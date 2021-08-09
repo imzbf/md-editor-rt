@@ -1,8 +1,13 @@
 import React, { useState } from 'react';
 import cn from 'classnames';
 import { createPortal } from 'react-dom';
-
+import ToolBar from './layouts/Toolbar';
 import { allToolbar, highlightUrl, iconfontUrl, prettierUrl, cropperUrl } from './config';
+
+// import bus from './utils/event-bus';
+import { prefix } from './config';
+
+import './styles/index.less';
 
 declare global {
   interface Window {
@@ -11,6 +16,13 @@ declare global {
     prettierPlugins: any;
     Cropper: any;
   }
+}
+
+export interface SettingType {
+  pageFullScreen: boolean;
+  fullscreen: boolean;
+  preview: boolean;
+  htmlPreview: boolean;
 }
 
 export interface ToolbarTips {
@@ -127,52 +139,84 @@ export interface EditorProp {
   iconfontJs?: string;
 }
 
-export const prefix = 'md';
-
 // 生成唯一ID
 const editorId = `mev-${Math.random().toString(36).substr(3)}`;
 
 const Editor = (props: EditorProp) => {
-  const [test, setTest] = useState(0);
+  const {
+    theme = 'light',
+    editorClass = '',
+    toolbars = allToolbar,
+    toolbarsExclude = [],
+    preview = false,
+    htmlPreview = false,
+    iconfontJs = iconfontUrl,
+    prettier = true,
+    prettierCDN = prettierUrl.main,
+    prettierMDCDN = prettierUrl.markdown,
+    previewOnly,
+    pageFullScreen = false
+  } = props;
 
-  setTimeout(() => {
-    setTest((v) => v + 1);
-  }, 1000);
+  // ----编辑器设置----
+  const [setting, setSetting] = useState<SettingType>({
+    pageFullScreen: pageFullScreen,
+    fullscreen: false,
+    preview: preview,
+    htmlPreview: preview ? false : htmlPreview
+  });
+
+  const updateSetting = (v: any, k: keyof typeof setting) => {
+    setting[k] = v;
+
+    setSetting((settingN) => {
+      return {
+        ...settingN,
+        [k]: v,
+        preview: k === 'htmlPreview' && settingN.htmlPreview ? false : settingN.preview,
+        htmlPreview: k === 'preview' && setting.preview ? false : settingN.htmlPreview
+      };
+    });
+  };
+
+  const Iconfont = () => {
+    return createPortal(<script src={iconfontJs} onLoad={console.log} />, document.body);
+  };
 
   return (
     <div
       id={editorId}
-      className={cn([
-        prefix,
-        props.editorClass,
-        props.theme === 'dark' && `${prefix}-dark`
-      ])}
+      className={cn([prefix, editorClass, theme === 'dark' && `${prefix}-dark`])}
     >
-      编辑器{test}
-      {createPortal(<script src={props.iconfontJs} />, document.head)}
+      {!previewOnly && (
+        <ToolBar
+          toolbars={toolbars}
+          toolbarsExclude={toolbarsExclude}
+          setting={setting}
+          updateSetting={updateSetting}
+        />
+      )}
+      <Iconfont />
+      {prettier &&
+        createPortal(
+          <>
+            <script src={prettierCDN} />
+            <script src={prettierMDCDN} />
+          </>,
+          document.head
+        )}
     </div>
   );
 };
 
 Editor.defaultProps = {
-  theme: 'light',
-  editorClass: '',
   highlightJs: highlightUrl.js,
   highlightCss: highlightUrl.css,
   historyLength: 10,
-  pageFullScreen: false,
-  preview: true,
-  htmlPreview: false,
   previewOnly: false,
   language: 'zh-CN',
-  toolbars: allToolbar,
-  toolbarsExclude: [],
-  prettier: true,
-  prettierCDN: prettierUrl.main,
-  prettierMDCDN: prettierUrl.markdown,
   cropperCss: cropperUrl.css,
-  cropperJs: cropperUrl.js,
-  iconfontJs: iconfontUrl
+  cropperJs: cropperUrl.js
 } as EditorProp;
 
 export default Editor;

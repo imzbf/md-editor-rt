@@ -1,4 +1,6 @@
-import { StaticTextDefault } from './Editor';
+import { StaticTextDefault, ToolbarNames } from './Editor';
+
+export const prefix = 'md';
 
 // 编辑器ID
 export const iconScriptId = 'md-editor-rt';
@@ -24,7 +26,7 @@ export const cropperUrl = {
 };
 
 // 所有的编辑器功能点
-export const allToolbar = [
+export const allToolbar: ToolbarNames[] = [
   'bold',
   'underline',
   'italic',
