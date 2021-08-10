@@ -4,7 +4,8 @@ import React, {
   CSSProperties,
   useEffect,
   useRef,
-  useState
+  useState,
+  JSXElementConstructor
 } from 'react';
 
 import cn from 'classnames';
@@ -102,26 +103,30 @@ const DropDown = (props: ModalProp) => {
     };
   }, []);
 
-  const slotDefault = props.children;
-  const slotOverlay = props.overlay;
+  const slotDefault = props.children as ReactElement<
+    any,
+    string | JSXElementConstructor<any>
+  >;
+  const slotOverlay = props.overlay as ReactElement<
+    any,
+    string | JSXElementConstructor<any>
+  >;
 
   // 触发器
-  const trigger = cloneElement(
-    slotDefault instanceof Array ? slotDefault[0] : slotDefault,
-    {
-      onClick: triggerHandler,
-      // onMouseover: (e: MouseEvent) => triggerHandler(e, 'hover'),
-      // onMouseleave: (e: MouseEvent) => {
-      //   ctl.visible = false;
-      // },
-      ref: triggerRef
-    }
-  );
+  const trigger = cloneElement(slotDefault, {
+    onClick: triggerHandler,
+    // onMouseover: (e: MouseEvent) => triggerHandler(e, 'hover'),
+    // onMouseleave: (e: MouseEvent) => {
+    //   ctl.visible = false;
+    // },
+    ref: triggerRef
+  });
   // 列表内容
-  const overlay = cloneElement(
-    slotOverlay instanceof Array ? slotOverlay[0] : slotOverlay,
-    { className: ctl.overlayClass, style: ctl.overlayStyle, ref: overlayRef }
-  );
+  const overlay = cloneElement(slotOverlay, {
+    className: cn(ctl.overlayClass, slotOverlay.props?.className),
+    style: ctl.overlayStyle,
+    ref: overlayRef
+  });
 
   return (
     <>

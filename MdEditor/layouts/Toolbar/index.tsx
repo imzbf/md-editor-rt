@@ -8,20 +8,25 @@ import Divider from '../../components/Divider';
 import Dropdown from '../../components/Dropdown';
 
 export interface ToolbarProp {
+  editorId: string;
   // 工具栏选择显示
   toolbars: Array<ToolbarNames>;
   // 工具栏选择不显示
   toolbarsExclude: Array<ToolbarNames>;
   setting: SettingType;
+  // 使用的语言设置
+  ult: StaticTextDefaultValue;
   updateSetting: (v: boolean, k: keyof SettingType) => void;
 }
 
-const Toolbar = ({ toolbars, toolbarsExclude, setting, updateSetting }: ToolbarProp) => {
-  // 获取Id
-  const editorId = '' as string;
-  // 获取语言设置
-  const ult: StaticTextDefaultValue = {};
-
+const Toolbar = ({
+  editorId,
+  toolbars,
+  toolbarsExclude,
+  setting,
+  ult,
+  updateSetting
+}: ToolbarProp) => {
   const [visible, setVisible] = useState({
     title: false,
     catalog: false
@@ -65,7 +70,7 @@ const Toolbar = ({ toolbars, toolbarsExclude, setting, updateSetting }: ToolbarP
   const to = useRef(document.body);
   useEffect(() => {
     to.current = document.getElementById(editorId) as HTMLElement;
-  });
+  }, []);
 
   return (
     <div className={`${prefix}-toolbar-wrapper`}>
@@ -129,6 +134,7 @@ const Toolbar = ({ toolbars, toolbarsExclude, setting, updateSetting }: ToolbarP
               visible={visible.title}
               trigger="click"
               onChange={(v) => {
+                console.log('visible.title', v);
                 setVisible((vi) => ({
                   ...vi,
                   title: v

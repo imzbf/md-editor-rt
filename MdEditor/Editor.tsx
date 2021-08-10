@@ -1,8 +1,14 @@
-import React, { useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import cn from 'classnames';
-import { createPortal } from 'react-dom';
 import ToolBar from './layouts/Toolbar';
-import { allToolbar, highlightUrl, iconfontUrl, prettierUrl, cropperUrl } from './config';
+import {
+  allToolbar,
+  highlightUrl,
+  iconfontUrl,
+  prettierUrl,
+  cropperUrl,
+  staticTextDefault
+} from './config';
 
 // import bus from './utils/event-bus';
 import { prefix } from './config';
@@ -155,7 +161,9 @@ const Editor = (props: EditorProp) => {
     prettierCDN = prettierUrl.main,
     prettierMDCDN = prettierUrl.markdown,
     previewOnly,
-    pageFullScreen = false
+    pageFullScreen = false,
+    language = 'zh-CN',
+    languageUserDefined = []
   } = props;
 
   // ----编辑器设置----
@@ -179,9 +187,46 @@ const Editor = (props: EditorProp) => {
     });
   };
 
-  const Iconfont = () => {
-    return createPortal(<script src={iconfontJs} onLoad={console.log} />, document.body);
-  };
+  const usedLanguageText = useMemo(() => {
+    const allText: any = {
+      ...staticTextDefault,
+      ...languageUserDefined
+    };
+
+    if (allText[language]) {
+      return allText[language];
+    } else {
+      return staticTextDefault['zh-CN'];
+    }
+  }, [props.language]);
+
+  useEffect(() => {
+    // 图标
+    const iconfontScript = document.createElement('script');
+    iconfontScript.src = iconfontJs;
+    document.body.appendChild(iconfontScript);
+
+    // prettier
+    const prettierScript = document.createElement('script');
+    const prettierMDScript = document.createElement('script');
+
+    if (prettier) {
+      prettierScript.src = prettierCDN;
+      prettierMDScript.src = prettierMDCDN;
+
+      document.body.appendChild(prettierScript);
+      document.body.appendChild(prettierMDScript);
+    }
+
+    return () => {
+      document.body.removeChild(iconfontScript);
+
+      if (prettier) {
+        document.body.removeChild(prettierScript);
+        document.body.removeChild(prettierMDScript);
+      }
+    };
+  });
 
   return (
     <div
@@ -190,21 +235,14 @@ const Editor = (props: EditorProp) => {
     >
       {!previewOnly && (
         <ToolBar
+          editorId={editorId}
           toolbars={toolbars}
           toolbarsExclude={toolbarsExclude}
           setting={setting}
+          ult={usedLanguageText}
           updateSetting={updateSetting}
         />
       )}
-      <Iconfont />
-      {prettier &&
-        createPortal(
-          <>
-            <script src={prettierCDN} />
-            <script src={prettierMDCDN} />
-          </>,
-          document.head
-        )}
     </div>
   );
 };
@@ -214,7 +252,6 @@ Editor.defaultProps = {
   highlightCss: highlightUrl.css,
   historyLength: 10,
   previewOnly: false,
-  language: 'zh-CN',
   cropperCss: cropperUrl.css,
   cropperJs: cropperUrl.js
 } as EditorProp;
