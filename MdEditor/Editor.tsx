@@ -187,6 +187,24 @@ const Editor = (props: EditorProp) => {
     });
   };
 
+  // 初始为空，渲染到页面后获取页面属性
+  let bodyOverflowHistory = '';
+  useEffect(() => {
+    bodyOverflowHistory = document.body.style.overflow;
+  }, []);
+
+  const adjustBody = () => {
+    if (setting.pageFullScreen || setting.fullscreen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = bodyOverflowHistory;
+    }
+  };
+
+  // 变化是调整一次
+  useEffect(adjustBody, [setting.pageFullScreen, setting.fullscreen]);
+  // ----end----
+
   const usedLanguageText = useMemo(() => {
     const allText: any = {
       ...staticTextDefault,
@@ -231,7 +249,13 @@ const Editor = (props: EditorProp) => {
   return (
     <div
       id={editorId}
-      className={cn([prefix, editorClass, theme === 'dark' && `${prefix}-dark`])}
+      className={cn([
+        prefix,
+        editorClass,
+        theme === 'dark' && `${prefix}-dark`,
+        setting.fullscreen || setting.pageFullScreen ? `${prefix}-fullscreen` : '',
+        previewOnly && `${prefix}-previewOnly`
+      ])}
     >
       {!previewOnly && (
         <ToolBar
