@@ -188,7 +188,7 @@ const Editor = (props: EditorProp) => {
   const updateSetting = (v: any, k: keyof typeof setting) => {
     setSetting((settingN) => {
       const nextSetting = {
-        ...setSetting,
+        ...settingN,
         [k]: v
       } as SettingType;
 
