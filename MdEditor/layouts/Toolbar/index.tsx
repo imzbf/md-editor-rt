@@ -134,7 +134,6 @@ const Toolbar = ({
               visible={visible.title}
               trigger="click"
               onChange={(v) => {
-                console.log('visible.title', v);
                 setVisible((vi) => ({
                   ...vi,
                   title: v

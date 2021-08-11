@@ -1,6 +1,10 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import cn from 'classnames';
+import { useKeyBoard } from './hooks';
 import ToolBar from './layouts/Toolbar';
+import Content from './layouts/Content';
+import bus from './utils/event-bus';
+
 import {
   allToolbar,
   highlightUrl,
@@ -10,7 +14,6 @@ import {
   staticTextDefault
 } from './config';
 
-// import bus from './utils/event-bus';
 import { prefix } from './config';
 
 import './styles/index.less';
@@ -154,7 +157,7 @@ const Editor = (props: EditorProp) => {
     editorClass = '',
     toolbars = allToolbar,
     toolbarsExclude = [],
-    preview = false,
+    preview = true,
     htmlPreview = false,
     iconfontJs = iconfontUrl,
     prettier = true,
@@ -166,6 +169,8 @@ const Editor = (props: EditorProp) => {
     languageUserDefined = []
   } = props;
 
+  useKeyBoard(props);
+
   // ----编辑器设置----
   const [setting, setSetting] = useState<SettingType>({
     pageFullScreen: pageFullScreen,
@@ -176,12 +181,18 @@ const Editor = (props: EditorProp) => {
 
   const updateSetting = (v: any, k: keyof typeof setting) => {
     setSetting((settingN) => {
-      return {
-        ...settingN,
-        [k]: v,
-        preview: k === 'htmlPreview' && settingN.htmlPreview ? false : settingN.preview,
-        htmlPreview: k === 'preview' && settingN.preview ? false : settingN.htmlPreview
-      };
+      const nextSetting = {
+        ...setSetting,
+        [k]: v
+      } as SettingType;
+
+      if (k === 'preview' && settingN.preview) {
+        nextSetting.htmlPreview = false;
+      } else if (k === 'htmlPreview' && settingN.htmlPreview) {
+        nextSetting.preview = false;
+      }
+
+      return nextSetting;
     });
   };
 
@@ -234,6 +245,31 @@ const Editor = (props: EditorProp) => {
       document.body.appendChild(prettierMDScript);
     }
 
+    // 监听上传图片
+    !previewOnly &&
+      bus.on({
+        name: 'uploadImage',
+        callback(files: FileList, cb: () => void) {
+          const insertHanlder = (urls: Array<string>) => {
+            urls.forEach((url) => {
+              // 利用事件循环机制，保证两次插入分开进行
+              setTimeout(() => {
+                bus.emit('replace', 'image', {
+                  desc: '',
+                  url
+                });
+              }, 0);
+            });
+
+            cb && cb();
+          };
+
+          if (props.onUploadImg) {
+            props.onUploadImg(files, insertHanlder);
+          }
+        }
+      });
+
     return () => {
       document.body.removeChild(iconfontScript);
 
@@ -265,11 +301,37 @@ const Editor = (props: EditorProp) => {
           updateSetting={updateSetting}
         />
       )}
+      <Content
+        hljs={props.hljs}
+        value={props.modelValue}
+        onChange={props.onChange}
+        setting={setting}
+        editorId={editorId}
+        highlight={highlightUrl}
+        previewOnly={props.previewOnly}
+        ult={usedLanguageText}
+        historyLength={props.historyLength}
+        onHtmlChanged={props.onHtmlChanged}
+      />
     </div>
   );
 };
 
 Editor.defaultProps = {
+  modelValue: '',
+  theme: 'light',
+  editorClass: '',
+  toolbars: allToolbar,
+  toolbarsExclude: [],
+  preview: true,
+  htmlPreview: false,
+  iconfontJs: iconfontUrl,
+  prettier: true,
+  prettierCDN: prettierUrl.main,
+  prettierMDCDN: prettierUrl.markdown,
+  pageFullScreen: false,
+  language: 'zh-CN',
+  languageUserDefined: [],
   highlightJs: highlightUrl.js,
   highlightCss: highlightUrl.css,
   historyLength: 10,
