@@ -1,13 +1,21 @@
-import React from 'react';
+import classNames from 'classnames';
+import React, { useState } from 'react';
+import Header from './Header';
+import Preview from './Preview';
 
-import MdEditor from '../MdEditor/Editor';
+import './style.less';
+
+export type Theme = 'dark' | 'light';
 
 function App() {
+  const [theme, setTheme] = useState<Theme>('light');
   return (
-    <div className="App">
-      <header className="App-header">
-        <MdEditor />
-      </header>
+    <div className={classNames('app', theme === 'dark' && 'theme-dark')}>
+      <Header theme={theme} onChange={(v: Theme) => setTheme(v)} />
+      <div className="page-body">
+        <Preview theme={theme} />
+        {/* <Doc theme={theme.value} /> */}
+      </div>
     </div>
   );
 }

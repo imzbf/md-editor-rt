@@ -1,10 +1,19 @@
-import React, { useState } from 'react';
+import React, { createContext, useEffect, useMemo, useState } from 'react';
 import cn from 'classnames';
-import { createPortal } from 'react-dom';
+import { useKeyBoard } from './hooks';
 import ToolBar from './layouts/Toolbar';
-import { allToolbar, highlightUrl, iconfontUrl, prettierUrl, cropperUrl } from './config';
+import Content from './layouts/Content';
+import bus from './utils/event-bus';
 
-// import bus from './utils/event-bus';
+import {
+  allToolbar,
+  highlightUrl,
+  iconfontUrl,
+  prettierUrl,
+  cropperUrl,
+  staticTextDefault
+} from './config';
+
 import { prefix } from './config';
 
 import './styles/index.less';
@@ -142,21 +151,29 @@ export interface EditorProp {
 // 生成唯一ID
 const editorId = `mev-${Math.random().toString(36).substr(3)}`;
 
+export const EditorContext = createContext({
+  editorId
+});
+
 const Editor = (props: EditorProp) => {
   const {
     theme = 'light',
     editorClass = '',
     toolbars = allToolbar,
     toolbarsExclude = [],
-    preview = false,
+    preview = true,
     htmlPreview = false,
     iconfontJs = iconfontUrl,
     prettier = true,
     prettierCDN = prettierUrl.main,
     prettierMDCDN = prettierUrl.markdown,
     previewOnly,
-    pageFullScreen = false
+    pageFullScreen = false,
+    language = 'zh-CN',
+    languageUserDefined = []
   } = props;
+
+  useKeyBoard(props);
 
   // ----编辑器设置----
   const [setting, setSetting] = useState<SettingType>({
@@ -167,54 +184,168 @@ const Editor = (props: EditorProp) => {
   });
 
   const updateSetting = (v: any, k: keyof typeof setting) => {
-    setting[k] = v;
-
     setSetting((settingN) => {
-      return {
-        ...settingN,
-        [k]: v,
-        preview: k === 'htmlPreview' && settingN.htmlPreview ? false : settingN.preview,
-        htmlPreview: k === 'preview' && setting.preview ? false : settingN.htmlPreview
-      };
+      const nextSetting = {
+        ...setSetting,
+        [k]: v
+      } as SettingType;
+
+      if (k === 'preview' && settingN.preview) {
+        nextSetting.htmlPreview = false;
+      } else if (k === 'htmlPreview' && settingN.htmlPreview) {
+        nextSetting.preview = false;
+      }
+
+      return nextSetting;
     });
   };
 
-  const Iconfont = () => {
-    return createPortal(<script src={iconfontJs} onLoad={console.log} />, document.body);
+  // 初始为空，渲染到页面后获取页面属性
+  let bodyOverflowHistory = '';
+  useEffect(() => {
+    bodyOverflowHistory = document.body.style.overflow;
+  }, []);
+
+  const adjustBody = () => {
+    if (setting.pageFullScreen || setting.fullscreen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = bodyOverflowHistory;
+    }
   };
 
+  // 变化是调整一次
+  useEffect(adjustBody, [setting.pageFullScreen, setting.fullscreen]);
+  // ----end----
+
+  const usedLanguageText = useMemo(() => {
+    const allText: any = {
+      ...staticTextDefault,
+      ...languageUserDefined
+    };
+
+    if (allText[language]) {
+      return allText[language];
+    } else {
+      return staticTextDefault['zh-CN'];
+    }
+  }, [props.language]);
+
+  useEffect(() => {
+    // 图标
+    const iconfontScript = document.createElement('script');
+    iconfontScript.src = iconfontJs;
+    document.body.appendChild(iconfontScript);
+
+    // prettier
+    const prettierScript = document.createElement('script');
+    const prettierMDScript = document.createElement('script');
+
+    if (prettier) {
+      prettierScript.src = prettierCDN;
+      prettierMDScript.src = prettierMDCDN;
+
+      document.body.appendChild(prettierScript);
+      document.body.appendChild(prettierMDScript);
+    }
+
+    // 监听上传图片
+    !previewOnly &&
+      bus.on({
+        name: 'uploadImage',
+        callback(files: FileList, cb: () => void) {
+          const insertHanlder = (urls: Array<string>) => {
+            urls.forEach((url) => {
+              // 利用事件循环机制，保证两次插入分开进行
+              setTimeout(() => {
+                bus.emit('replace', 'image', {
+                  desc: '',
+                  url
+                });
+              }, 0);
+            });
+
+            cb && cb();
+          };
+
+          if (props.onUploadImg) {
+            props.onUploadImg(files, insertHanlder);
+          }
+        }
+      });
+
+    return () => {
+      document.body.removeChild(iconfontScript);
+
+      if (prettier) {
+        document.body.removeChild(prettierScript);
+        document.body.removeChild(prettierMDScript);
+      }
+    };
+  }, []);
+
   return (
-    <div
-      id={editorId}
-      className={cn([prefix, editorClass, theme === 'dark' && `${prefix}-dark`])}
+    <EditorContext.Provider
+      value={{
+        editorId
+      }}
     >
-      {!previewOnly && (
-        <ToolBar
-          toolbars={toolbars}
-          toolbarsExclude={toolbarsExclude}
-          setting={setting}
-          updateSetting={updateSetting}
-        />
-      )}
-      <Iconfont />
-      {prettier &&
-        createPortal(
-          <>
-            <script src={prettierCDN} />
-            <script src={prettierMDCDN} />
-          </>,
-          document.head
+      <div
+        id={editorId}
+        className={cn([
+          prefix,
+          editorClass,
+          theme === 'dark' && `${prefix}-dark`,
+          setting.fullscreen || setting.pageFullScreen ? `${prefix}-fullscreen` : '',
+          previewOnly && `${prefix}-previewOnly`
+        ])}
+      >
+        {!previewOnly && (
+          <ToolBar
+            editorId={editorId}
+            toolbars={toolbars}
+            toolbarsExclude={toolbarsExclude}
+            setting={setting}
+            ult={usedLanguageText}
+            updateSetting={updateSetting}
+          />
         )}
-    </div>
+        <Content
+          hljs={props.hljs}
+          value={props.modelValue}
+          onChange={props.onChange}
+          setting={setting}
+          editorId={editorId}
+          highlight={highlightUrl}
+          previewOnly={props.previewOnly}
+          ult={usedLanguageText}
+          historyLength={props.historyLength}
+          onHtmlChanged={props.onHtmlChanged}
+        />
+      </div>
+    </EditorContext.Provider>
   );
 };
 
 Editor.defaultProps = {
+  modelValue: '',
+  theme: 'light',
+  editorClass: '',
+  toolbars: allToolbar,
+  toolbarsExclude: [],
+  preview: true,
+  htmlPreview: false,
+  iconfontJs: iconfontUrl,
+  prettier: true,
+  prettierCDN: prettierUrl.main,
+  prettierMDCDN: prettierUrl.markdown,
+  pageFullScreen: false,
+  language: 'zh-CN',
+  languageUserDefined: [],
   highlightJs: highlightUrl.js,
   highlightCss: highlightUrl.css,
   historyLength: 10,
   previewOnly: false,
-  language: 'zh-CN',
   cropperCss: cropperUrl.css,
   cropperJs: cropperUrl.js
 } as EditorProp;
