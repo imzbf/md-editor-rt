@@ -175,14 +175,12 @@ const Editor = (props: EditorProp) => {
   });
 
   const updateSetting = (v: any, k: keyof typeof setting) => {
-    setting[k] = v;
-
     setSetting((settingN) => {
       return {
         ...settingN,
         [k]: v,
         preview: k === 'htmlPreview' && settingN.htmlPreview ? false : settingN.preview,
-        htmlPreview: k === 'preview' && setting.preview ? false : settingN.htmlPreview
+        htmlPreview: k === 'preview' && settingN.preview ? false : settingN.htmlPreview
       };
     });
   };
@@ -244,7 +242,7 @@ const Editor = (props: EditorProp) => {
         document.body.removeChild(prettierMDScript);
       }
     };
-  });
+  }, []);
 
   return (
     <div
