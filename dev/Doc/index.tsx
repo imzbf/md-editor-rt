@@ -1,28 +1,27 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useState } from 'react';
 import Editor from '../../MdEditor/Editor';
 import { Theme } from '../App';
 import axios from 'axios';
 
 export default (props: { theme: Theme }) => {
-  const mdText = useRef('');
+  const [mdText, setMdText] = useState('');
 
   useEffect(() => {
     axios
       .get('doc.md')
       .then(({ data }) => {
-        mdText.current = data;
+        setMdText(data);
       })
       .catch((e) => {
         console.log(e);
-
-        mdText.current = '文档读取失败！';
+        setMdText('文档读取失败！');
       });
   }, []);
 
   return (
     <div className="doc">
       <div className="container">
-        <Editor theme={props.theme} modelValue={mdText.current} previewOnly />
+        <Editor theme={props.theme} modelValue={mdText} previewOnly />
       </div>
     </div>
   );
