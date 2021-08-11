@@ -17,10 +17,7 @@ export type ModalProps = Readonly<{
 export default (props: ModalProps) => {
   const { onClosed = () => {}, to = document.body } = props;
 
-  const modalVisible = useRef(props.visible);
-
   const modalClass = useRef([`${prefix}-modal`]);
-
   const modalRef = useRef<HTMLDivElement>(null);
   const modalHeaderRef = useRef<HTMLDivElement>(null);
 
@@ -47,7 +44,6 @@ export default (props: ModalProps) => {
 
     if (nVal) {
       modalClass.current.push('zoom-in');
-      modalVisible.current = nVal;
 
       setTimeout(() => {
         const halfWidth = (modalRef.current as HTMLElement).offsetWidth / 2;
@@ -68,13 +64,12 @@ export default (props: ModalProps) => {
       modalClass.current.push('zoom-out');
       setTimeout(() => {
         modalClass.current = modalClass.current.filter((item) => item !== 'zoom-out');
-        modalVisible.current = nVal;
       }, 130);
     }
   }, [props.visible]);
 
   return createPortal(
-    <div style={{ display: modalVisible.current ? 'block' : 'none' }}>
+    <div style={{ display: props.visible ? 'block' : 'none' }}>
       <div className={`${prefix}-modal-mask`} onClick={onClosed} />
       <div
         className={cn(modalClass.current)}
