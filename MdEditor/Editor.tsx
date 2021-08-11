@@ -170,7 +170,9 @@ const Editor = (props: EditorProp) => {
     previewOnly,
     pageFullScreen = false,
     language = 'zh-CN',
-    languageUserDefined = []
+    languageUserDefined = [],
+    cropperCss = cropperUrl.css,
+    cropperJs = cropperUrl.js
   } = props;
 
   useKeyBoard(props);
@@ -241,6 +243,16 @@ const Editor = (props: EditorProp) => {
     const prettierScript = document.createElement('script');
     const prettierMDScript = document.createElement('script');
 
+    // 裁剪图片
+    const cropperLink = document.createElement('link');
+    cropperLink.rel = 'stylesheet';
+    cropperLink.href = cropperCss;
+    const cropperScript = document.createElement('script');
+    cropperScript.src = cropperJs;
+
+    document.body.appendChild(cropperLink);
+    document.body.appendChild(cropperScript);
+
     if (prettier) {
       prettierScript.src = prettierCDN;
       prettierMDScript.src = prettierMDCDN;
@@ -276,6 +288,8 @@ const Editor = (props: EditorProp) => {
 
     return () => {
       document.body.removeChild(iconfontScript);
+      document.body.removeChild(cropperLink);
+      document.body.removeChild(cropperScript);
 
       if (prettier) {
         document.body.removeChild(prettierScript);

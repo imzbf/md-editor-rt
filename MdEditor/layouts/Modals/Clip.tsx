@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import Modal from '../../components/Modal';
 import { StaticTextDefaultValue } from '../../Editor';
 import { prefix } from '../../config';
@@ -15,6 +15,8 @@ interface ClipModalProp {
   to: HTMLElement;
 }
 
+let cropper: any = null;
+
 export default (props: ClipModalProp) => {
   const { ult } = props;
 
@@ -26,40 +28,37 @@ export default (props: ClipModalProp) => {
     imgSrc: ''
   });
 
-  let cropper: any = null;
-
   useEffect(() => {
-    (uploadRef.current as HTMLInputElement).addEventListener('change', () => {
-      const fileList = (uploadRef.current as HTMLInputElement).files || [];
+    setTimeout(() => {
+      (uploadRef.current as HTMLInputElement).addEventListener('change', () => {
+        const fileList = (uploadRef.current as HTMLInputElement).files || [];
 
-      // 切换模式
-      setData({
-        ...data,
-        imgSelected: true
+        if (fileList?.length > 0) {
+          const fileReader = new FileReader();
+
+          fileReader.onload = (e: any) => {
+            setData({
+              imgSelected: true,
+              imgSrc: e.target.result
+            });
+          };
+
+          fileReader.readAsDataURL(fileList[0]);
+        }
       });
+    }, 0);
 
-      if (fileList?.length > 0) {
-        const fileReader = new FileReader();
-
-        fileReader.onload = (e: any) => {
-          setData({
-            ...data,
-            imgSrc: e.target.result
-          });
-
-          // nextTick(() => {
-          cropper = new window.Cropper(uploadImgRef.current, {
-            viewMode: 2,
-            preview: `.${prefix}-clip-preview-target`
-            // aspectRatio: 16 / 9,
-          });
-          // });
-        };
-
-        fileReader.readAsDataURL(fileList[0]);
-      }
-    });
+    // TODO 优化卸载清除监听
   }, []);
+
+  useLayoutEffect(() => {
+    if (data.imgSelected) {
+      cropper = new window.Cropper(uploadImgRef.current, {
+        viewMode: 2,
+        preview: `.${prefix}-clip-preview-target`
+      });
+    }
+  }, [data.imgSelected]);
 
   const reset = () => {
     cropper.destroy();
