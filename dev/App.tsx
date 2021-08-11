@@ -2,6 +2,7 @@ import classNames from 'classnames';
 import React, { useState } from 'react';
 import Header from './Header';
 import Preview from './Preview';
+import Doc from './Doc';
 
 import './style.less';
 
@@ -14,7 +15,7 @@ function App() {
       <Header theme={theme} onChange={(v: Theme) => setTheme(v)} />
       <div className="page-body">
         <Preview theme={theme} />
-        {/* <Doc theme={theme.value} /> */}
+        <Doc theme={theme} />
       </div>
     </div>
   );
