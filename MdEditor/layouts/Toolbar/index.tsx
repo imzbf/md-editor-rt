@@ -6,6 +6,7 @@ import { prefix } from '../../config';
 import bus from '../../utils/event-bus';
 import Divider from '../../components/Divider';
 import Dropdown from '../../components/Dropdown';
+import Modals from '../Modals';
 
 export interface ToolbarProp {
   editorId: string;
@@ -32,11 +33,22 @@ const Toolbar = ({
     catalog: false
   });
 
+  // 链接
+  const [modalData, setModalData] = useState<{
+    type: 'link' | 'image' | 'help';
+    visible: boolean;
+  }>({
+    type: 'link',
+    visible: false
+  });
+
+  // 触发器
   const emitHandler = (direct: ToolDirective, params?: any) => {
     bus.emit('replace', direct, params);
   };
 
-  const fullScreen = () => {
+  // 触发全屏
+  const fullScreenHandler = () => {
     if (screenfull.isEnabled) {
       if (screenfull.isFullscreen) {
         screenfull.exit();
@@ -48,28 +60,30 @@ const Toolbar = ({
     }
   };
 
-  if (screenfull.isEnabled) {
-    screenfull.on('change', () => {
-      updateSetting(!setting.fullscreen, 'fullscreen');
-    });
-  }
-
+  // 判断是否显示工具项
   const showBar = (name: ToolbarNames) =>
     toolbars.includes(name) && !toolbarsExclude.includes(name);
-
-  // 链接
-  const [modalData, setModalData] = useState<{
-    type: 'link' | 'image' | 'help';
-    visible: boolean;
-  }>({
-    type: 'link',
-    visible: false
-  });
 
   // 挂载位置
   const to = useRef(document.body);
   useEffect(() => {
     to.current = document.getElementById(editorId) as HTMLElement;
+
+    //
+    if (screenfull.isEnabled) {
+      screenfull.on('change', () => {
+        updateSetting(!setting.fullscreen, 'fullscreen');
+      });
+    }
+
+    //
+    bus.on({
+      name: 'openModals',
+      callback(type) {
+        modalData.type = type;
+        modalData.visible = true;
+      }
+    });
   }, []);
 
   return (
@@ -418,7 +432,7 @@ const Toolbar = ({
             <div
               className={`${prefix}-toolbar-item`}
               title={ult.toolbarTips?.fullscreen}
-              onClick={fullScreen}
+              onClick={fullScreenHandler}
             >
               <svg className={`${prefix}-icon`} aria-hidden="true">
                 <use
@@ -486,23 +500,30 @@ const Toolbar = ({
           )}
         </div>
       </div>
-      {/* <Modals
+      <Modals
+        ult={ult}
         visible={modalData.visible}
         type={modalData.type}
         onCancel={() => {
-          modalData.visible = false;
+          setModalData({
+            ...modalData,
+            visible: false
+          });
         }}
-        onOk={(data) => {
+        onOk={(data: any) => {
           if (data) {
             emitHandler(modalData.type, {
               desc: data.desc,
               url: data.url
             });
           }
-          modalData.visible = false;
+          setModalData({
+            ...modalData,
+            visible: false
+          });
         }}
         to={to.current}
-      /> */}
+      />
     </div>
   );
 };

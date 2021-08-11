@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { createContext, useEffect, useMemo, useState } from 'react';
 import cn from 'classnames';
 import { useKeyBoard } from './hooks';
 import ToolBar from './layouts/Toolbar';
@@ -151,6 +151,10 @@ export interface EditorProp {
 // 生成唯一ID
 const editorId = `mev-${Math.random().toString(36).substr(3)}`;
 
+export const EditorContext = createContext({
+  editorId
+});
+
 const Editor = (props: EditorProp) => {
   const {
     theme = 'light',
@@ -281,39 +285,45 @@ const Editor = (props: EditorProp) => {
   }, []);
 
   return (
-    <div
-      id={editorId}
-      className={cn([
-        prefix,
-        editorClass,
-        theme === 'dark' && `${prefix}-dark`,
-        setting.fullscreen || setting.pageFullScreen ? `${prefix}-fullscreen` : '',
-        previewOnly && `${prefix}-previewOnly`
-      ])}
+    <EditorContext.Provider
+      value={{
+        editorId
+      }}
     >
-      {!previewOnly && (
-        <ToolBar
-          editorId={editorId}
-          toolbars={toolbars}
-          toolbarsExclude={toolbarsExclude}
+      <div
+        id={editorId}
+        className={cn([
+          prefix,
+          editorClass,
+          theme === 'dark' && `${prefix}-dark`,
+          setting.fullscreen || setting.pageFullScreen ? `${prefix}-fullscreen` : '',
+          previewOnly && `${prefix}-previewOnly`
+        ])}
+      >
+        {!previewOnly && (
+          <ToolBar
+            editorId={editorId}
+            toolbars={toolbars}
+            toolbarsExclude={toolbarsExclude}
+            setting={setting}
+            ult={usedLanguageText}
+            updateSetting={updateSetting}
+          />
+        )}
+        <Content
+          hljs={props.hljs}
+          value={props.modelValue}
+          onChange={props.onChange}
           setting={setting}
+          editorId={editorId}
+          highlight={highlightUrl}
+          previewOnly={props.previewOnly}
           ult={usedLanguageText}
-          updateSetting={updateSetting}
+          historyLength={props.historyLength}
+          onHtmlChanged={props.onHtmlChanged}
         />
-      )}
-      <Content
-        hljs={props.hljs}
-        value={props.modelValue}
-        onChange={props.onChange}
-        setting={setting}
-        editorId={editorId}
-        highlight={highlightUrl}
-        previewOnly={props.previewOnly}
-        ult={usedLanguageText}
-        historyLength={props.historyLength}
-        onHtmlChanged={props.onHtmlChanged}
-      />
-    </div>
+      </div>
+    </EditorContext.Provider>
   );
 };
 
