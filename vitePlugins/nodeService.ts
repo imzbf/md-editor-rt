@@ -19,12 +19,12 @@ export default (): Plugin => {
             uploadDir: LOCAL_IMG_PATH
           });
 
-          form.parse(req, (_, __, files) => {});
+          form.parse(req, () => {});
 
           res.end(
             JSON.stringify({
               code: 0,
-              url: 'https://art-1252753142.cos.ap-chengdu.myqcloud.com/2021/06301522413082599421018280471.png'
+              url: 'https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/eb468550ee274210a20bd213848fa4d0~tplv-k3u1fbpfcp-watermark.awebp'
             })
           );
         } else {
