@@ -1,6 +1,5 @@
 import React, { useRef, useState, ReactElement, useLayoutEffect } from 'react';
 import cn from 'classnames';
-import { createPortal } from 'react-dom';
 import { prefix } from '../../config';
 import { keyMove } from '../../utils/dom';
 import './style.less';
@@ -31,20 +30,22 @@ export default (props: ModalProps) => {
   useLayoutEffect(() => {
     let keyMoveClear = () => {};
 
-    setTimeout(() => {
-      keyMoveClear = keyMove(
-        modalHeaderRef.current as HTMLElement,
-        (left: number, top: number) => {
-          setInitPos({
-            left: left + 'px',
-            top: top + 'px'
-          });
-        }
-      );
-    });
+    if (inited) {
+      setTimeout(() => {
+        keyMoveClear = keyMove(
+          modalHeaderRef.current as HTMLElement
+          // (left: number, top: number) => {
+          //   setInitPos({
+          //     left: left + 'px',
+          //     top: top + 'px'
+          //   });
+          // }
+        );
+      });
+    }
 
     return keyMoveClear;
-  }, []);
+  }, [inited]);
 
   useLayoutEffect(() => {
     const nVal = props.visible;
@@ -77,7 +78,7 @@ export default (props: ModalProps) => {
     }
   }, [props.visible]);
 
-  const ModalElement = createPortal(
+  return (
     <div style={{ display: props.visible && inited ? 'block' : 'none' }}>
       <div className={`${prefix}-modal-mask`} onClick={onClosed} />
       <div
@@ -105,9 +106,6 @@ export default (props: ModalProps) => {
         </div>
         <div className={`${prefix}-modal-body`}>{props.children}</div>
       </div>
-    </div>,
-    document.body
+    </div>
   );
-
-  return inited ? ModalElement : <></>;
 };
