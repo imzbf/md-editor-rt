@@ -1,32 +1,32 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
+import axios from 'axios';
 import Editor from '../../MdEditor/Editor';
 import { mdText } from '../data';
 import { Theme } from '../App';
-import axios from 'axios';
 
 import './index.less';
-import { useEffect, useState } from 'react';
-
 const SAVE_KEY = 'XHMPGLJIZTDB';
 
 export default ({ theme }: { theme: Theme }) => {
   const [md, setMd] = useState('');
 
-  // 自动保存
-  let taskId = -1;
   useEffect(() => {
     const storagedText = localStorage.getItem(SAVE_KEY) || '';
     setMd(storagedText || mdText);
-
-    taskId = window.setInterval(() => {
-      localStorage.setItem(SAVE_KEY, md);
-    }, 10_000);
-
-    return () => {
-      clearInterval(taskId);
-    };
   }, []);
 
+  // 自动保存
+  const taskId = useRef(-1);
+  useEffect(() => {
+    clearInterval(taskId.current);
+    taskId.current = window.setTimeout(() => {
+      localStorage.setItem(SAVE_KEY, md);
+    }, 2_000);
+
+    return () => {
+      clearInterval(taskId.current);
+    };
+  }, [md]);
   // -----end-----
 
   return (
