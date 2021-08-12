@@ -192,9 +192,9 @@ const Editor = (props: EditorProp) => {
         [k]: !settingN[k]
       } as SettingType;
 
-      if (k === 'preview' && settingN.preview) {
+      if (k === 'preview' && nextSetting.preview) {
         nextSetting.htmlPreview = false;
-      } else if (k === 'htmlPreview' && settingN.htmlPreview) {
+      } else if (k === 'htmlPreview' && nextSetting.htmlPreview) {
         nextSetting.preview = false;
       }
 
