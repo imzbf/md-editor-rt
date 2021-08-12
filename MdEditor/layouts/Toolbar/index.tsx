@@ -80,8 +80,11 @@ const Toolbar = ({
     bus.on({
       name: 'openModals',
       callback(type) {
-        modalData.type = type;
-        modalData.visible = true;
+        setModalData((nVal) => ({
+          ...nVal,
+          type,
+          visible: true
+        }));
       }
     });
   }, []);
