@@ -65,7 +65,7 @@ const Toolbar = ({
     toolbars.includes(name) && !toolbarsExclude.includes(name);
 
   // 挂载位置
-  const to = useRef(document.body);
+  const to = useRef<HTMLElement>();
   useEffect(() => {
     to.current = document.getElementById(editorId) as HTMLElement;
 

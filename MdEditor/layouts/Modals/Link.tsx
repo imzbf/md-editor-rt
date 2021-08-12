@@ -10,7 +10,7 @@ interface LinkModalProp {
   ult: StaticTextDefaultValue;
   onCancel: () => void;
   onOk: (data?: any) => void;
-  to: HTMLElement;
+  to: HTMLElement | undefined;
   onClip: () => void;
 }
 

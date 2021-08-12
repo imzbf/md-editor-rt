@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState, ReactElement, useLayoutEffect } from 'react';
+import React, { useRef, useState, ReactElement, useLayoutEffect, useMemo } from 'react';
 import cn from 'classnames';
 import { createPortal } from 'react-dom';
 import { prefix } from '../../config';
@@ -10,33 +10,40 @@ export type ModalProps = Readonly<{
   visible?: boolean;
   width?: number;
   onClosed?: () => void;
-  to?: HTMLElement;
+  to?: HTMLElement | undefined;
   children?: any;
 }>;
 
 export default (props: ModalProps) => {
-  const { onClosed = () => {}, to = document.body } = props;
+  const { onClosed = () => {}, to } = props;
 
   const modalClass = useRef([`${prefix}-modal`]);
   const modalRef = useRef<HTMLDivElement>(null);
   const modalHeaderRef = useRef<HTMLDivElement>(null);
 
   const [initPos, setInitPos] = useState({
+    unInited: true,
     left: '0px',
     top: '0px'
   });
 
-  useEffect(() => {
-    const keyMoveClear = keyMove(
-      modalHeaderRef.current as HTMLElement,
-      (left: number, top: number) => {
-        setInitPos({
-          left: left + 'px',
-          top: top + 'px'
-        });
-      }
-    );
-    keyMoveClear();
+  useLayoutEffect(() => {
+    let keyMoveClear = () => {};
+
+    setTimeout(() => {
+      keyMoveClear = keyMove(
+        modalHeaderRef.current as HTMLElement,
+        (left: number, top: number) => {
+          setInitPos({
+            unInited: false,
+            left: left + 'px',
+            top: top + 'px'
+          });
+        }
+      );
+    });
+
+    return keyMoveClear;
   }, []);
 
   useLayoutEffect(() => {
@@ -53,6 +60,7 @@ export default (props: ModalProps) => {
         const halfClientHeight = document.documentElement.clientHeight / 2;
 
         setInitPos({
+          unInited: false,
           left: halfClientWidth - halfWidth + 'px',
           top: halfClientHeight - halfHeight + 'px'
         });
@@ -68,8 +76,12 @@ export default (props: ModalProps) => {
     }
   }, [props.visible]);
 
-  return createPortal(
-    <div style={{ display: props.visible ? 'block' : 'none' }}>
+  const modalVisible = useMemo(() => {
+    return props.visible && initPos.unInited;
+  }, [initPos, props.visible]);
+
+  return (
+    <div style={{ display: modalVisible ? 'block' : 'none' }}>
       <div className={`${prefix}-modal-mask`} onClick={onClosed} />
       <div
         className={cn(modalClass.current)}
@@ -96,7 +108,6 @@ export default (props: ModalProps) => {
         </div>
         <div className={`${prefix}-modal-body`}>{props.children}</div>
       </div>
-    </div>,
-    to
+    </div>
   );
 };

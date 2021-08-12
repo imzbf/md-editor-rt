@@ -1,97 +1,35 @@
-> 当前最新版本：**v1.3.3**
+> 当前最新版本：**v1.0.0**
 
-## 1. 基本使用示例
+> [md-editor-rt](https://github.com/imzbf/md-editor-rt)是`vue3`编辑器[md-editor-v3](https://github.com/imzbf/md-editor-v3)的 react 版本!
 
-目前一直在迭代开发，所以尽量安装最新版本。发布日志请前往：[releases](https://github.com/imzbf/md-editor-v3/releases)
+## 1. 使用示例
+
+目前一直在迭代开发，所以尽量安装最新版本。发布日志请前往：[releases](https://github.com/imzbf/md-editor-rt/releases)
 
 ```shell
-yarn add md-editor-v3
+yarn add md-editor-rt
 ```
 
-目前 vue3 已经能很友好的使用 jsx 来开发了，对于一些爱好者（比如作者本身），需要考虑兼容一下。
-
-两种方式开发上区别在于**vue 模板**能很好的支持`vue`特性，比如指令，内置的双向绑定等；而**jsx 语法**更偏向于`react`的理念，开发环境来讲 jsx 如果在支持 ts 的环境下，会更友好一些。
-
-### 1.1 传统开发模式
-
-通过直接链接生产版本来使用，下面是一个小 demo：
+### 1.1 基本使用
 
 ```js
-<!DOCTYPE html>
-<html lang="zh-CN">
-  <head>
-    <meta charset="UTF-8" />
-    <title>传统开发模式中使用</title>
-    <link href="https://cdn.jsdelivr.net/npm/md-editor-v3@1.2.0/lib/style.css" rel="stylesheet" />
-  </head>
-  <body>
-    <div id="md-editor-v3">
-      <md-editor-v3 v-model="text" />
-    </div>
-    <script src="https://cdn.jsdelivr.net/npm/vue@3.1.5/dist/vue.global.prod.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/md-editor-v3@1.2.0/lib/md-editor-v3.umd.js"></script>
-    <script>
-      const App = {
-        data() {
-          return {
-            text: 'Hello Editor!!'
-          };
-        }
-      };
-      Vue.createApp(App).use(MdEditorV3).mount('#md-editor-v3');
-    </script>
-  </body>
-</html>
+import React, { useEffect, useState } from 'react';
+import Editor from 'md-editor-rt';
+import './index.less';
+
+export default () => {
+  const [md, setMd] = useState('');
+  return <Editor theme="dark" modelValue={md} onChange={(v) => setMd(v)} />;
+};
 ```
 
-### 1.2 模块化的 vue 模板
+### 1.2 在 NextJs 中使用
 
-```js
-<template>
-  <md-editor v-model="text" />
-</template>
-
-<script lang="ts">
-import { defineComponent } from 'vue';
-import MdEditor from 'md-editor-v3';
-import 'md-editor-v3/lib/style.css';
-
-export default defineComponent({
-  components: {
-    MdEditor
-  },
-  data() {
-    return {
-      text: ''
-    };
-  }
-});
-</script>
-```
-
-### 1.3 模块化的 jsx
-
-```js
-import { defineComponent, ref } from 'vue';
-import MdEditor from 'md-editor-v3';
-import 'md-editor-v3/lib/style.css';
-
-export default defineComponent({
-  name: 'MdEditor',
-  setup() {
-    const text = ref('');
-    return () => (
-      <MdEditor modelValue={text.value} onChange={(v: string) => (text.value = v)} />
-    );
-  }
-});
-```
-
-### 1.4 图片上传
+### 1.3 图片上传
 
 默认可以选择多张图片，支持截图粘贴板上传图片，支持复制网页图片粘贴上传。
 
-> v1.2.0：图片裁剪上传只支持选择一张图片~，但回调入仍是一个文件数组
+> 图片裁剪上传只支持选择一张图片~，但回调入仍是一个文件数组
 
 > 注意：粘贴板上传时，如果是网页上的 gif 图，无法正确上传为 gif 格式！请保存本地后再手动上传。
 
@@ -119,9 +57,26 @@ async onUploadImg(files: FileList, callback: (urls: string[]) => void) {
 }
 ```
 
+### 1.3 直接渲染内容
+
+这种方式会隐藏编辑器的工具栏和编辑区局，同时，也不会注册相应的绑定事件（例如：快捷键绑定）。
+
+```js
+import React, { useEffect, useState } from 'react';
+import Editor from 'md-editor-rt';
+import './index.less';
+
+export default () => {
+  const [md, setMd] = useState('');
+  return <Editor modelValue={md} previewOnly />;
+};
+```
+
+效果即与本文档效果相同。
+
 ## 2. Props 说明
 
-这是组件最重要的一部分内容，`MdEditorV3`的属性参数如下：
+这是组件最重要的一部分内容，`MdEditorRT`的属性参数如下：
 
 <br>
 
@@ -137,18 +92,17 @@ async onUploadImg(files: FileList, callback: (urls: string[]) => void) {
 | pageFullScreen | Boolean | false | x | 浏览器内全屏 |
 | preview | Boolean | true | x | 预览模式 |
 | htmlPreview | Boolean | false | x | html 预览 |
-| previewOnly<sup>v1.3.0</sup> | Boolean | false | x | 仅预览模式，不显示 bar 和编辑框，_不支持响应式，仅能初始设置一次_ |
+| previewOnly | Boolean | false | x | 仅预览模式，不显示 bar 和编辑框，_不支持响应式，仅能初始设置一次_ |
 | language | String | 'zh-CN' | √ | 内置中英文('zh-CN','en-US')，可自行扩展其他语言，同时可覆盖内置的中英文 |
 | languageUserDefined | Array | [{key: StaticTextDefaultValue}] | √ | 通过这里扩展语言，修改 language 值为扩展 key 即可，类型申明可手动导入 |
 | toolbars | Array | [all] | √ | 选择性展示工具栏，可选内容如下<sup>[toolbars]<sup> |
-| toolbarsExclude<sup>v1.1.4</sup> | Array | [] | √ | 选择性不展示工具栏，内容同`toolbars` |
+| toolbarsExclude | Array | [] | √ | 选择性不展示工具栏，内容同`toolbars` |
 | prettier | Boolean | true | x | 是否启用 prettier 优化 md 内容 |
 | prettierCDN | String | [standalone](https://unpkg.com/prettier@2.3.2/standalone.js) | x |  |
 | prettierMDCDN | String | [parser-markdown](https://unpkg.com/prettier@2.3.2/parser-markdown.js) | x |  |
-| editorName<sup>v1.3.2delete</sup> | String | 'editor' | x | 当在同一页面放置了多个编辑器，最好提供该属性以区别某些带有 ID 的内容，v1.3.2 后版本编辑器自动生成唯一 ID，不再需要手动设置 |
-| cropperCss<sup>v1.2.0</sup> | String | [cropper.min.css](https://cdn.jsdelivr.net/npm/cropperjs@1.5.12/dist/cropper.min.css) | x | cropper css url |
-| cropperJs<sup>v1.2.0</sup> | String | [cropper.min.js](https://cdn.jsdelivr.net/npm/cropperjs@1.5.12/dist/cropper.min.js) | x | cropper js url |
-| iconfontJs<sup>v1.3.2</sup> | String | [iconfont](https://at.alicdn.com/t/font_2605852_khjf435c7th.js) | x | 矢量图标链接，无外网时，下载 js 到内网，提供链接 |
+| cropperCss | String | [cropper.min.css](https://cdn.jsdelivr.net/npm/cropperjs@1.5.12/dist/cropper.min.css) | x | cropper css url |
+| cropperJs | String | [cropper.min.js](https://cdn.jsdelivr.net/npm/cropperjs@1.5.12/dist/cropper.min.js) | x | cropper js url |
+| iconfontJs | String | [iconfont](https://at.alicdn.com/t/font_2605852_khjf435c7th.js) | x | 矢量图标链接，无外网时，下载 js 到内网，提供链接 |
 
 > 响应式=x，该属性只支持设置，不支持响应式更新~
 
@@ -214,12 +168,10 @@ async onUploadImg(files: FileList, callback: (urls: string[]) => void) {
       buttonOK: '确定',
       buttonUpload: '上传'
     },
-    // v1.2.0新增
     clipModalTips: {
       title: '裁剪图片上传',
       buttonUpload: '上传'
     },
-    // v1.1.4新增
     copyCode: {
       text: '复制代码';
       tips: '已复制';
@@ -260,7 +212,7 @@ async onUploadImg(files: FileList, callback: (urls: string[]) => void) {
 | CTRL + Q         | 引用       | `> 引用`                         | √        |
 | CTRL + O         | 有序列表   | `1. 有序列表`                    | √        |
 | CTRL + L         | 链接       | `[链接](https://imbf.cc)`        | √        |
-| CTRL + T         | 表格       | `\|表格\|` 放弃开发（无法实现）  | x        |
+| CTRL + T         | 表格       | `\|表格\|` 后期开发              | x        |
 | CTRL + Z         | 撤回       | 触发编辑器内内容撤回，与系统无关 | √        |
 | CTRL + SHIFT + S | 删除线     | `~删除线~`                       | √        |
 | CTRL + SHIFT + U | 无序列表   | `- 无序列表`                     | √        |
@@ -289,22 +241,22 @@ async onUploadImg(files: FileList, callback: (urls: string[]) => void) {
 
 ### 5.3 组件：**Dropdown**
 
-源码：[传送门](https://github.com/imzbf/md-editor-v3/tree/master/MdEditor/components/Dropdown)
+源码：[传送门](https://github.com/imzbf/md-editor-rt/tree/main/MdEditor/components/Dropdown)
 
-- 下拉模块，主要用于下拉菜单使用。该组件将主插槽内容作为触发器，`overlay`插槽内容作为拉下展示内容，通过 vue 内置的`cloneVNode`方法克隆组件，以绑定扩展属性及事件，达到了不添加多余的节点的目的；
+- 下拉模块，主要用于下拉菜单使用。该组件将主插槽内容作为触发器，`overlay`插槽内容作为拉下展示内容，通过`cloneElement`方法克隆组件，以绑定扩展属性及事件，达到了不添加多余的节点的目的；
 
-- 内容插入通过 vue 内置的`Teleport`组件，将内容插入到编辑器内部（预设的地方），不会污染全局结构；
+- 内容插入通过 **react-dom** 内置的`createPortal`方法，将内容插入到编辑器内部（预设的地方），不会污染全局结构；
 
-- 在卸载对应组件时，`onUnmounted`方法会主动卸载绑定事件。
+- 在卸载对应组件时，`useEffect`会主动卸载绑定事件。
 
 ### 5.4 组件：Modal
 
-源码：[传送门](https://github.com/imzbf/md-editor-v3/tree/master/MdEditor/components/Modal)
+源码：[传送门](https://github.com/imzbf/md-editor-rt/tree/main/MdEditor/components/Modal)
 
 - 作为弹窗模块使用，实现与**Dropdown**大为相似，默认了显示动画及居中位置；
 - 这里加入了一个新特性，在显示弹窗时，可以通过点击弹窗标题移动弹框。
 
-封装的移动元素[代码](https://github.com/imzbf/md-editor-v3/blob/master/MdEditor/utils/dom.ts)，优化了正确解绑事件，该方法针对了触发器实现，单一窗口并不通用。
+封装的移动元素[代码](https://github.com/imzbf/md-editor-rt/blob/main/MdEditor/utils/dom.ts)，优化了正确解绑事件，该方法针对了触发器实现，单一窗口并不通用。
 
 ### 5.5 主题模式
 
@@ -320,4 +272,4 @@ async onUploadImg(files: FileList, callback: (urls: string[]) => void) {
 
 1. 邮箱：zbfcqtl@163.com
 2. 博客留言：[imbf.cc](https://imbf.cc)
-3. issue 管理：[github issues](https://github.com/imzbf/md-editor-v3/issues)
+3. issue 管理：[github issues](https://github.com/imzbf/md-editor-rt/issues)

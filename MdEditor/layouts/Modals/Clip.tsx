@@ -12,7 +12,7 @@ interface ClipModalProp {
   ult: StaticTextDefaultValue;
   onCancel: () => void;
   onOk: (data?: any) => void;
-  to: HTMLElement;
+  to: HTMLElement | undefined;
 }
 
 let cropper: any = null;

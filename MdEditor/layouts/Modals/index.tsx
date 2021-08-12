@@ -9,7 +9,7 @@ interface ModalsProp {
   ult: StaticTextDefaultValue;
   onCancel: () => void;
   onOk: (data?: any) => void;
-  to: HTMLElement;
+  to: HTMLElement | undefined;
 }
 
 // 链接弹窗\图片弹窗\帮助弹窗
