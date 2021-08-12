@@ -17,7 +17,7 @@ export interface ToolbarProp {
   setting: SettingType;
   // 使用的语言设置
   ult: StaticTextDefaultValue;
-  updateSetting: (v: boolean, k: keyof SettingType) => void;
+  updateSetting: (k: keyof SettingType) => void;
 }
 
 const Toolbar = ({
@@ -72,7 +72,7 @@ const Toolbar = ({
     //
     if (screenfull.isEnabled) {
       screenfull.on('change', () => {
-        updateSetting(!setting.fullscreen, 'fullscreen');
+        updateSetting('fullscreen');
       });
     }
 
@@ -417,7 +417,7 @@ const Toolbar = ({
               className={`${prefix}-toolbar-item`}
               title={ult.toolbarTips?.pageFullscreen}
               onClick={() => {
-                updateSetting(!setting.pageFullScreen, 'pageFullScreen');
+                updateSetting('pageFullScreen');
               }}
             >
               <svg className={`${prefix}-icon`} aria-hidden="true">
@@ -449,7 +449,7 @@ const Toolbar = ({
               className={`${prefix}-toolbar-item`}
               title={ult.toolbarTips?.preview}
               onClick={() => {
-                updateSetting(!setting.preview, 'preview');
+                updateSetting('preview');
               }}
             >
               <svg className={`${prefix}-icon`} aria-hidden="true">
@@ -478,7 +478,7 @@ const Toolbar = ({
               className={`${prefix}-toolbar-item`}
               title={ult.toolbarTips?.htmlPreview}
               onClick={() => {
-                updateSetting(!setting.htmlPreview, 'htmlPreview');
+                updateSetting('htmlPreview');
               }}
             >
               <svg className={`${prefix}-icon`} aria-hidden="true">
