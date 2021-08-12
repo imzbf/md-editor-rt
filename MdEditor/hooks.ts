@@ -207,25 +207,29 @@ export const useKeyBoard = (props: any) => {
   useEffect(() => {
     if (!props.previewOnly) {
       window.addEventListener('keydown', keyDownHandler);
-
       document.addEventListener('paste', pasteHandler);
     }
-
-    // 注册保存事件
-    !props.previewOnly &&
-      bus.on({
-        name: 'onSave',
-        callback() {
-          if (props.onSave) {
-            props.onSave(props.modelValue);
-          }
-        }
-      });
-
     // 编辑器卸载时移除相应的监听事件
     return () => {
       window.removeEventListener('keydown', keyDownHandler);
       document.removeEventListener('paste', pasteHandler);
     };
   }, []);
+
+  useEffect(() => {
+    const callback = () => {
+      if (props.onSave) {
+        props.onSave(props.modelValue);
+      }
+    };
+
+    bus.remove('onSave', callback);
+
+    // 注册保存事件
+    !props.previewOnly &&
+      bus.on({
+        name: 'onSave',
+        callback
+      });
+  }, [props.modelValue]);
 };

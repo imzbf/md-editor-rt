@@ -43,7 +43,7 @@ const Content = (props: EditorContentProp) => {
   // 输入框
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
   // 输入框选中的内容
-  let selectedText = '';
+  const selectedText = useRef('');
   // 预览框
   const previewRef = useRef<HTMLDivElement>(null);
   // html代码预览框
@@ -81,7 +81,7 @@ const Content = (props: EditorContentProp) => {
   useEffect(() => {
     if (!previewOnly) {
       textAreaRef.current?.addEventListener('select', () => {
-        selectedText = window.getSelection()?.toString() || '';
+        selectedText.current = window.getSelection()?.toString() || '';
       });
 
       textAreaRef.current?.addEventListener('keypress', (event) => {
@@ -141,7 +141,7 @@ const Content = (props: EditorContentProp) => {
           onChange(
             directive2flag(
               direct,
-              selectedText,
+              selectedText.current,
               textAreaRef.current as HTMLTextAreaElement,
               params
             )
@@ -235,7 +235,7 @@ const Content = (props: EditorContentProp) => {
               value={props.value}
               onInput={(e) => {
                 // 先清空保存的选中内容，防止异常现象
-                selectedText = '';
+                selectedText.current = '';
 
                 // 触发更新
                 onChange((e.target as HTMLTextAreaElement).value);

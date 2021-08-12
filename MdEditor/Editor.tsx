@@ -148,11 +148,8 @@ export interface EditorProp {
   iconfontJs?: string;
 }
 
-// 生成唯一ID
-const editorId = `mev-${Math.random().toString(36).substr(3)}`;
-
 export const EditorContext = createContext({
-  editorId
+  editorId: ''
 });
 
 const Editor = (props: EditorProp) => {
@@ -175,6 +172,9 @@ const Editor = (props: EditorProp) => {
     cropperJs = cropperUrl.js
   } = props;
 
+  // 生成唯一ID
+  const [editorId] = useState(`mev-${Math.random().toString(36).substr(3)}`);
+
   useKeyBoard(props);
 
   // ----编辑器设置----
@@ -185,16 +185,16 @@ const Editor = (props: EditorProp) => {
     htmlPreview: preview ? false : htmlPreview
   });
 
-  const updateSetting = (v: any, k: keyof typeof setting) => {
+  const updateSetting = (k: keyof typeof setting) => {
     setSetting((settingN) => {
       const nextSetting = {
         ...settingN,
-        [k]: v
+        [k]: !settingN[k]
       } as SettingType;
 
-      if (k === 'preview' && settingN.preview) {
+      if (k === 'preview' && nextSetting.preview) {
         nextSetting.htmlPreview = false;
-      } else if (k === 'htmlPreview' && settingN.htmlPreview) {
+      } else if (k === 'htmlPreview' && nextSetting.htmlPreview) {
         nextSetting.preview = false;
       }
 
