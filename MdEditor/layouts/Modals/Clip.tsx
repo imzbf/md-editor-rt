@@ -12,7 +12,6 @@ interface ClipModalProp {
   ult: StaticTextDefaultValue;
   onCancel: () => void;
   onOk: (data?: any) => void;
-  to: HTMLElement | undefined;
 }
 
 let cropper: any = null;
@@ -74,7 +73,6 @@ export default (props: ClipModalProp) => {
       title={ult.clipModalTips?.title}
       visible={props.visible}
       onClosed={props.onCancel}
-      to={props.to}
     >
       <div className={`${prefix}-form-item ${prefix}-clip`}>
         <div className={`${prefix}-clip-main`}>

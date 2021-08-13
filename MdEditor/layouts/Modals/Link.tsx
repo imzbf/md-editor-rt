@@ -10,7 +10,6 @@ interface LinkModalProp {
   ult: StaticTextDefaultValue;
   onCancel: () => void;
   onOk: (data?: any) => void;
-  to: HTMLElement | undefined;
   onClip: () => void;
 }
 
@@ -56,7 +55,7 @@ export default (props: LinkModalProp) => {
   }, [props.type]);
 
   return (
-    <Modal title={title} visible={props.visible} onClosed={props.onCancel} to={props.to}>
+    <Modal title={title} visible={props.visible} onClosed={props.onCancel}>
       <div className={`${prefix}-form-item`}>
         <label className={`${prefix}-lable`} htmlFor={`link-desc-${editorId}`}>
           {ult.linkModalTips?.descLable}

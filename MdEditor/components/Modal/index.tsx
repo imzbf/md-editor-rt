@@ -9,7 +9,6 @@ export type ModalProps = Readonly<{
   visible?: boolean;
   width?: number;
   onClosed?: () => void;
-  to?: HTMLElement | undefined;
   children?: any;
 }>;
 

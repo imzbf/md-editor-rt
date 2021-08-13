@@ -21,13 +21,11 @@ interface ModalProp {
   trigger: 'hover' | 'click';
   overlay: string | number | ReactElement;
   visible: boolean;
-  to: HTMLElement | undefined;
   children?: string | number | ReactElement;
   onChange: (v: boolean) => void;
 }
 
 import { prefix } from '../../config';
-import { createPortal } from 'react-dom';
 
 const DropDown = (props: ModalProp) => {
   const HIDDEN_CLASS = `${prefix}-dropdown-hidden`;
@@ -131,7 +129,7 @@ const DropDown = (props: ModalProp) => {
   return (
     <>
       {trigger}
-      {props.to && createPortal(overlay, props.to)}
+      {overlay}
     </>
   );
 };
