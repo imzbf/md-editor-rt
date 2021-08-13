@@ -13,7 +13,7 @@ interface LinkModalProp {
   onClip: () => void;
 }
 
-export default (props: LinkModalProp) => {
+const LinkModal = (props: LinkModalProp) => {
   const { ult } = props;
   const { editorId } = useContext(EditorContext);
 
@@ -135,3 +135,5 @@ export default (props: LinkModalProp) => {
     </Modal>
   );
 };
+
+export default LinkModal;

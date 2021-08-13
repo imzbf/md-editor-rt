@@ -16,7 +16,7 @@ interface ClipModalProp {
 
 let cropper: any = null;
 
-export default (props: ClipModalProp) => {
+const ClipModal = (props: ClipModalProp) => {
   const { ult } = props;
 
   const uploadRef = useRef<HTMLInputElement>(null);
@@ -129,3 +129,5 @@ export default (props: ClipModalProp) => {
     </Modal>
   );
 };
+
+export default ClipModal;

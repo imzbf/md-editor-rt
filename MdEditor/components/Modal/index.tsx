@@ -12,7 +12,7 @@ export type ModalProps = Readonly<{
   children?: any;
 }>;
 
-export default (props: ModalProps) => {
+const Modal = (props: ModalProps) => {
   const { onClosed = () => {} } = props;
 
   const modalClass = useRef([`${prefix}-modal`]);
@@ -108,3 +108,5 @@ export default (props: ModalProps) => {
     </div>
   );
 };
+
+export default Modal;

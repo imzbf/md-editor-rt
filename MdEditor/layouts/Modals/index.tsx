@@ -11,8 +11,7 @@ interface ModalsProp {
   onOk: (data?: any) => void;
 }
 
-// 链接弹窗\图片弹窗\帮助弹窗
-export default (props: ModalsProp) => {
+const Modals = (props: ModalsProp) => {
   const [modelVisible, setModelVisible] = useState({
     link: false,
     clip: false
@@ -49,3 +48,6 @@ export default (props: ModalsProp) => {
     </>
   );
 };
+
+// 链接弹窗\图片弹窗\帮助弹窗
+export default Modals;
