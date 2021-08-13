@@ -153,11 +153,11 @@ const Content = (props: EditorContentProp) => {
 
   // ---预览代码---
   const html = useMemo(() => {
-    if (highlightInited) {
-      return marked(props.value);
-    } else {
-      return '';
-    }
+    // if (highlightInited) {
+    return marked(props.value);
+    // } else {
+    //   return '';
+    // }
   }, [props.value, highlightInited]);
 
   let clearScrollAuto = () => {};
