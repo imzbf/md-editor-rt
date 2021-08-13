@@ -13,7 +13,7 @@ yarn add md-editor-rt
 ### 1.1 基本使用
 
 ```js
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import Editor from 'md-editor-rt';
 import './index.less';
 
@@ -23,9 +23,26 @@ export default () => {
 };
 ```
 
-### 1.2 在 NextJs 中使用
+### 1.2 直接渲染内容
 
-### 1.3 图片上传
+这种方式会隐藏编辑器的工具栏和编辑区局，同时，也不会注册相应的绑定事件（例如：快捷键绑定）。
+
+```js
+import React, { useState } from 'react';
+import Editor from 'md-editor-rt';
+import './index.less';
+
+export default () => {
+  const [md, setMd] = useState('## title');
+  return <Editor modelValue={md} previewOnly />;
+};
+```
+
+### 1.3 在 NextJs 中使用
+
+`react`版本默认支持`ssr`，使用方式和上面一致。
+
+### 1.4 图片上传
 
 默认可以选择多张图片，支持截图粘贴板上传图片，支持复制网页图片粘贴上传。
 
@@ -55,21 +72,6 @@ async onUploadImg(files: FileList, callback: (urls: string[]) => void) {
 
   callback(res.map((item: any) => item.data.url));
 }
-```
-
-### 1.3 直接渲染内容
-
-这种方式会隐藏编辑器的工具栏和编辑区局，同时，也不会注册相应的绑定事件（例如：快捷键绑定）。
-
-```js
-import React, { useEffect, useState } from 'react';
-import Editor from 'md-editor-rt';
-import './index.less';
-
-export default () => {
-  const [md, setMd] = useState('');
-  return <Editor modelValue={md} previewOnly />;
-};
 ```
 
 效果即与本文档效果相同。
@@ -103,6 +105,7 @@ export default () => {
 | cropperCss | String | [cropper.min.css](https://cdn.jsdelivr.net/npm/cropperjs@1.5.12/dist/cropper.min.css) | x | cropper css url |
 | cropperJs | String | [cropper.min.js](https://cdn.jsdelivr.net/npm/cropperjs@1.5.12/dist/cropper.min.js) | x | cropper js url |
 | iconfontJs | String | [iconfont](https://at.alicdn.com/t/font_2605852_khjf435c7th.js) | x | 矢量图标链接，无外网时，下载 js 到内网，提供链接 |
+| editorId | String | random | x | 同页面存在两个编辑器，使用该属性区别，默认不需要设置，在`ssr`下（即使只有一个编辑器），最好手动提供该属性，防止报错提示服务端与客户端内容不一致问题（nextjs 中能复现） |
 
 > 响应式=x，该属性只支持设置，不支持响应式更新~
 
@@ -191,6 +194,7 @@ export default () => {
 | onSave | v:String | 保存事件，快捷键与保存按钮均会触发 |
 | onUploadImg | files:FileList, callback:Function | 上传图片事件，弹窗会等待上传结果，务必将上传后的 urls 作为 callback 入参回传 |
 | onHtmlChanged | h:String | html 变化回调事件，用于获取预览 html 代码 |
+| onGetCatalog | list: HeadList[] | 获取目录结构，扁平结构 |
 
 <br>
 
