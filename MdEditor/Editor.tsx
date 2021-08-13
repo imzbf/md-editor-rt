@@ -100,6 +100,11 @@ export type StaticTextDefaultKey = keyof StaticTextDefault;
 
 export type ToolbarNames = keyof ToolbarTips;
 
+export interface HeadList {
+  text: string;
+  level: 1 | 2 | 3 | 4 | 5 | 6;
+}
+
 export interface EditorProp {
   modelValue: string;
   // 主题，默认light
@@ -148,6 +153,8 @@ export interface EditorProp {
   iconfontJs?: string;
   // 编辑器唯一标识
   editorId?: string;
+  // 获取目录结构
+  onGetCatalog?: (list: HeadList[]) => void;
 }
 
 export const EditorContext = createContext({
@@ -335,6 +342,7 @@ const Editor = (props: EditorProp) => {
           ult={usedLanguageText}
           historyLength={props.historyLength}
           onHtmlChanged={props.onHtmlChanged}
+          onGetCatalog={props.onGetCatalog}
         />
       </div>
     </EditorContext.Provider>
