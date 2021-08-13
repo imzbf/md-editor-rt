@@ -146,6 +146,8 @@ export interface EditorProp {
   cropperJs?: string;
   // 图标
   iconfontJs?: string;
+  // 编辑器唯一标识
+  editorId?: string;
 }
 
 export const EditorContext = createContext({
@@ -169,11 +171,9 @@ const Editor = (props: EditorProp) => {
     language = 'zh-CN',
     languageUserDefined = [],
     cropperCss = cropperUrl.css,
-    cropperJs = cropperUrl.js
+    cropperJs = cropperUrl.js,
+    editorId = `mev-${Math.random().toString(36).substr(3)}`
   } = props;
-
-  // 生成唯一ID
-  const [editorId] = useState(`mev-${Math.random().toString(36).substr(3)}`);
 
   useKeyBoard(props);
 
