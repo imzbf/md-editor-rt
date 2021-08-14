@@ -2,7 +2,7 @@ import React, { useEffect, useMemo, useRef, useState } from 'react';
 import marked from 'marked';
 import copy from 'copy-to-clipboard';
 import { prefix } from '../../config';
-import { SettingType, StaticTextDefaultValue } from '../../Editor';
+import { HeadList, SettingType, StaticTextDefaultValue } from '../../Editor';
 import bus from '../../utils/event-bus';
 import {
   ToolDirective,
@@ -24,7 +24,10 @@ export type EditorContentProp = Readonly<{
   historyLength?: number;
   onChange?: (v: string) => void;
   onHtmlChanged?: (h: string) => void;
+  onGetCatalog?: (list: HeadList[]) => void;
 }>;
+
+let clearScrollAuto = () => {};
 
 const Content = (props: EditorContentProp) => {
   // ID
@@ -35,7 +38,8 @@ const Content = (props: EditorContentProp) => {
     ult,
     hljs = null,
     onChange = () => {},
-    onHtmlChanged = () => {}
+    onHtmlChanged = () => {},
+    onGetCatalog = () => {}
   } = props;
 
   const [highlightInited, setHighlightInited] = useState<boolean>(hljs !== null);
@@ -49,14 +53,19 @@ const Content = (props: EditorContentProp) => {
   // html代码预览框
   const htmlRef = useRef<HTMLDivElement>(null);
 
-  if (hljs) {
-    // 提供了hljs，在创建阶段即完成设置
-    marked.setOptions({
-      highlight(code) {
-        return hljs.highlightAuto(code).value;
-      }
-    });
-  }
+  // 标题获取
+  let count = 0;
+  const headstemp: HeadList[] = [];
+  const renderer = new marked.Renderer();
+  renderer.heading = (text, level) => {
+    headstemp.push({ text, level });
+    count++;
+    return `<h${level} id="heading-${count}"><span class="h-text">${text}</span></h${level}>`;
+  };
+
+  marked.setOptions({
+    renderer
+  });
 
   // 向页面代码块注入复制按钮
   const initCopyEntry = () => {
@@ -78,7 +87,40 @@ const Content = (props: EditorContentProp) => {
       });
   };
 
+  const highlightLoad = () => {
+    marked.setOptions({
+      highlight(code) {
+        return window.hljs.highlightAuto(code).value;
+      }
+    });
+
+    setHighlightInited(true);
+  };
+
   useEffect(() => {
+    let highlightLink: HTMLLinkElement;
+    let highlightScript: HTMLScriptElement;
+
+    if (hljs) {
+      // 提供了hljs，在创建阶段即完成设置
+      marked.setOptions({
+        highlight(code) {
+          return hljs.highlightAuto(code).value;
+        }
+      });
+    } else {
+      highlightLink = document.createElement('link');
+      highlightLink.rel = 'stylesheet';
+      highlightLink.href = highlight.css;
+
+      highlightScript = document.createElement('script');
+      highlightScript.src = highlight.js;
+      highlightScript.onload = highlightLoad;
+
+      document.head.appendChild(highlightLink);
+      document.body.appendChild(highlightScript);
+    }
+
     if (!previewOnly) {
       textAreaRef.current?.addEventListener('select', () => {
         selectedText.current = window.getSelection()?.toString() || '';
@@ -149,21 +191,29 @@ const Content = (props: EditorContentProp) => {
         }
       });
     }
+
+    return () => {
+      if (!props.hljs) {
+        document.head.removeChild(highlightLink);
+        document.body.removeChild(highlightScript);
+      }
+    };
   }, []);
 
   // ---预览代码---
   const html = useMemo(() => {
-    if (highlightInited) {
-      return marked(props.value);
-    } else {
-      return '';
-    }
+    // if (highlightInited) {
+    return marked(props.value);
+    // } else {
+    //   return '';
+    // }
   }, [props.value, highlightInited]);
 
-  let clearScrollAuto = () => {};
   useEffect(() => {
     // 变化时调用变化事件
     onHtmlChanged(html);
+    // 传递标题
+    onGetCatalog(headstemp);
 
     // 更新完毕后判断是否需要重新绑定滚动事件
     if (props.setting.preview && !previewOnly) {
@@ -178,16 +228,6 @@ const Content = (props: EditorContentProp) => {
   }, [html]);
   // ---end---
 
-  const highlightLoad = () => {
-    marked.setOptions({
-      highlight(code) {
-        return window.hljs.highlightAuto(code).value;
-      }
-    });
-
-    setHighlightInited(true);
-  };
-
   useEffect(() => {
     // 分栏发生变化时，显示分栏时注册同步滚动，隐藏是清除同步滚动
     if (props.setting.preview && !previewOnly) {
@@ -200,28 +240,6 @@ const Content = (props: EditorContentProp) => {
       clearScrollAuto();
     }
   }, [props.setting.preview]);
-
-  useEffect(() => {
-    const highlightLink = document.createElement('link');
-    highlightLink.rel = 'stylesheet';
-    highlightLink.href = highlight.css;
-
-    const highlightScript = document.createElement('script');
-    highlightScript.src = highlight.js;
-    highlightScript.onload = highlightLoad;
-
-    if (!props.hljs) {
-      document.head.appendChild(highlightLink);
-      document.body.appendChild(highlightScript);
-    }
-
-    return () => {
-      if (!props.hljs) {
-        document.head.removeChild(highlightLink);
-        document.body.removeChild(highlightScript);
-      }
-    };
-  }, []);
 
   useHistory(props);
 

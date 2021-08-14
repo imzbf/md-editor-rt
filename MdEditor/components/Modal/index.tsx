@@ -1,6 +1,5 @@
-import React, { useEffect, useRef, useState, ReactElement, useLayoutEffect } from 'react';
+import React, { useRef, useState, ReactElement, useLayoutEffect } from 'react';
 import cn from 'classnames';
-import { createPortal } from 'react-dom';
 import { prefix } from '../../config';
 import { keyMove } from '../../utils/dom';
 import './style.less';
@@ -10,12 +9,11 @@ export type ModalProps = Readonly<{
   visible?: boolean;
   width?: number;
   onClosed?: () => void;
-  to?: HTMLElement;
   children?: any;
 }>;
 
-export default (props: ModalProps) => {
-  const { onClosed = () => {}, to = document.body } = props;
+const Modal = (props: ModalProps) => {
+  const { onClosed = () => {} } = props;
 
   const modalClass = useRef([`${prefix}-modal`]);
   const modalRef = useRef<HTMLDivElement>(null);
@@ -26,18 +24,27 @@ export default (props: ModalProps) => {
     top: '0px'
   });
 
-  useEffect(() => {
-    const keyMoveClear = keyMove(
-      modalHeaderRef.current as HTMLElement,
-      (left: number, top: number) => {
-        setInitPos({
-          left: left + 'px',
-          top: top + 'px'
-        });
-      }
-    );
-    keyMoveClear();
-  }, []);
+  const [inited, setInited] = useState(false);
+
+  useLayoutEffect(() => {
+    let keyMoveClear = () => {};
+
+    if (inited) {
+      setTimeout(() => {
+        keyMoveClear = keyMove(
+          modalHeaderRef.current as HTMLElement
+          // (left: number, top: number) => {
+          //   setInitPos({
+          //     left: left + 'px',
+          //     top: top + 'px'
+          //   });
+          // }
+        );
+      });
+    }
+
+    return keyMoveClear;
+  }, [inited]);
 
   useLayoutEffect(() => {
     const nVal = props.visible;
@@ -60,6 +67,8 @@ export default (props: ModalProps) => {
       setTimeout(() => {
         modalClass.current = modalClass.current.filter((item) => item !== 'zoom-in');
       }, 140);
+
+      !inited && setInited(true);
     } else {
       modalClass.current.push('zoom-out');
       setTimeout(() => {
@@ -68,8 +77,8 @@ export default (props: ModalProps) => {
     }
   }, [props.visible]);
 
-  return createPortal(
-    <div style={{ display: props.visible ? 'block' : 'none' }}>
+  return (
+    <div style={{ display: props.visible && inited ? 'block' : 'none' }}>
       <div className={`${prefix}-modal-mask`} onClick={onClosed} />
       <div
         className={cn(modalClass.current)}
@@ -96,7 +105,8 @@ export default (props: ModalProps) => {
         </div>
         <div className={`${prefix}-modal-body`}>{props.children}</div>
       </div>
-    </div>,
-    to
+    </div>
   );
 };
+
+export default Modal;

@@ -9,11 +9,9 @@ interface ModalsProp {
   ult: StaticTextDefaultValue;
   onCancel: () => void;
   onOk: (data?: any) => void;
-  to: HTMLElement;
 }
 
-// 链接弹窗\图片弹窗\帮助弹窗
-export default (props: ModalsProp) => {
+const Modals = (props: ModalsProp) => {
   const [modelVisible, setModelVisible] = useState({
     link: false,
     clip: false
@@ -46,8 +44,10 @@ export default (props: ModalsProp) => {
         visible={modelVisible.clip}
         onOk={props.onOk}
         onCancel={props.onCancel}
-        to={props.to}
       />
     </>
   );
 };
+
+// 链接弹窗\图片弹窗\帮助弹窗
+export default Modals;

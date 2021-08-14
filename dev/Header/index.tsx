@@ -12,14 +12,14 @@ export default (props: HeaderProp) => (
     <section className="container">
       <h1 className="project-name">md-editor-rt</h1>
       <p className="project-desc">
-        Markdown编辑器，react版本，使用jsx和typescript语法开发，支持切换主题、prettier美化文本等。
+        Markdown编辑器，React版本，支持切换主题、Prettier美化文本等，支持SSR，在NextJs中使用。
       </p>
       <p className="header-actions">
         <button className="btn btn-header">
           <a
             href="https://github.com/imzbf/md-editor-rt"
             target="_blank"
-            title="md-editor-v3"
+            title="md-editor-rt"
           >
             GitHub源码
           </a>

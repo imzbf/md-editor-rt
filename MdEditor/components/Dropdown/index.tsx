@@ -21,13 +21,11 @@ interface ModalProp {
   trigger: 'hover' | 'click';
   overlay: string | number | ReactElement;
   visible: boolean;
-  to: HTMLElement;
   children?: string | number | ReactElement;
   onChange: (v: boolean) => void;
 }
 
 import { prefix } from '../../config';
-import { createPortal } from 'react-dom';
 
 const DropDown = (props: ModalProp) => {
   const HIDDEN_CLASS = `${prefix}-dropdown-hidden`;
@@ -37,13 +35,13 @@ const DropDown = (props: ModalProp) => {
     overlayStyle: {}
   });
 
-  const triggerRef = useRef<HTMLElement>(document.body);
-  const overlayRef = useRef<HTMLElement>(document.body);
+  const triggerRef = useRef<HTMLElement>(null);
+  const overlayRef = useRef<HTMLElement>(null);
 
   const triggerHandler = (e: MouseEvent, type: 'click' | 'hover' = 'click') => {
     if (type === 'click') {
-      const triggerEle: HTMLElement = triggerRef.current;
-      const overlayEle: HTMLElement = overlayRef.current;
+      const triggerEle = triggerRef.current as HTMLElement;
+      const overlayEle = overlayRef.current as HTMLElement;
 
       const triggerInfo = triggerEle.getBoundingClientRect();
 
@@ -83,8 +81,8 @@ const DropDown = (props: ModalProp) => {
 
   // 点击非内容区域时触发关闭
   const hiddenHandler = (e: MouseEvent) => {
-    const triggerEle: HTMLElement = triggerRef.current;
-    const overlayEle: HTMLElement = overlayRef.current;
+    const triggerEle = triggerRef.current as HTMLElement;
+    const overlayEle = overlayRef.current as HTMLElement;
 
     if (
       !triggerEle.contains(e.target as HTMLElement) &&
@@ -131,7 +129,7 @@ const DropDown = (props: ModalProp) => {
   return (
     <>
       {trigger}
-      {createPortal(overlay, props.to)}
+      {overlay}
     </>
   );
 };

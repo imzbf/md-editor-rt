@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import screenfull from 'screenfull';
 import { StaticTextDefaultValue, ToolbarNames, SettingType } from '../../Editor';
 import { goto, ToolDirective } from '../../utils';
@@ -9,7 +9,7 @@ import Dropdown from '../../components/Dropdown';
 import Modals from '../Modals';
 
 export interface ToolbarProp {
-  editorId: string;
+  editorId?: string;
   // 工具栏选择显示
   toolbars: Array<ToolbarNames>;
   // 工具栏选择不显示
@@ -21,7 +21,6 @@ export interface ToolbarProp {
 }
 
 const Toolbar = ({
-  editorId,
   toolbars,
   toolbarsExclude,
   setting,
@@ -64,11 +63,7 @@ const Toolbar = ({
   const showBar = (name: ToolbarNames) =>
     toolbars.includes(name) && !toolbarsExclude.includes(name);
 
-  // 挂载位置
-  const to = useRef(document.body);
   useEffect(() => {
-    to.current = document.getElementById(editorId) as HTMLElement;
-
     //
     if (screenfull.isEnabled) {
       screenfull.on('change', () => {
@@ -156,7 +151,6 @@ const Toolbar = ({
                   title: v
                 }));
               }}
-              to={to.current}
               overlay={
                 <ul
                   className={`${prefix}-menu`}
@@ -525,7 +519,6 @@ const Toolbar = ({
             visible: false
           });
         }}
-        to={to.current}
       />
     </div>
   );
