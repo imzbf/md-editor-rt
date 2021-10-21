@@ -1,6 +1,6 @@
-import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
+import React, { useContext, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import Modal from '../../components/Modal';
-import { StaticTextDefaultValue } from '../../Editor';
+import { EditorContext, StaticTextDefaultValue } from '../../Editor';
 import { prefix } from '../../config';
 import { base642File } from '../../utils';
 import bus from '../../utils/event-bus';
@@ -18,7 +18,7 @@ let cropper: any = null;
 
 const ClipModal = (props: ClipModalProp) => {
   const { ult } = props;
-
+  const { editorId } = useContext(EditorContext);
   const uploadRef = useRef<HTMLInputElement>(null);
   const uploadImgRef = useRef<HTMLImageElement>(null);
 
@@ -108,6 +108,7 @@ const ClipModal = (props: ClipModalProp) => {
           onClick={() => {
             const cvs = cropper.getCroppedCanvas();
             bus.emit(
+              editorId,
               'uploadImage',
               [base642File(cvs.toDataURL('image/png'))],
               props.onOk

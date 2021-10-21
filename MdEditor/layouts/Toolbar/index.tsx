@@ -1,6 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import screenfull from 'screenfull';
-import { StaticTextDefaultValue, ToolbarNames, SettingType } from '../../Editor';
+import {
+  StaticTextDefaultValue,
+  ToolbarNames,
+  SettingType,
+  EditorContext
+} from '../../Editor';
 import { goto, ToolDirective } from '../../utils';
 import { prefix } from '../../config';
 import bus from '../../utils/event-bus';
@@ -27,6 +32,8 @@ const Toolbar = ({
   ult,
   updateSetting
 }: ToolbarProp) => {
+  const { editorId } = useContext(EditorContext);
+
   const [visible, setVisible] = useState({
     title: false,
     catalog: false
@@ -72,7 +79,7 @@ const Toolbar = ({
     }
 
     //
-    bus.on({
+    bus.on(editorId, {
       name: 'openModals',
       callback(type) {
         setModalData((nVal) => ({
@@ -359,7 +366,7 @@ const Toolbar = ({
               className={`${prefix}-toolbar-item`}
               title={ult.toolbarTips?.revoke}
               onClick={() => {
-                bus.emit('ctrlZ');
+                bus.emit(editorId, 'ctrlZ');
               }}
             >
               <svg className={`${prefix}-icon`} aria-hidden="true">
@@ -372,7 +379,7 @@ const Toolbar = ({
               className={`${prefix}-toolbar-item`}
               title={ult.toolbarTips?.next}
               onClick={() => {
-                bus.emit('ctrlShiftZ');
+                bus.emit(editorId, 'ctrlShiftZ');
               }}
             >
               <svg className={`${prefix}-icon`} aria-hidden="true">
@@ -385,7 +392,7 @@ const Toolbar = ({
               className={`${prefix}-toolbar-item`}
               title={ult.toolbarTips?.save}
               onClick={() => {
-                bus.emit('onSave');
+                bus.emit(editorId, 'onSave');
               }}
             >
               <svg className={`${prefix}-icon`} aria-hidden="true">

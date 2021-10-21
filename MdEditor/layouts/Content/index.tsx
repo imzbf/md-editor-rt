@@ -177,7 +177,7 @@ const Content = (props: EditorContentProp) => {
       });
 
       // 注册指令替换内容事件
-      bus.on({
+      bus.on(editorId, {
         name: 'replace',
         callback(direct: ToolDirective, params: any) {
           onChange(

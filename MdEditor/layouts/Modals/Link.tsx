@@ -41,7 +41,12 @@ const LinkModal = (props: LinkModalProp) => {
   const uploadRef = useRef<HTMLInputElement>(null);
 
   const uploadHandler = () => {
-    bus.emit('uploadImage', (uploadRef.current as HTMLInputElement).files, props.onOk);
+    bus.emit(
+      editorId,
+      'uploadImage',
+      (uploadRef.current as HTMLInputElement).files,
+      props.onOk
+    );
     // 清空内容，否则无法再次选取同一张图片
     (uploadRef.current as HTMLInputElement).value = '';
   };
