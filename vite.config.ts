@@ -30,7 +30,7 @@ export default ({ mode }: ConfigEnv): UserConfigExport => {
       reactRefresh(),
       mode === 'production' &&
         dts({
-          include: './MdEditor/*'
+          include: './MdEditor/Editor.tsx'
         })
     ],
     css: {
@@ -62,6 +62,6 @@ export default ({ mode }: ConfigEnv): UserConfigExport => {
               }
             }
           }
-        : { outDir: path.resolve(__dirname, 'docs') }
+        : {}
   };
 };

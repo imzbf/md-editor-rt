@@ -21,7 +21,7 @@ export default (props: { theme: Theme }) => {
   return (
     <div className="doc">
       <div className="container">
-        <Editor theme={props.theme} modelValue={mdText} previewOnly />
+        <Editor editorId="md-doc" theme={props.theme} modelValue={mdText} previewOnly />
       </div>
     </div>
   );

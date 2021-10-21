@@ -139,7 +139,7 @@ export interface EditorProp {
   // 工具栏选择显示
   toolbars?: Array<ToolbarNames>;
   // 工具栏选择不显示
-  toolbarsExclude?: Array<ToolbarNames> | [];
+  toolbarsExclude?: Array<ToolbarNames>;
   // 格式化md，默认true
   prettier?: boolean;
   prettierCDN?: string;
@@ -270,14 +270,14 @@ const Editor = (props: EditorProp) => {
 
     // 监听上传图片
     !previewOnly &&
-      bus.on({
+      bus.on(editorId, {
         name: 'uploadImage',
         callback(files: FileList, cb: () => void) {
           const insertHanlder = (urls: Array<string>) => {
             urls.forEach((url) => {
               // 利用事件循环机制，保证两次插入分开进行
               setTimeout(() => {
-                bus.emit('replace', 'image', {
+                bus.emit(editorId, 'replace', 'image', {
                   desc: '',
                   url
                 });

@@ -1,13 +1,20 @@
 import bus from './utils/event-bus';
 import { ToolDirective } from './utils';
-import { ToolbarNames } from './Editor';
+import { EditorProp, ToolbarNames } from './Editor';
 import { useEffect } from 'react';
 
-export const useKeyBoard = (props: any) => {
+export const useKeyBoard = (props: EditorProp) => {
+  const { editorId = '' } = props;
+
   const initFunc = (name: ToolbarNames) =>
     props.toolbars?.includes(name) && !props.toolbarsExclude?.includes(name);
 
   const keyDownHandler = (event: KeyboardEvent) => {
+    // 只处理是编辑框内的内容
+    if (event.target !== document.querySelector(`#${editorId}-textarea`)) {
+      return;
+    }
+
     // 按键操作是否会替换内容
     // let toReplaceValue = false;
 
@@ -18,12 +25,12 @@ export const useKeyBoard = (props: any) => {
           if (event.shiftKey) {
             // 删除线
             if (initFunc('strikeThrough')) {
-              bus.emit('replace', 'strikeThrough' as ToolDirective);
+              bus.emit(editorId, 'replace', 'strikeThrough' as ToolDirective);
             }
           } else {
             // 触发保存事件
             if (initFunc('save')) {
-              bus.emit('onSave', props.modelValue);
+              bus.emit(editorId, 'onSave', props.modelValue);
               event.preventDefault();
             }
           }
@@ -31,7 +38,7 @@ export const useKeyBoard = (props: any) => {
         }
         case 'KeyB': {
           if (initFunc('bold')) {
-            bus.emit('replace', 'bold' as ToolDirective);
+            bus.emit(editorId, 'replace', 'bold' as ToolDirective);
             event.preventDefault();
           }
           break;
@@ -40,13 +47,13 @@ export const useKeyBoard = (props: any) => {
           if (event.shiftKey) {
             // ctrl+shift+u触发无需列表
             if (initFunc('unorderedList')) {
-              bus.emit('replace', 'unorderedList' as ToolDirective);
+              bus.emit(editorId, 'replace', 'unorderedList' as ToolDirective);
               event.preventDefault();
             }
           } else {
             // ctrl+u触发下划线
             if (initFunc('underline')) {
-              bus.emit('replace', 'underline' as ToolDirective);
+              bus.emit(editorId, 'replace', 'underline' as ToolDirective);
               event.preventDefault();
             }
           }
@@ -57,12 +64,12 @@ export const useKeyBoard = (props: any) => {
           if (event.shiftKey) {
             // ctrl+shift+l触发图片链接
             if (initFunc('image')) {
-              bus.emit('openModals', 'img');
+              bus.emit(editorId, 'openModals', 'image');
               event.preventDefault();
             }
           } else {
             if (initFunc('italic')) {
-              bus.emit('replace', 'italic' as ToolDirective);
+              bus.emit(editorId, 'replace', 'italic' as ToolDirective);
               event.preventDefault();
             }
           }
@@ -71,68 +78,68 @@ export const useKeyBoard = (props: any) => {
         }
         case 'Digit1': {
           if (initFunc('title')) {
-            bus.emit('replace', 'h1' as ToolDirective);
+            bus.emit(editorId, 'replace', 'h1' as ToolDirective);
             event.preventDefault();
           }
           break;
         }
         case 'Digit2': {
           if (initFunc('title')) {
-            bus.emit('replace', 'h2' as ToolDirective);
+            bus.emit(editorId, 'replace', 'h2' as ToolDirective);
             event.preventDefault();
           }
           break;
         }
         case 'Digit3': {
           if (initFunc('title')) {
-            bus.emit('replace', 'h3' as ToolDirective);
+            bus.emit(editorId, 'replace', 'h3' as ToolDirective);
             event.preventDefault();
           }
           break;
         }
         case 'Digit4': {
           if (initFunc('title')) {
-            bus.emit('replace', 'h4' as ToolDirective);
+            bus.emit(editorId, 'replace', 'h4' as ToolDirective);
             event.preventDefault();
           }
           break;
         }
         case 'Digit5': {
           if (initFunc('title')) {
-            bus.emit('replace', 'h5' as ToolDirective);
+            bus.emit(editorId, 'replace', 'h5' as ToolDirective);
             event.preventDefault();
           }
           break;
         }
         case 'Digit6': {
           if (initFunc('title')) {
-            bus.emit('replace', 'h6' as ToolDirective);
+            bus.emit(editorId, 'replace', 'h6' as ToolDirective);
             event.preventDefault();
           }
           break;
         }
         case 'ArrowUp': {
           if (initFunc('sup')) {
-            bus.emit('replace', 'sup' as ToolDirective);
+            bus.emit(editorId, 'replace', 'sup' as ToolDirective);
             event.preventDefault();
           }
           break;
         }
         case 'ArrowDown': {
           if (initFunc('sub')) {
-            bus.emit('replace', 'sub' as ToolDirective);
+            bus.emit(editorId, 'replace', 'sub' as ToolDirective);
             event.preventDefault();
           }
           break;
         }
         case 'KeyQ': {
-          bus.emit('replace', 'quote' as ToolDirective);
+          bus.emit(editorId, 'replace', 'quote' as ToolDirective);
           event.preventDefault();
           break;
         }
         case 'KeyO': {
           if (initFunc('orderedList')) {
-            bus.emit('replace', 'orderedList' as ToolDirective);
+            bus.emit(editorId, 'replace', 'orderedList' as ToolDirective);
             event.preventDefault();
           }
           break;
@@ -141,22 +148,27 @@ export const useKeyBoard = (props: any) => {
           if (event.shiftKey) {
             // ctrl+shift+c触发块级代码
             if (initFunc('code')) {
-              bus.emit('replace', 'code' as ToolDirective);
+              bus.emit(editorId, 'replace', 'code' as ToolDirective);
               event.preventDefault();
             }
           } else if (event.altKey) {
             // ctrl+alt+c触发行内代码
             if (initFunc('codeRow')) {
-              bus.emit('replace', 'codeRow' as ToolDirective);
+              bus.emit(editorId, 'replace', 'codeRow' as ToolDirective);
               event.preventDefault();
             }
+          } else {
+            // 接管复制快捷键
+            event.preventDefault();
+            bus.emit(editorId, 'replace', 'ctrlC');
+            break;
           }
           break;
         }
         case 'KeyL': {
           // ctrl+l触发普通链接
           if (initFunc('link')) {
-            bus.emit('openModals', 'link');
+            bus.emit(editorId, 'openModals', 'link');
             event.preventDefault();
           }
           break;
@@ -165,13 +177,13 @@ export const useKeyBoard = (props: any) => {
           if (event.shiftKey) {
             // ctrl+shift+z 前进一步
             if (initFunc('next')) {
-              bus.emit('ctrlShiftZ');
+              bus.emit(editorId, 'ctrlShiftZ');
               event.preventDefault();
             }
           } else {
             // ctrl+z 后退一步
             if (initFunc('revoke')) {
-              bus.emit('ctrlZ');
+              bus.emit(editorId, 'ctrlZ');
               event.preventDefault();
             }
           }
@@ -182,12 +194,40 @@ export const useKeyBoard = (props: any) => {
           // ctrl+shift+f 美化内容
           if (event.shiftKey) {
             if (initFunc('prettier')) {
-              bus.emit('replace', 'prettier');
+              bus.emit(editorId, 'replace', 'prettier');
               event.preventDefault();
             }
           }
           break;
         }
+        case 'KeyT': {
+          // ctrl+shift+alt+t 新增表格
+          if (event.altKey && event.shiftKey) {
+            if (initFunc('table')) {
+              bus.emit(editorId, 'replace', 'table');
+              event.preventDefault();
+            }
+          }
+          break;
+        }
+        case 'KeyX': {
+          bus.emit(editorId, 'replace', 'ctrlX');
+          event.preventDefault();
+          break;
+        }
+        case 'KeyD': {
+          event.preventDefault();
+          bus.emit(editorId, 'replace', 'ctrlD');
+          break;
+        }
+      }
+    } else if (event.code === 'Tab') {
+      event.preventDefault();
+      // 缩进
+      if (event.shiftKey) {
+        bus.emit(editorId, 'replace', 'shiftTab');
+      } else {
+        bus.emit(editorId, 'replace', 'tab');
       }
     }
   };
@@ -198,7 +238,7 @@ export const useKeyBoard = (props: any) => {
       const file = e.clipboardData.files[0];
 
       if (/image\/.*/.test(file.type)) {
-        bus.emit('uploadImage', [file]);
+        bus.emit(editorId, 'uploadImage', [file]);
         e.preventDefault();
       }
     }
@@ -217,19 +257,22 @@ export const useKeyBoard = (props: any) => {
   }, []);
 
   useEffect(() => {
+    // 每次更新都重新注册save监听
+    if (props.previewOnly) {
+      return;
+    }
+
     const callback = () => {
       if (props.onSave) {
         props.onSave(props.modelValue);
       }
     };
 
-    bus.remove('onSave', callback);
-
+    bus.remove(editorId, 'onSave', callback);
     // 注册保存事件
-    !props.previewOnly &&
-      bus.on({
-        name: 'onSave',
-        callback
-      });
+    bus.on(editorId, {
+      name: 'onSave',
+      callback
+    });
   }, [props.modelValue]);
 };

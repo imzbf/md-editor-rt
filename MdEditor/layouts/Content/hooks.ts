@@ -50,7 +50,7 @@ export const useHistory = (props: EditorContentProp) => {
   }, [props.value]);
 
   useEffect(() => {
-    bus.on({
+    bus.on(props.editorId, {
       name: 'ctrlZ',
       callback() {
         setHistory({
@@ -63,7 +63,7 @@ export const useHistory = (props: EditorContentProp) => {
       }
     });
 
-    bus.on({
+    bus.on(props.editorId, {
       name: 'ctrlShiftZ',
       callback() {
         setHistory({
