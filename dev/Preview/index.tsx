@@ -35,6 +35,7 @@ export default ({ theme }: { theme: Theme }) => {
         <Editor
           theme={theme}
           modelValue={md}
+          editorId="md-editor-preview"
           onSave={(v) => {
             localStorage.setItem(SAVE_KEY, v);
           }}

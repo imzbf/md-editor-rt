@@ -50,7 +50,7 @@ const Toolbar = ({
 
   // 触发器
   const emitHandler = (direct: ToolDirective, params?: any) => {
-    bus.emit('replace', direct, params);
+    bus.emit(editorId, 'replace', direct, params);
   };
 
   // 触发全屏

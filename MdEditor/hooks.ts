@@ -258,6 +258,10 @@ export const useKeyBoard = (props: EditorProp) => {
 
   useEffect(() => {
     // 每次更新都重新注册save监听
+    if (props.previewOnly) {
+      return;
+    }
+
     const callback = () => {
       if (props.onSave) {
         props.onSave(props.modelValue);
@@ -265,12 +269,10 @@ export const useKeyBoard = (props: EditorProp) => {
     };
 
     bus.remove(editorId, 'onSave', callback);
-
     // 注册保存事件
-    !props.previewOnly &&
-      bus.on(editorId, {
-        name: 'onSave',
-        callback
-      });
+    bus.on(editorId, {
+      name: 'onSave',
+      callback
+    });
   }, [props.modelValue]);
 };
