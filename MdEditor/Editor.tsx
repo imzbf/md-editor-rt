@@ -108,16 +108,16 @@ export interface HeadList {
 export interface EditorProp {
   modelValue: string;
   // 主题，默认light
-  theme?: 'light' | 'dark';
+  theme: 'light' | 'dark';
   // 外层扩展类名
-  editorClass?: string;
+  editorClass: string;
   // 如果项目中有使用highlight.js或者没有外网访问权限，可以直接传递实例hljs并且手动导入css
   hljs?: Record<string, unknown>;
   // 可以手动提供highlight.js的cdn链接
-  highlightJs?: string;
-  highlightCss?: string;
+  highlightJs: string;
+  highlightCss: string;
   // 历史记录最长条数，默认10
-  historyLength?: number;
+  historyLength: number;
   // input回调事件
   onChange?: (v: string) => void;
   // 保存事件
@@ -125,36 +125,37 @@ export interface EditorProp {
   // 上传图片事件
   onUploadImg?: (files: FileList, callBack: (urls: string[]) => void) => void;
   // 是否页面内全屏，默认false
-  pageFullScreen?: boolean;
+  pageFullScreen: boolean;
   // 是否展开预览，默认true
-  preview?: boolean;
+  preview: boolean;
   // 是否展开html预览，默认false
-  htmlPreview?: boolean;
+  htmlPreview: boolean;
   // 仅预览模式，不显示toolbar和编辑框，默认false
-  previewOnly?: boolean;
+  previewOnly: boolean;
   // 预设语言名称
-  language?: StaticTextDefaultKey | string;
+  language: StaticTextDefaultKey | string;
   // 语言扩展，以标准的形式定义内容，设置language为key值即可替换
   languageUserDefined?: Array<{ [key: string]: StaticTextDefaultValue }>;
   // 工具栏选择显示
-  toolbars?: Array<ToolbarNames>;
+  toolbars: Array<ToolbarNames>;
   // 工具栏选择不显示
-  toolbarsExclude?: Array<ToolbarNames>;
+  toolbarsExclude: Array<ToolbarNames>;
   // 格式化md，默认true
-  prettier?: boolean;
-  prettierCDN?: string;
-  prettierMDCDN?: string;
+  prettier: boolean;
+  prettierCDN: string;
+  prettierMDCDN: string;
   // html变化事件
   onHtmlChanged?: (h: string) => void;
   // 图片裁剪
-  cropperCss?: string;
-  cropperJs?: string;
+  cropperCss: string;
+  cropperJs: string;
   // 图标
-  iconfontJs?: string;
+  iconfontJs: string;
   // 编辑器唯一标识
-  editorId?: string;
+  editorId: string;
   // 获取目录结构
   onGetCatalog?: (list: HeadList[]) => void;
+  tabWidth: number;
 }
 
 export const EditorContext = createContext({
@@ -163,23 +164,23 @@ export const EditorContext = createContext({
 
 const Editor = (props: EditorProp) => {
   const {
-    theme = 'light',
-    editorClass = '',
-    toolbars = allToolbar,
-    toolbarsExclude = [],
-    preview = true,
-    htmlPreview = false,
-    iconfontJs = iconfontUrl,
-    prettier = true,
-    prettierCDN = prettierUrl.main,
-    prettierMDCDN = prettierUrl.markdown,
+    theme,
+    editorClass,
+    toolbars,
+    toolbarsExclude,
+    preview,
+    htmlPreview,
+    iconfontJs,
+    prettier,
+    prettierCDN,
+    prettierMDCDN,
     previewOnly,
-    pageFullScreen = false,
-    language = 'zh-CN',
-    languageUserDefined = [],
-    cropperCss = cropperUrl.css,
-    cropperJs = cropperUrl.js,
-    editorId = `mev-${Math.random().toString(36).substr(3)}`
+    pageFullScreen,
+    language,
+    languageUserDefined,
+    cropperCss,
+    cropperJs,
+    editorId
   } = props;
 
   useKeyBoard(props);
@@ -353,23 +354,25 @@ Editor.defaultProps = {
   modelValue: '',
   theme: 'light',
   editorClass: '',
-  toolbars: allToolbar,
-  toolbarsExclude: [],
-  preview: true,
-  htmlPreview: false,
-  iconfontJs: iconfontUrl,
-  prettier: true,
-  prettierCDN: prettierUrl.main,
-  prettierMDCDN: prettierUrl.markdown,
-  pageFullScreen: false,
-  language: 'zh-CN',
-  languageUserDefined: [],
   highlightJs: highlightUrl.js,
   highlightCss: highlightUrl.css,
   historyLength: 10,
+  pageFullScreen: false,
+  preview: true,
+  htmlPreview: false,
   previewOnly: false,
+  language: 'zh-CN',
+  languageUserDefined: [],
+  toolbars: allToolbar,
+  toolbarsExclude: [],
+  prettier: true,
+  prettierCDN: prettierUrl.main,
+  prettierMDCDN: prettierUrl.markdown,
   cropperCss: cropperUrl.css,
-  cropperJs: cropperUrl.js
+  cropperJs: cropperUrl.js,
+  iconfontJs: iconfontUrl,
+  editorId: `mev-${Math.random().toString(36).substr(3)}`,
+  tabWidth: 2
 } as EditorProp;
 
 export default Editor;

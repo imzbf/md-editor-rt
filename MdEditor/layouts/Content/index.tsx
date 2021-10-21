@@ -15,7 +15,7 @@ import { useHistory } from './hooks';
 
 export type EditorContentProp = Readonly<{
   value: string;
-  hljs?: Record<string, any> | undefined;
+  hljs?: Record<string, any>;
   setting: SettingType;
   editorId: string;
   highlight: { js: string; css: string };
