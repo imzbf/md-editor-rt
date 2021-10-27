@@ -1,10 +1,10 @@
-import { useEffect } from 'react';
+import { useCallback, useEffect } from 'react';
 import { ToolbarProp } from './';
 
 export const useSreenfull = (props: ToolbarProp) => {
   let { screenfull } = props;
 
-  const fullScreenHandler = () => {
+  const fullScreenHandler = useCallback(() => {
     if (screenfull.isEnabled) {
       if (screenfull.isFullscreen) {
         screenfull.exit();
@@ -14,7 +14,7 @@ export const useSreenfull = (props: ToolbarProp) => {
     } else {
       console.error('browser does not support screenfull!');
     }
-  };
+  }, [screenfull]);
 
   const screenfullLoad = () => {
     // 复制实例

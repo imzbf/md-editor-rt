@@ -608,7 +608,7 @@ const Toolbar = (props: ToolbarProp) => {
     (uploadRef.current as HTMLInputElement).addEventListener('change', uploadHandler);
 
     // 非预览模式且未提供screenfull时请求cdn
-    if (!previewOnly && props.screenfull === null) {
+    if (!previewOnly && !props.screenfull) {
       const screenScript = document.createElement('script');
       screenScript.src = screenfullJs;
       screenScript.addEventListener('load', screenfullLoad);
