@@ -4,20 +4,19 @@ import { EditorProp, ToolbarNames } from './Editor';
 import { useEffect } from 'react';
 
 export const useKeyBoard = (props: EditorProp) => {
-  const { editorId = '' } = props;
+  const { editorId } = props;
 
   const initFunc = (name: ToolbarNames) =>
     props.toolbars?.includes(name) && !props.toolbarsExclude?.includes(name);
 
   const keyDownHandler = (event: KeyboardEvent) => {
     // 只处理是编辑框内的内容
-    if (event.target !== document.querySelector(`#${editorId}-textarea`)) {
+    if (event.target !== document.querySelector(`#${props.editorId}-textarea`)) {
       return;
     }
 
     // 按键操作是否会替换内容
     // let toReplaceValue = false;
-
     // macos中以meta键位配s键位为保存，windows中如此会被系统默认的事件替代
     if (event.ctrlKey || event.metaKey) {
       switch (event.code) {
@@ -249,10 +248,13 @@ export const useKeyBoard = (props: EditorProp) => {
       window.addEventListener('keydown', keyDownHandler);
       document.addEventListener('paste', pasteHandler);
     }
+
     // 编辑器卸载时移除相应的监听事件
     return () => {
-      window.removeEventListener('keydown', keyDownHandler);
-      document.removeEventListener('paste', pasteHandler);
+      if (!props.previewOnly) {
+        window.removeEventListener('keydown', keyDownHandler);
+        document.removeEventListener('paste', pasteHandler);
+      }
     };
   }, []);
 

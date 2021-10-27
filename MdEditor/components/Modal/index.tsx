@@ -1,4 +1,4 @@
-import React, { useRef, useState, ReactElement, useLayoutEffect } from 'react';
+import React, { useRef, useState, ReactElement, useEffect } from 'react';
 import cn from 'classnames';
 import { prefix } from '../../config';
 import { keyMove } from '../../utils/dom';
@@ -7,100 +7,132 @@ import './style.less';
 export type ModalProps = Readonly<{
   title?: string | ReactElement;
   visible?: boolean;
-  width?: number;
+  width?: string;
+  height?: string;
   onClosed?: () => void;
+  showAdjust?: boolean;
+  isFullscreen?: boolean;
+  onAdjust: (val: boolean) => void;
   children?: any;
 }>;
 
 const Modal = (props: ModalProps) => {
   const { onClosed = () => {} } = props;
-
+  const modalVisible = useRef(props.visible);
   const modalClass = useRef([`${prefix}-modal`]);
   const modalRef = useRef<HTMLDivElement>(null);
   const modalHeaderRef = useRef<HTMLDivElement>(null);
 
-  const [initPos, setInitPos] = useState({
-    left: '0px',
-    top: '0px'
+  const [state, setState] = useState({
+    initPos: {
+      left: '0px',
+      top: '0px'
+    },
+    historyPos: {
+      left: '0px',
+      top: '0px'
+    }
   });
 
-  const [inited, setInited] = useState(false);
-
-  useLayoutEffect(() => {
+  useEffect(() => {
     let keyMoveClear = () => {};
 
-    if (inited) {
-      setTimeout(() => {
-        keyMoveClear = keyMove(
-          modalHeaderRef.current as HTMLElement
-          // (left: number, top: number) => {
-          //   setInitPos({
-          //     left: left + 'px',
-          //     top: top + 'px'
-          //   });
-          // }
-        );
-      });
-    }
+    setTimeout(() => {
+      keyMoveClear = keyMove(
+        modalHeaderRef.current as HTMLDivElement,
+        (left: number, top: number) => {
+          state.initPos.left = left + 'px';
+          state.initPos.top = top + 'px';
+        }
+      );
+    }, 0);
 
     return keyMoveClear;
-  }, [inited]);
+  }, []);
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     const nVal = props.visible;
 
     if (nVal) {
       modalClass.current.push('zoom-in');
+      modalVisible.current = nVal;
 
-      setTimeout(() => {
-        const halfWidth = (modalRef.current as HTMLElement).offsetWidth / 2;
-        const halfHeight = (modalRef.current as HTMLElement).offsetHeight / 2;
+      const halfWidth = (modalRef.current as HTMLElement).offsetWidth / 2;
+      const halfHeight = (modalRef.current as HTMLElement).offsetHeight / 2;
+      const halfClientWidth = document.documentElement.clientWidth / 2;
+      const halfClientHeight = document.documentElement.clientHeight / 2;
 
-        const halfClientWidth = document.documentElement.clientWidth / 2;
-        const halfClientHeight = document.documentElement.clientHeight / 2;
+      state.initPos.left = halfClientWidth - halfWidth + 'px';
+      state.initPos.top = halfClientHeight - halfHeight + 'px';
 
-        setInitPos({
-          left: halfClientWidth - halfWidth + 'px',
-          top: halfClientHeight - halfHeight + 'px'
-        });
-      }, 0);
       setTimeout(() => {
         modalClass.current = modalClass.current.filter((item) => item !== 'zoom-in');
       }, 140);
-
-      !inited && setInited(true);
     } else {
       modalClass.current.push('zoom-out');
       setTimeout(() => {
         modalClass.current = modalClass.current.filter((item) => item !== 'zoom-out');
+        modalVisible.current = nVal;
       }, 130);
     }
   }, [props.visible]);
 
   return (
-    <div style={{ display: props.visible && inited ? 'block' : 'none' }}>
+    <div style={{ display: modalVisible.current ? 'block' : 'none' }}>
       <div className={`${prefix}-modal-mask`} onClick={onClosed} />
       <div
         className={cn(modalClass.current)}
         style={{
-          left: initPos.left,
-          top: initPos.top,
-          width: typeof props.width === 'number' ? `${props.width}px` : props.width
+          ...state.initPos,
+          width: props.width,
+          height: props.height
         }}
         ref={modalRef}
       >
         <div className={`${prefix}-modal-header`} ref={modalHeaderRef}>
           <div className={`${prefix}-modal-title`}>{props.title || ''}</div>
-          <div
-            className={`${prefix}-modal-close`}
-            onClick={(e) => {
-              e.stopPropagation();
-              props.onClosed && props.onClosed();
-            }}
-          >
-            <svg className={`${prefix}-icon`} aria-hidden="true">
-              <use xlinkHref="#icon-close" />
-            </svg>
+          <div className={`${prefix}-modal-func`}>
+            {props.showAdjust && (
+              <div
+                className={`${prefix}-modal-adjust`}
+                onClick={(e) => {
+                  e.stopPropagation();
+
+                  // 全屏时，保存上次位置
+                  if (!props.isFullscreen) {
+                    setState((_state) => ({
+                      historyPos: _state.initPos,
+                      initPos: {
+                        left: '0',
+                        top: '0'
+                      }
+                    }));
+                  } else {
+                    setState((_state) => ({
+                      ..._state,
+                      initPos: _state.historyPos
+                    }));
+                  }
+
+                  props.onAdjust(!props.isFullscreen);
+                }}
+              >
+                <svg className={`${prefix}-icon`} aria-hidden="true">
+                  <use xlinkHref={`#icon-${props.isFullscreen ? 'suoxiao' : 'fangda'}`} />
+                </svg>
+              </div>
+            )}
+            <div
+              className={`${prefix}-modal-close`}
+              onClick={(e) => {
+                e.stopPropagation();
+                props.onClosed && props.onClosed();
+              }}
+            >
+              <svg className={`${prefix}-icon`} aria-hidden="true">
+                <use xlinkHref="#icon-close" />
+              </svg>
+            </div>
           </div>
         </div>
         <div className={`${prefix}-modal-body`}>{props.children}</div>
@@ -108,5 +140,9 @@ const Modal = (props: ModalProps) => {
     </div>
   );
 };
+
+Modal.defaultProps = {
+  onAdjust() {}
+} as ModalProps;
 
 export default Modal;

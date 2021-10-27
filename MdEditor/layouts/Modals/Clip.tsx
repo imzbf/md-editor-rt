@@ -1,6 +1,6 @@
-import React, { useContext, useEffect, useLayoutEffect, useRef, useState } from 'react';
+import React, { useContext, useEffect, useMemo, useRef, useState } from 'react';
 import Modal from '../../components/Modal';
-import { EditorContext, StaticTextDefaultValue } from '../../Editor';
+import { EditorContext } from '../../Editor';
 import { prefix } from '../../config';
 import { base642File } from '../../utils';
 import bus from '../../utils/event-bus';
@@ -9,7 +9,6 @@ import './style.less';
 
 interface ClipModalProp {
   visible: boolean;
-  ult: StaticTextDefaultValue;
   onCancel: () => void;
   onOk: (data?: any) => void;
 }
@@ -17,47 +16,84 @@ interface ClipModalProp {
 let cropper: any = null;
 
 const ClipModal = (props: ClipModalProp) => {
-  const { ult } = props;
-  const { editorId } = useContext(EditorContext);
+  const editorConext = useContext(EditorContext);
+  const { editorId, usedLanguageText } = editorConext;
+  let { Cropper } = editorConext;
+
   const uploadRef = useRef<HTMLInputElement>(null);
   const uploadImgRef = useRef<HTMLImageElement>(null);
 
+  // 预览框
+  const previewTargetRef = useRef<HTMLImageElement>();
+
   const [data, setData] = useState({
+    cropperInited: false,
     imgSelected: false,
-    imgSrc: ''
+    imgSrc: '',
+    // 是否全屏
+    isFullscreen: false
   });
 
   useEffect(() => {
-    setTimeout(() => {
-      (uploadRef.current as HTMLInputElement).addEventListener('change', () => {
+    // 显示时构建实例及监听事件
+    if (props.visible && !data.cropperInited) {
+      Cropper = Cropper || window.Cropper;
+
+      // 直接定义onchange，防止创建新的实例时遗留事件
+      (uploadRef.current as HTMLInputElement).onchange = () => {
         const fileList = (uploadRef.current as HTMLInputElement).files || [];
+
+        // 切换模式
+        data.imgSelected = true;
 
         if (fileList?.length > 0) {
           const fileReader = new FileReader();
 
           fileReader.onload = (e: any) => {
-            setData({
-              imgSelected: true,
-              imgSrc: e.target.result
+            data.imgSrc = e.target.result;
+
+            cropper = new Cropper(uploadImgRef.current, {
+              viewMode: 2,
+              preview: `.${prefix}-clip-preview-target`
+              // aspectRatio: 16 / 9,
             });
           };
 
           fileReader.readAsDataURL(fileList[0]);
         }
-      });
-    }, 0);
+      };
+    }
+  }, [props.visible]);
 
-    // TODO 优化卸载清除监听
-  }, []);
+  useEffect(() => {
+    (previewTargetRef.current as HTMLImageElement)?.setAttribute('style', '');
+  }, [data.imgSelected]);
 
-  useLayoutEffect(() => {
-    if (data.imgSelected) {
-      cropper = new window.Cropper(uploadImgRef.current, {
+  useEffect(() => {
+    cropper?.destroy();
+    (previewTargetRef.current as HTMLImageElement)?.setAttribute('style', '');
+
+    if (uploadImgRef.current) {
+      cropper = new Cropper(uploadImgRef.current, {
         viewMode: 2,
         preview: `.${prefix}-clip-preview-target`
+        // aspectRatio: 16 / 9,
       });
     }
-  }, [data.imgSelected]);
+  }, [data.isFullscreen]);
+
+  // 弹出层宽度
+  const modalSize = useMemo(() => {
+    return data.isFullscreen
+      ? {
+          width: '100%',
+          height: '100%'
+        }
+      : {
+          width: '668px',
+          height: '421px'
+        };
+  }, [data.isFullscreen]);
 
   const reset = () => {
     cropper.destroy();
@@ -70,9 +106,15 @@ const ClipModal = (props: ClipModalProp) => {
 
   return (
     <Modal
-      title={ult.clipModalTips?.title}
+      title={usedLanguageText.clipModalTips?.title}
       visible={props.visible}
       onClosed={props.onCancel}
+      showAdjust
+      isFullscreen={data.isFullscreen}
+      onAdjust={(val) => {
+        data.isFullscreen = val;
+      }}
+      {...modalSize}
     >
       <div className={`${prefix}-form-item ${prefix}-clip`}>
         <div className={`${prefix}-clip-main`}>
@@ -117,7 +159,7 @@ const ClipModal = (props: ClipModalProp) => {
             reset();
           }}
         >
-          {ult.linkModalTips?.buttonOK}
+          {usedLanguageText.linkModalTips?.buttonOK}
         </button>
       </div>
       <input

@@ -11,12 +11,15 @@ import {
   iconfontUrl,
   prettierUrl,
   cropperUrl,
-  staticTextDefault
+  staticTextDefault,
+  screenfullUrl
 } from './config';
 
 import { prefix } from './config';
 
 import './styles/index.less';
+
+import '@vavt/markdown-theme/css/all.css';
 
 declare global {
   interface Window {
@@ -24,14 +27,8 @@ declare global {
     prettier: any;
     prettierPlugins: any;
     Cropper: any;
+    screenfull: any;
   }
-}
-
-export interface SettingType {
-  pageFullScreen: boolean;
-  fullscreen: boolean;
-  preview: boolean;
-  htmlPreview: boolean;
 }
 
 export interface ToolbarTips {
@@ -59,6 +56,8 @@ export interface ToolbarTips {
   preview?: string;
   htmlPreview?: string;
   github?: string;
+  '-'?: string;
+  '='?: string;
 }
 
 export interface StaticTextDefaultValue {
@@ -71,6 +70,11 @@ export interface StaticTextDefaultValue {
     h5?: string;
     h6?: string;
   };
+  imgTitleItem?: {
+    link: string;
+    upload: string;
+    clip2upload: string;
+  };
   linkModalTips?: {
     title?: string;
     descLable?: string;
@@ -78,8 +82,6 @@ export interface StaticTextDefaultValue {
     urlLable?: string;
     UrlLablePlaceHolder?: string;
     buttonOK?: string;
-    buttonUpload?: string;
-    buttonUploadClip?: string;
   };
   clipModalTips?: {
     title?: string;
@@ -100,86 +102,149 @@ export type StaticTextDefaultKey = keyof StaticTextDefault;
 
 export type ToolbarNames = keyof ToolbarTips;
 
+export interface SettingType {
+  pageFullScreen: boolean;
+  fullscreen: boolean;
+  preview: boolean;
+  htmlPreview: boolean;
+}
+
 export interface HeadList {
   text: string;
   level: 1 | 2 | 3 | 4 | 5 | 6;
 }
 
+export type PreviewThemes = 'default' | 'github' | 'vuepress';
+
+// marked heading方法
+export type MarkedHeading = (
+  text: string,
+  level: 1 | 2 | 3 | 4 | 5 | 6,
+  raw: string,
+  // marked@2.1.3
+  slugger: {
+    seen: { [slugValue: string]: number };
+    slug(
+      value: string,
+      options?: {
+        dryrun: boolean;
+      }
+    ): string;
+  }
+) => string;
+
 export interface EditorProp {
   modelValue: string;
   // 主题，默认light
-  theme?: 'light' | 'dark';
+  theme: 'light' | 'dark';
   // 外层扩展类名
-  editorClass?: string;
+  editorClass: string;
   // 如果项目中有使用highlight.js或者没有外网访问权限，可以直接传递实例hljs并且手动导入css
   hljs?: Record<string, unknown>;
   // 可以手动提供highlight.js的cdn链接
-  highlightJs?: string;
-  highlightCss?: string;
+  highlightJs: string;
+  highlightCss: string;
   // 历史记录最长条数，默认10
-  historyLength?: number;
+  historyLength: number;
   // input回调事件
-  onChange?: (v: string) => void;
+  onChange: (v: string) => void;
   // 保存事件
   onSave?: (v: string) => void;
   // 上传图片事件
   onUploadImg?: (files: FileList, callBack: (urls: string[]) => void) => void;
   // 是否页面内全屏，默认false
-  pageFullScreen?: boolean;
+  pageFullScreen: boolean;
   // 是否展开预览，默认true
-  preview?: boolean;
+  preview: boolean;
   // 是否展开html预览，默认false
-  htmlPreview?: boolean;
+  htmlPreview: boolean;
   // 仅预览模式，不显示toolbar和编辑框，默认false
-  previewOnly?: boolean;
+  previewOnly: boolean;
   // 预设语言名称
-  language?: StaticTextDefaultKey | string;
+  language: StaticTextDefaultKey | string;
   // 语言扩展，以标准的形式定义内容，设置language为key值即可替换
-  languageUserDefined?: Array<{ [key: string]: StaticTextDefaultValue }>;
+  languageUserDefined?: { [key: string]: StaticTextDefaultValue };
   // 工具栏选择显示
-  toolbars?: Array<ToolbarNames>;
+  toolbars: Array<ToolbarNames>;
   // 工具栏选择不显示
-  toolbarsExclude?: Array<ToolbarNames>;
+  toolbarsExclude: Array<ToolbarNames>;
   // 格式化md，默认true
-  prettier?: boolean;
-  prettierCDN?: string;
-  prettierMDCDN?: string;
+  prettier: boolean;
+  prettierCDN: string;
+  prettierMDCDN: string;
   // html变化事件
   onHtmlChanged?: (h: string) => void;
+  // 图片裁剪对象
+  Cropper?: any;
   // 图片裁剪
-  cropperCss?: string;
-  cropperJs?: string;
+  cropperCss: string;
+  cropperJs: string;
   // 图标
-  iconfontJs?: string;
-  // 编辑器唯一标识
-  editorId?: string;
+  iconfontJs: string;
   // 获取目录结构
   onGetCatalog?: (list: HeadList[]) => void;
+  // 编辑器唯一标识
+  editorId: string;
+  tabWidth: number;
+  // 预览中代码是否显示行号
+  showCodeRowNumber: boolean;
+  screenfull?: any;
+  screenfullJs: string;
+  // 预览内容样式
+  previewTheme: PreviewThemes;
+  markedHeading: MarkedHeading;
 }
 
-export const EditorContext = createContext({
-  editorId: ''
+export interface ContentType {
+  editorId: string;
+  tabWidth: number;
+  highlight: {
+    js: string;
+    css: string;
+  };
+  historyLength: number;
+  previewOnly: boolean;
+  showCodeRowNumber: boolean;
+  usedLanguageText: StaticTextDefaultValue;
+  Cropper: any;
+  previewTheme: PreviewThemes;
+}
+
+export const EditorContext = createContext<ContentType>({
+  editorId: '',
+  tabWidth: 2,
+  highlight: {
+    js: '',
+    css: ''
+  },
+  historyLength: 10,
+  previewOnly: false,
+  showCodeRowNumber: false,
+  usedLanguageText: staticTextDefault['zh-CN'],
+  Cropper: null,
+  previewTheme: 'default'
 });
 
 const Editor = (props: EditorProp) => {
   const {
-    theme = 'light',
-    editorClass = '',
-    toolbars = allToolbar,
-    toolbarsExclude = [],
-    preview = true,
-    htmlPreview = false,
-    iconfontJs = iconfontUrl,
-    prettier = true,
-    prettierCDN = prettierUrl.main,
-    prettierMDCDN = prettierUrl.markdown,
+    theme,
+    editorClass,
+    toolbars,
+    toolbarsExclude,
+    preview,
+    htmlPreview,
+    iconfontJs,
+    prettier,
+    prettierCDN,
+    prettierMDCDN,
     previewOnly,
-    pageFullScreen = false,
-    language = 'zh-CN',
-    languageUserDefined = [],
-    cropperCss = cropperUrl.css,
-    cropperJs = cropperUrl.js,
-    editorId = `mev-${Math.random().toString(36).substr(3)}`
+    pageFullScreen,
+    cropperCss,
+    cropperJs,
+    editorId,
+    tabWidth,
+    screenfull,
+    screenfullJs
   } = props;
 
   useKeyBoard(props);
@@ -192,7 +257,7 @@ const Editor = (props: EditorProp) => {
     htmlPreview: preview ? false : htmlPreview
   });
 
-  const updateSetting = (k: keyof typeof setting) => {
+  const updateSetting = (v: any, k: keyof typeof setting) => {
     setSetting((settingN) => {
       const nextSetting = {
         ...settingN,
@@ -226,19 +291,6 @@ const Editor = (props: EditorProp) => {
   // 变化是调整一次
   useEffect(adjustBody, [setting.pageFullScreen, setting.fullscreen]);
   // ----end----
-
-  const usedLanguageText = useMemo(() => {
-    const allText: any = {
-      ...staticTextDefault,
-      ...languageUserDefined
-    };
-
-    if (allText[language]) {
-      return allText[language];
-    } else {
-      return staticTextDefault['zh-CN'];
-    }
-  }, [props.language]);
 
   useEffect(() => {
     // 图标
@@ -305,10 +357,58 @@ const Editor = (props: EditorProp) => {
     };
   }, []);
 
+  const highlightSet = useMemo(() => {
+    let url = highlightUrl.atom;
+
+    if (props.highlightCss) {
+      // 用户设置为高优先级
+      url = props.highlightCss;
+    } else {
+      // 低优先级，根据全局主题加预览主题判断使用
+      switch (props.previewTheme) {
+        case 'github': {
+          if (props.theme === 'dark') {
+            url = highlightUrl.githubDark;
+          } else {
+            url = highlightUrl.github;
+          }
+
+          break;
+        }
+      }
+    }
+
+    return {
+      js: props.highlightJs,
+      css: url
+    };
+  }, [props.highlightCss, props.previewTheme, props.theme]);
+
+  const usedLanguageText = useMemo(() => {
+    const allText: any = {
+      ...staticTextDefault,
+      ...props.languageUserDefined
+    };
+
+    if (allText[props.language]) {
+      return allText[props.language];
+    } else {
+      return staticTextDefault['zh-CN'];
+    }
+  }, [props.languageUserDefined, props.language]);
+
   return (
     <EditorContext.Provider
       value={{
-        editorId
+        editorId,
+        tabWidth,
+        highlight: highlightSet,
+        historyLength: props.historyLength,
+        previewOnly,
+        showCodeRowNumber: props.showCodeRowNumber,
+        usedLanguageText,
+        Cropper: props.Cropper,
+        previewTheme: props.previewTheme
       }}
     >
       <div
@@ -323,11 +423,11 @@ const Editor = (props: EditorProp) => {
       >
         {!previewOnly && (
           <ToolBar
-            editorId={editorId}
+            screenfull={screenfull}
+            screenfullJs={screenfullJs}
             toolbars={toolbars}
             toolbarsExclude={toolbarsExclude}
             setting={setting}
-            ult={usedLanguageText}
             updateSetting={updateSetting}
           />
         )}
@@ -336,13 +436,9 @@ const Editor = (props: EditorProp) => {
           value={props.modelValue}
           onChange={props.onChange}
           setting={setting}
-          editorId={editorId}
-          highlight={highlightUrl}
-          previewOnly={props.previewOnly}
-          ult={usedLanguageText}
-          historyLength={props.historyLength}
           onHtmlChanged={props.onHtmlChanged}
           onGetCatalog={props.onGetCatalog}
+          markedHeading={props.markedHeading}
         />
       </div>
     </EditorContext.Provider>
@@ -353,23 +449,31 @@ Editor.defaultProps = {
   modelValue: '',
   theme: 'light',
   editorClass: '',
-  toolbars: allToolbar,
-  toolbarsExclude: [],
+  highlightJs: highlightUrl.js,
+  highlightCss: '',
+  historyLength: 10,
+  onChange() {},
+  pageFullScreen: false,
   preview: true,
   htmlPreview: false,
-  iconfontJs: iconfontUrl,
+  previewOnly: false,
+  language: 'zh-CN',
+  languageUserDefined: {},
+  toolbars: allToolbar,
+  toolbarsExclude: [],
   prettier: true,
   prettierCDN: prettierUrl.main,
   prettierMDCDN: prettierUrl.markdown,
-  pageFullScreen: false,
-  language: 'zh-CN',
-  languageUserDefined: [],
-  highlightJs: highlightUrl.js,
-  highlightCss: highlightUrl.css,
-  historyLength: 10,
-  previewOnly: false,
   cropperCss: cropperUrl.css,
-  cropperJs: cropperUrl.js
+  cropperJs: cropperUrl.js,
+  iconfontJs: iconfontUrl,
+  editorId: `mev-${Math.random().toString(36).substr(3)}`,
+  tabWidth: 2,
+  showCodeRowNumber: false,
+  screenfullJs: screenfullUrl,
+  previewTheme: 'default',
+  markedHeading: (text, level) =>
+    `<h${level} id="${text}"><a href="#${text}">${text}</a></h${level}>`
 } as EditorProp;
 
 export default Editor;

@@ -1,29 +1,26 @@
-import React, { useContext, useEffect, useMemo, useRef, useState } from 'react';
+import React, { useContext, useEffect, useMemo, useState } from 'react';
 import Modal from '../../components/Modal';
-import bus from '../../utils/event-bus';
 import { prefix } from '../../config';
-import { EditorContext, StaticTextDefaultValue } from '../../Editor';
+import { EditorContext } from '../../Editor';
 
 interface LinkModalProp {
   type: 'link' | 'image' | 'help';
   visible: boolean;
-  ult: StaticTextDefaultValue;
   onCancel: () => void;
   onOk: (data?: any) => void;
-  onClip: () => void;
 }
 
 const LinkModal = (props: LinkModalProp) => {
-  const { ult } = props;
+  const { usedLanguageText } = useContext(EditorContext);
   const { editorId } = useContext(EditorContext);
 
   const title = useMemo(() => {
     switch (props.type) {
       case 'link': {
-        return `${ult.linkModalTips?.title}${ult.toolbarTips?.link}`;
+        return `${usedLanguageText.linkModalTips?.title}${usedLanguageText.toolbarTips?.link}`;
       }
       case 'image': {
-        return `${ult.linkModalTips?.title}${ult.toolbarTips?.image}`;
+        return `${usedLanguageText.linkModalTips?.title}${usedLanguageText.toolbarTips?.image}`;
       }
       default: {
         return '';
@@ -37,36 +34,25 @@ const LinkModal = (props: LinkModalProp) => {
     url: ''
   });
 
-  // 上传控件
-  const uploadRef = useRef<HTMLInputElement>(null);
-
-  const uploadHandler = () => {
-    bus.emit(
-      editorId,
-      'uploadImage',
-      (uploadRef.current as HTMLInputElement).files,
-      props.onOk
-    );
-    // 清空内容，否则无法再次选取同一张图片
-    (uploadRef.current as HTMLInputElement).value = '';
-  };
-
   useEffect(() => {
-    if (props.type === 'image') {
-      // nextTick(() => {
-      (uploadRef.current as HTMLInputElement).addEventListener('change', uploadHandler);
-      // });
+    if (!props.visible) {
+      setTimeout(() => {
+        setLinkData({
+          desc: '',
+          url: ''
+        });
+      }, 200);
     }
-  }, [props.type]);
+  }, [props.visible]);
 
   return (
     <Modal title={title} visible={props.visible} onClosed={props.onCancel}>
       <div className={`${prefix}-form-item`}>
         <label className={`${prefix}-lable`} htmlFor={`link-desc-${editorId}`}>
-          {ult.linkModalTips?.descLable}
+          {usedLanguageText.linkModalTips?.descLable}
         </label>
         <input
-          placeholder={ult.linkModalTips?.descLablePlaceHolder}
+          placeholder={usedLanguageText.linkModalTips?.descLablePlaceHolder}
           className={`${prefix}-input`}
           id={`link-desc-${editorId}`}
           type="text"
@@ -81,10 +67,10 @@ const LinkModal = (props: LinkModalProp) => {
       </div>
       <div className={`${prefix}-form-item`}>
         <label className={`${prefix}-lable`} htmlFor={`link-url-${editorId}`}>
-          {ult.linkModalTips?.urlLable}
+          {usedLanguageText.linkModalTips?.urlLable}
         </label>
         <input
-          placeholder={ult.linkModalTips?.UrlLablePlaceHolder}
+          placeholder={usedLanguageText.linkModalTips?.UrlLablePlaceHolder}
           className={`${prefix}-input`}
           id={`link-url-${editorId}`}
           type="text"
@@ -99,7 +85,8 @@ const LinkModal = (props: LinkModalProp) => {
       </div>
       <div className={`${prefix}-form-item`}>
         <button
-          className={`${prefix}-btn ${props.type === 'link' && prefix + '-btn-row'}`}
+          className={`${prefix}-btn ${prefix}-btn-row`}
+          type="button"
           onClick={() => {
             props.onOk(linkData);
 
@@ -110,32 +97,8 @@ const LinkModal = (props: LinkModalProp) => {
             });
           }}
         >
-          {ult.linkModalTips?.buttonOK}
+          {usedLanguageText.linkModalTips?.buttonOK}
         </button>
-        {props.type === 'image' && (
-          <>
-            <button
-              className={`${prefix}-btn`}
-              onClick={() => {
-                // nextTick(() => {
-                (uploadRef.current as HTMLInputElement).click();
-                // });
-              }}
-            >
-              {ult.linkModalTips?.buttonUpload}
-            </button>
-            <button className={`${prefix}-btn`} onClick={props.onClip}>
-              {ult.linkModalTips?.buttonUploadClip}
-            </button>
-            <input
-              ref={uploadRef}
-              accept="image/*"
-              type="file"
-              multiple={true}
-              style={{ display: 'none' }}
-            />
-          </>
-        )}
       </div>
     </Modal>
   );

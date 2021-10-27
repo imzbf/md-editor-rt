@@ -13,12 +13,14 @@ import cn from 'classnames';
 import './style.less';
 
 interface CtlTypes {
-  overlayClass: string;
+  overlayClass: Array<string>;
   overlayStyle: CSSProperties;
+  triggerHover: boolean;
+  overlayHover: boolean;
 }
 
 interface ModalProp {
-  trigger: 'hover' | 'click';
+  trigger?: 'hover' | 'click';
   overlay: string | number | ReactElement;
   visible: boolean;
   children?: string | number | ReactElement;
@@ -31,56 +33,69 @@ const DropDown = (props: ModalProp) => {
   const HIDDEN_CLASS = `${prefix}-dropdown-hidden`;
 
   const [ctl, setCtl] = useState<CtlTypes>({
-    overlayClass: '',
-    overlayStyle: {}
+    overlayClass: [HIDDEN_CLASS],
+    overlayStyle: {},
+    triggerHover: false,
+    overlayHover: false
   });
 
-  const triggerRef = useRef<HTMLElement>(null);
-  const overlayRef = useRef<HTMLElement>(null);
+  const triggerRef = useRef<HTMLDivElement>(null);
+  const overlayRef = useRef<HTMLDivElement>(null);
 
-  const triggerHandler = (e: MouseEvent, type: 'click' | 'hover' = 'click') => {
-    if (type === 'click') {
-      const triggerEle = triggerRef.current as HTMLElement;
-      const overlayEle = overlayRef.current as HTMLElement;
-
-      const triggerInfo = triggerEle.getBoundingClientRect();
-
-      const triggerTop = triggerEle.offsetTop;
-      const triggerLeft = triggerEle.offsetLeft;
-      const triggerHeight = triggerInfo.height;
-      const triggerWidth = triggerInfo.width;
-
-      // 设置好正对位置
-      setCtl((ctlN) => {
-        return {
-          ...ctlN,
-          overlayStyle: {
-            ...ctlN.overlayStyle,
-            top: triggerTop + triggerHeight + 'px',
-            left: triggerLeft - overlayEle.offsetWidth / 2 + triggerWidth / 2 + 'px',
-            marginTop: '10px'
-          }
-        };
-      });
-
-      props.onChange(!props.visible);
-    } else {
-      props.onChange(true);
+  const triggerHandler = () => {
+    if (props.trigger === 'hover') {
+      ctl.triggerHover = true;
     }
+
+    const triggerEle = triggerRef.current as HTMLElement;
+    const overlayEle = overlayRef.current as HTMLElement;
+
+    const triggerInfo = triggerEle.getBoundingClientRect();
+
+    const triggerTop = triggerEle.offsetTop;
+    const triggerLeft = triggerEle.offsetLeft;
+    const triggerHeight = triggerInfo.height;
+    const triggerWidth = triggerInfo.width;
+
+    // 设置好正对位置
+    setCtl({
+      ...ctl,
+      overlayStyle: {
+        top: triggerTop + triggerHeight + 'px',
+        left: triggerLeft - overlayEle.offsetWidth / 2 + triggerWidth / 2 + 'px'
+      }
+    });
+
+    props.onChange(true);
+  };
+
+  const overlayHandler = () => {
+    ctl.overlayHover = true;
   };
 
   // 显示状态变化后修改某些属性
   useEffect(() => {
-    setCtl((ctlN) => {
-      return {
-        ...ctlN,
-        overlayClass: cn(`${prefix}-dropdown-overlay`, !props.visible && HIDDEN_CLASS)
-      };
-    });
+    if (props.visible) {
+      setCtl((ctlN) => {
+        return {
+          ...ctlN,
+          overlayClass: ctl.overlayClass.filter(
+            (classItem: string) => classItem !== HIDDEN_CLASS
+          )
+        };
+      });
+    } else {
+      setCtl((ctlN) => {
+        return {
+          ...ctlN,
+          overlayClass: [...ctlN.overlayClass, HIDDEN_CLASS]
+        };
+      });
+    }
   }, [props.visible]);
 
   // 点击非内容区域时触发关闭
-  const hiddenHandler = (e: MouseEvent) => {
+  const clickHidden = (e: MouseEvent) => {
     const triggerEle = triggerRef.current as HTMLElement;
     const overlayEle = overlayRef.current as HTMLElement;
 
@@ -92,12 +107,59 @@ const DropDown = (props: ModalProp) => {
     }
   };
 
+  let hiddenTimer = -1;
+  const leaveHidden = (e: MouseEvent) => {
+    if (triggerRef.current === e.target) {
+      ctl.triggerHover = false;
+    } else {
+      ctl.overlayHover = false;
+    }
+
+    clearTimeout(hiddenTimer);
+    hiddenTimer = window.setTimeout(() => {
+      if (!ctl.overlayHover && !ctl.triggerHover) {
+        props.onChange(false);
+      }
+    }, 10);
+  };
+
   useEffect(() => {
-    document.addEventListener('click', hiddenHandler);
+    if (props.trigger === 'click') {
+      (triggerRef.current as HTMLElement).addEventListener('click', triggerHandler);
+      document.addEventListener('click', clickHidden);
+    } else {
+      (triggerRef.current as HTMLElement).addEventListener('mouseenter', triggerHandler);
+      (triggerRef.current as HTMLElement).addEventListener('mouseleave', leaveHidden);
+
+      (overlayRef.current as HTMLElement).addEventListener('mouseenter', overlayHandler);
+      (overlayRef.current as HTMLElement).addEventListener('mouseleave', leaveHidden);
+    }
 
     // 卸载组件时清除副作用
     return () => {
-      document.removeEventListener('click', hiddenHandler);
+      if (props.trigger === 'click') {
+        (triggerRef.current as HTMLElement).removeEventListener('click', triggerHandler);
+        document.removeEventListener('click', clickHidden);
+      } else {
+        (triggerRef.current as HTMLElement).removeEventListener(
+          'mouseenter',
+          triggerHandler
+        );
+        (triggerRef.current as HTMLElement).removeEventListener(
+          'mouseleave',
+          leaveHidden
+        );
+
+        // 同时移除内容区域监听
+        (overlayRef.current as HTMLElement).removeEventListener(
+          'mouseenter',
+          overlayHandler
+        );
+        (overlayRef.current as HTMLElement).removeEventListener(
+          'mouseleave',
+          leaveHidden
+        );
+      }
     };
   }, []);
 
@@ -112,19 +174,20 @@ const DropDown = (props: ModalProp) => {
 
   // 触发器
   const trigger = cloneElement(slotDefault, {
-    onClick: triggerHandler,
-    // onMouseover: (e: MouseEvent) => triggerHandler(e, 'hover'),
-    // onMouseleave: (e: MouseEvent) => {
-    //   ctl.visible = false;
-    // },
     ref: triggerRef
   });
   // 列表内容
-  const overlay = cloneElement(slotOverlay, {
-    className: cn(ctl.overlayClass, slotOverlay.props?.className),
-    style: ctl.overlayStyle,
-    ref: overlayRef
-  });
+  const overlay = (
+    <div
+      className={cn(`${prefix}-dropdown`, ctl.overlayClass)}
+      style={ctl.overlayStyle}
+      ref={overlayRef}
+    >
+      <div className={`${prefix}-dropdown-overlay`}>
+        {slotOverlay instanceof Array ? slotOverlay[0] : slotOverlay}
+      </div>
+    </div>
+  );
 
   return (
     <>

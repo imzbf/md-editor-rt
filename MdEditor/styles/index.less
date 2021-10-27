@@ -1,7 +1,6 @@
 // 部分样式来源于其他开源UI库
 
 @import './vars';
-@import './md-preview';
 
 @toolBarHeight: 35px;
 @toolBarPadding: 4px;
@@ -15,12 +14,14 @@
   flex-direction: column;
   overflow: hidden;
   background-color: @bkColor;
-  font-family: PingFangSC-light, PingFangTC-light, 'PingFang SC', Cambria, Cochin, Georgia,
-    Times, 'Times New Roman', serif;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI Variable', 'Segoe UI',
+    system-ui, ui-sans-serif, Helvetica, Arial, sans-serif, 'Apple Color Emoji',
+    'Segoe UI Emoji';
 
   /* 浏览器滚动条 */
   ::-webkit-scrollbar {
     width: 6px;
+    height: 6px;
   }
 
   ::-webkit-scrollbar-corner,
@@ -156,6 +157,7 @@
       flex: 1;
       padding: 10px 20px;
       overflow: auto;
+      font-size: 16px;
     }
   }
 
@@ -269,6 +271,9 @@
   // 下拉组件
   .@{prefix}-dropdown-overlay {
     background-color: @bkColorDark;
+  }
+
+  .@{prefix}-menu {
     border-color: @borderColorDark;
   }
 

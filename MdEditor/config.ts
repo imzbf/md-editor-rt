@@ -1,4 +1,4 @@
-import { StaticTextDefault, ToolbarNames } from './Editor';
+import { StaticTextDefault } from './Editor';
 
 export const prefix = 'md';
 
@@ -10,14 +10,16 @@ export const iconfontUrl = 'https://at.alicdn.com/t/font_2605852_khjf435c7th.js'
 
 // 代码高亮cdn链接
 export const highlightUrl = {
-  css: 'https://cdn.bootcdn.net/ajax/libs/highlight.js/11.0.1/styles/atom-one-dark.min.css',
-  js: 'https://cdn.bootcdn.net/ajax/libs/highlight.js/11.0.1/highlight.min.js'
+  atom: 'https://cdn.jsdelivr.net/npm/highlight.js@11.2.0/styles/atom-one-dark.css',
+  github: 'https://cdn.jsdelivr.net/npm/highlight.js@11.2.0/styles/github.css',
+  githubDark: 'https://cdn.jsdelivr.net/npm/highlight.js@11.2.0/styles/github-dark.css',
+  js: 'https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.2.0/build/highlight.min.js'
 };
 
 // 美化代码cdn连接
 export const prettierUrl = {
-  main: 'https://unpkg.com/prettier@2.3.2/standalone.js',
-  markdown: 'https://unpkg.com/prettier@2.3.2/parser-markdown.js'
+  main: 'https://cdn.jsdelivr.net/npm/prettier@2.4.0/standalone.js',
+  markdown: 'https://cdn.jsdelivr.net/npm/prettier@2.4.0/parser-markdown.js'
 };
 
 export const cropperUrl = {
@@ -25,26 +27,33 @@ export const cropperUrl = {
   js: 'https://cdn.jsdelivr.net/npm/cropperjs@1.5.12/dist/cropper.min.js'
 };
 
+export const screenfullUrl =
+  'https://cdn.jsdelivr.net/npm/screenfull@5.1.0/dist/screenfull.js';
+
 // 所有的编辑器功能点
-export const allToolbar: ToolbarNames[] = [
+export const allToolbar = [
   'bold',
   'underline',
   'italic',
   'strikeThrough',
+  '-',
   'title',
   'sub',
   'sup',
   'quote',
   'unorderedList',
   'orderedList',
+  '-',
   'codeRow',
   'code',
   'link',
   'image',
   'table',
+  '-',
   'revoke',
   'next',
   'save',
+  '=',
   'prettier',
   'pageFullscreen',
   'fullscreen',
@@ -89,15 +98,18 @@ export const staticTextDefault: StaticTextDefault = {
       h5: '五级标题',
       h6: '六级标题'
     },
+    imgTitleItem: {
+      link: '添加链接',
+      upload: '上传图片',
+      clip2upload: '裁剪上传'
+    },
     linkModalTips: {
       title: '添加',
       descLable: '链接描述：',
       descLablePlaceHolder: '请输入描述...',
       urlLable: '链接地址：',
       UrlLablePlaceHolder: '请输入链接...',
-      buttonOK: '确定',
-      buttonUpload: '上传',
-      buttonUploadClip: '裁剪上传'
+      buttonOK: '确定'
     },
     clipModalTips: {
       title: '裁剪图片上传',
@@ -143,15 +155,18 @@ export const staticTextDefault: StaticTextDefault = {
       h5: 'Lv5 Heading',
       h6: 'Lv6 Heading'
     },
+    imgTitleItem: {
+      link: 'Add Img Link',
+      upload: 'Upload Img',
+      clip2upload: 'Clip Upload'
+    },
     linkModalTips: {
       title: 'Add ',
       descLable: 'Desc:',
       descLablePlaceHolder: 'Enter a description...',
       urlLable: 'Link:',
       UrlLablePlaceHolder: 'Enter a link...',
-      buttonOK: 'OK',
-      buttonUpload: 'Upload',
-      buttonUploadClip: 'Crop2upload'
+      buttonOK: 'OK'
     },
     clipModalTips: {
       title: 'Crop Image',

@@ -1,30 +1,28 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React, { useContext, useEffect, useMemo, useRef, useState } from 'react';
 import marked from 'marked';
 import copy from 'copy-to-clipboard';
 import { prefix } from '../../config';
-import { HeadList, SettingType, StaticTextDefaultValue } from '../../Editor';
+import { EditorContext, HeadList, SettingType, MarkedHeading } from '../../Editor';
 import bus from '../../utils/event-bus';
 import {
   ToolDirective,
   directive2flag,
   insert,
   setPosition,
-  scrollAuto
+  scrollAuto,
+  generateCodeRowNumber
 } from '../../utils';
 import { useHistory } from './hooks';
+import classNames from 'classnames';
 
 export type EditorContentProp = Readonly<{
   value: string;
-  hljs?: Record<string, any> | undefined;
+  hljs?: Record<string, any>;
+  onChange: (v: string) => void;
   setting: SettingType;
-  editorId: string;
-  highlight: { js: string; css: string };
-  previewOnly?: boolean;
-  ult: StaticTextDefaultValue;
-  historyLength?: number;
-  onChange?: (v: string) => void;
   onHtmlChanged?: (h: string) => void;
   onGetCatalog?: (list: HeadList[]) => void;
+  markedHeading: MarkedHeading;
 }>;
 
 let clearScrollAuto = () => {};
@@ -32,15 +30,20 @@ let clearScrollAuto = () => {};
 const Content = (props: EditorContentProp) => {
   // ID
   const {
-    editorId,
-    highlight,
-    previewOnly,
-    ult,
     hljs = null,
     onChange = () => {},
     onHtmlChanged = () => {},
     onGetCatalog = () => {}
   } = props;
+
+  const {
+    editorId,
+    highlight,
+    previewOnly,
+    usedLanguageText,
+    previewTheme,
+    showCodeRowNumber
+  } = useContext(EditorContext);
 
   const [highlightInited, setHighlightInited] = useState<boolean>(hljs !== null);
 
@@ -54,13 +57,18 @@ const Content = (props: EditorContentProp) => {
   const htmlRef = useRef<HTMLDivElement>(null);
 
   // 标题获取
-  let count = 0;
   const headstemp: HeadList[] = [];
   const renderer = new marked.Renderer();
-  renderer.heading = (text, level) => {
+  // 标题重构
+  renderer.heading = (...headProps) => {
+    const [text, level] = headProps;
     headstemp.push({ text, level });
-    count++;
-    return `<h${level} id="heading-${count}"><span class="h-text">${text}</span></h${level}>`;
+
+    return props.markedHeading(...headProps);
+  };
+
+  renderer.image = (href, _, desc) => {
+    return `<figure><img src="${href}" alt="${desc}"><figcaption>${desc}</figcaption></figure>`;
   };
 
   marked.setOptions({
@@ -74,13 +82,13 @@ const Content = (props: EditorContentProp) => {
       .forEach((pre: Element) => {
         const copyButton = document.createElement('span');
         copyButton.setAttribute('class', 'copy-button');
-        copyButton.innerText = ult.copyCode?.text || '复制代码';
+        copyButton.innerText = usedLanguageText.copyCode?.text || '复制代码';
         copyButton.addEventListener('click', () => {
           copy((pre.querySelector('code') as HTMLElement).innerText);
 
-          copyButton.innerText = ult.copyCode?.tips || '已复制！';
+          copyButton.innerText = usedLanguageText.copyCode?.tips || '已复制！';
           setTimeout(() => {
-            copyButton.innerText = ult.copyCode?.text || '复制代码';
+            copyButton.innerText = usedLanguageText.copyCode?.text || '复制代码';
           }, 1500);
         });
         pre.appendChild(copyButton);
@@ -90,7 +98,10 @@ const Content = (props: EditorContentProp) => {
   const highlightLoad = () => {
     marked.setOptions({
       highlight(code) {
-        return window.hljs.highlightAuto(code).value;
+        const codeHtml = window.hljs.highlightAuto(code).value;
+        return showCodeRowNumber
+          ? generateCodeRowNumber(codeHtml)
+          : `<span class="code-block">${codeHtml}</span>`;
       }
     });
 
@@ -101,11 +112,15 @@ const Content = (props: EditorContentProp) => {
     let highlightLink: HTMLLinkElement;
     let highlightScript: HTMLScriptElement;
 
-    if (hljs) {
+    if (props.hljs) {
       // 提供了hljs，在创建阶段即完成设置
       marked.setOptions({
-        highlight(code) {
-          return hljs.highlightAuto(code).value;
+        highlight: (code) => {
+          const codeHtml = props.hljs?.highlightAuto(code).value;
+
+          return showCodeRowNumber
+            ? generateCodeRowNumber(codeHtml)
+            : `<span class="code-block">${codeHtml}</span>`;
         }
       });
     } else {
@@ -241,7 +256,23 @@ const Content = (props: EditorContentProp) => {
     }
   }, [props.setting.preview]);
 
-  useHistory(props);
+  useEffect(() => {
+    if (props.hljs) {
+      const highlightLink = document.createElement('link');
+      const highlightScript = document.createElement('script');
+
+      highlightLink.rel = 'stylesheet';
+      highlightLink.href = highlight.css;
+
+      highlightScript.src = highlight.js;
+      highlightScript.addEventListener('load', highlightLoad);
+
+      document.head.appendChild(highlightLink);
+      document.head.appendChild(highlightScript);
+    }
+  }, []);
+
+  useHistory(props, textAreaRef);
 
   return (
     <>
@@ -249,6 +280,7 @@ const Content = (props: EditorContentProp) => {
         {!previewOnly && (
           <div className={`${prefix}-input-wrapper`}>
             <textarea
+              id={`${editorId}-textarea`}
               ref={textAreaRef}
               value={props.value}
               onInput={(e) => {
@@ -267,7 +299,11 @@ const Content = (props: EditorContentProp) => {
         {props.setting.preview && (
           <div
             ref={previewRef}
-            className={`${prefix}-preview`}
+            className={classNames(
+              `${prefix}-preview`,
+              `${previewTheme}-theme`,
+              showCodeRowNumber && `${prefix}-scrn`
+            )}
             dangerouslySetInnerHTML={{ __html: html }}
           />
         )}
