@@ -17,14 +17,13 @@ let cropper: any = null;
 
 const ClipModal = (props: ClipModalProp) => {
   const editorConext = useContext(EditorContext);
-  const { editorId, usedLanguageText } = editorConext;
-  let { Cropper } = editorConext;
+  const { editorId, usedLanguageText, Cropper } = editorConext;
 
   const uploadRef = useRef<HTMLInputElement>(null);
   const uploadImgRef = useRef<HTMLImageElement>(null);
 
   // 预览框
-  const previewTargetRef = useRef<HTMLImageElement>();
+  const previewTargetRef = useRef<HTMLDivElement>(null);
 
   const [data, setData] = useState({
     cropperInited: false,
@@ -37,26 +36,21 @@ const ClipModal = (props: ClipModalProp) => {
   useEffect(() => {
     // 显示时构建实例及监听事件
     if (props.visible && !data.cropperInited) {
-      Cropper = Cropper || window.Cropper;
+      window.Cropper = Cropper || window.Cropper;
 
       // 直接定义onchange，防止创建新的实例时遗留事件
       (uploadRef.current as HTMLInputElement).onchange = () => {
         const fileList = (uploadRef.current as HTMLInputElement).files || [];
 
-        // 切换模式
-        data.imgSelected = true;
-
         if (fileList?.length > 0) {
           const fileReader = new FileReader();
 
           fileReader.onload = (e: any) => {
-            data.imgSrc = e.target.result;
-
-            cropper = new Cropper(uploadImgRef.current, {
-              viewMode: 2,
-              preview: `.${prefix}-clip-preview-target`
-              // aspectRatio: 16 / 9,
-            });
+            setData((_data) => ({
+              ..._data,
+              imgSelected: true,
+              imgSrc: e.target.result
+            }));
           };
 
           fileReader.readAsDataURL(fileList[0]);
@@ -64,6 +58,16 @@ const ClipModal = (props: ClipModalProp) => {
       };
     }
   }, [props.visible]);
+
+  useEffect(() => {
+    if (data.imgSrc) {
+      cropper = new window.Cropper(uploadImgRef.current, {
+        viewMode: 2,
+        preview: `.${prefix}-clip-preview-target`
+        // aspectRatio: 16 / 9,
+      });
+    }
+  }, [data.imgSrc]);
 
   useEffect(() => {
     (previewTargetRef.current as HTMLImageElement)?.setAttribute('style', '');
@@ -74,7 +78,7 @@ const ClipModal = (props: ClipModalProp) => {
     (previewTargetRef.current as HTMLImageElement)?.setAttribute('style', '');
 
     if (uploadImgRef.current) {
-      cropper = new Cropper(uploadImgRef.current, {
+      cropper = new window.Cropper(uploadImgRef.current, {
         viewMode: 2,
         preview: `.${prefix}-clip-preview-target`
         // aspectRatio: 16 / 9,
@@ -91,17 +95,18 @@ const ClipModal = (props: ClipModalProp) => {
         }
       : {
           width: '668px',
-          height: '421px'
+          height: '392px'
         };
   }, [data.isFullscreen]);
 
   const reset = () => {
     cropper.destroy();
     (uploadRef.current as HTMLInputElement).value = '';
-    setData({
-      ...data,
+    setData((_data) => ({
+      ..._data,
+      imgSrc: '',
       imgSelected: false
-    });
+    }));
   };
 
   return (
@@ -112,7 +117,10 @@ const ClipModal = (props: ClipModalProp) => {
       showAdjust
       isFullscreen={data.isFullscreen}
       onAdjust={(val) => {
-        data.isFullscreen = val;
+        setData({
+          ...data,
+          isFullscreen: val
+        });
       }}
       {...modalSize}
     >
@@ -141,7 +149,7 @@ const ClipModal = (props: ClipModalProp) => {
           )}
         </div>
         <div className={`${prefix}-clip-preview`}>
-          <div className={`${prefix}-clip-preview-target`}></div>
+          <div className={`${prefix}-clip-preview-target`} ref={previewTargetRef}></div>
         </div>
       </div>
       <div className={`${prefix}-form-item`}>
