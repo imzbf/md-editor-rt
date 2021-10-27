@@ -19,7 +19,7 @@ export type ModalProps = Readonly<{
 const Modal = (props: ModalProps) => {
   const { onClosed = () => {} } = props;
   const modalVisible = useRef(props.visible);
-  const modalClass = useRef([`${prefix}-modal`]);
+  const [modalClass, setModalClass] = useState([`${prefix}-modal`]);
   const modalRef = useRef<HTMLDivElement>(null);
   const modalHeaderRef = useRef<HTMLDivElement>(null);
 
@@ -61,7 +61,7 @@ const Modal = (props: ModalProps) => {
     const nVal = props.visible;
 
     if (nVal) {
-      modalClass.current.push('zoom-in');
+      setModalClass((_modalClass) => [..._modalClass, 'zoom-in']);
       modalVisible.current = nVal;
 
       const halfWidth = (modalRef.current as HTMLElement).offsetWidth / 2;
@@ -69,18 +69,24 @@ const Modal = (props: ModalProps) => {
       const halfClientWidth = document.documentElement.clientWidth / 2;
       const halfClientHeight = document.documentElement.clientHeight / 2;
 
-      state.initPos.left = halfClientWidth - halfWidth + 'px';
-      state.initPos.top = halfClientHeight - halfHeight + 'px';
+      setState({
+        ...state,
+        initPos: {
+          left: halfClientWidth - halfWidth + 'px',
+          top: halfClientHeight - halfHeight + 'px'
+        }
+      });
 
       setTimeout(() => {
-        modalClass.current = modalClass.current.filter((item) => item !== 'zoom-in');
+        setModalClass((_modalClass) => _modalClass.filter((item) => item !== 'zoom-in'));
       }, 140);
 
       !inited && setInited(true);
-    } else {
-      modalClass.current.push('zoom-out');
+    } else if (inited) {
+      setModalClass((_modalClass) => [..._modalClass, 'zoom-out']);
+
       setTimeout(() => {
-        modalClass.current = modalClass.current.filter((item) => item !== 'zoom-out');
+        setModalClass((_modalClass) => _modalClass.filter((item) => item !== 'zoom-out'));
         modalVisible.current = nVal;
       }, 130);
     }
@@ -90,7 +96,7 @@ const Modal = (props: ModalProps) => {
     <div style={{ display: modalVisible.current ? 'block' : 'none' }}>
       <div className={`${prefix}-modal-mask`} onClick={onClosed} />
       <div
-        className={cn(modalClass.current)}
+        className={cn(modalClass)}
         style={{
           ...state.initPos,
           width: props.width,
