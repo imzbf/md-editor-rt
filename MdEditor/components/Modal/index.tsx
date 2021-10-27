@@ -1,4 +1,4 @@
-import React, { useRef, useState, ReactElement, useLayoutEffect } from 'react';
+import React, { useRef, useState, ReactElement, useLayoutEffect, useEffect } from 'react';
 import cn from 'classnames';
 import { prefix } from '../../config';
 import { keyMove } from '../../utils/dom';
@@ -57,13 +57,8 @@ const Modal = (props: ModalProps) => {
     return keyMoveClear;
   }, [inited]);
 
-  useLayoutEffect(() => {
-    const nVal = props.visible;
-
-    if (nVal) {
-      setModalClass((_modalClass) => [..._modalClass, 'zoom-in']);
-      modalVisible.current = nVal;
-
+  useEffect(() => {
+    if (modalVisible.current) {
       const halfWidth = (modalRef.current as HTMLElement).offsetWidth / 2;
       const halfHeight = (modalRef.current as HTMLElement).offsetHeight / 2;
       const halfClientWidth = document.documentElement.clientWidth / 2;
@@ -77,18 +72,22 @@ const Modal = (props: ModalProps) => {
         }
       });
 
-      setTimeout(() => {
-        setModalClass((_modalClass) => _modalClass.filter((item) => item !== 'zoom-in'));
-      }, 140);
-
       !inited && setInited(true);
+    }
+  }, [modalVisible.current]);
+
+  useEffect(() => {
+    const nVal = props.visible;
+
+    if (nVal) {
+      setModalClass(() => [`${prefix}-modal`, 'zoom-in']);
+      modalVisible.current = nVal;
     } else if (inited) {
-      setModalClass((_modalClass) => [..._modalClass, 'zoom-out']);
+      setModalClass(() => [`${prefix}-modal`, 'zoom-out']);
 
       setTimeout(() => {
-        setModalClass((_modalClass) => _modalClass.filter((item) => item !== 'zoom-out'));
         modalVisible.current = nVal;
-      }, 130);
+      }, 150);
     }
   }, [props.visible]);
 
