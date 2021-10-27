@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useMemo, useRef, useState } from 'react';
 import { ToolbarNames, SettingType, EditorContext } from '../../Editor';
-import { goto, ToolDirective } from '../../utils';
+import { goto } from '../../utils';
+import { ToolDirective } from '../../utils/content-help';
 import { prefix } from '../../config';
 import bus from '../../utils/event-bus';
 import Divider from '../../components/Divider';
@@ -321,8 +322,11 @@ const Toolbar = (props: ToolbarProp) => {
             className={`${prefix}-toolbar-item`}
             title={ult.toolbarTips?.link}
             onClick={() => {
-              modalData.type = 'link';
-              modalData.linkVisible = true;
+              setModalData({
+                ...modalData,
+                type: 'link',
+                linkVisible: true
+              });
             }}
             key="bar-link"
           >
@@ -546,7 +550,7 @@ const Toolbar = (props: ToolbarProp) => {
           <div
             className={`${prefix}-toolbar-item`}
             title={ult.toolbarTips?.github}
-            onClick={() => goto('https://github.com/imzbf/md-editor-v3')}
+            onClick={() => goto('https://github.com/imzbf/md-editor-rt')}
             key="bar-github"
           >
             <svg className={`${prefix}-icon`} aria-hidden="true">
@@ -587,8 +591,11 @@ const Toolbar = (props: ToolbarProp) => {
     bus.on(editorId, {
       name: 'openModals',
       callback(type) {
-        modalData.type = type;
-        modalData.linkVisible = true;
+        setModalData({
+          ...modalData,
+          type,
+          linkVisible: true
+        });
       }
     });
 

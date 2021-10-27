@@ -4,14 +4,8 @@ import copy from 'copy-to-clipboard';
 import { prefix } from '../../config';
 import { EditorContext, HeadList, SettingType, MarkedHeading } from '../../Editor';
 import bus from '../../utils/event-bus';
-import {
-  ToolDirective,
-  directive2flag,
-  insert,
-  setPosition,
-  scrollAuto,
-  generateCodeRowNumber
-} from '../../utils';
+import { insert, setPosition, scrollAuto, generateCodeRowNumber } from '../../utils';
+import { ToolDirective, directive2flag } from '../../utils/content-help';
 import { useHistory } from './hooks';
 import classNames from 'classnames';
 

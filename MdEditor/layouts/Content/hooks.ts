@@ -1,4 +1,5 @@
-import { directive2flag, insert, setPosition, ToolDirective } from '../../utils';
+import { insert, setPosition } from '../../utils';
+import { directive2flag, ToolDirective } from '../../utils/content-help';
 import { RefObject, useContext, useEffect, useRef, useState } from 'react';
 import bus from '../../utils/event-bus';
 import { EditorContentProp } from './';
@@ -28,7 +29,7 @@ export const useHistory = (
   props: EditorContentProp,
   textAreaRef: RefObject<HTMLTextAreaElement>
 ) => {
-  const { onChange = () => {} } = props;
+  const { onChange } = props;
   const { historyLength, editorId } = useContext(EditorContext);
 
   const [history, setHistory] = useState<HistoryDataType>({

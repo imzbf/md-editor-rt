@@ -1,5 +1,5 @@
 import bus from './utils/event-bus';
-import { ToolDirective } from './utils';
+import { ToolDirective } from './utils/content-help';
 import { EditorProp, ToolbarNames } from './Editor';
 import { useEffect } from 'react';
 

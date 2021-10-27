@@ -1,4 +1,4 @@
-import React, { useRef, useState, ReactElement, useEffect } from 'react';
+import React, { useRef, useState, ReactElement, useLayoutEffect } from 'react';
 import cn from 'classnames';
 import { prefix } from '../../config';
 import { keyMove } from '../../utils/dom';
@@ -34,23 +34,30 @@ const Modal = (props: ModalProps) => {
     }
   });
 
-  useEffect(() => {
+  const [inited, setInited] = useState(false);
+
+  useLayoutEffect(() => {
     let keyMoveClear = () => {};
 
     setTimeout(() => {
       keyMoveClear = keyMove(
         modalHeaderRef.current as HTMLDivElement,
         (left: number, top: number) => {
-          state.initPos.left = left + 'px';
-          state.initPos.top = top + 'px';
+          setState({
+            ...state,
+            initPos: {
+              left: left + 'px',
+              top: top + 'px'
+            }
+          });
         }
       );
     }, 0);
 
     return keyMoveClear;
-  }, []);
+  }, [inited]);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const nVal = props.visible;
 
     if (nVal) {
@@ -68,6 +75,8 @@ const Modal = (props: ModalProps) => {
       setTimeout(() => {
         modalClass.current = modalClass.current.filter((item) => item !== 'zoom-in');
       }, 140);
+
+      !inited && setInited(true);
     } else {
       modalClass.current.push('zoom-out');
       setTimeout(() => {
