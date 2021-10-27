@@ -33,13 +33,7 @@ export const useHistory = (
   const { historyLength, editorId } = useContext(EditorContext);
 
   const [history, setHistory] = useState<HistoryDataType>({
-    list: [
-      {
-        content: props.value,
-        startPos: textAreaRef.current?.selectionStart || 0,
-        endPos: textAreaRef.current?.selectionEnd || 0
-      }
-    ],
+    list: [],
     userUpdated: true,
     curr: 0
   });
@@ -61,7 +55,11 @@ export const useHistory = (
         }
 
         // 修改保存上次记录选中定位
-        const lastStep = history.list.pop() as HistoryItemType;
+        const lastStep = history.list.pop() || {
+          startPos: 0,
+          endPos: 0,
+          content: props.value
+        };
         lastStep.startPos = startPos;
         lastStep.endPos = endPos;
 
@@ -79,7 +77,7 @@ export const useHistory = (
           userUpdated: true
         });
       }
-    }, 500);
+    }, 10);
   }, [props.value]);
 
   useEffect(() => {

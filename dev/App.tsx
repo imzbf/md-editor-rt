@@ -15,7 +15,7 @@ function App() {
       <Header theme={theme} onChange={(v: Theme) => setTheme(v)} />
       <div className="page-body">
         <Preview theme={theme} />
-        <Doc theme={theme} />
+        {/* <Doc theme={theme} /> */}
       </div>
     </div>
   );
