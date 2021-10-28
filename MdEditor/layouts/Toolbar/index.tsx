@@ -10,6 +10,7 @@ import Modals from '../Modals';
 import { useSreenfull } from './hooks';
 
 export interface ToolbarProp {
+  prettier: boolean;
   // 工具栏选择显示
   toolbars: Array<ToolbarNames>;
   // 工具栏选择不显示
@@ -21,13 +22,13 @@ export interface ToolbarProp {
 }
 
 const Toolbar = (props: ToolbarProp) => {
-  const { toolbars, toolbarsExclude, setting, updateSetting, screenfullJs } = props;
+  const { toolbars, toolbarsExclude, setting, updateSetting } = props;
   // 获取ID，语言设置
-  const { editorId, previewOnly, usedLanguageText } = useContext(EditorContext);
+  const { editorId, usedLanguageText } = useContext(EditorContext);
   const ult = usedLanguageText;
 
   // 全屏功能
-  const { fullScreenHandler, screenfullLoad } = useSreenfull(props);
+  const { fullScreenHandler } = useSreenfull(props);
 
   const [visible, setVisible] = useState({
     title: false,
@@ -460,7 +461,7 @@ const Toolbar = (props: ToolbarProp) => {
         );
       }
       case 'prettier': {
-        return (
+        return props.prettier ? (
           <div
             className={`${prefix}-toolbar-item`}
             title={ult.toolbarTips?.prettier}
@@ -473,6 +474,8 @@ const Toolbar = (props: ToolbarProp) => {
               <use xlinkHref="#icon-prettier" />
             </svg>
           </div>
+        ) : (
+          ''
         );
       }
       case 'pageFullscreen': {
@@ -606,15 +609,6 @@ const Toolbar = (props: ToolbarProp) => {
     });
 
     (uploadRef.current as HTMLInputElement).addEventListener('change', uploadHandler);
-
-    // 非预览模式且未提供screenfull时请求cdn
-    if (!previewOnly && !props.screenfull) {
-      const screenScript = document.createElement('script');
-      screenScript.src = screenfullJs;
-      screenScript.addEventListener('load', screenfullLoad);
-
-      document.head.appendChild(screenScript);
-    }
   }, []);
 
   return (
