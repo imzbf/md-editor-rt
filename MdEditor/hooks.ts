@@ -321,8 +321,11 @@ export const useExpansion = (props: EditorProp) => {
     // 非仅预览模式才添加扩展
     if (!previewOnly) {
       appendHandler(iconfontScript);
-      appendHandler(cropperLink);
-      appendHandler(cropperScript);
+
+      if (!props.Cropper) {
+        appendHandler(cropperLink);
+        appendHandler(cropperScript);
+      }
 
       if (prettier) {
         appendHandler(prettierScript);
