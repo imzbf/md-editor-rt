@@ -294,6 +294,11 @@ const Editor = (props: EditorProp) => {
       // 保存body部分样式
       bodyOverflowHistory = document.body.style.overflow;
     }
+
+    () => {
+      // 清空所有的事件监听
+      bus.clear(editorId);
+    };
   }, []);
 
   // 变化是调整一次
