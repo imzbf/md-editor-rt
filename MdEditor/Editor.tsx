@@ -378,6 +378,7 @@ const Editor = (props: EditorProp) => {
       >
         {!previewOnly && (
           <ToolBar
+            prettier={props.prettier}
             screenfull={screenfull}
             screenfullJs={screenfullJs}
             toolbars={toolbars}

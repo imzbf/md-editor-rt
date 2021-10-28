@@ -10,6 +10,7 @@ import Modals from '../Modals';
 import { useSreenfull } from './hooks';
 
 export interface ToolbarProp {
+  prettier: boolean;
   // 工具栏选择显示
   toolbars: Array<ToolbarNames>;
   // 工具栏选择不显示
@@ -460,7 +461,7 @@ const Toolbar = (props: ToolbarProp) => {
         );
       }
       case 'prettier': {
-        return (
+        return props.prettier ? (
           <div
             className={`${prefix}-toolbar-item`}
             title={ult.toolbarTips?.prettier}
@@ -473,6 +474,8 @@ const Toolbar = (props: ToolbarProp) => {
               <use xlinkHref="#icon-prettier" />
             </svg>
           </div>
+        ) : (
+          ''
         );
       }
       case 'pageFullscreen': {
