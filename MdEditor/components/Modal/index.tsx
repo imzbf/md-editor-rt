@@ -18,7 +18,7 @@ export type ModalProps = Readonly<{
 
 const Modal = (props: ModalProps) => {
   const { onClosed = () => {} } = props;
-  const modalVisible = useRef(props.visible);
+  const [modalVisible, setMV] = useState(props.visible);
   const [modalClass, setModalClass] = useState([`${prefix}-modal`]);
   const modalRef = useRef<HTMLDivElement>(null);
   const modalHeaderRef = useRef<HTMLDivElement>(null);
@@ -58,7 +58,7 @@ const Modal = (props: ModalProps) => {
   }, [inited]);
 
   useEffect(() => {
-    if (modalVisible.current) {
+    if (modalVisible) {
       const halfWidth = (modalRef.current as HTMLElement).offsetWidth / 2;
       const halfHeight = (modalRef.current as HTMLElement).offsetHeight / 2;
       const halfClientWidth = document.documentElement.clientWidth / 2;
@@ -74,25 +74,25 @@ const Modal = (props: ModalProps) => {
 
       !inited && setInited(true);
     }
-  }, [modalVisible.current]);
+  }, [modalVisible]);
 
   useEffect(() => {
     const nVal = props.visible;
 
     if (nVal) {
       setModalClass(() => [`${prefix}-modal`, 'zoom-in']);
-      modalVisible.current = nVal;
+      setMV(nVal);
     } else if (inited) {
       setModalClass(() => [`${prefix}-modal`, 'zoom-out']);
 
       setTimeout(() => {
-        modalVisible.current = nVal;
+        setMV(nVal);
       }, 150);
     }
   }, [props.visible]);
 
   return (
-    <div style={{ display: modalVisible.current ? 'block' : 'none' }}>
+    <div style={{ display: modalVisible ? 'block' : 'none' }}>
       <div className={`${prefix}-modal-mask`} onClick={onClosed} />
       <div
         className={cn(modalClass)}
