@@ -3,10 +3,8 @@ import marked from 'marked';
 import copy from 'copy-to-clipboard';
 import { prefix } from '../../config';
 import { EditorContext, HeadList, SettingType, MarkedHeading } from '../../Editor';
-import bus from '../../utils/event-bus';
-import { insert, setPosition, scrollAuto, generateCodeRowNumber } from '../../utils';
-import { ToolDirective, directive2flag } from '../../utils/content-help';
-import { useHistory } from './hooks';
+import { scrollAuto, generateCodeRowNumber } from '../../utils';
+import { useAutoGenrator, useHistory } from './hooks';
 import classNames from 'classnames';
 import { appendHandler } from '../../utils/dom';
 
@@ -132,77 +130,6 @@ const Content = (props: EditorContentProp) => {
       appendHandler(highlightScript);
     }
 
-    if (!previewOnly) {
-      textAreaRef.current?.addEventListener('select', () => {
-        selectedText.current = window.getSelection()?.toString() || '';
-      });
-
-      textAreaRef.current?.addEventListener('keypress', (event) => {
-        if (event.key === 'Enter') {
-          const endPoint = textAreaRef.current?.selectionStart as number;
-
-          // 前半部分
-          const prefixStr = textAreaRef.current?.value.substring(0, endPoint);
-          // 后半部分
-          const subStr = textAreaRef.current?.value.substring(endPoint);
-          // 前半部分最后一个换行符位置，用于分割当前行内容
-          const lastIndexBR = prefixStr?.lastIndexOf('\n');
-
-          const enterPressRow = prefixStr?.substring(
-            (lastIndexBR as number) + 1,
-            endPoint
-          ) as string;
-
-          // 是列表
-          if (/^\d+\.\s|^-\s/.test(enterPressRow)) {
-            event.cancelBubble = true;
-            event.preventDefault();
-            event.stopPropagation();
-
-            // 如果列表当前行没有内容，则清空当前行
-            if (/^\d+\.\s+$|^-\s+$/.test(enterPressRow)) {
-              const resetPrefixStr = prefixStr?.replace(
-                new RegExp(enterPressRow + '$'),
-                ''
-              );
-              onChange((resetPrefixStr as string) + subStr);
-
-              // 手动定位光标到当前位置
-              setPosition(
-                textAreaRef.current as HTMLTextAreaElement,
-                resetPrefixStr?.length
-              );
-            } else if (/^-\s+.+/.test(enterPressRow)) {
-              // 无序列表存在内容
-              onChange(insert(textAreaRef.current as HTMLTextAreaElement, `\n- `, {}));
-            } else {
-              const lastOrderMatch = enterPressRow?.match(/\d+(?=\.)/);
-
-              const nextOrder = (lastOrderMatch && Number(lastOrderMatch[0]) + 1) || 1;
-              onChange(
-                insert(textAreaRef.current as HTMLTextAreaElement, `\n${nextOrder}. `, {})
-              );
-            }
-          }
-        }
-      });
-
-      // 注册指令替换内容事件
-      bus.on(editorId, {
-        name: 'replace',
-        callback(direct: ToolDirective, params: any) {
-          onChange(
-            directive2flag(
-              direct,
-              selectedText.current,
-              textAreaRef.current as HTMLTextAreaElement,
-              params
-            )
-          );
-        }
-      });
-    }
-
     return () => {
       if (!props.hljs) {
         document.head.removeChild(highlightLink);
@@ -249,6 +176,8 @@ const Content = (props: EditorContentProp) => {
   }, [props.setting.preview]);
 
   useHistory(props, textAreaRef);
+
+  useAutoGenrator(props, textAreaRef);
 
   return (
     <>
