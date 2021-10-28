@@ -2,6 +2,8 @@ import bus from './utils/event-bus';
 import { ToolDirective } from './utils/content-help';
 import { EditorProp, ToolbarNames } from './Editor';
 import { useEffect } from 'react';
+import { prefix } from './config';
+import { appendHandler } from './utils/dom';
 
 export const useKeyBoard = (props: EditorProp) => {
   const { editorId } = props;
@@ -277,4 +279,68 @@ export const useKeyBoard = (props: EditorProp) => {
       callback
     });
   }, [props.modelValue]);
+};
+
+export const useExpansion = (props: EditorProp) => {
+  const {
+    iconfontJs,
+    prettier,
+    prettierCDN,
+    prettierMDCDN,
+    previewOnly,
+    cropperCss,
+    cropperJs
+  } = props;
+
+  useEffect(() => {
+    // 图标
+    const iconfontScript = document.createElement('script');
+    iconfontScript.src = iconfontJs;
+    iconfontScript.id = `${prefix}-icon`;
+
+    // prettier
+    const prettierScript = document.createElement('script');
+    const prettierMDScript = document.createElement('script');
+
+    prettierScript.src = prettierCDN;
+    prettierScript.id = `${prefix}-prettier`;
+
+    prettierMDScript.src = prettierMDCDN;
+    prettierMDScript.id = `${prefix}-prettierMD`;
+
+    // 裁剪图片
+    const cropperLink = document.createElement('link');
+    cropperLink.rel = 'stylesheet';
+    cropperLink.href = cropperCss;
+    cropperLink.id = `${prefix}-cropperCss`;
+
+    const cropperScript = document.createElement('script');
+    cropperScript.src = cropperJs;
+    cropperScript.id = `${prefix}-cropper`;
+
+    // 非仅预览模式才添加扩展
+    if (!previewOnly) {
+      appendHandler(iconfontScript);
+      appendHandler(cropperLink);
+      appendHandler(cropperScript);
+
+      if (prettier) {
+        appendHandler(prettierScript);
+        appendHandler(prettierMDScript);
+      }
+    }
+
+    return () => {
+      if (!previewOnly) {
+        document.head.removeChild(iconfontScript);
+        document.head.removeChild(cropperLink);
+        document.head.removeChild(cropperScript);
+
+        if (prettier) {
+          document.head.removeChild(prettierScript);
+          document.head.removeChild(prettierMDScript);
+        }
+      }
+    };
+  }, []);
 };

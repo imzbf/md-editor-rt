@@ -1,6 +1,6 @@
 import React, { createContext, useEffect, useMemo, useState } from 'react';
 import cn from 'classnames';
-import { useKeyBoard } from './hooks';
+import { useExpansion, useKeyBoard } from './hooks';
 import ToolBar from './layouts/Toolbar';
 import Content from './layouts/Content';
 import bus from './utils/event-bus';
@@ -198,10 +198,6 @@ export interface EditorProp {
 export interface ContentType {
   editorId: string;
   tabWidth: number;
-  highlight: {
-    js: string;
-    css: string;
-  };
   historyLength: number;
   previewOnly: boolean;
   showCodeRowNumber: boolean;
@@ -213,10 +209,6 @@ export interface ContentType {
 export const EditorContext = createContext<ContentType>({
   editorId: '',
   tabWidth: 2,
-  highlight: {
-    js: '',
-    css: ''
-  },
   historyLength: 10,
   previewOnly: false,
   showCodeRowNumber: false,
@@ -224,6 +216,9 @@ export const EditorContext = createContext<ContentType>({
   Cropper: null,
   previewTheme: 'default'
 });
+
+// 初始为空，渲染到页面后获取页面属性
+let bodyOverflowHistory = '';
 
 const Editor = (props: EditorProp) => {
   const {
@@ -233,14 +228,8 @@ const Editor = (props: EditorProp) => {
     toolbarsExclude,
     preview,
     htmlPreview,
-    iconfontJs,
-    prettier,
-    prettierCDN,
-    prettierMDCDN,
     previewOnly,
     pageFullScreen,
-    cropperCss,
-    cropperJs,
     editorId,
     tabWidth,
     screenfull,
@@ -248,6 +237,8 @@ const Editor = (props: EditorProp) => {
   } = props;
 
   useKeyBoard(props);
+
+  useExpansion(props);
 
   // ----编辑器设置----
   const [setting, setSetting] = useState<SettingType>({
@@ -261,7 +252,7 @@ const Editor = (props: EditorProp) => {
     setSetting((settingN) => {
       const nextSetting = {
         ...settingN,
-        [k]: !settingN[k]
+        [k]: v
       } as SettingType;
 
       if (k === 'preview' && nextSetting.preview) {
@@ -274,54 +265,9 @@ const Editor = (props: EditorProp) => {
     });
   };
 
-  // 初始为空，渲染到页面后获取页面属性
-  let bodyOverflowHistory = '';
   useEffect(() => {
-    bodyOverflowHistory = document.body.style.overflow;
-  }, []);
-
-  const adjustBody = () => {
-    if (setting.pageFullScreen || setting.fullscreen) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = bodyOverflowHistory;
-    }
-  };
-
-  // 变化是调整一次
-  useEffect(adjustBody, [setting.pageFullScreen, setting.fullscreen]);
-  // ----end----
-
-  useEffect(() => {
-    // 图标
-    const iconfontScript = document.createElement('script');
-    iconfontScript.src = iconfontJs;
-    document.body.appendChild(iconfontScript);
-
-    // prettier
-    const prettierScript = document.createElement('script');
-    const prettierMDScript = document.createElement('script');
-
-    // 裁剪图片
-    const cropperLink = document.createElement('link');
-    cropperLink.rel = 'stylesheet';
-    cropperLink.href = cropperCss;
-    const cropperScript = document.createElement('script');
-    cropperScript.src = cropperJs;
-
-    document.body.appendChild(cropperLink);
-    document.body.appendChild(cropperScript);
-
-    if (prettier) {
-      prettierScript.src = prettierCDN;
-      prettierMDScript.src = prettierMDCDN;
-
-      document.body.appendChild(prettierScript);
-      document.body.appendChild(prettierMDScript);
-    }
-
-    // 监听上传图片
-    !previewOnly &&
+    if (!previewOnly) {
+      // 监听上传图片
       bus.on(editorId, {
         name: 'uploadImage',
         callback(files: FileList, cb: () => void) {
@@ -345,18 +291,22 @@ const Editor = (props: EditorProp) => {
         }
       });
 
-    return () => {
-      document.body.removeChild(iconfontScript);
-      document.body.removeChild(cropperLink);
-      document.body.removeChild(cropperScript);
-
-      if (prettier) {
-        document.body.removeChild(prettierScript);
-        document.body.removeChild(prettierMDScript);
-      }
-    };
+      // 保存body部分样式
+      bodyOverflowHistory = document.body.style.overflow;
+    }
   }, []);
 
+  // 变化是调整一次
+  useEffect(() => {
+    if (setting.pageFullScreen || setting.fullscreen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = bodyOverflowHistory;
+    }
+  }, [setting.pageFullScreen, setting.fullscreen]);
+  // ----end----
+
+  // 缓存代码扩展
   const highlightSet = useMemo(() => {
     let url = highlightUrl.atom;
 
@@ -384,6 +334,7 @@ const Editor = (props: EditorProp) => {
     };
   }, [props.highlightCss, props.previewTheme, props.theme]);
 
+  // 缓存语言设置
   const usedLanguageText = useMemo(() => {
     const allText: any = {
       ...staticTextDefault,
@@ -402,7 +353,6 @@ const Editor = (props: EditorProp) => {
       value={{
         editorId,
         tabWidth,
-        highlight: highlightSet,
         historyLength: props.historyLength,
         previewOnly,
         showCodeRowNumber: props.showCodeRowNumber,
@@ -433,6 +383,7 @@ const Editor = (props: EditorProp) => {
         )}
         <Content
           hljs={props.hljs}
+          highlightSet={highlightSet}
           value={props.modelValue}
           onChange={props.onChange}
           setting={setting}

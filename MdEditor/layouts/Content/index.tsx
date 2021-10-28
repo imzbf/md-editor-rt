@@ -8,10 +8,15 @@ import { insert, setPosition, scrollAuto, generateCodeRowNumber } from '../../ut
 import { ToolDirective, directive2flag } from '../../utils/content-help';
 import { useHistory } from './hooks';
 import classNames from 'classnames';
+import { appendHandler } from '../../utils/dom';
 
 export type EditorContentProp = Readonly<{
   value: string;
   hljs?: Record<string, any>;
+  highlightSet: {
+    js: string;
+    css: string;
+  };
   onChange: (v: string) => void;
   setting: SettingType;
   onHtmlChanged?: (h: string) => void;
@@ -25,19 +30,14 @@ const Content = (props: EditorContentProp) => {
   // ID
   const {
     hljs = null,
+    highlightSet,
     onChange = () => {},
     onHtmlChanged = () => {},
     onGetCatalog = () => {}
   } = props;
 
-  const {
-    editorId,
-    highlight,
-    previewOnly,
-    usedLanguageText,
-    previewTheme,
-    showCodeRowNumber
-  } = useContext(EditorContext);
+  const { editorId, previewOnly, usedLanguageText, previewTheme, showCodeRowNumber } =
+    useContext(EditorContext);
 
   const [highlightInited, setHighlightInited] = useState<boolean>(hljs !== null);
 
@@ -120,14 +120,16 @@ const Content = (props: EditorContentProp) => {
     } else {
       highlightLink = document.createElement('link');
       highlightLink.rel = 'stylesheet';
-      highlightLink.href = highlight.css;
+      highlightLink.href = highlightSet.css;
+      highlightLink.id = `${prefix}-hlCss`;
 
       highlightScript = document.createElement('script');
-      highlightScript.src = highlight.js;
+      highlightScript.src = highlightSet.js;
       highlightScript.onload = highlightLoad;
+      highlightScript.id = `${prefix}-hljs`;
 
-      document.head.appendChild(highlightLink);
-      document.body.appendChild(highlightScript);
+      appendHandler(highlightLink);
+      appendHandler(highlightScript);
     }
 
     if (!previewOnly) {
@@ -204,18 +206,14 @@ const Content = (props: EditorContentProp) => {
     return () => {
       if (!props.hljs) {
         document.head.removeChild(highlightLink);
-        document.body.removeChild(highlightScript);
+        document.head.removeChild(highlightScript);
       }
     };
   }, []);
 
   // ---预览代码---
   const html = useMemo(() => {
-    // if (highlightInited) {
     return marked(props.value);
-    // } else {
-    //   return '';
-    // }
   }, [props.value, highlightInited]);
 
   useEffect(() => {
