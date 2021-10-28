@@ -1,6 +1,6 @@
 import { insert, setPosition } from '../../utils';
 import { directive2flag, ToolDirective } from '../../utils/content-help';
-import { RefObject, useContext, useEffect, useRef, useState } from 'react';
+import { RefObject, useCallback, useContext, useEffect, useRef, useState } from 'react';
 import bus from '../../utils/event-bus';
 import { EditorContentProp } from './';
 import { EditorContext } from '../../Editor';
@@ -193,33 +193,44 @@ export const useAutoGenrator = (
         }
       });
 
-      // 注册指令替换内容事件
+      // 注册修改选择内容事件
       bus.on(editorId, {
-        name: 'replace',
-        callback(direct: ToolDirective, params = {}) {
-          props.onChange(
-            directive2flag(
-              direct,
-              selectedText.current,
-              textAreaRef.current as HTMLTextAreaElement,
-              {
-                ...params,
-                tabWidth
-              }
-            )
-          );
+        name: 'selectTextChange',
+        callback(val: string) {
+          selectedText.current = val;
         }
       });
     }
-
-    // 注册修改选择内容事件
-    bus.on(editorId, {
-      name: 'selectTextChange',
-      callback(val: string) {
-        selectedText.current = val;
-      }
-    });
   }, []);
+
+  const replaceCallBack = useCallback(
+    (direct: ToolDirective, params = {}) => {
+      props.onChange(
+        directive2flag(
+          direct,
+          selectedText.current,
+          textAreaRef.current as HTMLTextAreaElement,
+          {
+            ...params,
+            tabWidth
+          }
+        )
+      );
+    },
+    [textAreaRef]
+  );
+
+  useEffect(() => {
+    if (!previewOnly) {
+      bus.remove(editorId, 'replace', replaceCallBack);
+
+      // 注册指令替换内容事件
+      bus.on(editorId, {
+        name: 'replace',
+        callback: replaceCallBack
+      });
+    }
+  }, [textAreaRef]);
 
   return {
     selectedText
