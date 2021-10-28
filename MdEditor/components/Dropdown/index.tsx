@@ -135,30 +135,34 @@ const DropDown = (props: ModalProp) => {
       (overlayRef.current as HTMLElement).addEventListener('mouseleave', leaveHidden);
     }
 
-    // 卸载组件时清除副作用
+    // 卸载组件时清除事件监听
     return () => {
-      if (props.trigger === 'click') {
+      if (props.trigger === 'click' && triggerRef.current) {
         (triggerRef.current as HTMLElement).removeEventListener('click', triggerHandler);
         document.removeEventListener('click', clickHidden);
       } else {
-        (triggerRef.current as HTMLElement).removeEventListener(
-          'mouseenter',
-          triggerHandler
-        );
-        (triggerRef.current as HTMLElement).removeEventListener(
-          'mouseleave',
-          leaveHidden
-        );
+        if (triggerRef.current) {
+          (triggerRef.current as HTMLElement).removeEventListener(
+            'mouseenter',
+            triggerHandler
+          );
+          (triggerRef.current as HTMLElement).removeEventListener(
+            'mouseleave',
+            leaveHidden
+          );
+        }
 
-        // 同时移除内容区域监听
-        (overlayRef.current as HTMLElement).removeEventListener(
-          'mouseenter',
-          overlayHandler
-        );
-        (overlayRef.current as HTMLElement).removeEventListener(
-          'mouseleave',
-          leaveHidden
-        );
+        if (overlayRef.current) {
+          // 同时移除内容区域监听
+          (overlayRef.current as HTMLElement).removeEventListener(
+            'mouseenter',
+            overlayHandler
+          );
+          (overlayRef.current as HTMLElement).removeEventListener(
+            'mouseleave',
+            leaveHidden
+          );
+        }
       }
     };
   }, []);
