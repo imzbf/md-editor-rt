@@ -140,7 +140,7 @@ export interface EditorProp {
   // 外层扩展类名
   editorClass: string;
   // 如果项目中有使用highlight.js或者没有外网访问权限，可以直接传递实例hljs并且手动导入css
-  hljs?: Record<string, unknown>;
+  hljs?: any;
   // 可以手动提供highlight.js的cdn链接
   highlightJs: string;
   highlightCss: string;

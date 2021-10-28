@@ -250,22 +250,6 @@ const Content = (props: EditorContentProp) => {
     }
   }, [props.setting.preview]);
 
-  useEffect(() => {
-    if (props.hljs) {
-      const highlightLink = document.createElement('link');
-      const highlightScript = document.createElement('script');
-
-      highlightLink.rel = 'stylesheet';
-      highlightLink.href = highlight.css;
-
-      highlightScript.src = highlight.js;
-      highlightScript.addEventListener('load', highlightLoad);
-
-      document.head.appendChild(highlightLink);
-      document.head.appendChild(highlightScript);
-    }
-  }, []);
-
   useHistory(props, textAreaRef);
 
   return (
