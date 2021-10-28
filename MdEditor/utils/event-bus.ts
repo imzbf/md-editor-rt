@@ -8,7 +8,7 @@ class Bus {
   pools: { [race: string]: { [eventName: string]: Array<(p?: any) => any> } } = {};
 
   // 移除事件监听
-  remove(race: string, name: string, func: (p?: any) => any) {
+  remove(race: string, name: string, func: (...p: any) => any) {
     const targetRace = this.pools[race];
     const events = targetRace && this.pools[race][name];
 

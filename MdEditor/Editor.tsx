@@ -1,4 +1,4 @@
-import React, { createContext, useEffect, useMemo, useState } from 'react';
+import React, { createContext, useCallback, useEffect, useMemo, useState } from 'react';
 import cn from 'classnames';
 import { useExpansion, useKeyBoard } from './hooks';
 import ToolBar from './layouts/Toolbar';
@@ -265,30 +265,33 @@ const Editor = (props: EditorProp) => {
     });
   };
 
+  const uploadImageCallBack = useCallback((files: FileList, cb: () => void) => {
+    const insertHanlder = (urls: Array<string>) => {
+      urls.forEach((url) => {
+        // 利用事件循环机制，保证两次插入分开进行
+        setTimeout(() => {
+          bus.emit(editorId, 'replace', 'image', {
+            desc: '',
+            url
+          });
+        }, 0);
+      });
+
+      cb && cb();
+    };
+
+    if (props.onUploadImg) {
+      props.onUploadImg(files, insertHanlder);
+    }
+  }, []);
+
   useEffect(() => {
     if (!previewOnly) {
+      bus.remove(editorId, 'uploadImage', uploadImageCallBack);
       // 监听上传图片
       bus.on(editorId, {
         name: 'uploadImage',
-        callback(files: FileList, cb: () => void) {
-          const insertHanlder = (urls: Array<string>) => {
-            urls.forEach((url) => {
-              // 利用事件循环机制，保证两次插入分开进行
-              setTimeout(() => {
-                bus.emit(editorId, 'replace', 'image', {
-                  desc: '',
-                  url
-                });
-              }, 0);
-            });
-
-            cb && cb();
-          };
-
-          if (props.onUploadImg) {
-            props.onUploadImg(files, insertHanlder);
-          }
-        }
+        callback: uploadImageCallBack
       });
 
       // 保存body部分样式
