@@ -1,4 +1,4 @@
-import React, { useRef, useState, ReactElement, useLayoutEffect, useEffect } from 'react';
+import React, { useRef, useState, ReactElement, useEffect } from 'react';
 import cn from 'classnames';
 import { prefix } from '../../config';
 import { keyMove } from '../../utils/dom';
@@ -36,7 +36,7 @@ const Modal = (props: ModalProps) => {
 
   const [inited, setInited] = useState(false);
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     let keyMoveClear = () => {};
 
     setTimeout(() => {

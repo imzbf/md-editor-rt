@@ -1,63 +1,69 @@
-# md-editor-rt
+# md-editor-v3
 
-react 版本的 Markdown 编辑器，[md-editor-v3](https://imzbf.github.io/md-editor-v3)同系列项目。
+![](https://img.shields.io/github/package-json/v/imzbf/md-editor-rt) ![](https://img.shields.io/npm/dm/md-editor-rt) ![](https://img.shields.io/bundlephobia/min/md-editor-rt) ![](https://img.shields.io/github/license/imzbf/md-editor-rt) ![](https://img.shields.io/badge/ssr-%3E1.0.0-brightgreen)
 
-文档与在线预览：[传送门](https://imzbf.github.io/md-editor-rt)
+English \| [中文](https://github.com/imzbf/md-editor-rt/blob/master/README-CN.md)
 
-## 功能一览
+Markdown editor for `react`, developed by `jsx` and `typescript`.
 
-1. 快捷插入内容工具栏、编辑器浏览器全屏、页面内全屏等；
-2. 内置的白色主题和暗黑主题，支持绑定切换；
-3. 支持快捷键插入内容；
-4. 支持使用 prettier 格式化内容（使用 CDN 方式引入，只支持格式化 md 内容，可在代码内设置关闭）；
-5. 支持多语言，支持自行扩展语言；
-6. 支持复制粘贴上传图片，图片裁剪上传；
-7. 支持渲染模式（不显示编辑器，只显示 md 预览内容，无额外监听）；
-8. 支持`ssr`，支持在`nextjs`中使用；
-9. ...
+- Documentation and demo：[Go](https://imzbf.github.io/md-editor-rt)
 
-> 更多功能待后续更新，若有想要的功能未开发，请留言~
+- Use it online：[Go](https://codesandbox.io/s/elated-khorana-65jmr)
 
-## 预览图
+- The same series editor for vue3：[md-editor-v3](https://github.com/imzbf/md-editor-v3)
 
-默认模式下：
+## Features
 
-![](https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/6d93b5ac7338479fb7fd0b94ba6e003a~tplv-k3u1fbpfcp-watermark.image)
+- Toolbar, screenfull or screenfull in web pages and so on.
+- Themes, Built-in default and dark themes.
+- Shortcut key for editor.
+- Beautify your content by `prettier`(only for markdown content, not the code and other text).
+- Multi-language, build-in Chinese and English(default: Chinese).
+- Upload picture, paste or clip the picture and upload it.
+- Render article directly(no editor，no event listener, only preview content).
+- Preview themes, support `defalut`、`vuepress`、`github` styles(not identical).
 
-暗黑模式下：
+> More features are developing, if you have some ideas or find issues, please tell it to me~
 
-![](https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/45d0ddaead1d48b2843ef16e2065a298~tplv-k3u1fbpfcp-watermark.image)
+## Preview
 
-## apis
+| Default theme | Dark theme | Preview only |
+| --- | --- | --- |
+| ![](https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/316ecb6e9b3b431aa1a6b0d20d9dabac~tplv-k3u1fbpfcp-watermark.image) | ![](https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/611acc4227084ba19875b4b578a01e07~tplv-k3u1fbpfcp-watermark.image) | ![](https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/1664c4a5404641c4a1080d64bc6c5831~tplv-k3u1fbpfcp-watermark.image) |
 
-### props
+## Apis
 
-| 名称 | 类型 | 默认值 | 响应式 | 说明 |
-| --- | --- | --- | --- | --- |
-| modelValue | String | '' | √ | md 编辑内容，vue 模板支持双向绑定（v-model="value"） |
-| theme | 'light' \| 'dark' | 'light' | √ | 主题切换 |
-| editorClass | String | '' | √ | 编辑器最外层样式 |
-| hljs | Object | null | x | 项目中使用到了 highlight，可将实例直接传递，生产环境则不会请求 CDN，需要手动导入支持的高亮代码样式 |
-| highlightJs | String | [highlight.js](https://cdn.bootcdn.net/ajax/libs/highlight.js/11.0.1/highlight.min.js) | x | highlightJs CDN |
-| highlightCss | String | [atom-one-dark](https://cdn.bootcdn.net/ajax/libs/highlight.js/11.0.1/styles/atom-one-dark.min.css) | x | 预览高亮代码样式 |
-| historyLength | Number | 10 | x | 最大记录操作数（太大会占用内存） |
-| pageFullScreen | Boolean | false | x | 浏览器内全屏 |
-| preview | Boolean | true | x | 预览模式 |
-| htmlPreview | Boolean | false | x | html 预览 |
-| previewOnly | Boolean | false | x | 仅预览模式，不显示 bar 和编辑框，_不支持响应式，仅能初始设置一次_ |
-| language | String | 'zh-CN' | √ | 内置中英文('zh-CN','en-US')，可自行扩展其他语言，同时可覆盖内置的中英文 |
-| languageUserDefined | Array | [{key: StaticTextDefaultValue}] | √ | 通过这里扩展语言，修改 language 值为扩展 key 即可，类型申明可手动导入 |
-| toolbars | Array | [all] | √ | 选择性展示工具栏，可选内容如下<sup>[toolbars]<sup> |
-| toolbarsExclude | Array | [] | √ | 选择性不展示工具栏，内容同`toolbars` |
-| prettier | Boolean | true | x | 是否启用 prettier 优化 md 内容 |
-| prettierCDN | String | [standalone](https://unpkg.com/prettier@2.3.2/standalone.js) | x |  |
-| prettierMDCDN | String | [parser-markdown](https://unpkg.com/prettier@2.3.2/parser-markdown.js) | x |  |
-| cropperCss | String | [cropper.min.css](https://cdn.jsdelivr.net/npm/cropperjs@1.5.12/dist/cropper.min.css) | x | cropper css url |
-| cropperJs | String | [cropper.min.js](https://cdn.jsdelivr.net/npm/cropperjs@1.5.12/dist/cropper.min.js) | x | cropper js url |
-| iconfontJs | String | [iconfont](https://at.alicdn.com/t/font_2605852_khjf435c7th.js) | x | 矢量图标链接，无外网时，下载 js 到内网，提供链接 |
-| editorId | String | random | x | 同页面存在两个编辑器，使用该属性区别，默认不需要设置，在`ssr`下（即使只有一个编辑器），最好手动提供该属性，防止报错提示服务端与客户端内容不一致问题（nextjs 中能复现） |
+### Props
 
-> 响应式=x，该属性只支持设置，不支持响应式更新~
+| name | type | default | description |
+| --- | --- | --- | --- |
+| modelValue | String | '' | Markdown content |
+| theme | 'light' \| 'dark' | 'light' | Change editor theme |
+| editorClass | String | '' |  |
+| hljs | Object | null | `Highlight` instance, editor will not insert script of it, but you need to import `highlight` code style by yourself |
+| highlightJs | String | [highlight.js@11.2.0](https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.2.0/build/highlight.min.js) | HighlightJs url |
+| highlightCss | String | [atom-one-dark@11.2.0](https://cdn.jsdelivr.net/npm/highlight.js@11.2.0/styles/atom-one-dark.css) | `Highlight` code style |
+| historyLength | Number | 10 | The max length of history(if it is too big, editor will use more `RAM`) |
+| pageFullScreen | Boolean | false | Screenfull in web page |
+| preview | Boolean | true | Preview content in editor |
+| htmlPreview | Boolean | false | Preview html in editor |
+| previewOnly | Boolean | false | Only render article content, no toolbar, no edit area |
+| language | String | 'zh-CN' | Build-in language('zh-CN','en-US') |
+| languageUserDefined | Object | {key: StaticTextDefaultValue} | Expand language，update `language` api to your key |
+| toolbars | Array | [toolbars] | Show some item of toolbars，all keys<sup>see `toolbars` below<sup> |
+| toolbarsExclude | Array | [] | Don't show some item of toolbars，all keys`toolbars` |
+| prettier | Boolean | true | Use prettier to beautify content or not |
+| prettierCDN | String | [standalone@2.4.0](https://cdn.jsdelivr.net/npm/prettier@2.4.0/standalone.js) |  |
+| prettierMDCDN | String | [parser-markdown@2.4.0](https://cdn.jsdelivr.net/npm/prettier@2.4.0/parser-markdown.js) |  |
+| cropperCss | String | [cropper.min.css@1.5.12](https://cdn.jsdelivr.net/npm/cropperjs@1.5.12/dist/cropper.min.css) | Cropper css url |
+| cropperJs | String | [cropper.min.js@1.5.12](https://cdn.jsdelivr.net/npm/cropperjs@1.5.12/dist/cropper.min.js) | Cropper js url |
+| iconfontJs | String | [iconfont](https://at.alicdn.com/t/font_2605852_khjf435c7th.js) | Icon url |
+| editorId | String | random | Editor id, also the html id, it is used when there are two or more editor and server render in the future |
+| tabWidth | Number | 2 | One tab eq some space |
+| showCodeRowNumber | Boolean | false | Show row number for code block or not |
+| screenfull | Object | null | Screenfull instance, editor will not insert script of it |
+| screenfullJs | String | [screenfull@5.1.0](https://cdn.jsdelivr.net/npm/screenfull@5.1.0/dist/screenfull.js) | Screenfull js url |
+| previewTheme | 'default' \| 'github' \| 'vuepress' | 'default' | Preview themes |
 
 [toolbars]
 
@@ -66,6 +72,7 @@ react 版本的 Markdown 编辑器，[md-editor-v3](https://imzbf.github.io/md-e
   'bold',
   'underline',
   'italic',
+  '-',
   'strikeThrough',
   'title',
   'sub',
@@ -73,14 +80,17 @@ react 版本的 Markdown 编辑器，[md-editor-v3](https://imzbf.github.io/md-e
   'quote',
   'unorderedList',
   'orderedList',
+  '-',
   'codeRow',
   'code',
   'link',
   'image',
   'table',
+  '-',
   'revoke',
   'next',
   'save',
+  '=',
   'pageFullscreen',
   'fullscreen',
   'preview',
@@ -89,15 +99,17 @@ react 版本的 Markdown 编辑器，[md-editor-v3](https://imzbf.github.io/md-e
 ];
 ```
 
-自定义语言，需要替换的内容如下（某些字段若不主动提供，可能会造成页面不美观）：
+> You can sort the toolbar as you like, split tools by `'-'`, the left and right toolbars are divided by `'='`！
+
+Expand language，you need to replace all the content here：
 
 [StaticTextDefaultValue]
 
 ```ts
 export interface StaticTextDefaultValue {
-  // 工具栏hover title提示
+  // Toolbar hover tips(html title)
   toolbarTips?: ToolbarTips;
-  // 标题下拉框内容
+  // h1-h6 dropdown menu item
   titleItem?: {
     h1?: string;
     h2?: string;
@@ -106,7 +118,12 @@ export interface StaticTextDefaultValue {
     h5?: string;
     h6?: string;
   };
-  // 添加链接或图片时弹窗提示
+  imgTitleItem?: {
+    link: string;
+    upload: string;
+    clip2upload: string;
+  };
+  // The modal tips of add link or upload picture
   linkModalTips?: {
     title?: string;
     descLable?: string;
@@ -114,14 +131,13 @@ export interface StaticTextDefaultValue {
     urlLable?: string;
     UrlLablePlaceHolder?: string;
     buttonOK?: string;
-    buttonUpload?: string;
   };
-  // 裁剪图片弹窗提示
+  // The modal tips of clip the picture
   clipModalTips?: {
     title?: string;
     buttonUpload?: string;
   };
-  // 预览代码中复制代码提示
+  // Copy code tips
   copyCode?: {
     text?: string;
     tips?: string;
@@ -129,96 +145,72 @@ export interface StaticTextDefaultValue {
 }
 ```
 
-### 事件绑定
+### Event
 
-| 名称 | 入参 | 说明 |
+| name | params | description |
 | --- | --- | --- |
-| onChange | v:String | 内容变化事件（当前与`textare`的`oninput`事件绑定，每输入一个单字即会触发） |
-| onSave | v:String | 保存事件，快捷键与保存按钮均会触发 |
-| onUploadImg | files:FileList, callback:Function | 上传图片事件，弹窗会等待上传结果，务必将上传后的 urls 作为 callback 入参回传 |
-| onHtmlChanged | h:String | html 变化回调事件，用于获取预览 html 代码 |
-| onGetCatalog | list: HeadList[] | 获取目录结构，扁平结构 |
+| onChange | v:String | Content changed event(bind to `oninput` of `textarea`) |
+| onSave | v:String | Save Content event，`ctrl+s`and click button will trigger |
+| onUploadImg | files:FileList, callback:Function | Upload picture event，when picture is uploading the modal will not close，please provide right urls to the callback function |
+| onHtmlChanged | h:String | Compile markdown successful event，you can use it to get the html code |
+| onGetCatalog | list: HeadList[] | Get catalogue of article |
+| markedHeading | text: string,level: 1-6,raw: string, slugger: Slugger | `marked` head renderer methods |
 
-### 快捷键
+### Shortcut key
 
-主要以`CTRL`搭配对应功能英文单词首字母，冲突项添加`SHIFT`，再冲突替换为`ALT`。
+| key | function | description |
+| --- | --- | --- |
+| TAB | insert space | Insert space, the length eq `tabWidth`, default: 2, support multiline |
+| SHIFT + TAB | delete space, setting is the same as Tab |  |
+| CTRL + C | copy | When selected, copy the selected content. When not selected, copy the content of the current line |
+| CTRL + X | shear | When selected, cut the selected content. When not selected, cut the current line |
+| CTRL + D | delete | When selected, delete the selected content. When not selected, delete the current line |
+| CTRL + S | save | Trigger `onSave` event |
+| CTRL + B | bold text | `**bold**` |
+| CTRL + U | underline | `<u>underline</u>` |
+| CTRL + I | italic | `*italic*` |
+| CTRL + 1-6 | h1-h6 | `# title` |
+| CTRL + ↑ | superscript | `<sup>superscript</sup>` |
+| CTRL + ↓ | subscript | `<sub>subscript</sub>` |
+| CTRL + Q | quote | `> quote` |
+| CTRL + O | ordered list | `1. ordered list` |
+| CTRL + L | link | `[link](https://github.com/imzbf/md-editor-v3)` |
+| CTRL + Z | withdraw | Withdraw history in editor, not the function of system |
+| CTRL + SHIFT + S | line-through | `~line-through~` |
+| CTRL + SHIFT + U | unordered list | `- unordered list` |
+| CTRL + SHIFT + C | code block |  |
+| CTRL + SHIFT + I | picture | `![picture](https://imbf.cc)` |
+| CTRL + SHIFT + Z | forward | Forward history in editor, not the function of system |
+| CTRL + SHIFT + F | Beautify |  |
+| CTRL + ALT + C | code row |  |
+| CTRL + SHIFT + ALT + T | table | `\|table\|` |
 
-| 键位             | 功能       | 说明                             | 开发标记 |
-| ---------------- | ---------- | -------------------------------- | -------- |
-| CTRL + S         | 保存       | 触发编辑器的`onSave`回调         | √        |
-| CTRL + B         | 加粗       | `**加粗**`                       | √        |
-| CTRL + U         | 下划线     | `<u>下划线</u>`                  | √        |
-| CTRL + I         | 斜体       | `*斜体*`                         | √        |
-| CTRL + 1-6       | 1-6 级标题 | `# 标题`                         | √        |
-| CTRL + ↑         | 上角标     | `<sup>上角标</sup>`              | √        |
-| CTRL + ↓         | 下角标     | `<sub>下角标</sub>`              | √        |
-| CTRL + Q         | 引用       | `> 引用`                         | √        |
-| CTRL + O         | 有序列表   | `1. 有序列表`                    | √        |
-| CTRL + L         | 链接       | `[链接](https://imbf.cc)`        | √        |
-| CTRL + T         | 表格       | `\|表格\|` 放弃开发（无法实现）  | x        |
-| CTRL + Z         | 撤回       | 触发编辑器内内容撤回，与系统无关 | √        |
-| CTRL + SHIFT + S | 删除线     | `~删除线~`                       | √        |
-| CTRL + SHIFT + U | 无序列表   | `- 无序列表`                     | √        |
-| CTRL + SHIFT + C | 块级代码   | 多行代码块                       | √        |
-| CTRL + SHIFT + I | 图片链接   | `![图片](https://imbf.cc)`       | √        |
-| CTRL + SHIFT + Z | 前进一步   | 触发编辑器内内容前进，与系统无关 | √        |
-| CTRL + SHIFT + F | 美化内容   |                                  | √        |
-| CTRL + ALT + C   | 行内代码   | 行内代码块                       | √        |
+## Simple demo
 
-## 演示
-
-### jsx 语法项目
-
-```js
-import { defineComponent, reactive } from 'vue';
-import Editor from 'md-editor-rt';
-import 'md-editor-rt/lib/style.css';
-// 支持手动传入highlight，不提供将使用cdn
-import hljs from 'highlight.js';
-import 'highlight.js/styles/atom-one-dark.css';
-
-export default defineComponent({
-  setup() {
-    const md = reactive({
-      text: 'default markdown content'
-    });
-    return () => (
-      <Editor hljs={hljs} modelValue={md.text} onChange={(value) => (md.text = value)} />
-    );
-  }
-});
-```
-
-### vue 模板项目
+### Jsx module
 
 ```js
-<template>
-  <editor v-model="text" pageFullScreen></editor>
-</template>
-
-<script>
-import { defineComponent } from 'vue';
+import { useState } from 'react';
 import Editor from 'md-editor-rt';
 import 'md-editor-rt/lib/style.css';
 
-export default defineComponent({
-  name: 'VueTemplateDemo',
-  components: { Editor },
-  data() {
-    return {
-      text: '默认值'
-    };
-  }
-});
-</script>
+export default function App() {
+  const [text, setText] = useState('hello md-editor-rt！');
 
+  return (
+    <Editor
+      modelValue={text}
+      onChange={(modelValue) => {
+        setText(modelValue);
+      }}
+    />
+  );
+}
 ```
 
-### 上传图片
+### Upload picture
 
-默认可以选择多张图片，支持粘贴板上传图片。
-
-> 注意：粘贴板上传时，如果是网页上的 gif 图，无法正确上传为 gif 格式！
+> Tips：When you paste and upload GIF，it will upload a static picture. So you should upload it by file system!
 
 ```js
 async onUploadImg(files: FileList, callback: (urls: string[]) => void) {

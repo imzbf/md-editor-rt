@@ -26,8 +26,8 @@ export default ({ mode }: ConfigEnv): UserConfigExport => {
       }
     },
     plugins: [
-      nodeService(),
-      reactRefresh(),
+      mode !== 'production' && nodeService(),
+      mode !== 'production' && reactRefresh(),
       mode === 'production' &&
         dts({
           include: './MdEditor/Editor.tsx'
