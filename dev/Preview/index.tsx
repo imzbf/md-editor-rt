@@ -1,8 +1,10 @@
 import React, { useEffect, useRef, useState } from 'react';
 import axios from 'axios';
 import Editor from '../../MdEditor/Editor';
+// import Editor from '../../lib/md-editor-rt.es';
 import { mdText } from '../data';
 import { Theme } from '../App';
+// import '../../lib/style.css';
 
 import './index.less';
 const SAVE_KEY = 'XHMPGLJIZTDB';
