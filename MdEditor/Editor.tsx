@@ -427,7 +427,7 @@ Editor.defaultProps = {
   cropperCss: cropperUrl.css,
   cropperJs: cropperUrl.js,
   iconfontJs: iconfontUrl,
-  editorId: `mev-${Math.random().toString(36).substr(3)}`,
+  editorId: `md-editor-rt`,
   tabWidth: 2,
   showCodeRowNumber: false,
   screenfullJs: screenfullUrl,
