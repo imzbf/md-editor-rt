@@ -58,7 +58,7 @@ Markdown editor for `react`, developed by `jsx` and `typescript`.
 | cropperCss | String | [cropper.min.css@1.5.12](https://cdn.jsdelivr.net/npm/cropperjs@1.5.12/dist/cropper.min.css) | Cropper css url |
 | cropperJs | String | [cropper.min.js@1.5.12](https://cdn.jsdelivr.net/npm/cropperjs@1.5.12/dist/cropper.min.js) | Cropper js url |
 | iconfontJs | String | [iconfont](https://at.alicdn.com/t/font_2605852_khjf435c7th.js) | Icon url |
-| editorId | String | random | Editor id, also the html id, it is used when there are two or more editor and server render in the future |
+| editorId | String | md-editor-rt | Editor id, also the html id, it is used when there are more than two editors |
 | tabWidth | Number | 2 | One tab eq some space |
 | showCodeRowNumber | Boolean | false | Show row number for code block or not |
 | screenfull | Object | null | Screenfull instance, editor will not insert script of it |

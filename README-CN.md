@@ -56,7 +56,7 @@ react 版本的 Markdown 编辑器，[md-editor-v3](https://imzbf.github.io/md-e
 | cropperCss | String | [cropper.min.css@1.5.12](https://cdn.jsdelivr.net/npm/cropperjs@1.5.12/dist/cropper.min.css) | cropper css url |
 | cropperJs | String | [cropper.min.js@1.5.12](https://cdn.jsdelivr.net/npm/cropperjs@1.5.12/dist/cropper.min.js) | cropper js url |
 | iconfontJs | String | [iconfont](https://at.alicdn.com/t/font_2605852_khjf435c7th.js) | 矢量图标链接，无外网时，下载 js 到内网，提供链接 |
-| editorId | String | random | 编辑器唯一标识，非必须项，用于后续支持`ssr`时，防止产生服务端与客户端渲染内容不一致错误提示 |
+| editorId | String | md-editor-rt | 编辑器唯一标识，非必须项，当相同页面存在两个编辑器时，请务必区别该属性 |
 | tabWidth | Number | 2 | 编辑器 TAB 键位等于空格数 |
 | showCodeRowNumber | Boolean | false | 代码块是否显示行号 |
 | screenfull | Object | null | 全屏插件实例，编辑器不再插入对应的`script` |
