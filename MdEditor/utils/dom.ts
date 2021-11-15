@@ -9,7 +9,7 @@ export const keyMove = (
 ): (() => void) => {
   const triggerMouseDown = (mdown: MouseEvent) => {
     if (mdown.target !== trigger) {
-      return;
+      // return;
     }
 
     const parent: HTMLElement = trigger.parentElement || document.body;
