@@ -248,11 +248,11 @@ const Editor = (props: EditorProp) => {
     htmlPreview: preview ? false : htmlPreview
   });
 
-  const updateSetting = (v: any, k: keyof typeof setting) => {
+  const updateSetting = (k: keyof typeof setting) => {
     setSetting((settingN) => {
       const nextSetting = {
         ...settingN,
-        [k]: v
+        [k]: !settingN[k]
       } as SettingType;
 
       if (k === 'preview' && nextSetting.preview) {
@@ -427,7 +427,7 @@ Editor.defaultProps = {
   cropperCss: cropperUrl.css,
   cropperJs: cropperUrl.js,
   iconfontJs: iconfontUrl,
-  editorId: `mev-${Math.random().toString(36).substr(3)}`,
+  editorId: `md-editor-rt`,
   tabWidth: 2,
   showCodeRowNumber: false,
   screenfullJs: screenfullUrl,

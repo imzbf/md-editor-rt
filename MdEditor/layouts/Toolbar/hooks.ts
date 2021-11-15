@@ -26,7 +26,7 @@ export const useSreenfull = (props: ToolbarProp) => {
     // 注册事件
     if (screenfull && screenfull.isEnabled) {
       screenfull.on('change', () => {
-        props.updateSetting(!props.setting.fullscreen, 'fullscreen');
+        props.updateSetting('fullscreen');
       });
     }
   };
@@ -46,7 +46,7 @@ export const useSreenfull = (props: ToolbarProp) => {
     // 提供了对象直接监听事件，未提供通过screenfullLoad触发
     if (!previewOnly && screenfull && screenfull.isEnabled) {
       screenfull.on('change', () => {
-        props.updateSetting(!props.setting.fullscreen, 'fullscreen');
+        props.updateSetting('fullscreen');
       });
     }
 

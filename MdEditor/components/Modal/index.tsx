@@ -39,7 +39,7 @@ const Modal = (props: ModalProps) => {
   useEffect(() => {
     let keyMoveClear = () => {};
 
-    setTimeout(() => {
+    if (!props.isFullscreen) {
       keyMoveClear = keyMove(
         modalHeaderRef.current as HTMLDivElement,
         (left: number, top: number) => {
@@ -52,10 +52,10 @@ const Modal = (props: ModalProps) => {
           });
         }
       );
-    }, 0);
+    }
 
     return keyMoveClear;
-  }, [inited]);
+  }, [inited, props.isFullscreen]);
 
   useEffect(() => {
     if (modalVisible) {
@@ -104,49 +104,49 @@ const Modal = (props: ModalProps) => {
         ref={modalRef}
       >
         <div className={`${prefix}-modal-header`} ref={modalHeaderRef}>
-          <div className={`${prefix}-modal-title`}>{props.title || ''}</div>
-          <div className={`${prefix}-modal-func`}>
-            {props.showAdjust && (
-              <div
-                className={`${prefix}-modal-adjust`}
-                onClick={(e) => {
-                  e.stopPropagation();
-
-                  // 全屏时，保存上次位置
-                  if (!props.isFullscreen) {
-                    setState((_state) => ({
-                      historyPos: _state.initPos,
-                      initPos: {
-                        left: '0',
-                        top: '0'
-                      }
-                    }));
-                  } else {
-                    setState((_state) => ({
-                      ..._state,
-                      initPos: _state.historyPos
-                    }));
-                  }
-
-                  props.onAdjust(!props.isFullscreen);
-                }}
-              >
-                <svg className={`${prefix}-icon`} aria-hidden="true">
-                  <use xlinkHref={`#icon-${props.isFullscreen ? 'suoxiao' : 'fangda'}`} />
-                </svg>
-              </div>
-            )}
+          {props.title || ''}
+        </div>
+        <div className={`${prefix}-modal-func`}>
+          {props.showAdjust && (
             <div
-              className={`${prefix}-modal-close`}
+              className={`${prefix}-modal-adjust`}
               onClick={(e) => {
                 e.stopPropagation();
-                props.onClosed && props.onClosed();
+
+                // 全屏时，保存上次位置
+                if (!props.isFullscreen) {
+                  setState((_state) => ({
+                    historyPos: _state.initPos,
+                    initPos: {
+                      left: '0',
+                      top: '0'
+                    }
+                  }));
+                } else {
+                  setState((_state) => ({
+                    ..._state,
+                    initPos: _state.historyPos
+                  }));
+                }
+
+                props.onAdjust(!props.isFullscreen);
               }}
             >
               <svg className={`${prefix}-icon`} aria-hidden="true">
-                <use xlinkHref="#icon-close" />
+                <use xlinkHref={`#icon-${props.isFullscreen ? 'suoxiao' : 'fangda'}`} />
               </svg>
             </div>
+          )}
+          <div
+            className={`${prefix}-modal-close`}
+            onClick={(e) => {
+              e.stopPropagation();
+              props.onClosed && props.onClosed();
+            }}
+          >
+            <svg className={`${prefix}-icon`} aria-hidden="true">
+              <use xlinkHref="#icon-close" />
+            </svg>
           </div>
         </div>
         <div className={`${prefix}-modal-body`}>{props.children}</div>

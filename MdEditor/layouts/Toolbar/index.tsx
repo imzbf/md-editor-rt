@@ -18,7 +18,7 @@ export interface ToolbarProp {
   setting: SettingType;
   screenfull: any;
   screenfullJs: string;
-  updateSetting: (v: boolean, k: keyof SettingType) => void;
+  updateSetting: (k: keyof SettingType) => void;
 }
 
 const Toolbar = (props: ToolbarProp) => {
@@ -485,7 +485,7 @@ const Toolbar = (props: ToolbarProp) => {
               className={`${prefix}-toolbar-item`}
               title={ult.toolbarTips?.pageFullscreen}
               onClick={() => {
-                updateSetting(!setting.pageFullScreen, 'pageFullScreen');
+                updateSetting('pageFullScreen');
               }}
               key="bar-pageFullscreen"
             >
@@ -522,7 +522,7 @@ const Toolbar = (props: ToolbarProp) => {
             className={`${prefix}-toolbar-item`}
             title={ult.toolbarTips?.preview}
             onClick={() => {
-              updateSetting(!setting.preview, 'preview');
+              updateSetting('preview');
             }}
             key="bar-preview"
           >
@@ -538,7 +538,7 @@ const Toolbar = (props: ToolbarProp) => {
             className={`${prefix}-toolbar-item`}
             title={ult.toolbarTips?.htmlPreview}
             onClick={() => {
-              updateSetting(!setting.htmlPreview, 'htmlPreview');
+              updateSetting('htmlPreview');
             }}
             key="bar-htmlPreview"
           >
