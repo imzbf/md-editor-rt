@@ -248,11 +248,11 @@ const Editor = (props: EditorProp) => {
     htmlPreview: preview ? false : htmlPreview
   });
 
-  const updateSetting = (v: any, k: keyof typeof setting) => {
+  const updateSetting = (k: keyof typeof setting) => {
     setSetting((settingN) => {
       const nextSetting = {
         ...settingN,
-        [k]: v
+        [k]: !settingN[k]
       } as SettingType;
 
       if (k === 'preview' && nextSetting.preview) {
