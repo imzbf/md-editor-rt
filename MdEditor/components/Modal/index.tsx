@@ -39,7 +39,7 @@ const Modal = (props: ModalProps) => {
   useEffect(() => {
     let keyMoveClear = () => {};
 
-    setTimeout(() => {
+    if (!props.isFullscreen) {
       keyMoveClear = keyMove(
         modalHeaderRef.current as HTMLDivElement,
         (left: number, top: number) => {
@@ -52,10 +52,10 @@ const Modal = (props: ModalProps) => {
           });
         }
       );
-    }, 0);
+    }
 
     return keyMoveClear;
-  }, [inited]);
+  }, [inited, props.isFullscreen]);
 
   useEffect(() => {
     if (modalVisible) {
