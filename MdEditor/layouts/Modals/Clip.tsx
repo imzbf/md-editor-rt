@@ -155,6 +155,7 @@ const ClipModal = (props: ClipModalProp) => {
       <div className={`${prefix}-form-item`}>
         <button
           className={`${prefix}-btn`}
+          type="button"
           onClick={() => {
             const cvs = cropper.getCroppedCanvas();
             bus.emit(
