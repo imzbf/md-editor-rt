@@ -516,6 +516,22 @@ const Toolbar = (props: ToolbarProp) => {
           </div>
         );
       }
+      case 'catalog': {
+        return (
+          <div
+            className={`${prefix}-toolbar-item`}
+            title={ult.toolbarTips?.catalog}
+            onClick={() => {
+              bus.emit(editorId, 'catalogShow');
+            }}
+            key="bar-catalog"
+          >
+            <svg className={`${prefix}-icon`} aria-hidden="true">
+              <use xlinkHref="#icon-catalog" />
+            </svg>
+          </div>
+        );
+      }
       case 'preview': {
         return (
           <div

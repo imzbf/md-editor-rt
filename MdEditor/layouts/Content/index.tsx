@@ -7,6 +7,7 @@ import { scrollAuto, generateCodeRowNumber } from '../../utils';
 import { useAutoGenrator, useHistory } from './hooks';
 import classNames from 'classnames';
 import { appendHandler } from '../../utils/dom';
+import bus from '../../utils/event-bus';
 
 export type EditorContentProp = Readonly<{
   value: string;
@@ -149,6 +150,9 @@ const Content = (props: EditorContentProp) => {
     // 传递标题
     onGetCatalog(headstemp);
 
+    // 生成目录
+    bus.emit(editorId, 'catalogChanged', headstemp);
+
     // 更新完毕后判断是否需要重新绑定滚动事件
     if (props.setting.preview && !previewOnly) {
       clearScrollAuto = scrollAuto(
@@ -204,6 +208,7 @@ const Content = (props: EditorContentProp) => {
         {props.setting.preview && (
           <div
             ref={previewRef}
+            id={`${prefix}-preview`}
             className={classNames(
               `${prefix}-preview`,
               `${previewTheme}-theme`,

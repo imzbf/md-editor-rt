@@ -59,6 +59,7 @@ export const allToolbar = [
   'fullscreen',
   'preview',
   'htmlPreview',
+  'catalog',
   'github'
 ];
 
@@ -86,6 +87,7 @@ export const staticTextDefault: StaticTextDefault = {
       prettier: '美化',
       pageFullscreen: '浏览器全屏',
       fullscreen: '屏幕全屏',
+      catalog: '目录',
       preview: '预览',
       htmlPreview: 'html代码预览',
       github: '源码地址'
@@ -143,6 +145,7 @@ export const staticTextDefault: StaticTextDefault = {
       prettier: 'prettier',
       pageFullscreen: 'fullscreen in page',
       fullscreen: 'fullscreen',
+      catalog: 'catalog',
       preview: 'preview',
       htmlPreview: 'html preview',
       github: 'source code'
