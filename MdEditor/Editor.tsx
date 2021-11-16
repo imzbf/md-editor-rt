@@ -10,6 +10,7 @@ import cn from 'classnames';
 import { useExpansion, useKeyBoard } from './hooks';
 import ToolBar from './layouts/Toolbar';
 import Content from './layouts/Content';
+import Catalog from './layouts/Catalog';
 import bus from './utils/event-bus';
 
 import {
@@ -60,6 +61,7 @@ export interface ToolbarTips {
   prettier?: string;
   pageFullscreen?: string;
   fullscreen?: string;
+  catalog?: string;
   preview?: string;
   htmlPreview?: string;
   github?: string;
@@ -140,6 +142,8 @@ export type MarkedHeading = (
   }
 ) => string;
 
+export type MarkedHeadingId = (text: string, level: number) => string;
+
 export interface EditorProp {
   modelValue: string;
   // 主题，默认light
@@ -200,6 +204,7 @@ export interface EditorProp {
   // 预览内容样式
   previewTheme: PreviewThemes;
   markedHeading: MarkedHeading;
+  markedHeadingId: MarkedHeadingId;
   // 编辑器样式
   style: CSSProperties;
 }
@@ -228,6 +233,9 @@ export const EditorContext = createContext<ContentType>({
 
 // 初始为空，渲染到页面后获取页面属性
 let bodyOverflowHistory = '';
+
+const markedHeadingId: MarkedHeadingId = (text, level) =>
+  `l${level}-${btoa(encodeURIComponent(text))}`;
 
 const Editor = (props: EditorProp) => {
   const {
@@ -410,6 +418,7 @@ const Editor = (props: EditorProp) => {
           onGetCatalog={props.onGetCatalog}
           markedHeading={props.markedHeading}
         />
+        <Catalog markedHeadingId={props.markedHeadingId} />
       </div>
     </EditorContext.Provider>
   );
@@ -442,8 +451,13 @@ Editor.defaultProps = {
   showCodeRowNumber: false,
   screenfullJs: screenfullUrl,
   previewTheme: 'default',
-  markedHeading: (text, level) =>
-    `<h${level} id="${text}"><a href="#${text}">${text}</a></h${level}>`,
+  markedHeading: (text, level) => {
+    // 我们默认同一级别的标题，你不会定义两个相同的
+    const id = markedHeadingId(text, level);
+    return `<h${level} id="${id}"><a href="#${id}">${text}</a></h${level}>`;
+  },
+  // 希望你在自定义markedHeading的同时，能够告诉编辑器你生成ID的算法~
+  markedHeadingId: markedHeadingId,
   style: {}
 } as EditorProp;
 
