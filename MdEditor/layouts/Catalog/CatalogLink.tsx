@@ -12,7 +12,8 @@ const CatalogLink = (props: CatalogLinkProps) => {
   return (
     <div
       className={`${prefix}-catalog-link`}
-      onClick={() => {
+      onClick={(e) => {
+        e.stopPropagation();
         const id = props.markedHeadingId(props.tocItem.text, props.tocItem.level);
         const targetHeadEle = document.getElementById(id);
         const previewEle = document.getElementById(`${prefix}-preview`);
