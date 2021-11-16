@@ -12,7 +12,7 @@ export default ({ mode }: ConfigEnv): UserConfigExport => {
 
   return {
     base: mode === 'preview' ? homepage : '/',
-    publicDir: mode === 'production' ? false : './dev/public',
+    publicDir: mode === 'production' ? false : './public',
     server: {
       host: 'localhost',
       open: true,
@@ -22,7 +22,7 @@ export default ({ mode }: ConfigEnv): UserConfigExport => {
     resolve: {
       alias: {
         // 键必须以斜线开始和结束
-        '@': path.resolve(__dirname, './dev')
+        '@': path.resolve(__dirname, './src')
       }
     },
     plugins: [
@@ -42,26 +42,6 @@ export default ({ mode }: ConfigEnv): UserConfigExport => {
           javascriptEnabled: true
         }
       }
-    },
-    build:
-      mode === 'production'
-        ? {
-            outDir: path.resolve(__dirname, 'lib'),
-            lib: {
-              entry: path.resolve(__dirname, './MdEditor/Editor.tsx'),
-              name: 'MdEditorRT',
-              formats: ['es']
-              // fileName: (): string => 'md-editor-rt.js'
-            },
-            rollupOptions: {
-              external: ['react'],
-              output: {
-                globals: {
-                  react: 'React'
-                }
-              }
-            }
-          }
-        : {}
+    }
   };
 };
