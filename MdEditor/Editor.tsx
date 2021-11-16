@@ -1,4 +1,11 @@
-import React, { createContext, useCallback, useEffect, useMemo, useState } from 'react';
+import React, {
+  createContext,
+  CSSProperties,
+  useCallback,
+  useEffect,
+  useMemo,
+  useState
+} from 'react';
 import cn from 'classnames';
 import { useExpansion, useKeyBoard } from './hooks';
 import ToolBar from './layouts/Toolbar';
@@ -193,6 +200,8 @@ export interface EditorProp {
   // 预览内容样式
   previewTheme: PreviewThemes;
   markedHeading: MarkedHeading;
+  // 编辑器样式
+  style: CSSProperties;
 }
 
 export interface ContentType {
@@ -378,6 +387,7 @@ const Editor = (props: EditorProp) => {
           setting.fullscreen || setting.pageFullScreen ? `${prefix}-fullscreen` : '',
           previewOnly && `${prefix}-previewOnly`
         ])}
+        style={props.style}
       >
         {!previewOnly && (
           <ToolBar
@@ -433,7 +443,8 @@ Editor.defaultProps = {
   screenfullJs: screenfullUrl,
   previewTheme: 'default',
   markedHeading: (text, level) =>
-    `<h${level} id="${text}"><a href="#${text}">${text}</a></h${level}>`
+    `<h${level} id="${text}"><a href="#${text}">${text}</a></h${level}>`,
+  style: {}
 } as EditorProp;
 
 export default Editor;
