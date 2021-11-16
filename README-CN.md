@@ -62,6 +62,7 @@ react 版本的 Markdown 编辑器，[md-editor-v3](https://imzbf.github.io/md-e
 | screenfull | Object | null | 全屏插件实例，编辑器不再插入对应的`script` |
 | screenfullJs | String | [5.1.0](https://cdn.jsdelivr.net/npm/screenfull@5.1.0/dist/screenfull.js) | screenfull js 链接 |
 | previewTheme | 'default' \| 'github' \| 'vuepress' | 'default' | 预览内容主题 |
+| style | CSSProperties | {} | 编辑器内联样式 |
 
 [toolbars]
 
