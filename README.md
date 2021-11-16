@@ -96,6 +96,7 @@ Markdown editor for `react`, developed by `jsx` and `typescript`.
   'fullscreen',
   'preview',
   'htmlPreview',
+  'catalog',
   'github'
 ];
 ```
@@ -148,14 +149,17 @@ export interface StaticTextDefaultValue {
 
 ### Event
 
-| name | params | description |
+| name | type | description |
 | --- | --- | --- |
-| onChange | v:String | Content changed event(bind to `oninput` of `textarea`) |
-| onSave | v:String | Save Content event，`ctrl+s`and click button will trigger |
-| onUploadImg | files:FileList, callback:Function | Upload picture event，when picture is uploading the modal will not close，please provide right urls to the callback function |
-| onHtmlChanged | h:String | Compile markdown successful event，you can use it to get the html code |
-| onGetCatalog | list: HeadList[] | Get catalogue of article |
-| markedHeading | text: string,level: 1-6,raw: string, slugger: Slugger | `marked` head renderer methods |
+| onChange | (v: string) => void | Content changed event(bind to `oninput` of `textarea`) |
+| onSave | (v: string) => void | Save Content event，`ctrl+s`and click button will trigger |
+| onUploadImg | (files: FileList, callback: function) => void | Upload picture event，when picture is uploading the modal will not close，please provide right urls to the callback function |
+| onHtmlChanged | (h: string) => void | Compile markdown successful event，you can use it to get the html code |
+| onGetCatalog | (list: HeadList[]) => void | Get catalogue of article |
+| markedHeading | (text: string,level: 1-6,raw: string, slugger: Slugger) => string | `marked` head renderer methods |
+| markedHeadingId | (text: string, level: number) => string | title `ID` generator |
+
+> If `markedHeading` is overridden, be sure to tell the editor the algorithm for generating the title ID by `marketheadingid`.
 
 ### Shortcut key
 
