@@ -1,21 +1,27 @@
 import React, { useEffect, useRef, useState } from 'react';
 import axios from 'axios';
 import Editor from 'md-editor-rt';
-import { mdText } from '@/data';
+import { mdText, mdEnText } from '../../data';
 
 import './index.less';
 import { useSelector } from 'react-redux';
+import { StateType } from '@/store';
 const SAVE_KEY = 'XHMPGLJIZTDB';
 
 export default () => {
   const [md, setMd] = useState('');
 
-  const theme = useSelector((state: any) => state.theme);
+  const state = useSelector((state: any) => state) as StateType;
 
   useEffect(() => {
     const storagedText = localStorage.getItem(SAVE_KEY) || '';
-    setMd(storagedText || mdText);
-  }, []);
+
+    if (state.lang === 'zh-CN') {
+      setMd(storagedText || mdText);
+    } else {
+      setMd(storagedText || mdEnText);
+    }
+  }, [state.lang]);
 
   // 自动保存
   const taskId = useRef(-1);
@@ -35,7 +41,7 @@ export default () => {
     <div className="project-preview">
       <div className="container">
         <Editor
-          theme={theme}
+          theme={state.theme}
           modelValue={md}
           editorId="md-editor-preview"
           onSave={(v) => {
@@ -66,7 +72,9 @@ export default () => {
         />
         <br />
         <span className="tips-text">
-          tips：本页上方的编辑器有localstorage保存功能，可手动点击保存触发，每次操作后两秒会自己保存一次，可用于一些文档的编辑。下方的文档内容也是使用该编辑器完成~
+          {state.lang === 'zh-CN'
+            ? 'Tips：本页上方的编辑器有localstorage保存功能，每次操作后两秒会自己保存一次，可手动点击保存触发，可用于一些文档的编辑。'
+            : 'Tips: The editor in this page will save text to localstorage auto, and you can save text by yourself also. Wish this function can be used to edit some temporary document.'}
         </span>
       </div>
     </div>
