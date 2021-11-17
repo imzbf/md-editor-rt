@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Header from './Header';
 
 import './style.less';
@@ -13,6 +13,15 @@ export type Theme = 'dark' | 'light';
 
 function App() {
   const [theme, setTheme] = useState<Theme>('light');
+
+  useEffect(() => {
+    if (import.meta.env.MODE === 'preview') {
+      const hm = document.createElement('script');
+      hm.src = 'https://hm.baidu.com/hm.js?1563bc52cb27ffbc7b5b46cdfc327ce0';
+      document.head.appendChild(hm);
+    }
+  }, []);
+
   return (
     <div className={classNames('app', theme === 'dark' && 'theme-dark')}>
       <Header theme={theme} onChange={(v: Theme) => setTheme(v)} />
