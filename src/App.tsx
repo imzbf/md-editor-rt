@@ -1,10 +1,13 @@
 import classNames from 'classnames';
 import React, { useState } from 'react';
 import Header from './Header';
-import Preview from './Preview';
-import Doc from './Doc';
 
 import './style.less';
+import { Route, Routes } from 'react-router';
+import Preview from './pages/Preview';
+import Doc from './pages/Doc';
+import Demo from './pages/Demo';
+import About from './pages/About';
 
 export type Theme = 'dark' | 'light';
 
@@ -13,10 +16,12 @@ function App() {
   return (
     <div className={classNames('app', theme === 'dark' && 'theme-dark')}>
       <Header theme={theme} onChange={(v: Theme) => setTheme(v)} />
-      <div className="page-body">
-        <Preview theme={theme} />
-        {/* <Doc theme={theme} /> */}
-      </div>
+      <Routes>
+        <Route path="/" element={<Preview />} />
+        <Route path="/docs" element={<Doc />} />
+        <Route path="/demo" element={<Demo />} />
+        <Route path="/about" element={<About />} />
+      </Routes>
     </div>
   );
 }

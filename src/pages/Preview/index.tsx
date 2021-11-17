@@ -1,16 +1,16 @@
 import React, { useEffect, useRef, useState } from 'react';
 import axios from 'axios';
 import Editor from 'md-editor-rt';
-import { mdText } from '../data';
-import { Theme } from '../App';
-
-import 'md-editor-rt/lib/style.css';
+import { mdText } from '@/data';
 
 import './index.less';
+import { useSelector } from 'react-redux';
 const SAVE_KEY = 'XHMPGLJIZTDB';
 
-export default ({ theme }: { theme: Theme }) => {
+export default () => {
   const [md, setMd] = useState('');
+
+  const theme = useSelector((state: any) => state.theme);
 
   useEffect(() => {
     const storagedText = localStorage.getItem(SAVE_KEY) || '';
