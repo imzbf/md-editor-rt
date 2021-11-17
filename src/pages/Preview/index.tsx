@@ -42,6 +42,7 @@ export default () => {
       <div className="container">
         <Editor
           theme={state.theme}
+          previewTheme={state.previewTheme}
           modelValue={md}
           editorId="md-editor-preview"
           onSave={(v) => {
