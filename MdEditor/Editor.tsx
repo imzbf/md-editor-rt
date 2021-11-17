@@ -373,6 +373,11 @@ const Editor = (props: EditorProp) => {
     }
   }, [props.languageUserDefined, props.language]);
 
+  // 是否挂载目录组件
+  const catalogShow = useMemo(() => {
+    return !toolbarsExclude.includes('catalog') && toolbars.includes('catalog');
+  }, [toolbars, toolbarsExclude]);
+
   return (
     <EditorContext.Provider
       value={{
@@ -418,7 +423,7 @@ const Editor = (props: EditorProp) => {
           onGetCatalog={props.onGetCatalog}
           markedHeading={props.markedHeading}
         />
-        <Catalog markedHeadingId={props.markedHeadingId} />
+        {catalogShow && <Catalog markedHeadingId={props.markedHeadingId} />}
       </div>
     </EditorContext.Provider>
   );
