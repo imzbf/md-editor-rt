@@ -65,7 +65,8 @@ const Content = (props: EditorContentProp) => {
   };
 
   marked.setOptions({
-    renderer
+    renderer,
+    breaks: true
   });
 
   // 向页面代码块注入复制按钮
