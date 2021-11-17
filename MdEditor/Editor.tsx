@@ -234,8 +234,7 @@ export const EditorContext = createContext<ContentType>({
 // 初始为空，渲染到页面后获取页面属性
 let bodyOverflowHistory = '';
 
-const markedHeadingId: MarkedHeadingId = (text, level) =>
-  `l${level}-${btoa(encodeURIComponent(text))}`;
+const markedHeadingId: MarkedHeadingId = (text) => text;
 
 const Editor = (props: EditorProp) => {
   const {
