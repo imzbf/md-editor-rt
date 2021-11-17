@@ -6,6 +6,7 @@ import store from './store';
 import App from './App';
 
 import 'md-editor-rt/lib/style.css';
+import './style.less';
 
 ReactDOM.render(
   <Provider store={store}>

@@ -16,7 +16,7 @@ export default ({ mode }: ConfigEnv): UserConfigExport => {
     server: {
       host: 'localhost',
       open: true,
-      port: 2233,
+      port: 2234,
       https: false
     },
     resolve: {

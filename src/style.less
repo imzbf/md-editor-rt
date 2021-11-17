@@ -1,4 +1,9 @@
 @import './vars';
+@import '../node_modules/antd/lib/back-top/style';
+@import '../node_modules/antd/lib/dropdown/style';
+@import '../node_modules/antd/lib/menu/style';
+@import '../node_modules/antd/lib/affix/style';
+@import '../node_modules/antd/lib/anchor/style';
 
 body,
 h1,
@@ -29,11 +34,19 @@ td {
   padding: 0;
 }
 
-body {
-  font-size: 16px;
-  font-family: 'Varela Round', 'Noto Sans SC', -apple-system, BlinkMacSystemFont,
-    'Segoe UI', Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
-    'Segoe UI Symbol';
+a {
+  text-decoration: none;
+  color: #2d8cf0;
+  transition: color 0.3s;
+}
+
+html {
+  body {
+    font-size: 16px;
+    font-family: 'Varela Round', 'Noto Sans SC', -apple-system, BlinkMacSystemFont,
+      'Segoe UI', Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+      'Segoe UI Symbol';
+  }
 }
 
 /* 浏览器滚动条 */
@@ -62,6 +75,14 @@ body {
 
 ::-webkit-scrollbar-thumb:vertical:active {
   background-color: rgba(0, 0, 0, 0.38);
+}
+
+.icon {
+  width: 1em;
+  height: 1em;
+  vertical-align: -0.15em;
+  fill: currentColor;
+  overflow: hidden;
 }
 
 .container {
@@ -100,9 +121,32 @@ body {
   }
 }
 
-.app {
+.docs-page {
   color: @color;
   background-color: @bkColor;
+  min-height: 100vh;
+
+  .ant-anchor {
+    font-size: 1rem;
+  }
+
+  .doc {
+    display: flex;
+    padding: 2rem;
+
+    .catalog {
+      width: 25%;
+
+      .ant-anchor-wrapper {
+        padding-left: 1rem;
+      }
+    }
+
+    .content {
+      width: 75%;
+      padding-right: 1rem;
+    }
+  }
 }
 
 .theme-dark {
@@ -119,5 +163,27 @@ body {
         background-color: @bkColorDark;
       }
     }
+  }
+
+  // 覆盖ant，锚点默认样式
+  .ant-anchor {
+    color: @colorDark;
+
+    .ant-anchor-ink::before {
+      background-color: @borderColorDark;
+    }
+
+    .ant-anchor-link-title {
+      color: @colorDark;
+    }
+  }
+
+  .ant-dropdown-menu-dark {
+    background-color: @bkColorDark;
+    border: 1px solid @borderColorDark;
+  }
+
+  .ant-back-top {
+    color: @colorDark;
   }
 }

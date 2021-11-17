@@ -30,14 +30,18 @@ if (!defaultState.lang) {
 
 const setting = (state = defaultState, action: any) => {
   const newState = JSON.parse(JSON.stringify(state));
+
   switch (action.type) {
     case 'changeTheme': {
       newState.theme = action.value;
+
       localStorage.setItem(STORAGED_STORE_KEY, JSON.stringify(newState));
+      break;
     }
     case 'changePreviewTheme': {
       newState.previewTheme = action.value;
       localStorage.setItem(STORAGED_STORE_KEY, JSON.stringify(newState));
+      break;
     }
     case 'changeLang': {
       newState.lang = newState.lang === 'zh-CN' ? 'en-US' : 'zh-CN';
