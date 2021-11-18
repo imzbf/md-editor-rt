@@ -1,11 +1,11 @@
 ## 😁Basic usage
 
-It has been developing iteratively，so update the latest version please. Publish logs: [releases](https://github.com/imzbf/md-editor-v3/releases)
+It has been developing iteratively，so update the latest version please. Publish logs: [releases](https://github.com/imzbf/md-editor-rt/releases)
 
 ### 🤖Install
 
 ```shell
-yarn add md-editor-v3
+yarn add md-editor-rt
 ```
 
 Now, we can develop vue3 project by `jsx` friendly. Editor is compatible for some enthusiasts(like me).
