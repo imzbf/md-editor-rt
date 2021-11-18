@@ -1,11 +1,4 @@
-import React, {
-  createContext,
-  CSSProperties,
-  useCallback,
-  useEffect,
-  useMemo,
-  useState
-} from 'react';
+import React, { createContext, CSSProperties, useEffect, useMemo, useState } from 'react';
 import cn from 'classnames';
 import { useExpansion, useKeyBoard } from './hooks';
 import ToolBar from './layouts/Toolbar';
@@ -281,7 +274,7 @@ const Editor = (props: EditorProp) => {
     });
   };
 
-  const uploadImageCallBack = useCallback((files: FileList, cb: () => void) => {
+  const uploadImageCallBack = (files: FileList, cb: () => void) => {
     const insertHanlder = (urls: Array<string>) => {
       urls.forEach((url) => {
         // 利用事件循环机制，保证两次插入分开进行
@@ -299,7 +292,7 @@ const Editor = (props: EditorProp) => {
     if (props.onUploadImg) {
       props.onUploadImg(files, insertHanlder);
     }
-  }, []);
+  };
 
   useEffect(() => {
     if (!previewOnly) {
