@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import axios from '@/utils/request';
 import Editor from 'md-editor-rt';
 import { mdText, mdEnText } from '../../data';
 

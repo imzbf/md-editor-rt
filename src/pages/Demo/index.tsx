@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Editor, { HeadList } from 'md-editor-rt';
-import axios from 'axios';
+import axios from '@/utils/request';
 import { version } from '../../../package.json';
 import { useSelector } from 'react-redux';
 import { StateType } from '@/store';
