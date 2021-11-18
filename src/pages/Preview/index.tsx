@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import Editor from 'md-editor-rt';
 import { mdText, mdEnText } from '../../data';
@@ -6,7 +6,6 @@ import { mdText, mdEnText } from '../../data';
 import './index.less';
 import { useSelector } from 'react-redux';
 import { StateType } from '@/store';
-const SAVE_KEY = 'XHMPGLJIZTDB';
 
 export default () => {
   const [md, setMd] = useState('');
@@ -14,28 +13,12 @@ export default () => {
   const state = useSelector((state: any) => state) as StateType;
 
   useEffect(() => {
-    const storagedText = localStorage.getItem(SAVE_KEY) || '';
-
     if (state.lang === 'zh-CN') {
-      setMd(storagedText || mdText);
+      setMd(mdText);
     } else {
-      setMd(storagedText || mdEnText);
+      setMd(mdEnText);
     }
   }, [state.lang]);
-
-  // 自动保存
-  const taskId = useRef(-1);
-  useEffect(() => {
-    clearInterval(taskId.current);
-    taskId.current = window.setTimeout(() => {
-      localStorage.setItem(SAVE_KEY, md);
-    }, 2_000);
-
-    return () => {
-      clearInterval(taskId.current);
-    };
-  }, [md]);
-  // -----end-----
 
   return (
     <div className="project-preview">
@@ -45,9 +28,6 @@ export default () => {
           previewTheme={state.previewTheme}
           modelValue={md}
           editorId="md-editor-preview"
-          onSave={(v) => {
-            localStorage.setItem(SAVE_KEY, v);
-          }}
           onChange={(value) => setMd(value)}
           onUploadImg={async (files: FileList, callback: (urls: string[]) => void) => {
             const res = await Promise.all(
@@ -74,8 +54,8 @@ export default () => {
         <br />
         <span className="tips-text">
           {state.lang === 'zh-CN'
-            ? 'Tips：本页上方的编辑器有localstorage保存功能，每次操作后两秒会自己保存一次，可手动点击保存触发，可用于一些文档的编辑。'
-            : 'Tips: The editor in this page will save text to localstorage auto, and you can save text by yourself also. Wish this function can be used to edit some temporary document.'}
+            ? 'Tips：本页展示编辑器localstorage存储功能已移除！'
+            : 'Tips: The editor in this page can not save text to localstorage now!'}
         </span>
       </div>
     </div>
