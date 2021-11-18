@@ -4,19 +4,22 @@ import { TocItem } from './';
 
 const { Link } = Anchor;
 
-interface RecursiveProps {
+interface CatalogLinkProps {
   tocItem: TocItem;
 }
 
-const Recursive = ({ tocItem }: RecursiveProps): ReactElement => {
+const CatalogLink = ({ tocItem }: CatalogLinkProps): ReactElement => {
   return (
     <Link href={`#${tocItem.text}`} title={tocItem.text}>
-      {tocItem.children &&
-        tocItem.children.map((item) => (
-          <Recursive key={`${item.level}-${item.text}`} tocItem={item} />
-        ))}
+      {tocItem.children && (
+        <div className="catalog-container">
+          {tocItem.children.map((item) => (
+            <CatalogLink key={`${item.level}-${item.text}`} tocItem={item} />
+          ))}
+        </div>
+      )}
     </Link>
   );
 };
 
-export default Recursive;
+export default CatalogLink;

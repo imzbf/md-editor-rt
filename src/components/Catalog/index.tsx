@@ -1,6 +1,6 @@
 import React, { ReactElement, useMemo } from 'react';
 import { Anchor } from 'antd';
-
+import './style.less';
 import CatalogLink from './CatalogLink';
 
 export interface TocItem {
@@ -52,7 +52,7 @@ const Topicfy = ({ heads }: { heads: Array<any> }): ReactElement => {
   }, [heads]);
 
   return (
-    <Anchor affix={false} showInkInFixed={true}>
+    <Anchor affix={false} showInkInFixed={false}>
       {catalogs.map((item) => (
         <CatalogLink key={`${item.level}-${item.text}`} tocItem={item} />
       ))}
