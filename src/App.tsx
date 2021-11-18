@@ -29,10 +29,10 @@ function App() {
       <Header />
       <Suspense fallback={<div>Loadin...</div>}>
         <Routes>
-          <Route path="/" element={<Preview />} />
-          <Route path="/docs" element={<Doc />} />
-          <Route path="/demo" element={<Demo />} />
-          <Route path="/about" element={<About />} />
+          <Route path="/md-editor-rt" element={<Preview />} />
+          <Route path="/md-editor-rt/docs" element={<Doc />} />
+          <Route path="/md-editor-rt/demo" element={<Demo />} />
+          <Route path="/md-editor-rt/about" element={<About />} />
         </Routes>
       </Suspense>
       <BackTop>
