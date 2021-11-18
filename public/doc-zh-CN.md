@@ -1,4 +1,4 @@
-> 当前最新版本：[${EDITOR_VERSION}](https://github.com/imzbf/md-editor-rt/releases/tag/v${EDITOR_VERSION})，在线尝试示例：[传送门](https://codesandbox.io/s/elated-khorana-65jmr)
+> 当前最新版本：[${EDITOR_VERSION}](https://github.com/imzbf/md-editor-rt/releases/tag/v${EDITOR_VERSION})，在线尝试示例：[传送门](https://codesandbox.io/s/elated-khorana-65jmr)。
 
 ## Props 说明
 
@@ -8,79 +8,79 @@
 
 - **类型**：`String`
 - **默认值**：`''`
-- **说明**：编辑的内容
+- **说明**：编辑的内容。
 
 ### theme
 
 - **类型**：`'light' | 'dark'`
 - **默认值**：`'light'`
-- **说明**：编辑器主题
+- **说明**：编辑器主题。
 
 ### editorClass
 
 - **类型**：`String`
 - **默认值**：`''`
-- **说明**：编辑器`class`
+- **说明**：编辑器`class`。
 
 ### hljs
 
 - **类型**：`Object`
 - **默认值**：`null`
-- **说明**：highlight 实例，编辑器不会插入对应的 script，但需要手动导入的高亮代码样式
+- **说明**：highlight 实例，编辑器不会插入对应的 script，但需要手动导入的高亮代码样式。
 
 ### highlightJs
 
 - **类型**：`String`
 - **默认值**：[highlight.js@11.2.0](https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.2.0/build/highlight.min.js)
-- **说明**：highlightJs 链接
+- **说明**：highlightJs 链接。
 
 ### highlightCss
 
 - **类型**：`String`
 - **默认值**：[atom-one-dark@11.2.0](https://cdn.jsdelivr.net/npm/highlight.js@11.2.0/styles/atom-one-dark.css)
-- **说明**：预览高亮代码样式
+- **说明**：预览高亮代码样式。
 
 ### historyLength
 
 - **类型**：`Number`
 - **默认值**：`10`
-- **说明**：最大记录操作数（太大会占用内存）
+- **说明**：最大记录操作数（太大会占用内存）。
 
 ### pageFullScreen
 
 - **类型**：`Boolean`
 - **默认值**：`false`
-- **说明**：页面内全屏
+- **说明**：页面内全屏。
 
 ### preview
 
 - **类型**：`Boolean`
 - **默认值**：`true`
-- **说明**：是否显示预览
+- **说明**：是否显示预览。
 
 ### htmlPreview
 
 - **类型**：`Boolean`
 - **默认值**：`false`
-- **说明**：是否显示 html 预览
+- **说明**：是否显示 html 预览。
 
 ### previewOnly
 
 - **类型**：`Boolean`
 - **默认值**：`false`
-- **说明**：仅预览模式，不显示 bar 和编辑框，不支持响应式，仅能初始设置一次
+- **说明**：仅预览模式，不显示 bar 和编辑框，不支持响应式，仅能初始设置一次。
 
 ### language
 
 - **类型**：`String`
 - **默认值**：`'zh-CN'`
-- **说明**：内置中英文(`'zh-CN'`,`'en-US'`)，可自行扩展其他语言，同时可覆盖内置的中英文
+- **说明**：内置中英文(`'zh-CN'`,`'en-US'`)，可自行扩展其他语言，同时可覆盖内置的中英文。
 
 ### languageUserDefined
 
 - **类型**：`Object`
 - **默认值**：`{key: StaticTextDefaultValue}`
-- **说明**：通过这里扩展语言，修改 language 值为扩展 key 即可，类型申明可手动导入，支持覆盖默认的两个配置 🤨
+- **说明**：通过这里扩展语言，修改 language 值为扩展 key 即可，类型申明可手动导入，支持覆盖默认的两个配置 🤨。
 
 ```
 export interface ToolbarTips {
@@ -156,7 +156,7 @@ export interface StaticTextDefaultValue {
 
 - **类型**：`Array`
 - **默认值**：`[all]`
-- **说明**：选择性展示工具栏，可选内容见下方
+- **说明**：选择性展示工具栏，可选内容见下方。
 
 你可以随意排序工具栏，通过`'-'`分割两个工具，通过`'='`实现左右放置！
 
@@ -175,13 +175,13 @@ export interface StaticTextDefaultValue {
 
 - **类型**：`Array`
 - **默认值**：`[]`
-- **说明**：选择性不展示工具栏，内容同上
+- **说明**：选择性不展示工具栏，内容同上。
 
 ### prettier
 
 - **类型**：`Boolean`
 - **默认值**：`true`
-- **说明**：是否启用 prettier 优化 md 内容
+- **说明**：是否启用 prettier 优化 md 内容。
 
 ### prettierCDN
 
@@ -199,62 +199,62 @@ export interface StaticTextDefaultValue {
 
 - **类型**：`String`
 - **默认值**：[cropper.min.css@1.5.12](https://cdn.jsdelivr.net/npm/cropperjs@1.5.12/dist/cropper.min.css)
-- **说明**：裁剪扩展库 css
+- **说明**：裁剪扩展库 css。
 
 ### cropperJs
 
 - **类型**：`String`
 - **默认值**：[cropper.min.js@1.5.12](https://cdn.jsdelivr.net/npm/cropperjs@1.5.12/dist/cropper.min.js)
-- **说明**：裁剪扩展库 js
+- **说明**：裁剪扩展库 js。
 
 ### iconfontJs
 
 - **类型**：`String`
 - **默认值**：[iconfont](https://at.alicdn.com/t/font_2605852_khjf435c7th.js)
-- **说明**：矢量图标链接，无外网时，下载 js 到内网，提供链接
+- **说明**：矢量图标链接，无外网时，下载 js 到内网，提供链接。
 
 ### editorId
 
 - **类型**：`String`
 - **默认值**：`'md-editor-rt'`
-- **说明**：编辑器唯一标识，非必须项，用于后续支持 ssr 时，防止产生服务端与客户端渲染内容不一致错误提示
+- **说明**：编辑器唯一标识，非必须项，用于后续支持 ssr 时，防止产生服务端与客户端渲染内容不一致错误提示。
 
 ### tabWidth
 
 - **类型**：`Number`
 - **默认值**：`2`
-- **说明**：编辑器一个 TAB 键等于空格数
+- **说明**：编辑器一个 TAB 键等于空格数。
 
 ### showCodeRowNumber
 
 - **类型**：`Boolean`
 - **默认值**：`false`
-- **说明**：代码块是否显示行号
+- **说明**：代码块是否显示行号。
 
 ### screenfull
 
 - **类型**：`Object`
 - **默认值**：`null`
-- **说明**：全屏插件实例，编辑器不再插入对应的 script
+- **说明**：全屏插件实例，编辑器不再插入对应的 script。
 
 ### screenfullJs
 
 - **类型**：`String`
 - **默认值**：[5.1.0](https://cdn.jsdelivr.net/npm/screenfull@5.1.0/dist/screenfull.js)
-- **说明**：screenfull js 链接
+- **说明**：screenfull js 链接。
 
 ### previewTheme
 
 - **类型**：`'default' | 'github' | 'vuepress'`
 - **默认值**：`'default'`
-- **说明**：预览内容主题
+- **说明**：预览内容主题。
 
 ### style
 
 - **类型**：`CSSProperties`
 - **默认值**：`'default'`
 - **版本**：`>= 1.2.0`
-- **说明**：编辑器内联样式，默认不能直接设置字符串
+- **说明**：编辑器内联样式，默认不能直接设置字符串。
 
 ## 绑定事件
 
@@ -263,17 +263,17 @@ export interface StaticTextDefaultValue {
 ### onChange
 
 - **类型**：`(v: string) => void`
-- **说明**：内容变化事件（当前与`textare`的`oninput`事件绑定，每输入一个单字即会触发）
+- **说明**：内容变化事件（当前与`textare`的`oninput`事件绑定，每输入一个单字即会触发）。
 
 ### onSave
 
 - **类型**：`(v: string) => void`
-- **说明**：保存事件，快捷键与保存按钮均会触发
+- **说明**：保存事件，快捷键与保存按钮均会触发。
 
 ### onUploadImg
 
 - **类型**：`(files: FileList, callback: function) => void`
-- **说明**：上传图片事件，弹窗会等待上传结果，务必将上传后的 urls 作为 callback 入参回传
+- **说明**：上传图片事件，弹窗会等待上传结果，务必将上传后的 urls 作为 callback 入参回传。
 
 ```js
 async onUploadImg(files: FileList, callback: (urls: string[]) => void) {
@@ -302,24 +302,24 @@ async onUploadImg(files: FileList, callback: (urls: string[]) => void) {
 ### onHtmlChanged
 
 - **类型**：`(h: string) => void`
-- **说明**：html 变化回调事件，用于获取预览 html 代码
+- **说明**：html 变化回调事件，用于获取预览 html 代码。
 
 ### onGetCatalog
 
 - **类型**：`(list: HeadList[]) => void`
-- **说明**：动态获取`markdown`目录
+- **说明**：动态获取`markdown`目录。
 
 ### markedHeading
 
 - **类型**：`(text: string,level: 1-6,raw: string, slugger: Slugger) => string`
-- **说明**：`marked`转换 md 文本标题的方法
+- **说明**：`marked`转换 md 文本标题的方法。
 
 > 如果你重写了`markedHeading`方法，请务必通过`markedHeadingId`告诉编辑器你生成标题 ID 的算法。以便生成的内部目录能够正确导航。
 
 ### markedHeadingId
 
 - **类型**：`(text: string, level: number) => string`
-- **说明**：标题`ID`计算方式
+- **说明**：标题`ID`计算方式。
 
 ## 快捷键
 
