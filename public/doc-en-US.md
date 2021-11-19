@@ -364,4 +364,6 @@ async onUploadImg(files: FileList, callback: (urls: string[]) => void) {
 | CTRL + ALT + C | code row |  |
 | CTRL + SHIFT + ALT + T | table | `\|table\|` |
 
-## End of docs
+## Edit this page
+
+[doc-en-US](https://github.com/imzbf/md-editor-rt/blob/dev-docs/public/doc-en-US.md)

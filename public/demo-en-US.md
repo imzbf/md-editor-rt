@@ -1,8 +1,8 @@
-## 😁Basic usage
+## 😁 Basic usage
 
 It has been developing iteratively，so update the latest version please. Publish logs: [releases](https://github.com/imzbf/md-editor-rt/releases)
 
-### 🤖Install
+### 🤖 Install
 
 ```shell
 yarn add md-editor-rt
@@ -10,7 +10,7 @@ yarn add md-editor-rt
 
 Now, we can develop vue3 project by `jsx` friendly. Editor is compatible for some enthusiasts(like me).
 
-### 🤓Simple use
+### 🤓 Simple use
 
 ```js
 import React, { useState } from 'react';
@@ -23,15 +23,15 @@ export default function App() {
 }
 ```
 
-## 🥂Extended
+## 🥂 Extended
 
 Usages of some APIs.
 
-### 🍦Change Theme
+### 🍦 Change Theme
 
 After `v1.1.0`, Themes are divided into editor themes(api: `theme`) and article preview themes(api: `previewTheme`).
 
-#### 🍧Editor Theme
+#### 🍧 Editor Theme
 
 Support `light` and `dark` default.
 
@@ -47,7 +47,7 @@ export default function App() {
 }
 ```
 
-#### 🍡Preview Theme
+#### 🍡 Preview Theme
 
 There are three themes `default`, `github` and `vuepress`. It is useful When you want to show your article directly. Modify `previewTheme`.
 
@@ -68,19 +68,18 @@ export default function App() {
 }
 ```
 
-### 🛠Extension component
+### 🛠 Extension component
 
 Extensions highlight, prettier, cropper, screenfull are import from `cdn`. When your project is running offline, replace urls of these extensions. Some Extensions support be injected in development environment.
 
 Demo of `screenfull`
 
-#### ⚰️Inject directly
+#### ⚰️ Inject directly
 
 ```js
 import React, { useState } from 'react';
 import Editor from 'md-editor-rt';
 import 'md-editor-rt/lib/style.css';
-// 引用screenfull
 import screenfull from 'screenfull';
 
 export default function App() {
@@ -89,7 +88,7 @@ export default function App() {
 }
 ```
 
-#### 📡Intranet link
+#### 📡 Intranet link
 
 Get these extension files from [https://www.jsdelivr.com/](https://www.jsdelivr.com/).
 
@@ -110,7 +109,7 @@ export default function App() {
 }
 ```
 
-### 📷Upload pictures
+### 📷 Upload pictures
 
 By default, you can select multiple pictures. You can paste and upload screenshots and copy web page pictures.
 
@@ -142,7 +141,7 @@ async onUploadImg(files: FileList, callback: (urls: string[]) => void) {
 }
 ```
 
-### 🏳️‍🌈Extension language
+### 🏳️‍🌈 Extension language
 
 ```js
 import React, { useState } from 'react';
@@ -223,7 +222,7 @@ export default function App() {
 }
 ```
 
-### 📄Get catalogue
+### 📄 Get catalogue
 
 Get data list by `onGetCatalog`:
 
@@ -242,9 +241,114 @@ export default function App() {
 
 If there is a component like [`Anchor`](https://ant.design/components/anchor-cn/) in your project, continue.
 
-Create `Catalog` component, source code: [Catalog](https://github.com/imzbf/md-editor-rt/tree/dev-docs/src/components/Catalog)
+#### 🚥 Generate catalogs
 
-### 🪚Define toolbar
+We need create `Catalog` component and `CatalogLink` component to finish this function.
+
+**Catalog.tsx**
+
+```js
+import React, { ReactElement, useMemo } from 'react';
+import { Anchor } from 'antd';
+import './style.less';
+import CatalogLink from './CatalogLink';
+
+export interface TocItem {
+  text: string;
+  level: number;
+  children?: Array<TocItem>;
+}
+
+const Catalog = ({ heads }: { heads: Array<any> }): ReactElement => {
+  const catalogs = useMemo(() => {
+    const tocItems: TocItem[] = [];
+
+    heads.forEach(({ text, level }) => {
+      const item = { level, text };
+
+      if (tocItems.length === 0) {
+        tocItems.push(item);
+      } else {
+        let lastItem = tocItems[tocItems.length - 1];
+
+        if (item.level > lastItem.level) {
+          for (let i = lastItem.level + 1; i <= 6; i++) {
+            const { children } = lastItem;
+            if (!children) {
+              lastItem.children = [item];
+              break;
+            }
+
+            lastItem = children[children.length - 1];
+
+            if (item.level <= lastItem.level) {
+              children.push(item);
+              break;
+            }
+          }
+        } else {
+          tocItems.push(item);
+        }
+      }
+    });
+
+    return tocItems;
+  }, [heads]);
+
+  return (
+    <Anchor affix={false} showInkInFixed={false}>
+      {catalogs.map((item) => (
+        <CatalogLink key={`${item.level}-${item.text}`} tocItem={item} />
+      ))}
+    </Anchor>
+  );
+};
+
+export default Catalog;
+```
+
+**CatalogLink.tsx**
+
+```js
+import React, { ReactElement } from 'react';
+import { Anchor } from 'antd';
+import { TocItem } from './';
+
+const { Link } = Anchor;
+
+interface CatalogLinkProps {
+  tocItem: TocItem;
+}
+
+const CatalogLink = ({ tocItem }: CatalogLinkProps): ReactElement => {
+  return (
+    <Link href={`#${tocItem.text}`} title={tocItem.text}>
+      {tocItem.children && (
+        <div className="catalog-container">
+          {tocItem.children.map((item) => (
+            <CatalogLink key={`${item.level}-${item.text}`} tocItem={item} />
+          ))}
+        </div>
+      )}
+    </Link>
+  );
+};
+
+export default CatalogLink;
+```
+
+**style.css**
+
+```css
+.catalog-container {
+  max-height: 300px;
+  overflow: auto;
+}
+```
+
+Source code: [Catalog](https://github.com/imzbf/md-editor-rt/tree/dev-docs/src/components/Catalog).
+
+### 🪚 Define toolbar
 
 > after v1.2.0, You can sort the toolbar as you like, split tools by `'-'`, the left and right toolbars are divided by `'='`！
 
@@ -261,4 +365,6 @@ export default function App() {
 }
 ```
 
-## 🧻End
+## 🧻 Edit this page
+
+[demo-en-US](https://github.com/imzbf/md-editor-rt/blob/dev-docs/public/demo-en-US.md)
