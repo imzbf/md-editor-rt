@@ -242,7 +242,118 @@ export default function App() {
 
 若项目中使用的 ui 库有锚点类似的组件，请继续看下去（案例使用 antd 组件库）：
 
-创建组件`Catalog`，源码地址：[Catalog 源码](https://github.com/imzbf/md-editor-rt/tree/dev-docs/src/components/Catalog)
+#### 🚥 生成目录导航
+
+我们需要创建`Catalog`组件和`CatalogLink`组件来展示我们的目录（本案例中，约定了子目录最大高度为`300px`）
+
+**Catalog.tsx**
+
+```js
+import React, { ReactElement, useMemo } from 'react';
+import { Anchor } from 'antd';
+import './style.less';
+import CatalogLink from './CatalogLink';
+
+export interface TocItem {
+  text: string;
+  level: number;
+  children?: Array<TocItem>;
+}
+
+const Catalog = ({ heads }: { heads: Array<any> }): ReactElement => {
+  // 重构的列表
+  const catalogs = useMemo(() => {
+    const tocItems: TocItem[] = [];
+
+    heads.forEach(({ text, level }) => {
+      const item = { level, text };
+
+      if (tocItems.length === 0) {
+        // 第一个 item 直接 push
+        tocItems.push(item);
+      } else {
+        let lastItem = tocItems[tocItems.length - 1]; // 最后一个 item
+
+        if (item.level > lastItem.level) {
+          // item 是 lastItem 的 children
+          for (let i = lastItem.level + 1; i <= 6; i++) {
+            const { children } = lastItem;
+            if (!children) {
+              // 如果 children 不存在
+              lastItem.children = [item];
+              break;
+            }
+
+            lastItem = children[children.length - 1]; // 重置 lastItem 为 children 的最后一个 item
+
+            if (item.level <= lastItem.level) {
+              // item level 小于或等于 lastItem level 都视为与 children 同级
+              children.push(item);
+              break;
+            }
+          }
+        } else {
+          // 置于最顶级
+          tocItems.push(item);
+        }
+      }
+    });
+
+    return tocItems;
+  }, [heads]);
+
+  return (
+    <Anchor affix={false} showInkInFixed={false}>
+      {catalogs.map((item) => (
+        <CatalogLink key={`${item.level}-${item.text}`} tocItem={item} />
+      ))}
+    </Anchor>
+  );
+};
+
+export default Catalog;
+```
+
+**CatalogLink.tsx**
+
+```js
+import React, { ReactElement } from 'react';
+import { Anchor } from 'antd';
+import { TocItem } from './';
+
+const { Link } = Anchor;
+
+interface CatalogLinkProps {
+  tocItem: TocItem;
+}
+
+const CatalogLink = ({ tocItem }: CatalogLinkProps): ReactElement => {
+  return (
+    <Link href={`#${tocItem.text}`} title={tocItem.text}>
+      {tocItem.children && (
+        <div className="catalog-container">
+          {tocItem.children.map((item) => (
+            <CatalogLink key={`${item.level}-${item.text}`} tocItem={item} />
+          ))}
+        </div>
+      )}
+    </Link>
+  );
+};
+
+export default CatalogLink;
+```
+
+**style.css**
+
+```css
+.catalog-container {
+  max-height: 300px;
+  overflow: auto;
+}
+```
+
+源码地址：[Catalog 源码](https://github.com/imzbf/md-editor-rt/tree/dev-docs/src/components/Catalog)
 
 ### 🪚 调整工具栏
 
@@ -263,4 +374,6 @@ export default function App() {
 
 更详细的实现可以参考本文档的源码！
 
-## 🧻 结束
+## 🧻 编辑此页面
+
+[demo-zh-CN](https://github.com/imzbf/md-editor-rt/blob/dev-docs/public/demo-zh-CN.md)
