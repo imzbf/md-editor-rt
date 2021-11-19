@@ -9,7 +9,7 @@ export interface TocItem {
   children?: Array<TocItem>;
 }
 
-const Topicfy = ({ heads }: { heads: Array<any> }): ReactElement => {
+const Catalog = ({ heads }: { heads: Array<any> }): ReactElement => {
   // 重构的列表
   const catalogs = useMemo(() => {
     const tocItems: TocItem[] = [];
@@ -60,4 +60,4 @@ const Topicfy = ({ heads }: { heads: Array<any> }): ReactElement => {
   );
 };
 
-export default Topicfy;
+export default Catalog;
