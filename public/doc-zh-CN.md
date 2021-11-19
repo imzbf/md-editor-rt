@@ -352,4 +352,6 @@ async onUploadImg(files: FileList, callback: (urls: string[]) => void) {
 | CTRL + ALT + C | 行内代码 | 行内代码块 |
 | CTRL + SHIFT + ALT + T | 表格 | `\|表格\|` |
 
-## 结束
+## 编辑此页面
+
+[doc-zh-CN](https://github.com/imzbf/md-editor-rt/blob/dev-docs/public/doc-zh-CN.md)

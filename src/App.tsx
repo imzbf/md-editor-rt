@@ -27,7 +27,7 @@ function App() {
   return (
     <div className={classNames('docs-page', theme === 'dark' && 'theme-dark')}>
       <Header />
-      <Suspense fallback={<div>Loadin...</div>}>
+      <Suspense fallback={<div></div>}>
         <Routes>
           <Route path="/md-editor-rt" element={<Preview />} />
           <Route path="/md-editor-rt/docs" element={<Doc />} />
