@@ -33,7 +33,7 @@ export default () => {
   return (
     <ul className="nav-list">
       <li className="nav-item">
-        <Link to="/">
+        <Link to="/md-editor-rt">
           <svg className="icon" aria-hidden="true">
             <use xlinkHref="#icon-d-online"></use>
           </svg>
@@ -41,7 +41,7 @@ export default () => {
         </Link>
       </li>
       <li className="nav-item">
-        <Link to="/docs">
+        <Link to="/md-editor-rt/docs">
           <svg className="icon" aria-hidden="true">
             <use xlinkHref="#icon-d-docs"></use>
           </svg>
@@ -49,7 +49,7 @@ export default () => {
         </Link>
       </li>
       <li className="nav-item">
-        <Link to="/demo">
+        <Link to="/md-editor-rt/demo">
           <svg className="icon" aria-hidden="true">
             <use xlinkHref="#icon-d-demo"></use>
           </svg>
@@ -65,7 +65,7 @@ export default () => {
         </a>
       </li>
       <li className="nav-item">
-        <Link to="/about">
+        <Link to="/md-editor-rt/about">
           <svg className="icon" aria-hidden="true">
             <use xlinkHref="#icon-d-about"></use>
           </svg>

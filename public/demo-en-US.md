@@ -1,119 +1,53 @@
-## Basic usage
+## 😁 Basic usage
 
-It has been developing iteratively，so update the latest version please. Publish logs: [releases](https://github.com/imzbf/md-editor-v3/releases)
+It has been developing iteratively，so update the latest version please. Publish logs: [releases](https://github.com/imzbf/md-editor-rt/releases)
+
+### 🤖 Install
 
 ```shell
-yarn add md-editor-v3
+yarn add md-editor-rt
 ```
 
 Now, we can develop vue3 project by `jsx` friendly. Editor is compatible for some enthusiasts(like me).
 
-### Traditional development
-
-Use production version in html directly：
+### 🤓 Simple use
 
 ```js
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <title>Traditional development</title>
-    <link href="https://cdn.jsdelivr.net/npm/md-editor-v3@${EDITOR_VERSION}/lib/style.css" rel="stylesheet" />
-  </head>
-  <body>
-    <div id="md-editor-v3">
-      <md-editor-v3 v-model="text" />
-    </div>
-    <script src="https://cdn.jsdelivr.net/npm/vue@3.1.5/dist/vue.global.prod.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/md-editor-v3@${EDITOR_VERSION}/lib/md-editor-v3.umd.js"></script>
-    <script>
-      const App = {
-        data() {
-          return {
-            text: 'Hello Editor!!'
-          };
-        }
-      };
-      Vue.createApp(App).use(MdEditorV3).mount('#md-editor-v3');
-    </script>
-  </body>
-</html>
+import React, { useState } from 'react';
+import Editor from 'md-editor-rt';
+import 'md-editor-rt/lib/style.css';
+
+export default function App() {
+  const [text, setText] = useState('hello md-editor-rt！');
+  return <Editor modelValue={text} onChange={setText} />;
+}
 ```
 
-### Vue template
-
-```js
-<template>
-  <md-editor v-model="text" />
-</template>
-
-<script lang="ts">
-import { defineComponent } from 'vue';
-import MdEditor from 'md-editor-v3';
-import 'md-editor-v3/lib/style.css';
-
-export default defineComponent({
-  components: { MdEditor },
-  data() {
-    return { text: '' };
-  }
-});
-</script>
-```
-
-### Jsx module
-
-```js
-import { defineComponent, ref } from 'vue';
-import MdEditor from 'md-editor-v3';
-import 'md-editor-v3/lib/style.css';
-
-export default defineComponent({
-  name: 'MdEditor',
-  setup() {
-    const text = ref('');
-    return () => (
-      <MdEditor modelValue={text.value} onChange={(v: string) => (text.value = v)} />
-    );
-  }
-});
-```
-
-## Api usage
+## 🥂 Extended
 
 Usages of some APIs.
 
-### Change Theme
+### 🍦 Change Theme
 
-After `v1.4.3`, Themes are divided into editor themes(api: `theme`) and article preview themes(api: `previewTheme`).
+After `v1.1.0`, Themes are divided into editor themes(api: `theme`) and article preview themes(api: `previewTheme`).
 
-#### Editor Theme
+#### 🍧 Editor Theme
 
 Support `light` and `dark` default.
 
 ```js
-<template>
-  <md-editor v-model="text" :theme="theme"/>
-</template>
+import React, { useState } from 'react';
+import Editor from 'md-editor-rt';
+import 'md-editor-rt/lib/style.css';
 
-<script lang="ts">
-import { defineComponent } from 'vue';
-import MdEditor from 'md-editor-v3';
-import 'md-editor-v3/lib/style.css';
-
-export default defineComponent({
-  components: { MdEditor },
-  data() {
-    return {
-      text: '',
-      theme: 'dark'
-    };
-  }
-});
-</script>
+export default function App() {
+  const [text, setText] = useState('hello md-editor-rt！');
+  const [theme] = useState('dark');
+  return <Editor modelValue={text} onChange={setText} theme={theme} />;
+}
 ```
 
-#### Preview Theme
+#### 🍡 Preview Theme
 
 There are three themes `default`, `github` and `vuepress`. It is useful When you want to show your article directly. Modify `previewTheme`.
 
@@ -123,90 +57,63 @@ Rules:
 - When `github`, the style of code will vary in `github-light` and `github-dark`.
 
 ```js
-<template>
-  <md-editor v-model="text" :preview-theme="theme"/>
-</template>
+import React, { useState } from 'react';
+import Editor from 'md-editor-rt';
+import 'md-editor-rt/lib/style.css';
 
-<script lang="ts">
-import { defineComponent } from 'vue';
-import MdEditor from 'md-editor-v3';
-import 'md-editor-v3/lib/style.css';
-
-export default defineComponent({
-  components: { MdEditor },
-  data() {
-    return {
-      text: '',
-      theme: 'vuepress'
-    };
-  }
-});
-</script>
+export default function App() {
+  const [text, setText] = useState('hello md-editor-rt！');
+  const [previewTheme] = useState('github');
+  return <Editor modelValue={text} onChange={setText} previewTheme={previewTheme} />;
+}
 ```
 
-### Extension component
+### 🛠 Extension component
 
 Extensions highlight, prettier, cropper, screenfull are import from `cdn`. When your project is running offline, replace urls of these extensions. Some Extensions support be injected in development environment.
 
 Demo of `screenfull`
 
-#### Inject directly
+#### ⚰️ Inject directly
 
 ```js
-<template>
-  <md-editor v-model="text" :screenfull="screenfull"/>
-</template>
-
-<script lang="ts">
-import { defineComponent } from 'vue';
-// import screenfull
+import React, { useState } from 'react';
+import Editor from 'md-editor-rt';
+import 'md-editor-rt/lib/style.css';
 import screenfull from 'screenfull';
-import MdEditor from 'md-editor-v3';
-import 'md-editor-v3/lib/style.css';
 
-export default defineComponent({
-  components: { MdEditor },
-  data() {
-    return {
-      text: '',
-      screenfull
-    };
-  }
-});
-</script>
+export default function App() {
+  const [text, setText] = useState('hello md-editor-rt！');
+  return <Editor modelValue={text} onChange={setText} screenfull={screenfull} />;
+}
 ```
 
-#### Intranet link
+#### 📡 Intranet link
 
 Get these extension files from [https://www.jsdelivr.com/](https://www.jsdelivr.com/).
 
 ```js
-<template>
-  <md-editor v-model="text" :screenfullJs="screenfull"/>
-</template>
+import React, { useState } from 'react';
+import Editor from 'md-editor-rt';
+import 'md-editor-rt/lib/style.css';
 
-<script lang="ts">
-import { defineComponent } from 'vue';
-import MdEditor from 'md-editor-v3';
-import 'md-editor-v3/lib/style.css';
-
-export default defineComponent({
-  components: { MdEditor },
-  data() {
-    return {
-      text: '',
-      screenfullJs: 'http://127.0.0.1:90/libs/screenfull.js'
-    };
-  }
-});
-</script>
+export default function App() {
+  const [text, setText] = useState('hello md-editor-rt！');
+  return (
+    <Editor
+      modelValue={text}
+      onChange={setText}
+      screenfullJs="'http://127.0.0.1:90/libs/screenfull.js'"
+    />
+  );
+}
 ```
 
-### Upload pictures
+### 📷 Upload pictures
 
 By default, you can select multiple pictures. You can paste and upload screenshots and copy web page pictures.
 
-> v1.2.0：Only one image can be selected for image clipping ~，but `onUploadImg` function will receive an array also.
+> Only one image can be selected for image clipping ~，but `onUploadImg` function will receive an array also.
 
 > Tips: When pasting pictures, if they are GIF graphs, it does not work! Please upload it by file system.
 
@@ -234,190 +141,230 @@ async onUploadImg(files: FileList, callback: (urls: string[]) => void) {
 }
 ```
 
-### Extension language
+### 🏳️‍🌈 Extension language
 
 ```js
-<template>
-  <md-editor
-    v-model="text"
-    :language="language"
-    :languageUserDefined="languageUserDefined"
-  />
-</template>
+import React, { useState } from 'react';
+import Editor from 'md-editor-rt';
+import 'md-editor-rt/lib/style.css';
 
-<script lang="ts">
-import { defineComponent } from 'vue';
-import MdEditor from 'md-editor-v3';
-import 'md-editor-v3/lib/style.css';
+export default function App() {
+  const [text, setText] = useState('hello md-editor-rt！');
 
-export default defineComponent({
-  components: { MdEditor },
-  data() {
-    return {
-      text: '',
-      // name
-      language: 'my-lang',
-      // text
-      languageUserDefined: {
-        'my-lang': {
-          toolbarTips: {
-            bold: '----',
-            underline: 'underline',
-            italic: 'italic',
-            strikeThrough: 'strikeThrough',
-            title: 'title',
-            sub: 'subscript',
-            sup: 'superscript',
-            quote: 'quote',
-            unorderedList: 'unordered list',
-            orderedList: 'ordered list',
-            codeRow: 'inline code',
-            code: 'block-level code',
-            link: 'link',
-            image: 'image',
-            table: 'table',
-            revoke: 'revoke',
-            next: 'undo revoke',
-            save: 'save',
-            prettier: 'prettier',
-            pageFullscreen: 'fullscreen in page',
-            fullscreen: 'fullscreen',
-            preview: 'preview',
-            htmlPreview: 'html preview',
-            github: 'source code'
-          },
-          titleItem: {
-            h1: 'Lv1 Heading',
-            h2: 'Lv2 Heading',
-            h3: 'Lv3 Heading',
-            h4: 'Lv4 Heading',
-            h5: 'Lv5 Heading',
-            h6: 'Lv6 Heading'
-          },
-          imgTitleItem: {
-            link: 'Add Img Link',
-            upload: 'Upload Img',
-            clip2upload: 'Clip Upload'
-          },
-          linkModalTips: {
-            title: 'Add ',
-            descLable: 'Desc:',
-            descLablePlaceHolder: 'Enter a description...',
-            urlLable: 'Link:',
-            UrlLablePlaceHolder: 'Enter a link...',
-            buttonOK: 'OK',
-          },
-          clipModalTips: {
-            title: 'Crop Image',
-            buttonUpload: 'Upload'
-          },
-          copyCode: {
-            text: 'Copy',
-            tips: 'Copied!'
-          }
-        }
-      }
-    };
-  }
-});
-</script>
+  const [language] = useState('my-lang');
+  const [languageUserDefined] = useState({
+    toolbarTips: {
+      bold: 'bold',
+      underline: 'underline',
+      italic: 'italic',
+      strikeThrough: 'strikeThrough',
+      title: 'title',
+      sub: 'subscript',
+      sup: 'superscript',
+      quote: 'quote',
+      unorderedList: 'unordered list',
+      orderedList: 'ordered list',
+      codeRow: 'inline code',
+      code: 'block-level code',
+      link: 'link',
+      image: 'image',
+      table: 'table',
+      revoke: 'revoke',
+      next: 'undo revoke',
+      save: 'save',
+      prettier: 'prettier',
+      pageFullscreen: 'fullscreen in page',
+      fullscreen: 'fullscreen',
+      catalog: 'catalog',
+      preview: 'preview',
+      htmlPreview: 'html preview',
+      github: 'source code'
+    },
+    titleItem: {
+      h1: 'Lv1 Heading',
+      h2: 'Lv2 Heading',
+      h3: 'Lv3 Heading',
+      h4: 'Lv4 Heading',
+      h5: 'Lv5 Heading',
+      h6: 'Lv6 Heading'
+    },
+    imgTitleItem: {
+      link: 'Add Img Link',
+      upload: 'Upload Img',
+      clip2upload: 'Clip Upload'
+    },
+    linkModalTips: {
+      title: 'Add ',
+      descLable: 'Desc:',
+      descLablePlaceHolder: 'Enter a description...',
+      urlLable: 'Link:',
+      UrlLablePlaceHolder: 'Enter a link...',
+      buttonOK: 'OK'
+    },
+    clipModalTips: {
+      title: 'Crop Image',
+      buttonUpload: 'Upload'
+    },
+    copyCode: {
+      text: 'Copy',
+      tips: 'Copied!'
+    }
+  });
 
+  return (
+    <Editor
+      modelValue={text}
+      onChange={setText}
+      language={language}
+      languageUserDefined={languageUserDefined}
+    />
+  );
+}
 ```
 
-### Get catalogue
+### 📄 Get catalogue
 
 Get data list by `onGetCatalog`:
 
 ```js
-<template>
-  <md-editor v-model="text" @onGetCatalog="onGetCatalog" />
-</template>
+import React, { useState } from 'react';
+import Editor from 'md-editor-rt';
+import 'md-editor-rt/lib/style.css';
 
-<script lang="ts">
-import { defineComponent } from 'vue';
-import MdEditor from 'md-editor-v3';
-import 'md-editor-v3/lib/style.css';
+export default function App() {
+  const [text, setText] = useState('hello md-editor-rt！');
+  const [catalogList, setList] = useState([]);
 
-export default defineComponent({
-  components: { MdEditor },
-  data() {
-    return {
-      text: '',
-      catalogList: []
-    };
-  },
-  methods: {
-    onGetCatalog(list: any) {
-      this.catalogList = list;
-    }
-  }
-});
-</script>
-
+  return <Editor modelValue={text} onChange={setText} onGetCatalog={setList} />;
+}
 ```
 
-If there is a component like [`Anchor`](https://2x.antdv.com/components/anchor-cn) in your project, continue.
+If there is a component like [`Anchor`](https://ant.design/components/anchor-cn/) in your project, continue.
 
-Create `Catalog` component, source code: [Catalog](https://github.com/imzbf/md-editor-v3/tree/dev-docs/src/components/Catalog)
+#### 🚥 Generate catalogs
+
+We need create `Catalog` component and `CatalogLink` component to finish this function.
+
+**Catalog.tsx**
 
 ```js
-<template>
-  <div>
-    <md-editor v-model="text" @onGetCatalog="onGetCatalog"/>
-    <catalog :heads="catalogList" />
-  </div>
-</template>
+import React, { ReactElement, useMemo } from 'react';
+import { Anchor } from 'antd';
+import './style.less';
+import CatalogLink from './CatalogLink';
 
-<script lang="ts">
-import { defineComponent } from 'vue';
-import MdEditor from 'md-editor-v3';
-import 'md-editor-v3/lib/style.css';
+export interface TocItem {
+  text: string;
+  level: number;
+  children?: Array<TocItem>;
+}
 
-import Catalog from '@/Catalog';
+const Catalog = ({ heads }: { heads: Array<any> }): ReactElement => {
+  const catalogs = useMemo(() => {
+    const tocItems: TocItem[] = [];
 
-export default defineComponent({
-  components: {
-    MdEditor,
-    Catalog
-  },
-  data() {
-    return {
-      text: '',
-      catalogList: []
-    };
-  },
-  methods: {
-    onGetCatalog(list) {
-      this.catalogList = list
-    }
-  }
-});
+    heads.forEach(({ text, level }) => {
+      const item = { level, text };
+
+      if (tocItems.length === 0) {
+        tocItems.push(item);
+      } else {
+        let lastItem = tocItems[tocItems.length - 1];
+
+        if (item.level > lastItem.level) {
+          for (let i = lastItem.level + 1; i <= 6; i++) {
+            const { children } = lastItem;
+            if (!children) {
+              lastItem.children = [item];
+              break;
+            }
+
+            lastItem = children[children.length - 1];
+
+            if (item.level <= lastItem.level) {
+              children.push(item);
+              break;
+            }
+          }
+        } else {
+          tocItems.push(item);
+        }
+      }
+    });
+
+    return tocItems;
+  }, [heads]);
+
+  return (
+    <Anchor affix={false} showInkInFixed={false}>
+      {catalogs.map((item) => (
+        <CatalogLink key={`${item.level}-${item.text}`} tocItem={item} />
+      ))}
+    </Anchor>
+  );
+};
+
+export default Catalog;
 ```
 
-### define toolbar
-
-> after v1.6.0, You can sort the toolbar as you like, split tools by `'-'`, the left and right toolbars are divided by `'='`！
+**CatalogLink.tsx**
 
 ```js
-<template>
-  <md-editor v-model="text" :toolbars="toolbars" />
-</template>
+import React, { ReactElement } from 'react';
+import { Anchor } from 'antd';
+import { TocItem } from './';
 
-<script lang="ts">
-import { defineComponent } from 'vue';
-import MdEditor from 'md-editor-v3';
-import 'md-editor-v3/lib/style.css';
+const { Link } = Anchor;
 
-export default defineComponent({
-  components: {
-    MdEditor
-  },
-  data() {
-    return {
-      toolbars: ['italic', 'underline', '-', 'bold', '=', 'github'],
-    };
-  }
-});
+interface CatalogLinkProps {
+  tocItem: TocItem;
+}
+
+const CatalogLink = ({ tocItem }: CatalogLinkProps): ReactElement => {
+  return (
+    <Link href={`#${tocItem.text}`} title={tocItem.text}>
+      {tocItem.children && (
+        <div className="catalog-container">
+          {tocItem.children.map((item) => (
+            <CatalogLink key={`${item.level}-${item.text}`} tocItem={item} />
+          ))}
+        </div>
+      )}
+    </Link>
+  );
+};
+
+export default CatalogLink;
 ```
 
-## End
+**style.css**
+
+```css
+.catalog-container {
+  max-height: 300px;
+  overflow: auto;
+}
+```
+
+Source code: [Catalog](https://github.com/imzbf/md-editor-rt/tree/dev-docs/src/components/Catalog).
+
+### 🪚 Define toolbar
+
+> after v1.2.0, You can sort the toolbar as you like, split tools by `'-'`, the left and right toolbars are divided by `'='`！
+
+```js
+import React, { useState } from 'react';
+import Editor from 'md-editor-rt';
+import 'md-editor-rt/lib/style.css';
+
+export default function App() {
+  const [text, setText] = useState('hello md-editor-rt！');
+  const [toolbars] = useState(['italic', 'underline', '-', 'bold', '=', 'github']);
+
+  return <Editor modelValue={text} onChange={setText} toolbars={toolbars} />;
+}
+```
+
+## 🧻 Edit this page
+
+[demo-en-US](https://github.com/imzbf/md-editor-rt/blob/dev-docs/public/demo-en-US.md)

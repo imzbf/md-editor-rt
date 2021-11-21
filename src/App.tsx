@@ -1,12 +1,12 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, lazy, Suspense } from 'react';
 import classNames from 'classnames';
 import Header from './layouts/Header';
 
-import { Route, Routes } from 'react-router';
-import Preview from './pages/Preview';
-import Doc from './pages/Doc';
-import Demo from './pages/Demo';
-import About from './pages/About';
+import { Route, Routes } from 'react-router-dom';
+const Preview = lazy(() => import('./pages/Preview'));
+const Doc = lazy(() => import('./pages/Doc'));
+const Demo = lazy(() => import('./pages/Demo'));
+const About = lazy(() => import('./pages/About'));
 import { BackTop } from 'antd';
 import { StateType } from './store';
 import { useSelector } from 'react-redux';
@@ -27,12 +27,14 @@ function App() {
   return (
     <div className={classNames('docs-page', theme === 'dark' && 'theme-dark')}>
       <Header />
-      <Routes>
-        <Route path="/" element={<Preview />} />
-        <Route path="/docs" element={<Doc />} />
-        <Route path="/demo" element={<Demo />} />
-        <Route path="/about" element={<About />} />
-      </Routes>
+      <Suspense fallback={<div></div>}>
+        <Routes>
+          <Route path="/md-editor-rt" element={<Preview />} />
+          <Route path="/md-editor-rt/docs" element={<Doc />} />
+          <Route path="/md-editor-rt/demo" element={<Demo />} />
+          <Route path="/md-editor-rt/about" element={<About />} />
+        </Routes>
+      </Suspense>
       <BackTop>
         <span>UP</span>
       </BackTop>
