@@ -448,10 +448,16 @@ Editor.defaultProps = {
   showCodeRowNumber: false,
   screenfullJs: screenfullUrl,
   previewTheme: 'default',
-  markedHeading: (text, level) => {
+  markedHeading: (text, level, raw) => {
     // 我们默认同一级别的标题，你不会定义两个相同的
-    const id = markedHeadingId(text, level);
-    return `<h${level} id="${id}"><a href="#${id}">${text}</a></h${level}>`;
+    const id = markedHeadingId(raw, level);
+
+    // 如果标题有markdown语法内容，会按照该语法添加标题，而不再自定义，但是仍然支持目录定位
+    if (text !== raw) {
+      return `<h${level} id="${id}">${text}</h${level}>`;
+    } else {
+      return `<h${level} id="${id}"><a href="#${id}">${raw}</a></h${level}>`;
+    }
   },
   // 希望你在自定义markedHeading的同时，能够告诉编辑器你生成ID的算法~
   markedHeadingId: markedHeadingId,
