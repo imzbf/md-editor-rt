@@ -222,6 +222,47 @@ export default function App() {
 }
 ```
 
+### 🛬 Modify head structure
+
+Use `markedHeading` to modify head structure, after `v1.2.2`, if there are some content about `markdown`(like: link..）, editor will display them first.
+
+> Document of `markedHeading` is the same as `heading` in [marked.js](https://marked.js.org/using_pro#renderer).
+
+- Demand: open link in new window.
+
+- Demo:
+
+```js
+import React, { useState } from 'react';
+import Editor from 'md-editor-rt';
+import 'md-editor-rt/lib/style.css';
+
+const markedHeading = (text, level, raw) => {
+  // You can not use markedHeadingId method directly, but It's really simple.
+  // If the ID you defined is not equal to `raw`(your title), be sure to tell the editor the algorithm for generating the ID by `marketheadingid`.
+  // If not, the Catalog will not go right.
+  const id = raw;
+
+  if (/<a.*>.*<\/a>/.test(text)) {
+    return `<h${level} id="${id}">${text.replace(
+      /(?<=\<a.*)>(?=.*<\/a>)/,
+      ' target="_blank">'
+    )}</h${level}>`;
+  } else if (text !== raw) {
+    return `<h${level} id="${id}">${text}</h${level}>`;
+  } else {
+    return `<h${level} id="${id}"><a href="#${id}">${raw}</a></h${level}>`;
+  }
+};
+
+export default function App() {
+  const [text, setText] = useState('hello md-editor-rt！');
+  const [catalogList, setList] = useState([]);
+
+  return <Editor modelValue={text} onChange={setText} markedHeading={markedHeading} />;
+}
+```
+
 ### 📄 Get catalogue
 
 Get data list by `onGetCatalog`:
