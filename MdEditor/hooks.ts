@@ -335,13 +335,13 @@ export const useExpansion = (props: EditorProp) => {
 
     return () => {
       if (!previewOnly) {
-        document.head.removeChild(iconfontScript);
-        document.head.removeChild(cropperLink);
-        document.head.removeChild(cropperScript);
+        iconfontScript.remove();
+        cropperLink.remove();
+        cropperScript.remove();
 
         if (prettier) {
-          document.head.removeChild(prettierScript);
-          document.head.removeChild(prettierMDScript);
+          prettierScript.remove();
+          prettierMDScript.remove();
         }
       }
     };

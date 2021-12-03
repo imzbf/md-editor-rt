@@ -109,7 +109,7 @@ export const goto = (
 
   document.body.appendChild(aEle);
   aEle.click();
-  document.body.removeChild(aEle);
+  aEle.remove();
 };
 
 /**

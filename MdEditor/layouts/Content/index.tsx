@@ -134,8 +134,8 @@ const Content = (props: EditorContentProp) => {
 
     return () => {
       if (!props.hljs) {
-        document.head.removeChild(highlightLink);
-        document.head.removeChild(highlightScript);
+        highlightLink.remove();
+        highlightScript.remove();
       }
     };
   }, []);
