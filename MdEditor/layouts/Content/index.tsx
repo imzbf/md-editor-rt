@@ -156,10 +156,12 @@ const Content = (props: EditorContentProp) => {
 
     // 更新完毕后判断是否需要重新绑定滚动事件
     if (props.setting.preview && !previewOnly) {
-      clearScrollAuto = scrollAuto(
-        textAreaRef.current as HTMLElement,
-        (previewRef.current as HTMLElement) || htmlRef.current
-      );
+      setTimeout(() => {
+        clearScrollAuto = scrollAuto(
+          textAreaRef.current as HTMLElement,
+          (previewRef.current as HTMLElement) || htmlRef.current
+        );
+      }, 0);
     }
 
     // 重新设置复制按钮
