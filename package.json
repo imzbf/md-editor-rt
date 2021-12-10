@@ -47,7 +47,7 @@
   "devDependencies": {
     "@babel/core": "^7.14.6",
     "@babel/preset-env": "^7.14.7",
-    "@types/marked": "^2.0.3",
+    "@types/marked": "^4.0.1",
     "@types/node": "^15.12.5",
     "@types/react": "^17.0.15",
     "@types/react-dom": "^17.0.9",
@@ -66,7 +66,7 @@
     "eslint-plugin-react": "^7.24.0",
     "highlight.js": "^11.0.1",
     "less": "^4.1.1",
-    "marked": "^2.1.3",
+    "marked": "^4.0.7",
     "mermaid": "^8.13.4",
     "multiparty": "^4.2.2",
     "prettier": "^2.3.2",

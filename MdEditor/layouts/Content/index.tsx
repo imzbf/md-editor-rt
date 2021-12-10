@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useMemo, useRef, useState } from 'react';
-import marked from 'marked';
+import { marked } from 'marked';
 import copy from 'copy-to-clipboard';
 import { prefix } from '../../config';
 import { EditorContext, HeadList, SettingType, MarkedHeading } from '../../Editor';
