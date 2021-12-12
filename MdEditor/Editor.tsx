@@ -1,11 +1,4 @@
-import React, {
-  createContext,
-  CSSProperties,
-  useCallback,
-  useEffect,
-  useMemo,
-  useState
-} from 'react';
+import React, { createContext, CSSProperties, useEffect, useMemo, useState } from 'react';
 import cn from 'classnames';
 import { useExpansion, useKeyBoard } from './hooks';
 import ToolBar from './layouts/Toolbar';
@@ -234,8 +227,7 @@ export const EditorContext = createContext<ContentType>({
 // 初始为空，渲染到页面后获取页面属性
 let bodyOverflowHistory = '';
 
-const markedHeadingId: MarkedHeadingId = (text, level) =>
-  `l${level}-${btoa(encodeURIComponent(text))}`;
+const markedHeadingId: MarkedHeadingId = (text) => text;
 
 const Editor = (props: EditorProp) => {
   const {
@@ -282,7 +274,7 @@ const Editor = (props: EditorProp) => {
     });
   };
 
-  const uploadImageCallBack = useCallback((files: FileList, cb: () => void) => {
+  const uploadImageCallBack = (files: FileList, cb: () => void) => {
     const insertHanlder = (urls: Array<string>) => {
       urls.forEach((url) => {
         // 利用事件循环机制，保证两次插入分开进行
@@ -300,7 +292,7 @@ const Editor = (props: EditorProp) => {
     if (props.onUploadImg) {
       props.onUploadImg(files, insertHanlder);
     }
-  }, []);
+  };
 
   useEffect(() => {
     if (!previewOnly) {
@@ -373,6 +365,11 @@ const Editor = (props: EditorProp) => {
     }
   }, [props.languageUserDefined, props.language]);
 
+  // 是否挂载目录组件
+  const catalogShow = useMemo(() => {
+    return !toolbarsExclude.includes('catalog') && toolbars.includes('catalog');
+  }, [toolbars, toolbarsExclude]);
+
   return (
     <EditorContext.Provider
       value={{
@@ -418,7 +415,7 @@ const Editor = (props: EditorProp) => {
           onGetCatalog={props.onGetCatalog}
           markedHeading={props.markedHeading}
         />
-        <Catalog markedHeadingId={props.markedHeadingId} />
+        {catalogShow && <Catalog markedHeadingId={props.markedHeadingId} />}
       </div>
     </EditorContext.Provider>
   );
@@ -451,10 +448,16 @@ Editor.defaultProps = {
   showCodeRowNumber: false,
   screenfullJs: screenfullUrl,
   previewTheme: 'default',
-  markedHeading: (text, level) => {
+  markedHeading: (text, level, raw) => {
     // 我们默认同一级别的标题，你不会定义两个相同的
-    const id = markedHeadingId(text, level);
-    return `<h${level} id="${id}"><a href="#${id}">${text}</a></h${level}>`;
+    const id = markedHeadingId(raw, level);
+
+    // 如果标题有markdown语法内容，会按照该语法添加标题，而不再自定义，但是仍然支持目录定位
+    if (text !== raw) {
+      return `<h${level} id="${id}">${text}</h${level}>`;
+    } else {
+      return `<h${level} id="${id}"><a href="#${id}">${raw}</a></h${level}>`;
+    }
   },
   // 希望你在自定义markedHeading的同时，能够告诉编辑器你生成ID的算法~
   markedHeadingId: markedHeadingId,

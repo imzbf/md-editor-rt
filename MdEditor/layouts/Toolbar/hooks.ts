@@ -52,7 +52,7 @@ export const useSreenfull = (props: ToolbarProp) => {
 
     return () => {
       if (!previewOnly && !props.screenfull) {
-        document.head.removeChild(screenScript);
+        screenScript.remove();
       }
     };
   }, []);

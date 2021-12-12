@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useMemo, useRef, useState } from 'react';
-import marked from 'marked';
+import { marked } from 'marked';
 import copy from 'copy-to-clipboard';
 import { prefix } from '../../config';
 import { EditorContext, HeadList, SettingType, MarkedHeading } from '../../Editor';
@@ -54,8 +54,8 @@ const Content = (props: EditorContentProp) => {
   const renderer = new marked.Renderer();
   // 标题重构
   renderer.heading = (...headProps) => {
-    const [text, level] = headProps;
-    headstemp.push({ text, level });
+    const [, level, raw] = headProps;
+    headstemp.push({ text: raw, level });
 
     return props.markedHeading(...headProps);
   };
@@ -65,7 +65,8 @@ const Content = (props: EditorContentProp) => {
   };
 
   marked.setOptions({
-    renderer
+    renderer,
+    breaks: true
   });
 
   // 向页面代码块注入复制按钮
@@ -133,8 +134,8 @@ const Content = (props: EditorContentProp) => {
 
     return () => {
       if (!props.hljs) {
-        document.head.removeChild(highlightLink);
-        document.head.removeChild(highlightScript);
+        highlightLink.remove();
+        highlightScript.remove();
       }
     };
   }, []);
@@ -155,10 +156,12 @@ const Content = (props: EditorContentProp) => {
 
     // 更新完毕后判断是否需要重新绑定滚动事件
     if (props.setting.preview && !previewOnly) {
-      clearScrollAuto = scrollAuto(
-        textAreaRef.current as HTMLElement,
-        (previewRef.current as HTMLElement) || htmlRef.current
-      );
+      setTimeout(() => {
+        clearScrollAuto = scrollAuto(
+          textAreaRef.current as HTMLElement,
+          (previewRef.current as HTMLElement) || htmlRef.current
+        );
+      }, 0);
     }
 
     // 重新设置复制按钮
