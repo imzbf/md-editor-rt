@@ -19,6 +19,7 @@ export interface ToolbarProp {
   screenfull: any;
   screenfullJs: string;
   updateSetting: (k: keyof SettingType) => void;
+  tableShape: [number, number];
 }
 
 const Toolbar = (props: ToolbarProp) => {
@@ -34,7 +35,9 @@ const Toolbar = (props: ToolbarProp) => {
     title: false,
     catalog: false,
     // 图片上传下拉
-    image: false
+    image: false,
+    // 表格预选
+    table: false
   });
 
   // 触发器
@@ -139,9 +142,11 @@ const Toolbar = (props: ToolbarProp) => {
               <ul
                 className={`${prefix}-menu`}
                 onClick={() => {
-                  setVisible({
-                    ...visible,
-                    title: false
+                  setVisible((_vis) => {
+                    return {
+                      ..._vis,
+                      title: false
+                    };
                   });
                 }}
               >
@@ -342,9 +347,11 @@ const Toolbar = (props: ToolbarProp) => {
           <Dropdown
             visible={visible.image}
             onChange={(v) => {
-              setVisible({
-                ...visible,
-                image: v
+              setVisible((_vis) => {
+                return {
+                  ..._vis,
+                  image: v
+                };
               });
             }}
             overlay={
@@ -386,30 +393,57 @@ const Toolbar = (props: ToolbarProp) => {
             }
             key="bar-image"
           >
-            {
-              <div className={`${prefix}-toolbar-item`} title={ult.toolbarTips?.image}>
-                <svg className={`${prefix}-icon`} aria-hidden="true">
-                  <use xlinkHref="#icon-image" />
-                </svg>
-              </div>
-            }
+            <div className={`${prefix}-toolbar-item`} title={ult.toolbarTips?.image}>
+              <svg className={`${prefix}-icon`} aria-hidden="true">
+                <use xlinkHref="#icon-image" />
+              </svg>
+            </div>
           </Dropdown>
         );
       }
       case 'table': {
         return (
-          <div
-            className={`${prefix}-toolbar-item`}
-            title={ult.toolbarTips?.table}
-            onClick={() => {
-              emitHandler('table');
+          <Dropdown
+            visible={visible.table}
+            onChange={(v) => {
+              setVisible((_vis) => {
+                return {
+                  ..._vis,
+                  table: v
+                };
+              });
             }}
             key="bar-table"
+            overlay={
+              <div className={`${prefix}-table-shape`}>
+                {new Array(props.tableShape[1]).fill('').map((_, rowIndex) => (
+                  <div
+                    className={`${prefix}-table-shape-row`}
+                    key={`table-shape-row-${rowIndex}`}
+                  >
+                    {new Array(props.tableShape[0]).fill('').map((_, colIndex) => (
+                      <div
+                        className={`${prefix}-table-shape-col`}
+                        key={`table-shape-col-${colIndex}`}
+                      ></div>
+                    ))}
+                  </div>
+                ))}
+              </div>
+            }
           >
-            <svg className={`${prefix}-icon`} aria-hidden="true">
-              <use xlinkHref="#icon-table" />
-            </svg>
-          </div>
+            <div
+              className={`${prefix}-toolbar-item`}
+              title={ult.toolbarTips?.table}
+              onClick={() => {
+                emitHandler('table');
+              }}
+            >
+              <svg className={`${prefix}-icon`} aria-hidden="true">
+                <use xlinkHref="#icon-table" />
+              </svg>
+            </div>
+          </Dropdown>
         );
       }
       case 'revoke': {

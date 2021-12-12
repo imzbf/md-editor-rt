@@ -81,6 +81,27 @@
     }
   }
 
+  &-table-shape {
+    padding: 4px;
+    border-radius: 3px;
+    border: 1px solid @borderColor;
+    display: flex;
+    flex-direction: column;
+
+    &-row {
+      display: flex;
+    }
+
+    &-col {
+      width: 16px;
+      height: 16px;
+      background-color: #e0e0e0;
+      margin: 2px;
+      border-radius: 3px;
+      cursor: pointer;
+    }
+  }
+
   &-toolbar-wrapper {
     overflow-x: auto;
     overflow-y: hidden;
@@ -257,6 +278,14 @@
 
     &-item:hover {
       background-color: @hoverdark;
+    }
+  }
+
+  .@{prefix}-table-shape {
+    border-color: @borderColorDark;
+
+    &-col {
+      background-color: #222;
     }
   }
 

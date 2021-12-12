@@ -200,6 +200,8 @@ export interface EditorProp {
   markedHeadingId: MarkedHeadingId;
   // 编辑器样式
   style: CSSProperties;
+  // 表格预设格子数
+  tableShape: [number, number];
 }
 
 export interface ContentType {
@@ -403,6 +405,7 @@ const Editor = (props: EditorProp) => {
             toolbarsExclude={toolbarsExclude}
             setting={setting}
             updateSetting={updateSetting}
+            tableShape={props.tableShape}
           />
         )}
         <Content
@@ -461,7 +464,8 @@ Editor.defaultProps = {
   },
   // 希望你在自定义markedHeading的同时，能够告诉编辑器你生成ID的算法~
   markedHeadingId: markedHeadingId,
-  style: {}
+  style: {},
+  tableShape: [6, 4]
 } as EditorProp;
 
 export default Editor;
