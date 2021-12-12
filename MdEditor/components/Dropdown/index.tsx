@@ -8,15 +8,13 @@ import React, {
   JSXElementConstructor
 } from 'react';
 
-import cn from 'classnames';
-
 import './style.less';
 
 interface CtlTypes {
-  overlayClass: Array<string>;
+  overlayClass: string;
   overlayStyle: CSSProperties;
-  triggerHover: boolean;
-  overlayHover: boolean;
+  // triggerHover: boolean;
+  // overlayHover: boolean;
 }
 
 interface ModalProp {
@@ -28,13 +26,15 @@ interface ModalProp {
 }
 
 import { prefix } from '../../config';
+const HIDDEN_CLASS = `${prefix}-dropdown-hidden`;
 
 const DropDown = (props: ModalProp) => {
-  const HIDDEN_CLASS = `${prefix}-dropdown-hidden`;
-
   const [ctl, setCtl] = useState<CtlTypes>({
-    overlayClass: [HIDDEN_CLASS],
-    overlayStyle: {},
+    overlayClass: HIDDEN_CLASS,
+    overlayStyle: {}
+  });
+
+  const status = useRef({
     triggerHover: false,
     overlayHover: false
   });
@@ -44,7 +44,7 @@ const DropDown = (props: ModalProp) => {
 
   const triggerHandler = () => {
     if (props.trigger === 'hover') {
-      ctl.triggerHover = true;
+      status.current.triggerHover = true;
     }
 
     const triggerEle = triggerRef.current as HTMLElement;
@@ -58,19 +58,19 @@ const DropDown = (props: ModalProp) => {
     const triggerWidth = triggerInfo.width;
 
     // 设置好正对位置
-    setCtl({
-      ...ctl,
+    setCtl((_ctl) => ({
+      ..._ctl,
       overlayStyle: {
         top: triggerTop + triggerHeight + 'px',
         left: triggerLeft - overlayEle.offsetWidth / 2 + triggerWidth / 2 + 'px'
       }
-    });
+    }));
 
     props.onChange(true);
   };
 
   const overlayHandler = () => {
-    ctl.overlayHover = true;
+    status.current.overlayHover = true;
   };
 
   // 显示状态变化后修改某些属性
@@ -79,16 +79,14 @@ const DropDown = (props: ModalProp) => {
       setCtl((ctlN) => {
         return {
           ...ctlN,
-          overlayClass: ctl.overlayClass.filter(
-            (classItem: string) => classItem !== HIDDEN_CLASS
-          )
+          overlayClass: ''
         };
       });
     } else {
       setCtl((ctlN) => {
         return {
           ...ctlN,
-          overlayClass: [...ctlN.overlayClass, HIDDEN_CLASS]
+          overlayClass: HIDDEN_CLASS
         };
       });
     }
@@ -107,17 +105,17 @@ const DropDown = (props: ModalProp) => {
     }
   };
 
-  let hiddenTimer = -1;
+  const hiddenTimer = useRef(-1);
   const leaveHidden = (e: MouseEvent) => {
     if (triggerRef.current === e.target) {
-      ctl.triggerHover = false;
+      status.current.triggerHover = false;
     } else {
-      ctl.overlayHover = false;
+      status.current.overlayHover = false;
     }
 
-    clearTimeout(hiddenTimer);
-    hiddenTimer = window.setTimeout(() => {
-      if (!ctl.overlayHover && !ctl.triggerHover) {
+    clearTimeout(hiddenTimer.current);
+    hiddenTimer.current = window.setTimeout(() => {
+      if (!status.current.overlayHover && !status.current.triggerHover) {
         props.onChange(false);
       }
     }, 10);
@@ -180,10 +178,11 @@ const DropDown = (props: ModalProp) => {
   const trigger = cloneElement(slotDefault, {
     ref: triggerRef
   });
+
   // 列表内容
   const overlay = (
     <div
-      className={cn(`${prefix}-dropdown`, ctl.overlayClass)}
+      className={`${prefix}-dropdown ${ctl.overlayClass}`}
       style={ctl.overlayStyle}
       ref={overlayRef}
     >
@@ -199,6 +198,10 @@ const DropDown = (props: ModalProp) => {
       {overlay}
     </>
   );
+};
+
+DropDown.defaultProps = {
+  trigger: 'hover'
 };
 
 export default DropDown;
