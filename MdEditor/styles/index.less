@@ -93,12 +93,20 @@
     }
 
     &-col {
-      width: 16px;
-      height: 16px;
-      background-color: #e0e0e0;
-      margin: 2px;
-      border-radius: 3px;
+      padding: 2px;
       cursor: pointer;
+
+      &-default {
+        width: 16px;
+        height: 16px;
+        background-color: #e0e0e0;
+        border-radius: 3px;
+        transition: all 0.2s;
+      }
+
+      &-include {
+        background-color: #aaa;
+      }
     }
   }
 
@@ -285,7 +293,13 @@
     border-color: @borderColorDark;
 
     &-col {
-      background-color: #222;
+      &-default {
+        background-color: #222;
+      }
+
+      &-include {
+        background-color: #555;
+      }
     }
   }
 
