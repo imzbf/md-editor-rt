@@ -1,10 +1,9 @@
 import React, { useContext, useEffect, useMemo, useRef, useState } from 'react';
-import { marked } from 'marked';
 import copy from 'copy-to-clipboard';
 import { prefix } from '../../config';
-import { EditorContext, HeadList, SettingType, MarkedHeading } from '../../Editor';
+import { EditorContext, SettingType, MarkedHeading, HeadList } from '../../Editor';
 import { scrollAuto, generateCodeRowNumber } from '../../utils';
-import { useAutoGenrator, useHistory } from './hooks';
+import { useAutoGenrator, useHistory, useMarked } from './hooks';
 import classNames from 'classnames';
 import { appendHandler } from '../../utils/dom';
 import bus from '../../utils/event-bus';
@@ -48,26 +47,20 @@ const Content = (props: EditorContentProp) => {
   const previewRef = useRef<HTMLDivElement>(null);
   // html代码预览框
   const htmlRef = useRef<HTMLDivElement>(null);
-
-  // 标题获取
   const headstemp: HeadList[] = [];
-  const renderer = new marked.Renderer();
-  // 标题重构
-  renderer.heading = (...headProps) => {
+  // const [headstemp, setHeadStemp] = useState<HeadList[]>([]);
+
+  const heading: MarkedHeading = (...headProps) => {
     const [, level, raw] = headProps;
+    // setHeadStemp((_headstemp) => [..._headstemp, { text: raw, level }]);
     headstemp.push({ text: raw, level });
 
     return props.markedHeading(...headProps);
   };
 
-  renderer.image = (href, _, desc) => {
-    return `<figure><img src="${href}" alt="${desc}"><figcaption>${desc}</figcaption></figure>`;
-  };
+  console.log(headstemp);
 
-  marked.setOptions({
-    renderer,
-    breaks: true
-  });
+  const marked = useMarked(heading);
 
   // 向页面代码块注入复制按钮
   const initCopyEntry = () => {
@@ -148,6 +141,7 @@ const Content = (props: EditorContentProp) => {
   useEffect(() => {
     // 变化时调用变化事件
     onHtmlChanged(html);
+
     // 传递标题
     onGetCatalog(headstemp);
 

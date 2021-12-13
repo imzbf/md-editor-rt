@@ -181,3 +181,6 @@ export const staticTextDefault: StaticTextDefault = {
     }
   }
 };
+
+export const mermaidUrl =
+  'https://cdn.jsdelivr.net/npm/mermaid@8.13.5/dist/mermaid.min.js';

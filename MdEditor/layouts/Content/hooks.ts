@@ -4,6 +4,10 @@ import { RefObject, useCallback, useContext, useEffect, useRef, useState } from 
 import bus from '../../utils/event-bus';
 import { EditorContentProp } from './';
 import { EditorContext } from '../../Editor';
+import { marked } from 'marked';
+
+import mermaid from 'mermaid';
+
 interface HistoryItemType {
   // 记录内容
   content: string;
@@ -235,4 +239,41 @@ export const useAutoGenrator = (
   return {
     selectedText
   };
+};
+
+export const useMarked = (heading: any) => {
+  const [inited, setInited] = useState(false);
+
+  if (!inited) {
+    setInited(true);
+    // 标题获取
+    const renderer: any = new marked.Renderer();
+    // 标题重构
+    renderer.heading = heading;
+    renderer.defaultCode = renderer.code;
+
+    renderer.code = (code: string, language: string, isEscaped: boolean) => {
+      if (language === 'mermaid') {
+        const id = new Date().getTime();
+        // setTimeout(() => {
+        //   mermaid.render(id + '', code);
+        // }, 1000);
+
+        return `<div class="mermaid" id="${id}">${code}</div>`;
+      }
+
+      return renderer.defaultCode(code, language, isEscaped);
+    };
+
+    renderer.image = (href: string, _: string, desc: string) => {
+      return `<figure><img src="${href}" alt="${desc}"><figcaption>${desc}</figcaption></figure>`;
+    };
+
+    marked.setOptions({
+      renderer,
+      breaks: true
+    });
+  }
+
+  return marked;
 };
