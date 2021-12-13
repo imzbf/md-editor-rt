@@ -2,13 +2,18 @@ import React, { useState } from 'react';
 import classNames from 'classnames';
 import { prefix } from '../../config';
 
+interface HoverData {
+  x: number;
+  y: number;
+}
+
 interface TableShapeProp {
   tableShape: [number, number];
-  onSelected: (data: [number, number]) => void;
+  onSelected: (data: HoverData) => void;
 }
 
 const TableShape = (props: TableShapeProp) => {
-  const [hoverPosition, setHoverPosition] = useState({
+  const [hoverPosition, setHoverPosition] = useState<HoverData>({
     x: -1,
     y: -1
   });
@@ -36,7 +41,7 @@ const TableShape = (props: TableShapeProp) => {
                 });
               }}
               onClick={() => {
-                props.onSelected([hoverPosition.x, hoverPosition.y]);
+                props.onSelected(hoverPosition);
               }}
             >
               <div
