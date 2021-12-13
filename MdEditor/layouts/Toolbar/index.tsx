@@ -8,6 +8,7 @@ import Divider from '../../components/Divider';
 import Dropdown from '../../components/Dropdown';
 import Modals from '../Modals';
 import { useSreenfull } from './hooks';
+import TableShape from './TableShape';
 
 export interface ToolbarProp {
   prettier: boolean;
@@ -415,30 +416,15 @@ const Toolbar = (props: ToolbarProp) => {
             }}
             key="bar-table"
             overlay={
-              <div className={`${prefix}-table-shape`}>
-                {new Array(props.tableShape[1]).fill('').map((_, rowIndex) => (
-                  <div
-                    className={`${prefix}-table-shape-row`}
-                    key={`table-shape-row-${rowIndex}`}
-                  >
-                    {new Array(props.tableShape[0]).fill('').map((_, colIndex) => (
-                      <div
-                        className={`${prefix}-table-shape-col`}
-                        key={`table-shape-col-${colIndex}`}
-                      ></div>
-                    ))}
-                  </div>
-                ))}
-              </div>
+              <TableShape
+                tableShape={props.tableShape}
+                onSelected={(selectedShape) => {
+                  emitHandler('table', { selectedShape });
+                }}
+              />
             }
           >
-            <div
-              className={`${prefix}-toolbar-item`}
-              title={ult.toolbarTips?.table}
-              onClick={() => {
-                emitHandler('table');
-              }}
-            >
+            <div className={`${prefix}-toolbar-item`} title={ult.toolbarTips?.table}>
               <svg className={`${prefix}-icon`} aria-hidden="true">
                 <use xlinkHref="#icon-table" />
               </svg>
