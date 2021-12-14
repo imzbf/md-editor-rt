@@ -13,7 +13,8 @@ import {
   prettierUrl,
   cropperUrl,
   staticTextDefault,
-  screenfullUrl
+  screenfullUrl,
+  mermaidUrl
 } from './config';
 
 import { prefix } from './config';
@@ -29,6 +30,7 @@ declare global {
     prettierPlugins: any;
     Cropper: any;
     screenfull: any;
+    mermaid: any;
   }
 }
 
@@ -202,6 +204,12 @@ export interface EditorProp {
   style: CSSProperties;
   // 表格预设格子数
   tableShape: [number, number];
+  // mermaid实例
+  mermaid?: any;
+  // mermaid script链接
+  mermaidJs: string;
+  // 不使用该功能
+  noMermaid?: boolean;
 }
 
 export interface ContentType {
@@ -411,6 +419,9 @@ const Editor = (props: EditorProp) => {
         <Content
           hljs={props.hljs}
           highlightSet={highlightSet}
+          mermaid={props.mermaid}
+          mermaidJs={props.mermaidJs}
+          noMermaid={props.noMermaid}
           value={props.modelValue}
           onChange={props.onChange}
           setting={setting}
@@ -465,7 +476,8 @@ Editor.defaultProps = {
   // 希望你在自定义markedHeading的同时，能够告诉编辑器你生成ID的算法~
   markedHeadingId: markedHeadingId,
   style: {},
-  tableShape: [6, 4]
+  tableShape: [6, 4],
+  mermaidJs: mermaidUrl
 } as EditorProp;
 
 export default Editor;

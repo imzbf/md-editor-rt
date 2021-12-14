@@ -6,8 +6,6 @@ import { EditorContentProp } from './';
 import { EditorContext } from '../../Editor';
 import { marked } from 'marked';
 
-import mermaid from 'mermaid';
-
 interface HistoryItemType {
   // 记录内容
   content: string;
@@ -241,7 +239,7 @@ export const useAutoGenrator = (
   };
 };
 
-export const useMarked = (heading: any) => {
+export const useMarked = (props: EditorContentProp, heading: any) => {
   const [inited, setInited] = useState(false);
 
   if (!inited) {
@@ -253,13 +251,8 @@ export const useMarked = (heading: any) => {
     renderer.defaultCode = renderer.code;
 
     renderer.code = (code: string, language: string, isEscaped: boolean) => {
-      if (language === 'mermaid') {
-        const id = new Date().getTime();
-        // setTimeout(() => {
-        //   mermaid.render(id + '', code);
-        // }, 1000);
-
-        return `<div class="mermaid" id="${id}">${code}</div>`;
+      if (!props.noMermaid && language === 'mermaid') {
+        return `<div class="mermaid">${code}</div>`;
       }
 
       return renderer.defaultCode(code, language, isEscaped);

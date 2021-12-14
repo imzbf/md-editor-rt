@@ -92,7 +92,7 @@ export const goto = (
   }
 ) => {
   if (!url) {
-    console.warn('无效的链接！');
+    console.warn('Invalid link！');
   }
 
   const aEle = document.createElement('a');

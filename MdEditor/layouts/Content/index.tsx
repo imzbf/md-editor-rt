@@ -20,6 +20,12 @@ export type EditorContentProp = Readonly<{
   onHtmlChanged?: (h: string) => void;
   onGetCatalog?: (list: HeadList[]) => void;
   markedHeading: MarkedHeading;
+  // mermaid实例
+  mermaid?: any;
+  // mermaid script链接
+  mermaidJs: string;
+  // 不使用该功能
+  noMermaid?: boolean;
 }>;
 
 let clearScrollAuto = () => {};
@@ -33,6 +39,8 @@ const Content = (props: EditorContentProp) => {
     onHtmlChanged = () => {},
     onGetCatalog = () => {}
   } = props;
+
+  let { mermaid = null } = props;
 
   const { editorId, previewOnly, usedLanguageText, previewTheme, showCodeRowNumber } =
     useContext(EditorContext);
@@ -58,9 +66,7 @@ const Content = (props: EditorContentProp) => {
     return props.markedHeading(...headProps);
   };
 
-  console.log(headstemp);
-
-  const marked = useMarked(heading);
+  const marked = useMarked(props, heading);
 
   // 向页面代码块注入复制按钮
   const initCopyEntry = () => {
@@ -98,6 +104,7 @@ const Content = (props: EditorContentProp) => {
   useEffect(() => {
     let highlightLink: HTMLLinkElement;
     let highlightScript: HTMLScriptElement;
+    let mermaidScript: HTMLScriptElement;
 
     if (props.hljs) {
       // 提供了hljs，在创建阶段即完成设置
@@ -125,10 +132,29 @@ const Content = (props: EditorContentProp) => {
       appendHandler(highlightScript);
     }
 
+    // 引入mermaid
+    if (!props.noMermaid && !mermaid) {
+      mermaidScript = document.createElement('script');
+
+      mermaidScript.src = props.mermaidJs;
+      mermaidScript.onload = () => {
+        mermaid = window.mermaid;
+        // 执行一次初始化
+        mermaid.init('.mermaid');
+      };
+      mermaidScript.id = `${prefix}-mermaid`;
+
+      appendHandler(mermaidScript);
+    }
+
     return () => {
       if (!props.hljs) {
         highlightLink.remove();
         highlightScript.remove();
+      }
+
+      if (!props.noMermaid && !props.mermaid) {
+        mermaidScript.remove();
       }
     };
   }, []);
@@ -160,6 +186,9 @@ const Content = (props: EditorContentProp) => {
 
     // 重新设置复制按钮
     initCopyEntry();
+
+    // 重新构造svg
+    !props.noMermaid && mermaid && mermaid.init('.mermaid');
   }, [html]);
   // ---end---
 
