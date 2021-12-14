@@ -252,7 +252,11 @@ export const useMarked = (props: EditorContentProp, heading: any) => {
 
     renderer.code = (code: string, language: string, isEscaped: boolean) => {
       if (!props.noMermaid && language === 'mermaid') {
-        return `<div class="mermaid">${code}</div>`;
+        // return `<div class="mermaid">${code}</div>`;
+        return (
+          window.mermaid &&
+          window.mermaid.mermaidAPI.render(`md-mermaid-${new Date().getTime()}`, code)
+        );
       }
 
       return renderer.defaultCode(code, language, isEscaped);

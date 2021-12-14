@@ -187,9 +187,9 @@ const Content = (props: EditorContentProp) => {
     initCopyEntry();
 
     // 重新构造svg
-    if (!props.noMermaid && window.mermaid) {
-      window.mermaid.init('.mermaid');
-    }
+    // if (!props.noMermaid && window.mermaid) {
+    //   window.mermaid.init('.mermaid');
+    // }
   }, [html]);
   // ---end---
 
