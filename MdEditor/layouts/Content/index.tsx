@@ -40,8 +40,6 @@ const Content = (props: EditorContentProp) => {
     onGetCatalog = () => {}
   } = props;
 
-  let { mermaid = null } = props;
-
   const { editorId, previewOnly, usedLanguageText, previewTheme, showCodeRowNumber } =
     useContext(EditorContext);
 
@@ -133,15 +131,16 @@ const Content = (props: EditorContentProp) => {
     }
 
     // 引入mermaid
-    if (!props.noMermaid && !mermaid) {
+    if (!props.noMermaid && props.mermaid) {
+      window.mermaid = props.mermaid;
+    } else if (!props.noMermaid && !props.mermaid) {
       mermaidScript = document.createElement('script');
 
       mermaidScript.src = props.mermaidJs;
-      mermaidScript.onload = () => {
-        mermaid = window.mermaid;
-        // 执行一次初始化
-        mermaid.init('.mermaid');
-      };
+      // mermaidScript.onload = () => {
+      // 执行一次初始化
+      // window.mermaid.init('.mermaid');
+      // };
       mermaidScript.id = `${prefix}-mermaid`;
 
       appendHandler(mermaidScript);
@@ -188,7 +187,9 @@ const Content = (props: EditorContentProp) => {
     initCopyEntry();
 
     // 重新构造svg
-    !props.noMermaid && mermaid && mermaid.init('.mermaid');
+    if (!props.noMermaid && window.mermaid) {
+      window.mermaid.init('.mermaid');
+    }
   }, [html]);
   // ---end---
 
