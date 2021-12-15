@@ -253,10 +253,24 @@ export const useMarked = (props: EditorContentProp, heading: any) => {
     renderer.code = (code: string, language: string, isEscaped: boolean) => {
       if (!props.noMermaid && language === 'mermaid') {
         // return `<div class="mermaid">${code}</div>`;
-        return (
-          window.mermaid &&
-          window.mermaid.mermaidAPI.render(`md-mermaid-${new Date().getTime()}`, code)
-        );
+
+        // 服务端渲染，如果提供了mermaid，就生成svg
+        if (props.mermaid) {
+          return props.mermaid.mermaidAPI.render(
+            `md-mermaid-${new Date().getTime()}`,
+            code
+          );
+        }
+
+        // 没有提供，则判断window对象是否可用，不可用则反回待解析的结构，在页面引入后再解析
+        if (window && window.mermaid) {
+          return window.mermaid.mermaidAPI.render(
+            `md-mermaid-${new Date().getTime()}`,
+            code
+          );
+        } else {
+          return `<div class="mermaid">${code}</div>`;
+        }
       }
 
       return renderer.defaultCode(code, language, isEscaped);

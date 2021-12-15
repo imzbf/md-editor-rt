@@ -220,6 +220,7 @@ export interface ContentType {
   showCodeRowNumber: boolean;
   usedLanguageText: StaticTextDefaultValue;
   Cropper: any;
+  theme: 'light' | 'dark';
   previewTheme: PreviewThemes;
 }
 
@@ -231,6 +232,7 @@ export const EditorContext = createContext<ContentType>({
   showCodeRowNumber: false,
   usedLanguageText: staticTextDefault['zh-CN'],
   Cropper: null,
+  theme: 'light',
   previewTheme: 'default'
 });
 
@@ -385,6 +387,7 @@ const Editor = (props: EditorProp) => {
       value={{
         editorId,
         tabWidth,
+        theme: props.theme,
         historyLength: props.historyLength,
         previewOnly,
         showCodeRowNumber: props.showCodeRowNumber,
