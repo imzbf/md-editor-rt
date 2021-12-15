@@ -6,7 +6,7 @@ export const prefix = 'md';
 export const iconScriptId = 'md-editor-rt';
 
 // 字体链接
-export const iconfontUrl = 'https://at.alicdn.com/t/font_2605852_khjf435c7th.js';
+export const iconfontUrl = '//at.alicdn.com/t/font_2605852_ihjkm7wo1y.js';
 
 // 代码高亮cdn链接
 export const highlightUrl = {
@@ -49,6 +49,7 @@ export const allToolbar = [
   'link',
   'image',
   'table',
+  'mermaid',
   '-',
   'revoke',
   'next',
@@ -81,6 +82,7 @@ export const staticTextDefault: StaticTextDefault = {
       link: '链接',
       image: '图片',
       table: '表格',
+      mermaid: 'mermaid图',
       revoke: '后退',
       next: '前进',
       save: '保存',
@@ -120,6 +122,16 @@ export const staticTextDefault: StaticTextDefault = {
     copyCode: {
       text: '复制代码',
       tips: '已复制！'
+    },
+    mermaid: {
+      flow: '流程图',
+      sequence: '时序图',
+      gantt: '甘特图',
+      class: '类图',
+      state: '状态图',
+      pie: '饼图',
+      relationship: '关系图',
+      journey: '旅程图'
     }
   },
   'en-US': {
@@ -139,6 +151,7 @@ export const staticTextDefault: StaticTextDefault = {
       link: 'link',
       image: 'image',
       table: 'table',
+      mermaid: 'mermaid',
       revoke: 'revoke',
       next: 'undo revoke',
       save: 'save',
@@ -178,6 +191,16 @@ export const staticTextDefault: StaticTextDefault = {
     copyCode: {
       text: 'Copy',
       tips: 'Copied!'
+    },
+    mermaid: {
+      flow: 'flow',
+      sequence: 'sequence',
+      gantt: 'gantt',
+      class: 'class',
+      state: 'state',
+      pie: 'pie',
+      relationship: 'relationship',
+      journey: 'journey'
     }
   }
 };

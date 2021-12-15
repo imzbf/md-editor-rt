@@ -50,6 +50,7 @@ export interface ToolbarTips {
   link?: string;
   image?: string;
   table?: string;
+  mermaid?: string;
   revoke?: string;
   next?: string;
   save?: string;
@@ -94,6 +95,24 @@ export interface StaticTextDefaultValue {
   copyCode?: {
     text?: string;
     tips?: string;
+  };
+  mermaid?: {
+    // 流程图
+    flow?: string;
+    // 时序图
+    sequence?: string;
+    // 甘特图
+    gantt?: string;
+    // 类图
+    class?: string;
+    // 状态图
+    state?: string;
+    // 饼图
+    pie?: string;
+    // 关系图
+    relationship?: string;
+    // 旅程图
+    journey?: string;
   };
 }
 
