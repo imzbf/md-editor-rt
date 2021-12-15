@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useMemo, useRef, useState } from 'react';
 import copy from 'copy-to-clipboard';
 import { prefix } from '../../config';
 import { EditorContext, SettingType, MarkedHeading, HeadList } from '../../Editor';
-import { scrollAuto, generateCodeRowNumber, loopEvent } from '../../utils';
+import { scrollAuto, generateCodeRowNumber } from '../../utils';
 import { useAutoGenrator, useHistory, useMarked } from './hooks';
 import classNames from 'classnames';
 import { appendHandler } from '../../utils/dom';
@@ -43,7 +43,9 @@ const Content = (props: EditorContentProp) => {
   const { editorId, previewOnly, usedLanguageText, previewTheme, showCodeRowNumber } =
     useContext(EditorContext);
 
-  const [highlightInited, setHighlightInited] = useState<boolean>(hljs !== null);
+  // 当页面已经引入完成对应的库时，通过修改从状态完成marked重新编译
+  const [highlightInited, setHighlightInited] = useState<boolean>(!!hljs);
+  const [mermaidInited, setMermaidInited] = useState<boolean>(!!props.mermaid);
 
   // 输入框
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
@@ -138,29 +140,7 @@ const Content = (props: EditorContentProp) => {
 
       mermaidScript.src = props.mermaidJs;
       mermaidScript.onload = () => {
-        // 执行一次初始化;
-        window.mermaid.init('.mermaid');
-
-        // 循环判断mermaid是否已经将页面存在的内容转化完成
-        // 完成时需要重新设置同步滚动
-        loopEvent(
-          () => {
-            // 未来得及初始化的列表
-            const unInitElesOfMermaid = document.querySelectorAll('.mermaid');
-            // 已经转换好的列表
-            const initElesOfMermaid = document.querySelectorAll(
-              '.mermaid[data-processed]'
-            );
-
-            return unInitElesOfMermaid.length === initElesOfMermaid.length;
-          },
-          () => {
-            clearScrollAuto = scrollAuto(
-              textAreaRef.current as HTMLElement,
-              (previewRef.current as HTMLElement) || htmlRef.current
-            );
-          }
-        );
+        setMermaidInited(true);
       };
       mermaidScript.id = `${prefix}-mermaid`;
 
@@ -181,8 +161,9 @@ const Content = (props: EditorContentProp) => {
 
   // ---预览代码---
   const html = useMemo(() => {
+    console.log(mermaidInited);
     return marked(props.value);
-  }, [props.value, highlightInited]);
+  }, [props.value, highlightInited, mermaidInited]);
 
   useEffect(() => {
     // 变化时调用变化事件
