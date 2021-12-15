@@ -40,12 +40,20 @@ const Content = (props: EditorContentProp) => {
     onGetCatalog = () => {}
   } = props;
 
-  const { editorId, previewOnly, usedLanguageText, previewTheme, showCodeRowNumber } =
-    useContext(EditorContext);
+  const {
+    editorId,
+    theme,
+    previewOnly,
+    usedLanguageText,
+    previewTheme,
+    showCodeRowNumber
+  } = useContext(EditorContext);
 
   // 当页面已经引入完成对应的库时，通过修改从状态完成marked重新编译
   const [highlightInited, setHighlightInited] = useState<boolean>(!!hljs);
   const [mermaidInited, setMermaidInited] = useState<boolean>(!!props.mermaid);
+  // 修改它触发重新编译
+  const [reRender, setReRender] = useState<boolean>(false);
 
   // 输入框
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
@@ -56,7 +64,7 @@ const Content = (props: EditorContentProp) => {
   // html代码预览框
   const htmlRef = useRef<HTMLDivElement>(null);
   const headstemp: HeadList[] = [];
-  // const [headstemp, setHeadStemp] = useState<HeadList[]>([]);
+  // const headstemp = useRef<HeadList[]>([]);
 
   const heading: MarkedHeading = (...headProps) => {
     const [, level, raw] = headProps;
@@ -161,9 +169,8 @@ const Content = (props: EditorContentProp) => {
 
   // ---预览代码---
   const html = useMemo(() => {
-    console.log(mermaidInited);
     return marked(props.value);
-  }, [props.value, highlightInited, mermaidInited]);
+  }, [props.value, highlightInited, mermaidInited, reRender]);
 
   useEffect(() => {
     // 变化时调用变化事件
@@ -211,6 +218,16 @@ const Content = (props: EditorContentProp) => {
   useHistory(props, textAreaRef);
 
   useAutoGenrator(props, textAreaRef);
+
+  useEffect(() => {
+    if (!props.noMermaid && window.mermaid) {
+      window.mermaid.initialize({
+        theme: theme === 'dark' ? 'dark' : 'default'
+      });
+
+      setReRender((_reRender) => !_reRender);
+    }
+  }, [theme]);
 
   return (
     <>
