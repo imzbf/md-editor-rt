@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useMemo, useRef, useState } from 'react';
 import copy from 'copy-to-clipboard';
 import { prefix } from '../../config';
 import { EditorContext, SettingType, MarkedHeading, HeadList } from '../../Editor';
-import { scrollAuto, generateCodeRowNumber } from '../../utils';
+import { scrollAuto, generateCodeRowNumber, loopEvent } from '../../utils';
 import { useAutoGenrator, useHistory, useMarked } from './hooks';
 import classNames from 'classnames';
 import { appendHandler } from '../../utils/dom';
@@ -137,10 +137,31 @@ const Content = (props: EditorContentProp) => {
       mermaidScript = document.createElement('script');
 
       mermaidScript.src = props.mermaidJs;
-      // mermaidScript.onload = () => {
-      // 执行一次初始化
-      // window.mermaid.init('.mermaid');
-      // };
+      mermaidScript.onload = () => {
+        // 执行一次初始化;
+        window.mermaid.init('.mermaid');
+
+        // 循环判断mermaid是否已经将页面存在的内容转化完成
+        // 完成时需要重新设置同步滚动
+        loopEvent(
+          () => {
+            // 未来得及初始化的列表
+            const unInitElesOfMermaid = document.querySelectorAll('.mermaid');
+            // 已经转换好的列表
+            const initElesOfMermaid = document.querySelectorAll(
+              '.mermaid[data-processed]'
+            );
+
+            return unInitElesOfMermaid.length === initElesOfMermaid.length;
+          },
+          () => {
+            clearScrollAuto = scrollAuto(
+              textAreaRef.current as HTMLElement,
+              (previewRef.current as HTMLElement) || htmlRef.current
+            );
+          }
+        );
+      };
       mermaidScript.id = `${prefix}-mermaid`;
 
       appendHandler(mermaidScript);

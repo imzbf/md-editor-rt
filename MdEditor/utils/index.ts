@@ -242,3 +242,19 @@ export const debounce = (fn: (...params: Array<any>) => any, ms = 200) => {
     }, ms);
   };
 };
+
+/**
+ * 事件循环
+ *
+ * @param stopEvent 停止条件
+ * @param cb 停止时执行方法
+ * @param ms 每次循环间隔
+ */
+export const loopEvent = (stopEvent: any, cb: any, ms = 50) => {
+  const id = setInterval(() => {
+    if (stopEvent()) {
+      cb();
+      clearInterval(id);
+    }
+  }, ms);
+};
