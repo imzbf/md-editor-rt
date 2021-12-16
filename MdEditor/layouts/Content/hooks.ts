@@ -254,29 +254,32 @@ export const useMarked = (props: EditorContentProp, heading: any) => {
 
     renderer.code = (code: string, language: string, isEscaped: boolean) => {
       if (!props.noMermaid && language === 'mermaid') {
-        // return `<div class="mermaid">${code}</div>`;
-        const idRand = `md-mermaid-${Date.now().toString(36)}`;
+        const idRand = `${prefix}-mermaid-${Date.now().toString(36)}`;
 
         try {
+          let svgCode = '';
           // 服务端渲染，如果提供了mermaid，就生成svg
           if (props.mermaid) {
-            return props.mermaid.mermaidAPI.render(idRand, code);
+            svgCode = props.mermaid.mermaidAPI.render(idRand, code);
           }
 
           // 没有提供，则判断window对象是否可用，不可用则反回待解析的结构，在页面引入后再解析
           if (typeof window !== 'undefined' && window.mermaid) {
-            return window.mermaid.mermaidAPI.render(idRand, code);
+            svgCode = window.mermaid.mermaidAPI.render(idRand, code);
           } else {
-            return `<div class="mermaid">${code}</div>`;
+            // 这块代码不会正确展示在页面上
+            svgCode = `<div class="mermaid">${code}</div>`;
           }
+
+          return `<div class="${prefix}-mermaid">${svgCode}</div>`;
         } catch (error) {
-          // console.error('err', error);
           if (typeof document !== 'undefined') {
             const errorDom = document.querySelector(`#${idRand}`);
 
             if (errorDom) {
+              const errorSvg = errorDom.outerHTML;
               errorDom.remove();
-              return errorDom.outerHTML;
+              return errorSvg;
             }
           }
 
