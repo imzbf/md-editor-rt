@@ -1,5 +1,4 @@
 import React, { useEffect, lazy, Suspense } from 'react';
-import classNames from 'classnames';
 import Header from './layouts/Header';
 
 import { Route, Routes } from 'react-router-dom';
@@ -24,8 +23,16 @@ function App() {
     }
   }, []);
 
+  useEffect(() => {
+    if (theme === 'dark') {
+      document.documentElement.className = 'theme-dark';
+    } else {
+      document.documentElement.className = '';
+    }
+  }, [theme]);
+
   return (
-    <div className={classNames('docs-page', theme === 'dark' && 'theme-dark')}>
+    <div className="docs-page">
       <Header />
       <Suspense fallback={<div></div>}>
         <Routes>
