@@ -26,6 +26,7 @@ export type EditorContentProp = Readonly<{
   mermaidJs: string;
   // 不使用该功能
   noMermaid?: boolean;
+  sanitize: (html: string) => string;
 }>;
 
 let clearScrollAuto = () => {};
@@ -144,7 +145,7 @@ const Content = (props: EditorContentProp) => {
     heads.current = [];
     const _html = marked(props.value);
 
-    return _html;
+    return props.sanitize(_html);
   }, [props.value, highlightInited, mermaidInited, reRender]);
 
   useEffect(() => {
