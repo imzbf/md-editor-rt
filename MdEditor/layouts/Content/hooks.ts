@@ -255,23 +255,32 @@ export const useMarked = (props: EditorContentProp, heading: any) => {
     renderer.code = (code: string, language: string, isEscaped: boolean) => {
       if (!props.noMermaid && language === 'mermaid') {
         // return `<div class="mermaid">${code}</div>`;
+        const idRand = `md-mermaid-${Date.now().toString(36)}`;
 
-        // 服务端渲染，如果提供了mermaid，就生成svg
-        if (props.mermaid) {
-          return props.mermaid.mermaidAPI.render(
-            `md-mermaid-${new Date().getTime()}`,
-            code
-          );
-        }
+        try {
+          // 服务端渲染，如果提供了mermaid，就生成svg
+          if (props.mermaid) {
+            return props.mermaid.mermaidAPI.render(idRand, code);
+          }
 
-        // 没有提供，则判断window对象是否可用，不可用则反回待解析的结构，在页面引入后再解析
-        if (window && window.mermaid) {
-          return window.mermaid.mermaidAPI.render(
-            `md-mermaid-${new Date().getTime()}`,
-            code
-          );
-        } else {
-          return `<div class="mermaid">${code}</div>`;
+          // 没有提供，则判断window对象是否可用，不可用则反回待解析的结构，在页面引入后再解析
+          if (typeof window !== 'undefined' && window.mermaid) {
+            return window.mermaid.mermaidAPI.render(idRand, code);
+          } else {
+            return `<div class="mermaid">${code}</div>`;
+          }
+        } catch (error) {
+          // console.error('err', error);
+          if (typeof document !== 'undefined') {
+            const errorDom = document.querySelector(`#${idRand}`);
+
+            if (errorDom) {
+              errorDom.remove();
+              return errorDom.outerHTML;
+            }
+          }
+
+          return '';
         }
       }
 
@@ -319,6 +328,9 @@ export const useMermaid = (props: EditorContentProp) => {
       mermaidScript.src = props.mermaidJs;
       mermaidScript.onload = () => {
         setMermaidInited(true);
+        window.mermaid.initialize({
+          logLevel: 'Warn'
+        });
       };
       mermaidScript.id = `${prefix}-mermaid`;
 
