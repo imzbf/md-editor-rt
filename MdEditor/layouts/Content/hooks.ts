@@ -278,7 +278,7 @@ export const useMarked = (props: EditorContentProp, heading: any) => {
 
             if (errorDom) {
               const errorSvg = errorDom.outerHTML;
-              errorDom.remove();
+              errorDom.parentElement?.remove();
               return errorSvg;
             }
           }
