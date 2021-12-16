@@ -3,7 +3,7 @@ import copy from 'copy-to-clipboard';
 import { prefix } from '../../config';
 import { EditorContext, SettingType, MarkedHeading, HeadList } from '../../Editor';
 import { scrollAuto, generateCodeRowNumber } from '../../utils';
-import { useAutoGenrator, useHistory, useMarked } from './hooks';
+import { useAutoGenrator, useHistory, useMarked, useMermaid } from './hooks';
 import classNames from 'classnames';
 import { appendHandler } from '../../utils/dom';
 import bus from '../../utils/event-bus';
@@ -26,6 +26,8 @@ export type EditorContentProp = Readonly<{
   mermaidJs: string;
   // 不使用该功能
   noMermaid?: boolean;
+  sanitize: (html: string) => string;
+  placeholder: string;
 }>;
 
 let clearScrollAuto = () => {};
@@ -40,20 +42,11 @@ const Content = (props: EditorContentProp) => {
     onGetCatalog = () => {}
   } = props;
 
-  const {
-    editorId,
-    theme,
-    previewOnly,
-    usedLanguageText,
-    previewTheme,
-    showCodeRowNumber
-  } = useContext(EditorContext);
+  const { editorId, previewOnly, usedLanguageText, previewTheme, showCodeRowNumber } =
+    useContext(EditorContext);
 
   // 当页面已经引入完成对应的库时，通过修改从状态完成marked重新编译
   const [highlightInited, setHighlightInited] = useState<boolean>(!!hljs);
-  const [mermaidInited, setMermaidInited] = useState<boolean>(!!props.mermaid);
-  // 修改它触发重新编译
-  const [reRender, setReRender] = useState<boolean>(false);
 
   // 输入框
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
@@ -63,18 +56,19 @@ const Content = (props: EditorContentProp) => {
   const previewRef = useRef<HTMLDivElement>(null);
   // html代码预览框
   const htmlRef = useRef<HTMLDivElement>(null);
-  const headstemp: HeadList[] = [];
-  // const headstemp = useRef<HeadList[]>([]);
+  // const [heads, setHeads] = useState<HeadList[]>([]);
+  const heads = useRef<HeadList[]>([]);
 
   const heading: MarkedHeading = (...headProps) => {
     const [, level, raw] = headProps;
-    // setHeadStemp((_headstemp) => [..._headstemp, { text: raw, level }]);
-    headstemp.push({ text: raw, level });
+    // setHeads((_heads) => [..._heads, { text: raw, level }]);
+    heads.current.push({ text: raw, level });
 
     return props.markedHeading(...headProps);
   };
 
   const marked = useMarked(props, heading);
+  const { reRender, mermaidInited } = useMermaid(props);
 
   // 向页面代码块注入复制按钮
   const initCopyEntry = () => {
@@ -112,7 +106,6 @@ const Content = (props: EditorContentProp) => {
   useEffect(() => {
     let highlightLink: HTMLLinkElement;
     let highlightScript: HTMLScriptElement;
-    let mermaidScript: HTMLScriptElement;
 
     if (props.hljs) {
       // 提供了hljs，在创建阶段即完成设置
@@ -140,36 +133,20 @@ const Content = (props: EditorContentProp) => {
       appendHandler(highlightScript);
     }
 
-    // 引入mermaid
-    if (!props.noMermaid && props.mermaid) {
-      window.mermaid = props.mermaid;
-    } else if (!props.noMermaid && !props.mermaid) {
-      mermaidScript = document.createElement('script');
-
-      mermaidScript.src = props.mermaidJs;
-      mermaidScript.onload = () => {
-        setMermaidInited(true);
-      };
-      mermaidScript.id = `${prefix}-mermaid`;
-
-      appendHandler(mermaidScript);
-    }
-
     return () => {
       if (!props.hljs) {
         highlightLink.remove();
         highlightScript.remove();
-      }
-
-      if (!props.noMermaid && !props.mermaid) {
-        mermaidScript.remove();
       }
     };
   }, []);
 
   // ---预览代码---
   const html = useMemo(() => {
-    return marked(props.value);
+    heads.current = [];
+    const _html = marked(props.value);
+
+    return props.sanitize(_html);
   }, [props.value, highlightInited, mermaidInited, reRender]);
 
   useEffect(() => {
@@ -177,10 +154,9 @@ const Content = (props: EditorContentProp) => {
     onHtmlChanged(html);
 
     // 传递标题
-    onGetCatalog(headstemp);
-
-    // 生成目录
-    bus.emit(editorId, 'catalogChanged', headstemp);
+    onGetCatalog(heads.current);
+    // 生成目录，
+    bus.emit(editorId, 'catalogChanged', heads.current);
 
     // 更新完毕后判断是否需要重新绑定滚动事件
     if (props.setting.preview && !previewOnly) {
@@ -219,16 +195,6 @@ const Content = (props: EditorContentProp) => {
 
   useAutoGenrator(props, textAreaRef);
 
-  useEffect(() => {
-    if (!props.noMermaid && window.mermaid) {
-      window.mermaid.initialize({
-        theme: theme === 'dark' ? 'dark' : 'default'
-      });
-
-      setReRender((_reRender) => !_reRender);
-    }
-  }, [theme]);
-
   return (
     <>
       <div className={`${prefix}-content`}>
@@ -248,6 +214,7 @@ const Content = (props: EditorContentProp) => {
               className={
                 props.setting.preview || props.setting.htmlPreview ? '' : 'textarea-only'
               }
+              placeholder={props.placeholder}
             />
           </div>
         )}

@@ -229,6 +229,10 @@ export interface EditorProp {
   mermaidJs: string;
   // 不使用该功能
   noMermaid?: boolean;
+  // 不能保证文本正确的情况，在marked编译md文本后通过该方法处理
+  // 推荐DOMPurify、sanitize-html
+  sanitize: (html: string) => string;
+  placeholder: string;
 }
 
 export interface ContentType {
@@ -450,6 +454,8 @@ const Editor = (props: EditorProp) => {
           onHtmlChanged={props.onHtmlChanged}
           onGetCatalog={props.onGetCatalog}
           markedHeading={props.markedHeading}
+          sanitize={props.sanitize}
+          placeholder={props.placeholder}
         />
         {catalogShow && <Catalog markedHeadingId={props.markedHeadingId} />}
       </div>
@@ -499,7 +505,9 @@ Editor.defaultProps = {
   markedHeadingId: markedHeadingId,
   style: {},
   tableShape: [6, 4],
-  mermaidJs: mermaidUrl
+  mermaidJs: mermaidUrl,
+  sanitize: (html) => html,
+  placeholder: ''
 } as EditorProp;
 
 export default Editor;
