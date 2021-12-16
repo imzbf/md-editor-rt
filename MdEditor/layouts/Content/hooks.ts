@@ -5,6 +5,8 @@ import bus from '../../utils/event-bus';
 import { EditorContentProp } from './';
 import { EditorContext } from '../../Editor';
 import { marked } from 'marked';
+import { prefix } from '../../config';
+import { appendHandler } from '../../utils/dom';
 
 interface HistoryItemType {
   // 记录内容
@@ -287,4 +289,48 @@ export const useMarked = (props: EditorContentProp, heading: any) => {
   }
 
   return marked;
+};
+
+export const useMermaid = (props: EditorContentProp) => {
+  const { theme } = useContext(EditorContext);
+
+  // 修改它触发重新编译
+  const [reRender, setReRender] = useState<boolean>(false);
+  const [mermaidInited, setMermaidInited] = useState<boolean>(!!props.mermaid);
+
+  useEffect(() => {
+    if (!props.noMermaid && window.mermaid) {
+      window.mermaid.initialize({
+        theme: theme === 'dark' ? 'dark' : 'default'
+      });
+
+      setReRender((_reRender) => !_reRender);
+    }
+  }, [theme]);
+
+  useEffect(() => {
+    let mermaidScript: HTMLScriptElement;
+    // 引入mermaid
+    if (!props.noMermaid && props.mermaid) {
+      window.mermaid = props.mermaid;
+    } else if (!props.noMermaid && !props.mermaid) {
+      mermaidScript = document.createElement('script');
+
+      mermaidScript.src = props.mermaidJs;
+      mermaidScript.onload = () => {
+        setMermaidInited(true);
+      };
+      mermaidScript.id = `${prefix}-mermaid`;
+
+      appendHandler(mermaidScript);
+    }
+
+    return () => {
+      if (!props.noMermaid && !props.mermaid) {
+        mermaidScript.remove();
+      }
+    };
+  }, []);
+
+  return { reRender, mermaidInited };
 };
