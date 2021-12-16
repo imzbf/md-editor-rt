@@ -27,6 +27,7 @@ export type EditorContentProp = Readonly<{
   // 不使用该功能
   noMermaid?: boolean;
   sanitize: (html: string) => string;
+  placeholder: string;
 }>;
 
 let clearScrollAuto = () => {};
@@ -213,6 +214,7 @@ const Content = (props: EditorContentProp) => {
               className={
                 props.setting.preview || props.setting.htmlPreview ? '' : 'textarea-only'
               }
+              placeholder={props.placeholder}
             />
           </div>
         )}
