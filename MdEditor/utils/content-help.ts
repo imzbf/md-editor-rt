@@ -456,7 +456,7 @@ export const directive2flag = (
       }
       // 甘特图
       case 'gantt': {
-        targetValue = `\`\`\`mermaid\ngantt\n  apple :a, 2017-07-20, 1w\n  banana :crit, b, 2017-07-23, 1d\n  cherry :active, c, after b a, 1d\n\`\`\`\n`;
+        targetValue = `\`\`\`mermaid\ngantt\ntitle A Gantt Diagram\ndateFormat  YYYY-MM-DD\nsection Section\nA task  :a1, 2014-01-01, 30d\nAnother task  :after a1, 20d\n\`\`\`\n`;
         deviationStart = 2;
         break;
       }
