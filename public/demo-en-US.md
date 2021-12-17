@@ -406,6 +406,21 @@ export default function App() {
 }
 ```
 
+## 🔒 xss
+
+after`1.3.0`, please use `sanitize` to sanitize `html`. eg: `sanitize-html`
+
+```js
+// install
+yarn add sanitize-html
+
+// use
+import sanitizeHtml from 'sanitize-html';
+
+//
+<Editor sanitize={(html) => sanitizeHtml(html)} />;
+```
+
 ## 🧻 Edit this page
 
 [demo-en-US](https://github.com/imzbf/md-editor-rt/blob/dev-docs/public/demo-en-US.md)

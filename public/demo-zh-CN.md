@@ -413,6 +413,21 @@ export default function App() {
 }
 ```
 
+## 🔒 xss 防范
+
+在`1.3.0`之后，通过`sanitize`事件，自行处理不安全的 html 内容。例如：使用`sanitize-html`处理
+
+```js
+// 安装
+yarn add sanitize-html
+
+// 使用
+import sanitizeHtml from 'sanitize-html';
+
+//
+<Editor sanitize={(html) => sanitizeHtml(html)} />;
+```
+
 更详细的实现可以参考本文档的源码！
 
 ## 🧻 编辑此页面
