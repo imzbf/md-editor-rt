@@ -36,7 +36,7 @@ export const useHistory = (
   const { onChange } = props;
   const { historyLength, editorId } = useContext(EditorContext);
 
-  const [history, setHistory] = useState<HistoryDataType>({
+  const history = useRef<HistoryDataType>({
     list: [],
     userUpdated: true,
     curr: 0
@@ -49,17 +49,17 @@ export const useHistory = (
 
     saveHistoryId = window.setTimeout(() => {
       // 如果不是撤销操作，就记录
-      if (history.userUpdated) {
+      if (history.current.userUpdated) {
         // 重置撤回之前的记录
-        if (history.curr < history.list.length - 1) {
-          history.list = history.list.slice(0, history.curr + 1);
+        if (history.current.curr < history.current.list.length - 1) {
+          history.current.list = history.current.list.slice(0, history.current.curr + 1);
         }
-        if (history.list.length > historyLength) {
-          history.list.shift();
+        if (history.current.list.length > historyLength) {
+          history.current.list.shift();
         }
 
         // 修改保存上次记录选中定位
-        const lastStep = history.list.pop() || {
+        const lastStep = history.current.list.pop() || {
           startPos: 0,
           endPos: 0,
           content: props.value
@@ -67,35 +67,31 @@ export const useHistory = (
         lastStep.startPos = startPos;
         lastStep.endPos = endPos;
 
-        Array.prototype.push.call(history.list, lastStep, {
+        Array.prototype.push.call(history.current.list, lastStep, {
           content: props.value,
           startPos,
           endPos
         });
 
         // 下标调整为最后一个位置
-        history.curr = history.list.length - 1;
+        history.current.curr = history.current.list.length - 1;
       } else {
-        setHistory({
-          ...history,
-          userUpdated: true
-        });
+        history.current.userUpdated = true;
       }
-    }, 10);
+    }, 500);
   }, [props.value]);
 
   useEffect(() => {
     bus.on(editorId, {
       name: 'ctrlZ',
       callback() {
-        setHistory({
-          ...history,
-          userUpdated: false
-        });
-        // 倒退一个下标，最多倒退到0
-        history.curr = history.curr - 1 < 0 ? 0 : history.curr - 1;
+        history.current.userUpdated = false;
 
-        const currHistory = history.list[history.curr];
+        // 倒退一个下标，最多倒退到0
+        history.current.curr =
+          history.current.curr - 1 < 0 ? 0 : history.current.curr - 1;
+
+        const currHistory = history.current.list[history.current.curr];
 
         onChange(currHistory.content);
         // 选中内容
@@ -110,15 +106,14 @@ export const useHistory = (
     bus.on(editorId, {
       name: 'ctrlShiftZ',
       callback() {
-        setHistory({
-          ...history,
-          userUpdated: false
-        });
+        history.current.userUpdated = false;
         // 前进一个下标，最多倒退到最大下标
-        history.curr =
-          history.curr + 1 === history.list.length ? history.curr : history.curr + 1;
+        history.current.curr =
+          history.current.curr + 1 === history.current.list.length
+            ? history.current.curr
+            : history.current.curr + 1;
 
-        const currHistory = history.list[history.curr];
+        const currHistory = history.current.list[history.current.curr];
         onChange(currHistory.content);
 
         // 选中内容
