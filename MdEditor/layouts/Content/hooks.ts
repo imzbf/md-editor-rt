@@ -329,7 +329,7 @@ export const useMermaid = (props: EditorContentProp) => {
       mermaidScript.onload = () => {
         setMermaidInited(true);
         window.mermaid.initialize({
-          logLevel: 'Warn'
+          logLevel: import.meta.env.MODE === 'development' ? 'Error' : 'Fatal'
         });
       };
       mermaidScript.id = `${prefix}-mermaid`;
