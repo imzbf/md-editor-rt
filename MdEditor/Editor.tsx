@@ -342,7 +342,7 @@ const Editor = (props: EditorProp) => {
       bodyOverflowHistory = document.body.style.overflow;
     }
 
-    () => {
+    return () => {
       // 清空所有的事件监听
       bus.clear(editorId);
     };
