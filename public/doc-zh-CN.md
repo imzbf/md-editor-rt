@@ -16,6 +16,10 @@
 - **默认值**：`'light'`
 - **说明**：编辑器主题。
 
+```js
+<Editor theme="dark" />
+```
+
 ### 🎀 editorClass
 
 - **类型**：`String`
@@ -99,6 +103,7 @@ export interface ToolbarTips {
   link?: string;
   image?: string;
   table?: string;
+  mermaid?: string;
   revoke?: string;
   next?: string;
   save?: string;
@@ -149,6 +154,24 @@ export interface StaticTextDefaultValue {
     text?: string;
     tips?: string;
   };
+  mermaid?: {
+    // 流程图
+    flow?: string;
+    // 时序图
+    sequence?: string;
+    // 甘特图
+    gantt?: string;
+    // 类图
+    class?: string;
+    // 状态图
+    state?: string;
+    // 饼图
+    pie?: string;
+    // 关系图
+    relationship?: string;
+    // 旅程图
+    journey?: string;
+  };
 }
 ```
 
@@ -162,12 +185,12 @@ export interface StaticTextDefaultValue {
 
 ```js
 'bold', 'underline', 'italic', '-', 'strikeThrough', 'sub', 'sup', 'quote', 'unorderedList',
-'orderedList', '-', 'codeRow', 'code', 'link', 'image', 'table', '-', 'revoke', 'next', 'save',
+'orderedList', '-', 'codeRow', 'code', 'link', 'image', 'table', 'mermaid', '-', 'revoke', 'next', 'save',
 '=', 'pageFullscreen', 'fullscreen', 'preview', 'htmlPreview', 'catalog', 'github'
 
 // 对应功能名称
 '加粗', '下划线', '斜体', '删除线', '下标', '上标', '引用', '无序列表',
-'有序列表', '行内代码', '块级代码', '链接', '图片', '表格', '后退一步', '前进一步', '保存'，
+'有序列表', '行内代码', '块级代码', '链接', '图片', '表格', '图表', '后退一步', '前进一步', '保存'，
 '页面内全屏', '屏幕全屏', '内容预览', 'html代码预览', '目录', '源码地址'
 ```
 

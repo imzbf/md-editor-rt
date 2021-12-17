@@ -14,6 +14,10 @@
 - **default**: `'light'`
 - **description**: Editor's theme.
 
+```js
+<Editor theme="dark" />
+```
+
 ### 🎀 editorClass
 
 - **type**: `String`
@@ -97,6 +101,7 @@ export interface ToolbarTips {
   link?: string;
   image?: string;
   table?: string;
+  mermaid?: string;
   revoke?: string;
   next?: string;
   save?: string;
@@ -142,6 +147,16 @@ export interface StaticTextDefaultValue {
     text?: string;
     tips?: string;
   };
+  mermaid?: {
+    flow?: string;
+    sequence?: string;
+    gantt?: string;
+    class?: string;
+    state?: string;
+    pie?: string;
+    relationship?: string;
+    journey?: string;
+  };
 }
 ```
 
@@ -171,6 +186,7 @@ You can sort the toolbar as you like, split tools by `'-'`, the left and right t
   'link',
   'image',
   'table',
+  'mermaid',
   '-',
   'revoke',
   'next',
