@@ -27,6 +27,7 @@ export default () => {
           theme={state.theme}
           previewTheme={state.previewTheme}
           modelValue={md}
+          language={state.lang}
           editorId="md-editor-preview"
           onChange={(value) => setMd(value)}
           onUploadImg={async (files: FileList, callback: (urls: string[]) => void) => {
@@ -42,8 +43,8 @@ export default () => {
                         'Content-Type': 'multipart/form-data'
                       }
                     })
-                    .then((res) => rev(res))
-                    .catch((error) => rej(error));
+                    .then((res: any) => rev(res))
+                    .catch((error: any) => rej(error));
                 });
               })
             );

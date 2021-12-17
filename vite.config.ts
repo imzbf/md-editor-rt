@@ -11,7 +11,7 @@ export default ({ mode }: ConfigEnv): UserConfigExport => {
   console.log('mode：', mode);
 
   return {
-    base: mode === 'preview' ? homepage : '/',
+    base: mode === 'preview' ? homepage : '',
     publicDir: mode === 'production' ? false : './public',
     server: {
       host: 'localhost',
