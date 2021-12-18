@@ -18,7 +18,8 @@ react 版本的 Markdown 编辑器，[md-editor-v3](https://imzbf.github.io/md-e
 - 多语言，支持自行扩展语言；
 - 粘贴上传图片，图片裁剪上传；
 - 仅预览模式（不显示编辑器，只显示 md 预览内容，无额外监听）；
-- 预览主题，支持`defalut`、`vuepress`、`github` 样式（不完全相同）。
+- 预览主题，支持`defalut`、`vuepress`、`github` 样式（不完全相同）；
+- `mermaid`绘图（>=1.3.0）。
 
 > 更多功能待后续更新，如果你有新的想法或者使用发现有问题，请留言告诉我~
 
@@ -26,7 +27,7 @@ react 版本的 Markdown 编辑器，[md-editor-v3](https://imzbf.github.io/md-e
 
 | 默认模式 | 暗黑模式 | 仅预览 |
 | --- | --- | --- |
-| ![默认模式](https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/800881ba72d74476a36731861e88d4ba~tplv-k3u1fbpfcp-watermark.image) | ![暗黑模式](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/def08468baf14ce3b7086d0a911d1801~tplv-k3u1fbpfcp-watermark.image) | ![](https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/1664c4a5404641c4a1080d64bc6c5831~tplv-k3u1fbpfcp-watermark.image) |
+| ![默认模式](https://imzbf.github.io/md-editor-rt/imgs/preview-light.png) | ![暗黑模式](https://imzbf.github.io/md-editor-rt/imgs/preview-dark.png) | ![](https://imzbf.github.io/md-editor-rt/imgs/preview-previewOnly.png) |
 
 ## Apis
 
@@ -63,6 +64,10 @@ react 版本的 Markdown 编辑器，[md-editor-v3](https://imzbf.github.io/md-e
 | screenfullJs | String | [5.1.0](https://cdn.jsdelivr.net/npm/screenfull@5.1.0/dist/screenfull.js) | screenfull js 链接 |
 | previewTheme | 'default' \| 'github' \| 'vuepress' | 'default' | 预览内容主题 |
 | style | CSSProperties | {} | 编辑器内联样式 |
+| mermaid | Object | undefined | 图表库`mermaid`实例 |
+| mermaidJs | String | [mermaid@8.13.5](https://cdn.jsdelivr.net/npm/mermaid@8.13.5/dist/mermaid.min.js) | mermaidJs 链接 |
+| noMermaid | Boolean | false | 如果你不希望使用图表展示内容，可以设置关闭 |
+| placeholder | String | '' |  |
 
 [toolbars]
 
@@ -85,6 +90,7 @@ react 版本的 Markdown 编辑器，[md-editor-v3](https://imzbf.github.io/md-e
   'link',
   'image',
   'table',
+  'mermaid',
   '-',
   'revoke',
   'next',
@@ -106,6 +112,37 @@ react 版本的 Markdown 编辑器，[md-editor-v3](https://imzbf.github.io/md-e
 [StaticTextDefaultValue]
 
 ```ts
+export interface ToolbarTips {
+  bold?: string;
+  underline?: string;
+  italic?: string;
+  strikeThrough?: string;
+  title?: string;
+  sub?: string;
+  sup?: string;
+  quote?: string;
+  unorderedList?: string;
+  orderedList?: string;
+  codeRow?: string;
+  code?: string;
+  link?: string;
+  image?: string;
+  table?: string;
+  mermaid?: string;
+  revoke?: string;
+  next?: string;
+  save?: string;
+  prettier?: string;
+  pageFullscreen?: string;
+  fullscreen?: string;
+  catalog?: string;
+  preview?: string;
+  htmlPreview?: string;
+  github?: string;
+  '-'?: string;
+  '='?: string;
+}
+
 export interface StaticTextDefaultValue {
   // 工具栏hover title提示
   toolbarTips?: ToolbarTips;
@@ -142,6 +179,24 @@ export interface StaticTextDefaultValue {
     text?: string;
     tips?: string;
   };
+  mermaid?: {
+    // 流程图
+    flow?: string;
+    // 时序图
+    sequence?: string;
+    // 甘特图
+    gantt?: string;
+    // 类图
+    class?: string;
+    // 状态图
+    state?: string;
+    // 饼图
+    pie?: string;
+    // 关系图
+    relationship?: string;
+    // 旅程图
+    journey?: string;
+  };
 }
 ```
 
@@ -156,6 +211,7 @@ export interface StaticTextDefaultValue {
 | onGetCatalog | (list: HeadList[]) => void | 动态获取`markdown`目录 |
 | markedHeading | (text: string,level: 1-6,raw: string, slugger: Slugger) => string | `marked`转换 md 文本标题的方法 |
 | markedHeadingId | (text: string, level: number) => string | 标题`ID`计算方式 |
+| sanitize | (html: string) => string | 在每次生成 html 后，通过该方法移除危险内容，比如 xss 相关。 |
 
 > 如果你重写了`markedHeading`方法，请务必通过`markedHeadingId`告诉编辑器你生成标题 ID 的算法。以便生成的内部目录能够正确导航。
 
@@ -242,3 +298,7 @@ async onUploadImg(files: FileList, callback: (urls: string[]) => void) {
   callback(res.map((item: any) => item.data.url));
 }
 ```
+
+### 更多
+
+请前往文档-演示页面：[go](https://imzbf.github.io/md-editor-rt/demo)
