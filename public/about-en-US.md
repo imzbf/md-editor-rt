@@ -13,3 +13,7 @@ Markdown editor for react, developed by jsx and typescript, dark theme, beautify
 1. Email：zbfcqtl@163.com
 2. My blog：[imbf.cc](https://imbf.cc/message)
 3. Github issue：[github issues](https://github.com/imzbf/md-editor-rt/issues)
+
+## About docs
+
+Editor's author is not proficient in English, please help author correct wrong grammar.

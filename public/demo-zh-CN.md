@@ -169,6 +169,8 @@ export default function App() {
         link: '链接',
         image: '图片',
         table: '表格',
+        mermaid: 'mermaid图',
+        katex: '公式',
         revoke: '后退',
         next: '前进',
         save: '保存',
@@ -208,6 +210,20 @@ export default function App() {
       copyCode: {
         text: '复制代码',
         tips: '已复制！'
+      },
+      mermaid: {
+        flow: '流程图',
+        sequence: '时序图',
+        gantt: '甘特图',
+        class: '类图',
+        state: '状态图',
+        pie: '饼图',
+        relationship: '关系图',
+        journey: '旅程图'
+      },
+      katex: {
+        inline: '行内公式',
+        block: '块级公式'
       }
     }
   });
@@ -220,6 +236,47 @@ export default function App() {
       languageUserDefined={languageUserDefined}
     />
   );
+}
+```
+
+### 🛬 自定义目录结构
+
+编辑器提供了`markedHeading`，用来自定义标题的结构，在`v1.2.2`版本之后，标题中如果包含了`markdown`内容（比如：链接等），将会优先展示这些内容。
+
+> `markedHeading`的入参请参考[marked.js](https://marked.js.org/using_pro#renderer)中的`heading`。
+
+需求：在标题中存在外链时，点击打开新窗口。
+
+实现：
+
+```js
+import React, { useState } from 'react';
+import Editor from 'md-editor-rt';
+import 'md-editor-rt/lib/style.css';
+
+const markedHeading = (text, level, raw) => {
+  // 你不能直接调用默认的markedHeadingId，但是它很简单
+  // 如果你的id与raw不相同，请一定记得将你的生成方法通过markedHeadingId告诉编辑器
+  // 否则编辑器默认的目录定位功能无法正确使用
+  const id = raw;
+
+  if (/<a.*>.*<\/a>/.test(text)) {
+    return `<h${level} id="${id}">${text.replace(
+      /(?<=\<a.*)>(?=.*<\/a>)/,
+      ' target="_blank">'
+    )}</h${level}>`;
+  } else if (text !== raw) {
+    return `<h${level} id="${id}">${text}</h${level}>`;
+  } else {
+    return `<h${level} id="${id}"><a href="#${id}">${raw}</a></h${level}>`;
+  }
+};
+
+export default function App() {
+  const [text, setText] = useState('hello md-editor-rt！');
+  const [catalogList, setList] = useState([]);
+
+  return <Editor modelValue={text} onChange={setText} markedHeading={markedHeading} />;
 }
 ```
 
@@ -370,6 +427,21 @@ export default function App() {
 
   return <Editor modelValue={text} onChange={setText} toolbars={toolbars} />;
 }
+```
+
+## 🔒 xss 防范
+
+在`1.3.0`之后，通过`sanitize`事件，自行处理不安全的 html 内容。例如：使用`sanitize-html`处理
+
+```js
+// 安装
+yarn add sanitize-html
+
+// 使用
+import sanitizeHtml from 'sanitize-html';
+
+//
+<Editor sanitize={(html) => sanitizeHtml(html)} />;
 ```
 
 更详细的实现可以参考本文档的源码！

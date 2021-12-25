@@ -1,80 +1,84 @@
 > The latest version: [${EDITOR_VERSION}](https://github.com/imzbf/md-editor-rt/releases/tag/v${EDITOR_VERSION}), Use it online: [Go](https://codesandbox.io/s/elated-khorana-65jmr)
 
-## Props
+## 🤯 Props
 
-### modelValue
+### 📃 modelValue
 
 - **type**: `String`
 - **default**: `''`
 - **description**: Markdown content.
 
-### theme
+### 🛍 theme
 
 - **type**: `'light' | 'dark'`
 - **default**: `'light'`
 - **description**: Editor's theme.
 
-### editorClass
+```js
+<Editor theme="dark" />
+```
+
+### 🎀 editorClass
 
 - **type**: `String`
 - **default**: `''`
 - **description**: Editor's `class`.
 
-### hljs
+### 🧸 hljs
 
 - **type**: `Object`
 - **default**: `null`
 - **description**: `Highlight` instance, editor will not insert script of it, but you need to import `highlight` code style by yourself.
 
-### highlightJs
+### 🧸 highlightJs
 
 - **type**: `String`
 - **default**: [highlight.js@11.2.0](https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.2.0/build/highlight.min.js)
 - **description**: HighlightJs url.
 
-### highlightCss
+### 🧸 highlightCss
 
 - **type**: `String`
 - **default**: [atom-one-dark@11.2.0](https://cdn.jsdelivr.net/npm/highlight.js@11.2.0/styles/atom-one-dark.css)
 - **description**: `Highlight` code style url.
 
-### historyLength
+### 🤏🏼 historyLength
 
 - **type**: `Number`
 - **default**: `10`
 - **description**: The max length of history(if it is too big, editor will use more `RAM`).
 
-### pageFullScreen
+### 💻 pageFullScreen
 
 - **type**: `Boolean`
 - **default**: `false`
 - **description**: Screenfull in web page.
 
-### preview
+### 📱 preview
 
 - **type**: `Boolean`
 - **default**: `true`
 - **description**: Preview content in editor.
 
-### htmlPreview
+### 📀 htmlPreview
 
 - **type**: `Boolean`
 - **default**: `false`
 - **description**: Preview html in editor.
 
-### previewOnly
+### 📺 previewOnly
 
 - **type**: `Boolean`
 - **default**: `false`
 - **description**: Only render article content, no toolbar, no edit area.
 
-### language
+### 🔤 language
 
 - **type**: `String`
 - **default**: `'zh-CN'`
 - **description**: Build-in language('zh-CN','en-US').
 
-### languageUserDefined
+### 🔤 languageUserDefined
 
 - **type**: `Object`
 - **default**: `{key: StaticTextDefaultValue}`
@@ -97,6 +101,8 @@ export interface ToolbarTips {
   link?: string;
   image?: string;
   table?: string;
+  mermaid?: string;
+  katex?: string;
   revoke?: string;
   next?: string;
   save?: string;
@@ -142,10 +148,27 @@ export interface StaticTextDefaultValue {
     text?: string;
     tips?: string;
   };
+  mermaid?: {
+    flow?: string;
+    sequence?: string;
+    gantt?: string;
+    class?: string;
+    state?: string;
+    pie?: string;
+    relationship?: string;
+    journey?: string;
+  };
+  // 1.4.0
+  katex?: {
+    // formula inline
+    inline: string;
+    // formula block
+    block: string;
+  };
 }
 ```
 
-### toolbars
+### 🧱 toolbars
 
 - **type**: `Array`
 - **default**: `[all]`
@@ -171,6 +194,8 @@ You can sort the toolbar as you like, split tools by `'-'`, the left and right t
   'link',
   'image',
   'table',
+  'mermaid',
+  'katex',
   '-',
   'revoke',
   'next',
@@ -185,106 +210,214 @@ You can sort the toolbar as you like, split tools by `'-'`, the left and right t
 ];
 ```
 
-### toolbarsExclude
+### 🧱 toolbarsExclude
 
 - **type**: `Array`
 - **default**: `[]`
 - **description**: Don't show some item of toolbars, all keys.
 
-### prettier
+### 🪒 prettier
 
 - **type**: `Boolean`
 - **default**: `true`
 - **description**: Use prettier to beautify content or not.
 
-### prettierCDN
+### 🪒 prettierCDN
 
 - **type**: `String`
 - **default**: [standalone@2.4.0](https://cdn.jsdelivr.net/npm/prettier@2.4.0/standalone.js)
 - **description**:
 
-### prettierMDCDN
+### 🪒 prettierMDCDN
 
 - **type**: `String`
 - **default**: [parser-markdown@2.4.0](https://cdn.jsdelivr.net/npm/prettier@2.4.0/parser-markdown.js)
 - **description**:
 
-### cropperCss
+### ✂️ Cropper
+
+- **type**：`Object`
+- **default**：`undefined`
+- **description**: Instance of Cropper.
+
+### ✂️ cropperCss
 
 - **type**: `String`
 - **default**: [cropper.min.css@1.5.12](https://cdn.jsdelivr.net/npm/cropperjs@1.5.12/dist/cropper.min.css)
 - **description**: Cropper css url.
 
-### cropperJs
+### ✂️ cropperJs
 
 - **type**: `String`
 - **default**: [cropper.min.js@1.5.12](https://cdn.jsdelivr.net/npm/cropperjs@1.5.12/dist/cropper.min.js)
 - **description**: Cropper js url.
 
-### iconfontJs
+### 👻 iconfontJs
 
 - **type**: `String`
 - **default**: [iconfont](https://at.alicdn.com/t/font_2605852_khjf435c7th.js)
 - **description**: Icon url.
 
-### editorId
+### 🎲 editorId
 
 - **type**: `String`
 - **default**: `'md-editor-rt'`
 - **description**: Editor id, also the html id, it is used when there are two or more editor and server render.
 
-### tabWidth
+### 🤏 tabWidth
 
 - **type**: `Number`
 - **default**: `2`
 - **description**: One tab eq some space.
 
-### showCodeRowNumber
+### 🔢 showCodeRowNumber
 
 - **type**: `Boolean`
 - **default**: `false`
 - **description**: Show row number for code block or not.
 
-### screenfull
+### 🖥 screenfull
 
 - **type**: `Object`
 - **default**: `null`
 - **description**: Screenfull instance, editor will not insert script of it.
 
-### screenfullJs
+### 🖥 screenfullJs
 
 - **type**: `String`
 - **default**: [5.1.0](https://cdn.jsdelivr.net/npm/screenfull@5.1.0/dist/screenfull.js)
 - **description**: Screenfull js url.
 
-### previewTheme
+### 🔦 previewTheme
 
 - **type**: `'default' | 'github' | 'vuepress'`
 - **default**: `'default'`
 - **description**: Preview themes.
 
-### style
+### 🎅🏻 style
 
 - **type**: `CSSProperties`
-- **default**: `'default'`
-- **版本**: `>= 1.2.0`
+- **default**: `''`
+- **version**: `>= 1.2.0`
 - **description**: Editor's inline style.
+
+### 📅 tableShape
+
+- **type**: `[Number, Number]`
+- **default**: `[6, 4]`
+- **version**: `>= 1.3.0`
+- **description**: Preset the size of the table, [columns, rows].
+
+```js
+<Editor tableShape={[8, 4]}>
+```
+
+![Preview](/md-editor-rt/imgs/20211216165424.png)
+
+### 📉 mermaid
+
+- **type**: `mermaid`
+- **default**: `undefined`
+- **version**: `>= 1.3.0`
+- **description**: Instance of `mermaid`, if you provide it, editor in browser will not download `mermaid`.
+
+```js
+import mermaid from 'mermaid'
+
+//
+<Editor mermaid={mermaid}>
+```
+
+### 📉 mermaidJs
+
+- **type**: `String`
+- **default**: [mermaid@8.13.5](https://cdn.jsdelivr.net/npm/mermaid@8.13.5/dist/mermaid.min.js)
+- **version**: `>= 1.3.0`
+- **description**: MermaidJs url。
+
+```js
+<Editor mermaidJs="/lib/mermaid.min.js" />
+```
+
+### ☝️ noMermaid
+
+- **type**: `Boolean`
+- **default**: `false`
+- **version**: `>= 1.3.0`
+- **description**: do not want to use `mermaid`, set it to `true`.
+
+```js
+<Editor noMermaid />
+```
+
+### 🪧 placeholder
+
+- **type**: `String`
+- **default**: `''`
+- **version**: `>= 1.3.0`
+- **description**: em-\_-！
 
 > !!! Plug-in units are import from `cdn.jsdelivr.net`, if your project does not run on line, please use your local url to replace. eg: highlightJs = "//127.0.0.1/highlight.min.js".
 
-## Event
+### 📐 katex
 
-### onChange
+- **type**: `katex`
+- **default**: `undefined`
+- **version**: `>= 1.9.0`
+- **description**: Instance of `katex`, if you provide it, editor in browser will not download `katex`.
+
+```js
+import katex from 'katex'
+
+//
+<Editor katex={katex}>
+```
+
+### 📐 katexJs
+
+- **type**: `String`
+- **default**: [katex.min.js@0.15.1](https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.js)
+- **version**: `>= 1.9.0`
+- **description**: katexJs url.
+
+```js
+<Editor katexJs="/lib/katex.min.js" />
+```
+
+### 📐 katexCss
+
+- **type**: `String`
+- **default**: [katex.min.css@0.15.1](https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.css)
+- **version**: `>= 1.9.0`
+- **description**: katexCss url.
+
+```js
+<Editor katexCss="/lib/katex.min.css" />
+```
+
+### ☝️ noKatex
+
+- **type**: `Boolean`
+- **default**: `false`
+- **version**: `>= 1.9.0`
+- **description**: Do not want to use `katex`, set it to `true`.
+
+<br>
+<hr>
+
+## 🪢 Event
+
+### 📞 onChange
 
 - **type**: `(v: string) => void`
 - **description**: Content changed event(bind to `oninput` of `textarea`).
 
-### onSave
+### 💾 onSave
 
 - **type**: `(v: string) => void`
 - **description**: Save Content event,`ctrl+s`and click button will trigger.
 
-### onUploadImg
+### 📸 onUploadImg
 
 - **type**: `(files: FileList, callback: function) => void`
 - **description**: Upload picture event,when picture is uploading the modal will not close,please provide right urls to the callback function.
@@ -313,29 +446,43 @@ async onUploadImg(files: FileList, callback: (urls: string[]) => void) {
 }
 ```
 
-### onHtmlChanged
+### ☎️ onHtmlChanged
 
 - **type**: `(h: string) => void`
 - **description**: Compile markdown successful event,you can use it to get the html code.
 
-### onGetCatalog
+### 🗒 onGetCatalog
 
 - **type**: `(list: HeadList[]) => void`
 - **description**: Get catalogue of article.
 
-### markedHeading
+### 🪄 markedHeading
 
 - **type**: `(text: string,level: 1-6,raw: string, slugger: Slugger) => string`
 - **description**: `marked` head renderer method.
 
 > If `markedHeading` is overridden, be sure to tell the editor the algorithm for generating the title ID by `marketheadingid`.
 
-### markedHeadingId
+### 🎈 markedHeadingId
 
 - **type**: `(text: string, level: number) => string`
 - **description**: Title `ID` generator.
 
-## Shortcut key
+### 🔒 sanitize
+
+- **type**: `(html: string) => string`
+- **description**: Sanitize the html, prevent XSS. When you can be sure that your content is OK, ignore this.
+
+> Use `sanitize-html`
+
+```js
+import sanitizeHtml from 'sanitize-html';
+
+//
+<Editor sanitize={(html) => sanitizeHtml(html)} />;
+```
+
+## 🪡 Shortcut key
 
 | key | function | description |
 | --- | --- | --- |
@@ -364,6 +511,6 @@ async onUploadImg(files: FileList, callback: (urls: string[]) => void) {
 | CTRL + ALT + C | code row |  |
 | CTRL + SHIFT + ALT + T | table | `\|table\|` |
 
-## Edit this page
+## ✍️ Edit this page
 
 [doc-en-US](https://github.com/imzbf/md-editor-rt/blob/dev-docs/public/doc-en-US.md)
