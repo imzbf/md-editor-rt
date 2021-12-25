@@ -4,7 +4,7 @@
 
 English \| [中文](https://github.com/imzbf/md-editor-rt/blob/master/README-CN.md)
 
-Markdown editor for `react`, developed by `jsx` and `typescript`.
+Markdown editor for `react`, developed in `jsx` and `typescript`.
 
 - Documentation and demo：[Go](https://imzbf.github.io/md-editor-rt)
 
@@ -23,6 +23,7 @@ Markdown editor for `react`, developed by `jsx` and `typescript`.
 - Render article directly(no editor，no event listener, only preview content).
 - Preview themes, support `defalut`、`vuepress`、`github` styles(not identical).
 - `mermaid`(>=1.3.0).
+- `katex` mathematical formula（>=1.9.0）.
 
 > More features are developing, if you have some ideas or find issues, please tell it to me~
 
@@ -70,6 +71,10 @@ Markdown editor for `react`, developed by `jsx` and `typescript`.
 | mermaidJs | String | [mermaid@8.13.5](https://cdn.jsdelivr.net/npm/mermaid@8.13.5/dist/mermaid.min.js) | mermaidJs url |
 | noMermaid | Boolean | false | do not use mermaid |
 | placeholder | String | '' |  |
+| katex<sup>v1.9.0</sup> | Object | undefined | `katex` instance(you need import css by yourself.) |
+| katexJs<sup>v1.9.0</sup> | String | [katex.min.js@0.15.1](https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.js) | katexJs url |
+| katexCss<sup>v1.9.0</sup> | String | [katex.min.css@0.15.1](https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.css) | katexCss url |
+| noKatex<sup>v1.9.0</sup> | Boolean | false | do not use katex |
 
 [toolbars]
 
@@ -93,6 +98,7 @@ Markdown editor for `react`, developed by `jsx` and `typescript`.
   'image',
   'table',
   'mermaid',
+  'katex',
   '-',
   'revoke',
   'next',
@@ -131,6 +137,7 @@ export interface ToolbarTips {
   image?: string;
   table?: string;
   mermaid?: string;
+  katex?: string;
   revoke?: string;
   next?: string;
   save?: string;
@@ -190,6 +197,13 @@ export interface StaticTextDefaultValue {
     pie?: string;
     relationship?: string;
     journey?: string;
+  };
+  // 1.4.0
+  katex?: {
+    // formula inline
+    inline: string;
+    // formula block
+    block: string;
   };
 }
 ```

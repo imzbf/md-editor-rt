@@ -19,7 +19,8 @@ react 版本的 Markdown 编辑器，[md-editor-v3](https://imzbf.github.io/md-e
 - 粘贴上传图片，图片裁剪上传；
 - 仅预览模式（不显示编辑器，只显示 md 预览内容，无额外监听）；
 - 预览主题，支持`defalut`、`vuepress`、`github` 样式（不完全相同）；
-- `mermaid`绘图（>=1.3.0）。
+- `mermaid`绘图（>=1.3.0）；
+- `katex`数学公式（>=1.9.0）。
 
 > 更多功能待后续更新，如果你有新的想法或者使用发现有问题，请留言告诉我~
 
@@ -68,6 +69,10 @@ react 版本的 Markdown 编辑器，[md-editor-v3](https://imzbf.github.io/md-e
 | mermaidJs | String | [mermaid@8.13.5](https://cdn.jsdelivr.net/npm/mermaid@8.13.5/dist/mermaid.min.js) | mermaidJs 链接 |
 | noMermaid | Boolean | false | 如果你不希望使用图表展示内容，可以设置关闭 |
 | placeholder | String | '' |  |
+| katex | Object | undefined | `katex` 实例，这种方式你需要自行引入 css |
+| katexJs | String | [katex.min.js@0.15.1](https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.js) | katexJs 链接 |
+| katexCss | String | [katex.min.css@0.15.1](https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.css) | katexCss 链接 |
+| noKatex | Boolean | false | 不使用 katex 展示数学公式 |
 
 [toolbars]
 
@@ -91,6 +96,7 @@ react 版本的 Markdown 编辑器，[md-editor-v3](https://imzbf.github.io/md-e
   'image',
   'table',
   'mermaid',
+  'katex',
   '-',
   'revoke',
   'next',
@@ -129,6 +135,7 @@ export interface ToolbarTips {
   image?: string;
   table?: string;
   mermaid?: string;
+  katex?: string;
   revoke?: string;
   next?: string;
   save?: string;
@@ -196,6 +203,12 @@ export interface StaticTextDefaultValue {
     relationship?: string;
     // 旅程图
     journey?: string;
+  };
+  katex?: {
+    // 行内公式
+    inline: string;
+    // 块级公式
+    block: string;
   };
 }
 ```
