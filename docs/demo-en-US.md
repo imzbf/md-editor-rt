@@ -169,6 +169,8 @@ export default function App() {
       link: 'link',
       image: 'image',
       table: 'table',
+      mermaid: 'mermaid',
+      katex: 'formula',
       revoke: 'revoke',
       next: 'undo revoke',
       save: 'save',
@@ -208,6 +210,20 @@ export default function App() {
     copyCode: {
       text: 'Copy',
       tips: 'Copied!'
+    },
+    mermaid: {
+      flow: 'flow',
+      sequence: 'sequence',
+      gantt: 'gantt',
+      class: 'class',
+      state: 'state',
+      pie: 'pie',
+      relationship: 'relationship',
+      journey: 'journey'
+    },
+    katex: {
+      inline: 'inline',
+      block: 'block'
     }
   });
 
