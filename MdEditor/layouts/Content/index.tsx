@@ -3,7 +3,7 @@ import copy from 'copy-to-clipboard';
 import { prefix } from '../../config';
 import { EditorContext, SettingType, MarkedHeading, HeadList } from '../../Editor';
 import { scrollAuto, generateCodeRowNumber } from '../../utils';
-import { useAutoGenrator, useHistory, useMarked, useMermaid } from './hooks';
+import { useAutoGenrator, useHistory, useMarked, useMermaid, useKatex } from './hooks';
 import classNames from 'classnames';
 import { appendHandler } from '../../utils/dom';
 import bus from '../../utils/event-bus';
@@ -28,6 +28,12 @@ export type EditorContentProp = Readonly<{
   noMermaid?: boolean;
   sanitize: (html: string) => string;
   placeholder: string;
+  // katex实例
+  katex?: any;
+  // katex script链接
+  katexJs: string;
+  katexCss: string;
+  noKatex?: boolean;
 }>;
 
 let clearScrollAuto = () => {};
@@ -68,6 +74,7 @@ const Content = (props: EditorContentProp) => {
   };
 
   const marked = useMarked(props, heading);
+  const katexInited = useKatex(props, marked);
   const { reRender, mermaidInited } = useMermaid(props);
 
   // 向页面代码块注入复制按钮
@@ -147,7 +154,7 @@ const Content = (props: EditorContentProp) => {
     const _html = marked(props.value);
 
     return props.sanitize(_html);
-  }, [props.value, highlightInited, mermaidInited, reRender]);
+  }, [props.value, highlightInited, mermaidInited, reRender, katexInited]);
 
   useEffect(() => {
     // 变化时调用变化事件

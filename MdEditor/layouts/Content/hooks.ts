@@ -7,6 +7,7 @@ import { EditorContext } from '../../Editor';
 import { marked } from 'marked';
 import { prefix } from '../../config';
 import { appendHandler } from '../../utils/dom';
+import kaTexExtensions from '../../utils/katex';
 
 interface HistoryItemType {
   // 记录内容
@@ -343,4 +344,48 @@ export const useMermaid = (props: EditorContentProp) => {
   }, []);
 
   return { reRender, mermaidInited };
+};
+
+export const useKatex = (props: EditorContentProp, marked: any) => {
+  const [katexInited, setKatexInited] = useState(false);
+
+  // 当没有设置不使用katex，直接扩展组件
+  if (!props.noKatex) {
+    marked.use({
+      extensions: [
+        kaTexExtensions.inline(prefix, props.katex),
+        kaTexExtensions.block(prefix, props.katex)
+      ]
+    });
+  }
+
+  useEffect(() => {
+    let katexScript: HTMLScriptElement;
+    let katexLink: HTMLLinkElement;
+    // 标签引入katex
+    if (!props.noKatex && !props.katex) {
+      katexScript = document.createElement('script');
+
+      katexScript.src = props.katexJs;
+      katexScript.onload = () => {
+        setKatexInited(true);
+      };
+      katexScript.id = `${prefix}-katex`;
+
+      katexLink = document.createElement('link');
+      katexLink.rel = 'stylesheet';
+      katexLink.href = props.katexCss;
+      katexLink.id = `${prefix}-katexCss`;
+
+      appendHandler(katexScript);
+      appendHandler(katexLink);
+    }
+
+    return () => {
+      katexScript && katexScript.remove();
+      katexLink && katexLink.remove();
+    };
+  }, []);
+
+  return katexInited;
 };

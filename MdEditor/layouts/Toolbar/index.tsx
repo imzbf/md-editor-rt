@@ -40,7 +40,8 @@ const Toolbar = (props: ToolbarProp) => {
     // 表格预选
     table: false,
     // mermaid
-    mermaid: false
+    mermaid: false,
+    katex: false
   });
 
   // 触发器
@@ -693,6 +694,54 @@ const Toolbar = (props: ToolbarProp) => {
             <div className={`${prefix}-toolbar-item`} title={ult.toolbarTips?.mermaid}>
               <svg className={`${prefix}-icon`} aria-hidden="true">
                 <use xlinkHref="#icon-mermaid" />
+              </svg>
+            </div>
+          </Dropdown>
+        );
+      }
+      case 'katex': {
+        return (
+          <Dropdown
+            visible={visible.katex}
+            onChange={(v) => {
+              setVisible({
+                ...visible,
+                katex: v
+              });
+            }}
+            overlay={
+              <ul
+                className={`${prefix}-menu`}
+                onClick={() => {
+                  setVisible({
+                    ...visible,
+                    katex: false
+                  });
+                }}
+              >
+                <li
+                  className={`${prefix}-menu-item`}
+                  onClick={() => {
+                    emitHandler('katexInline');
+                  }}
+                >
+                  {ult.katex?.inline}
+                </li>
+                <li
+                  className={`${prefix}-menu-item`}
+                  onClick={() => {
+                    emitHandler('katexBlock');
+                  }}
+                >
+                  {ult.katex?.block}
+                </li>
+              </ul>
+            }
+            key="bar-katex"
+          >
+            <div className={`${prefix}-toolbar-item`} title={ult.toolbarTips?.mermaid}>
+              <svg className={`${prefix}-icon`} aria-hidden="true">
+                <use xlinkHref="#icon-formula" />
               </svg>
             </div>
           </Dropdown>

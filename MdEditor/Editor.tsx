@@ -14,7 +14,9 @@ import {
   cropperUrl,
   staticTextDefault,
   screenfullUrl,
-  mermaidUrl
+  mermaidUrl,
+  katexJsUrl,
+  katexCssUrl
 } from './config';
 
 import { prefix } from './config';
@@ -31,6 +33,7 @@ declare global {
     Cropper: any;
     screenfull: any;
     mermaid: any;
+    katex: any;
   }
 }
 
@@ -51,6 +54,7 @@ export interface ToolbarTips {
   image?: string;
   table?: string;
   mermaid?: string;
+  katex?: string;
   revoke?: string;
   next?: string;
   save?: string;
@@ -113,6 +117,10 @@ export interface StaticTextDefaultValue {
     relationship?: string;
     // 旅程图
     journey?: string;
+  };
+  katex?: {
+    inline: string;
+    block: string;
   };
 }
 
@@ -233,6 +241,12 @@ export interface EditorProp {
   // 推荐DOMPurify、sanitize-html
   sanitize: (html: string) => string;
   placeholder: string;
+  // katex实例
+  katex?: any;
+  // katex script链接
+  katexJs: string;
+  katexCss: string;
+  noKatex?: boolean;
 }
 
 export interface ContentType {
@@ -456,6 +470,10 @@ const Editor = (props: EditorProp) => {
           markedHeading={props.markedHeading}
           sanitize={props.sanitize}
           placeholder={props.placeholder}
+          katex={props.katex}
+          katexJs={props.katexJs}
+          katexCss={props.katexCss}
+          noKatex={props.noKatex}
         />
         {catalogShow && <Catalog markedHeadingId={props.markedHeadingId} />}
       </div>
@@ -507,7 +525,9 @@ Editor.defaultProps = {
   tableShape: [6, 4],
   mermaidJs: mermaidUrl,
   sanitize: (html) => html,
-  placeholder: ''
+  placeholder: '',
+  katexJs: katexJsUrl,
+  katexCss: katexCssUrl
 } as EditorProp;
 
 export default Editor;
