@@ -260,7 +260,7 @@ export const useMarked = (props: EditorContentProp, heading: any) => {
           }
 
           // 没有提供，则判断window对象是否可用，不可用则反回待解析的结构，在页面引入后再解析
-          if (typeof window !== 'undefined' && window.mermaid) {
+          else if (typeof window !== 'undefined' && window.mermaid) {
             svgCode = window.mermaid.mermaidAPI.render(idRand, code);
           } else {
             // 这块代码不会正确展示在页面上
@@ -307,11 +307,17 @@ export const useMermaid = (props: EditorContentProp) => {
   const [mermaidInited, setMermaidInited] = useState<boolean>(!!props.mermaid);
 
   useEffect(() => {
-    if (!props.noMermaid && window.mermaid) {
-      window.mermaid.initialize({
-        theme: theme === 'dark' ? 'dark' : 'default'
-      });
-
+    if (!props.noMermaid) {
+      // 提供了外部实例
+      if (props.mermaid) {
+        props.mermaid.initialize({
+          theme: theme === 'dark' ? 'dark' : 'default'
+        });
+      } else if (window.mermaid) {
+        window.mermaid.initialize({
+          theme: theme === 'dark' ? 'dark' : 'default'
+        });
+      }
       setReRender((_reRender) => !_reRender);
     }
   }, [theme]);
@@ -319,9 +325,7 @@ export const useMermaid = (props: EditorContentProp) => {
   useEffect(() => {
     let mermaidScript: HTMLScriptElement;
     // 引入mermaid
-    if (!props.noMermaid && props.mermaid) {
-      window.mermaid = props.mermaid;
-    } else if (!props.noMermaid && !props.mermaid) {
+    if (!props.noMermaid && !props.mermaid) {
       mermaidScript = document.createElement('script');
       mermaidScript.src = props.mermaidJs;
       mermaidScript.onload = () => {
