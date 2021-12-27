@@ -102,6 +102,7 @@ export interface ToolbarTips {
   image?: string;
   table?: string;
   mermaid?: string;
+  katex?: string;
   revoke?: string;
   next?: string;
   save?: string;
@@ -157,6 +158,13 @@ export interface StaticTextDefaultValue {
     relationship?: string;
     journey?: string;
   };
+  // 1.4.0
+  katex?: {
+    // formula inline
+    inline: string;
+    // formula block
+    block: string;
+  };
 }
 ```
 
@@ -187,6 +195,7 @@ You can sort the toolbar as you like, split tools by `'-'`, the left and right t
   'image',
   'table',
   'mermaid',
+  'katex',
   '-',
   'revoke',
   'next',
@@ -227,9 +236,9 @@ You can sort the toolbar as you like, split tools by `'-'`, the left and right t
 
 ### ✂️ Cropper
 
-- **类型**：`Object`
-- **默认值**：`undefined`
-- **说明**: Instance of Cropper.
+- **type**：`Object`
+- **default**：`undefined`
+- **description**: Instance of Cropper.
 
 ### ✂️ cropperCss
 
@@ -349,6 +358,49 @@ import mermaid from 'mermaid'
 - **description**: em-\_-！
 
 > !!! Plug-in units are import from `cdn.jsdelivr.net`, if your project does not run on line, please use your local url to replace. eg: highlightJs = "//127.0.0.1/highlight.min.js".
+
+### 📐 katex
+
+- **type**: `katex`
+- **default**: `undefined`
+- **version**: `>= 1.9.0`
+- **description**: Instance of `katex`, if you provide it, editor in browser will not download `katex`.
+
+```js
+import katex from 'katex'
+
+//
+<Editor katex={katex}>
+```
+
+### 📐 katexJs
+
+- **type**: `String`
+- **default**: [katex.min.js@0.15.1](https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.js)
+- **version**: `>= 1.9.0`
+- **description**: katexJs url.
+
+```js
+<Editor katexJs="/lib/katex.min.js" />
+```
+
+### 📐 katexCss
+
+- **type**: `String`
+- **default**: [katex.min.css@0.15.1](https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.css)
+- **version**: `>= 1.9.0`
+- **description**: katexCss url.
+
+```js
+<Editor katexCss="/lib/katex.min.css" />
+```
+
+### ☝️ noKatex
+
+- **type**: `Boolean`
+- **default**: `false`
+- **version**: `>= 1.9.0`
+- **description**: Do not want to use `katex`, set it to `true`.
 
 <br>
 <hr>
