@@ -1,4 +1,4 @@
-import{r as a,u as E,R as n}from"./vendor.3c93b742.js";import{E as l,a as C}from"./md-editor-rt.es.e6ac3a56.js";const c=`## \u{1F632} md-editor-rt
+import{r as o,u as E,R as e}from"./vendor.f5242722.js";import{E as l,a as C}from"./md-editor-rt.es.4124a57b.js";const c=`## \u{1F632} md-editor-rt
 
 Markdown \u7F16\u8F91\u5668\uFF0C\u57FA\u4E8E react\uFF0C\u4F7F\u7528 jsx \u548C typescript \u8BED\u6CD5\u5F00\u53D1\uFF0C\u652F\u6301\u5207\u6362\u4E3B\u9898\u3001prettier \u7F8E\u5316\u6587\u672C\u7B49\u3002
 
@@ -41,6 +41,13 @@ export default defineComponent({
 | ---- | ---------- | --------- |
 | \u4E4B\u95F4 | 3          | \u4E2D\u56FD-\u91CD\u5E86 |
 
+
+## \u{1F9EC} \u56FE\u8868
+
+\`\`\`mermaid
+flowchart TD
+  Start --> Stop
+\`\`\`
 
 ## \u2618\uFE0F \u5360\u4E2A\u5751@\uFF01
 `,f=`## \u{1F632} md-editor-rt
@@ -87,5 +94,12 @@ The Old Man and the Sea served to reinvigorate Hemingway's literary reputation a
 | zhijian | 3          | China ChongQing |
 
 
+## \u{1F9EC} Diagram
+
+\`\`\`mermaid
+flowchart TD
+  Start --> Stop
+\`\`\`
+
 ## \u2618\uFE0F em... 
-`;var B=()=>{const[i,t]=a.exports.useState(""),u=E(e=>e);return a.exports.useEffect(()=>{u.lang==="zh-CN"?t(c):t(f)},[u.lang]),n.createElement("div",{className:"project-preview"},n.createElement("div",{className:"container"},n.createElement(l,{theme:u.theme,previewTheme:u.previewTheme,modelValue:i,editorId:"md-editor-preview",onChange:e=>t(e),onUploadImg:async(e,s)=>{const d=await Promise.all(Array.from(e).map(F=>new Promise((m,p)=>{const o=new FormData;o.append("file",F),C.post("/api/img/upload",o,{headers:{"Content-Type":"multipart/form-data"}}).then(r=>m(r)).catch(r=>p(r))})));s(d.map(F=>F.data.url))}}),n.createElement("br",null),n.createElement("span",{className:"tips-text"},u.lang==="zh-CN"?"Tips\uFF1A\u672C\u9875\u5C55\u793A\u7F16\u8F91\u5668localstorage\u5B58\u50A8\u529F\u80FD\u5DF2\u79FB\u9664\uFF01":"Tips: The editor in this page can not save text to localstorage now!")))};export{B as default};
+`;var B=()=>{const[i,t]=o.exports.useState(""),u=E(n=>n);return o.exports.useEffect(()=>{u.lang==="zh-CN"?t(c):t(f)},[u.lang]),e.createElement("div",{className:"project-preview"},e.createElement("div",{className:"container"},e.createElement(l,{theme:u.theme,previewTheme:u.previewTheme,modelValue:i,language:u.lang,editorId:"md-editor-preview",onChange:n=>t(n),onUploadImg:async(n,s)=>{const d=await Promise.all(Array.from(n).map(r=>new Promise((m,p)=>{const a=new FormData;a.append("file",r),C.post("/api/img/upload",a,{headers:{"Content-Type":"multipart/form-data"}}).then(F=>m(F)).catch(F=>p(F))})));s(d.map(r=>r.data.url))}}),e.createElement("br",null),e.createElement("span",{className:"tips-text"},u.lang==="zh-CN"?"Tips\uFF1A\u672C\u9875\u5C55\u793A\u7F16\u8F91\u5668localstorage\u5B58\u50A8\u529F\u80FD\u5DF2\u79FB\u9664\uFF01":"Tips: The editor in this page can not save text to localstorage now!")))};export{B as default};
