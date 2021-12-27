@@ -323,13 +323,13 @@ export const useMermaid = (props: EditorContentProp) => {
       window.mermaid = props.mermaid;
     } else if (!props.noMermaid && !props.mermaid) {
       mermaidScript = document.createElement('script');
-
       mermaidScript.src = props.mermaidJs;
       mermaidScript.onload = () => {
-        setMermaidInited(true);
         window.mermaid.initialize({
+          theme: theme === 'dark' ? 'dark' : 'default',
           logLevel: import.meta.env.MODE === 'development' ? 'Error' : 'Fatal'
         });
+        setMermaidInited(true);
       };
       mermaidScript.id = `${prefix}-mermaid`;
 
