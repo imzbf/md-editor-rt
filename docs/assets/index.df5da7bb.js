@@ -1,4 +1,4 @@
-import{r as o,u as E,R as e}from"./vendor.f5242722.js";import{E as l,a as C}from"./md-editor-rt.es.4124a57b.js";const c=`## \u{1F632} md-editor-rt
+import{r as o,u as E,R as e}from"./vendor.f5242722.js";import{E as l,a as C}from"./md-editor-rt.es.d7496dd9.js";const c=`## \u{1F632} md-editor-rt
 
 Markdown \u7F16\u8F91\u5668\uFF0C\u57FA\u4E8E react\uFF0C\u4F7F\u7528 jsx \u548C typescript \u8BED\u6CD5\u5F00\u53D1\uFF0C\u652F\u6301\u5207\u6362\u4E3B\u9898\u3001prettier \u7F8E\u5316\u6587\u672C\u7B49\u3002
 
