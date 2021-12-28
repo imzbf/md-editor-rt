@@ -1,4 +1,4 @@
-import { insert, setPosition } from '../../utils';
+import { insert, setPosition, scrollAuto } from '../../utils';
 import { directive2flag, ToolDirective } from '../../utils/content-help';
 import { RefObject, useCallback, useContext, useEffect, useRef, useState } from 'react';
 import bus from '../../utils/event-bus';
@@ -392,4 +392,80 @@ export const useKatex = (props: EditorContentProp, marked: any) => {
   }, []);
 
   return katexInited;
+};
+
+export const useAutoScroll = (
+  props: EditorContentProp,
+  html: string,
+  textAreaRef: RefObject<HTMLElement>,
+  previewRef: RefObject<HTMLElement>,
+  htmlRef: RefObject<HTMLElement>
+) => {
+  const { previewOnly } = useContext(EditorContext);
+  const [scrollCb, setScrollCb] = useState({
+    clear() {},
+    init() {}
+  });
+
+  useEffect(() => {
+    // 初始化滚动事件
+    const [init, clear] = scrollAuto(
+      textAreaRef.current as HTMLElement,
+      (previewRef.current as HTMLElement) || htmlRef.current
+    );
+
+    setScrollCb({
+      init,
+      clear
+    });
+  }, []);
+
+  useEffect(() => {
+    // 更新完毕后判断是否需要重新绑定滚动事件
+    if (props.setting.preview && !previewOnly) {
+      setTimeout(() => {
+        scrollCb.clear();
+        scrollCb.init();
+      }, 0);
+    }
+  }, [html]);
+
+  useEffect(() => {
+    // 我们默认不发生直接将编辑器切换成预览模式的行为
+    // 分栏发生变化时，显示分栏时注册同步滚动，隐藏是清除同步滚动
+    if (props.setting.preview && !previewOnly) {
+      scrollCb.clear();
+      // 需要等到页面挂载完成后再注册，否则不能正确获取到预览dom
+      const [init, clear] = scrollAuto(
+        textAreaRef.current as HTMLElement,
+        previewRef.current as HTMLElement
+      );
+
+      setScrollCb({
+        init,
+        clear
+      });
+
+      init();
+    }
+  }, [props.setting.preview, setScrollCb]);
+
+  useEffect(() => {
+    // 分栏发生变化时，显示分栏时注册同步滚动，隐藏是清除同步滚动
+    if (props.setting.htmlPreview && !previewOnly) {
+      scrollCb.clear();
+      // 需要等到页面挂载完成后再注册，否则不能正确获取到预览dom
+      const [init, clear] = scrollAuto(
+        textAreaRef.current as HTMLElement,
+        htmlRef.current as HTMLElement
+      );
+
+      setScrollCb({
+        init,
+        clear
+      });
+
+      init();
+    }
+  }, [props.setting.htmlPreview, setScrollCb]);
 };

@@ -2,8 +2,15 @@ import React, { useContext, useEffect, useMemo, useRef, useState } from 'react';
 import copy from 'copy-to-clipboard';
 import { prefix } from '../../config';
 import { EditorContext, SettingType, MarkedHeading, HeadList } from '../../Editor';
-import { scrollAuto, generateCodeRowNumber } from '../../utils';
-import { useAutoGenrator, useHistory, useMarked, useMermaid, useKatex } from './hooks';
+import { generateCodeRowNumber } from '../../utils';
+import {
+  useAutoGenrator,
+  useHistory,
+  useMarked,
+  useMermaid,
+  useKatex,
+  useAutoScroll
+} from './hooks';
 import classNames from 'classnames';
 import { appendHandler } from '../../utils/dom';
 import bus from '../../utils/event-bus';
@@ -35,8 +42,6 @@ export type EditorContentProp = Readonly<{
   katexCss: string;
   noKatex?: boolean;
 }>;
-
-let clearScrollAuto = () => {};
 
 const Content = (props: EditorContentProp) => {
   // ID
@@ -165,16 +170,6 @@ const Content = (props: EditorContentProp) => {
     // 生成目录，
     bus.emit(editorId, 'catalogChanged', heads.current);
 
-    // 更新完毕后判断是否需要重新绑定滚动事件
-    if (props.setting.preview && !previewOnly) {
-      setTimeout(() => {
-        clearScrollAuto = scrollAuto(
-          textAreaRef.current as HTMLElement,
-          (previewRef.current as HTMLElement) || htmlRef.current
-        );
-      }, 0);
-    }
-
     // 重新设置复制按钮
     initCopyEntry();
 
@@ -185,21 +180,9 @@ const Content = (props: EditorContentProp) => {
   }, [html]);
   // ---end---
 
-  useEffect(() => {
-    // 分栏发生变化时，显示分栏时注册同步滚动，隐藏是清除同步滚动
-    if (props.setting.preview && !previewOnly) {
-      // 需要等到页面挂载完成后再注册，否则不能正确获取到预览dom
-      clearScrollAuto = scrollAuto(
-        textAreaRef.current as HTMLElement,
-        (previewRef.current as HTMLElement) || htmlRef.current
-      );
-    } else {
-      clearScrollAuto();
-    }
-  }, [props.setting.preview]);
+  useAutoScroll(props, html, textAreaRef, previewRef, htmlRef);
 
   useHistory(props, textAreaRef);
-
   useAutoGenrator(props, textAreaRef);
 
   return (
@@ -227,19 +210,28 @@ const Content = (props: EditorContentProp) => {
         )}
         {props.setting.preview && (
           <div
+            className={`${prefix}-preview-wrapper`}
             ref={previewRef}
-            id={`${prefix}-preview`}
-            className={classNames(
-              `${prefix}-preview`,
-              `${previewTheme}-theme`,
-              showCodeRowNumber && `${prefix}-scrn`
-            )}
-            dangerouslySetInnerHTML={{ __html: html }}
-          />
+            key="content-preview-wrapper"
+          >
+            <div
+              id={`${prefix}-preview`}
+              className={classNames(
+                `${prefix}-preview`,
+                `${previewTheme}-theme`,
+                showCodeRowNumber && `${prefix}-scrn`
+              )}
+              dangerouslySetInnerHTML={{ __html: html }}
+            />
+          </div>
         )}
         {props.setting.htmlPreview && (
-          <div ref={htmlRef} className={`${prefix}-html`}>
-            {html}
+          <div
+            className={`${prefix}-preview-wrapper`}
+            ref={htmlRef}
+            key="html-preview-wrapper"
+          >
+            <div className={`${prefix}-html`}>{html}</div>
           </div>
         )}
       </div>
