@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from '@/utils/request';
 import Editor from 'md-editor-rt';
-import { mdText, mdEnText } from '../../data';
+import { mdText, mdEnText, emojis } from '../../data';
 
 import './index.less';
 import { useSelector } from 'react-redux';
@@ -20,6 +20,8 @@ export default () => {
     }
   }, [state.lang]);
 
+  const [defVisible, setDefVisible] = useState(false);
+
   return (
     <div className="project-preview">
       <div className="container">
@@ -29,7 +31,73 @@ export default () => {
           modelValue={md}
           language={state.lang}
           editorId="md-editor-preview"
-          onChange={(value) => setMd(value)}
+          toolbars={[
+            'bold',
+            'underline',
+            'italic',
+            'strikeThrough',
+            '-',
+            'title',
+            'sub',
+            'sup',
+            'quote',
+            'unorderedList',
+            'orderedList',
+            '-',
+            'codeRow',
+            'code',
+            'link',
+            'image',
+            'table',
+            'mermaid',
+            'katex',
+            'emoji',
+            '-',
+            'revoke',
+            'next',
+            'save',
+            '=',
+            'prettier',
+            'pageFullscreen',
+            'fullscreen',
+            'preview',
+            'htmlPreview',
+            'catalog',
+            'github'
+          ]}
+          defToolbars={[
+            {
+              type: 'dropdown',
+              name: 'emoji',
+              trigger: (
+                <svg className="icon" aria-hidden="true">
+                  <use xlinkHref="#icon-emoji"></use>
+                </svg>
+              ),
+              visible: defVisible,
+              onChange: setDefVisible,
+              overlay: (
+                // <span
+                //   onClick={() => {
+                //     console.log(document.querySelector('#md-editor-preview-textarea'));
+                //   }}
+                // >
+                //   哈哈哈
+                // </span>
+                <div className="emoji-container">
+                  <ol className="emojis">
+                    {emojis.map((emoji, index) => (
+                      <li key={`emoji-${index}`}>{emoji}</li>
+                    ))}
+                  </ol>
+                </div>
+              ),
+              onClick: () => {
+                console.log('自定义工具栏被点击');
+              }
+            }
+          ]}
+          onChange={(value: string) => setMd(value)}
           onUploadImg={async (files: FileList, callback: (urls: string[]) => void) => {
             const res = await Promise.all(
               Array.from(files).map((file) => {
@@ -55,8 +123,8 @@ export default () => {
         <br />
         <span className="tips-text">
           {state.lang === 'zh-CN'
-            ? 'Tips：本页展示编辑器localstorage存储功能已移除！'
-            : 'Tips: The editor in this page can not save text to localstorage now!'}
+            ? 'Tips：本页展示编辑器localstorage存储功能已移除！本页面的emoji示例需要自行扩展，请参考示例页面中的内容！'
+            : 'Tips: The editor in this page can not save text to localstorage now! The function of inserting emoji on this page needs to be developed by yourself! The example is on the "demo" page.'}
         </span>
       </div>
     </div>
