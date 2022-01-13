@@ -1,4 +1,11 @@
-import React, { createContext, CSSProperties, useEffect, useMemo, useState } from 'react';
+import React, {
+  createContext,
+  CSSProperties,
+  ReactElement,
+  useEffect,
+  useMemo,
+  useState
+} from 'react';
 import cn from 'classnames';
 import { useExpansion, useKeyBoard } from './hooks';
 import ToolBar from './layouts/Toolbar';
@@ -67,6 +74,7 @@ export interface ToolbarTips {
   github?: string;
   '-'?: string;
   '='?: string;
+  [key: string]: string | undefined;
 }
 
 export interface StaticTextDefaultValue {
@@ -247,6 +255,8 @@ export interface EditorProp {
   katexJs: string;
   katexCss: string;
   noKatex?: boolean;
+  // 自定义的工具栏列表
+  defToolbars?: Array<DefiendToolbar>;
 }
 
 export interface ContentType {
@@ -260,6 +270,33 @@ export interface ContentType {
   theme: 'light' | 'dark';
   previewTheme: PreviewThemes;
 }
+
+export interface NormalToolbar {
+  type: 'normal';
+  name: string;
+  title?: string;
+  // 工具栏显示内容，这通常是个图标
+  trigger: ReactElement;
+  // 点击事件
+  onClick: () => void;
+}
+
+export interface DropdownToolbar {
+  // 工具栏类型，dropdown类型会要求提供控制下拉内容的显示状态
+  type: 'dropdown';
+  // 必须提供名称，并在toolbar中包含该名称才能正确展示
+  name: string;
+  // hover提示，可以不设置
+  title?: string;
+  visible: boolean;
+  // 工具栏显示内容，这通常是个图标
+  trigger: ReactElement;
+  onChange: (visible: boolean) => void;
+  // 下拉列表
+  overlay: ReactElement;
+}
+
+export type DefiendToolbar = NormalToolbar | DropdownToolbar;
 
 export const EditorContext = createContext<ContentType>({
   editorId: '',
@@ -454,6 +491,7 @@ const Editor = (props: EditorProp) => {
             setting={setting}
             updateSetting={updateSetting}
             tableShape={props.tableShape}
+            defToolbars={props.defToolbars}
           />
         )}
         <Content

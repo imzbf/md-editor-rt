@@ -31,6 +31,8 @@ export default ({ theme }: { theme: Theme }) => {
   }, [md]);
   // -----end-----
 
+  const [defVisible, setDefVisible] = useState(false);
+
   return (
     <div className="project-preview">
       <div className="container">
@@ -38,6 +40,62 @@ export default ({ theme }: { theme: Theme }) => {
           theme={theme}
           modelValue={md}
           editorId="md-editor-preview"
+          toolbars={[
+            'bold',
+            'underline',
+            'italic',
+            'strikeThrough',
+            '-',
+            'title',
+            'sub',
+            'sup',
+            'quote',
+            'unorderedList',
+            'orderedList',
+            '-',
+            'codeRow',
+            'code',
+            'link',
+            'image',
+            'table',
+            'mermaid',
+            'katex',
+            '-',
+            'revoke',
+            'next',
+            'save',
+            '=',
+            'prettier',
+            'pageFullscreen',
+            'fullscreen',
+            'preview',
+            'htmlPreview',
+            'catalog',
+            'github',
+            'ddd'
+          ]}
+          defToolbars={[
+            {
+              type: 'dropdown',
+              name: 'my-def',
+              trigger: (
+                <svg className="md-icon" aria-hidden="true">
+                  <use xlinkHref="#icon-underline" />
+                </svg>
+              ),
+              visible: defVisible,
+              onChange: setDefVisible,
+              overlay: (
+                <span
+                  onClick={() => {
+                    console.log(document.querySelector('#md-editor-preview-textarea'));
+                  }}
+                >
+                  哈哈哈
+                </span>
+              )
+            }
+          ]}
           onSave={(v) => {
             localStorage.setItem(SAVE_KEY, v);
           }}
