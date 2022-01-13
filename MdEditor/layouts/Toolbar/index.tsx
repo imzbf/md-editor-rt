@@ -755,10 +755,7 @@ const Toolbar = (props: ToolbarProp) => {
                 }
                 key="bar-katex"
               >
-                <div
-                  className={`${prefix}-toolbar-item`}
-                  title={ult.toolbarTips?.mermaid}
-                >
+                <div className={`${prefix}-toolbar-item`} title={ult.toolbarTips?.katex}>
                   <svg className={`${prefix}-icon`} aria-hidden="true">
                     <use xlinkHref="#icon-formula" />
                   </svg>
