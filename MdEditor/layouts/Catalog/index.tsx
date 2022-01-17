@@ -1,7 +1,8 @@
 import React, { useContext, useEffect, useMemo, useState } from 'react';
 import './style.less';
 import bus from '../../utils/event-bus';
-import { EditorContext, HeadList, MarkedHeadingId } from '../../Editor';
+import { EditorContext } from '../../Editor';
+import { HeadList, MarkedHeadingId } from '../../type';
 import CatalogLink from './CatalogLink';
 import { prefix } from '../../config';
 

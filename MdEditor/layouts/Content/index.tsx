@@ -1,7 +1,8 @@
 import React, { useContext, useEffect, useMemo, useRef, useState } from 'react';
 import copy from 'copy-to-clipboard';
 import { prefix } from '../../config';
-import { EditorContext, SettingType, MarkedHeading, HeadList } from '../../Editor';
+import { EditorContext } from '../../Editor';
+import { SettingType, MarkedHeading, HeadList } from '../../type';
 import { generateCodeRowNumber } from '../../utils';
 import {
   useAutoGenrator,

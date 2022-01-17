@@ -1,4 +1,4 @@
-import { StaticTextDefault } from './Editor';
+import { StaticTextDefault } from './type';
 
 export const prefix = 'md';
 

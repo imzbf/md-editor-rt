@@ -1,6 +1,6 @@
 import { insert, setPosition, scrollAuto } from '../../utils';
 import { directive2flag, ToolDirective } from '../../utils/content-help';
-import { RefObject, useCallback, useContext, useEffect, useRef, useState } from 'react';
+import { RefObject, useContext, useEffect, useRef, useState } from 'react';
 import bus from '../../utils/event-bus';
 import { EditorContentProp } from './';
 import { EditorContext } from '../../Editor';
@@ -203,22 +203,19 @@ export const useAutoGenrator = (
     }
   }, []);
 
-  const replaceCallBack = useCallback(
-    (direct: ToolDirective, params = {}) => {
-      props.onChange(
-        directive2flag(
-          direct,
-          selectedText.current,
-          textAreaRef.current as HTMLTextAreaElement,
-          {
-            ...params,
-            tabWidth
-          }
-        )
-      );
-    },
-    [textAreaRef]
-  );
+  const replaceCallBack = (direct: ToolDirective, params = {}) => {
+    props.onChange(
+      directive2flag(
+        direct,
+        selectedText.current,
+        textAreaRef.current as HTMLTextAreaElement,
+        {
+          ...params,
+          tabWidth
+        }
+      )
+    );
+  };
 
   useEffect(() => {
     if (!previewOnly) {

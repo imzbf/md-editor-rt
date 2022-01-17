@@ -30,7 +30,7 @@ export default ({ mode }: ConfigEnv): UserConfigExport => {
       mode !== 'production' && reactRefresh(),
       mode === 'production' &&
         dts({
-          include: './MdEditor/Editor.tsx'
+          include: ['./MdEditor/type.ts', './MdEditor/Editor.tsx']
         })
     ],
     css: {

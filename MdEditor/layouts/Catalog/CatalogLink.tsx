@@ -1,7 +1,7 @@
 import { prefix } from '../../config';
 import React from 'react';
 import { TocItem } from './index';
-import { MarkedHeadingId } from '../../Editor';
+import { MarkedHeadingId } from '../../type';
 
 export interface CatalogLinkProps {
   tocItem: TocItem;

@@ -8,6 +8,8 @@ export const useSreenfull = (props: ToolbarProp) => {
   let { screenfull } = props;
   const { previewOnly } = useContext(EditorContext);
 
+  // 该处使用useCallback并不是为了减少子组件渲染次数
+  // 而是screenfull获取到实例后要正确的初始化该方法
   const fullScreenHandler = useCallback(() => {
     if (screenfull.isEnabled) {
       if (screenfull.isFullscreen) {
