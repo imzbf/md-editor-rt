@@ -42,6 +42,7 @@ export type EditorContentProp = Readonly<{
   katexJs: string;
   katexCss: string;
   noKatex?: boolean;
+  extensions?: Array<any>;
 }>;
 
 const Content = (props: EditorContentProp) => {

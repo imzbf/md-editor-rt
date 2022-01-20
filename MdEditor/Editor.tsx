@@ -239,6 +239,7 @@ const Editor = (props: EditorProp) => {
           katexJs={props.katexJs}
           katexCss={props.katexCss}
           noKatex={props.noKatex}
+          extensions={props.extensions}
         />
         {catalogShow && <Catalog markedHeadingId={props.markedHeadingId} />}
       </div>

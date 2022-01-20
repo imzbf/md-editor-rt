@@ -755,34 +755,35 @@ const Toolbar = (props: ToolbarProp) => {
         }
       }
     } else if (props.defToolbars instanceof Array && props.defToolbars.length > 0) {
-      for (let i = 0; i < props.defToolbars.length; i++) {
-        const defItem = props.defToolbars[i];
+      // for (let i = 0; i < props.defToolbars.length; i++) {
+      // 通过下标匹配到对应的自定义工具栏
+      const defItem = props.defToolbars[barItem as number];
 
-        if (defItem.name === barItem) {
-          return defItem.type === 'normal' ? (
-            <div
-              className={`${prefix}-toolbar-item`}
-              title={defItem.title || ''}
-              onClick={defItem.onClick}
-              key={defItem.name}
-            >
+      if (defItem !== undefined) {
+        return defItem.type === 'normal' ? (
+          <div
+            className={`${prefix}-toolbar-item`}
+            title={defItem.title || ''}
+            onClick={defItem.onClick}
+            key={defItem.name}
+          >
+            {defItem.trigger}
+          </div>
+        ) : (
+          <Dropdown
+            // 优化代码
+            visible={defItem.visible as boolean}
+            onChange={defItem.onChange as any}
+            overlay={defItem.overlay as any}
+            key={defItem.name}
+          >
+            <div className={`${prefix}-toolbar-item`} title={defItem.title || ''}>
               {defItem.trigger}
             </div>
-          ) : (
-            <Dropdown
-              // 优化代码
-              visible={defItem.visible as boolean}
-              onChange={defItem.onChange as any}
-              overlay={defItem.overlay as any}
-              key={defItem.name}
-            >
-              <div className={`${prefix}-toolbar-item`} title={defItem.title || ''}>
-                {defItem.trigger}
-              </div>
-            </Dropdown>
-          );
-        }
+          </Dropdown>
+        );
       }
+      // }
 
       return '';
     } else {

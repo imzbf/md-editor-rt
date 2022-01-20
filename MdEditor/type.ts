@@ -106,7 +106,7 @@ export interface StaticTextDefault {
 
 export type StaticTextDefaultKey = keyof StaticTextDefault;
 
-export type ToolbarNames = keyof ToolbarTips;
+export type ToolbarNames = keyof ToolbarTips | number;
 
 export interface SettingType {
   pageFullScreen: boolean;
@@ -224,6 +224,8 @@ export interface EditorProp {
   noKatex?: boolean;
   // 自定义的工具栏列表
   defToolbars?: Array<DefiendToolbar>;
+  // 自定义marked扩展，只支持预设
+  extensions?: Array<any>;
 }
 
 export interface ContentType {

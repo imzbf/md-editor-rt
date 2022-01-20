@@ -291,6 +291,13 @@ export const useMarked = (props: EditorContentProp, heading: any) => {
       renderer,
       breaks: true
     });
+
+    // 自定义的marked扩展
+    if (props.extensions instanceof Array && props.extensions.length > 0) {
+      marked.use({
+        extensions: props.extensions
+      });
+    }
   }
 
   return marked;
