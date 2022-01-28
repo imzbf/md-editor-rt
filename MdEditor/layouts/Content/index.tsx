@@ -10,7 +10,8 @@ import {
   useMarked,
   useMermaid,
   useKatex,
-  useAutoScroll
+  useAutoScroll,
+  usePasteUpload
 } from './hooks';
 import classNames from 'classnames';
 import { appendHandler } from '../../utils/dom';
@@ -186,6 +187,8 @@ const Content = (props: EditorContentProp) => {
 
   useHistory(props, textAreaRef);
   useAutoGenrator(props, textAreaRef);
+
+  usePasteUpload(textAreaRef);
 
   return (
     <>

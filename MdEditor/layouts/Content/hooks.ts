@@ -473,3 +473,32 @@ export const useAutoScroll = (
     }
   }, [props.setting.htmlPreview, setScrollCb]);
 };
+
+export const usePasteUpload = (textAreaRef: RefObject<HTMLTextAreaElement>) => {
+  const { editorId, previewOnly } = useContext(EditorContext);
+
+  // 粘贴板上传
+  const pasteHandler = (e: ClipboardEvent) => {
+    if (e.clipboardData && e.clipboardData.files.length > 0) {
+      const file = e.clipboardData.files[0];
+
+      if (/image\/.*/.test(file.type)) {
+        bus.emit(editorId, 'uploadImage', [file]);
+        e.preventDefault();
+      }
+    }
+  };
+
+  useEffect(() => {
+    if (!previewOnly) {
+      textAreaRef.current?.addEventListener('paste', pasteHandler);
+    }
+
+    // 编辑器卸载时移除相应的监听事件
+    return () => {
+      if (!previewOnly) {
+        textAreaRef.current?.removeEventListener('paste', pasteHandler);
+      }
+    };
+  }, []);
+};
