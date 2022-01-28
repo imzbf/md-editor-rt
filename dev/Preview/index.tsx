@@ -64,6 +64,8 @@ export default ({ theme }: { theme: Theme }) => {
             'revoke',
             'next',
             'save',
+            0,
+            1,
             '=',
             'prettier',
             'pageFullscreen',
@@ -71,30 +73,29 @@ export default ({ theme }: { theme: Theme }) => {
             'preview',
             'htmlPreview',
             'catalog',
-            'github',
-            'ddd'
+            'github'
           ]}
           defToolbars={[
-            {
-              type: 'dropdown',
-              name: 'my-def',
-              trigger: (
-                <svg className="md-icon" aria-hidden="true">
-                  <use xlinkHref="#icon-underline" />
+            <Editor.NormalToolbar
+              trigger={
+                <svg className={`md-icon`} aria-hidden="true">
+                  <use xlinkHref="#icon-strike-through" />
                 </svg>
-              ),
-              visible: defVisible,
-              onChange: setDefVisible,
-              overlay: (
-                <span
-                  onClick={() => {
-                    console.log(document.querySelector('#md-editor-preview-textarea'));
-                  }}
-                >
-                  哈哈哈
-                </span>
-              )
-            }
+              }
+              onClick={console.log}
+              key="dddd"
+            ></Editor.NormalToolbar>,
+            <Editor.DropdownToolbar
+              visible={defVisible}
+              trigger={
+                <svg className={`md-icon`} aria-hidden="true">
+                  <use xlinkHref="#icon-strike-through" />
+                </svg>
+              }
+              onChange={setDefVisible}
+              overlay={<div>下拉内容</div>}
+              key="dddd3"
+            ></Editor.DropdownToolbar>
           ]}
           onSave={(v) => {
             localStorage.setItem(SAVE_KEY, v);

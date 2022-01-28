@@ -30,7 +30,12 @@ export default ({ mode }: ConfigEnv): UserConfigExport => {
       mode !== 'production' && reactRefresh(),
       mode === 'production' &&
         dts({
-          include: ['./MdEditor/type.ts', './MdEditor/Editor.tsx']
+          include: [
+            './MdEditor/type.ts',
+            './MdEditor/Editor.tsx',
+            './MdEditor/NormalToolbar.tsx',
+            './MdEditor/DropdownToolbar.tsx'
+          ]
         })
     ],
     css: {

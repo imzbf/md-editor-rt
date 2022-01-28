@@ -223,7 +223,7 @@ export interface EditorProp {
   katexCss: string;
   noKatex?: boolean;
   // 自定义的工具栏列表
-  defToolbars?: Array<DefiendToolbar>;
+  defToolbars?: Array<ReactElement>;
   // 自定义marked扩展，只支持预设
   extensions?: Array<any>;
 }
@@ -239,33 +239,3 @@ export interface ContentType {
   theme: 'light' | 'dark';
   previewTheme: PreviewThemes;
 }
-
-export interface NormalToolbar {
-  type: 'normal';
-  name: string;
-  title?: string;
-  // 工具栏显示内容，这通常是个图标
-  trigger: ReactElement;
-  // 点击事件
-  onClick: () => void;
-}
-
-export interface DropdownToolbar {
-  // 工具栏类型，dropdown类型会要求提供控制下拉内容的显示状态
-  type: 'dropdown';
-  // 必须提供名称，并在toolbar中包含该名称才能正确展示
-  name: string;
-  // hover提示，可以不设置
-  title?: string;
-  visible: boolean;
-  // 工具栏显示内容，这通常是个图标
-  trigger: ReactElement;
-  onChange: (visible: boolean) => void;
-  // 下拉列表
-  overlay: ReactElement;
-}
-
-export type DefiendToolbar = NormalToolbar | DropdownToolbar;
-
-// 自定义的工具栏
-export type DefinedToolBar = Array<string>;

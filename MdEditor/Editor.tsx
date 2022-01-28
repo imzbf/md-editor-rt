@@ -21,6 +21,8 @@ import {
 } from './config';
 
 import { ContentType, MarkedHeadingId, EditorProp, SettingType } from './type';
+import DropdownToolbar from './DropdownToolbar';
+import NormalToolbar from './NormalToolbar';
 
 import './styles/index.less';
 import '@vavt/markdown-theme/css/all.css';
@@ -295,5 +297,8 @@ Editor.defaultProps = {
   katexJs: katexJsUrl,
   katexCss: katexCssUrl
 } as EditorProp;
+
+Editor.DropdownToolbar = DropdownToolbar;
+Editor.NormalToolbar = NormalToolbar;
 
 export default Editor;

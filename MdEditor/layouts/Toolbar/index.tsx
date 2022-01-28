@@ -1,5 +1,12 @@
-import React, { useContext, useEffect, useMemo, useRef, useState } from 'react';
-import { ToolbarNames, SettingType, DefiendToolbar } from '../../type';
+import React, {
+  ReactElement,
+  useContext,
+  useEffect,
+  useMemo,
+  useRef,
+  useState
+} from 'react';
+import { ToolbarNames, SettingType } from '../../type';
 import { EditorContext } from '../../Editor';
 import { goto } from '../../utils';
 import { ToolDirective } from '../../utils/content-help';
@@ -22,7 +29,7 @@ export interface ToolbarProp {
   screenfullJs: string;
   updateSetting: (k: keyof SettingType) => void;
   tableShape: [number, number];
-  defToolbars?: Array<DefiendToolbar>;
+  defToolbars?: Array<ReactElement>;
 }
 
 let splitNum = 0;
@@ -754,38 +761,10 @@ const Toolbar = (props: ToolbarProp) => {
           );
         }
       }
-    } else if (props.defToolbars instanceof Array && props.defToolbars.length > 0) {
-      // for (let i = 0; i < props.defToolbars.length; i++) {
-      // 通过下标匹配到对应的自定义工具栏
+    } else if (props.defToolbars && props.defToolbars instanceof Array) {
       const defItem = props.defToolbars[barItem as number];
 
-      if (defItem !== undefined) {
-        return defItem.type === 'normal' ? (
-          <div
-            className={`${prefix}-toolbar-item`}
-            title={defItem.title || ''}
-            onClick={defItem.onClick}
-            key={defItem.name}
-          >
-            {defItem.trigger}
-          </div>
-        ) : (
-          <Dropdown
-            // 优化代码
-            visible={defItem.visible as boolean}
-            onChange={defItem.onChange as any}
-            overlay={defItem.overlay as any}
-            key={defItem.name}
-          >
-            <div className={`${prefix}-toolbar-item`} title={defItem.title || ''}>
-              {defItem.trigger}
-            </div>
-          </Dropdown>
-        );
-      }
-      // }
-
-      return '';
+      return defItem || '';
     } else {
       return '';
     }
