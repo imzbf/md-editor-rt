@@ -301,4 +301,6 @@ Editor.defaultProps = {
 Editor.DropdownToolbar = DropdownToolbar;
 Editor.NormalToolbar = NormalToolbar;
 
+export * from './type';
+
 export default Editor;
