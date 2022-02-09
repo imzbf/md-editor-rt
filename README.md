@@ -52,7 +52,7 @@ Markdown editor for `react`, developed in `jsx` and `typescript`.
 | previewOnly | Boolean | false | Only render article content, no toolbar, no edit area |
 | language | String | 'zh-CN' | Build-in language('zh-CN','en-US') |
 | languageUserDefined | Object | {key: StaticTextDefaultValue} | Expand language，update `language` api to your key |
-| toolbars | Array | [toolbars] | Show some item of toolbars，all keys<sup>see `toolbars` below<sup> |
+| toolbars | Array | [toolbars] | Show some item of toolbars，all keys<sup>see `toolbars` below</sup> |
 | toolbarsExclude | Array | [] | Don't show some item of toolbars，all keys`toolbars` |
 | prettier | Boolean | true | Use prettier to beautify content or not |
 | prettierCDN | String | [standalone@2.4.0](https://cdn.jsdelivr.net/npm/prettier@2.4.0/standalone.js) |  |
@@ -71,10 +71,16 @@ Markdown editor for `react`, developed in `jsx` and `typescript`.
 | mermaidJs | String | [mermaid@8.13.5](https://cdn.jsdelivr.net/npm/mermaid@8.13.5/dist/mermaid.min.js) | mermaidJs url |
 | noMermaid | Boolean | false | do not use mermaid |
 | placeholder | String | '' |  |
-| katex<sup>v1.9.0</sup> | Object | undefined | `katex` instance(you need import css by yourself.) |
-| katexJs<sup>v1.9.0</sup> | String | [katex.min.js@0.15.1](https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.js) | katexJs url |
-| katexCss<sup>v1.9.0</sup> | String | [katex.min.css@0.15.1](https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.css) | katexCss url |
-| noKatex<sup>v1.9.0</sup> | Boolean | false | do not use katex |
+| katex | Object | undefined | `katex` instance(you need import css by yourself.) |
+| katexJs | String | [katex.min.js@0.15.1](https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.js) | katexJs url |
+| katexCss | String | [katex.min.css@0.15.1](https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.css) | katexCss url |
+| noKatex | Boolean | false | do not use katex |
+| defToolbars | Array<DropdownToolbar \| NormalToolbar> | null | Customize Toolbar, for more usage, please refer to [docs](https://imzbf.github.io/md-editor-rt/docs/index#%F0%9F%92%AA%20defToolbars) and [emoji](https://imzbf.github.io/md-editor-rt/demo/index#💪%20Customize%20Toolbar) |
+| extensions | Array | [] | [marked](https://marked.js.org/using_pro#extensions) extensions |
+
+mark and emoji extensions
+
+![mark and Emoji extension](https://imzbf.github.io/md-editor-rt/imgs/mark_emoji.gif)
 
 [toolbars]
 
