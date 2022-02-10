@@ -396,6 +396,219 @@ import katex from 'katex'
 <Editor noKatex />
 ```
 
+### 💪 defToolbars
+
+- **类型**：`Array<VNode>`
+- **默认值**：`[]`
+- **版本**：`>= 1.10.0`
+- **说明**：自定义工具栏插槽，通过使用内置的`NormalToolbar`普通点击触发事件组件，和`DropdownToolbar`下拉点击触发事件组件进行扩展。将`defToolbars`插槽中的组件下标穿插在`toolbars`实现展示（这并不规范）
+
+**Editor.NormalToolbar** Props 说明
+
+- **title**: `String`，hover 提示。
+- **trigger**：`VNode`，触发点击，同时展示在工具栏中，通常是一个图标。
+- **onClick**： `(e: MouseEvent) => void`，trigger 点击事件。
+
+**Editor.DropdownToolbar** Props 说明
+
+- **title**: `String`，hover 提示。
+- **visible**：`Boolean`，下拉框状态。
+- **onChange**： `(visible: boolean) => void`，trigger 点击事件。
+- **trigger**：`VNode`，触发点击，同时展示在工具栏中，通常是一个图标。
+- **overlay**：`VNode`，下拉框中的内容。
+
+<br>
+<hr>
+
+- 普通扩展
+
+这里展示将选中的内容使用`@`包裹，完整可用的示例请参考[mark 标记示例](https://imzbf.github.io/md-editor-rt/demo#💪%20Customize%20Toolbar)。
+
+```js
+import React, { useState } from 'react';
+import Editor from 'md-editor-rt';
+
+export default () => {
+  const [md, setMd] = useState('');
+
+  const markHandler = () => {
+    // 获取输入框
+    const textarea = document.querySelector('#md-prev-textarea') as HTMLTextAreaElement;
+    // 获取选中的内容
+    const selection = window.getSelection()?.toString();
+    // 获取鼠标位置
+    const endPoint = textarea.selectionStart;
+
+    // 生成标记文本
+    const markStr = `@${selection}@`;
+
+    // 根据鼠标位置分割旧文本
+    // 前半部分
+    const prefixStr = textarea.value.substring(0, endPoint);
+    // 后半部分
+    const suffixStr = textarea.value.substring(endPoint + (selection?.length || 0));
+
+    setMd(`${prefixStr}${markStr}${suffixStr}`);
+
+    setTimeout(() => {
+      textarea.setSelectionRange(endPoint, markStr.length + endPoint);
+      textarea.focus();
+    }, 0);
+  };
+
+  return (
+    <div className="project-preview">
+      <div className="container">
+        <Editor
+          modelValue={md}
+          editorId="md-prev"
+          defToolbars={[
+            <Editor.NormalToolbar
+              title="mark"
+              trigger={
+                <svg className="md-icon" aria-hidden="true">
+                  <use xlinkHref="#icon-mark"></use>
+                </svg>
+              }
+              onClick={markHandler}
+              key="mark-toolbar"
+            ></Editor.NormalToolbar>
+          ]}
+          toolbars={['bold', 'underline', 'italic', 0]}
+          onChange={(value: string) => setMd(value)}
+        />
+      </div>
+    </div>
+  );
+};
+```
+
+![普通扩展工具栏](/md-editor-rt/imgs/normal-toolbar.gif)
+
+<br>
+
+- 下拉扩展
+
+这里展示下拉框选择的扩展，完整可用的示例请参考[emoji 示例](https://imzbf.github.io/md-editor-rt/demo#💪%20Customize%20Toolbar)。
+
+```js
+import React, { useState } from 'react';
+import Editor from 'md-editor-rt';
+import { emojis } from '../../data';
+
+export default () => {
+  const [md, setMd] = useState('');
+
+  const [emojiVisible, setEmojiVisible] = useState(false);
+
+  const emojiHandler = (emoji: string) => {
+    // 获取输入框
+    const textarea = document.querySelector('#md-prev-textarea') as HTMLTextAreaElement;
+    // 获取选中的内容
+    const selection = window.getSelection()?.toString();
+    // 获取鼠标位置
+    const endPoint = textarea.selectionStart;
+
+    // 根据鼠标位置分割旧文本
+    // 前半部分
+    const prefixStr = textarea.value.substring(0, endPoint);
+    // 后半部分
+    const suffixStr = textarea.value.substring(endPoint + (selection?.length || 0));
+
+    setMd(`${prefixStr}${emoji}${suffixStr}`);
+
+    setTimeout(() => {
+      textarea.setSelectionRange(endPoint, endPoint + 1);
+      textarea.focus();
+    }, 0);
+  };
+
+  return (
+    <div className="project-preview">
+      <div className="container">
+        <Editor
+          modelValue={md}
+          editorId="md-prev"
+          defToolbars={[
+            <Editor.DropdownToolbar
+              title="emoji"
+              visible={emojiVisible}
+              onChange={setEmojiVisible}
+              overlay={
+                <>
+                  <div className="emoji-container">
+                    <ol className="emojis">
+                      {emojis.map((emoji, index) => (
+                        <li
+                          key={`emoji-${index}`}
+                          onClick={() => {
+                            emojiHandler(emoji);
+                          }}
+                        >
+                          {emoji}
+                        </li>
+                      ))}
+                    </ol>
+                  </div>
+                </>
+              }
+              trigger={
+                <svg className="md-icon" aria-hidden="true">
+                  <use xlinkHref="#icon-emoji"></use>
+                </svg>
+              }
+              key="emoji-toolbar"
+            ></Editor.DropdownToolbar>
+          ]}
+          toolbars={['bold', 'underline', 'italic', 0]}
+          onChange={(value: string) => setMd(value)}
+        />
+      </div>
+    </div>
+  );
+};
+```
+
+![下拉扩展工具栏](/md-editor-rt/imgs/dropdown-toolbar.gif)
+
+### 🪡 extensions
+
+- **类型**：`Array<Object>`
+- **默认值**：`[]`
+- **说明**：编辑器依赖的[marked](https://marked.js.org/using_pro#extensions)扩展。
+
+一个简单的`mark`示例，更加复杂的功能请参考[marked](https://marked.js.org/using_pro#extensions)扩展文档。
+
+```js
+const MarkExtension = {
+  name: 'MarkExtension',
+  level: 'inline',
+  start: (text: string) => text.match(/@[^@]/)?.index,
+  tokenizer(text: string) {
+    const reg = /^@([^@]*)@/;
+    const match = reg.exec(text);
+
+    if (match) {
+      const token = {
+        type: 'MarkExtension',
+        raw: match[0],
+        text: match[1].trim(),
+        tokens: []
+      };
+
+      return token;
+    }
+  },
+  renderer(token: any) {
+    return `<mark>${token.text}</mark>`;
+  }
+};
+
+export default () => <Editor extensions={MarkExtension} />;
+```
+
+该扩展的作用是将`@hello@`转换成`<mark>hello</mark>`。
+
 <br>
 <hr>
 

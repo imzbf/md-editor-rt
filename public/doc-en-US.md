@@ -402,6 +402,206 @@ import katex from 'katex'
 - **version**: `>= 1.9.0`
 - **description**: Do not want to use `katex`, set it to `true`.
 
+### 💪 defToolbars
+
+- **type**: `Array<VNode>`
+- **default**: `[]`
+- **version**: `>= 1.10.0`
+- **description**: Customize Toolbar, and there are two types to choose from. `NormalToolbar` and `DropdownToolbar`. To display them, put index of `defToolbars` into `toolbars`(this is not standard).
+
+**Editor.NormalToolbar** Props
+
+- **title**: `String`, hover tips.
+- **trigger**: `VNode`, trigger dom, it will be displayed in the toolbar area also, it is usually an icon.
+- **onClick**: `(e: MouseEvent) => void`, trigger click event.
+
+**Editor.DropdownToolbar** Props
+
+- **title**: `String`, hover tips.
+- **visible**: `Boolean`, visible of dropdown.
+- **onChange**: `(visible: boolean) => void`, visible changed event.
+- **trigger**: `VNode`, trigger dom, it will be displayed in the toolbar area also, it is usually an icon.
+- **overlay**: `VNode`, content of dropdown.
+
+<br>
+<hr>
+
+- NormalToolbar
+
+For a complete example, please refer to [mark example](https://imzbf.github.io/md-editor-rt/demo#💪%20Customize%20Toolbar).
+
+```js
+import React, { useState } from 'react';
+import Editor from 'md-editor-rt';
+
+export default () => {
+  const [md, setMd] = useState('');
+
+  const markHandler = () => {
+    const textarea = document.querySelector('#md-prev-textarea') as HTMLTextAreaElement;
+    const selection = window.getSelection()?.toString();
+    const endPoint = textarea.selectionStart;
+
+    const markStr = `@${selection}@`;
+
+    const prefixStr = textarea.value.substring(0, endPoint);
+    const suffixStr = textarea.value.substring(endPoint + (selection?.length || 0));
+
+    setMd(`${prefixStr}${markStr}${suffixStr}`);
+
+    setTimeout(() => {
+      textarea.setSelectionRange(endPoint, markStr.length + endPoint);
+      textarea.focus();
+    }, 0);
+  };
+
+  return (
+    <div className="project-preview">
+      <div className="container">
+        <Editor
+          modelValue={md}
+          editorId="md-prev"
+          defToolbars={[
+            <Editor.NormalToolbar
+              title="mark"
+              trigger={
+                <svg className="md-icon" aria-hidden="true">
+                  <use xlinkHref="#icon-mark"></use>
+                </svg>
+              }
+              onClick={markHandler}
+              key="mark-toolbar"
+            ></Editor.NormalToolbar>
+          ]}
+          toolbars={['bold', 'underline', 'italic', 0]}
+          onChange={(value: string) => setMd(value)}
+        />
+      </div>
+    </div>
+  );
+};
+```
+
+![NormalToolbar](/md-editor-rt/imgs/normal-toolbar.gif)
+
+<br>
+
+- DropdownToolbar
+
+For a complete example, please refer to [emoji example](https://imzbf.github.io/md-editor-rt/demo#💪%20Customize%20Toolbar).
+
+```js
+import React, { useState } from 'react';
+import Editor from 'md-editor-rt';
+import { emojis } from '../../data';
+
+export default () => {
+  const [md, setMd] = useState('');
+
+  const [emojiVisible, setEmojiVisible] = useState(false);
+
+  const emojiHandler = (emoji: string) => {
+    const textarea = document.querySelector('#md-prev-textarea') as HTMLTextAreaElement;
+    const selection = window.getSelection()?.toString();
+    const endPoint = textarea.selectionStart;
+
+    const prefixStr = textarea.value.substring(0, endPoint);
+    const suffixStr = textarea.value.substring(endPoint + (selection?.length || 0));
+
+    setMd(`${prefixStr}${emoji}${suffixStr}`);
+
+    setTimeout(() => {
+      textarea.setSelectionRange(endPoint, endPoint + 1);
+      textarea.focus();
+    }, 0);
+  };
+
+  return (
+    <div className="project-preview">
+      <div className="container">
+        <Editor
+          modelValue={md}
+          editorId="md-prev"
+          defToolbars={[
+            <Editor.DropdownToolbar
+              title="emoji"
+              visible={emojiVisible}
+              onChange={setEmojiVisible}
+              overlay={
+                <>
+                  <div className="emoji-container">
+                    <ol className="emojis">
+                      {emojis.map((emoji, index) => (
+                        <li
+                          key={`emoji-${index}`}
+                          onClick={() => {
+                            emojiHandler(emoji);
+                          }}
+                        >
+                          {emoji}
+                        </li>
+                      ))}
+                    </ol>
+                  </div>
+                </>
+              }
+              trigger={
+                <svg className="md-icon" aria-hidden="true">
+                  <use xlinkHref="#icon-emoji"></use>
+                </svg>
+              }
+              key="emoji-toolbar"
+            ></Editor.DropdownToolbar>
+          ]}
+          toolbars={['bold', 'underline', 'italic', 0]}
+          onChange={(value: string) => setMd(value)}
+        />
+      </div>
+    </div>
+  );
+};
+```
+
+![DropdownToolbar](/md-editor-rt/imgs/dropdown-toolbar.gif)
+
+### 🪡 extensions
+
+- **type**: `Array<Object>`
+- **default**: `[]`
+- **description**: [marked](https://marked.js.org/using_pro#extensions) extensions.
+
+`mark` example, for a complete example, please refer to [marked extensions](https://marked.js.org/using_pro#extensions).
+
+```js
+const MarkExtension = {
+  name: 'MarkExtension',
+  level: 'inline',
+  start: (text: string) => text.match(/@[^@]/)?.index,
+  tokenizer(text: string) {
+    const reg = /^@([^@]*)@/;
+    const match = reg.exec(text);
+
+    if (match) {
+      const token = {
+        type: 'MarkExtension',
+        raw: match[0],
+        text: match[1].trim(),
+        tokens: []
+      };
+
+      return token;
+    }
+  },
+  renderer(token: any) {
+    return `<mark>${token.text}</mark>`;
+  }
+};
+
+export default () => <Editor extensions={MarkExtension} />;
+```
+
+This is an example of converting `@hello@` to `<mark>hello</mark>`.
+
 <br>
 <hr>
 
