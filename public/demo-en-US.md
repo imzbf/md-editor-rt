@@ -422,6 +422,244 @@ export default function App() {
 }
 ```
 
+### 💪 Customize Toolbar
+
+There are examples of `mark` and `emoji`.
+
+```js
+import React, { useState } from 'react';
+import Editor from 'md-editor-rt';
+import { emojis } from '../../data';
+import MarkExtension from '@/utils/marked-mark';
+import './index.less';
+
+export default () => {
+  const [md, setMd] = useState('');
+
+  const [emojiVisible, setEmojiVisible] = useState(false);
+
+  const markHandler = () => {
+    const textarea = document.querySelector('#md-prev-textarea') as HTMLTextAreaElement;
+    const selection = window.getSelection()?.toString();
+    const endPoint = textarea.selectionStart;
+
+    const markStr = `@${selection}@`;
+    const prefixStr = textarea.value.substring(0, endPoint);
+    const suffixStr = textarea.value.substring(endPoint + (selection?.length || 0));
+
+    setMd(`${prefixStr}${markStr}${suffixStr}`);
+
+    setTimeout(() => {
+      textarea.setSelectionRange(endPoint, markStr.length + endPoint);
+      textarea.focus();
+    }, 0);
+  };
+
+  const emojiHandler = (emoji: string) => {
+    const textarea = document.querySelector('#md-prev-textarea') as HTMLTextAreaElement;
+    const selection = window.getSelection()?.toString();
+    const endPoint = textarea.selectionStart;
+
+    const prefixStr = textarea.value.substring(0, endPoint);
+    const suffixStr = textarea.value.substring(endPoint + (selection?.length || 0));
+
+    setMd(`${prefixStr}${emoji}${suffixStr}`);
+
+    setTimeout(() => {
+      textarea.setSelectionRange(endPoint, endPoint + 1);
+      textarea.focus();
+    }, 0);
+  };
+
+  return (
+    <div className="project-preview">
+      <div className="container">
+        <Editor
+          modelValue={md}
+          editorId="md-prev"
+          defToolbars={[
+            <Editor.NormalToolbar
+              title="mark"
+              trigger={
+                <svg className="md-icon" aria-hidden="true">
+                  <use xlinkHref="#icon-mark"></use>
+                </svg>
+              }
+              onClick={markHandler}
+              key="mark-toolbar"
+            ></Editor.NormalToolbar>,
+            <Editor.DropdownToolbar
+              title="emoji"
+              visible={emojiVisible}
+              onChange={setEmojiVisible}
+              overlay={
+                <>
+                  <div className="emoji-container">
+                    <ol className="emojis">
+                      {emojis.map((emoji, index) => (
+                        <li
+                          key={`emoji-${index}`}
+                          onClick={() => {
+                            emojiHandler(emoji);
+                          }}
+                        >
+                          {emoji}
+                        </li>
+                      ))}
+                    </ol>
+                  </div>
+                </>
+              }
+              trigger={
+                <svg className="md-icon" aria-hidden="true">
+                  <use xlinkHref="#icon-emoji"></use>
+                </svg>
+              }
+              key="emoji-toolbar"
+            ></Editor.DropdownToolbar>
+          ]}
+          extensions={[MarkExtension]}
+          toolbars={[
+            'bold',
+            'underline',
+            'italic',
+            'strikeThrough',
+            '-',
+            'title',
+            'sub',
+            'sup',
+            'quote',
+            'unorderedList',
+            'orderedList',
+            '-',
+            'codeRow',
+            'code',
+            'link',
+            'image',
+            'table',
+            'mermaid',
+            'katex',
+            0,
+            1,
+            '-',
+            'revoke',
+            'next',
+            'save',
+            '=',
+            'prettier',
+            'pageFullscreen',
+            'fullscreen',
+            'preview',
+            'htmlPreview',
+            'catalog',
+            'github'
+          ]}
+          onChange={(value: string) => setMd(value)}
+        />
+      </div>
+    </div>
+  );
+};
+```
+
+**data.ts**
+
+```js
+export const emojis = [
+  '😀',
+  '😃',
+  '😄',
+  '😁',
+  '😆',
+  '😅',
+  '😂',
+  '🤣',
+  '🥲',
+  '🤔',
+  '😊',
+  '😇',
+  '🙂',
+  '🙃',
+  '😉',
+  '😌',
+  '😍',
+  '🥰',
+  '😘',
+  '😗',
+  '😙',
+  '😚',
+  '😋',
+  '😛',
+  '😝',
+  '😜',
+  '🤪',
+  '🤨',
+  '🧐',
+  '🤓',
+  '😎',
+  '🥸',
+  '🤩',
+  '🥳',
+  '😏',
+  '😒',
+  '😞',
+  '😔',
+  '😟',
+  '😕',
+  '🙁',
+  '👻',
+  '😣',
+  '😖',
+  '😫',
+  '😩',
+  '🥺',
+  '😢',
+  '😭',
+  '😤',
+  '😠',
+  '😡',
+  '🤬',
+  '🤯',
+  '😳'
+];
+```
+
+> Get more emojis, go to [https://getemoji.com/](https://getemoji.com/).
+
+To get complete code, refer to [Preview.tsx](https://github.com/imzbf/md-editor-rt/blob/dev-docs/src/pages/Preview/index.tsx).
+
+![mark and Emoji extension](/md-editor-rt/imgs/mark_emoji.gif)
+
+### 🪡 marked extension
+
+Simple example of converting `@hello@` to `<mark>hello</mark>`.
+
+```js
+export default {
+  name: 'MarkExtension',
+  level: 'inline',
+  start: (text: string) => text.match(/@[^@]/)?.index,
+  tokenizer(text: string) {
+    const reg = /^@([^@]*)@/;
+    const match = reg.exec(text);
+
+    if (match) {
+      const token = {
+        type: 'MarkExtension',
+        raw: match[0],
+        text: match[1].trim(),
+        tokens: []
+      };
+
+      return token;
+    }
+  },
+  renderer(token: any) {
+    return `<mark>${token.text}</mark>`;
+  }
+};
+```
+
 ## 🔒 xss
 
 after`1.3.0`, please use `sanitize` to sanitize `html`. eg: `sanitize-html`
