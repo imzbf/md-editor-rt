@@ -20,7 +20,7 @@ react 版本的 Markdown 编辑器，[md-editor-v3](https://imzbf.github.io/md-e
 - 仅预览模式（不显示编辑器，只显示 md 预览内容，无额外监听）；
 - 预览主题，支持`defalut`、`vuepress`、`github` 样式（不完全相同）；
 - `mermaid`绘图（>=1.3.0）；
-- `katex`数学公式（>=1.9.0）。
+- `katex`数学公式（>=1.4.0）。
 
 > 更多功能待后续更新，如果你有新的想法或者使用发现有问题，请留言告诉我~
 

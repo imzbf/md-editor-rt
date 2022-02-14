@@ -23,7 +23,7 @@ Markdown editor for `react`, developed in `jsx` and `typescript`.
 - Render article directly(no editor，no event listener, only preview content).
 - Preview themes, support `defalut`、`vuepress`、`github` styles(not identical).
 - `mermaid`(>=1.3.0).
-- `katex` mathematical formula（>=1.9.0）.
+- `katex` mathematical formula（>=1.4.0）.
 
 > More features are developing, if you have some ideas or find issues, please tell it to me~
 
@@ -311,4 +311,4 @@ async onUploadImg(files: FileList, callback: (urls: string[]) => void) {
 
 ### More
 
-go to demo page: [go](https://imzbf.github.io/md-editor-rt/demo)
+Go to the example page: [go](https://imzbf.github.io/md-editor-rt/demo)
