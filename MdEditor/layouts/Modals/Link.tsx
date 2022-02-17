@@ -11,8 +11,7 @@ interface LinkModalProp {
 }
 
 const LinkModal = (props: LinkModalProp) => {
-  const { usedLanguageText } = useContext(EditorContext);
-  const { editorId } = useContext(EditorContext);
+  const { editorId, usedLanguageText } = useContext(EditorContext);
 
   const title = useMemo(() => {
     switch (props.type) {
@@ -26,7 +25,7 @@ const LinkModal = (props: LinkModalProp) => {
         return '';
       }
     }
-  }, [props.type]);
+  }, [props.type, usedLanguageText]);
 
   // 链接
   const [linkData, setLinkData] = useState({
