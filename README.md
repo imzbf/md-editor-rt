@@ -25,7 +25,7 @@ Markdown editor for `react`, developed in `jsx` and `typescript`.
 - `mermaid`(>=1.3.0).
 - `katex` mathematical formula（>=1.4.0）.
 
-> More features are developing, if you have some ideas or find issues, please tell it to me~
+> More features are developing, if you have some ideas or find issues, please tell me~
 
 ## Preview
 
