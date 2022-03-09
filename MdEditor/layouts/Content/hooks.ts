@@ -283,9 +283,7 @@ export const useMarked = (props: EditorContentProp, heading: any) => {
       return renderer.defaultCode(code, language, isEscaped);
     };
 
-    renderer.image = (href: string, _: string, desc: string) => {
-      return `<figure><img src="${href}" alt="${desc}"><figcaption>${desc}</figcaption></figure>`;
-    };
+    renderer.image = props.markedImage;
 
     marked.setOptions({
       renderer,

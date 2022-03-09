@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useMemo, useRef, useState } from 'react';
 import copy from 'copy-to-clipboard';
 import { prefix } from '../../config';
 import { EditorContext } from '../../Editor';
-import { SettingType, MarkedHeading, HeadList } from '../../type';
+import { SettingType, MarkedHeading, HeadList, MarkedImage } from '../../type';
 import { generateCodeRowNumber } from '../../utils';
 import {
   useAutoGenrator,
@@ -44,6 +44,7 @@ export type EditorContentProp = Readonly<{
   katexCss: string;
   noKatex?: boolean;
   extensions?: Array<any>;
+  markedImage?: MarkedImage;
 }>;
 
 const Content = (props: EditorContentProp) => {

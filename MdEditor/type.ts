@@ -226,6 +226,7 @@ export interface EditorProp {
   defToolbars?: Array<ReactElement>;
   // 自定义marked扩展，只支持预设
   extensions?: Array<any>;
+  markedImage?: MarkedImage;
 }
 
 export interface ContentType {
@@ -239,3 +240,5 @@ export interface ContentType {
   theme: 'light' | 'dark';
   previewTheme: PreviewThemes;
 }
+
+export type MarkedImage = (href: string, title: string, desc: string) => string;

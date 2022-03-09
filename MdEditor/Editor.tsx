@@ -253,6 +253,7 @@ const Editor = (props: EditorProp) => {
           katexCss={props.katexCss}
           noKatex={props.noKatex}
           extensions={props.extensions}
+          markedImage={props.markedImage}
         />
         {catalogShow && (
           <Catalog
@@ -315,7 +316,10 @@ Editor.defaultProps = {
   sanitize: (html) => html,
   placeholder: '',
   katexJs: katexJsUrl,
-  katexCss: katexCssUrl
+  katexCss: katexCssUrl,
+  markedImage: (href: string, _: string, desc: string) => {
+    return `<figure><img src="${href}" alt="${desc}"><figcaption>${desc}</figcaption></figure>`;
+  }
 } as EditorProp;
 
 Editor.DropdownToolbar = DropdownToolbar;
