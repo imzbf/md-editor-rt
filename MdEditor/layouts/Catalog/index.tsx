@@ -1,7 +1,6 @@
-import React, { useContext, useEffect, useMemo, useState } from 'react';
+import React, { CSSProperties, useEffect, useMemo, useState } from 'react';
 import './style.less';
 import bus from '../../utils/event-bus';
-import { EditorContext } from '../../Editor';
 import { HeadList, MarkedHeadingId } from '../../type';
 import CatalogLink from './CatalogLink';
 import { prefix } from '../../config';
@@ -13,11 +12,18 @@ export interface TocItem {
 }
 
 export interface CatalogProps {
+  editorId: string;
+  className?: string;
   markedHeadingId: MarkedHeadingId;
+  // 指定滚动的容器，选择器需带上对应的符号，默认预览框
+  // 元素必须定位！！！！！！
+  scrollElement?: string | HTMLElement;
+  style?: CSSProperties;
 }
 
 const Catalog = (props: CatalogProps) => {
-  const { editorId } = useContext(EditorContext);
+  // 获取Id
+  const editorId = props.editorId;
 
   const [list, setList] = useState<Array<HeadList>>([]);
 
@@ -62,7 +68,7 @@ const Catalog = (props: CatalogProps) => {
     return tocItems;
   }, [list]);
 
-  const [show, setShow] = useState(false);
+  const [scrollElement] = useState(props.scrollElement || `#${editorId}-preview-wrapper`);
 
   useEffect(() => {
     bus.on(editorId, {
@@ -71,30 +77,26 @@ const Catalog = (props: CatalogProps) => {
         setList(_list);
       }
     });
-
-    bus.on(editorId, {
-      name: 'catalogShow',
-      callback: () => {
-        setShow((_val) => {
-          return !_val;
-        });
-      }
-    });
   }, []);
 
-  return show ? (
-    <div className={`${prefix}-catalog`}>
+  return (
+    <div className={`${prefix}-catalog ${props.className || ''}`} style={props.style}>
       {catalogs.map((item) => {
         return (
           <CatalogLink
             markedHeadingId={props.markedHeadingId}
             tocItem={item}
             key={item.text}
+            scrollElement={scrollElement}
           />
         );
       })}
     </div>
-  ) : null;
+  );
+};
+
+Catalog.defaultProps = {
+  markedHeadingId: (text: string) => text
 };
 
 export default Catalog;

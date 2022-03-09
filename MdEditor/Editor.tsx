@@ -60,6 +60,10 @@ const Editor = (props: EditorProp) => {
     screenfullJs
   } = props;
 
+  const [state, setState] = useState({
+    catalogVisible: false
+  });
+
   useKeyBoard(props);
 
   useExpansion(props);
@@ -116,6 +120,18 @@ const Editor = (props: EditorProp) => {
       // 保存body部分样式
       bodyOverflowHistory = document.body.style.overflow;
     }
+
+    bus.on(editorId, {
+      name: 'catalogShow',
+      callback: () => {
+        setState((_state) => {
+          return {
+            ..._state,
+            catalogVisible: !_state.catalogVisible
+          };
+        });
+      }
+    });
 
     return () => {
       // 清空所有的事件监听
@@ -238,7 +254,16 @@ const Editor = (props: EditorProp) => {
           noKatex={props.noKatex}
           extensions={props.extensions}
         />
-        {catalogShow && <Catalog markedHeadingId={props.markedHeadingId} />}
+        {catalogShow && (
+          <Catalog
+            style={{
+              display: state.catalogVisible ? 'block' : 'none'
+            }}
+            className={`${prefix}-catalog-editor`}
+            editorId={editorId}
+            markedHeadingId={props.markedHeadingId}
+          />
+        )}
       </div>
     </EditorContext.Provider>
   );
@@ -295,6 +320,7 @@ Editor.defaultProps = {
 
 Editor.DropdownToolbar = DropdownToolbar;
 Editor.NormalToolbar = NormalToolbar;
+Editor.Catalog = Catalog;
 
 export * from './type';
 

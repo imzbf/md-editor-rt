@@ -35,6 +35,17 @@ export default ({ theme }: { theme: Theme }) => {
 
   return (
     <div className="project-preview">
+      <div
+        style={{
+          width: '200px',
+          padding: '10px',
+          border: '1px solid #666',
+          position: 'fixed',
+          right: '10px'
+        }}
+      >
+        <Editor.Catalog editorId="md-editor-preview" />
+      </div>
       <div className="container">
         <Editor
           theme={theme}

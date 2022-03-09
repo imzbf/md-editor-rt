@@ -215,12 +215,13 @@ const Content = (props: EditorContentProp) => {
         )}
         {props.setting.preview && (
           <div
+            id={`${editorId}-preview-wrapper`}
             className={`${prefix}-preview-wrapper`}
             ref={previewRef}
             key="content-preview-wrapper"
           >
             <div
-              id={`${prefix}-preview`}
+              id={`${editorId}-preview`}
               className={classNames(
                 `${prefix}-preview`,
                 `${previewTheme}-theme`,

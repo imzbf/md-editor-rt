@@ -6,6 +6,7 @@ import { MarkedHeadingId } from '../../type';
 export interface CatalogLinkProps {
   tocItem: TocItem;
   markedHeadingId: MarkedHeadingId;
+  scrollElement: string | HTMLElement;
 }
 
 const CatalogLink = (props: CatalogLinkProps) => {
@@ -16,13 +17,26 @@ const CatalogLink = (props: CatalogLinkProps) => {
         e.stopPropagation();
         const id = props.markedHeadingId(props.tocItem.text, props.tocItem.level);
         const targetHeadEle = document.getElementById(id);
-        const previewEle = document.getElementById(`${prefix}-preview`);
+        const scrollContainer =
+          props.scrollElement instanceof HTMLElement
+            ? props.scrollElement
+            : document.querySelector(props.scrollElement);
 
-        if (targetHeadEle) {
-          const scrollLength = targetHeadEle.offsetTop;
+        if (targetHeadEle && scrollContainer) {
+          let par = targetHeadEle.offsetParent as HTMLElement;
+          let offsetTop = targetHeadEle.offsetTop;
 
-          previewEle?.parentElement?.scrollTo({
-            top: scrollLength,
+          // 滚动容器包含父级offser标准元素
+          if (scrollContainer.contains(par)) {
+            while (par && scrollContainer != par) {
+              // 循环获取当前对象与相对的top高度
+              offsetTop += par?.offsetTop;
+              par = par?.offsetParent as HTMLElement;
+            }
+          }
+
+          scrollContainer?.scrollTo({
+            top: offsetTop,
             behavior: 'smooth'
           });
         }
@@ -35,6 +49,7 @@ const CatalogLink = (props: CatalogLinkProps) => {
             markedHeadingId={props.markedHeadingId}
             key={item.text}
             tocItem={item}
+            scrollElement={props.scrollElement}
           />
         ))}
     </div>
