@@ -682,6 +682,35 @@ import sanitizeHtml from 'sanitize-html';
 <Editor sanitize={(html) => sanitizeHtml(html)} />;
 ```
 
+### 🖼 markedImage
+
+- **type**: `(href: string, title: string, desc: string) => string`
+- **description**: Overrides the html element structure of the default generated picture.
+
+Default way:
+
+```js
+(href: string, _: string, desc: string) => {
+  return `<figure><img src="${href}" alt="${desc}"><figcaption>${desc}</figcaption></figure>`;
+};
+```
+
+usage:
+
+```js
+const markedImage = (href: string, _: string, desc: string) => {
+  return `<img src="${href}" alt="${desc}">`;
+};
+
+export default () => {
+  const [state] = useState({
+    text: '# head'
+  });
+
+  return <Editor modelValue={state.text} markedImage={markedImage} />;
+};
+```
+
 ## 🪡 Shortcut key
 
 | key | function | description |
@@ -710,6 +739,118 @@ import sanitizeHtml from 'sanitize-html';
 | CTRL + SHIFT + F | Beautify |  |
 | CTRL + ALT + C | code row |  |
 | CTRL + SHIFT + ALT + T | table | `\|table\|` |
+
+## 🪤 Internal components
+
+Before 1.x, they are used as attributes of the editor component, eg: `Editor.DropdownToolbar`. For more examples, refer to [document](https://imzbf.github.io/md-editor-v3).
+
+### 🐣 NormalToolbar
+
+`Editor.NormalToolbar`
+
+- `title`: `string`, not necessary, the tips when hover toolbar;
+- `trigger`: `string | JSX.Element`, necessary, it is usually an icon, which is displayed on the toolbar;
+- `onClick`: `(e: MouseEvent) => void`, necessary.
+
+usage:
+
+```js
+<Editor
+  editorId="md-prev"
+  defToolbars={[
+    <Editor.NormalToolbar
+      title="mark"
+      trigger={
+        <svg className="md-icon" aria-hidden="true">
+          <use xlinkHref="#icon-mark"></use>
+        </svg>
+      }
+      onClick={consol.log}
+      key="mark-toolbar"
+    ></Editor.NormalToolbar>
+  ]}
+/>
+```
+
+> Get the complete example of toolbar, please refer to [emoji](https://imzbf.github.io/md-editor-rt/demo#%F0%9F%92%AA%20Customize%20Toolbar), or clone source code from `dev-docs` branch.
+
+### 🐼 DropdownToolbar
+
+`Editor.DropdownToolbar`
+
+- `title`: `string`, not necessary, the tips when hover toolbar;
+- `visible`: `boolean`, necessary;
+- `trigger`: `string | JSX.Element`, necessary, it is usually an icon, which is displayed on the toolbar;
+- `onChange`: `(visible: boolean) => void`, necessary;
+- `overlay`: `string | JSX.Element`, necessary, contents in the drop-down box.
+
+usage:
+
+```js
+<Editor
+  modelValue={md}
+  editorId="md-prev"
+  defToolbars={[
+    <Editor.DropdownToolbar
+      visible={emojiVisible}
+      onChange={setEmojiVisible}
+      overlay={
+        <>
+          <div className="emoji-container">
+            <ol className="emojis">
+              {emojis.map((emoji, index) => (
+                <li
+                  key={`emoji-${index}`}
+                  onClick={() => {
+                    emojiHandler(emoji);
+                  }}
+                >
+                  {emoji}
+                </li>
+              ))}
+            </ol>
+          </div>
+        </>
+      }
+      trigger={
+        <svg className="md-icon" aria-hidden="true">
+          <use xlinkHref="#icon-emoji"></use>
+        </svg>
+      }
+      key="emoji-toolbar"
+    ></Editor.DropdownToolbar>
+  ]}
+/>
+```
+
+### 🐻 Catalogue
+
+`Editor.Catalog`
+
+- `editorId`: `string`, necessary, editor's `editorId`, used to register listening events;
+- `class`: `string`, not necessary;
+- `markedHeadingId`: `MarkedHeadingId`, not necessary, same as editor;
+- `scrollElement`: `string | HTMLElement`, not necessary, it is an element selector when its type is string. When `previewOnly` eq `true`, it is usually set to `document.documentElement`.
+
+usage:
+
+```js
+const editorId = 'my-editor';
+
+export default () => {
+  const [state] = useState({
+    text: '# head',
+    scrollElement: document.documentElement
+  });
+
+  return (
+    <>
+      <Editor modelValue={state.text} editorId={editorId} previewOnly />
+      <Editor.Catalog editorId={editorId} scrollElement={state.scrollElement} />
+    </>
+  );
+};
+```
 
 ## ✍️ Edit this page
 
