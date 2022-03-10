@@ -695,6 +695,35 @@ import sanitizeHtml from 'sanitize-html';
 
 > 为什么不内置到编辑器：由于类似编辑器大多属于自行处理文本，自身即可确认内容是否安全，并不需要该功能。
 
+### 🖼 markedImage
+
+- **类型**：`(href: string, title: string, desc: string) => string`
+- **说明**：覆盖默认生成图片的 html 元素结构。
+
+内部的生成方法：
+
+```js
+(href: string, _: string, desc: string) => {
+  return `<figure><img src="${href}" alt="${desc}"><figcaption>${desc}</figcaption></figure>`;
+};
+```
+
+使用方式：
+
+```js
+const markedImage = (href: string, _: string, desc: string) => {
+  return `<img src="${href}" alt="${desc}">`;
+};
+
+export default () => {
+  const [state] = useState({
+    text: '# 标题'
+  });
+
+  return <Editor modelValue={state.text} markedImage={markedImage} />;
+};
+```
+
 ## 🪡 快捷键
 
 主要以`CTRL`搭配对应功能英文单词首字母，冲突项添加`SHIFT`，再冲突替换为`ALT`。
@@ -725,6 +754,112 @@ import sanitizeHtml from 'sanitize-html';
 | CTRL + SHIFT + F | 美化内容 |  |
 | CTRL + ALT + C | 行内代码 | 行内代码块 |
 | CTRL + SHIFT + ALT + T | 表格 | `\|表格\|` |
+
+## 🪤 内置组件
+
+1.x 版本扩展组件作为编辑器组件的属性值来使用，例如：`Editor.DropdownToolbar`。
+
+### 🐣 NormalToolbar
+
+`Editor.NormalToolbar`
+
+- `title`: `string`，非必须，作为工具栏上的 hover 提示；
+- `trigger`: `string | JSX.Element`，必须，通常是个图标，用来展示在工具栏上；
+- `onClick`: `(e: MouseEvent) => void`，必须，点击事件。
+
+```js
+<Editor
+  editorId="md-prev"
+  defToolbars={[
+    <Editor.NormalToolbar
+      title="标记"
+      trigger={
+        <svg className="md-icon" aria-hidden="true">
+          <use xlinkHref="#icon-mark"></use>
+        </svg>
+      }
+      onClick={consol.log}
+      key="mark-toolbar"
+    ></Editor.NormalToolbar>
+  ]}
+/>
+```
+
+> 工具栏完整的示例请参考[表情扩展](https://imzbf.github.io/md-editor-rt/demo#%F0%9F%92%AA%20%E8%87%AA%E5%AE%9A%E4%B9%89%E5%B7%A5%E5%85%B7%E6%A0%8F)，或者源码的`dev-docs`分支。
+
+### 🐼 DropdownToolbar
+
+`Editor.DropdownToolbar`
+
+- `title`: `string`，非必须，作为工具栏上的 hover 提示；
+- `visible`: `boolean`，必须，下拉状态；
+- `trigger`: `string | JSX.Element`，必须，通常是个图标，用来展示在工具栏上；
+- `onChange`: `(visible: boolean) => void`，必须，状态变化事件；
+- `overlay`: `string | JSX.Element`，必须，下拉框中的内容。
+
+```js
+<Editor
+  modelValue={md}
+  editorId="md-prev"
+  defToolbars={[
+    <Editor.DropdownToolbar
+      visible={emojiVisible}
+      onChange={setEmojiVisible}
+      overlay={
+        <>
+          <div className="emoji-container">
+            <ol className="emojis">
+              {emojis.map((emoji, index) => (
+                <li
+                  key={`emoji-${index}`}
+                  onClick={() => {
+                    emojiHandler(emoji);
+                  }}
+                >
+                  {emoji}
+                </li>
+              ))}
+            </ol>
+          </div>
+        </>
+      }
+      trigger={
+        <svg className="md-icon" aria-hidden="true">
+          <use xlinkHref="#icon-emoji"></use>
+        </svg>
+      }
+      key="emoji-toolbar"
+    ></Editor.DropdownToolbar>
+  ]}
+/>
+```
+
+### 🐻 Catalog
+
+`Editor.Catalog`
+
+- `editorId`: `string`，必须，对应编辑器的`editorId`，在内部注册目录变化监听事件；
+- `class`: `string`，非必须，目录组件最外层类名；
+- `markedHeadingId`: `MarkedHeadingId`，非必须，特殊化编辑器标题的算法，与编辑器相同；
+- `scrollElement`: `string | HTMLElement`，非必须，为字符时应是一个元素选择器。仅预览模式中，整页滚动时，设置为`document.documentElement`
+
+```js
+const editorId = 'my-editor';
+
+export default () => {
+  const [state] = useState({
+    text: '# 标题',
+    scrollElement: document.documentElement
+  });
+
+  return (
+    <>
+      <Editor modelValue={state.text} editorId={editorId} previewOnly />
+      <Editor.Catalog editorId={editorId} scrollElement={state.scrollElement} />
+    </>
+  );
+};
+```
 
 ## ✍️ 编辑此页面
 
