@@ -13,7 +13,6 @@ import {
   useAutoScroll,
   usePasteUpload
 } from './hooks';
-import classNames from 'classnames';
 import { appendHandler } from '../../utils/dom';
 import bus from '../../utils/event-bus';
 
@@ -223,11 +222,13 @@ const Content = (props: EditorContentProp) => {
           >
             <div
               id={`${editorId}-preview`}
-              className={classNames(
+              className={[
                 `${prefix}-preview`,
                 `${previewTheme}-theme`,
                 showCodeRowNumber && `${prefix}-scrn`
-              )}
+              ]
+                .filter((c) => !!c)
+                .join(' ')}
               dangerouslySetInnerHTML={{ __html: html }}
             />
           </div>

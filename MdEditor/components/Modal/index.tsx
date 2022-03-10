@@ -1,5 +1,4 @@
 import React, { useRef, useState, ReactElement, useEffect } from 'react';
-import cn from 'classnames';
 import { prefix } from '../../config';
 import { keyMove } from '../../utils/dom';
 import './style.less';
@@ -95,7 +94,7 @@ const Modal = (props: ModalProps) => {
     <div style={{ display: modalVisible ? 'block' : 'none' }}>
       <div className={`${prefix}-modal-mask`} onClick={onClosed} />
       <div
-        className={cn(modalClass)}
+        className={modalClass.join(' ')}
         style={{
           ...state.initPos,
           width: props.width,

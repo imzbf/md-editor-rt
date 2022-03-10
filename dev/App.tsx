@@ -1,4 +1,3 @@
-import classNames from 'classnames';
 import React, { useState } from 'react';
 import Header from './Header';
 import Preview from './Preview';
@@ -11,7 +10,7 @@ export type Theme = 'dark' | 'light';
 function App() {
   const [theme, setTheme] = useState<Theme>('light');
   return (
-    <div className={classNames('app', theme === 'dark' && 'theme-dark')}>
+    <div className={['app', theme === 'dark' && 'theme-dark'].join(' ')}>
       <Header theme={theme} onChange={(v: Theme) => setTheme(v)} />
       <div className="page-body">
         <Preview theme={theme} />

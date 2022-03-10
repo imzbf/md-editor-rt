@@ -1,5 +1,4 @@
 import React, { createContext, useEffect, useMemo, useState } from 'react';
-import cn from 'classnames';
 import { useExpansion, useKeyBoard } from './hooks';
 import ToolBar from './layouts/Toolbar';
 import Content from './layouts/Content';
@@ -212,13 +211,15 @@ const Editor = (props: EditorProp) => {
     >
       <div
         id={editorId}
-        className={cn([
+        className={[
           prefix,
           editorClass,
           theme === 'dark' && `${prefix}-dark`,
           setting.fullscreen || setting.pageFullScreen ? `${prefix}-fullscreen` : '',
           previewOnly && `${prefix}-previewOnly`
-        ])}
+        ]
+          .filter((c) => !!c)
+          .join(' ')}
         style={props.style}
       >
         {!previewOnly && (

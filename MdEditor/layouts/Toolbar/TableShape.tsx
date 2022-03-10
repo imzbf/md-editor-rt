@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import classNames from 'classnames';
 import { prefix } from '../../config';
 
 interface HoverData {
@@ -45,12 +44,14 @@ const TableShape = (props: TableShapeProp) => {
               }}
             >
               <div
-                className={classNames(
+                className={[
                   `${prefix}-table-shape-col-default`,
                   rowIndex <= hoverPosition.x &&
                     colIndex <= hoverPosition.y &&
                     `${prefix}-table-shape-col-include`
-                )}
+                ]
+                  .filter((c) => !!c)
+                  .join(' ')}
               ></div>
             </div>
           ))}
