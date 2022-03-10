@@ -257,6 +257,7 @@ const Editor = (props: EditorProp) => {
         />
         {catalogShow && (
           <Catalog
+            theme={props.theme}
             style={{
               display: state.catalogVisible ? 'block' : 'none'
             }}

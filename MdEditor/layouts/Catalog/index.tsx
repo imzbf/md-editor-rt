@@ -1,7 +1,7 @@
 import React, { CSSProperties, useEffect, useMemo, useState } from 'react';
 import './style.less';
 import bus from '../../utils/event-bus';
-import { HeadList, MarkedHeadingId } from '../../type';
+import { HeadList, MarkedHeadingId, Themes } from '../../type';
 import CatalogLink from './CatalogLink';
 import { prefix } from '../../config';
 
@@ -19,6 +19,7 @@ export interface CatalogProps {
   // 元素必须定位！！！！！！
   scrollElement?: string | HTMLElement;
   style?: CSSProperties;
+  theme?: Themes;
 }
 
 const Catalog = (props: CatalogProps) => {
@@ -80,7 +81,12 @@ const Catalog = (props: CatalogProps) => {
   }, []);
 
   return (
-    <div className={`${prefix}-catalog ${props.className || ''}`} style={props.style}>
+    <div
+      className={`${prefix}-catalog${props.theme === 'dark' ? '-dark' : ''} ${
+        props.className || ''
+      } `}
+      style={props.style}
+    >
       {catalogs.map((item) => {
         return (
           <CatalogLink
@@ -96,7 +102,8 @@ const Catalog = (props: CatalogProps) => {
 };
 
 Catalog.defaultProps = {
-  markedHeadingId: (text: string) => text
+  markedHeadingId: (text: string) => text,
+  theme: 'light'
 };
 
 export default Catalog;

@@ -44,7 +44,7 @@ export default ({ theme }: { theme: Theme }) => {
           right: '10px'
         }}
       >
-        <Editor.Catalog editorId="md-editor-preview" />
+        <Editor.Catalog theme={theme} editorId="md-editor-preview" />
       </div>
       <div className="container">
         <Editor

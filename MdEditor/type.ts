@@ -120,6 +120,8 @@ export interface HeadList {
   level: 1 | 2 | 3 | 4 | 5 | 6;
 }
 
+export type Themes = 'light' | 'dark';
+
 export type PreviewThemes = 'default' | 'github' | 'vuepress';
 
 // marked heading方法
@@ -144,7 +146,7 @@ export type MarkedHeadingId = (text: string, level: number) => string;
 export interface EditorProp {
   modelValue: string;
   // 主题，默认light
-  theme: 'light' | 'dark';
+  theme: Themes;
   // 外层扩展类名
   editorClass: string;
   // 如果项目中有使用highlight.js或者没有外网访问权限，可以直接传递实例hljs并且手动导入css
@@ -237,7 +239,7 @@ export interface ContentType {
   showCodeRowNumber: boolean;
   usedLanguageText: StaticTextDefaultValue;
   Cropper: any;
-  theme: 'light' | 'dark';
+  theme: Themes;
   previewTheme: PreviewThemes;
 }
 
