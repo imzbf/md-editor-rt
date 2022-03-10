@@ -231,6 +231,7 @@ export interface StaticTextDefaultValue {
 | markedHeading | (text: string,level: 1-6,raw: string, slugger: Slugger) => string | `marked`转换 md 文本标题的方法 |
 | markedHeadingId | (text: string, level: number) => string | 标题`ID`计算方式 |
 | sanitize | (html: string) => string | 在每次生成 html 后，通过该方法移除危险内容，比如 xss 相关。 |
+| markedImage | (href: string, title: string, desc: string) => string | 覆盖默认生成图片的 html 元素结构 |
 
 > 如果你重写了`markedHeading`方法，请务必通过`markedHeadingId`告诉编辑器你生成标题 ID 的算法。以便生成的内部目录能够正确导航。
 
@@ -265,9 +266,40 @@ export interface StaticTextDefaultValue {
 | CTRL + ALT + C | 行内代码 | 行内代码块 |
 | CTRL + SHIFT + ALT + T | 表格 | `\|表格\|` |
 
-## 演示
+## 使用内部组件
 
-### jsx 语法项目
+1.x 版本扩展组件作为编辑器组件的属性值来使用，例如：`Editor.DropdownToolbar`。使用参考：[文档页面](https://imzbf.github.io/md-editor-rt)
+
+### 普通扩展工具栏
+
+`Editor.NormalToolbar`
+
+- `title`: `string`，非必须，作为工具栏上的 hover 提示；
+- `trigger`: `string | JSX.Element`，必须，通常是个图标，用来展示在工具栏上；
+- `onClick`: `(e: MouseEvent) => void`，必须，点击事件。
+
+### 下拉扩展工具栏
+
+`Editor.DropdownToolbar`
+
+- `title`: `string`，非必须，作为工具栏上的 hover 提示；
+- `visible`: `boolean`，必须，下拉状态；
+- `trigger`: `string | JSX.Element`，必须，通常是个图标，用来展示在工具栏上；
+- `onChange`: `(visible: boolean) => void`，必须，状态变化事件；
+- `overlay`: `string | JSX.Element`，必须，下拉框中的内容。
+
+### 目录导航
+
+`Editor.Catalog`
+
+- `editorId`: `string`，必须，对应编辑器的`editorId`，在内部注册目录变化监听事件；
+- `class`: `string`，非必须，目录组件最外层类名；
+- `markedHeadingId`: `MarkedHeadingId`，非必须，特殊化编辑器标题的算法，与编辑器相同；
+- `scrollElement`: `string | HTMLElement`，非必须，为字符时应是一个元素选择器。仅预览模式中，整页滚动时，设置为`document.documentElement`
+
+## 部分示例
+
+### Jsx 语法项目
 
 ```js
 import { useState } from 'react';

@@ -20,7 +20,7 @@ Markdown editor for `react`, developed in `jsx` and `typescript`.
 - Beautify your content by `prettier`(only for markdown content, not the code and other text).
 - Multi-language, build-in Chinese and English(default: Chinese).
 - Upload picture, paste or clip the picture and upload it.
-- Render article directly(no editor，no event listener, only preview content).
+- Render article directly(no editor, no event listener, only preview content).
 - Preview themes, support `defalut`、`vuepress`、`github` styles(not identical).
 - `mermaid`(>=1.3.0).
 - `katex` mathematical formula（>=1.4.0）.
@@ -51,9 +51,9 @@ Markdown editor for `react`, developed in `jsx` and `typescript`.
 | htmlPreview | Boolean | false | Preview html in editor |
 | previewOnly | Boolean | false | Only render article content, no toolbar, no edit area |
 | language | String | 'zh-CN' | Build-in language('zh-CN','en-US') |
-| languageUserDefined | Object | {key: StaticTextDefaultValue} | Expand language，update `language` api to your key |
-| toolbars | Array | [toolbars] | Show some item of toolbars，all keys<sup>see `toolbars` below</sup> |
-| toolbarsExclude | Array | [] | Don't show some item of toolbars，all keys`toolbars` |
+| languageUserDefined | Object | {key: StaticTextDefaultValue} | Expand language, update `language` api to your key |
+| toolbars | Array | [toolbars] | Show some item of toolbars, all keys<sup>see `toolbars` below</sup> |
+| toolbarsExclude | Array | [] | Don't show some item of toolbars, all keys`toolbars` |
 | prettier | Boolean | true | Use prettier to beautify content or not |
 | prettierCDN | String | [standalone@2.4.0](https://cdn.jsdelivr.net/npm/prettier@2.4.0/standalone.js) |  |
 | prettierMDCDN | String | [parser-markdown@2.4.0](https://cdn.jsdelivr.net/npm/prettier@2.4.0/parser-markdown.js) |  |
@@ -121,7 +121,7 @@ mark and emoji extensions
 
 > You can sort the toolbar as you like, split tools by `'-'`, the left and right toolbars are divided by `'='`！
 
-Expand language，you need to replace all the content here：
+Expand language, you need to replace all the content here：
 
 [StaticTextDefaultValue]
 
@@ -219,13 +219,14 @@ export interface StaticTextDefaultValue {
 | name | type | description |
 | --- | --- | --- |
 | onChange | (v: string) => void | Content changed event(bind to `oninput` of `textarea`) |
-| onSave | (v: string) => void | Save Content event，`ctrl+s`and click button will trigger |
-| onUploadImg | (files: FileList, callback: function) => void | Upload picture event，when picture is uploading the modal will not close，please provide right urls to the callback function |
-| onHtmlChanged | (h: string) => void | Compile markdown successful event，you can use it to get the html code |
+| onSave | (v: string) => void | Save Content event, `ctrl+s`and click button will trigger |
+| onUploadImg | (files: FileList, callback: function) => void | Upload picture event, when picture is uploading the modal will not close, please provide right urls to the callback function |
+| onHtmlChanged | (h: string) => void | Compile markdown successful event, you can use it to get the html code |
 | onGetCatalog | (list: HeadList[]) => void | Get catalogue of article |
 | markedHeading | (text: string,level: 1-6,raw: string, slugger: Slugger) => string | `marked` head renderer methods |
 | markedHeadingId | (text: string, level: number) => string | title `ID` generator |
 | sanitize | (html: string) => string | Sanitize the html, prevent XSS. |
+| markedImage | (href: string, title: string, desc: string) => string | Overrides the html element structure of the default generated picture |
 
 > If `markedHeading` is overridden, be sure to tell the editor the algorithm for generating the title ID by `marketheadingid`.
 
@@ -258,7 +259,38 @@ export interface StaticTextDefaultValue {
 | CTRL + ALT + C | code row |  |
 | CTRL + SHIFT + ALT + T | table | `\|table\|` |
 
-## Simple demo
+## Internal components
+
+Before 1.x, they are used as attributes of the editor component, eg: `Editor.DropdownToolbar`. For more examples, refer to [document](https://imzbf.github.io/md-editor-v3).
+
+### NormalToolbar
+
+`Editor.NormalToolbar`
+
+- `title`: `string`, not necessary, the tips when hover toolbar;
+- `trigger`: `string | JSX.Element`, necessary, it is usually an icon, which is displayed on the toolbar;
+- `onClick`: `(e: MouseEvent) => void`, necessary.
+
+### DropdownToolbar
+
+`Editor.DropdownToolbar`
+
+- `title`: `string`, not necessary, the tips when hover toolbar;
+- `visible`: `boolean`, necessary;
+- `trigger`: `string | JSX.Element`, necessary, it is usually an icon, which is displayed on the toolbar;
+- `onChange`: `(visible: boolean) => void`, necessary;
+- `overlay`: `string | JSX.Element`, necessary, contents in the drop-down box.
+
+### Catalogue
+
+`Editor.Catalog`
+
+- `editorId`: `string`, necessary, editor's `editorId`, used to register listening events;
+- `class`: `string`, not necessary;
+- `markedHeadingId`: `MarkedHeadingId`, not necessary, same as editor;
+- `scrollElement`: `string | HTMLElement`, not necessary, it is an element selector when its type is string. When `previewOnly` eq `true`, it is usually set to `document.documentElement`.
+
+## Some examples
 
 ### Jsx module
 
@@ -283,7 +315,7 @@ export default function App() {
 
 ### Upload picture
 
-> Tips：When you paste and upload GIF，it will upload a static picture. So you should upload it by file system!
+> Tips：When you paste and upload GIF, it will upload a static picture. So you should upload it by file system!
 
 ```js
 async onUploadImg(files: FileList, callback: (urls: string[]) => void) {
