@@ -159,7 +159,7 @@ const Content = (props: EditorContentProp) => {
   // ---预览代码---
   const html = useMemo(() => {
     heads.current = [];
-    const _html = marked(props.value);
+    const _html = marked(props.value || '');
 
     return props.sanitize(_html);
   }, [props.value, highlightInited, mermaidInited, reRender, katexInited]);
