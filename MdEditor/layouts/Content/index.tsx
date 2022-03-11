@@ -118,6 +118,7 @@ const Content = (props: EditorContentProp) => {
     setHighlightInited(true);
   };
 
+  // 添加扩展
   useEffect(() => {
     let highlightLink: HTMLLinkElement;
     let highlightScript: HTMLScriptElement;
@@ -154,6 +155,16 @@ const Content = (props: EditorContentProp) => {
         highlightScript.remove();
       }
     };
+  }, []);
+
+  // 添加目录主动触发接收监听
+  useEffect(() => {
+    bus.on(editorId, {
+      name: 'pushCatalog',
+      callback() {
+        bus.emit(editorId, 'catalogChanged', heads.current);
+      }
+    });
   }, []);
 
   // ---预览代码---
