@@ -51,12 +51,6 @@ export const useSreenfull = (props: ToolbarProp) => {
         props.updateSetting('fullscreen');
       });
     }
-
-    return () => {
-      if (!previewOnly && !props.screenfull) {
-        screenScript.remove();
-      }
-    };
   }, []);
   return { fullScreenHandler, screenfullLoad };
 };

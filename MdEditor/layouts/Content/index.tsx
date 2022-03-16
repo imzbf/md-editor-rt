@@ -146,15 +146,8 @@ const Content = (props: EditorContentProp) => {
       highlightScript.id = `${prefix}-hljs`;
 
       appendHandler(highlightLink);
-      appendHandler(highlightScript);
+      appendHandler(highlightScript, 'hljs');
     }
-
-    return () => {
-      if (!props.hljs) {
-        highlightLink.remove();
-        highlightScript.remove();
-      }
-    };
   }, []);
 
   // 添加目录主动触发接收监听

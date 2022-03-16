@@ -339,14 +339,8 @@ export const useMermaid = (props: EditorContentProp) => {
       };
       mermaidScript.id = `${prefix}-mermaid`;
 
-      appendHandler(mermaidScript);
+      appendHandler(mermaidScript, 'mermaid');
     }
-
-    return () => {
-      if (!props.noMermaid && !props.mermaid) {
-        mermaidScript.remove();
-      }
-    };
   }, []);
 
   return { reRender, mermaidInited };
@@ -383,14 +377,9 @@ export const useKatex = (props: EditorContentProp, marked: any) => {
       katexLink.href = props.katexCss;
       katexLink.id = `${prefix}-katexCss`;
 
-      appendHandler(katexScript);
+      appendHandler(katexScript, 'katex');
       appendHandler(katexLink);
     }
-
-    return () => {
-      katexScript && katexScript.remove();
-      katexLink && katexLink.remove();
-    };
   }, []);
 
   return katexInited;

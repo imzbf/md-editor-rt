@@ -357,18 +357,5 @@ export const useExpansion = (props: EditorProp) => {
         appendHandler(prettierMDScript);
       }
     }
-
-    return () => {
-      if (!previewOnly) {
-        iconfontScript.remove();
-        cropperLink.remove();
-        cropperScript.remove();
-
-        if (prettier) {
-          prettierScript.remove();
-          prettierMDScript.remove();
-        }
-      }
-    };
   }, []);
 };
