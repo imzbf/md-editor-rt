@@ -831,6 +831,7 @@ usage:
 - `class`: `string`, not necessary;
 - `markedHeadingId`: `MarkedHeadingId`, not necessary, same as editor;
 - `scrollElement`: `string | HTMLElement`, not necessary, it is an element selector when its type is string. When `previewOnly` eq `true`, it is usually set to `document.documentElement`.
+- `theme`: 'light' | 'dark', not necessary, provide it when you want to change theme online, it is the same as Editor `theme`.
 
 usage:
 
@@ -840,13 +841,23 @@ const editorId = 'my-editor';
 export default () => {
   const [state] = useState({
     text: '# head',
+    theme: 'dark',
     scrollElement: document.documentElement
   });
 
   return (
     <>
-      <Editor modelValue={state.text} editorId={editorId} previewOnly />
-      <Editor.Catalog editorId={editorId} scrollElement={state.scrollElement} />
+      <Editor
+        modelValue={state.text}
+        editorId={editorId}
+        theme={state.theme}
+        previewOnly
+      />
+      <Editor.Catalog
+        editorId={editorId}
+        theme={state.theme}
+        scrollElement={state.scrollElement}
+      />
     </>
   );
 };
