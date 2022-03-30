@@ -3,9 +3,9 @@ export default {
     return {
       name: 'KaTexBlockExtension',
       level: 'block',
-      start: (text: string) => text.match(/\$\$\n/)?.index,
+      start: (text: string) => text.match(/\n\$\$\n/)?.index,
       tokenizer(text: string) {
-        const reg = /^\$\$\n([^$]*)\$\$\n?/;
+        const reg = /^\$\$\n(((\\\$)*[^$]*)*)\$\$\n?/;
         const match = reg.exec(text);
 
         if (match) {
@@ -24,7 +24,8 @@ export default {
 
         if (_katex) {
           const html = _katex.renderToString(token.text, {
-            throwOnError: false
+            throwOnError: false,
+            displayMode: true
           });
 
           return `<span class="${prefix}-katex-block" data-processed>${html}</span>`;
@@ -38,9 +39,9 @@ export default {
     return {
       name: 'KaTexInlineExtension',
       level: 'inline',
-      start: (text: string) => text.match(/\$[^$]/)?.index,
+      start: (text: string) => text.match(/\$[^\n]/)?.index,
       tokenizer(text: string) {
-        const reg = /^\$([^$]*)\$/;
+        const reg = /^\$(((\\\$)*[^$]*)*)\$/;
         const match = reg.exec(text);
 
         if (match) {
