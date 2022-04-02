@@ -400,15 +400,17 @@ export const useAutoScroll = (
 
   useEffect(() => {
     // 初始化滚动事件
-    const [init, clear] = scrollAuto(
-      textAreaRef.current as HTMLElement,
-      (previewRef.current as HTMLElement) || htmlRef.current
-    );
+    if (previewRef.current || htmlRef.current) {
+      const [init, clear] = scrollAuto(
+        textAreaRef.current as HTMLElement,
+        (previewRef.current as HTMLElement) || htmlRef.current
+      );
 
-    setScrollCb({
-      init,
-      clear
-    });
+      setScrollCb({
+        init,
+        clear
+      });
+    }
   }, []);
 
   useEffect(() => {
