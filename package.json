@@ -1,6 +1,6 @@
 {
   "name": "md-editor-rt",
-  "version": "1.6.4",
+  "version": "1.6.5",
   "keywords": [
     "react",
     "nextjs",
@@ -43,6 +43,15 @@
     "dev": "vite",
     "build": "vite build",
     "build:preview": "vite build --mode=preview"
+  },
+  "dependencies": {
+    "antd": "4.15.4",
+    "md-editor-rt": "^1.6.5",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-redux": "^7.2.6",
+    "react-router-dom": "^6.0.2",
+    "redux": "^4.1.2"
   },
   "devDependencies": {
     "@babel/core": "^7.14.6",
@@ -108,14 +117,5 @@
     "> 1%",
     "last 2 versions",
     "not dead"
-  ],
-  "dependencies": {
-    "antd": "4.15.4",
-    "md-editor-rt": "^1.6.4",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2",
-    "react-redux": "^7.2.6",
-    "react-router-dom": "^6.0.2",
-    "redux": "^4.1.2"
-  }
+  ]
 }
