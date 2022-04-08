@@ -1,6 +1,8 @@
-import { insert, setPosition, scrollAuto } from '../../utils';
-import { directive2flag, ToolDirective } from '../../utils/content-help';
 import { RefObject, useContext, useEffect, useRef, useState } from 'react';
+import copy from 'copy-to-clipboard';
+import { MarkedHeading, HeadList } from '../../type';
+import { insert, setPosition, scrollAuto, generateCodeRowNumber } from '../../utils';
+import { directive2flag, ToolDirective } from '../../utils/content-help';
 import bus from '../../utils/event-bus';
 import { EditorContentProp } from './';
 import { EditorContext } from '../../Editor';
@@ -234,9 +236,28 @@ export const useAutoGenrator = (
   };
 };
 
-export const useMarked = (props: EditorContentProp, heading: any) => {
-  const [inited, setInited] = useState(false);
+export const useMarked = (props: EditorContentProp) => {
+  const {
+    hljs = null,
+    highlightSet,
+    onHtmlChanged = () => {},
+    onGetCatalog = () => {}
+  } = props;
+  const { editorId, usedLanguageText, showCodeRowNumber } = useContext(EditorContext);
 
+  const [inited, setInited] = useState(false);
+  // 当页面已经引入完成对应的库时，通过修改从状态完成marked重新编译
+  const [highlightInited, setHighlightInited] = useState<boolean>(!!hljs);
+
+  const heads = useRef<HeadList[]>([]);
+  const heading: MarkedHeading = (...headProps) => {
+    const [, level, raw] = headProps;
+    heads.current.push({ text: raw, level });
+
+    return props.markedHeading(...headProps);
+  };
+
+  // 只初始化一次marked，不使用useEffect，使其在服务端也能初始化
   if (!inited) {
     setInited(true);
     // 标题获取
@@ -298,7 +319,113 @@ export const useMarked = (props: EditorContentProp, heading: any) => {
     }
   }
 
-  return marked;
+  const katexInited = useKatex(props, marked);
+  const { reRender, mermaidInited } = useMermaid(props);
+
+  // 向页面代码块注入复制按钮
+  const initCopyEntry = () => {
+    document
+      .querySelectorAll(`#${editorId} .${prefix}-preview pre`)
+      .forEach((pre: Element) => {
+        const copyButton = document.createElement('span');
+        copyButton.setAttribute('class', 'copy-button');
+        copyButton.innerText = usedLanguageText.copyCode?.text || '复制代码';
+        copyButton.addEventListener('click', () => {
+          copy((pre.querySelector('code') as HTMLElement).innerText);
+
+          copyButton.innerText = usedLanguageText.copyCode?.tips || '已复制！';
+          setTimeout(() => {
+            copyButton.innerText = usedLanguageText.copyCode?.text || '复制代码';
+          }, 1500);
+        });
+        pre.appendChild(copyButton);
+      });
+  };
+
+  const highlightLoad = () => {
+    marked.setOptions({
+      highlight(code) {
+        const codeHtml = window.hljs.highlightAuto(code).value;
+        return showCodeRowNumber
+          ? generateCodeRowNumber(codeHtml)
+          : `<span class="code-block">${codeHtml}</span>`;
+      }
+    });
+
+    setHighlightInited(true);
+  };
+
+  // 添加扩展
+  useEffect(() => {
+    let highlightLink: HTMLLinkElement;
+    let highlightScript: HTMLScriptElement;
+
+    if (props.hljs) {
+      // 提供了hljs，在创建阶段即完成设置
+      marked.setOptions({
+        highlight: (code) => {
+          const codeHtml = props.hljs?.highlightAuto(code).value;
+
+          return showCodeRowNumber
+            ? generateCodeRowNumber(codeHtml)
+            : `<span class="code-block">${codeHtml}</span>`;
+        }
+      });
+    } else {
+      highlightLink = document.createElement('link');
+      highlightLink.rel = 'stylesheet';
+      highlightLink.href = highlightSet.css;
+      highlightLink.id = `${prefix}-hlCss`;
+
+      highlightScript = document.createElement('script');
+      highlightScript.src = highlightSet.js;
+      highlightScript.onload = highlightLoad;
+      highlightScript.id = `${prefix}-hljs`;
+
+      appendHandler(highlightLink);
+      appendHandler(highlightScript, 'hljs');
+    }
+  }, []);
+
+  // ---预览代码---
+  const [html, setHtml] = useState(props.sanitize(marked(props.value || '')));
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      heads.current = [];
+      const _html = props.sanitize(marked(props.value || ''));
+      onHtmlChanged(_html);
+      setHtml(_html);
+    }, 200);
+
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [props.value, highlightInited, mermaidInited, reRender, katexInited]);
+
+  // 添加目录主动触发接收监听
+  useEffect(() => {
+    bus.on(editorId, {
+      name: 'pushCatalog',
+      callback() {
+        bus.emit(editorId, 'catalogChanged', heads.current);
+      }
+    });
+  }, []);
+
+  useEffect(() => {
+    // 传递标题
+    onGetCatalog(heads.current);
+    // 生成目录，
+    bus.emit(editorId, 'catalogChanged', heads.current);
+  }, [heads.current]);
+
+  useEffect(() => {
+    // 重新设置复制按钮
+    initCopyEntry();
+  }, [html]);
+
+  return { html };
 };
 
 export const useMermaid = (props: EditorContentProp) => {

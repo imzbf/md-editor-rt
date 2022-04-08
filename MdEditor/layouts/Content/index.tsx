@@ -1,20 +1,14 @@
-import React, { useContext, useEffect, useMemo, useRef, useState } from 'react';
-import copy from 'copy-to-clipboard';
+import React, { useContext, useRef } from 'react';
 import { prefix } from '../../config';
 import { EditorContext } from '../../Editor';
 import { SettingType, MarkedHeading, HeadList, MarkedImage } from '../../type';
-import { generateCodeRowNumber } from '../../utils';
 import {
   useAutoGenrator,
   useHistory,
   useMarked,
-  useMermaid,
-  useKatex,
   useAutoScroll,
   usePasteUpload
 } from './hooks';
-import { appendHandler } from '../../utils/dom';
-import bus from '../../utils/event-bus';
 
 export type EditorContentProp = Readonly<{
   value: string;
@@ -48,19 +42,10 @@ export type EditorContentProp = Readonly<{
 
 const Content = (props: EditorContentProp) => {
   // ID
-  const {
-    hljs = null,
-    highlightSet,
-    onChange = () => {},
-    onHtmlChanged = () => {},
-    onGetCatalog = () => {}
-  } = props;
+  const { onChange = () => {} } = props;
 
-  const { editorId, previewOnly, usedLanguageText, previewTheme, showCodeRowNumber } =
+  const { editorId, previewOnly, previewTheme, showCodeRowNumber } =
     useContext(EditorContext);
-
-  // 当页面已经引入完成对应的库时，通过修改从状态完成marked重新编译
-  const [highlightInited, setHighlightInited] = useState<boolean>(!!hljs);
 
   // 输入框
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
@@ -70,128 +55,11 @@ const Content = (props: EditorContentProp) => {
   const previewRef = useRef<HTMLDivElement>(null);
   // html代码预览框
   const htmlRef = useRef<HTMLDivElement>(null);
-  // const [heads, setHeads] = useState<HeadList[]>([]);
-  const heads = useRef<HeadList[]>([]);
 
-  const heading: MarkedHeading = (...headProps) => {
-    const [, level, raw] = headProps;
-    // setHeads((_heads) => [..._heads, { text: raw, level }]);
-    heads.current.push({ text: raw, level });
-
-    return props.markedHeading(...headProps);
-  };
-
-  const marked = useMarked(props, heading);
-  const katexInited = useKatex(props, marked);
-  const { reRender, mermaidInited } = useMermaid(props);
-
-  // 向页面代码块注入复制按钮
-  const initCopyEntry = () => {
-    document
-      .querySelectorAll(`#${editorId} .${prefix}-preview pre`)
-      .forEach((pre: Element) => {
-        const copyButton = document.createElement('span');
-        copyButton.setAttribute('class', 'copy-button');
-        copyButton.innerText = usedLanguageText.copyCode?.text || '复制代码';
-        copyButton.addEventListener('click', () => {
-          copy((pre.querySelector('code') as HTMLElement).innerText);
-
-          copyButton.innerText = usedLanguageText.copyCode?.tips || '已复制！';
-          setTimeout(() => {
-            copyButton.innerText = usedLanguageText.copyCode?.text || '复制代码';
-          }, 1500);
-        });
-        pre.appendChild(copyButton);
-      });
-  };
-
-  const highlightLoad = () => {
-    marked.setOptions({
-      highlight(code) {
-        const codeHtml = window.hljs.highlightAuto(code).value;
-        return showCodeRowNumber
-          ? generateCodeRowNumber(codeHtml)
-          : `<span class="code-block">${codeHtml}</span>`;
-      }
-    });
-
-    setHighlightInited(true);
-  };
-
-  // 添加扩展
-  useEffect(() => {
-    let highlightLink: HTMLLinkElement;
-    let highlightScript: HTMLScriptElement;
-
-    if (props.hljs) {
-      // 提供了hljs，在创建阶段即完成设置
-      marked.setOptions({
-        highlight: (code) => {
-          const codeHtml = props.hljs?.highlightAuto(code).value;
-
-          return showCodeRowNumber
-            ? generateCodeRowNumber(codeHtml)
-            : `<span class="code-block">${codeHtml}</span>`;
-        }
-      });
-    } else {
-      highlightLink = document.createElement('link');
-      highlightLink.rel = 'stylesheet';
-      highlightLink.href = highlightSet.css;
-      highlightLink.id = `${prefix}-hlCss`;
-
-      highlightScript = document.createElement('script');
-      highlightScript.src = highlightSet.js;
-      highlightScript.onload = highlightLoad;
-      highlightScript.id = `${prefix}-hljs`;
-
-      appendHandler(highlightLink);
-      appendHandler(highlightScript, 'hljs');
-    }
-  }, []);
-
-  // 添加目录主动触发接收监听
-  useEffect(() => {
-    bus.on(editorId, {
-      name: 'pushCatalog',
-      callback() {
-        bus.emit(editorId, 'catalogChanged', heads.current);
-      }
-    });
-  }, []);
-
-  // ---预览代码---
-  const html = useMemo(() => {
-    heads.current = [];
-    const _html = marked(props.value || '');
-
-    return props.sanitize(_html);
-  }, [props.value, highlightInited, mermaidInited, reRender, katexInited]);
-
-  useEffect(() => {
-    // 变化时调用变化事件
-    onHtmlChanged(html);
-
-    // 传递标题
-    onGetCatalog(heads.current);
-    // 生成目录，
-    bus.emit(editorId, 'catalogChanged', heads.current);
-
-    // 重新设置复制按钮
-    initCopyEntry();
-
-    // 重新构造svg
-    // if (!props.noMermaid && window.mermaid) {
-    //   window.mermaid.init('.mermaid');
-    // }
-  }, [html]);
-  // ---end---
-
+  const { html } = useMarked(props);
   useAutoScroll(props, html, textAreaRef, previewRef, htmlRef);
-
   useHistory(props, textAreaRef);
   useAutoGenrator(props, textAreaRef);
-
   usePasteUpload(textAreaRef);
 
   return (
