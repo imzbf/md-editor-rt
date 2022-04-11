@@ -388,7 +388,9 @@ export const useMarked = (props: EditorContentProp) => {
   }, []);
 
   // ---预览代码---
-  const [html, setHtml] = useState(props.sanitize(marked(props.value || '')));
+  const [html, setHtml] = useState(() => {
+    return props.sanitize(marked(props.value || ''));
+  });
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -396,7 +398,7 @@ export const useMarked = (props: EditorContentProp) => {
       const _html = props.sanitize(marked(props.value || ''));
       onHtmlChanged(_html);
       setHtml(_html);
-    }, 200);
+    }, 500);
 
     return () => {
       clearTimeout(timer);

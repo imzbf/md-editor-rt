@@ -10,12 +10,9 @@ import './index.less';
 const SAVE_KEY = 'XHMPGLJIZTDB';
 
 export default ({ theme }: { theme: Theme }) => {
-  const [md, setMd] = useState('');
-
-  useEffect(() => {
-    const storagedText = localStorage.getItem(SAVE_KEY) || '';
-    setMd(storagedText || mdText);
-  }, []);
+  const [md, setMd] = useState(() => {
+    return localStorage.getItem(SAVE_KEY) || mdText;
+  });
 
   // 自动保存
   const taskId = useRef(-1);
