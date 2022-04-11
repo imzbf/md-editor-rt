@@ -17,7 +17,7 @@ export interface CatalogProps {
   markedHeadingId: MarkedHeadingId;
   // 指定滚动的容器，选择器需带上对应的符号，默认预览框
   // 元素必须定位！！！！！！
-  scrollElement?: string | HTMLElement;
+  scrollElement?: string | Element;
   style?: CSSProperties;
   theme?: Themes;
 }

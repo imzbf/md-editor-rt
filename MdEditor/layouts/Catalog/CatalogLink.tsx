@@ -6,7 +6,7 @@ import { MarkedHeadingId } from '../../type';
 export interface CatalogLinkProps {
   tocItem: TocItem;
   markedHeadingId: MarkedHeadingId;
-  scrollElement: string | HTMLElement;
+  scrollElement: string | Element;
 }
 
 const CatalogLink = (props: CatalogLinkProps) => {
@@ -18,7 +18,7 @@ const CatalogLink = (props: CatalogLinkProps) => {
         const id = props.markedHeadingId(props.tocItem.text, props.tocItem.level);
         const targetHeadEle = document.getElementById(id);
         const scrollContainer =
-          props.scrollElement instanceof HTMLElement
+          props.scrollElement instanceof Element
             ? props.scrollElement
             : document.querySelector(props.scrollElement);
 
