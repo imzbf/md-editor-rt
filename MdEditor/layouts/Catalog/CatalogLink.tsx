@@ -43,15 +43,17 @@ const CatalogLink = (props: CatalogLinkProps) => {
       }}
     >
       <span title={props.tocItem.text}>{props.tocItem.text}</span>
-      {props.tocItem.children &&
-        props.tocItem.children.map((item) => (
-          <CatalogLink
-            markedHeadingId={props.markedHeadingId}
-            key={item.text}
-            tocItem={item}
-            scrollElement={props.scrollElement}
-          />
-        ))}
+      <div className={`${prefix}-catalog-wrapper`}>
+        {props.tocItem.children &&
+          props.tocItem.children.map((item) => (
+            <CatalogLink
+              markedHeadingId={props.markedHeadingId}
+              key={item.text}
+              tocItem={item}
+              scrollElement={props.scrollElement}
+            />
+          ))}
+      </div>
     </div>
   );
 };
