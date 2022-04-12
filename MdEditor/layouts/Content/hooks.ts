@@ -245,7 +245,6 @@ export const useMarked = (props: EditorContentProp) => {
   } = props;
   const { editorId, usedLanguageText, showCodeRowNumber } = useContext(EditorContext);
 
-  const [inited, setInited] = useState(false);
   // 当页面已经引入完成对应的库时，通过修改从状态完成marked重新编译
   const [highlightInited, setHighlightInited] = useState<boolean>(!!hljs);
 
@@ -253,13 +252,12 @@ export const useMarked = (props: EditorContentProp) => {
   const heading: MarkedHeading = (...headProps) => {
     const [, level, raw] = headProps;
     heads.current.push({ text: raw, level });
+    console.log({ text: raw, level });
 
     return props.markedHeading(...headProps);
   };
 
-  // 只初始化一次marked，不使用useEffect，使其在服务端也能初始化
-  if (!inited) {
-    setInited(true);
+  const [renderer] = useState(() => {
     // 标题获取
     const renderer: any = new marked.Renderer();
     // 标题重构
@@ -307,7 +305,6 @@ export const useMarked = (props: EditorContentProp) => {
     renderer.image = props.markedImage;
 
     marked.setOptions({
-      renderer,
       breaks: true
     });
 
@@ -317,7 +314,9 @@ export const useMarked = (props: EditorContentProp) => {
         extensions: props.extensions
       });
     }
-  }
+
+    return renderer;
+  });
 
   const katexInited = useKatex(props, marked);
   const { reRender, mermaidInited } = useMermaid(props);
@@ -389,13 +388,13 @@ export const useMarked = (props: EditorContentProp) => {
 
   // ---预览代码---
   const [html, setHtml] = useState(() => {
-    return props.sanitize(marked(props.value || ''));
+    return props.sanitize(marked(props.value || '', { renderer }));
   });
 
   useEffect(() => {
     const timer = setTimeout(() => {
       heads.current = [];
-      const _html = props.sanitize(marked(props.value || ''));
+      const _html = props.sanitize(marked(props.value || '', { renderer }));
       onHtmlChanged(_html);
       setHtml(_html);
     }, 500);
