@@ -252,7 +252,6 @@ export const useMarked = (props: EditorContentProp) => {
   const heading: MarkedHeading = (...headProps) => {
     const [, level, raw] = headProps;
     heads.current.push({ text: raw, level });
-    console.log({ text: raw, level });
 
     return props.markedHeading(...headProps);
   };
