@@ -30,6 +30,7 @@
   "files": [
     "lib"
   ],
+  "type": "module",
   "types": "./lib/MdEditor/Editor.d.ts",
   "module": "./lib/md-editor-rt.es.js",
   "exports": {
