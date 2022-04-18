@@ -87,7 +87,7 @@ export const useHistory = (
       } else {
         history.current.userUpdated = true;
       }
-    }, 500);
+    }, 10);
   }, [props.value]);
 
   useEffect(() => {
