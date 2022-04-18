@@ -242,7 +242,10 @@ const Editor = (props: EditorProp) => {
           mermaidJs={props.mermaidJs}
           noMermaid={props.noMermaid}
           value={props.modelValue}
-          onChange={props.onChange}
+          onChange={(v: string) => {
+            bus.emit(editorId, 'saveHistory', v);
+            props.onChange(v);
+          }}
           setting={setting}
           onHtmlChanged={props.onHtmlChanged}
           onGetCatalog={props.onGetCatalog}

@@ -8,7 +8,7 @@ import './style.less';
 export type Theme = 'dark' | 'light';
 
 function App() {
-  const [theme, setTheme] = useState<Theme>('light');
+  const [theme, setTheme] = useState<Theme>('dark');
   return (
     <div className={['app', theme === 'dark' && 'theme-dark'].join(' ')}>
       <Header theme={theme} onChange={(v: Theme) => setTheme(v)} />

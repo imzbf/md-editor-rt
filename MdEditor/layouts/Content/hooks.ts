@@ -46,49 +46,63 @@ export const useHistory = (
   const { historyLength, editorId } = useContext(EditorContext);
 
   const history = useRef<HistoryDataType>({
-    list: [],
+    list: [
+      {
+        content: props.value,
+        startPos: textAreaRef.current?.selectionStart || 0,
+        endPos: textAreaRef.current?.selectionEnd || 0
+      }
+    ],
     userUpdated: true,
     curr: 0
   });
 
   useEffect(() => {
-    clearTimeout(saveHistoryId);
-    const startPos: number = textAreaRef.current?.selectionStart || 0;
-    const endPos: number = textAreaRef.current?.selectionEnd || 0;
+    bus.on(editorId, {
+      name: 'saveHistory',
+      callback(content: string) {
+        clearTimeout(saveHistoryId);
+        const startPos: number = textAreaRef.current?.selectionStart || 0;
+        const endPos: number = textAreaRef.current?.selectionEnd || 0;
 
-    saveHistoryId = window.setTimeout(() => {
-      // 如果不是撤销操作，就记录
-      if (history.current.userUpdated) {
-        // 重置撤回之前的记录
-        if (history.current.curr < history.current.list.length - 1) {
-          history.current.list = history.current.list.slice(0, history.current.curr + 1);
-        }
-        if (history.current.list.length > historyLength) {
-          history.current.list.shift();
-        }
+        saveHistoryId = window.setTimeout(() => {
+          // 如果不是撤销操作，就记录
+          if (history.current.userUpdated) {
+            // 重置撤回之前的记录
+            if (history.current.curr < history.current.list.length - 1) {
+              history.current.list = history.current.list.slice(
+                0,
+                history.current.curr + 1
+              );
+            }
+            if (history.current.list.length > historyLength) {
+              history.current.list.shift();
+            }
 
-        // 修改保存上次记录选中定位
-        const lastStep = history.current.list.pop() || {
-          startPos: 0,
-          endPos: 0,
-          content: props.value
-        };
-        lastStep.startPos = startPos;
-        lastStep.endPos = endPos;
+            // 修改保存上次记录选中定位
+            const lastStep = history.current.list.pop() || {
+              startPos: 0,
+              endPos: 0,
+              content
+            };
+            lastStep.startPos = startPos;
+            lastStep.endPos = endPos;
 
-        Array.prototype.push.call(history.current.list, lastStep, {
-          content: props.value,
-          startPos,
-          endPos
-        });
+            Array.prototype.push.call(history.current.list, lastStep, {
+              content,
+              startPos,
+              endPos
+            });
 
-        // 下标调整为最后一个位置
-        history.current.curr = history.current.list.length - 1;
-      } else {
-        history.current.userUpdated = true;
+            // 下标调整为最后一个位置
+            history.current.curr = history.current.list.length - 1;
+          } else {
+            history.current.userUpdated = true;
+          }
+        }, 150);
       }
-    }, 10);
-  }, [props.value]);
+    });
+  }, []);
 
   useEffect(() => {
     bus.on(editorId, {
