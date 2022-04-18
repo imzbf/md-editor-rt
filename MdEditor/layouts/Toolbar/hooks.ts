@@ -39,10 +39,10 @@ export const useSreenfull = (props: ToolbarProp) => {
     if (!previewOnly && !props.screenfull) {
       screenScript = document.createElement('script');
       screenScript.src = props.screenfullJs;
-      screenScript.addEventListener('load', screenfullLoad);
+      screenScript.onload = screenfullLoad;
       screenScript.id = `${prefix}-screenfull`;
 
-      appendHandler(screenScript);
+      appendHandler(screenScript, 'screenfull');
     }
 
     // 提供了对象直接监听事件，未提供通过screenfullLoad触发
