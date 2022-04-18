@@ -145,12 +145,6 @@ export const useAutoGenrator = (
 
   useEffect(() => {
     if (!previewOnly) {
-      textAreaRef.current?.addEventListener('select', () => {
-        selectedText.current = getSelectionText(
-          textAreaRef.current as HTMLTextAreaElement
-        );
-      });
-
       textAreaRef.current?.addEventListener('keypress', (event: any) => {
         if (event.key === 'Enter') {
           const endPoint = textAreaRef.current?.selectionStart as number;
@@ -206,8 +200,10 @@ export const useAutoGenrator = (
       // 注册修改选择内容事件
       bus.on(editorId, {
         name: 'selectTextChange',
-        callback(val: string) {
-          selectedText.current = val;
+        callback() {
+          selectedText.current = getSelectionText(
+            textAreaRef.current as HTMLTextAreaElement
+          );
         }
       });
     }

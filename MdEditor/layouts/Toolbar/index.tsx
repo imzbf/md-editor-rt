@@ -8,7 +8,7 @@ import React, {
 } from 'react';
 import { ToolbarNames, SettingType } from '../../type';
 import { EditorContext } from '../../Editor';
-import { getSelectionText, goto } from '../../utils';
+import { goto } from '../../utils';
 import { ToolDirective } from '../../utils/content-help';
 import { allToolbar, prefix } from '../../config';
 import bus from '../../utils/event-bus';
@@ -808,22 +808,18 @@ const Toolbar = (props: ToolbarProp) => {
       }
     });
 
-    toolbarLeftRef.current?.addEventListener('mouseover', () => {
-      const selectedText = getSelectionText(
-        document.querySelector(`#${editorId}-textarea`) as HTMLTextAreaElement
-      );
-
-      if (!selectedText) {
-        bus.emit(editorId, 'selectTextChange', '');
-      }
-    });
-
     (uploadRef.current as HTMLInputElement).addEventListener('change', uploadHandler);
   }, []);
 
   return (
     <div className={`${prefix}-toolbar-wrapper`}>
-      <div className={`${prefix}-toolbar`}>
+      <div
+        className={`${prefix}-toolbar`}
+        onMouseEnter={() => {
+          // 工具栏操作前，保存选中文本
+          bus.emit(editorId, 'selectTextChange');
+        }}
+      >
         <div className={`${prefix}-toolbar-left`} ref={toolbarLeftRef}>
           {splitedbar[0].map((barItem) => barRender(barItem))}
         </div>
