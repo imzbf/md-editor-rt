@@ -258,6 +258,14 @@ export const loopEvent = (stopEvent: any, cb: any, ms = 50) => {
   }, ms);
 };
 
+/**
+ * 逻辑分离katex相关文本
+ * 不再采用正确匹配，会导致性能问题
+ *
+ * @param str 待处理字符串
+ * @param key 单行或多行标识符
+ * @returns []
+ */
 export const splitKatexValue = (str: string, key = '$'): Array<string> => {
   const arr = str.split(key);
   let regText = key;
@@ -277,4 +285,21 @@ export const splitKatexValue = (str: string, key = '$'): Array<string> => {
   }
 
   return [regText, text];
+};
+
+/**
+ * 兼容firefox获取选中文本
+ *
+ * @param textarea 输入框element
+ * @returns selectedText
+ */
+export const getSelectionText = (textarea: HTMLTextAreaElement): string => {
+  const userAgent = navigator.userAgent;
+
+  if (userAgent.indexOf('Firefox') > -1) {
+    // firefox没法通过window.getSelection()?.toString()获取选中文本
+    return textarea.value.substring(textarea.selectionStart, textarea.selectionEnd);
+  }
+
+  return window.getSelection()?.toString() || '';
 };

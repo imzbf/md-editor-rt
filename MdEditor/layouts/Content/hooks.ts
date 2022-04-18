@@ -1,7 +1,13 @@
 import { RefObject, useContext, useEffect, useRef, useState } from 'react';
 import copy from 'copy-to-clipboard';
 import { MarkedHeading, HeadList } from '../../type';
-import { insert, setPosition, scrollAuto, generateCodeRowNumber } from '../../utils';
+import {
+  insert,
+  setPosition,
+  scrollAuto,
+  generateCodeRowNumber,
+  getSelectionText
+} from '../../utils';
 import { directive2flag, ToolDirective } from '../../utils/content-help';
 import bus from '../../utils/event-bus';
 import { EditorContentProp } from './';
@@ -140,7 +146,9 @@ export const useAutoGenrator = (
   useEffect(() => {
     if (!previewOnly) {
       textAreaRef.current?.addEventListener('select', () => {
-        selectedText.current = window.getSelection()?.toString() || '';
+        selectedText.current = getSelectionText(
+          textAreaRef.current as HTMLTextAreaElement
+        );
       });
 
       textAreaRef.current?.addEventListener('keypress', (event: any) => {

@@ -8,7 +8,7 @@ import React, {
 } from 'react';
 import { ToolbarNames, SettingType } from '../../type';
 import { EditorContext } from '../../Editor';
-import { goto } from '../../utils';
+import { getSelectionText, goto } from '../../utils';
 import { ToolDirective } from '../../utils/content-help';
 import { allToolbar, prefix } from '../../config';
 import bus from '../../utils/event-bus';
@@ -809,7 +809,11 @@ const Toolbar = (props: ToolbarProp) => {
     });
 
     toolbarLeftRef.current?.addEventListener('mouseover', () => {
-      if (!window.getSelection()?.toString()) {
+      const selectedText = getSelectionText(
+        document.querySelector(`#${editorId}-textarea`) as HTMLTextAreaElement
+      );
+
+      if (!selectedText) {
         bus.emit(editorId, 'selectTextChange', '');
       }
     });
