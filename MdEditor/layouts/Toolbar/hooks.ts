@@ -54,7 +54,10 @@ export const useSreenfull = (props: ToolbarProp) => {
     // 提供了对象直接监听事件，未提供通过screenfullLoad触发
     if (!previewOnly && screenfull && screenfull.isEnabled) {
       screenfull.on('change', () => {
-        props.updateSetting('fullscreen');
+        if (screenfullMe.current) {
+          screenfullMe.current = false;
+          props.updateSetting('fullscreen');
+        }
       });
     }
   }, []);
