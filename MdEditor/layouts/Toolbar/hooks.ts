@@ -1,17 +1,20 @@
+import { useCallback, useContext, useEffect, useRef } from 'react';
 import { prefix } from '../../config';
 import { EditorContext } from '../../Editor';
 import { appendHandler } from '../../utils/dom';
-import { useCallback, useContext, useEffect } from 'react';
 import { ToolbarProp } from './';
 
 export const useSreenfull = (props: ToolbarProp) => {
   let { screenfull } = props;
   const { previewOnly } = useContext(EditorContext);
+  // 是否组件内部全屏标识
+  const screenfullMe = useRef(false);
 
   // 该处使用useCallback并不是为了减少子组件渲染次数
   // 而是screenfull获取到实例后要正确的初始化该方法
   const fullScreenHandler = useCallback(() => {
     if (screenfull.isEnabled) {
+      screenfullMe.current = true;
       if (screenfull.isFullscreen) {
         screenfull.exit();
       } else {
@@ -28,7 +31,10 @@ export const useSreenfull = (props: ToolbarProp) => {
     // 注册事件
     if (screenfull && screenfull.isEnabled) {
       screenfull.on('change', () => {
-        props.updateSetting('fullscreen');
+        if (screenfullMe.current) {
+          screenfullMe.current = false;
+          props.updateSetting('fullscreen');
+        }
       });
     }
   };

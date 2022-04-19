@@ -14,6 +14,8 @@ export default ({ theme }: { theme: Theme }) => {
     return localStorage.getItem(SAVE_KEY) || mdText;
   });
 
+  const [md2, setMd2] = useState('# Hello World');
+
   // 自动保存
   const taskId = useRef(-1);
   useEffect(() => {
@@ -130,6 +132,13 @@ export default ({ theme }: { theme: Theme }) => {
 
             callback(res.map((item: any) => item.data.url));
           }}
+        />
+        <br />
+        <Editor
+          theme={theme}
+          modelValue={md2}
+          editorId="md-editor-preview-2"
+          onChange={setMd2}
         />
         <br />
         <span className="tips-text">
