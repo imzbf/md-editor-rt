@@ -242,8 +242,13 @@ const Editor = (props: EditorProp) => {
           mermaidJs={props.mermaidJs}
           noMermaid={props.noMermaid}
           value={props.modelValue}
-          onChange={(v: string) => {
-            bus.emit(editorId, 'saveHistory', v);
+          onChange={(v: string, completeStatus = true) => {
+            if (completeStatus) {
+              // 输入中文等语言时，未选择文本不保存历史
+              // 撤回将不会出现中间输入内容
+              bus.emit(editorId, 'saveHistory', v);
+            }
+
             props.onChange(v);
           }}
           setting={setting}

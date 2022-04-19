@@ -1,4 +1,4 @@
-import React, { useContext, useRef } from 'react';
+import React, { useContext, useRef, useState } from 'react';
 import { prefix } from '../../config';
 import { EditorContext } from '../../Editor';
 import { SettingType, MarkedHeading, HeadList, MarkedImage } from '../../type';
@@ -9,6 +9,7 @@ import {
   useAutoScroll,
   usePasteUpload
 } from './hooks';
+import bus from '../../utils/event-bus';
 
 export type EditorContentProp = Readonly<{
   value: string;
@@ -17,7 +18,7 @@ export type EditorContentProp = Readonly<{
     js: string;
     css: string;
   };
-  onChange: (v: string) => void;
+  onChange: (v: string, status?: boolean) => void;
   setting: SettingType;
   onHtmlChanged?: (h: string) => void;
   onGetCatalog?: (list: HeadList[]) => void;
@@ -41,11 +42,11 @@ export type EditorContentProp = Readonly<{
 }>;
 
 const Content = (props: EditorContentProp) => {
-  // ID
   const { onChange = () => {} } = props;
-
   const { editorId, previewOnly, previewTheme, showCodeRowNumber } =
     useContext(EditorContext);
+  // 输入状态，在输入中文等时，暂停保存
+  const [completeStatus, setCS] = useState(true);
 
   // 输入框
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
@@ -71,12 +72,25 @@ const Content = (props: EditorContentProp) => {
               id={`${editorId}-textarea`}
               ref={textAreaRef}
               value={props.value}
+              onCompositionStart={() => {
+                setCS(false);
+              }}
               onInput={(e) => {
                 // 先清空保存的选中内容，防止异常现象
                 selectedText.current = '';
 
                 // 触发更新
-                onChange((e.target as HTMLTextAreaElement).value);
+                onChange((e.target as HTMLTextAreaElement).value, completeStatus);
+              }}
+              onCompositionEnd={(e) => {
+                // 输入中文等时，oninput不会保存历史记录
+                // 在完成时保存
+                bus.emit(
+                  editorId,
+                  'saveHistory',
+                  (e.target as HTMLTextAreaElement).value
+                );
+                setCS(true);
               }}
               className={
                 props.setting.preview || props.setting.htmlPreview ? '' : 'textarea-only'
