@@ -23,6 +23,7 @@ interface ModalProp {
   visible: boolean;
   children?: string | number | ReactElement;
   onChange: (v: boolean) => void;
+  relative?: string;
 }
 
 import { prefix } from '../../config';
@@ -57,12 +58,20 @@ const DropDown = (props: ModalProp) => {
     const triggerHeight = triggerInfo.height;
     const triggerWidth = triggerInfo.width;
 
+    const relativecrollLeft =
+      document.querySelector(props.relative as string)?.scrollLeft || 0;
+
     // 设置好正对位置
     setCtl((_ctl) => ({
       ..._ctl,
       overlayStyle: {
         top: triggerTop + triggerHeight + 'px',
-        left: triggerLeft - overlayEle.offsetWidth / 2 + triggerWidth / 2 + 'px'
+        left:
+          triggerLeft -
+          overlayEle.offsetWidth / 2 +
+          triggerWidth / 2 -
+          relativecrollLeft +
+          'px'
       }
     }));
 
@@ -201,7 +210,8 @@ const DropDown = (props: ModalProp) => {
 };
 
 DropDown.defaultProps = {
-  trigger: 'hover'
+  trigger: 'hover',
+  relative: 'html'
 };
 
 export default DropDown;

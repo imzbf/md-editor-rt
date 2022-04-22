@@ -1,6 +1,7 @@
-import React, { ReactElement } from 'react';
+import React, { ReactElement, useContext } from 'react';
 import { prefix } from './config';
 import Dropdown from './components/Dropdown';
+import { EditorContext } from './Editor';
 
 export interface DropdownToolbarProp {
   title?: string;
@@ -11,8 +12,15 @@ export interface DropdownToolbarProp {
 }
 
 const DropdownToolbar = (props: DropdownToolbarProp) => {
+  const { editorId } = useContext(EditorContext);
+
   return (
-    <Dropdown visible={props.visible} onChange={props.onChange} overlay={props.overlay}>
+    <Dropdown
+      relative={`#${editorId}-toolbar-wrapper`}
+      visible={props.visible}
+      onChange={props.onChange}
+      overlay={props.overlay}
+    >
       <div className={`${prefix}-toolbar-item`} title={props.title || ''}>
         {props.trigger}
       </div>

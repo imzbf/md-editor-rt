@@ -55,6 +55,8 @@ const Toolbar = (props: ToolbarProp) => {
     katex: false
   });
 
+  const [wrapperId] = useState(() => `${editorId}-toolbar-wrapper`);
+
   // 触发器
   const emitHandler = (direct: ToolDirective, params?: any) => {
     bus.emit(editorId, 'replace', direct, params);
@@ -146,6 +148,7 @@ const Toolbar = (props: ToolbarProp) => {
         case 'title': {
           return (
             <Dropdown
+              relative={`#${wrapperId}`}
               visible={visible.title}
               onChange={(v) => {
                 setVisible({
@@ -360,6 +363,7 @@ const Toolbar = (props: ToolbarProp) => {
         case 'image': {
           return (
             <Dropdown
+              relative={`#${wrapperId}`}
               visible={visible.image}
               onChange={(v) => {
                 setVisible((_vis) => {
@@ -419,6 +423,7 @@ const Toolbar = (props: ToolbarProp) => {
         case 'table': {
           return (
             <Dropdown
+              relative={`#${wrapperId}`}
               visible={visible.table}
               onChange={(v) => {
                 setVisible((_vis) => {
@@ -615,6 +620,7 @@ const Toolbar = (props: ToolbarProp) => {
         case 'mermaid': {
           return (
             <Dropdown
+              relative={`#${wrapperId}`}
               visible={visible.mermaid}
               onChange={(v) => {
                 setVisible((_vis) => {
@@ -715,11 +721,14 @@ const Toolbar = (props: ToolbarProp) => {
         case 'katex': {
           return (
             <Dropdown
+              relative={`#${wrapperId}`}
               visible={visible.katex}
               onChange={(v) => {
-                setVisible({
-                  ...visible,
-                  katex: v
+                setVisible((_vis) => {
+                  return {
+                    ..._vis,
+                    katex: v
+                  };
                 });
               }}
               overlay={
@@ -812,7 +821,7 @@ const Toolbar = (props: ToolbarProp) => {
   }, []);
 
   return (
-    <div className={`${prefix}-toolbar-wrapper`}>
+    <div className={`${prefix}-toolbar-wrapper`} id={wrapperId}>
       <div
         className={`${prefix}-toolbar`}
         onMouseEnter={() => {
