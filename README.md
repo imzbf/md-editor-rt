@@ -220,7 +220,7 @@ export interface StaticTextDefaultValue {
 | --- | --- | --- |
 | onChange | (v: string) => void | Content changed event(bind to `oninput` of `textarea`) |
 | onSave | (v: string) => void | Save Content event, `ctrl+s`and click button will trigger |
-| onUploadImg | (files: FileList, callback: function) => void | Upload picture event, when picture is uploading the modal will not close, please provide right urls to the callback function |
+| onUploadImg | (files: Array<File>, callback: function) => void | Upload picture event, when picture is uploading the modal will not close, please provide right urls to the callback function |
 | onHtmlChanged | (h: string) => void | Compile markdown successful event, you can use it to get the html code |
 | onGetCatalog | (list: HeadList[]) => void | Get catalogue of article |
 | markedHeading | (text: string,level: 1-6,raw: string, slugger: Slugger) => string | `marked` head renderer methods |
@@ -319,9 +319,9 @@ export default function App() {
 > Tips：When you paste and upload GIF, it will upload a static picture. So you should upload it by file system!
 
 ```js
-async onUploadImg(files: FileList, callback: (urls: string[]) => void) {
+async onUploadImg(files: Array<File>, callback: (urls: string[]) => void) {
   const res = await Promise.all(
-    Array.from(files).map((file) => {
+    files.map((file) => {
       return new Promise((rev, rej) => {
         const form = new FormData();
         form.append('file', file);
