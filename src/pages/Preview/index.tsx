@@ -155,9 +155,9 @@ export default () => {
             'github'
           ]}
           onChange={(value: string) => setMd(value)}
-          onUploadImg={async (files: FileList, callback: (urls: string[]) => void) => {
+          onUploadImg={async (files: Array<File>, callback: (urls: string[]) => void) => {
             const res = await Promise.all(
-              Array.from(files).map((file) => {
+              files.map((file) => {
                 return new Promise((rev, rej) => {
                   const form = new FormData();
                   form.append('file', file);
