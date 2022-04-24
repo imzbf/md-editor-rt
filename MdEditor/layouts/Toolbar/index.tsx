@@ -799,7 +799,11 @@ const Toolbar = (props: ToolbarProp) => {
   const uploadRef = useRef<HTMLInputElement>(null);
 
   const uploadHandler = () => {
-    bus.emit(editorId, 'uploadImage', (uploadRef.current as HTMLInputElement).files);
+    bus.emit(
+      editorId,
+      'uploadImage',
+      Array.from((uploadRef.current as HTMLInputElement).files || [])
+    );
 
     // 清空内容，否则无法再次选取同一张图片
     (uploadRef.current as HTMLInputElement).value = '';

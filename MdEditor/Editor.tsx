@@ -92,7 +92,7 @@ const Editor = (props: EditorProp) => {
     });
   };
 
-  const uploadImageCallBack = (files: FileList, cb: () => void) => {
+  const uploadImageCallBack = (files: Array<File>, cb: () => void) => {
     const insertHanlder = (urls: Array<string>) => {
       bus.emit(editorId, 'replace', 'image', {
         desc: '',
