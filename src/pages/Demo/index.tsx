@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import Editor from 'md-editor-rt';
-import axios from '@/utils/request';
-import { version } from '../../../package.json';
+import mdEN from '../../../public/demo-en-US.md';
+import mdCN from '../../../public/demo-zh-CN.md';
 import { useSelector } from 'react-redux';
 import { StateType } from '@/store';
 import { Affix } from 'antd';
+import { replaceVersion } from '@/utils';
 
 const Catalog = Editor.Catalog;
 
@@ -13,16 +14,7 @@ export default () => {
   const state = useSelector<StateType>((state) => state) as StateType;
 
   const queryMd = () => {
-    axios
-      .get(`/demo-${state.lang}.md`)
-      .then(({ data }) => {
-        setMdText((data as string).replace(/\$\{EDITOR_VERSION\}/g, version));
-      })
-      .catch((e) => {
-        console.error(e);
-
-        setMdText('文档读取失败！');
-      });
+    setMdText(replaceVersion(state.lang === 'en-US' ? mdEN : mdCN));
   };
 
   useEffect(queryMd, [state.lang]);

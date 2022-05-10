@@ -2,9 +2,8 @@ import path from 'path';
 import { UserConfigExport, ConfigEnv } from 'vite';
 import reactRefresh from '@vitejs/plugin-react-refresh';
 import nodeService from './vitePlugins/nodeService';
+import markdownImport from './vitePlugins/markdownImport';
 import { homepage } from './package.json';
-
-import dts from 'vite-plugin-dts';
 
 // https://vitejs.dev/config/
 export default ({ mode }: ConfigEnv): UserConfigExport => {
@@ -28,10 +27,7 @@ export default ({ mode }: ConfigEnv): UserConfigExport => {
     plugins: [
       mode !== 'production' && nodeService(),
       mode !== 'production' && reactRefresh(),
-      mode === 'production' &&
-        dts({
-          include: './MdEditor/Editor.tsx'
-        })
+      markdownImport()
     ],
     css: {
       modules: {

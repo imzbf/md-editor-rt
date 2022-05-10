@@ -2,25 +2,18 @@ import React, { useEffect, useState } from 'react';
 import Editor from 'md-editor-rt';
 import { useSelector } from 'react-redux';
 import { StateType } from '@/store';
-import { version } from '../../../package.json';
-import axios from '@/utils/request';
+
+import mdEN from '../../../public/about-en-US.md';
+import mdCN from '../../../public/about-zh-CN.md';
+import { replaceVersion } from '@/utils';
 
 const About = () => {
   const state = useSelector<StateType>((state) => state) as StateType;
 
-  const [mdText, setMdText] = useState('');
+  const [mdText, setMdText] = useState(replaceVersion(mdEN));
 
   const queryMd = () => {
-    axios
-      .get(`/about-${state.lang}.md`)
-      .then(({ data }: any) => {
-        setMdText((data as string).replace(/\$\{EDITOR_VERSION\}/g, version));
-      })
-      .catch((e) => {
-        console.error(e);
-
-        setMdText('文档读取失败！');
-      });
+    setMdText(replaceVersion(state.lang === 'en-US' ? mdEN : mdCN));
   };
 
   useEffect(queryMd, [state.lang]);

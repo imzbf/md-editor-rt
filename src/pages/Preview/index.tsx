@@ -1,22 +1,24 @@
 import React, { useEffect, useState } from 'react';
 import axios from '@/utils/request';
 import Editor from 'md-editor-rt';
-import { mdText, mdEnText, emojis } from '../../data';
+import { emojis } from './data';
 import MarkExtension from '@/utils/marked-mark';
 import './index.less';
 import { useSelector } from 'react-redux';
 import { StateType } from '@/store';
+import mdEN from '../../../public/preview-en-US.md';
+import mdCN from '../../../public/preview-zh-CN.md';
 
 export default () => {
-  const [md, setMd] = useState('');
+  const [md, setMd] = useState(mdEN);
 
   const state = useSelector((state: any) => state) as StateType;
 
   useEffect(() => {
     if (state.lang === 'zh-CN') {
-      setMd(mdText);
+      setMd(mdCN);
     } else {
-      setMd(mdEnText);
+      setMd(mdEN);
     }
   }, [state.lang]);
 
