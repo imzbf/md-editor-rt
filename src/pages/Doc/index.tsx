@@ -10,7 +10,7 @@ import { replaceVersion } from '@/utils';
 const Catalog = Editor.Catalog;
 
 export default () => {
-  const [mdText, setMdText] = useState('');
+  const [mdText, setMdText] = useState(replaceVersion(mdEN));
   const state = useSelector<StateType>((state) => state) as StateType;
 
   const queryMd = () => {
