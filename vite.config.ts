@@ -2,7 +2,7 @@ import path from 'path';
 import { UserConfigExport, ConfigEnv } from 'vite';
 import reactRefresh from '@vitejs/plugin-react-refresh';
 import nodeService from './vitePlugins/nodeService';
-import { homepage } from './package.json';
+import markdownImport from './vitePlugins/markdownImport';
 
 import dts from 'vite-plugin-dts';
 
@@ -11,7 +11,7 @@ export default ({ mode }: ConfigEnv): UserConfigExport => {
   console.log('mode：', mode);
 
   return {
-    base: mode === 'preview' ? homepage : '/',
+    base: '/',
     publicDir: mode === 'production' ? false : './dev/public',
     server: {
       host: 'localhost',
@@ -27,15 +27,16 @@ export default ({ mode }: ConfigEnv): UserConfigExport => {
     },
     plugins: [
       mode !== 'production' && nodeService(),
+      mode !== 'production' && markdownImport(),
       mode !== 'production' && reactRefresh(),
       mode === 'production' &&
         dts({
           include: [
             './MdEditor/type.ts',
             './MdEditor/Editor.tsx',
-            './MdEditor/NormalToolbar.tsx',
-            './MdEditor/DropdownToolbar.tsx',
-            './MdEditor/layouts/Catalog/index.tsx'
+            './MdEditor/extensions/**/*.tsx',
+            './MdEditor/index.ts',
+            './MdEditor/utils/config.ts'
           ]
         })
     ],
