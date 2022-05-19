@@ -113,7 +113,7 @@ const ClipModal = (props: ClipModalProp) => {
     <Modal
       title={usedLanguageText.clipModalTips?.title}
       visible={props.visible}
-      onClosed={props.onCancel}
+      onClose={props.onCancel}
       showAdjust
       isFullscreen={data.isFullscreen}
       onAdjust={(val) => {

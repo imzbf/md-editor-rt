@@ -45,7 +45,7 @@ const LinkModal = (props: LinkModalProp) => {
   }, [props.visible]);
 
   return (
-    <Modal title={title} visible={props.visible} onClosed={props.onCancel}>
+    <Modal title={title} visible={props.visible} onClose={props.onCancel}>
       <div className={`${prefix}-form-item`}>
         <label className={`${prefix}-lable`} htmlFor={`link-desc-${editorId}`}>
           {usedLanguageText.linkModalTips?.descLable}

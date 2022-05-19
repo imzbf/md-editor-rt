@@ -8,7 +8,7 @@ export type ModalProps = Readonly<{
   visible?: boolean;
   width?: string;
   height?: string;
-  onClosed?: () => void;
+  onClose?: () => void;
   showAdjust?: boolean;
   isFullscreen?: boolean;
   onAdjust: (val: boolean) => void;
@@ -16,7 +16,7 @@ export type ModalProps = Readonly<{
 }>;
 
 const Modal = (props: ModalProps) => {
-  const { onClosed = () => {} } = props;
+  const { onClose = () => {} } = props;
   const [modalVisible, setMV] = useState(props.visible);
   const [modalClass, setModalClass] = useState([`${prefix}-modal`]);
   const modalRef = useRef<HTMLDivElement>(null);
@@ -92,7 +92,7 @@ const Modal = (props: ModalProps) => {
 
   return (
     <div style={{ display: modalVisible ? 'block' : 'none' }}>
-      <div className={`${prefix}-modal-mask`} onClick={onClosed} />
+      <div className={`${prefix}-modal-mask`} onClick={onClose} />
       <div
         className={modalClass.join(' ')}
         style={{
@@ -140,7 +140,7 @@ const Modal = (props: ModalProps) => {
             className={`${prefix}-modal-close`}
             onClick={(e) => {
               e.stopPropagation();
-              props.onClosed && props.onClosed();
+              props.onClose && props.onClose();
             }}
           >
             <svg className={`${prefix}-icon`} aria-hidden="true">
