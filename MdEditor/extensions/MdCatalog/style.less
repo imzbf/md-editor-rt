@@ -1,13 +1,15 @@
 @import '../../styles/vars';
 
 .@{prefix}-catalog-editor {
+  .css-vars(false);
+
   position: absolute;
   overflow: auto;
   top: 44px;
   right: 0;
   height: calc(100% - 44px);
-  background-color: #f6f6f6;
-  border-left: 1px solid @borderColor;
+  background-color: var(--md-bk-color-outstand);
+  border-left: 1px solid var(--md-border-color);
   width: 200px;
   box-sizing: border-box;
   margin: 0;
@@ -26,7 +28,7 @@
   }
 
   &-link {
-    padding: 5px 0 5px 8px;
+    padding: 5px 0 5px 1em;
     line-height: 1.2;
 
     span {
@@ -34,7 +36,7 @@
       width: 100%;
       position: relative;
       overflow: hidden;
-      color: @color;
+      color: var(--md-color);
       white-space: nowrap;
       text-overflow: ellipsis;
       transition: color 0.3s;
@@ -61,20 +63,5 @@
 }
 
 .@{prefix}-catalog-dark {
-  background-color: @bkColorDark;
-  border-left-color: @borderColorDark;
-
-  & > .@{prefix}-catalog-link {
-    padding: 5px 8px;
-  }
-
-  .@{prefix}-catalog-link {
-    span {
-      color: @colorDark;
-
-      &:hover {
-        color: #73d13d;
-      }
-    }
-  }
+  .css-vars(true);
 }

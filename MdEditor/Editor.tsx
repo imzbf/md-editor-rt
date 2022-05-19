@@ -2,7 +2,6 @@ import React, { createContext, useEffect, useMemo, useState } from 'react';
 import { useExpansion, useKeyBoard } from './hooks';
 import ToolBar from './layouts/Toolbar';
 import Content from './layouts/Content';
-import Catalog from './layouts/Catalog';
 import bus from './utils/event-bus';
 
 import {
@@ -20,8 +19,10 @@ import {
 } from './config';
 
 import { ContentType, MarkedHeadingId, EditorProp, SettingType } from './type';
-import DropdownToolbar from './DropdownToolbar';
-import NormalToolbar from './NormalToolbar';
+import DropdownToolbar from './extensions/DropdownToolbar';
+import NormalToolbar from './extensions/NormalToolbar';
+import ModalToolbar from './extensions/ModalToolbar';
+import MdCatalog from './extensions/MdCatalog';
 
 import './styles/index.less';
 import '@vavt/markdown-theme/css/all.css';
@@ -265,7 +266,7 @@ const Editor = (props: EditorProp) => {
           markedImage={props.markedImage}
         />
         {catalogShow && (
-          <Catalog
+          <MdCatalog
             theme={props.theme}
             style={{
               display: state.catalogVisible ? 'block' : 'none'
@@ -334,7 +335,8 @@ Editor.defaultProps = {
 
 Editor.DropdownToolbar = DropdownToolbar;
 Editor.NormalToolbar = NormalToolbar;
-Editor.Catalog = Catalog;
+Editor.MdCatalog = MdCatalog;
+Editor.ModalToolbar = ModalToolbar;
 
 export * from './type';
 

@@ -1,7 +1,7 @@
 import React, { ReactElement, useContext } from 'react';
-import { prefix } from './config';
-import Dropdown from './components/Dropdown';
-import { EditorContext } from './Editor';
+import { prefix } from '../config';
+import Dropdown from '../components/Dropdown';
+import { EditorContext } from '../Editor';
 
 export interface DropdownToolbarProp {
   title?: string;

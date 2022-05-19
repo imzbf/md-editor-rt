@@ -1,9 +1,9 @@
 import React, { CSSProperties, useEffect, useMemo, useState } from 'react';
-import './style.less';
 import bus from '../../utils/event-bus';
 import { HeadList, MarkedHeadingId, Themes } from '../../type';
 import CatalogLink from './CatalogLink';
 import { prefix } from '../../config';
+import './style.less';
 
 export interface TocItem {
   text: string;
@@ -22,7 +22,7 @@ export interface CatalogProps {
   theme?: Themes;
 }
 
-const Catalog = (props: CatalogProps) => {
+const MdCatalog = (props: CatalogProps) => {
   // 获取Id
   const editorId = props.editorId;
 
@@ -69,7 +69,9 @@ const Catalog = (props: CatalogProps) => {
     return tocItems;
   }, [list]);
 
-  const [scrollElement] = useState(props.scrollElement || `#${editorId}-preview-wrapper`);
+  const [scrollElement] = useState(() => {
+    return props.scrollElement || `#${editorId}-preview-wrapper`;
+  });
 
   useEffect(() => {
     bus.on(editorId, {
@@ -104,9 +106,9 @@ const Catalog = (props: CatalogProps) => {
   );
 };
 
-Catalog.defaultProps = {
+MdCatalog.defaultProps = {
   markedHeadingId: (text: string) => text,
   theme: 'light'
 };
 
-export default Catalog;
+export default MdCatalog;

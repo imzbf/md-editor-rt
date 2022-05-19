@@ -1,5 +1,5 @@
-import { prefix } from '../../config';
 import React from 'react';
+import { prefix } from '../../config';
 import { TocItem } from './index';
 import { MarkedHeadingId } from '../../type';
 
