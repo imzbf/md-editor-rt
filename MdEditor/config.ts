@@ -10,25 +10,27 @@ export const iconfontUrl = 'https://at.alicdn.com/t/font_2605852_pqekijay2ij.js'
 
 // 代码高亮cdn链接
 export const highlightUrl = {
-  atom: 'https://cdn.jsdelivr.net/npm/highlight.js@11.2.0/styles/atom-one-dark.css',
-  github: 'https://cdn.jsdelivr.net/npm/highlight.js@11.2.0/styles/github.css',
-  githubDark: 'https://cdn.jsdelivr.net/npm/highlight.js@11.2.0/styles/github-dark.css',
-  js: 'https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.2.0/build/highlight.min.js'
+  atom: 'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/styles/atom-one-dark.min.css',
+  github:
+    'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/styles/github.min.css',
+  githubDark:
+    'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/styles/github-dark.min.css',
+  js: 'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/highlight.min.js'
 };
 
 // 美化代码cdn连接
 export const prettierUrl = {
-  main: 'https://cdn.jsdelivr.net/npm/prettier@2.4.0/standalone.js',
-  markdown: 'https://cdn.jsdelivr.net/npm/prettier@2.4.0/parser-markdown.js'
+  main: 'https://cdnjs.cloudflare.com/ajax/libs/prettier/2.4.0/standalone.js',
+  markdown: 'https://cdnjs.cloudflare.com/ajax/libs/prettier/2.4.0/parser-markdown.js'
 };
 
 export const cropperUrl = {
-  css: 'https://cdn.jsdelivr.net/npm/cropperjs@1.5.12/dist/cropper.min.css',
-  js: 'https://cdn.jsdelivr.net/npm/cropperjs@1.5.12/dist/cropper.min.js'
+  css: 'https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.css',
+  js: 'https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.js'
 };
 
 export const screenfullUrl =
-  'https://cdn.jsdelivr.net/npm/screenfull@5.1.0/dist/screenfull.js';
+  'https://cdnjs.cloudflare.com/ajax/libs/screenfull.js/5.1.0/screenfull.min.js';
 
 // 所有的编辑器功能点
 export const allToolbar = [
@@ -217,7 +219,9 @@ export const staticTextDefault: StaticTextDefault = {
 };
 
 export const mermaidUrl =
-  'https://cdn.jsdelivr.net/npm/mermaid@8.13.5/dist/mermaid.min.js';
+  'https://cdnjs.cloudflare.com/ajax/libs/mermaid/8.13.5/mermaid.min.js';
 
-export const katexJsUrl = 'https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.js';
-export const katexCssUrl = 'https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.css';
+export const katexJsUrl =
+  'https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.15.1/katex.min.js';
+export const katexCssUrl =
+  'https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.15.1/katex.min.css';
