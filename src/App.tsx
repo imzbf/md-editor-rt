@@ -16,14 +16,6 @@ function App() {
   const theme = useSelector<StateType>((state) => state.theme);
 
   useEffect(() => {
-    if (import.meta.env.MODE === 'preview') {
-      const hm = document.createElement('script');
-      hm.src = 'https://hm.baidu.com/hm.js?1563bc52cb27ffbc7b5b46cdfc327ce0';
-      document.head.appendChild(hm);
-    }
-  }, []);
-
-  useEffect(() => {
     if (theme === 'dark') {
       document.documentElement.className = 'theme-dark';
     } else {
