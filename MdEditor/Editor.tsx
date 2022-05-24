@@ -3,22 +3,18 @@ import { useExpansion, useKeyBoard } from './hooks';
 import ToolBar from './layouts/Toolbar';
 import Content from './layouts/Content';
 import bus from './utils/event-bus';
+import configFn from './utils/config';
+
+import { prefix, allToolbar, highlightUrl, staticTextDefault, codeCss } from './config';
 
 import {
-  prefix,
-  allToolbar,
-  highlightUrl,
-  iconfontUrl,
-  prettierUrl,
-  cropperUrl,
-  staticTextDefault,
-  screenfullUrl,
-  mermaidUrl,
-  katexJsUrl,
-  katexCssUrl
-} from './config';
-
-import { ContentType, MarkedHeadingId, EditorProp, SettingType } from './type';
+  ContentType,
+  MarkedHeadingId,
+  EditorProp,
+  SettingType,
+  ConfigOption,
+  InnerError
+} from './type';
 import DropdownToolbar from './extensions/DropdownToolbar';
 import NormalToolbar from './extensions/NormalToolbar';
 import ModalToolbar from './extensions/ModalToolbar';
@@ -30,13 +26,17 @@ import '@vavt/markdown-theme/css/all.css';
 export const EditorContext = createContext<ContentType>({
   editorId: '',
   tabWidth: 2,
+  theme: 'light',
+  highlight: {
+    css: '',
+    js: ''
+  },
   historyLength: 10,
   previewOnly: false,
   showCodeRowNumber: false,
   usedLanguageText: staticTextDefault['zh-CN'],
-  Cropper: null,
-  theme: 'light',
-  previewTheme: 'default'
+  previewTheme: 'default',
+  extension: {}
 });
 
 // 初始为空，渲染到页面后获取页面属性
@@ -47,7 +47,7 @@ const markedHeadingId: MarkedHeadingId = (text) => text;
 const Editor = (props: EditorProp) => {
   const {
     theme,
-    editorClass,
+    className,
     toolbars,
     toolbarsExclude,
     preview,
@@ -56,17 +56,42 @@ const Editor = (props: EditorProp) => {
     pageFullScreen,
     editorId,
     tabWidth,
-    screenfull,
-    screenfullJs
+    historyLength,
+    showCodeRowNumber,
+    previewTheme
+    // screenfull,
+    // screenfullJs
   } = props;
 
-  const [state, setState] = useState({
-    catalogVisible: false
+  const [state, setState] = useState<{
+    catalogVisible: boolean;
+    extension: ConfigOption;
+  }>(() => {
+    return {
+      catalogVisible: false,
+      extension: Editor.extension
+    };
   });
+
+  const highlight = useMemo(() => {
+    const highlightConfig = state.extension?.editorExtensions?.highlight;
+
+    const cssList = {
+      ...codeCss,
+      ...highlightConfig?.css
+    };
+
+    return {
+      js: highlightConfig?.js || highlightUrl,
+      css: cssList[props.codeTheme]
+        ? cssList[props.codeTheme][props.theme as 'light' | 'dark']
+        : codeCss.atom[props.theme as 'light' | 'dark']
+    };
+  }, [props.theme, props.codeTheme]);
 
   useKeyBoard(props);
 
-  useExpansion(props);
+  useExpansion(props, state.extension);
 
   // ----编辑器设置----
   const [setting, setSetting] = useState<SettingType>({
@@ -150,38 +175,38 @@ const Editor = (props: EditorProp) => {
   // ----end----
 
   // 缓存代码扩展
-  const highlightSet = useMemo(() => {
-    let url = highlightUrl.atom;
+  // const highlightSet = useMemo(() => {
+  //   let url = highlightUrl.atom;
 
-    if (props.highlightCss) {
-      // 用户设置为高优先级
-      url = props.highlightCss;
-    } else {
-      // 低优先级，根据全局主题加预览主题判断使用
-      switch (props.previewTheme) {
-        case 'github': {
-          if (props.theme === 'dark') {
-            url = highlightUrl.githubDark;
-          } else {
-            url = highlightUrl.github;
-          }
+  //   if (props.highlightCss) {
+  //     // 用户设置为高优先级
+  //     url = props.highlightCss;
+  //   } else {
+  //     // 低优先级，根据全局主题加预览主题判断使用
+  //     switch (props.previewTheme) {
+  //       case 'github': {
+  //         if (props.theme === 'dark') {
+  //           url = highlightUrl.githubDark;
+  //         } else {
+  //           url = highlightUrl.github;
+  //         }
 
-          break;
-        }
-      }
-    }
+  //         break;
+  //       }
+  //     }
+  //   }
 
-    return {
-      js: props.highlightJs,
-      css: url
-    };
-  }, [props.highlightCss, props.previewTheme, props.theme]);
+  //   return {
+  //     js: props.highlightJs,
+  //     css: url
+  //   };
+  // }, [props.highlightCss, props.previewTheme, props.theme]);
 
   // 缓存语言设置
   const usedLanguageText = useMemo(() => {
     const allText: any = {
       ...staticTextDefault,
-      ...props.languageUserDefined
+      ...state.extension?.editorConfig?.languageUserDefined
     };
 
     if (allText[props.language]) {
@@ -189,32 +214,44 @@ const Editor = (props: EditorProp) => {
     } else {
       return staticTextDefault['zh-CN'];
     }
-  }, [props.languageUserDefined, props.language]);
+  }, [props.language]);
 
   // 是否挂载目录组件
   const catalogShow = useMemo(() => {
     return !toolbarsExclude.includes('catalog') && toolbars.includes('catalog');
   }, [toolbars, toolbarsExclude]);
 
+  useEffect(() => {
+    bus.on(editorId, {
+      name: 'errorCatcher',
+      callback: (err: InnerError) => {
+        if (props.onError instanceof Function) {
+          props.onError(err);
+        }
+      }
+    });
+  }, []);
+
   return (
     <EditorContext.Provider
       value={{
         editorId,
         tabWidth,
-        theme: props.theme,
-        historyLength: props.historyLength,
+        theme,
+        highlight,
+        historyLength,
         previewOnly,
-        showCodeRowNumber: props.showCodeRowNumber,
+        showCodeRowNumber,
         usedLanguageText,
-        Cropper: props.Cropper,
-        previewTheme: props.previewTheme
+        previewTheme,
+        extension: Editor.extension
       }}
     >
       <div
         id={editorId}
         className={[
           prefix,
-          editorClass,
+          className,
           theme === 'dark' && `${prefix}-dark`,
           setting.fullscreen || setting.pageFullScreen ? `${prefix}-fullscreen` : '',
           previewOnly && `${prefix}-previewOnly`
@@ -225,9 +262,9 @@ const Editor = (props: EditorProp) => {
       >
         {!previewOnly && (
           <ToolBar
-            prettier={props.prettier}
-            screenfull={screenfull}
-            screenfullJs={screenfullJs}
+            noPrettier={props.noPrettier}
+            // screenfull={screenfull}
+            // screenfullJs={screenfullJs}
             toolbars={toolbars}
             toolbarsExclude={toolbarsExclude}
             setting={setting}
@@ -237,33 +274,27 @@ const Editor = (props: EditorProp) => {
           />
         )}
         <Content
-          hljs={props.hljs}
-          highlightSet={highlightSet}
-          mermaid={props.mermaid}
-          mermaidJs={props.mermaidJs}
-          noMermaid={props.noMermaid}
+          // hljs={props.hljs}
+          // highlightSet={highlightSet}
+          // mermaid={props.mermaid}
+          // mermaidJs={props.mermaidJs}
           value={props.modelValue}
-          onChange={(v: string, completeStatus = true) => {
-            if (completeStatus) {
-              // 输入中文等语言时，未选择文本不保存历史
-              // 撤回将不会出现中间输入内容
-              bus.emit(editorId, 'saveHistory', v);
-            }
-
-            props.onChange(v);
-          }}
+          onChange={props.onChange}
           setting={setting}
           onHtmlChanged={props.onHtmlChanged}
           onGetCatalog={props.onGetCatalog}
-          markedHeading={props.markedHeading}
+          // markedHeading={props.markedHeading}
           sanitize={props.sanitize}
+          noMermaid={props.noMermaid}
           placeholder={props.placeholder}
-          katex={props.katex}
-          katexJs={props.katexJs}
-          katexCss={props.katexCss}
+          // katex={props.katex}
+          // katexJs={props.katexJs}
+          // katexCss={props.katexCss}
           noKatex={props.noKatex}
-          extensions={props.extensions}
-          markedImage={props.markedImage}
+          // extensions={props.extensions}
+          // markedImage={props.markedImage}
+          mermaidTemplate={state.extension?.editorConfig?.mermaidTemplate}
+          markedHeadingId={props.markedHeadingId}
         />
         {catalogShow && (
           <MdCatalog
@@ -284,9 +315,9 @@ const Editor = (props: EditorProp) => {
 Editor.defaultProps = {
   modelValue: '',
   theme: 'light',
-  editorClass: '',
-  highlightJs: highlightUrl.js,
-  highlightCss: '',
+  className: '',
+  // highlightJs: highlightUrl.js,
+  // highlightCss: '',
   historyLength: 10,
   onChange() {},
   pageFullScreen: false,
@@ -294,49 +325,52 @@ Editor.defaultProps = {
   htmlPreview: false,
   previewOnly: false,
   language: 'zh-CN',
-  languageUserDefined: {},
+  // languageUserDefined: {},
   toolbars: allToolbar,
   toolbarsExclude: [],
-  prettier: true,
-  prettierCDN: prettierUrl.main,
-  prettierMDCDN: prettierUrl.markdown,
-  cropperCss: cropperUrl.css,
-  cropperJs: cropperUrl.js,
-  iconfontJs: iconfontUrl,
+  noPrettier: false,
+  // prettierCDN: prettierUrl.main,
+  // prettierMDCDN: prettierUrl.markdown,
+  // cropperCss: cropperUrl.css,
+  // cropperJs: cropperUrl.js,
+  // iconfontJs: iconfontUrl,
   editorId: `md-editor-rt`,
   tabWidth: 2,
   showCodeRowNumber: false,
-  screenfullJs: screenfullUrl,
+  // screenfullJs: screenfullUrl,
   previewTheme: 'default',
-  markedHeading: (text, level, raw) => {
-    // 我们默认同一级别的标题，你不会定义两个相同的
-    const id = markedHeadingId(raw, level);
+  // markedHeading: (text, level, raw) => {
+  //   // 我们默认同一级别的标题，你不会定义两个相同的
+  //   const id = markedHeadingId(raw, level);
 
-    // 如果标题有markdown语法内容，会按照该语法添加标题，而不再自定义，但是仍然支持目录定位
-    if (text !== raw) {
-      return `<h${level} id="${id}">${text}</h${level}>`;
-    } else {
-      return `<h${level} id="${id}"><a href="#${id}">${raw}</a></h${level}>`;
-    }
-  },
+  //   // 如果标题有markdown语法内容，会按照该语法添加标题，而不再自定义，但是仍然支持目录定位
+  //   if (text !== raw) {
+  //     return `<h${level} id="${id}">${text}</h${level}>`;
+  //   } else {
+  //     return `<h${level} id="${id}"><a href="#${id}">${raw}</a></h${level}>`;
+  //   }
+  // },
   // 希望你在自定义markedHeading的同时，能够告诉编辑器你生成ID的算法~
-  markedHeadingId: markedHeadingId,
+  markedHeadingId,
   style: {},
   tableShape: [6, 4],
-  mermaidJs: mermaidUrl,
-  sanitize: (html) => html,
+  // mermaidJs: mermaidUrl,
+  sanitize: (html: string) => html,
   placeholder: '',
-  katexJs: katexJsUrl,
-  katexCss: katexCssUrl,
-  markedImage: (href: string, _: string, desc: string) => {
-    return `<figure><img src="${href}" alt="${desc}"><figcaption>${desc}</figcaption></figure>`;
-  }
+  // katexJs: katexJsUrl,
+  // katexCss: katexCssUrl,
+  // markedImage: (href: string, _: string, desc: string) => {
+  //   return `<figure><img src="${href}" alt="${desc}"><figcaption>${desc}</figcaption></figure>`;
+  // }
+  codeTheme: 'atom'
 } as EditorProp;
 
 Editor.DropdownToolbar = DropdownToolbar;
 Editor.NormalToolbar = NormalToolbar;
 Editor.MdCatalog = MdCatalog;
 Editor.ModalToolbar = ModalToolbar;
+Editor.config = configFn;
+Editor.extension = {};
 
 export * from './type';
 

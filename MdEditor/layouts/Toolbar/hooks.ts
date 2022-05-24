@@ -1,12 +1,13 @@
 import { useCallback, useContext, useEffect, useRef } from 'react';
-import { prefix } from '../../config';
+import { prefix, screenfullUrl } from '../../config';
 import { EditorContext } from '../../Editor';
 import { appendHandler } from '../../utils/dom';
 import { ToolbarProp } from './';
 
 export const useSreenfull = (props: ToolbarProp) => {
-  let { screenfull } = props;
-  const { previewOnly } = useContext(EditorContext);
+  const { previewOnly, extension } = useContext(EditorContext);
+  const screenfullConfig = extension.editorExtensions?.screenfull;
+  let screenfull = screenfullConfig?.instance;
   // 是否组件内部全屏标识
   const screenfullMe = useRef(false);
 
@@ -42,9 +43,9 @@ export const useSreenfull = (props: ToolbarProp) => {
   useEffect(() => {
     let screenScript: HTMLScriptElement;
     // 非预览模式且未提供screenfull时请求cdn
-    if (!previewOnly && !props.screenfull) {
+    if (!previewOnly && !screenfull) {
       screenScript = document.createElement('script');
-      screenScript.src = props.screenfullJs;
+      screenScript.src = screenfullConfig?.js || screenfullUrl;
       screenScript.onload = screenfullLoad;
       screenScript.id = `${prefix}-screenfull`;
 

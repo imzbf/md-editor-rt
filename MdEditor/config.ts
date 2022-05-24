@@ -1,4 +1,4 @@
-import { StaticTextDefault } from './type';
+import { CodeCss, StaticTextDefault } from './type';
 
 export const prefix = 'md';
 
@@ -8,27 +8,23 @@ export const iconScriptId = 'md-editor-rt';
 // 字体链接
 export const iconfontUrl = 'https://at.alicdn.com/t/font_2605852_pqekijay2ij.js';
 
+export const cdnBase = 'https://cdnjs.cloudflare.com/ajax/libs';
+
 // 代码高亮cdn链接
-export const highlightUrl = {
-  atom: 'https://cdn.jsdelivr.net/npm/highlight.js@11.2.0/styles/atom-one-dark.css',
-  github: 'https://cdn.jsdelivr.net/npm/highlight.js@11.2.0/styles/github.css',
-  githubDark: 'https://cdn.jsdelivr.net/npm/highlight.js@11.2.0/styles/github-dark.css',
-  js: 'https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.2.0/build/highlight.min.js'
-};
+export const highlightUrl = `${cdnBase}/highlight.js/11.5.1/highlight.min.js`;
 
 // 美化代码cdn连接
 export const prettierUrl = {
-  main: 'https://cdn.jsdelivr.net/npm/prettier@2.4.0/standalone.js',
-  markdown: 'https://cdn.jsdelivr.net/npm/prettier@2.4.0/parser-markdown.js'
+  main: `${cdnBase}/prettier/2.4.0/standalone.js`,
+  markdown: `${cdnBase}/prettier/2.4.0/parser-markdown.js`
 };
 
 export const cropperUrl = {
-  css: 'https://cdn.jsdelivr.net/npm/cropperjs@1.5.12/dist/cropper.min.css',
-  js: 'https://cdn.jsdelivr.net/npm/cropperjs@1.5.12/dist/cropper.min.js'
+  css: `${cdnBase}/cropperjs/1.5.12/cropper.min.css`,
+  js: `${cdnBase}/cropperjs/1.5.12/cropper.min.js`
 };
 
-export const screenfullUrl =
-  'https://cdn.jsdelivr.net/npm/screenfull@5.1.0/dist/screenfull.js';
+export const screenfullUrl = `${cdnBase}/screenfull.js/5.1.0/screenfull.min.js`;
 
 // 所有的编辑器功能点
 export const allToolbar = [
@@ -91,9 +87,9 @@ export const staticTextDefault: StaticTextDefault = {
       prettier: '美化',
       pageFullscreen: '浏览器全屏',
       fullscreen: '屏幕全屏',
-      catalog: '目录',
       preview: '预览',
       htmlPreview: 'html代码预览',
+      catalog: '目录',
       github: '源码地址'
     },
     titleItem: {
@@ -123,7 +119,8 @@ export const staticTextDefault: StaticTextDefault = {
     },
     copyCode: {
       text: '复制代码',
-      tips: '已复制！'
+      successTips: '已复制！',
+      failTips: '复制失败！'
     },
     mermaid: {
       flow: '流程图',
@@ -165,9 +162,9 @@ export const staticTextDefault: StaticTextDefault = {
       prettier: 'prettier',
       pageFullscreen: 'fullscreen in page',
       fullscreen: 'fullscreen',
-      catalog: 'catalog',
       preview: 'preview',
       htmlPreview: 'html preview',
+      catalog: 'catalog',
       github: 'source code'
     },
     titleItem: {
@@ -197,7 +194,8 @@ export const staticTextDefault: StaticTextDefault = {
     },
     copyCode: {
       text: 'Copy',
-      tips: 'Copied!'
+      successTips: 'Copied!',
+      failTips: 'Copy failed!'
     },
     mermaid: {
       flow: 'flow',
@@ -216,8 +214,44 @@ export const staticTextDefault: StaticTextDefault = {
   }
 };
 
-export const mermaidUrl =
-  'https://cdn.jsdelivr.net/npm/mermaid@8.13.5/dist/mermaid.min.js';
+export const mermaidUrl = `${cdnBase}/mermaid/8.13.5/mermaid.min.js`;
 
-export const katexJsUrl = 'https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.js';
-export const katexCssUrl = 'https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.css';
+export const katexUrl = {
+  js: `${cdnBase}/KaTeX/0.15.1/katex.min.js`,
+  css: `${cdnBase}/KaTeX/0.15.1/katex.min.css`
+};
+
+export const codeCss: CodeCss = {
+  a11y: {
+    light: `${cdnBase}/highlight.js/11.5.1/styles/a11y-light.min.css`,
+    dark: `${cdnBase}/highlight.js/11.5.1/styles/a11y-dark.min.css`
+  },
+  atom: {
+    light: `${cdnBase}/highlight.js/11.5.1/styles/atom-one-light.min.css`,
+    dark: `${cdnBase}/highlight.js/11.5.1/styles/atom-one-dark.min.css`
+  },
+  github: {
+    light: `${cdnBase}/highlight.js/11.5.1/styles/github.min.css`,
+    dark: `${cdnBase}/highlight.js/11.5.1/styles/github-dark.min.css`
+  },
+  gradient: {
+    light: `${cdnBase}/highlight.js/11.5.1/styles/gradient-light.min.css`,
+    dark: `${cdnBase}/highlight.js/11.5.1/styles/gradient-dark.min.css`
+  },
+  kimbie: {
+    light: `${cdnBase}/highlight.js/11.5.1/styles/kimbie-light.min.css`,
+    dark: `${cdnBase}/highlight.js/11.5.1/styles/kimbie-dark.min.css`
+  },
+  paraiso: {
+    light: `${cdnBase}/highlight.js/11.5.1/styles/paraiso-light.min.css`,
+    dark: `${cdnBase}/highlight.js/11.5.1/styles/paraiso-dark.min.css`
+  },
+  qtcreator: {
+    light: `${cdnBase}/highlight.js/11.5.1/styles/qtcreator-light.min.css`,
+    dark: `${cdnBase}/highlight.js/11.5.1/styles/qtcreator-dark.min.css`
+  },
+  stackoverflow: {
+    light: `${cdnBase}/highlight.js/11.5.1/styles/stackoverflow-light.min.css`,
+    dark: `${cdnBase}/highlight.js/11.5.1/styles/stackoverflow-dark.min.css`
+  }
+};

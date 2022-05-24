@@ -1,6 +1,6 @@
 import { RefObject, useContext, useEffect, useRef, useState } from 'react';
 import copy from 'copy-to-clipboard';
-import { MarkedHeading, HeadList } from '../../type';
+import { HeadList } from '../../type';
 import {
   insert,
   setPosition,
@@ -13,8 +13,8 @@ import bus from '../../utils/event-bus';
 import { EditorContentProp } from './';
 import { EditorContext } from '../../Editor';
 import { marked } from 'marked';
-import { prefix } from '../../config';
-import { appendHandler } from '../../utils/dom';
+import { prefix, katexUrl, mermaidUrl } from '../../config';
+import { appendHandler, updateHandler } from '../../utils/dom';
 import kaTexExtensions from '../../utils/katex';
 
 interface HistoryItemType {
@@ -40,7 +40,8 @@ let saveHistoryId = -1;
 
 export const useHistory = (
   props: EditorContentProp,
-  textAreaRef: RefObject<HTMLTextAreaElement>
+  textAreaRef: RefObject<HTMLTextAreaElement>,
+  completeStatus: boolean
 ) => {
   const { onChange } = props;
   const { historyLength, editorId } = useContext(EditorContext);
@@ -255,43 +256,76 @@ export const useAutoGenrator = (
 };
 
 export const useMarked = (props: EditorContentProp) => {
-  const {
-    hljs = null,
-    highlightSet,
-    onHtmlChanged = () => {},
-    onGetCatalog = () => {}
-  } = props;
-  const { editorId, usedLanguageText, showCodeRowNumber } = useContext(EditorContext);
+  const { onHtmlChanged = () => {}, onGetCatalog = () => {} } = props;
+  const { editorId, usedLanguageText, showCodeRowNumber, extension, highlight } =
+    useContext(EditorContext);
+
+  const { markedRenderer, markedOptions, markedExtensions } = extension;
+  const highlightIns = extension.editorExtensions?.highlight?.instance;
+  const mermaidIns = extension.editorExtensions?.mermaid?.instance;
+  const katexIns = extension.editorExtensions?.katex?.instance;
 
   // 当页面已经引入完成对应的库时，通过修改从状态完成marked重新编译
-  const [highlightInited, setHighlightInited] = useState<boolean>(!!hljs);
+  const [highlightInited, setHighlightInited] = useState<boolean>(() => {
+    return !!highlightIns;
+  });
 
   const heads = useRef<HeadList[]>([]);
-  const heading: MarkedHeading = (...headProps) => {
-    const [, level, raw] = headProps;
-    heads.current.push({ text: raw, level });
+  // const heading: MarkedHeading = (...headProps) => {
+  //   const [, level, raw] = headProps;
+  //   heads.current.push({ text: raw, level });
 
-    return props.markedHeading(...headProps);
-  };
+  //   return props.markedHeading(...headProps);
+  // };
 
   const [renderer] = useState(() => {
-    // 标题获取
-    const renderer: any = new marked.Renderer();
-    // 标题重构
-    renderer.heading = heading;
-    renderer.defaultCode = renderer.code;
+    let renderer = new marked.Renderer();
 
-    renderer.code = (code: string, language: string, isEscaped: boolean) => {
+    // 保存默认heading
+    const markedheading = renderer.heading;
+
+    if (markedRenderer instanceof Function) {
+      renderer = markedRenderer(renderer);
+    }
+
+    // ========heading========start
+    // 判断是否有重写heading
+    const newHeading = renderer.heading;
+    const isNewHeading = markedheading !== newHeading;
+
+    renderer.heading = (text, level, raw, slugger) => {
+      heads.current.push({ text: raw, level });
+
+      // 如果heading被重写了，使用新的heading
+      if (isNewHeading) {
+        return newHeading.call(renderer, text, level, raw, slugger);
+      }
+
+      // return props.markedHeading(...headProps);
+      // 我们默认同一级别的标题，你不会定义两个相同的
+      const id = props.markedHeadingId(raw, level);
+
+      // 如果标题有markdown语法内容，会按照该语法添加标题，而不再自定义，但是仍然支持目录定位
+      if (text !== raw) {
+        return `<h${level} id="${id}">${text}</h${level}>`;
+      } else {
+        return `<h${level} id="${id}"><a href="#${id}">${raw}</a></h${level}>`;
+      }
+    };
+    // ========heading========end
+
+    // ==========code==========start
+    const markedCode = renderer.code;
+    renderer.code = (code, language, isEscaped) => {
       if (!props.noMermaid && language === 'mermaid') {
         const idRand = `${prefix}-mermaid-${Date.now().toString(36)}`;
 
         try {
           let svgCode = '';
           // 服务端渲染，如果提供了mermaid，就生成svg
-          if (props.mermaid) {
-            svgCode = props.mermaid.mermaidAPI.render(idRand, code);
+          if (mermaidIns) {
+            svgCode = mermaidIns.mermaidAPI.render(idRand, code);
           }
-
           // 没有提供，则判断window对象是否可用，不可用则反回待解析的结构，在页面引入后再解析
           else if (typeof window !== 'undefined' && window.mermaid) {
             svgCode = window.mermaid.mermaidAPI.render(idRand, code);
@@ -316,19 +350,57 @@ export const useMarked = (props: EditorContentProp) => {
         }
       }
 
-      return renderer.defaultCode(code, language, isEscaped);
+      return markedCode.call(renderer, code, language, isEscaped);
     };
+    // ==========code==========end
 
-    renderer.image = props.markedImage;
+    // ==========image=========start
+    renderer.image = (href, title, desc) => {
+      return `<span class="figure"><img src="${href}" title="${title}" alt="${desc}"><span class="figcaption">${desc}</span></span>`;
+    };
+    // ==========image=========end
+
+    // ===========list==========start
+    renderer.listitem = (text: string, task: boolean) => {
+      if (task) {
+        return `<li class="li-task">${text}</li>`;
+      }
+      return `<li>${text}</li>`;
+    };
+    // ===========list==========end
 
     marked.setOptions({
-      breaks: true
+      breaks: true,
+      ...markedOptions
     });
 
-    // 自定义的marked扩展
-    if (props.extensions instanceof Array && props.extensions.length > 0) {
+    // 当没有设置不使用katex，直接扩展组件
+    if (!props.noKatex) {
       marked.use({
-        extensions: props.extensions
+        extensions: [
+          kaTexExtensions.inline(prefix, katexIns),
+          kaTexExtensions.block(prefix, katexIns)
+        ]
+      });
+    }
+
+    // 提供了hljs，在创建阶段即完成设置
+    if (highlightIns) {
+      marked.setOptions({
+        highlight: (code) => {
+          const codeHtml = highlightIns.highlightAuto(code).value;
+
+          return showCodeRowNumber
+            ? generateCodeRowNumber(codeHtml)
+            : `<span class="code-block">${codeHtml}</span>`;
+        }
+      });
+    }
+
+    // 自定义的marked扩展
+    if (markedExtensions instanceof Array && markedExtensions.length > 0) {
+      marked.use({
+        extensions: markedExtensions
       });
     }
 
@@ -343,15 +415,20 @@ export const useMarked = (props: EditorContentProp) => {
     document
       .querySelectorAll(`#${editorId} .${prefix}-preview pre`)
       .forEach((pre: Element) => {
+        const copyBtnText = usedLanguageText.copyCode?.text || '复制代码';
         const copyButton = document.createElement('span');
         copyButton.setAttribute('class', 'copy-button');
-        copyButton.innerText = usedLanguageText.copyCode?.text || '复制代码';
+        copyButton.innerText = copyBtnText;
         copyButton.addEventListener('click', () => {
-          copy((pre.querySelector('code') as HTMLElement).innerText);
+          const success = copy((pre.querySelector('code') as HTMLElement).innerText);
 
-          copyButton.innerText = usedLanguageText.copyCode?.tips || '已复制！';
+          const succssTip = usedLanguageText.copyCode?.successTips || '已复制！';
+          const failTip = usedLanguageText.copyCode?.failTips || '已复制！';
+
+          copyButton.innerText = success ? succssTip : failTip;
+
           setTimeout(() => {
-            copyButton.innerText = usedLanguageText.copyCode?.text || '复制代码';
+            copyButton.innerText = copyBtnText;
           }, 1500);
         });
         pre.appendChild(copyButton);
@@ -376,11 +453,11 @@ export const useMarked = (props: EditorContentProp) => {
     let highlightLink: HTMLLinkElement;
     let highlightScript: HTMLScriptElement;
 
-    if (props.hljs) {
+    if (highlightIns) {
       // 提供了hljs，在创建阶段即完成设置
       marked.setOptions({
         highlight: (code) => {
-          const codeHtml = props.hljs?.highlightAuto(code).value;
+          const codeHtml = highlightIns?.highlightAuto(code).value;
 
           return showCodeRowNumber
             ? generateCodeRowNumber(codeHtml)
@@ -390,11 +467,11 @@ export const useMarked = (props: EditorContentProp) => {
     } else {
       highlightLink = document.createElement('link');
       highlightLink.rel = 'stylesheet';
-      highlightLink.href = highlightSet.css;
+      highlightLink.href = highlight.css;
       highlightLink.id = `${prefix}-hlCss`;
 
       highlightScript = document.createElement('script');
-      highlightScript.src = highlightSet.js;
+      highlightScript.src = highlight.js;
       highlightScript.onload = highlightLoad;
       highlightScript.id = `${prefix}-hljs`;
 
@@ -402,6 +479,10 @@ export const useMarked = (props: EditorContentProp) => {
       appendHandler(highlightScript, 'hljs');
     }
   }, []);
+
+  useEffect(() => {
+    updateHandler(`${prefix}-hlCss`, 'href', highlight.css);
+  }, [highlight.css]);
 
   // ---预览代码---
   const [html, setHtml] = useState(() => {
@@ -447,17 +528,19 @@ export const useMarked = (props: EditorContentProp) => {
 };
 
 export const useMermaid = (props: EditorContentProp) => {
-  const { theme } = useContext(EditorContext);
+  const { theme, extension } = useContext(EditorContext);
+
+  const mermaidConf = extension.editorExtensions?.mermaid;
 
   // 修改它触发重新编译
   const [reRender, setReRender] = useState<boolean>(false);
-  const [mermaidInited, setMermaidInited] = useState<boolean>(!!props.mermaid);
+  const [mermaidInited, setMermaidInited] = useState<boolean>(!!mermaidConf?.instance);
 
   useEffect(() => {
     if (!props.noMermaid) {
       // 提供了外部实例
-      if (props.mermaid) {
-        props.mermaid.initialize({
+      if (mermaidConf?.instance) {
+        mermaidConf?.instance.initialize({
           theme: theme === 'dark' ? 'dark' : 'default'
         });
       } else if (window.mermaid) {
@@ -472,9 +555,9 @@ export const useMermaid = (props: EditorContentProp) => {
   useEffect(() => {
     let mermaidScript: HTMLScriptElement;
     // 引入mermaid
-    if (!props.noMermaid && !props.mermaid) {
+    if (!props.noMermaid && !mermaidConf?.instance) {
       mermaidScript = document.createElement('script');
-      mermaidScript.src = props.mermaidJs;
+      mermaidScript.src = mermaidConf?.js || mermaidUrl;
       mermaidScript.onload = () => {
         window.mermaid.initialize({
           theme: theme === 'dark' ? 'dark' : 'default',
@@ -492,14 +575,19 @@ export const useMermaid = (props: EditorContentProp) => {
 };
 
 export const useKatex = (props: EditorContentProp, marked: any) => {
+  const { extension } = useContext(EditorContext);
+  // 获取相应的扩展配置链接
+  const katexConf = extension.editorExtensions?.katex;
+  const katexIns = katexConf?.instance;
+
   const [katexInited, setKatexInited] = useState(false);
 
   // 当没有设置不使用katex，直接扩展组件
   if (!props.noKatex) {
     marked.use({
       extensions: [
-        kaTexExtensions.inline(prefix, props.katex),
-        kaTexExtensions.block(prefix, props.katex)
+        kaTexExtensions.inline(prefix, katexIns),
+        kaTexExtensions.block(prefix, katexIns)
       ]
     });
   }
@@ -508,10 +596,10 @@ export const useKatex = (props: EditorContentProp, marked: any) => {
     let katexScript: HTMLScriptElement;
     let katexLink: HTMLLinkElement;
     // 标签引入katex
-    if (!props.noKatex && !props.katex) {
+    if (!props.noKatex && !katexIns) {
       katexScript = document.createElement('script');
 
-      katexScript.src = props.katexJs;
+      katexScript.src = katexConf?.js || katexUrl.js;
       katexScript.onload = () => {
         setKatexInited(true);
       };
@@ -519,7 +607,7 @@ export const useKatex = (props: EditorContentProp, marked: any) => {
 
       katexLink = document.createElement('link');
       katexLink.rel = 'stylesheet';
-      katexLink.href = props.katexCss;
+      katexLink.href = katexConf?.css || katexUrl.css;
       katexLink.id = `${prefix}-katexCss`;
 
       appendHandler(katexScript, 'katex');

@@ -1,7 +1,7 @@
 import React, { useContext, useRef, useState } from 'react';
 import { prefix } from '../../config';
 import { EditorContext } from '../../Editor';
-import { SettingType, MarkedHeading, HeadList, MarkedImage } from '../../type';
+import { SettingType, HeadList, MermaidTemplate, MarkedHeadingId } from '../../type';
 import {
   useAutoGenrator,
   useHistory,
@@ -9,36 +9,37 @@ import {
   useAutoScroll,
   usePasteUpload
 } from './hooks';
-import bus from '../../utils/event-bus';
 
 export type EditorContentProp = Readonly<{
   value: string;
-  hljs?: Record<string, any>;
-  highlightSet: {
-    js: string;
-    css: string;
-  };
-  onChange: (v: string, status?: boolean) => void;
+  // hljs?: Record<string, any>;
+  // highlightSet: {
+  //   js: string;
+  //   css: string;
+  // };
+  onChange: (v: string) => void;
   setting: SettingType;
   onHtmlChanged?: (h: string) => void;
   onGetCatalog?: (list: HeadList[]) => void;
-  markedHeading: MarkedHeading;
+  // markedHeading: MarkedHeading;
   // mermaid实例
-  mermaid?: any;
+  // mermaid?: any;
   // mermaid script链接
-  mermaidJs: string;
+  // mermaidJs: string;
   // 不使用该功能
   noMermaid?: boolean;
   sanitize: (html: string) => string;
   placeholder: string;
   // katex实例
-  katex?: any;
+  // katex?: any;
   // katex script链接
-  katexJs: string;
-  katexCss: string;
+  // katexJs: string;
+  // katexCss: string;
   noKatex?: boolean;
-  extensions?: Array<any>;
-  markedImage?: MarkedImage;
+  // extensions?: Array<any>;
+  // markedImage?: MarkedImage;
+  mermaidTemplate?: MermaidTemplate;
+  markedHeadingId: MarkedHeadingId;
 }>;
 
 const Content = (props: EditorContentProp) => {
@@ -51,7 +52,7 @@ const Content = (props: EditorContentProp) => {
   // 输入框
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
   // 输入框选中的内容
-  const selectedText = useRef('');
+  // const selectedText = useRef('');
   // 预览框
   const previewRef = useRef<HTMLDivElement>(null);
   // html代码预览框
@@ -59,7 +60,7 @@ const Content = (props: EditorContentProp) => {
 
   const { html } = useMarked(props);
   useAutoScroll(props, html, textAreaRef, previewRef, htmlRef);
-  useHistory(props, textAreaRef);
+  useHistory(props, textAreaRef, completeStatus);
   useAutoGenrator(props, textAreaRef);
   usePasteUpload(textAreaRef);
 
@@ -77,19 +78,19 @@ const Content = (props: EditorContentProp) => {
               }}
               onInput={(e) => {
                 // 先清空保存的选中内容，防止异常现象
-                selectedText.current = '';
+                // selectedText.current = '';
 
                 // 触发更新
-                onChange((e.target as HTMLTextAreaElement).value, completeStatus);
+                onChange((e.target as HTMLTextAreaElement).value);
               }}
-              onCompositionEnd={(e) => {
+              onCompositionEnd={() => {
                 // 输入中文等时，oninput不会保存历史记录
                 // 在完成时保存
-                bus.emit(
-                  editorId,
-                  'saveHistory',
-                  (e.target as HTMLTextAreaElement).value
-                );
+                // bus.emit(
+                //   editorId,
+                //   'saveHistory',
+                //   (e.target as HTMLTextAreaElement).value
+                // );
                 setCS(true);
               }}
               className={

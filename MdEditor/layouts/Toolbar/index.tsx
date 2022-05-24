@@ -19,14 +19,14 @@ import { useSreenfull } from './hooks';
 import TableShape from './TableShape';
 
 export interface ToolbarProp {
-  prettier: boolean;
+  noPrettier: boolean;
   // 工具栏选择显示
   toolbars: Array<ToolbarNames>;
   // 工具栏选择不显示
   toolbarsExclude: Array<ToolbarNames>;
   setting: SettingType;
-  screenfull: any;
-  screenfullJs: string;
+  // screenfull: any;
+  // screenfullJs: string;
   updateSetting: (k: keyof SettingType) => void;
   tableShape: [number, number];
   defToolbars?: Array<ReactElement>;
@@ -500,7 +500,9 @@ const Toolbar = (props: ToolbarProp) => {
           );
         }
         case 'prettier': {
-          return props.prettier ? (
+          return props.noPrettier ? (
+            ''
+          ) : (
             <div
               className={`${prefix}-toolbar-item`}
               title={ult.toolbarTips?.prettier}
@@ -513,8 +515,6 @@ const Toolbar = (props: ToolbarProp) => {
                 <use xlinkHref="#icon-prettier" />
               </svg>
             </div>
-          ) : (
-            ''
           );
         }
         case 'pageFullscreen': {
