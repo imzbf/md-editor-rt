@@ -62,7 +62,7 @@ mark and emoji extensions
 | noMermaid | boolean | false | Use mermaid or not |
 | placeholder | string | '' |  |
 | noKatex | boolean | false | Use katex or not |
-| defToolbars | Array<DropdownToolbar \| NormalToolbar \| ModalToolbar> | null | Customize Toolbar, for more usage, please refer to [docs](https://imzbf.github.io/md-editor-rt/docs/index#%F0%9F%92%AA%20defToolbars) and [emoji](https://imzbf.github.io/md-editor-rt/demo/index#💪%20Customize%20Toolbar) |
+| defToolbars | Array<DropdownToolbar \| NormalToolbar \| ModalToolbar> | null | Custom toolbar in `DropdownToolbar`, `NormalToolbar` or `ModalToolbar` |
 | codeTheme | 'atom' \| 'a11y' \| 'github' \| 'gradient' \| 'kimbie' \| 'paraiso' \| 'qtcreator' \| 'stackoverflow' | 'atom' | [Highlight](https://www.jsdelivr.com/package/npm/highlight.js?path=styles) code style, can be customized also |
 | markedHeadingId | (text: string, level: number) => string | (text) => text | H1-H6 `ID` generator |
 | sanitize | (html: string) => string | (html) => html | Sanitize the html, prevent XSS |

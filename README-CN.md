@@ -38,27 +38,28 @@ react 版本的 Markdown 编辑器，[md-editor-v3](https://imzbf.github.io/md-e
 
 | 名称 | 类型 | 默认值 | 说明 |
 | --- | --- | --- | --- |
-| modelValue | String | '' | md 编辑内容 |
+| modelValue | string | '' | md 编辑内容 |
 | theme | 'light' \| 'dark' | 'light' | 主题切换 |
-| class | String | '' | 编辑器类名 |
-| historyLength | Number | 10 | 最大记录操作数（太大会占用内存） |
-| pageFullScreen | Boolean | false | 页面内全屏 |
-| preview | Boolean | true | 是否预览 |
-| htmlPreview | Boolean | false | 是否 html 预览 |
-| previewOnly | Boolean | false | 仅预览模式，不显示 bar 和编辑框，_不支持响应式，仅能初始设置一次_ |
-| language | String | 'zh-CN' | 内置中英文('zh-CN','en-US')，可自行扩展其他语言，同时可覆盖内置的中英文 |
-| toolbars | Array | [toolbars] | 选择性展示工具栏，可选内容<sup>见下方`toolbars`<sup> |
+| class | string | '' | 编辑器类名 |
+| historyLength | number | 10 | 最大记录操作数（太大会占用内存） |
+| pageFullScreen | boolean | false | 页面内全屏 |
+| preview | boolean | true | 是否预览 |
+| htmlPreview | boolean | false | 是否 html 预览 |
+| previewOnly | boolean | false | 仅预览模式，不显示 bar 和编辑框，_不支持响应式，仅能初始设置一次_ |
+| language | string | 'zh-CN' | 内置中英文('zh-CN','en-US')，可自行扩展其他语言，同时可覆盖内置的中英文 |
+| toolbars | Array | [toolbars] | 选择性展示工具栏，可选内容<sup>见下方`toolbars`</sup> |
 | toolbarsExclude | Array | [] | 选择性不展示工具栏，内容同`toolbars` |
-| noPrettier | Boolean | false | 是否启用 prettier 优化 md 内容 |
-| editorId | String | md-editor-rt | 编辑器唯一标识，非必须项，当相同页面存在两个编辑器时，请务必区别该属性 |
-| tabWidth | Number | 2 | 编辑器 TAB 键位等于空格数 |
-| showCodeRowNumber | Boolean | false | 代码块是否显示行号 |
+| noPrettier | boolean | false | 是否启用 prettier 优化 md 内容 |
+| editorId | string | md-editor-rt | 编辑器唯一标识，非必须项，当相同页面存在两个编辑器时，请务必区别该属性 |
+| tabWidth | number | 2 | 编辑器 TAB 键位等于空格数 |
+| showCodeRowNumber | boolean | false | 代码块是否显示行号 |
 | previewTheme | 'default' \| 'github' \| 'vuepress' \| 'mk-cute' \| 'smart-blue' \| 'cyanosis' | 'default' | 预览内容主题，自定义主题规则见下方 |
-| style | CSSProperties | {} | 编辑器内联样式 |
-| noMermaid | Boolean | false | 如果你不希望使用图表展示内容，可以设置关闭 |
-| placeholder | String | '' |  |
-| noKatex | Boolean | false | 不使用 katex 展示数学公式 |
-| defToolbars | Array<DropdownToolbar \| NormalToolbar \| ModalToolbar> | null | 自定义工具栏，具体使用请参考[文档](https://imzbf.github.io/md-editor-rt/docs/index#%F0%9F%92%AA%20defToolbars)和[emoji 示例](https://imzbf.github.io/md-editor-rt/demo/index#💪%20Customize%20Toolbar) |
+| style | string \| CSSProperties | {} | 编辑器内联样式 |
+| tableShape | [number, number] | [6, 4] | 标题栏添加表格时，预设待选表格大小，第一个代表最大列数，第二个代表最大行数。 |
+| noMermaid | boolean | false | 如果你不希望使用图表展示内容，可以设置关闭 |
+| placeholder | string | '' |  |
+| noKatex | boolean | false | 不使用 katex 展示数学公式 |
+| defToolbars | Array<DropdownToolbar \| NormalToolbar \| ModalToolbar> | null | 使用内置的组件自定义扩展工具栏 |
 | codeTheme | 'atom'\|'a11y'\|'github'\|'gradient'\|'kimbie'\|'paraiso'\|'qtcreator'\|'stackoverflow' | 'atom' | 代码块[highlight](https://www.jsdelivr.com/package/npm/highlight.js?path=styles)样式名称，扩展更多见下方 |
 | markedHeadingId | (text: string, level: number) => string | (text) => text | 标题`ID`计算方式 |
 | sanitize | (html: string) => string | (html) => html | 在每次生成 html 后，通过该方法移除危险内容，比如 xss 相关。 |
