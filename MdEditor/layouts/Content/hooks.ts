@@ -1,18 +1,20 @@
 import { RefObject, useContext, useEffect, useRef, useState } from 'react';
 import copy from 'copy-to-clipboard';
+import mediumZoom from 'medium-zoom';
+import { marked } from 'marked';
 import { HeadList } from '../../type';
 import {
   insert,
   setPosition,
   scrollAuto,
   generateCodeRowNumber,
-  getSelectionText
+  getSelectionText,
+  debounce
 } from '../../utils';
 import { directive2flag, ToolDirective } from '../../utils/content-help';
 import bus from '../../utils/event-bus';
 import { EditorContentProp } from './';
 import { EditorContext } from '../../Editor';
-import { marked } from 'marked';
 import { prefix, katexUrl, mermaidUrl } from '../../config';
 import { appendHandler, updateHandler } from '../../utils/dom';
 import kaTexExtensions from '../../utils/katex';
@@ -728,4 +730,26 @@ export const usePasteUpload = (textAreaRef: RefObject<HTMLTextAreaElement>) => {
       }
     };
   }, []);
+};
+
+export const userZoom = (html: string) => {
+  const { editorId } = useContext(EditorContext);
+
+  let zoomHander = () => {};
+
+  useEffect(() => {
+    zoomHander = debounce(() => {
+      const imgs = document.querySelectorAll(`#${editorId}-preview img`);
+
+      if (imgs.length === 0) {
+        return;
+      }
+
+      mediumZoom(imgs, {
+        background: '#00000073'
+      });
+    });
+
+    zoomHander();
+  }, [html]);
 };

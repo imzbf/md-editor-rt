@@ -7,7 +7,8 @@ import {
   useHistory,
   useMarked,
   useAutoScroll,
-  usePasteUpload
+  usePasteUpload,
+  userZoom
 } from './hooks';
 
 export type EditorContentProp = Readonly<{
@@ -63,6 +64,7 @@ const Content = (props: EditorContentProp) => {
   useHistory(props, textAreaRef, completeStatus);
   useAutoGenrator(props, textAreaRef);
   usePasteUpload(textAreaRef);
+  userZoom(html);
 
   return (
     <>
