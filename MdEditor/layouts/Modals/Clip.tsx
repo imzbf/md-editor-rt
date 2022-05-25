@@ -17,7 +17,9 @@ let cropper: any = null;
 
 const ClipModal = (props: ClipModalProp) => {
   const editorConext = useContext(EditorContext);
-  const { editorId, usedLanguageText, Cropper } = editorConext;
+  const { editorId, usedLanguageText, extension } = editorConext;
+
+  const Cropper = extension.editorExtensions?.cropper?.instance;
 
   const uploadRef = useRef<HTMLInputElement>(null);
   const uploadImgRef = useRef<HTMLImageElement>(null);

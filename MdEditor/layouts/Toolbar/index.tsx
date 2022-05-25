@@ -76,7 +76,7 @@ const Toolbar = (props: ToolbarProp) => {
   const toolbarLeftRef = useRef<HTMLDivElement>(null);
 
   const barRender = (barItem: ToolbarNames) => {
-    if (allToolbar.includes(barItem as string)) {
+    if (allToolbar.includes(barItem)) {
       switch (barItem) {
         case '-': {
           return <Divider key={`bar-${splitNum++}`} />;
