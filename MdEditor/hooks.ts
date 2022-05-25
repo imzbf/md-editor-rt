@@ -21,10 +21,12 @@ import { appendHandler } from './utils/dom';
  * @param props
  */
 export const useKeyBoard = (props: EditorProp) => {
-  const { editorId = defaultEditorId } = props;
+  const { editorId = defaultEditorId, noPrettier } = props;
 
   const initFunc = (name: ToolbarNames) =>
-    props.toolbars?.includes(name) && !props.toolbarsExclude?.includes(name);
+    props.toolbars?.includes(name) &&
+    !props.toolbarsExclude?.includes(name) &&
+    !noPrettier;
 
   const keyDownHandler = (event: KeyboardEvent) => {
     // 只处理是编辑框内的内容
