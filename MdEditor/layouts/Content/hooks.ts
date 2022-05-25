@@ -45,7 +45,6 @@ export const useHistory = (
   textAreaRef: RefObject<HTMLTextAreaElement>,
   completeStatus: boolean
 ) => {
-  const { onChange } = props;
   const { historyLength, editorId } = useContext(EditorContext);
 
   const history = useRef<HistoryDataType>({
@@ -60,96 +59,109 @@ export const useHistory = (
     curr: 0
   });
 
-  useEffect(() => {
-    bus.on(editorId, {
-      name: 'saveHistory',
-      callback(content: string) {
-        clearTimeout(saveHistoryId);
-        const startPos: number = textAreaRef.current?.selectionStart || 0;
-        const endPos: number = textAreaRef.current?.selectionEnd || 0;
+  // 文本改变前的光标位置
+  const historyPos = useRef([0, 0]);
 
-        saveHistoryId = window.setTimeout(() => {
-          // 如果不是撤销操作，就记录
-          if (history.current.userUpdated) {
-            // 重置撤回之前的记录
-            if (history.current.curr < history.current.list.length - 1) {
-              history.current.list = history.current.list.slice(
-                0,
-                history.current.curr + 1
-              );
-            }
-            if (history.current.list.length > historyLength) {
-              history.current.list.shift();
-            }
+  const keyZCallback = (curr: number) => {
+    // 保存当前的鼠标位置
+    const startPos: number = textAreaRef.current?.selectionStart || 0;
+    const endPos: number = textAreaRef.current?.selectionEnd || 0;
 
-            // 修改保存上次记录选中定位
-            const lastStep = history.current.list.pop() || {
-              startPos: 0,
-              endPos: 0,
-              content
-            };
-            lastStep.startPos = startPos;
-            lastStep.endPos = endPos;
+    history.current.list[history.current.curr].startPos = startPos;
+    history.current.list[history.current.curr].endPos = endPos;
 
-            Array.prototype.push.call(history.current.list, lastStep, {
-              content,
-              startPos,
-              endPos
-            });
+    // 移除状态
+    history.current.userUpdated = false;
+    history.current.curr = curr;
 
-            // 下标调整为最后一个位置
-            history.current.curr = history.current.list.length - 1;
-          } else {
-            history.current.userUpdated = true;
-          }
-        }, 150);
+    const currHistory = history.current.list[history.current.curr];
+    props.onChange(currHistory.content);
+
+    // 选中内容
+    setPosition(
+      textAreaRef.current as HTMLTextAreaElement,
+      currHistory.startPos,
+      currHistory.endPos
+    );
+  };
+
+  const saveHistory = (content: string) => {
+    clearTimeout(saveHistoryId);
+    const startPos: number = textAreaRef.current?.selectionStart || 0;
+    const endPos: number = textAreaRef.current?.selectionEnd || 0;
+
+    saveHistoryId = <any>setTimeout(() => {
+      // 如果不是撤销操作，就记录
+      if (history.current.userUpdated) {
+        // 重置撤回之前的记录
+        if (history.current.curr < history.current.list.length - 1) {
+          history.current.list = history.current.list.slice(0, history.current.curr + 1);
+        }
+        if (history.current.list.length > historyLength) {
+          history.current.list.shift();
+        }
+
+        // 修改保存上次记录选中定位
+        const lastStep = history.current.list.pop() || {
+          startPos: 0,
+          endPos: 0,
+          content
+        };
+
+        lastStep.startPos = historyPos.current[0];
+        lastStep.endPos = historyPos.current[1];
+
+        Array.prototype.push.call(history.current.list, lastStep, {
+          content,
+          startPos,
+          endPos
+        });
+
+        // 下标调整为最后一个位置
+        history.current.curr = history.current.list.length - 1;
+
+        // 保存记录后重新记录位置
+        saveHistoryPos();
+      } else {
+        history.current.userUpdated = true;
       }
-    });
-  }, []);
+    }, 150);
+  };
+
+  const saveHistoryPos = () => {
+    historyPos.current = [
+      textAreaRef.current?.selectionStart || 0,
+      textAreaRef.current?.selectionEnd || 0
+    ];
+  };
+
+  useEffect(() => {
+    if (completeStatus) {
+      saveHistory(props.value);
+    }
+  }, [props.value, completeStatus]);
 
   useEffect(() => {
     bus.on(editorId, {
       name: 'ctrlZ',
       callback() {
-        history.current.userUpdated = false;
-
-        // 倒退一个下标，最多倒退到0
-        history.current.curr =
-          history.current.curr - 1 < 0 ? 0 : history.current.curr - 1;
-
-        const currHistory = history.current.list[history.current.curr];
-
-        onChange(currHistory.content);
-        // 选中内容
-        setPosition(
-          textAreaRef.current as HTMLTextAreaElement,
-          currHistory.startPos,
-          currHistory.endPos
-        );
+        keyZCallback(history.current.curr - 1 < 0 ? 0 : history.current.curr - 1);
       }
     });
 
     bus.on(editorId, {
       name: 'ctrlShiftZ',
       callback() {
-        history.current.userUpdated = false;
-        // 前进一个下标，最多倒退到最大下标
-        history.current.curr =
+        keyZCallback(
           history.current.curr + 1 === history.current.list.length
             ? history.current.curr
-            : history.current.curr + 1;
-
-        const currHistory = history.current.list[history.current.curr];
-        onChange(currHistory.content);
-
-        // 选中内容
-        setPosition(
-          textAreaRef.current as HTMLTextAreaElement,
-          currHistory.startPos,
-          currHistory.endPos
+            : history.current.curr + 1
         );
       }
     });
+
+    // textAreaRef.value.addEventListener('keydown', saveHistoryPos);
+    textAreaRef.current?.addEventListener('click', saveHistoryPos);
   }, []);
 };
 
