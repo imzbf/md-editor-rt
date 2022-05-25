@@ -14,7 +14,7 @@ export interface TocItem {
 export interface CatalogProps {
   editorId: string;
   className?: string;
-  markedHeadingId: MarkedHeadingId;
+  markedHeadingId?: MarkedHeadingId;
   // 指定滚动的容器，选择器需带上对应的符号，默认预览框
   // 元素必须定位！！！！！！
   scrollElement?: string | Element;
@@ -24,7 +24,7 @@ export interface CatalogProps {
 
 const MdCatalog = (props: CatalogProps) => {
   // 获取Id
-  const editorId = props.editorId;
+  const { editorId, markedHeadingId = (text) => text, theme = 'light' } = props;
 
   const [list, setList] = useState<Array<HeadList>>([]);
 
@@ -87,7 +87,7 @@ const MdCatalog = (props: CatalogProps) => {
 
   return (
     <div
-      className={`${prefix}-catalog${props.theme === 'dark' ? '-dark' : ''} ${
+      className={`${prefix}-catalog${theme === 'dark' ? '-dark' : ''} ${
         props.className || ''
       } `}
       style={props.style}
@@ -95,7 +95,7 @@ const MdCatalog = (props: CatalogProps) => {
       {catalogs.map((item) => {
         return (
           <CatalogLink
-            markedHeadingId={props.markedHeadingId}
+            markedHeadingId={markedHeadingId}
             tocItem={item}
             key={item.text}
             scrollElement={scrollElement}
@@ -104,11 +104,6 @@ const MdCatalog = (props: CatalogProps) => {
       })}
     </div>
   );
-};
-
-MdCatalog.defaultProps = {
-  markedHeadingId: (text: string) => text,
-  theme: 'light'
 };
 
 export default MdCatalog;

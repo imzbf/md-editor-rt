@@ -6,18 +6,19 @@ export interface ModalToolbarProp {
   title?: string;
   modalTitle?: string;
   visible: boolean;
-  width: string;
-  height: string;
+  width?: string;
+  height?: string;
   trigger: string | ReactElement;
   onClick: () => void;
   onClose: () => void;
-  showAdjust: boolean;
-  isFullscreen: boolean;
-  onAdjust: (v: boolean) => void;
+  showAdjust?: boolean;
+  isFullscreen?: boolean;
+  onAdjust?: (v: boolean) => void;
   children?: any;
 }
 
 const ModalToolbar = (props: ModalToolbarProp) => {
+  const { width = 'auto', height = 'auto' } = props;
   return (
     <>
       <div
@@ -32,8 +33,8 @@ const ModalToolbar = (props: ModalToolbarProp) => {
         {props.trigger}
       </div>
       <Modal
-        width={props.width}
-        height={props.height}
+        width={width}
+        height={height}
         title={props.modalTitle}
         visible={props.visible}
         onClose={() => {
@@ -53,11 +54,6 @@ const ModalToolbar = (props: ModalToolbarProp) => {
       </Modal>
     </>
   );
-};
-
-ModalToolbar.defaultProps = {
-  width: 'auto',
-  height: 'auto'
 };
 
 export default ModalToolbar;
