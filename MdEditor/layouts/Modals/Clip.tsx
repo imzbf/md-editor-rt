@@ -42,6 +42,14 @@ const ClipModal = (props: ClipModalProp) => {
 
       // 直接定义onchange，防止创建新的实例时遗留事件
       (uploadRef.current as HTMLInputElement).onchange = () => {
+        if (!Cropper) {
+          bus.emit(editorId, 'errorCatcher', {
+            name: 'Cropper',
+            message: 'Cropper is undefined'
+          });
+          return;
+        }
+
         const fileList = (uploadRef.current as HTMLInputElement).files || [];
 
         if (fileList?.length > 0) {

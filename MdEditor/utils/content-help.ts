@@ -1,5 +1,6 @@
 import copy from 'copy-to-clipboard';
 import { insert, setPosition } from '.';
+import eventBus from './event-bus';
 
 export type ToolDirective =
   | 'bold'
@@ -120,6 +121,15 @@ export const directive2flag = (
     targetValue = `${pix} ${selectedText}`;
     deviationStart = pix.length + 1;
   } else if (direct === 'prettier') {
+    if (!window.prettier) {
+      // CATCH ERROR: 捕获全局错误
+      eventBus.emit(params.editorId, 'errorCatcher', {
+        name: 'prettier',
+        message: 'prettier is undefined'
+      });
+      return inputArea.value;
+    }
+
     return window.prettier.format(inputArea.value, {
       parser: 'markdown',
       plugins: window.prettierPlugins

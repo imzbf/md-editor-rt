@@ -1,3 +1,4 @@
+import eventBus from '../../utils/event-bus';
 import { useCallback, useContext, useEffect, useRef } from 'react';
 import { prefix, screenfullUrl } from '../../config';
 import { EditorContext } from '../../Editor';
@@ -5,7 +6,7 @@ import { appendHandler } from '../../utils/dom';
 import { ToolbarProp } from './';
 
 export const useSreenfull = (props: ToolbarProp) => {
-  const { previewOnly, extension } = useContext(EditorContext);
+  const { previewOnly, extension, editorId } = useContext(EditorContext);
   const screenfullConfig = extension.editorExtensions?.screenfull;
   let screenfull = screenfullConfig?.instance;
   // 是否组件内部全屏标识
@@ -14,6 +15,14 @@ export const useSreenfull = (props: ToolbarProp) => {
   // 该处使用useCallback并不是为了减少子组件渲染次数
   // 而是screenfull获取到实例后要正确的初始化该方法
   const fullScreenHandler = useCallback(() => {
+    if (!screenfull) {
+      eventBus.emit(editorId, 'errorCatcher', {
+        name: 'fullScreen',
+        message: 'fullScreen is undefined'
+      });
+      return;
+    }
+
     if (screenfull.isEnabled) {
       screenfullMe.current = true;
       if (screenfull.isFullscreen) {

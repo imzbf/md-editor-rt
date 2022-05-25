@@ -246,7 +246,8 @@ export const useAutoGenrator = (
         textAreaRef.current as HTMLTextAreaElement,
         {
           ...params,
-          tabWidth
+          tabWidth,
+          editorId
         }
       )
     );
