@@ -12,23 +12,25 @@ react 版本的 Markdown 编辑器，[md-editor-v3](https://imzbf.github.io/md-e
 
 ## 功能一览
 
-- 快捷插入内容工具栏、编辑器浏览器全屏、页面内全屏等；
-- 内置的白色主题和暗黑主题，支持绑定切换；
-- 支持快捷键插入内容； 支持使用 prettier 格式化内容（使用 CDN 方式引入，只支持格式化 md 内容，可在代码内设置关闭）；
-- 多语言，支持自行扩展语言；
-- 粘贴上传图片，图片裁剪上传；
-- 仅预览模式（不显示编辑器，只显示 md 预览内容，无额外监听）；
-- 预览主题，支持`defalut`、`vuepress`、`github` 样式（不完全相同）；
-- `mermaid`绘图（>=1.3.0）；
-- `katex`数学公式（>=1.4.0）。
-
-> 更多功能待后续更新，如果你有新的想法或者使用发现有问题，请留言告诉我~
+- 快捷插入内容工具栏、编辑器浏览器全屏、页面内全屏等。
+- 内置的白色主题和暗黑主题，支持绑定切换。
+- 支持快捷键插入内容； 支持使用 prettier 格式化内容（使用 CDN 方式引入，只支持格式化 md 内容，可在代码内设置关闭）。
+- 多语言，支持自行扩展语言。
+- 粘贴上传图片，图片裁剪上传。
+- 仅预览模式（不显示编辑器，只显示 md 预览内容，无额外监听）。
+- 预览主题，内置`defalut`、`vuepress`、`github` 、`cyanosis`、`mk-cute`、`smart-blue` 6 种预览主题（不完全相同），支持自定义主题（参考文档 demo 页示例）。
+- `mermaid`绘图（>=1.3.0），`katex`数学公式（>=1.4.0）。
+- 自定义工具栏顺序或显示，自定义扩展工具栏（支持点击类型、下拉菜单类型及弹窗类型）等。
 
 ## 预览图
 
 | 默认模式 | 暗黑模式 | 仅预览 |
 | --- | --- | --- |
 | ![默认模式](https://imzbf.github.io/md-editor-rt/imgs/preview-light.png) | ![暗黑模式](https://imzbf.github.io/md-editor-rt/imgs/preview-dark.png) | ![](https://imzbf.github.io/md-editor-rt/imgs/preview-previewOnly.png) |
+
+简单的标记和表情扩展预览
+
+![mark and emoji extension](https://imzbf.github.io/md-editor-rt/imgs/mark_emoji.gif)
 
 ## Apis
 
@@ -38,49 +40,33 @@ react 版本的 Markdown 编辑器，[md-editor-v3](https://imzbf.github.io/md-e
 | --- | --- | --- | --- |
 | modelValue | String | '' | md 编辑内容 |
 | theme | 'light' \| 'dark' | 'light' | 主题切换 |
-| editorClass | String | '' | 编辑器类名 |
-| hljs | Object | null | highlight 实例，编辑器不会插入对应的`script`，但需要手动导入的高亮代码样式 |
-| highlightJs | String | [highlight.js@11.2.0](https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.2.0/build/highlight.min.js) | highlightJs 链接 |
-| highlightCss | String | [atom-one-dark@11.2.0](https://cdn.jsdelivr.net/npm/highlight.js@11.2.0/styles/atom-one-dark.css) | 预览高亮代码样式 |
+| class | String | '' | 编辑器类名 |
 | historyLength | Number | 10 | 最大记录操作数（太大会占用内存） |
 | pageFullScreen | Boolean | false | 页面内全屏 |
 | preview | Boolean | true | 是否预览 |
 | htmlPreview | Boolean | false | 是否 html 预览 |
 | previewOnly | Boolean | false | 仅预览模式，不显示 bar 和编辑框，_不支持响应式，仅能初始设置一次_ |
 | language | String | 'zh-CN' | 内置中英文('zh-CN','en-US')，可自行扩展其他语言，同时可覆盖内置的中英文 |
-| languageUserDefined | Object | {key: StaticTextDefaultValue} | 通过这里扩展语言，修改 language 值为扩展 key 即可，类型申明可手动导入 |
 | toolbars | Array | [toolbars] | 选择性展示工具栏，可选内容<sup>见下方`toolbars`<sup> |
 | toolbarsExclude | Array | [] | 选择性不展示工具栏，内容同`toolbars` |
-| prettier | Boolean | true | 是否启用 prettier 优化 md 内容 |
-| prettierCDN | String | [standalone@2.4.0](https://cdn.jsdelivr.net/npm/prettier@2.4.0/standalone.js) |  |
-| prettierMDCDN | String | [parser-markdown@2.4.0](https://cdn.jsdelivr.net/npm/prettier@2.4.0/parser-markdown.js) |  |
-| editorName | String | 'editor' | 当在同一页面放置了多个编辑器，最好提供该属性以区别某些带有 ID 的内容 |
-| cropperCss | String | [cropper.min.css@1.5.12](https://cdn.jsdelivr.net/npm/cropperjs@1.5.12/dist/cropper.min.css) | cropper css url |
-| cropperJs | String | [cropper.min.js@1.5.12](https://cdn.jsdelivr.net/npm/cropperjs@1.5.12/dist/cropper.min.js) | cropper js url |
-| iconfontJs | String | [iconfont](https://at.alicdn.com/t/font_2605852_khjf435c7th.js) | 矢量图标链接，无外网时，下载 js 到内网，提供链接 |
+| noPrettier | Boolean | false | 是否启用 prettier 优化 md 内容 |
 | editorId | String | md-editor-rt | 编辑器唯一标识，非必须项，当相同页面存在两个编辑器时，请务必区别该属性 |
 | tabWidth | Number | 2 | 编辑器 TAB 键位等于空格数 |
 | showCodeRowNumber | Boolean | false | 代码块是否显示行号 |
-| screenfull | Object | null | 全屏插件实例，编辑器不再插入对应的`script` |
-| screenfullJs | String | [5.1.0](https://cdn.jsdelivr.net/npm/screenfull@5.1.0/dist/screenfull.js) | screenfull js 链接 |
-| previewTheme | 'default' \| 'github' \| 'vuepress' | 'default' | 预览内容主题 |
+| previewTheme | 'default' \| 'github' \| 'vuepress' \| 'mk-cute' \| 'smart-blue' \| 'cyanosis' | 'default' | 预览内容主题，自定义主题规则见下方 |
 | style | CSSProperties | {} | 编辑器内联样式 |
-| mermaid | Object | undefined | 图表库`mermaid`实例 |
-| mermaidJs | String | [mermaid@8.13.5](https://cdn.jsdelivr.net/npm/mermaid@8.13.5/dist/mermaid.min.js) | mermaidJs 链接 |
 | noMermaid | Boolean | false | 如果你不希望使用图表展示内容，可以设置关闭 |
 | placeholder | String | '' |  |
-| katex | Object | undefined | `katex` 实例，这种方式你需要自行引入 css |
-| katexJs | String | [katex.min.js@0.15.1](https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.js) | katexJs 链接 |
-| katexCss | String | [katex.min.css@0.15.1](https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.css) | katexCss 链接 |
 | noKatex | Boolean | false | 不使用 katex 展示数学公式 |
-| defToolbars | Array<DropdownToolbar \| NormalToolbar> | null | 自定义工具栏，具体使用请参考[文档](https://imzbf.github.io/md-editor-rt/docs/index#%F0%9F%92%AA%20defToolbars)和[emoji 示例](https://imzbf.github.io/md-editor-rt/demo/index#💪%20Customize%20Toolbar) |
-| extensions | Array | [] | 编辑器依赖的[marked](https://marked.js.org/using_pro#extensions)扩展 |
+| defToolbars | Array<DropdownToolbar \| NormalToolbar \| ModalToolbar> | null | 自定义工具栏，具体使用请参考[文档](https://imzbf.github.io/md-editor-rt/docs/index#%F0%9F%92%AA%20defToolbars)和[emoji 示例](https://imzbf.github.io/md-editor-rt/demo/index#💪%20Customize%20Toolbar) |
+| codeTheme | 'atom'\|'a11y'\|'github'\|'gradient'\|'kimbie'\|'paraiso'\|'qtcreator'\|'stackoverflow' | 'atom' | 代码块[highlight](https://www.jsdelivr.com/package/npm/highlight.js?path=styles)样式名称，扩展更多见下方 |
+| markedHeadingId | (text: string, level: number) => string | (text) => text | 标题`ID`计算方式 |
+| sanitize | (html: string) => string | (html) => html | 在每次生成 html 后，通过该方法移除危险内容，比如 xss 相关。 |
 
-简单的标记和表情扩展预览
+> 如果你重新定义了标题，请务必通过`markedHeadingId`告诉编辑器你生成标题 ID 的算法。以便生成的内部目录能够正确导航。
 
-![mark and Emoji extension](https://imzbf.github.io/md-editor-rt/imgs/mark_emoji.gif)
-
-[toolbars]
+<details>
+ <summary>[toolbars]</summary>
 
 ```js
 [
@@ -117,11 +103,14 @@ react 版本的 Markdown 编辑器，[md-editor-v3](https://imzbf.github.io/md-e
 ];
 ```
 
+</details>
+
 > 现在，你可以随意排序工具栏，通过`'-'`分割两个工具，通过`'='`实现左右放置！
 
-自定义语言，需要替换的下面的全部内容（某些字段若不主动提供，会造成页面不美观）：
+<details>
+ <summary>[StaticTextDefaultValue]</summary>
 
-[StaticTextDefaultValue]
+自定义语言，需要替换的下面的全部内容（某些字段若不主动提供，会造成页面不美观）：
 
 ```ts
 export interface ToolbarTips {
@@ -168,6 +157,7 @@ export interface StaticTextDefaultValue {
     h5?: string;
     h6?: string;
   };
+  // v1.6.0
   imgTitleItem?: {
     link: string;
     upload: string;
@@ -182,16 +172,18 @@ export interface StaticTextDefaultValue {
     UrlLablePlaceHolder?: string;
     buttonOK?: string;
   };
-  // 裁剪图片弹窗提示
+  // 裁剪图片弹窗提示，v1.2.0
   clipModalTips?: {
     title?: string;
     buttonUpload?: string;
   };
-  // 预览代码中复制代码提示
+  // 预览代码中复制代码提示，v1.1.4
   copyCode?: {
     text?: string;
-    tips?: string;
+    successTips?: string;
+    failTips?: string;
   };
+  // v1.8.0
   mermaid?: {
     // 流程图
     flow?: string;
@@ -219,21 +211,141 @@ export interface StaticTextDefaultValue {
 }
 ```
 
+</details>
+
 ### 事件绑定
 
-| 名称 | 类型 | 说明 |
+| 名称 | 入参 | 说明 |
 | --- | --- | --- |
-| onChange | (v: string) => void | 内容变化事件（当前与`textare`的`oninput`事件绑定，每输入一个单字即会触发） |
-| onSave | (v: string) => void | 保存事件，快捷键与保存按钮均会触发 |
-| onUploadImg | (files: Array<File>, callback: function) => void | 上传图片事件，弹窗会等待上传结果，务必将上传后的 urls 作为 callback 入参回传 |
-| onHtmlChanged | (h: string) => void | html 变化回调事件，用于获取预览 html 代码 |
-| onGetCatalog | (list: HeadList[]) => void | 动态获取`markdown`目录 |
-| markedHeading | (text: string,level: 1-6,raw: string, slugger: Slugger) => string | `marked`转换 md 文本标题的方法 |
-| markedHeadingId | (text: string, level: number) => string | 标题`ID`计算方式 |
-| sanitize | (html: string) => string | 在每次生成 html 后，通过该方法移除危险内容，比如 xss 相关。 |
-| markedImage | (href: string, title: string, desc: string) => string | 覆盖默认生成图片的 html 元素结构 |
+| onChange | v:string | 内容变化事件（当前与`textare`的`oninput`事件绑定，每输入一个单字即会触发） |
+| onSave | v:string | 保存事件，快捷键与保存按钮均会触发 |
+| onUploadImg | files:Array<File>, callback:Function | 上传图片事件，弹窗会等待上传结果，务必将上传后的 urls 作为 callback 入参回传 |
+| onHtmlChanged | h:string | html 变化回调事件，用于获取预览 html 代码 |
+| onGetCatalog | list: HeadList[] | 动态获取`markdown`目录 |
+| onError | err: { name: string; message: string } | 运行错误反馈事件，目前包括`Cropper`、`fullScreen`、`prettier`实例未加载完成操作错误 |
 
-> 如果你重写了`markedHeading`方法，请务必通过`markedHeadingId`告诉编辑器你生成标题 ID 的算法。以便生成的内部目录能够正确导航。
+## 编辑器配置
+
+使用`MdEditor.config(option: ConfigOption)`方法，可以对内部的`renderer`定制。
+
+- markedRenderer: `(renderer: Renderer) => Renderer`
+
+  设置链接在新窗口打开 🌰：
+
+  ```js
+  MdEditor.config({
+    markedRenderer(renderer) {
+      renderer.link = (href, title, text) => {
+        return `<a href="${href}" title="${title}" target="_blank">${text}</a>`;
+      };
+
+      return renderer;
+    }
+  });
+  ```
+
+  > 参考：https://marked.js.org/using_pro#renderer
+
+- markedExtensions: `Array<marked.TokenizerExtension & marked.RendererExtension>`
+
+  ```js
+  import MdEditor from 'md-editor-rt';
+
+  MdEditor.config({
+    markedExtensions: [your extension]
+  });
+  ```
+
+  > 参考：https://marked.js.org/using_pro#extensions
+
+- markedOptions: `marked.MarkedOptions`
+
+  设置输入空白行不渲染出来 🌰：
+
+  ```js
+  import MdEditor from 'md-editor-rt';
+
+  MdEditor.config({
+    markedOptions: { breaks: false }
+  });
+  ```
+
+  > 参考：https://marked.js.org/using_advanced#options
+
+- editorConfig: 编辑器常规配置，语言、`mermaid`默认模板和渲染延迟：
+
+  ```js
+  import MdEditor from 'md-editor-rt';
+
+  MdEditor.config({
+    editorConfig: {
+      // 语言
+      languageUserDefined: { lang: StaticTextDefaultValue },
+      // mermaid模板
+      mermaidTemplate: {
+        flow: `flow tempalte`,
+        ...more
+      },
+      // 输入渲染延迟，ms
+      renderDelay: 500
+    }
+  });
+  ```
+
+- editorExtensions: 类型如下，用于配置编辑器内部的扩展
+
+  ```typescript
+  import MdEditor from 'md-editor-rt';
+
+  MdEditor.config({
+    editorExtensions: { iconfont: 'https://xxx.cc' }
+  });
+  ```
+
+  <details>
+    <summary>[EditorExtensions]</summary>
+
+  ```ts
+  import MdEditor from 'md-editor-rt';
+
+  interface EditorExtensions {
+    highlight?: {
+      instance?: any;
+      js?: string;
+      css?: {
+        [key: string]: {
+          light: string;
+          dark: string;
+        };
+      };
+    };
+    prettier?: {
+      standaloneJs?: string;
+      parserMarkdownJs?: string;
+    };
+    cropper?: {
+      instance?: any;
+      js?: string;
+      css?: string;
+    };
+    iconfont?: string;
+    screenfull?: {
+      instance?: any;
+      js?: string;
+    };
+    mermaid?: {
+      instance?: any;
+      js?: string;
+    };
+    katex?: {
+      instance?: any;
+      js?: string;
+      css?: string;
+    };
+  }
+  ```
+
+  </details>
 
 ### 快捷键
 
@@ -266,59 +378,94 @@ export interface StaticTextDefaultValue {
 | CTRL + ALT + C | 行内代码 | 行内代码块 |
 | CTRL + SHIFT + ALT + T | 表格 | `\|表格\|` |
 
-## 使用内部组件
+## 内部组件
 
-1.x 版本扩展组件作为编辑器组件的属性值来使用，例如：`Editor.DropdownToolbar`。使用参考：[文档页面](https://imzbf.github.io/md-editor-rt)
+扩展组件作为编辑器组件的属性值来使用，例如：`Editor.DropdownToolbar`。使用参考：[文档页面](https://imzbf.github.io/md-editor-rt)
 
 ### 普通扩展工具栏
 
 `Editor.NormalToolbar`
 
-- `title`: `string`，非必须，作为工具栏上的 hover 提示；
-- `trigger`: `string | JSX.Element`，必须，通常是个图标，用来展示在工具栏上；
-- `onClick`: `(e: MouseEvent) => void`，必须，点击事件。
+- **props**
+
+  - `title`: `string`，非必须，作为工具栏上的 hover 提示。
+
+- **events**
+
+  - `onClick`: `(e: MouseEvent) => void`，必须，点击事件。
+
+- **slots**
+
+  - `trigger`: `string | JSX.Element`，必须，通常是个图标，用来展示在工具栏上。
 
 ### 下拉扩展工具栏
 
 `Editor.DropdownToolbar`
 
-- `title`: `string`，非必须，作为工具栏上的 hover 提示；
-- `visible`: `boolean`，必须，下拉状态；
-- `trigger`: `string | JSX.Element`，必须，通常是个图标，用来展示在工具栏上；
-- `onChange`: `(visible: boolean) => void`，必须，状态变化事件；
-- `overlay`: `string | JSX.Element`，必须，下拉框中的内容。
+- **props**
+
+  - `title`: `string`，非必须，作为工具栏上的 hover 提示。
+  - `visible`: `boolean`，必须，下拉状态。
+
+- **events**
+
+  - `onChange`: `(visible: boolean) => void`，必须，状态变化事件。
+
+- **slots**
+
+  - `trigger`: `string | JSX.Element`，必须，通常是个图标，用来展示在工具栏上。
+  - `overlay`: `string | JSX.Element`，必须，下拉框中的内容。
+
+### 弹窗扩展工具栏
+
+`Editor.ModalToolbar`
+
+- **props**
+
+  - `title`: `string`，非必须，作为工具栏上的 hover 提示。
+  - `modalTitle`: `string`，非必须，弹窗的标题。
+  - `visible`: `boolean`，必须，弹窗显示状态。
+  - `width`: `string`，非必须，弹窗宽度，默认`auto`。
+  - `height`: `string`，同`width`。
+  - `showAdjust`: `boolean`，非必须，是否显示弹窗全屏按钮。
+  - `isFullscreen`: `boolean`，显示全屏按钮时必须，弹窗全屏状态。
+
+- **events**
+
+  - `onClick`: `() => void`，必须，工具栏点击事件。
+  - `onClose`: `() => void`，必须，弹窗点击关闭事件。
+  - `onAdjust`: `(val: boolean) => void`，弹窗全屏按钮点击事件。
+
+- **slots**
+
+  - `trigger`: `string | JSX.Element`，必须，通常是个图标，用来展示在工具栏上。
+  - `overlay`: `string | JSX.Element`，必须，下拉框中的内容。
 
 ### 目录导航
 
-`Editor.Catalog`
+`Editor.MdCatalog`
 
-- `editorId`: `string`，必须，对应编辑器的`editorId`，在内部注册目录变化监听事件；
-- `class`: `string`，非必须，目录组件最外层类名；
-- `markedHeadingId`: `MarkedHeadingId`，非必须，特殊化编辑器标题的算法，与编辑器相同；
-- `scrollElement`: `string | HTMLElement`，非必须，为字符时应是一个元素选择器。仅预览模式中，整页滚动时，设置为`document.documentElement`；
-- `theme`: 'light' | 'dark'，非必须，当需要切换主题时提供，同编辑器的`theme`。
+- **props**
+
+  - `editorId`: `string`，必须，对应编辑器的`editorId`，在内部注册目录变化监听事件。
+  - `class`: `string`，非必须，目录组件最外层类名。
+  - `markedHeadingId`: `MarkedHeadingId`，非必须，特殊化编辑器标题的算法，与编辑器相同。
+  - `scrollElement`: `string | HTMLElement`，非必须，为字符时应是一个元素选择器。仅预览模式中，整页滚动时，设置为`document.documentElement`。
+  - `theme`: `'light' | 'dark'`，非必须，当需要切换主题时提供，同编辑器的`theme`。
 
 ## 部分示例
 
 ### Jsx 语法项目
 
 ```js
-import { useState } from 'react';
-import Editor from 'md-editor-rt';
+import React, { useState } from 'react';
+import MdEditor from 'md-editor-rt';
 import 'md-editor-rt/lib/style.css';
 
-export default function App() {
+export default () => {
   const [text, setText] = useState('hello md-editor-rt！');
-
-  return (
-    <Editor
-      modelValue={text}
-      onChange={(modelValue) => {
-        setText(modelValue);
-      }}
-    />
-  );
-}
+  return <MdEditor modelValue={text} onChange={setText} />;
+};
 ```
 
 ### 上传图片
@@ -328,29 +475,73 @@ export default function App() {
 > 注意：粘贴板上传时，如果是网页上的 gif 图，无法正确上传为 gif 格式！
 
 ```js
-async onUploadImg(files: Array<List>, callback: (urls: string[]) => void) {
-  const res = await Promise.all(
-    files.map((file) => {
-      return new Promise((rev, rej) => {
-        const form = new FormData();
-        form.append('file', file);
+import React, { useState } from 'react';
+import MdEditor from 'md-editor-rt';
+import 'md-editor-rt/lib/style.css';
 
-        axios
-          .post('/api/img/upload', form, {
-            headers: {
-              'Content-Type': 'multipart/form-data'
-            }
-          })
-          .then((res) => rev(res))
-          .catch((error) => rej(error));
-      });
-    })
-  );
+export default () => {
+  const [text, setText] = useState('#Hello Editor');
 
-  callback(res.map((item: any) => item.data.url));
+  const onUploadImg = async (files, callback) => {
+    const res = await Promise.all(
+      files.map((file) => {
+        return new Promise((rev, rej) => {
+          const form = new FormData();
+          form.append('file', file);
+
+          axios
+            .post('/api/img/upload', form, {
+              headers: {
+                'Content-Type': 'multipart/form-data'
+              }
+            })
+            .then((res) => rev(res))
+            .catch((error) => rej(error));
+        });
+      })
+    );
+
+    callback(res.map((item) => item.data.url));
+  };
+
+  return <MdEditor modelValue={text} onChange={setText} onUploadImg={onUploadImg} />;
+};
+```
+
+### 调整编辑器样式
+
+2.x 使用 css 变量定义了大部分内容：
+
+```less
+.css-vars(@isDark) {
+  --md-color: if(@isDark, #999, #222);
+  --md-hover-color: if(@isDark, #bbb, #000);
+  --md-bk-color: if(@isDark, #000, #fff);
+  --md-bk-color-outstand: if(@isDark, #111, #f6f6f6);
+  --md-bk-hover-color: if(@isDark, #1b1a1a, #f5f7fa);
+  --md-border-color: if(@isDark, #2d2d2d, #e6e6e6);
+  --md-border-hover-color: if(@isDark, #636262, #b9b9b9);
+  --md-border-active-color: if(@isDark, #777, #999);
+  --md-modal-mask: #00000073;
+  --md-scrollbar-bg-color: if(@isDark, #0f0f0f, #e2e2e2);
+  --md-scrollbar-thumb-color: if(@isDark, #2d2d2d, #0000004d);
+  --md-scrollbar-thumb-hover-color: if(@isDark, #3a3a3a, #00000059);
+  --md-scrollbar-thumb-avtive-color: if(@isDark, #3a3a3a, #00000061);
+}
+
+.md {
+  .css-vars(false);
+}
+
+.md-dark {
+  .css-vars(true);
 }
 ```
 
-### 更多
+只需要调整对应的 css 变量，比如调整暗夜模式下的背景：
 
-请前往文档-演示页面：[go](https://imzbf.github.io/md-editor-rt/demo)
+```css
+.md-dark {
+  --md-bk-color: #333 !important;
+}
+```
