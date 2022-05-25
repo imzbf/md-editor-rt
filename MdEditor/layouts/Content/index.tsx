@@ -49,21 +49,23 @@ const Content = (props: EditorContentProp) => {
     useContext(EditorContext);
   // 输入状态，在输入中文等时，暂停保存
   const [completeStatus, setCS] = useState(true);
-
   // 输入框
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
-  // 输入框选中的内容
-  // const selectedText = useRef('');
   // 预览框
   const previewRef = useRef<HTMLDivElement>(null);
   // html代码预览框
   const htmlRef = useRef<HTMLDivElement>(null);
-
+  // markdown => html
   const { html } = useMarked(props);
+  // 自动滚动
   useAutoScroll(props, html, textAreaRef, previewRef, htmlRef);
+  // 历史记录
   useHistory(props, textAreaRef, completeStatus);
+  // 自动监听生成md内容
   useAutoGenrator(props, textAreaRef);
+  // 粘贴上传
   usePasteUpload(textAreaRef);
+  // 图片点击放大
   userZoom(html);
 
   return (
@@ -79,20 +81,10 @@ const Content = (props: EditorContentProp) => {
                 setCS(false);
               }}
               onInput={(e) => {
-                // 先清空保存的选中内容，防止异常现象
-                // selectedText.current = '';
-
                 // 触发更新
                 onChange((e.target as HTMLTextAreaElement).value);
               }}
               onCompositionEnd={() => {
-                // 输入中文等时，oninput不会保存历史记录
-                // 在完成时保存
-                // bus.emit(
-                //   editorId,
-                //   'saveHistory',
-                //   (e.target as HTMLTextAreaElement).value
-                // );
                 setCS(true);
               }}
               className={

@@ -10,7 +10,6 @@ import {
 import ToolBar from './layouts/Toolbar';
 import Content from './layouts/Content';
 import configFn from './utils/config';
-
 import { prefix, allToolbar, staticTextDefault, defaultEditorId } from './config';
 import { ContentType, EditorProp, ConfigOption } from './type';
 import DropdownToolbar from './extensions/DropdownToolbar';
@@ -50,7 +49,6 @@ const Editor = (props: EditorProp) => {
     historyLength = 10,
     showCodeRowNumber = false,
     previewTheme = 'default',
-
     noPrettier = false,
     tableShape = [6, 4],
     noMermaid = false,
@@ -94,7 +92,7 @@ const Editor = (props: EditorProp) => {
         showCodeRowNumber,
         usedLanguageText,
         previewTheme,
-        extension: Editor.extension
+        extension: extension
       }}
     >
       <div
