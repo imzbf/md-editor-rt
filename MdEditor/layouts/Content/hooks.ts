@@ -277,7 +277,6 @@ export const useMarked = (props: EditorContentProp) => {
   const { markedRenderer, markedOptions, markedExtensions } = extension;
   const highlightIns = extension.editorExtensions?.highlight?.instance;
   const mermaidIns = extension.editorExtensions?.mermaid?.instance;
-  const katexIns = extension.editorExtensions?.katex?.instance;
 
   // 当页面已经引入完成对应的库时，通过修改从状态完成marked重新编译
   const [highlightInited, setHighlightInited] = useState<boolean>(() => {
@@ -387,16 +386,6 @@ export const useMarked = (props: EditorContentProp) => {
       breaks: true,
       ...markedOptions
     });
-
-    // 当没有设置不使用katex，直接扩展组件
-    if (!props.noKatex) {
-      marked.use({
-        extensions: [
-          kaTexExtensions.inline(prefix, katexIns),
-          kaTexExtensions.block(prefix, katexIns)
-        ]
-      });
-    }
 
     // 提供了hljs，在创建阶段即完成设置
     if (highlightIns) {
