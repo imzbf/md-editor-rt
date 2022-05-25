@@ -276,7 +276,7 @@ export const useMarked = (props: EditorContentProp) => {
   const { editorId, usedLanguageText, showCodeRowNumber, extension, highlight } =
     useContext(EditorContext);
 
-  const { markedRenderer, markedOptions, markedExtensions } = extension;
+  const { markedRenderer, markedOptions, markedExtensions, editorConfig } = extension;
   const highlightIns = extension.editorExtensions?.highlight?.instance;
   const mermaidIns = extension.editorExtensions?.mermaid?.instance;
 
@@ -495,12 +495,15 @@ export const useMarked = (props: EditorContentProp) => {
   });
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      heads.current = [];
-      const _html = props.sanitize(marked(props.value || '', { renderer }));
-      onHtmlChanged(_html);
-      setHtml(_html);
-    }, 500);
+    const timer = setTimeout(
+      () => {
+        heads.current = [];
+        const _html = props.sanitize(marked(props.value || '', { renderer }));
+        onHtmlChanged(_html);
+        setHtml(_html);
+      },
+      editorConfig?.renderDelay !== undefined ? editorConfig?.renderDelay : 500
+    );
 
     return () => {
       clearTimeout(timer);
