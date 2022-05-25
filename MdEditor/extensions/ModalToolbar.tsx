@@ -1,5 +1,4 @@
-import { ReactElement } from 'react';
-
+import React, { ReactElement } from 'react';
 import { prefix } from '../config';
 import Modal from '../components/Modal';
 
