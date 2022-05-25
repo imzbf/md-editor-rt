@@ -2,14 +2,67 @@ import React, { useEffect, useRef, useState } from 'react';
 import axios from 'axios';
 import Editor from '../../MdEditor/Editor';
 // import Editor from '../../lib/md-editor-rt.es';
-import { mdText } from '../data';
+import mdText from '../data.md';
 import { Theme } from '../App';
 // import '../../lib/style.css';
 
 import './index.less';
+
+import screenfull from 'screenfull';
+import katex from 'katex';
+import 'katex/dist/katex.min.css';
+
+import Cropper from 'cropperjs';
+import 'cropperjs/dist/cropper.css';
+import mermaid from 'mermaid';
+
+import { cdnBase } from '../../MdEditor/config';
+
+Editor.config({
+  markedRenderer(renderer) {
+    renderer.link = (href, title, text) => {
+      return `<a href="${href}" title="${title}" target="_blank">${text}</a>`;
+    };
+
+    renderer.image = (href: string, _: string, desc: string) => {
+      return `<img src="${href}" alt="${desc}">`;
+    };
+
+    return renderer;
+  },
+  editorExtensions: {
+    highlight: {
+      css: {
+        'tokyo-night': {
+          light: `${cdnBase}/highlight.js/11.5.1/styles/tokyo-night-light.min.css`,
+          dark: `${cdnBase}/highlight.js/11.5.1/styles/tokyo-night-dark.min.css`
+        }
+      }
+    },
+    screenfull: {
+      instance: screenfull
+    },
+    katex: {
+      instance: katex
+    },
+    cropper: {
+      instance: Cropper
+    },
+    mermaid: {
+      instance: mermaid
+    }
+  }
+});
+
 const SAVE_KEY = 'XHMPGLJIZTDB';
 
-export default ({ theme }: { theme: Theme }) => {
+interface PreviewProp {
+  theme: Theme;
+  previewTheme: string;
+  codeTheme: string;
+}
+
+export default ({ theme, previewTheme, codeTheme }: PreviewProp) => {
   const [md, setMd] = useState(() => {
     return localStorage.getItem(SAVE_KEY) || mdText;
   });
@@ -48,6 +101,8 @@ export default ({ theme }: { theme: Theme }) => {
       <div className="container">
         <Editor
           theme={theme}
+          previewTheme={previewTheme}
+          codeTheme={codeTheme}
           modelValue={md}
           editorId="md-editor-preview"
           toolbars={[
@@ -136,6 +191,8 @@ export default ({ theme }: { theme: Theme }) => {
         <br />
         <Editor
           theme={theme}
+          previewTheme={previewTheme}
+          codeTheme={codeTheme}
           modelValue={md2}
           editorId="md-editor-preview-2"
           onChange={setMd2}
