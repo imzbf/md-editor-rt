@@ -1,9 +1,11 @@
-import { CodeCss, StaticTextDefault } from './type';
+import { CodeCss, StaticTextDefault, ToolbarNames } from './type';
 
 export const prefix = 'md';
 
+export const defaultEditorId = 'md-editor-rt';
+
 // 编辑器ID
-export const iconScriptId = 'md-editor-rt';
+export const iconScriptId = defaultEditorId;
 
 // 字体链接
 export const iconfontUrl = 'https://at.alicdn.com/t/font_2605852_pqekijay2ij.js';
@@ -27,7 +29,7 @@ export const cropperUrl = {
 export const screenfullUrl = `${cdnBase}/screenfull.js/5.1.0/screenfull.min.js`;
 
 // 所有的编辑器功能点
-export const allToolbar = [
+export const allToolbar: Array<ToolbarNames> = [
   'bold',
   'underline',
   'italic',

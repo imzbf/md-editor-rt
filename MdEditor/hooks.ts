@@ -1,12 +1,27 @@
+import { useEffect, useMemo, useState } from 'react';
 import bus from './utils/event-bus';
 import { ToolDirective } from './utils/content-help';
-import { ConfigOption, EditorProp, ToolbarNames } from './type';
-import { useEffect } from 'react';
-import { prefix, iconfontUrl, prettierUrl, cropperUrl } from './config';
+import { ConfigOption, EditorProp, InnerError, SettingType, ToolbarNames } from './type';
+import {
+  prefix,
+  iconfontUrl,
+  prettierUrl,
+  cropperUrl,
+  defaultEditorId,
+  allToolbar,
+  codeCss,
+  highlightUrl,
+  staticTextDefault
+} from './config';
 import { appendHandler } from './utils/dom';
 
+/**
+ * 键盘监听
+ *
+ * @param props
+ */
 export const useKeyBoard = (props: EditorProp) => {
-  const { editorId } = props;
+  const { editorId = defaultEditorId } = props;
 
   const initFunc = (name: ToolbarNames) =>
     props.toolbars?.includes(name) && !props.toolbarsExclude?.includes(name);
@@ -309,6 +324,12 @@ export const useKeyBoard = (props: EditorProp) => {
   }, [props.modelValue]);
 };
 
+/**
+ * 插入扩展库
+ *
+ * @param props
+ * @param extension
+ */
 export const useExpansion = (props: EditorProp, extension: ConfigOption) => {
   const { noPrettier, previewOnly } = props;
 
@@ -355,4 +376,177 @@ export const useExpansion = (props: EditorProp, extension: ConfigOption) => {
       }
     }
   }, []);
+};
+
+/**
+ *  错误监听
+ *
+ * @param editorId
+ * @param onError
+ */
+export const useErrorCatcher = (editorId: string, onError: (err: InnerError) => void) => {
+  useEffect(() => {
+    bus.on(editorId, {
+      name: 'errorCatcher',
+      callback: (err: InnerError) => {
+        if (onError instanceof Function) {
+          onError(err);
+        }
+      }
+    });
+  }, []);
+};
+
+/**
+ * 上传图片事件
+ * @param props
+ */
+export const useUploadImg = (props: EditorProp) => {
+  const { editorId = defaultEditorId, previewOnly = false } = props;
+
+  const uploadImageCallBack = (files: Array<File>, cb: () => void) => {
+    const insertHanlder = (urls: Array<string>) => {
+      bus.emit(editorId, 'replace', 'image', {
+        desc: '',
+        urls
+      });
+
+      cb && cb();
+    };
+
+    if (props.onUploadImg) {
+      props.onUploadImg(files, insertHanlder);
+    }
+  };
+
+  useEffect(() => {
+    if (!previewOnly) {
+      bus.remove(editorId, 'uploadImage', uploadImageCallBack);
+      // 监听上传图片
+      bus.on(editorId, {
+        name: 'uploadImage',
+        callback: uploadImageCallBack
+      });
+    }
+
+    return () => {
+      // 清空所有的事件监听
+      bus.clear(editorId);
+    };
+  }, []);
+};
+
+/**
+ * 内部目录状态
+ *
+ * @param props
+ * @returns
+ */
+export const useCatalog = (props: EditorProp) => {
+  const {
+    editorId = defaultEditorId,
+    toolbars = allToolbar,
+    toolbarsExclude = []
+  } = props;
+
+  const [catalogVisible, setCatalogVisible] = useState(false);
+
+  useEffect(() => {
+    bus.on(editorId, {
+      name: 'catalogShow',
+      callback: () => {
+        setCatalogVisible((_catalogVisible) => !_catalogVisible);
+      }
+    });
+  }, []);
+
+  // 是否挂载目录组件
+  const catalogShow = useMemo(() => {
+    return !toolbarsExclude.includes('catalog') && toolbars.includes('catalog');
+  }, [toolbars, toolbarsExclude]);
+
+  return [catalogVisible, catalogShow];
+};
+
+// 初始为空，渲染到页面后获取页面属性
+let bodyOverflowHistory = '';
+
+/**
+ * highlight及language重构
+ * [SettingType, (k: keyof typeof setting) => void] => {}
+ * @param props
+ * @param extension
+ * @returns
+ */
+export const useConfig = (props: EditorProp, extension: ConfigOption) => {
+  const { theme = 'light', codeTheme = 'atom', language = 'zh-CN' } = props;
+
+  const highlight = useMemo(() => {
+    const highlightConfig = extension?.editorExtensions?.highlight;
+
+    const cssList = {
+      ...codeCss,
+      ...highlightConfig?.css
+    };
+
+    return {
+      js: highlightConfig?.js || highlightUrl,
+      css: cssList[codeTheme] ? cssList[codeTheme][theme] : codeCss.atom[theme]
+    };
+  }, [theme, codeTheme]);
+
+  // 缓存语言设置
+  const usedLanguageText = useMemo(() => {
+    const allText: any = {
+      ...staticTextDefault,
+      ...extension?.editorConfig?.languageUserDefined
+    };
+
+    if (allText[language]) {
+      return allText[language];
+    } else {
+      return staticTextDefault['zh-CN'];
+    }
+  }, [language]);
+
+  const { preview = true, htmlPreview = false, pageFullScreen = false } = props;
+
+  const [setting, setSetting] = useState<SettingType>({
+    pageFullScreen: pageFullScreen,
+    fullscreen: false,
+    preview: preview,
+    htmlPreview: preview ? false : htmlPreview
+  });
+
+  const updateSetting = (k: keyof typeof setting) => {
+    setSetting((settingN) => {
+      const nextSetting = {
+        ...settingN,
+        [k]: !settingN[k]
+      } as SettingType;
+
+      if (k === 'preview' && nextSetting.preview) {
+        nextSetting.htmlPreview = false;
+      } else if (k === 'htmlPreview' && nextSetting.htmlPreview) {
+        nextSetting.preview = false;
+      }
+
+      return nextSetting;
+    });
+  };
+
+  useEffect(() => {
+    // 保存body部分样式
+    bodyOverflowHistory = document.body.style.overflow;
+  }, []);
+
+  useEffect(() => {
+    if (setting.pageFullScreen || setting.fullscreen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = bodyOverflowHistory;
+    }
+  }, [setting.pageFullScreen, setting.fullscreen]);
+
+  return [highlight, usedLanguageText, setting, updateSetting];
 };

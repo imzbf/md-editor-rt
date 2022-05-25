@@ -1,20 +1,18 @@
-import React, { createContext, useEffect, useMemo, useState } from 'react';
-import { useExpansion, useKeyBoard } from './hooks';
+import React, { createContext } from 'react';
+import {
+  useCatalog,
+  useConfig,
+  useErrorCatcher,
+  useExpansion,
+  useKeyBoard,
+  useUploadImg
+} from './hooks';
 import ToolBar from './layouts/Toolbar';
 import Content from './layouts/Content';
-import bus from './utils/event-bus';
 import configFn from './utils/config';
 
-import { prefix, allToolbar, highlightUrl, staticTextDefault, codeCss } from './config';
-
-import {
-  ContentType,
-  MarkedHeadingId,
-  EditorProp,
-  SettingType,
-  ConfigOption,
-  InnerError
-} from './type';
+import { prefix, allToolbar, staticTextDefault, defaultEditorId } from './config';
+import { ContentType, EditorProp, ConfigOption } from './type';
 import DropdownToolbar from './extensions/DropdownToolbar';
 import NormalToolbar from './extensions/NormalToolbar';
 import ModalToolbar from './extensions/ModalToolbar';
@@ -39,198 +37,50 @@ export const EditorContext = createContext<ContentType>({
   extension: {}
 });
 
-// 初始为空，渲染到页面后获取页面属性
-let bodyOverflowHistory = '';
-
-const markedHeadingId: MarkedHeadingId = (text) => text;
-
 const Editor = (props: EditorProp) => {
   const {
-    theme,
-    className,
-    toolbars,
-    toolbarsExclude,
-    preview,
-    htmlPreview,
-    previewOnly,
-    pageFullScreen,
-    editorId,
-    tabWidth,
-    historyLength,
-    showCodeRowNumber,
-    previewTheme
-    // screenfull,
-    // screenfullJs
+    modelValue = '',
+    theme = 'light',
+    className = '',
+    toolbars = allToolbar,
+    toolbarsExclude = [],
+    previewOnly = false,
+    editorId = defaultEditorId,
+    tabWidth = 2,
+    historyLength = 10,
+    showCodeRowNumber = false,
+    previewTheme = 'default',
+
+    noPrettier = false,
+    tableShape = [6, 4],
+    noMermaid = false,
+    noKatex = false,
+    placeholder = '',
+    onChange = () => {},
+    onHtmlChanged = () => {},
+    onGetCatalog = () => {},
+    sanitize = (text) => text,
+    onError = () => {},
+    markedHeadingId = (text) => text
   } = props;
 
-  const [state, setState] = useState<{
-    catalogVisible: boolean;
-    extension: ConfigOption;
-  }>(() => {
-    return {
-      catalogVisible: false,
-      extension: Editor.extension
-    };
-  });
+  const extension = Editor.extension as ConfigOption;
 
-  const highlight = useMemo(() => {
-    const highlightConfig = state.extension?.editorExtensions?.highlight;
-
-    const cssList = {
-      ...codeCss,
-      ...highlightConfig?.css
-    };
-
-    return {
-      js: highlightConfig?.js || highlightUrl,
-      css: cssList[props.codeTheme]
-        ? cssList[props.codeTheme][props.theme as 'light' | 'dark']
-        : codeCss.atom[props.theme as 'light' | 'dark']
-    };
-  }, [props.theme, props.codeTheme]);
-
+  // 快捷键监听
   useKeyBoard(props);
-
-  useExpansion(props, state.extension);
-
-  // ----编辑器设置----
-  const [setting, setSetting] = useState<SettingType>({
-    pageFullScreen: pageFullScreen,
-    fullscreen: false,
-    preview: preview,
-    htmlPreview: preview ? false : htmlPreview
-  });
-
-  const updateSetting = (k: keyof typeof setting) => {
-    setSetting((settingN) => {
-      const nextSetting = {
-        ...settingN,
-        [k]: !settingN[k]
-      } as SettingType;
-
-      if (k === 'preview' && nextSetting.preview) {
-        nextSetting.htmlPreview = false;
-      } else if (k === 'htmlPreview' && nextSetting.htmlPreview) {
-        nextSetting.preview = false;
-      }
-
-      return nextSetting;
-    });
-  };
-
-  const uploadImageCallBack = (files: Array<File>, cb: () => void) => {
-    const insertHanlder = (urls: Array<string>) => {
-      bus.emit(editorId, 'replace', 'image', {
-        desc: '',
-        urls
-      });
-
-      cb && cb();
-    };
-
-    if (props.onUploadImg) {
-      props.onUploadImg(files, insertHanlder);
-    }
-  };
-
-  useEffect(() => {
-    if (!previewOnly) {
-      bus.remove(editorId, 'uploadImage', uploadImageCallBack);
-      // 监听上传图片
-      bus.on(editorId, {
-        name: 'uploadImage',
-        callback: uploadImageCallBack
-      });
-
-      // 保存body部分样式
-      bodyOverflowHistory = document.body.style.overflow;
-    }
-
-    bus.on(editorId, {
-      name: 'catalogShow',
-      callback: () => {
-        setState((_state) => {
-          return {
-            ..._state,
-            catalogVisible: !_state.catalogVisible
-          };
-        });
-      }
-    });
-
-    return () => {
-      // 清空所有的事件监听
-      bus.clear(editorId);
-    };
-  }, []);
-
-  // 变化是调整一次
-  useEffect(() => {
-    if (setting.pageFullScreen || setting.fullscreen) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = bodyOverflowHistory;
-    }
-  }, [setting.pageFullScreen, setting.fullscreen]);
-  // ----end----
-
-  // 缓存代码扩展
-  // const highlightSet = useMemo(() => {
-  //   let url = highlightUrl.atom;
-
-  //   if (props.highlightCss) {
-  //     // 用户设置为高优先级
-  //     url = props.highlightCss;
-  //   } else {
-  //     // 低优先级，根据全局主题加预览主题判断使用
-  //     switch (props.previewTheme) {
-  //       case 'github': {
-  //         if (props.theme === 'dark') {
-  //           url = highlightUrl.githubDark;
-  //         } else {
-  //           url = highlightUrl.github;
-  //         }
-
-  //         break;
-  //       }
-  //     }
-  //   }
-
-  //   return {
-  //     js: props.highlightJs,
-  //     css: url
-  //   };
-  // }, [props.highlightCss, props.previewTheme, props.theme]);
-
-  // 缓存语言设置
-  const usedLanguageText = useMemo(() => {
-    const allText: any = {
-      ...staticTextDefault,
-      ...state.extension?.editorConfig?.languageUserDefined
-    };
-
-    if (allText[props.language]) {
-      return allText[props.language];
-    } else {
-      return staticTextDefault['zh-CN'];
-    }
-  }, [props.language]);
-
-  // 是否挂载目录组件
-  const catalogShow = useMemo(() => {
-    return !toolbarsExclude.includes('catalog') && toolbars.includes('catalog');
-  }, [toolbars, toolbarsExclude]);
-
-  useEffect(() => {
-    bus.on(editorId, {
-      name: 'errorCatcher',
-      callback: (err: InnerError) => {
-        if (props.onError instanceof Function) {
-          props.onError(err);
-        }
-      }
-    });
-  }, []);
+  // 扩展库引用
+  useExpansion(props, extension);
+  // 上传图片监控
+  useUploadImg(props);
+  // 错误捕获
+  useErrorCatcher(editorId, onError);
+  // 目录状态
+  const [catalogVisible, catalogShow] = useCatalog(props);
+  // 部分配置重构
+  const [highlight, usedLanguageText, setting, updateSetting] = useConfig(
+    props,
+    extension
+  );
 
   return (
     <EditorContext.Provider
@@ -262,14 +112,14 @@ const Editor = (props: EditorProp) => {
       >
         {!previewOnly && (
           <ToolBar
-            noPrettier={props.noPrettier}
+            noPrettier={noPrettier}
             // screenfull={screenfull}
             // screenfullJs={screenfullJs}
             toolbars={toolbars}
             toolbarsExclude={toolbarsExclude}
             setting={setting}
             updateSetting={updateSetting}
-            tableShape={props.tableShape}
+            tableShape={tableShape}
             defToolbars={props.defToolbars}
           />
         )}
@@ -278,29 +128,29 @@ const Editor = (props: EditorProp) => {
           // highlightSet={highlightSet}
           // mermaid={props.mermaid}
           // mermaidJs={props.mermaidJs}
-          value={props.modelValue}
-          onChange={props.onChange}
+          value={modelValue}
+          onChange={onChange}
           setting={setting}
-          onHtmlChanged={props.onHtmlChanged}
-          onGetCatalog={props.onGetCatalog}
+          onHtmlChanged={onHtmlChanged}
+          onGetCatalog={onGetCatalog}
           // markedHeading={props.markedHeading}
-          sanitize={props.sanitize}
-          noMermaid={props.noMermaid}
-          placeholder={props.placeholder}
+          sanitize={sanitize}
+          noMermaid={noMermaid}
+          placeholder={placeholder}
           // katex={props.katex}
           // katexJs={props.katexJs}
           // katexCss={props.katexCss}
-          noKatex={props.noKatex}
+          noKatex={noKatex}
           // extensions={props.extensions}
           // markedImage={props.markedImage}
-          mermaidTemplate={state.extension?.editorConfig?.mermaidTemplate}
-          markedHeadingId={props.markedHeadingId}
+          mermaidTemplate={extension?.editorConfig?.mermaidTemplate}
+          markedHeadingId={markedHeadingId}
         />
         {catalogShow && (
           <MdCatalog
             theme={props.theme}
             style={{
-              display: state.catalogVisible ? 'block' : 'none'
+              display: catalogVisible ? 'block' : 'none'
             }}
             className={`${prefix}-catalog-editor`}
             editorId={editorId}
@@ -311,59 +161,6 @@ const Editor = (props: EditorProp) => {
     </EditorContext.Provider>
   );
 };
-
-Editor.defaultProps = {
-  modelValue: '',
-  theme: 'light',
-  className: '',
-  // highlightJs: highlightUrl.js,
-  // highlightCss: '',
-  historyLength: 10,
-  onChange() {},
-  pageFullScreen: false,
-  preview: true,
-  htmlPreview: false,
-  previewOnly: false,
-  language: 'zh-CN',
-  // languageUserDefined: {},
-  toolbars: allToolbar,
-  toolbarsExclude: [],
-  noPrettier: false,
-  // prettierCDN: prettierUrl.main,
-  // prettierMDCDN: prettierUrl.markdown,
-  // cropperCss: cropperUrl.css,
-  // cropperJs: cropperUrl.js,
-  // iconfontJs: iconfontUrl,
-  editorId: `md-editor-rt`,
-  tabWidth: 2,
-  showCodeRowNumber: false,
-  // screenfullJs: screenfullUrl,
-  previewTheme: 'default',
-  // markedHeading: (text, level, raw) => {
-  //   // 我们默认同一级别的标题，你不会定义两个相同的
-  //   const id = markedHeadingId(raw, level);
-
-  //   // 如果标题有markdown语法内容，会按照该语法添加标题，而不再自定义，但是仍然支持目录定位
-  //   if (text !== raw) {
-  //     return `<h${level} id="${id}">${text}</h${level}>`;
-  //   } else {
-  //     return `<h${level} id="${id}"><a href="#${id}">${raw}</a></h${level}>`;
-  //   }
-  // },
-  // 希望你在自定义markedHeading的同时，能够告诉编辑器你生成ID的算法~
-  markedHeadingId,
-  style: {},
-  tableShape: [6, 4],
-  // mermaidJs: mermaidUrl,
-  sanitize: (html: string) => html,
-  placeholder: '',
-  // katexJs: katexJsUrl,
-  // katexCss: katexCssUrl,
-  // markedImage: (href: string, _: string, desc: string) => {
-  //   return `<figure><img src="${href}" alt="${desc}"><figcaption>${desc}</figcaption></figure>`;
-  // }
-  codeTheme: 'atom'
-} as EditorProp;
 
 Editor.DropdownToolbar = DropdownToolbar;
 Editor.NormalToolbar = NormalToolbar;
