@@ -1,4 +1,4 @@
-import React, { useRef, useState, ReactElement, useEffect } from 'react';
+import React, { useRef, useState, ReactElement, useEffect, useMemo } from 'react';
 import { prefix } from '../../config';
 import { keyMove } from '../../utils/dom';
 import './style.less';
@@ -32,6 +32,20 @@ const Modal = (props: ModalProps) => {
       top: '0px'
     }
   });
+
+  const innerSize = useMemo(() => {
+    if (props.isFullscreen) {
+      return {
+        width: '100%',
+        height: '100%'
+      };
+    } else {
+      return {
+        width: props.width,
+        height: props.height
+      };
+    }
+  }, [props.isFullscreen]);
 
   const [inited, setInited] = useState(false);
 
@@ -97,8 +111,7 @@ const Modal = (props: ModalProps) => {
         className={modalClass.join(' ')}
         style={{
           ...state.initPos,
-          width: props.width,
-          height: props.height
+          ...innerSize
         }}
         ref={modalRef}
       >
