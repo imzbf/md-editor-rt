@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import axios from 'axios';
-import Editor from '../../MdEditor/Editor';
+import MdEditor from '../../MdEditor/Editor';
 // import Editor from '../../lib/md-editor-rt.es';
 import mdText from '../data.md';
 import { Theme } from '../App';
@@ -18,7 +18,7 @@ import mermaid from 'mermaid';
 
 import { cdnBase } from '../../MdEditor/config';
 
-Editor.config({
+MdEditor.config({
   markedRenderer(renderer) {
     renderer.link = (href, title, text) => {
       return `<a href="${href}" title="${title}" target="_blank">${text}</a>`;
@@ -51,6 +51,42 @@ Editor.config({
     mermaid: {
       instance: mermaid
     }
+  },
+  editorConfig: {
+    mermaidTemplate: {
+      /**
+       * 流程图
+       */
+      flow: 'flow',
+      /**
+       * 时序图
+       */
+      sequence: 'sequence',
+      /**
+       * 甘特图
+       */
+      gantt: 'gantt',
+      /**
+       * 类图
+       */
+      class: 'class',
+      /**
+       * 状态图
+       */
+      state: 'state',
+      /**
+       * 饼图
+       */
+      pie: 'pie',
+      /**
+       * 关系图
+       */
+      relationship: 'relationship',
+      /**
+       * 旅程图
+       */
+      journey: 'journey'
+    }
   }
 });
 
@@ -64,23 +100,27 @@ interface PreviewProp {
 
 export default ({ theme, previewTheme, codeTheme }: PreviewProp) => {
   const [md, setMd] = useState(() => {
-    return localStorage.getItem(SAVE_KEY) || mdText;
+    return {
+      text: localStorage.getItem(SAVE_KEY) || mdText,
+      text2: 'Hello world',
+      visible: false,
+      modalVisible: false,
+      isFullscreen: false
+    };
   });
-
-  const [md2, setMd2] = useState('# Hello World');
 
   // 自动保存
   const taskId = useRef(-1);
   useEffect(() => {
     clearInterval(taskId.current);
     taskId.current = window.setTimeout(() => {
-      localStorage.setItem(SAVE_KEY, md);
+      localStorage.setItem(SAVE_KEY, md.text);
     }, 2_000);
 
     return () => {
       clearInterval(taskId.current);
     };
-  }, [md]);
+  }, [md.text]);
   // -----end-----
 
   const [defVisible, setDefVisible] = useState(false);
@@ -96,14 +136,14 @@ export default ({ theme, previewTheme, codeTheme }: PreviewProp) => {
           right: '10px'
         }}
       >
-        <Editor.MdCatalog theme={theme} editorId="md-editor-preview" />
+        <MdEditor.MdCatalog theme={theme} editorId="md-editor-preview" />
       </div>
       <div className="container">
-        <Editor
+        <MdEditor
           theme={theme}
           previewTheme={previewTheme}
           codeTheme={codeTheme}
-          modelValue={md}
+          modelValue={md.text}
           editorId="md-editor-preview"
           toolbars={[
             'bold',
@@ -131,6 +171,7 @@ export default ({ theme, previewTheme, codeTheme }: PreviewProp) => {
             'save',
             0,
             1,
+            2,
             '=',
             'prettier',
             'pageFullscreen',
@@ -141,7 +182,7 @@ export default ({ theme, previewTheme, codeTheme }: PreviewProp) => {
             'github'
           ]}
           defToolbars={[
-            <Editor.NormalToolbar
+            <MdEditor.NormalToolbar
               trigger={
                 <svg className={`md-icon`} aria-hidden="true">
                   <use xlinkHref="#icon-strike-through" />
@@ -149,8 +190,8 @@ export default ({ theme, previewTheme, codeTheme }: PreviewProp) => {
               }
               onClick={console.log}
               key="dddd"
-            ></Editor.NormalToolbar>,
-            <Editor.DropdownToolbar
+            ></MdEditor.NormalToolbar>,
+            <MdEditor.DropdownToolbar
               visible={defVisible}
               trigger={
                 <svg className={`md-icon`} aria-hidden="true">
@@ -160,12 +201,55 @@ export default ({ theme, previewTheme, codeTheme }: PreviewProp) => {
               onChange={setDefVisible}
               overlay={<div>下拉内容</div>}
               key="dddd3"
-            ></Editor.DropdownToolbar>
+            ></MdEditor.DropdownToolbar>,
+            <MdEditor.ModalToolbar
+              key="ddd-modal"
+              title="弹窗扩展"
+              modalTitle="外置弹窗"
+              showAdjust
+              visible={md.modalVisible}
+              isFullscreen={md.isFullscreen}
+              onAdjust={(isFullscreen) => {
+                setMd({
+                  ...md,
+                  isFullscreen
+                });
+              }}
+              trigger={
+                <svg className="md-icon" aria-hidden="true">
+                  <use xlinkHref="#icon-strike-through" />
+                </svg>
+              }
+              onClick={() => {
+                setMd({
+                  ...md,
+                  modalVisible: true
+                });
+              }}
+              onClose={() => {
+                setMd({
+                  ...md,
+                  modalVisible: false
+                });
+              }}
+            >
+              <div
+                style={{
+                  width: '500px',
+                  height: '300px'
+                }}
+              ></div>
+            </MdEditor.ModalToolbar>
           ]}
           onSave={(v) => {
             localStorage.setItem(SAVE_KEY, v);
           }}
-          onChange={(value) => setMd(value)}
+          onChange={(value) =>
+            setMd({
+              ...md,
+              text: value
+            })
+          }
           onUploadImg={async (files: Array<File>, callback: (urls: string[]) => void) => {
             const res = await Promise.all(
               files.map((file) => {
@@ -189,13 +273,18 @@ export default ({ theme, previewTheme, codeTheme }: PreviewProp) => {
           }}
         />
         <br />
-        <Editor
+        <MdEditor
           theme={theme}
           previewTheme={previewTheme}
           codeTheme={codeTheme}
-          modelValue={md2}
+          modelValue={md.text2}
           editorId="md-editor-preview-2"
-          onChange={setMd2}
+          onChange={(value) => {
+            setMd({
+              ...md,
+              text2: value
+            });
+          }}
         />
         <br />
         <span className="tips-text">
