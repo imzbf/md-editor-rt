@@ -10,6 +10,8 @@ export interface StateType {
   theme: Theme;
   // 预览主题
   previewTheme: PreviewThemes;
+  // 代码主题
+  codeTheme: string;
   // 语言
   lang: Lang;
 }
@@ -21,6 +23,7 @@ const defaultState: StateType = stagedStore
   : {
       theme: 'light',
       previewTheme: 'default',
+      codeTheme: 'atom',
       lang: 'en-US'
     };
 
@@ -34,21 +37,21 @@ const setting = (state = defaultState, action: any) => {
   switch (action.type) {
     case 'changeTheme': {
       newState.theme = action.value;
-
-      localStorage.setItem(STORAGED_STORE_KEY, JSON.stringify(newState));
       break;
     }
     case 'changePreviewTheme': {
       newState.previewTheme = action.value;
-      localStorage.setItem(STORAGED_STORE_KEY, JSON.stringify(newState));
       break;
+    }
+    case 'changeCodeTheme': {
+      newState.codeTheme = action.value;
     }
     case 'changeLang': {
       newState.lang = newState.lang === 'zh-CN' ? 'en-US' : 'zh-CN';
-      localStorage.setItem(STORAGED_STORE_KEY, JSON.stringify(newState));
     }
   }
 
+  localStorage.setItem(STORAGED_STORE_KEY, JSON.stringify(newState));
   return newState;
 };
 

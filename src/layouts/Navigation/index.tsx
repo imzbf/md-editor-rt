@@ -17,7 +17,8 @@ export default () => {
           github: '源码',
           about: '关于',
           lang: 'English',
-          langIcon: '#icon-d-en'
+          langIcon: '#icon-d-en',
+          to2: '升级至2.x'
         }
       : {
           home: 'Home',
@@ -26,7 +27,8 @@ export default () => {
           github: 'Github',
           about: 'About',
           lang: '中文',
-          langIcon: '#icon-d-cn'
+          langIcon: '#icon-d-cn',
+          to2: 'Upgrade 2.x'
         };
   }, [lang]);
 
@@ -70,6 +72,14 @@ export default () => {
             <use xlinkHref="#icon-d-about"></use>
           </svg>
           {linkNames.about}
+        </Link>
+      </li>
+      <li className="nav-item">
+        <Link to="/md-editor-rt/contrast">
+          <svg className="icon" aria-hidden="true">
+            <use xlinkHref="#icon-d-v"></use>
+          </svg>
+          {linkNames.to2}
         </Link>
       </li>
       <li

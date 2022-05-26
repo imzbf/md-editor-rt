@@ -3,7 +3,6 @@
 @import '../node_modules/antd/lib/dropdown/style';
 @import '../node_modules/antd/lib/menu/style';
 @import '../node_modules/antd/lib/affix/style';
-@import '../node_modules/antd/lib/anchor/style';
 @import '../node_modules/antd/lib/style/';
 
 body,
@@ -89,8 +88,6 @@ html {
 .container {
   width: 1170px;
   margin: 0 auto;
-  position: relative;
-  overflow: auto;
 }
 
 .btn {
@@ -137,10 +134,6 @@ html {
 
     .catalog {
       width: 25%;
-
-      .ant-anchor-wrapper {
-        padding-left: 1rem;
-      }
     }
 
     .content {
@@ -185,19 +178,6 @@ html {
     }
   }
 
-  // 覆盖ant，锚点默认样式
-  .ant-anchor {
-    color: @colorDark;
-
-    .ant-anchor-ink::before {
-      background-color: @borderColorDark;
-    }
-
-    .ant-anchor-link-title {
-      color: @colorDark;
-    }
-  }
-
   .ant-dropdown-menu-dark {
     background-color: @bkColorDark;
     border: 1px solid @borderColorDark;
@@ -208,7 +188,61 @@ html {
   }
 }
 
-.md-catalog-wrapper {
-  max-height: 300px;
+.affix {
+  position: sticky;
+  top: 10px;
+  max-height: 100vh;
   overflow: auto;
+
+  &::-webkit-scrollbar {
+    height: 0;
+    width: 0;
+  }
+}
+
+.md-catalog {
+  margin-bottom: 1em;
+  &-link {
+    padding-left: 1em !important;
+  }
+}
+
+@keyframes Loading {
+  50% {
+    transform: translate(0, 15px);
+  }
+
+  100% {
+    transform: translate(0, 0);
+  }
+}
+
+.loading {
+  text-align: center;
+  margin: 50px 0;
+
+  div {
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    border-radius: 14px;
+    margin: 0 3px;
+    animation-name: Loading;
+    animation-duration: 1s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+
+    &:nth-child(1) {
+      background-color: #47759c;
+      animation-delay: 0.3s;
+    }
+    &:nth-child(2) {
+      background-color: #15757b;
+      animation-delay: 0.2s;
+    }
+    &:nth-child(3) {
+      background-color: #15955a;
+      animation-delay: 0.1s;
+    }
+  }
 }

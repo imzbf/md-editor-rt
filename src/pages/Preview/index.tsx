@@ -1,18 +1,24 @@
 import React, { useEffect, useState } from 'react';
-import axios from '@/utils/request';
-import Editor from 'md-editor-rt';
-import { emojis } from './data';
-import MarkExtension from '@/utils/marked-mark';
-import './index.less';
+import MdEditor from 'md-editor-rt';
 import { useSelector } from 'react-redux';
+import axios from '@/utils/request';
+import './index.less';
 import { StateType } from '@/store';
 import mdEN from '../../../public/preview-en-US.md';
 import mdCN from '../../../public/preview-zh-CN.md';
 
-export default () => {
-  const [md, setMd] = useState(mdEN);
+import EmojiExtension from '@/components/EmojiExtension';
+import MarkExtension from '@/components/MarkExtension';
+import ReadExtension from '@/components/ReadExtension';
 
+const editorId = 'editor-preview';
+
+export default () => {
   const state = useSelector((state: any) => state) as StateType;
+
+  const [md, setMd] = useState(() => {
+    return state.lang === 'zh-CN' ? mdCN : mdEN;
+  });
 
   useEffect(() => {
     if (state.lang === 'zh-CN') {
@@ -22,105 +28,20 @@ export default () => {
     }
   }, [state.lang]);
 
-  const [emojiVisible, setEmojiVisible] = useState(false);
-
-  const markHandler = () => {
-    // 获取输入框
-    const textarea = document.querySelector('#md-prev-textarea') as HTMLTextAreaElement;
-    // 获取选中的内容
-    const selection = window.getSelection()?.toString();
-    // 获取鼠标位置
-    const endPoint = textarea.selectionStart;
-
-    // 生成标记文本
-    const markStr = `@${selection}@`;
-
-    // 根据鼠标位置分割旧文本
-    // 前半部分
-    const prefixStr = textarea.value.substring(0, endPoint);
-    // 后半部分
-    const suffixStr = textarea.value.substring(endPoint + (selection?.length || 0));
-
-    setMd(`${prefixStr}${markStr}${suffixStr}`);
-
-    setTimeout(() => {
-      textarea.setSelectionRange(endPoint, markStr.length + endPoint);
-      textarea.focus();
-    }, 0);
-  };
-
-  const emojiHandler = (emoji: string) => {
-    // 获取输入框
-    const textarea = document.querySelector('#md-prev-textarea') as HTMLTextAreaElement;
-    // 获取选中的内容
-    const selection = window.getSelection()?.toString();
-    // 获取鼠标位置
-    const endPoint = textarea.selectionStart;
-
-    // 根据鼠标位置分割旧文本
-    // 前半部分
-    const prefixStr = textarea.value.substring(0, endPoint);
-    // 后半部分
-    const suffixStr = textarea.value.substring(endPoint + (selection?.length || 0));
-
-    setMd(`${prefixStr}${emoji}${suffixStr}`);
-
-    setTimeout(() => {
-      textarea.setSelectionRange(endPoint, endPoint + 1);
-      textarea.focus();
-    }, 0);
-  };
-
   return (
     <div className="project-preview">
       <div className="container">
-        <Editor
+        <MdEditor
           theme={state.theme}
           previewTheme={state.previewTheme}
           modelValue={md}
           language={state.lang}
-          editorId="md-prev"
+          editorId={editorId}
           defToolbars={[
-            <Editor.NormalToolbar
-              title="标记"
-              trigger={
-                <svg className="md-icon" aria-hidden="true">
-                  <use xlinkHref="#icon-mark"></use>
-                </svg>
-              }
-              onClick={markHandler}
-              key="mark-toolbar"
-            ></Editor.NormalToolbar>,
-            <Editor.DropdownToolbar
-              visible={emojiVisible}
-              onChange={setEmojiVisible}
-              overlay={
-                <>
-                  <div className="emoji-container">
-                    <ol className="emojis">
-                      {emojis.map((emoji, index) => (
-                        <li
-                          key={`emoji-${index}`}
-                          onClick={() => {
-                            emojiHandler(emoji);
-                          }}
-                        >
-                          {emoji}
-                        </li>
-                      ))}
-                    </ol>
-                  </div>
-                </>
-              }
-              trigger={
-                <svg className="md-icon" aria-hidden="true">
-                  <use xlinkHref="#icon-emoji"></use>
-                </svg>
-              }
-              key="emoji-toolbar"
-            ></Editor.DropdownToolbar>
+            <MarkExtension editorId={editorId} onChange={setMd} key="mark-extension" />,
+            <EmojiExtension editorId={editorId} onChange={setMd} key="emoji-extension" />,
+            <ReadExtension mdText={md} key="read-extension" />
           ]}
-          extensions={[MarkExtension]}
           toolbars={[
             'bold',
             'underline',
@@ -143,6 +64,7 @@ export default () => {
             'katex',
             0,
             1,
+            2,
             '-',
             'revoke',
             'next',
@@ -179,12 +101,6 @@ export default () => {
             callback(res.map((item: any) => item.data.url));
           }}
         />
-        <br />
-        <span className="tips-text">
-          {state.lang === 'zh-CN'
-            ? 'Tips：本页展示编辑器localstorage存储功能已移除！本页面的emoji示例需要自行扩展，请参考示例页面中的内容！'
-            : 'Tips: The editor in this page can not save text to localstorage now! The function of inserting emoji on this page needs to be developed by yourself! The example is on the "demo" page.'}
-        </span>
       </div>
     </div>
   );
