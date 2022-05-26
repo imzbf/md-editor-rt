@@ -45,9 +45,6 @@
     "build": "vite build",
     "build:preview": "vite build --mode=preview"
   },
-  "peerDependencies": {
-    "react": ">=18.0.0"
-  },
   "dependencies": {
     "@types/marked": "^4.0.3"
   },

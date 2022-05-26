@@ -45,7 +45,7 @@ react 版本的 Markdown 编辑器，[md-editor-v3](https://imzbf.github.io/md-e
 | pageFullScreen | boolean | false | 页面内全屏 |
 | preview | boolean | true | 是否预览 |
 | htmlPreview | boolean | false | 是否 html 预览 |
-| previewOnly | boolean | false | 仅预览模式，不显示 bar 和编辑框，_不支持响应式，仅能初始设置一次_ |
+| previewOnly | boolean | false | 仅预览模式，不显示 bar 和编辑框 |
 | language | string | 'zh-CN' | 内置中英文('zh-CN','en-US')，可自行扩展其他语言，同时可覆盖内置的中英文 |
 | toolbars | Array | [toolbars] | 选择性展示工具栏，可选内容<sup>见下方`toolbars`</sup> |
 | toolbarsExclude | Array | [] | 选择性不展示工具栏，内容同`toolbars` |
@@ -55,14 +55,14 @@ react 版本的 Markdown 编辑器，[md-editor-v3](https://imzbf.github.io/md-e
 | showCodeRowNumber | boolean | false | 代码块是否显示行号 |
 | previewTheme | 'default' \| 'github' \| 'vuepress' \| 'mk-cute' \| 'smart-blue' \| 'cyanosis' | 'default' | 预览内容主题，自定义主题规则见下方 |
 | style | string \| CSSProperties | {} | 编辑器内联样式 |
-| tableShape | [number, number] | [6, 4] | 标题栏添加表格时，预设待选表格大小，第一个代表最大列数，第二个代表最大行数。 |
+| tableShape | [number, number] | [6, 4] | 标题栏添加表格时，预设待选表格大小，第一个代表最大列数，第二个代表最大行数 |
 | noMermaid | boolean | false | 如果你不希望使用图表展示内容，可以设置关闭 |
 | placeholder | string | '' |  |
 | noKatex | boolean | false | 不使用 katex 展示数学公式 |
 | defToolbars | Array<DropdownToolbar \| NormalToolbar \| ModalToolbar> | null | 使用内置的组件自定义扩展工具栏 |
 | codeTheme | 'atom'\|'a11y'\|'github'\|'gradient'\|'kimbie'\|'paraiso'\|'qtcreator'\|'stackoverflow' | 'atom' | 代码块[highlight](https://www.jsdelivr.com/package/npm/highlight.js?path=styles)样式名称，扩展更多见下方 |
 | markedHeadingId | (text: string, level: number) => string | (text) => text | 标题`ID`计算方式 |
-| sanitize | (html: string) => string | (html) => html | 在每次生成 html 后，通过该方法移除危险内容，比如 xss 相关。 |
+| sanitize | (html: string) => string | (html) => html | 在每次生成 html 后，通过该方法移除危险内容，比如 xss 相关 |
 
 > 如果你重新定义了标题，请务必通过`markedHeadingId`告诉编辑器你生成标题 ID 的算法。以便生成的内部目录能够正确导航。
 
@@ -295,7 +295,7 @@ export interface StaticTextDefaultValue {
 
 - editorExtensions: 类型如下，用于配置编辑器内部的扩展
 
-  ```typescript
+  ```js
   import MdEditor from 'md-editor-rt';
 
   MdEditor.config({

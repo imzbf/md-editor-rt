@@ -53,7 +53,7 @@ mark and emoji extensions
 | toolbars | Array | [toolbars] | Show some item of toolbars, all keys<sup>see `toolbars` below</sup> |
 | toolbarsExclude | Array | [] | Don't show some item of toolbars, all keys`toolbars` |
 | noPrettier | boolean | false | Use prettier to beautify content or not |
-| editorId | string | md-editor-rt | Editor id, it is used when there are more than two editors in the same page. |
+| editorId | string | md-editor-rt | Editor id, it is used when there are more than two editors in the same page |
 | tabWidth | number | 2 | One tab eq some spaces |
 | showCodeRowNumber | boolean | false | Show row number for code block or not |
 | previewTheme | 'default' \| 'github' \| 'vuepress' \| 'mk-cute' \| 'smart-blue' \| 'cyanosis' | 'default' | Preview theme, can be customized |
@@ -287,7 +287,7 @@ Use `MdEditor.config(option: ConfigOption)` to reconfigure `renderer`.
 
 - editorExtensions: Config some dependency libraries, like highlight..
 
-  ```typescript
+  ```js
   import MdEditor from 'md-editor-rt';
 
   MdEditor.config({
@@ -453,11 +453,11 @@ import React, { useState } from 'react';
 import MdEditor from 'md-editor-rt';
 import 'md-editor-rt/lib/style.css';
 
-export default function App() {
+export default () => {
   const [text, setText] = useState('# Hello Editor');
 
-  return <Editor modelValue={text} onChange={setText} />;
-}
+  return <MdEditor modelValue={text} onChange={setText} />;
+};
 ```
 
 ### Upload picture
@@ -469,7 +469,7 @@ import React, { useState } from 'react';
 import MdEditor from 'md-editor-rt';
 import 'md-editor-rt/lib/style.css';
 
-export default function App() {
+export default () => {
   const [text, setText] = useState('# Hello Editor');
 
   const onUploadImg = async (files, callback) => {
@@ -494,8 +494,8 @@ export default function App() {
     callback(res.map((item) => item.data.url));
   };
 
-  return <Editor modelValue={text} onChange={setText} onUploadImg={onUploadImg} />;
-}
+  return <MdEditor modelValue={text} onChange={setText} onUploadImg={onUploadImg} />;
+};
 ```
 
 ### Change Styles
