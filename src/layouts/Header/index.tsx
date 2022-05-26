@@ -92,6 +92,7 @@ export default () => {
                           value: item
                         });
                       }}
+                      key={`preview-theme-${item}`}
                     >
                       {item}
                     </Menu.Item>
@@ -125,6 +126,7 @@ export default () => {
                           value: item
                         });
                       }}
+                      key={`code-theme-${item}`}
                     >
                       {item}
                     </Menu.Item>
