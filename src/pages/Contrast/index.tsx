@@ -13,7 +13,7 @@ const Contrast = () => {
   });
 
   const queryMd = () => {
-    setMdText(state.lang === 'en-US');
+    setMdText(state.lang === 'en-US' ? mdEN : mdCN);
   };
 
   useEffect(queryMd, [state.lang]);
@@ -21,12 +21,7 @@ const Contrast = () => {
   return (
     <div className="container">
       <div className="doc">
-        <div
-          className="content"
-          style={{
-            width: '100%'
-          }}
-        >
+        <div className="content" style={{ width: '100%' }}>
           <MdEditor
             theme={state.theme}
             modelValue={mdText}
