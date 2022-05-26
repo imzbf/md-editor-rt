@@ -1,6 +1,6 @@
 {
   "name": "md-editor-rt",
-  "version": "1.6.13",
+  "version": "2.0.0",
   "keywords": [
     "react",
     "nextjs",
@@ -17,7 +17,7 @@
   "description": "Markdown editor for react, developed by jsx and typescript, dark theme、beautify content by prettier、render articles directly、paste or clip the picture and upload it...",
   "author": {
     "name": "zbf",
-    "url": "https://imbf.cc"
+    "url": "https://imzbf.cc"
   },
   "homepage": "https://imzbf.github.io/md-editor-rt/",
   "repository": {

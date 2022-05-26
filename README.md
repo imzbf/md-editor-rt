@@ -184,7 +184,7 @@ export interface StaticTextDefaultValue {
 | CTRL + SHIFT + S | line-through | `~line-through~` |
 | CTRL + SHIFT + U | unordered list | `- unordered list` |
 | CTRL + SHIFT + C | code block |  |
-| CTRL + SHIFT + I | picture | `![picture](https://imbf.cc)` |
+| CTRL + SHIFT + I | picture | `![picture](https://imzbf.cc)` |
 | CTRL + SHIFT + Z | forward | Forward history in editor, not the function of system |
 | CTRL + SHIFT + F | Beautify |  |
 | CTRL + ALT + C | code row |  |

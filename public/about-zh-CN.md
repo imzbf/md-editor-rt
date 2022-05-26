@@ -13,5 +13,5 @@ Markdown 编辑器，react 版本，使用 jsx 和 typescript 语法开发，支
 ## 反馈联系
 
 1. 邮箱：zbfcqtl@gmail.com
-2. 博客留言：[imbf.cc](https://imbf.cc/message)
+2. 博客留言：[imzbf.cc](https://imzbf.cc/message)
 3. issue 管理：[github issues](https://github.com/imzbf/md-editor-rt/issues)
