@@ -32,43 +32,4 @@ This is the content that 2.x is incompatible with version 1.x only.
 
   `Editor.Catalog` is renamed to `Editor.MdCatalog`.
 
-  **Local Registration**
-
-  _App.vue_
-
-  ```js
-  <template>
-    <md-editor editor-id="ddd" />
-    <md-catalog editor-id="ddd" />
-  </template>
-
-  <script setup>
-  import MdEditor from 'md-editor-v3';
-  const { MdCatalog } = MdEditor;
-  </script>
-  ```
-
-  **Global Registration**
-
-  _main.js_
-
-  ```js
-  import { createApp } from 'vue';
-  import MdEditor from 'md-editor-v3';
-
-  // All components in MdEditor will be registered.
-  createApp(App).use(MdEditor);
-  ```
-
-  _App.vue_
-
-  ```js
-  <template>
-    <md-editor editor-id="ddd" />
-    <md-catalog editor-id="ddd" />
-  </template>
-
-  <script setup>
-  // import nothing
-  </script>
-  ```
+  For more usage, refer to branch [docs](https://github.com/imzbf/md-editor-rt/tree/docs).

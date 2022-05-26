@@ -1,172 +1,68 @@
-> The latest version: [${EDITOR_VERSION}](https://github.com/imzbf/md-editor-rt/releases/tag/v${EDITOR_VERSION}), Use it online: [Go](https://codesandbox.io/s/elated-khorana-65jmr)
+> Use it online: [Go](https://codesandbox.io/s/elated-khorana-65jmr)
 
 ## 🤯 Props
 
 ### 📃 modelValue
 
-- **type**: `String`
+- **type**: `string`
 - **default**: `''`
 - **description**: Markdown content.
+
+  ```jsx
+  <MdEditor v-model="xxx" />
+  ```
 
 ### 🛍 theme
 
 - **type**: `'light' | 'dark'`
 - **default**: `'light'`
-- **description**: Editor's theme.
+- **description**: Editor theme.
 
-```js
-<Editor theme="dark" />
-```
+  ```jsx
+  <MdEditor theme="dark" />
+  ```
 
-### 🎀 editorClass
+### 🎀 class
 
-- **type**: `String`
+- **type**: `string`
 - **default**: `''`
-- **description**: Editor's `class`.
-
-### 🧸 hljs
-
-- **type**: `Object`
-- **default**: `null`
-- **description**: `Highlight` instance, editor will not insert script of it, but you need to import `highlight` code style by yourself.
-
-### 🧸 highlightJs
-
-- **type**: `String`
-- **default**: [highlight.js@11.2.0](https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.2.0/build/highlight.min.js)
-- **description**: HighlightJs url.
-
-### 🧸 highlightCss
-
-- **type**: `String`
-- **default**: [atom-one-dark@11.2.0](https://cdn.jsdelivr.net/npm/highlight.js@11.2.0/styles/atom-one-dark.css)
-- **description**: `Highlight` code style url.
+- **description**: Editor `class`.
 
 ### 🤏🏼 historyLength
 
-- **type**: `Number`
+- **type**: `number`
 - **default**: `10`
 - **description**: The max length of history(if it is too big, editor will use more `RAM`).
 
 ### 💻 pageFullScreen
 
-- **type**: `Boolean`
+- **type**: `boolean`
 - **default**: `false`
 - **description**: Screenfull in web page.
 
 ### 📱 preview
 
-- **type**: `Boolean`
+- **type**: `boolean`
 - **default**: `true`
 - **description**: Preview content in editor.
 
 ### 📀 htmlPreview
 
-- **type**: `Boolean`
+- **type**: `boolean`
 - **default**: `false`
 - **description**: Preview html in editor.
 
 ### 📺 previewOnly
 
-- **type**: `Boolean`
+- **type**: `boolean`
 - **default**: `false`
 - **description**: Only render article content, no toolbar, no edit area.
 
 ### 🔤 language
 
-- **type**: `String`
+- **type**: `string`
 - **default**: `'zh-CN'`
 - **description**: Build-in language('zh-CN','en-US').
-
-### 🔤 languageUserDefined
-
-- **type**: `Object`
-- **default**: `{key: StaticTextDefaultValue}`
-- **description**: Expand language,update `language` api to your key 🤨
-
-```
-export interface ToolbarTips {
-  bold?: string;
-  underline?: string;
-  italic?: string;
-  strikeThrough?: string;
-  title?: string;
-  sub?: string;
-  sup?: string;
-  quote?: string;
-  unorderedList?: string;
-  orderedList?: string;
-  codeRow?: string;
-  code?: string;
-  link?: string;
-  image?: string;
-  table?: string;
-  mermaid?: string;
-  katex?: string;
-  revoke?: string;
-  next?: string;
-  save?: string;
-  prettier?: string;
-  pageFullscreen?: string;
-  fullscreen?: string;
-  catalog?: string;
-  preview?: string;
-  htmlPreview?: string;
-  github?: string;
-  '-'?: string;
-  '='?: string;
-}
-
-export interface StaticTextDefaultValue {
-  toolbarTips?: ToolbarTips;
-  titleItem?: {
-    h1?: string;
-    h2?: string;
-    h3?: string;
-    h4?: string;
-    h5?: string;
-    h6?: string;
-  };
-  imgTitleItem?: {
-    link: string;
-    upload: string;
-    clip2upload: string;
-  };
-  linkModalTips?: {
-    title?: string;
-    descLable?: string;
-    descLablePlaceHolder?: string;
-    urlLable?: string;
-    UrlLablePlaceHolder?: string;
-    buttonOK?: string;
-  };
-  clipModalTips?: {
-    title?: string;
-    buttonUpload?: string;
-  };
-  copyCode?: {
-    text?: string;
-    tips?: string;
-  };
-  mermaid?: {
-    flow?: string;
-    sequence?: string;
-    gantt?: string;
-    class?: string;
-    state?: string;
-    pie?: string;
-    relationship?: string;
-    journey?: string;
-  };
-  // 1.4.0
-  katex?: {
-    // formula inline
-    inline: string;
-    // formula block
-    block: string;
-  };
-}
-```
 
 ### 🧱 toolbars
 
@@ -174,41 +70,43 @@ export interface StaticTextDefaultValue {
 - **default**: `[all]`
 - **description**: Show some item of toolbars, all keys.
 
-You can sort the toolbar as you like, split tools by `'-'`, the left and right toolbars are divided by `'='`！
+  You can sort the toolbar as you like, split tools by `'-'`, the left and right toolbars are divided by `'='`！
 
-```js
-[
-  'bold',
-  'underline',
-  'italic',
-  '-',
-  'strikeThrough',
-  'sub',
-  'sup',
-  'quote',
-  'unorderedList',
-  'orderedList',
-  '-',
-  'codeRow',
-  'code',
-  'link',
-  'image',
-  'table',
-  'mermaid',
-  'katex',
-  '-',
-  'revoke',
-  'next',
-  'save',
-  '=',
-  'pageFullscreen',
-  'fullscreen',
-  'preview',
-  'htmlPreview',
-  'catalog',
-  'github'
-];
-```
+  _[all]_
+
+  ```js
+  [
+    'bold',
+    'underline',
+    'italic',
+    '-',
+    'strikeThrough',
+    'sub',
+    'sup',
+    'quote',
+    'unorderedList',
+    'orderedList',
+    '-',
+    'codeRow',
+    'code',
+    'link',
+    'image',
+    'table',
+    'mermaid',
+    'katex',
+    '-',
+    'revoke',
+    'next',
+    'save',
+    '=',
+    'pageFullscreen',
+    'fullscreen',
+    'preview',
+    'htmlPreview',
+    'catalog',
+    'github'
+  ];
+  ```
 
 ### 🧱 toolbarsExclude
 
@@ -216,394 +114,222 @@ You can sort the toolbar as you like, split tools by `'-'`, the left and right t
 - **default**: `[]`
 - **description**: Don't show some item of toolbars, all keys.
 
-### 🪒 prettier
+### 🪒 noPrettier
 
-- **type**: `Boolean`
+- **type**: `boolean`
 - **default**: `true`
 - **description**: Use prettier to beautify content or not.
 
-### 🪒 prettierCDN
-
-- **type**: `String`
-- **default**: [standalone@2.4.0](https://cdn.jsdelivr.net/npm/prettier@2.4.0/standalone.js)
-- **description**:
-
-### 🪒 prettierMDCDN
-
-- **type**: `String`
-- **default**: [parser-markdown@2.4.0](https://cdn.jsdelivr.net/npm/prettier@2.4.0/parser-markdown.js)
-- **description**:
-
-### ✂️ Cropper
-
-- **type**：`Object`
-- **default**：`undefined`
-- **description**: Instance of Cropper.
-
-### ✂️ cropperCss
-
-- **type**: `String`
-- **default**: [cropper.min.css@1.5.12](https://cdn.jsdelivr.net/npm/cropperjs@1.5.12/dist/cropper.min.css)
-- **description**: Cropper css url.
-
-### ✂️ cropperJs
-
-- **type**: `String`
-- **default**: [cropper.min.js@1.5.12](https://cdn.jsdelivr.net/npm/cropperjs@1.5.12/dist/cropper.min.js)
-- **description**: Cropper js url.
-
-### 👻 iconfontJs
-
-- **type**: `String`
-- **default**: [iconfont](https://at.alicdn.com/t/font_2605852_khjf435c7th.js)
-- **description**: Icon url.
-
 ### 🎲 editorId
 
-- **type**: `String`
+- **type**: `string`
 - **default**: `'md-editor-rt'`
 - **description**: Editor id, also the html id, it is used when there are two or more editor and server render.
 
 ### 🤏 tabWidth
 
-- **type**: `Number`
+- **type**: `number`
 - **default**: `2`
 - **description**: One tab eq some space.
 
 ### 🔢 showCodeRowNumber
 
-- **type**: `Boolean`
+- **type**: `boolean`
 - **default**: `false`
 - **description**: Show row number for code block or not.
 
-### 🖥 screenfull
-
-- **type**: `Object`
-- **default**: `null`
-- **description**: Screenfull instance, editor will not insert script of it.
-
-### 🖥 screenfullJs
-
-- **type**: `String`
-- **default**: [5.1.0](https://cdn.jsdelivr.net/npm/screenfull@5.1.0/dist/screenfull.js)
-- **description**: Screenfull js url.
-
 ### 🔦 previewTheme
 
-- **type**: `'default' | 'github' | 'vuepress'`
+- **type**: `'default' | 'github' | 'vuepress' | 'mk-cute' | 'smart-blue' | 'cyanosis'`
 - **default**: `'default'`
 - **description**: Preview themes.
+
+  Custom:
+
+  1. Write css
+
+  ```css
+  .xxx-theme {
+    color: red;
+  }
+  ```
+
+  2. Set `previewTheme`
+
+  ```jsx
+  <MdEditor previewTheme="xxx" />
+  ```
+
+  For more, refer to [markdown-theme](https://github.com/imzbf/markdown-theme).
 
 ### 🎅🏻 style
 
 - **type**: `CSSProperties`
-- **default**: `''`
-- **version**: `>= 1.2.0`
-- **description**: Editor's inline style.
+- **default**: `{}`
+- **description**: Editor inline style.
 
 ### 📅 tableShape
 
-- **type**: `[Number, Number]`
+- **type**: `[number, number]`
 - **default**: `[6, 4]`
-- **version**: `>= 1.3.0`
 - **description**: Preset the size of the table, [columns, rows].
 
-```js
-<Editor tableShape={[8, 4]}>
-```
+  ```jsx
+  <MdEditor tableShape={[8, 4]}>
+  ```
 
-![Preview](/md-editor-rt/imgs/20211216165424.png)
-
-### 📉 mermaid
-
-- **type**: `mermaid`
-- **default**: `undefined`
-- **version**: `>= 1.3.0`
-- **description**: Instance of `mermaid`, if you provide it, editor in browser will not download `mermaid`.
-
-```js
-import mermaid from 'mermaid'
-
-//
-<Editor mermaid={mermaid}>
-```
-
-### 📉 mermaidJs
-
-- **type**: `String`
-- **default**: [mermaid@8.13.5](https://cdn.jsdelivr.net/npm/mermaid@8.13.5/dist/mermaid.min.js)
-- **version**: `>= 1.3.0`
-- **description**: MermaidJs url。
-
-```js
-<Editor mermaidJs="/lib/mermaid.min.js" />
-```
+  ![Preview](https://imzbf.github.io/md-editor-rt/imgs/20211216165424.png)
 
 ### ☝️ noMermaid
 
-- **type**: `Boolean`
+- **type**: `boolean`
 - **default**: `false`
-- **version**: `>= 1.3.0`
 - **description**: do not want to use `mermaid`, set it to `true`.
 
-```js
-<Editor noMermaid />
-```
+  ```jsx
+  <MdEditor noMermaid />
+  ```
 
 ### 🪧 placeholder
 
-- **type**: `String`
+- **type**: `string`
 - **default**: `''`
-- **version**: `>= 1.3.0`
 - **description**: em-\_-！
-
-> !!! Plug-in units are import from `cdn.jsdelivr.net`, if your project does not run on line, please use your local url to replace. eg: highlightJs = "//127.0.0.1/highlight.min.js".
-
-### 📐 katex
-
-- **type**: `katex`
-- **default**: `undefined`
-- **version**: `>= 1.9.0`
-- **description**: Instance of `katex`, if you provide it, editor in browser will not download `katex`.
-
-```js
-import katex from 'katex'
-
-//
-<Editor katex={katex}>
-```
-
-### 📐 katexJs
-
-- **type**: `String`
-- **default**: [katex.min.js@0.15.1](https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.js)
-- **version**: `>= 1.9.0`
-- **description**: katexJs url.
-
-```js
-<Editor katexJs="/lib/katex.min.js" />
-```
-
-### 📐 katexCss
-
-- **type**: `String`
-- **default**: [katex.min.css@0.15.1](https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.css)
-- **version**: `>= 1.9.0`
-- **description**: katexCss url.
-
-```js
-<Editor katexCss="/lib/katex.min.css" />
-```
 
 ### ☝️ noKatex
 
-- **type**: `Boolean`
+- **type**: `boolean`
 - **default**: `false`
-- **version**: `>= 1.9.0`
 - **description**: Do not want to use `katex`, set it to `true`.
 
 ### 💪 defToolbars
 
 - **type**: `Array<VNode>`
 - **default**: `[]`
-- **version**: `>= 1.10.0`
-- **description**: Customize Toolbar, and there are two types to choose from. `NormalToolbar` and `DropdownToolbar`. To display them, put index of `defToolbars` into `toolbars`(this is not standard).
+- **description**: Custom toolbar in `DropdownToolbar`, `NormalToolbar` or `ModalToolbar`. To display them, put index of `defToolbars` into `toolbars`(this is not standard).
 
-**Editor.NormalToolbar** Props
+  ```jsx
+  import MdEditor from 'md-editor-rt';
 
-- **title**: `String`, hover tips.
-- **trigger**: `VNode`, trigger dom, it will be displayed in the toolbar area also, it is usually an icon.
-- **onClick**: `(e: MouseEvent) => void`, trigger click event.
+  const NormalToolbar = MdEditor.NormalToolbar;
 
-**Editor.DropdownToolbar** Props
-
-- **title**: `String`, hover tips.
-- **visible**: `Boolean`, visible of dropdown.
-- **onChange**: `(visible: boolean) => void`, visible changed event.
-- **trigger**: `VNode`, trigger dom, it will be displayed in the toolbar area also, it is usually an icon.
-- **overlay**: `VNode`, content of dropdown.
-
-<br>
-<hr>
-
-- NormalToolbar
-
-For a complete example, please refer to [mark example](https://imzbf.github.io/md-editor-rt/demo#💪%20Customize%20Toolbar).
-
-```js
-import React, { useState } from 'react';
-import Editor from 'md-editor-rt';
-
-export default () => {
-  const [md, setMd] = useState('');
-
-  const markHandler = () => {
-    const textarea = document.querySelector('#md-prev-textarea') as HTMLTextAreaElement;
-    const selection = window.getSelection()?.toString();
-    const endPoint = textarea.selectionStart;
-
-    const markStr = `@${selection}@`;
-
-    const prefixStr = textarea.value.substring(0, endPoint);
-    const suffixStr = textarea.value.substring(endPoint + (selection?.length || 0));
-
-    setMd(`${prefixStr}${markStr}${suffixStr}`);
-
-    setTimeout(() => {
-      textarea.setSelectionRange(endPoint, markStr.length + endPoint);
-      textarea.focus();
-    }, 0);
+  const handler = () => {
+    console.log('NormalToolbar clicked!');
   };
 
-  return (
-    <div className="project-preview">
-      <div className="container">
-        <Editor
-          modelValue={md}
-          editorId="md-prev"
-          defToolbars={[
-            <Editor.NormalToolbar
-              title="mark"
-              trigger={
-                <svg className="md-icon" aria-hidden="true">
-                  <use xlinkHref="#icon-mark"></use>
-                </svg>
-              }
-              onClick={markHandler}
-              key="mark-toolbar"
-            ></Editor.NormalToolbar>
-          ]}
-          toolbars={['bold', 'underline', 'italic', 0]}
-          onChange={(value: string) => setMd(value)}
-        />
-      </div>
-    </div>
-  );
-};
-```
-
-![NormalToolbar](/md-editor-rt/imgs/normal-toolbar.gif)
-
-<br>
-
-- DropdownToolbar
-
-For a complete example, please refer to [emoji example](https://imzbf.github.io/md-editor-rt/demo#💪%20Customize%20Toolbar).
-
-```js
-import React, { useState } from 'react';
-import Editor from 'md-editor-rt';
-import { emojis } from '../../data';
-
-export default () => {
-  const [md, setMd] = useState('');
-
-  const [emojiVisible, setEmojiVisible] = useState(false);
-
-  const emojiHandler = (emoji: string) => {
-    const textarea = document.querySelector('#md-prev-textarea') as HTMLTextAreaElement;
-    const selection = window.getSelection()?.toString();
-    const endPoint = textarea.selectionStart;
-
-    const prefixStr = textarea.value.substring(0, endPoint);
-    const suffixStr = textarea.value.substring(endPoint + (selection?.length || 0));
-
-    setMd(`${prefixStr}${emoji}${suffixStr}`);
-
-    setTimeout(() => {
-      textarea.setSelectionRange(endPoint, endPoint + 1);
-      textarea.focus();
-    }, 0);
+  export default () => {
+    return (
+      <MdEditor
+        modelValue=""
+        toolbars=['github','=', 0]
+        defToolbars={[
+          <NormalToolbar
+            title="mark"
+            onClick={handler}
+            trigger={
+              <svg className="md-icon" aria-hidden="true">
+                <use xlinkHref="#icon-mark"></use>
+              </svg>
+            }
+          />
+        ]}
+      />
+    );
   };
+  ```
 
-  return (
-    <div className="project-preview">
-      <div className="container">
-        <Editor
-          modelValue={md}
-          editorId="md-prev"
-          defToolbars={[
-            <Editor.DropdownToolbar
-              title="emoji"
-              visible={emojiVisible}
-              onChange={setEmojiVisible}
-              overlay={
-                <>
-                  <div className="emoji-container">
-                    <ol className="emojis">
-                      {emojis.map((emoji, index) => (
-                        <li
-                          key={`emoji-${index}`}
-                          onClick={() => {
-                            emojiHandler(emoji);
-                          }}
-                        >
-                          {emoji}
-                        </li>
-                      ))}
-                    </ol>
-                  </div>
-                </>
-              }
-              trigger={
-                <svg className="md-icon" aria-hidden="true">
-                  <use xlinkHref="#icon-emoji"></use>
-                </svg>
-              }
-              key="emoji-toolbar"
-            ></Editor.DropdownToolbar>
-          ]}
-          toolbars={['bold', 'underline', 'italic', 0]}
-          onChange={(value: string) => setMd(value)}
-        />
-      </div>
-    </div>
-  );
-};
-```
+  ![NormalToolbar](https://imzbf.github.io/md-editor-rt/imgs/normal-toolbar.gif)
 
-![DropdownToolbar](/md-editor-rt/imgs/dropdown-toolbar.gif)
+  ![DropdownToolbar](https://imzbf.github.io/md-editor-rt/imgs/dropdown-toolbar.gif)
 
-### 🪡 extensions
+  For more info, Get **Internal Components** heading. Get source code of **mark**, **emoji** and **modal preview** at [docs](https://github.com/imzbf/md-editor-rt/tree/docs/src/components) branch.
 
-- **type**: `Array<Object>`
-- **default**: `[]`
-- **description**: [marked](https://marked.js.org/using_pro#extensions) extensions.
+### 🦉 codeTheme
 
-`mark` example, for a complete example, please refer to [marked extensions](https://marked.js.org/using_pro#extensions).
+- **type**: `'atom'|'a11y'|'github'|'gradient'|'kimbie'|'paraiso'|'qtcreator'|'stackoverflow'`
+- **default**: `'atom'`
+- **description**: Highlight code css name. Get Them from `highlight.js`.
 
-```js
-const MarkExtension = {
-  name: 'MarkExtension',
-  level: 'inline',
-  start: (text: string) => text.match(/@[^@]/)?.index,
-  tokenizer(text: string) {
-    const reg = /^@([^@]*)@/;
-    const match = reg.exec(text);
+  Custom:
 
-    if (match) {
-      const token = {
-        type: 'MarkExtension',
-        raw: match[0],
-        text: match[1].trim(),
-        tokens: []
-      };
+  1. Config `editorExtensions`
 
-      return token;
+  ```js
+  import MdEditor from 'md-editor-rt';
+
+  MdEditor.config({
+    editorExtensions: {
+      highlight: {
+        css: {
+          atom: {
+            light:
+              'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/styles/atom-one-light.min.css',
+            dark: 'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/styles/atom-one-dark.min.css'
+          },
+          xxx: {
+            light:
+              'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/styles/xxx-light.css',
+            dark: 'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/styles/xxx-dark.css'
+          }
+        }
+      }
     }
-  },
-  renderer(token: any) {
-    return `<mark>${token.text}</mark>`;
-  }
-};
+  });
+  ```
 
-export default () => <Editor extensions={MarkExtension} />;
-```
+  2. Set `codeTheme`
 
-This is an example of converting `@hello@` to `<mark>hello</mark>`.
+  ```jsx
+  <MdEditor codeTheme="xxx" />
+  ```
 
-<br>
-<hr>
+### 🎱 markedHeadingId
+
+- **type**: `(text: string, level: number) => string`
+- **default**: `(text) => text`
+- **description**: Title `ID` generator.
+
+  1. Config `markedRenderer`
+
+  ```js
+  import MdEditor from 'md-editor-rt';
+
+  const generateId = (text, level) => `heading-${text}-${level}`;
+
+  MdEditor.config({
+    markedRenderer(renderer) {
+      renderer.heading = (text, level) => {
+        const id = generateId(text, level);
+        return `<h${level} id="${id}">${text}</h${level}>`;
+      };
+      return renderer;
+    }
+  });
+  ```
+
+  2. Set `markedHeadingId`
+
+  ```jsx
+  <MdEditor markedHeadingId={generateId} />
+  ```
+
+### 🐣 sanitize
+
+- **type**: `(html: string) => string`
+- **default**: `(html) => html`
+- **description**: Sanitize the html, prevent XSS. When you can be sure that your content is OK, ignore this.
+
+  `sanitize-html` example:
+
+  ```js
+  import sanitizeHtml from 'sanitize-html';
+
+  const sanitize = (html) => sanitizeHtml(html);
+  ```
+
+  ```jsx
+  <MdEditor sanitize={sanitize} />
+  ```
 
 ## 🪢 Event
 
@@ -623,7 +349,7 @@ This is an example of converting `@hello@` to `<mark>hello</mark>`.
 - **description**: Upload picture event,when picture is uploading the modal will not close,please provide right urls to the callback function.
 
 ```js
-async onUploadImg(files: Array<File>, callback: (urls: string[]) => void) {
+async onUploadImg(files, callback) {
   const res = await Promise.all(
     files.map((file) => {
       return new Promise((rev, rej) => {
@@ -642,7 +368,7 @@ async onUploadImg(files: Array<File>, callback: (urls: string[]) => void) {
     })
   );
 
-  callback(res.map((item: any) => item.data.url));
+  callback(res.map((item) => item.data.url));
 }
 ```
 
@@ -656,60 +382,228 @@ async onUploadImg(files: Array<File>, callback: (urls: string[]) => void) {
 - **type**: `(list: HeadList[]) => void`
 - **description**: Get catalogue of article.
 
-### 🪄 markedHeading
+### 💀 onError
 
-- **type**: `(text: string,level: 1-6,raw: string, slugger: Slugger) => string`
-- **description**: `marked` head renderer method.
+- **type**: `(err: { name: string; message: string;}) => void`
+- **description**: Run-Time error event, only be called when `Cropper`, `fullScreen`, `prettier` is not loaded.
 
-> If `markedHeading` is overridden, be sure to tell the editor the algorithm for generating the title ID by `marketheadingid`.
+  ```js
+  const onError = (err) => {
+    alert(err.message);
+  };
+  ```
 
-### 🎈 markedHeadingId
+  ```jsx
+  <MdEditor onError={onError} />
+  ```
 
-- **type**: `(text: string, level: number) => string`
-- **description**: Title `ID` generator.
+## 💴 Config Editor
 
-### 🔒 sanitize
+Custom `marked renderer` in `MdEditor.config(option: ConfigOption)`.
 
-- **type**: `(html: string) => string`
-- **description**: Sanitize the html, prevent XSS. When you can be sure that your content is OK, ignore this.
+- markedRenderer: `(renderer: Renderer) => Renderer`
 
-> Use `sanitize-html`
+  Open target page in a new browser window:
 
-```js
-import sanitizeHtml from 'sanitize-html';
+  ```js
+  import MdEditor from 'md-editor-rt';
 
-//
-<Editor sanitize={(html) => sanitizeHtml(html)} />;
-```
+  MdEditor.config({
+    markedRenderer(renderer) {
+      renderer.link = (href, title, text) => {
+        return `<a href="${href}" title="${title}" target="_blank">${text}</a>`;
+      };
 
-### 🖼 markedImage
-
-- **type**: `(href: string, title: string, desc: string) => string`
-- **description**: Overrides the html element structure of the default generated picture.
-
-Default way:
-
-```js
-(href: string, _: string, desc: string) => {
-  return `<figure><img src="${href}" alt="${desc}"><figcaption>${desc}</figcaption></figure>`;
-};
-```
-
-usage:
-
-```js
-const markedImage = (href: string, _: string, desc: string) => {
-  return `<img src="${href}" alt="${desc}">`;
-};
-
-export default () => {
-  const [state] = useState({
-    text: '# head'
+      return renderer;
+    }
   });
+  ```
 
-  return <Editor modelValue={state.text} markedImage={markedImage} />;
-};
-```
+  > docs: https://marked.js.org/using_pro#renderer
+
+- markedExtensions: `Array<marked.TokenizerExtension & marked.RendererExtension>`
+
+  ```js
+  import MdEditor from 'md-editor-rt';
+
+  MdEditor.config({
+    markedExtensions: [your extension]
+  });
+  ```
+
+  > marked docs: https://marked.js.org/using_pro#extensions
+
+  [Docs page source code](https://github.com/imzbf/md-editor-rt/blob/docs/src/main.ts)
+
+- markedOptions: `marked.MarkedOptions`
+
+  Do not render `<br>` on a single line break:
+
+  ```js
+  import MdEditor from 'md-editor-rt';
+
+  MdEditor.config({
+    markedOptions: { breaks: false }
+  });
+  ```
+
+  > marked docs: https://marked.js.org/using_advanced#options
+
+- editorConfig: Add more languages, reset `mermaid` template or delay rendering time
+
+  ```js
+  import MdEditor from 'md-editor-rt';
+
+  MdEditor.config({
+    editorConfig: {
+      languageUserDefined: {
+        'en-US': {
+          toolbarTips: {
+            bold: 'bold',
+            underline: 'underline',
+            italic: 'italic',
+            strikeThrough: 'strikeThrough',
+            title: 'title',
+            sub: 'subscript',
+            sup: 'superscript',
+            quote: 'quote',
+            unorderedList: 'unordered list',
+            orderedList: 'ordered list',
+            codeRow: 'inline code',
+            code: 'block-level code',
+            link: 'link',
+            image: 'image',
+            table: 'table',
+            mermaid: 'mermaid',
+            katex: 'formula',
+            revoke: 'revoke',
+            next: 'undo revoke',
+            save: 'save',
+            prettier: 'prettier',
+            pageFullscreen: 'fullscreen in page',
+            fullscreen: 'fullscreen',
+            preview: 'preview',
+            htmlPreview: 'html preview',
+            catalog: 'catalog',
+            github: 'source code'
+          },
+          titleItem: {
+            h1: 'Lv1 Heading',
+            h2: 'Lv2 Heading',
+            h3: 'Lv3 Heading',
+            h4: 'Lv4 Heading',
+            h5: 'Lv5 Heading',
+            h6: 'Lv6 Heading'
+          },
+          imgTitleItem: {
+            link: 'Add Img Link',
+            upload: 'Upload Img',
+            clip2upload: 'Clip Upload'
+          },
+          linkModalTips: {
+            title: 'Add ',
+            descLable: 'Desc:',
+            descLablePlaceHolder: 'Enter a description...',
+            urlLable: 'Link:',
+            UrlLablePlaceHolder: 'Enter a link...',
+            buttonOK: 'OK'
+          },
+          clipModalTips: {
+            title: 'Crop Image',
+            buttonUpload: 'Upload'
+          },
+          copyCode: {
+            text: 'Copy',
+            successTips: 'Copied!',
+            failTips: 'Copy failed!'
+          },
+          mermaid: {
+            flow: 'flow',
+            sequence: 'sequence',
+            gantt: 'gantt',
+            class: 'class',
+            state: 'state',
+            pie: 'pie',
+            relationship: 'relationship',
+            journey: 'journey'
+          },
+          katex: {
+            inline: 'inline',
+            block: 'block'
+          }
+        },
+        // mermaid template
+        mermaidTemplate: {
+          flow: `flow tempalte`,
+          sequence: `sequence template`,
+          gantt: `gantt template`,
+          class: `class template`,
+          state: `state template`,
+          pie: `pie template`,
+          relationship: `relationship template`,
+          journey: `journey template`
+        },
+        // delay rendering time(ms)
+        renderDelay: 0
+      }
+    }
+  });
+  ```
+
+- editorExtensions: Config some dependency libraries, like highlight..
+
+  ```typescript
+  import MdEditor from 'md-editor-rt';
+
+  MdEditor.config({
+    editorExtensions: { iconfont: 'https://xxx.cc' }
+  });
+  ```
+
+  <details>
+    <summary>[EditorExtensions]</summary>
+
+  ```ts
+  import MdEditor from 'md-editor-rt';
+
+  interface EditorExtensions {
+    highlight?: {
+      instance?: any;
+      js?: string;
+      css?: {
+        [key: string]: {
+          light: string;
+          dark: string;
+        };
+      };
+    };
+    prettier?: {
+      standaloneJs?: string;
+      parserMarkdownJs?: string;
+    };
+    cropper?: {
+      instance?: any;
+      js?: string;
+      css?: string;
+    };
+    iconfont?: string;
+    screenfull?: {
+      instance?: any;
+      js?: string;
+    };
+    mermaid?: {
+      instance?: any;
+      js?: string;
+    };
+    katex?: {
+      instance?: any;
+      js?: string;
+      css?: string;
+    };
+  }
+  ```
+
+  </details>
 
 ## 🪡 Shortcut key
 
@@ -742,56 +636,72 @@ export default () => {
 
 ## 🪤 Internal components
 
-Before 1.x, they are used as attributes of the editor component, eg: `Editor.DropdownToolbar`. For more examples, refer to [document](https://imzbf.github.io/md-editor-v3).
+They are used as attributes of the editor component, eg: `Editor.DropdownToolbar`
 
 ### 🐣 NormalToolbar
 
 `Editor.NormalToolbar`
 
-- `title`: `string`, not necessary, the tips when hover toolbar;
-- `trigger`: `string | JSX.Element`, necessary, it is usually an icon, which is displayed on the toolbar;
-- `onClick`: `(e: MouseEvent) => void`, necessary.
+- **props**
+
+  - `title`: `string`, not necessary, title of toolbar.
+
+- **events**
+
+  - `onClick`: `(e: MouseEvent) => void`, necessary.
+
+- **slots**
+
+  - `trigger`: `string | ReactElement`, necessary, it is usually an icon, which is displayed on the toolbar.
 
 usage:
 
-```js
-<Editor
+```jsx
+<MdEditor
   editorId="md-prev"
   defToolbars={[
-    <Editor.NormalToolbar
+    <MdEditor.NormalToolbar
       title="mark"
       trigger={
         <svg className="md-icon" aria-hidden="true">
           <use xlinkHref="#icon-mark"></use>
         </svg>
       }
-      onClick={consol.log}
+      onClick={console.log}
       key="mark-toolbar"
-    ></Editor.NormalToolbar>
+    />
   ]}
 />
 ```
 
-> Get the complete example of toolbar, please refer to [emoji](https://imzbf.github.io/md-editor-rt/demo#%F0%9F%92%AA%20Customize%20Toolbar), or clone source code from `dev-docs` branch.
+[MarkExtension Source Code](https://github.com/imzbf/md-editor-rt/blob/docs/src/components/MarkExtension/index.tsx)
 
 ### 🐼 DropdownToolbar
 
 `Editor.DropdownToolbar`
 
-- `title`: `string`, not necessary, the tips when hover toolbar;
-- `visible`: `boolean`, necessary;
-- `trigger`: `string | JSX.Element`, necessary, it is usually an icon, which is displayed on the toolbar;
-- `onChange`: `(visible: boolean) => void`, necessary;
-- `overlay`: `string | JSX.Element`, necessary, contents in the drop-down box.
+- **props**
+
+  - `title`: `string`, not necessary, title of toolbar.
+  - `visible`: `boolean`, necessary.
+
+- **events**
+
+  - `onChange`: `(visible: boolean) => void`, necessary.
+
+- **slots**
+
+  - `trigger`: `string | ReactElement`, necessary, it is usually an icon, which is displayed on the toolbar.
+  - `overlay`: `string | ReactElement`, necessary, content of dropdown box.
 
 usage:
 
 ```js
-<Editor
+<MdEditor
   modelValue={md}
   editorId="md-prev"
   defToolbars={[
-    <Editor.DropdownToolbar
+    <MdEditor.DropdownToolbar
       visible={emojiVisible}
       onChange={setEmojiVisible}
       overlay={
@@ -818,46 +728,122 @@ usage:
         </svg>
       }
       key="emoji-toolbar"
-    ></Editor.DropdownToolbar>
+    />
   ]}
 />
 ```
 
-### 🐻 Catalogue
+### 🦉 ModalToolbar
 
-`Editor.Catalog`
+- **props**
 
-- `editorId`: `string`, necessary, editor's `editorId`, used to register listening events;
-- `class`: `string`, not necessary;
-- `markedHeadingId`: `MarkedHeadingId`, not necessary, same as editor;
-- `scrollElement`: `string | HTMLElement`, not necessary, it is an element selector when its type is string. When `previewOnly` eq `true`, it is usually set to `document.documentElement`.
-- `theme`: 'light' | 'dark', not necessary, provide it when you want to change theme online, it is the same as Editor `theme`.
+  - `title`: `string`, not necessary, title of toolbar.
+  - `modalTitle`: `string`, not necessary, title of the Modal.
+  - `visible`: `boolean`, necessary, visibility of Modal.
+  - `width`: `string`, not necessary, width of Modal, default `auto`.
+  - `height`: `string`, same as `width`.
+  - `showAdjust`: `boolean`, not necessary, visibility of fullscreen button.
+  - `isFullscreen`: `boolean`, necessary when `showAdjust = true`, status of fullscreen.
+
+- **events**
+
+  - `onClick`: `() => void`, necessary.
+  - `onClose`: `() => void`, necessary, close event.
+  - `onAdjust`: `(val: boolean) => void`, fullscreen button click event.
+
+- **slots**
+
+  - `trigger`: `string | ReactElement`, necessary, it is usually an icon, which is displayed on the toolbar.
+  - `overlay`: `string | ReactElement`, necessary, content of Modal.
+
+```jsx
+<MdEditor
+  modelValue=""
+  editorId="md-prev"
+  defToolbars={[
+    <MdEditor.ModalToolbar
+      visible={state.visible}
+      isFullscreen={state.modalFullscreen}
+      showAdjust
+      title="弹窗预览"
+      modalTitle="编辑预览"
+      width="870px"
+      height="600px"
+      onClick={() => {
+        setState({
+          ...state,
+          visible: true
+        });
+      }}
+      onClose={() => {
+        setState({
+          ...state,
+          visible: false
+        });
+      }}
+      onAdjust={() => {
+        setState({
+          ...state,
+          modalFullscreen: !state.modalFullscreen
+        });
+      }}
+      trigger={
+        <svg className="md-icon" aria-hidden="true">
+          <use xlinkHref="#icon-read"></use>
+        </svg>
+      }
+    >
+      <div
+        style={{
+          height: '100%',
+          padding: '20px',
+          overflow: 'auto'
+        }}
+      >
+        <MdEditor
+          theme={store.theme}
+          language={store.lang}
+          previewTheme={store.previewTheme}
+          codeTheme={store.codeTheme}
+          editorId="edit2preview"
+          previewOnly
+          modelValue={props.mdText}
+        />
+      </div>
+    </MdEditor.ModalToolbar>
+  ]}
+/>
+```
+
+[ReadExtension Source Code](https://github.com/imzbf/md-editor-rt/blob/docs/src/components/ReadExtension/index.vue)
+
+### 🐻 MdCatalog
+
+`Editor.MdCatalog`
+
+- **props**
+
+  - `editorId`: `string`, necessary, editor's `editorId`, used to register listening events.
+  - `class`: `string`, not necessary.
+  - `markedHeadingId`: `MarkedHeadingId`, not necessary, same as editor.
+  - `scrollElement`: `string | HTMLElement`, not necessary, it is an element selector when its type is string. When `previewOnly` eq `true`, it is usually set to `document.documentElement`.
+  - `theme`: 'light' | 'dark', not necessary, provide it when you want to change theme online, it is the same as Editor `theme`.
 
 usage:
 
-```js
+```jsx
 const editorId = 'my-editor';
 
 export default () => {
   const [state] = useState({
-    text: '# head',
-    theme: 'dark',
+    text: '# heading',
     scrollElement: document.documentElement
   });
 
   return (
     <>
-      <Editor
-        modelValue={state.text}
-        editorId={editorId}
-        theme={state.theme}
-        previewOnly
-      />
-      <Editor.Catalog
-        editorId={editorId}
-        theme={state.theme}
-        scrollElement={state.scrollElement}
-      />
+      <Editor modelValue={state.text} editorId={editorId} previewOnly />
+      <Editor.Catalog editorId={editorId} scrollElement={state.scrollElement} />
     </>
   );
 };

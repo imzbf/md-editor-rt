@@ -34,44 +34,4 @@
 
   `Editor.Catalog`组件名称修改为`Editor.MdCatalog`。
 
-  **局部注册**
-
-  _App.vue_
-
-  ```js
-  <template>
-    <md-editor editor-id="ddd" />
-    <md-catalog editor-id="ddd" />
-  </template>
-
-  <script setup>
-  import MdEditor from 'md-editor-v3';
-  const { MdCatalog } = MdEditor;
-  </script>
-  ```
-
-  **全局注册**
-
-  这会使得内部的所有组件按照名称注册
-
-  _main.js_
-
-  ```js
-  import { createApp } from 'vue';
-  import MdEditor from 'md-editor-v3';
-
-  createApp(App).use(MdEditor);
-  ```
-
-  _App.vue_
-
-  ```js
-  <template>
-    <md-editor editor-id="ddd" />
-    <md-catalog editor-id="ddd" />
-  </template>
-
-  <script setup>
-  // 不需要再import
-  </script>
-  ```
+  更多请参考使用[docs](https://github.com/imzbf/md-editor-rt/tree/docs)分支。
