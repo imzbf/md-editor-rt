@@ -41,8 +41,7 @@
   "license": "MIT",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
-    "build:preview": "vite build --mode=preview"
+    "build": "vite build --mode=preview"
   },
   "dependencies": {
     "antd": "4.15.4",
