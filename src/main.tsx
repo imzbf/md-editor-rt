@@ -5,7 +5,6 @@ import { Provider } from 'react-redux';
 import MdEditor from 'md-editor-rt';
 import store from './store';
 import App from './App';
-import 'antd/dist/antd.css';
 
 import MarkExtension from './utils/marked-mark';
 
