@@ -5,6 +5,7 @@ import { Provider } from 'react-redux';
 import MdEditor from 'md-editor-rt';
 import store from './store';
 import App from './App';
+import 'antd/dist/antd.css';
 
 import MarkExtension from './utils/marked-mark';
 
@@ -26,8 +27,8 @@ MdEditor.config({
       css: {
         atom: {
           light:
-            'https://cdn.jsdelivr.net/npm/highlight.js@11.2.0/styles/atom-one-dark.css',
-          dark: 'https://cdn.jsdelivr.net/npm/highlight.js@11.2.0/styles/atom-one-dark.css'
+            'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/styles/atom-one-dark.min.css',
+          dark: 'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/styles/atom-one-dark.min.css'
         }
       }
     }

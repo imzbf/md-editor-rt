@@ -45,6 +45,7 @@ const setting = (state = defaultState, action: any) => {
     }
     case 'changeCodeTheme': {
       newState.codeTheme = action.value;
+      break;
     }
     case 'changeLang': {
       newState.lang = newState.lang === 'zh-CN' ? 'en-US' : 'zh-CN';
