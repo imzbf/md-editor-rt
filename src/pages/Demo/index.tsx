@@ -25,6 +25,7 @@ export default () => {
           <MdEditor
             editorId="demo-preview"
             theme={state.theme}
+            codeTheme={state.codeTheme}
             language={state.lang}
             modelValue={mdText}
             previewTheme={state.previewTheme}

@@ -24,11 +24,11 @@
   <MdEditor theme="dark" />
   ```
 
-### 🎀 class
+### 🎀 className
 
 - **类型**：`string`
 - **默认值**：`''`
-- **说明**：编辑器`class`。
+- **说明**：编辑器`className`。
 
 ### 🤏🏼 historyLength
 
@@ -873,7 +873,7 @@ async onUploadImg(files, callback) {
 - **props**
 
   - `editorId`: `string`，必须，对应编辑器的`editorId`，在内部注册目录变化监听事件。
-  - `class`: `string`，非必须，目录组件最外层类名。
+  - `className`: `string`，非必须，目录组件最外层类名。
   - `markedHeadingId`: `MarkedHeadingId`，非必须，特殊化编辑器标题的算法，与编辑器相同。
   - `scrollElement`: `string | HTMLElement`，非必须，为字符时应是一个元素选择器。仅预览模式中，整页滚动时，设置为`document.documentElement`。
   - `theme`: `'light' | 'dark'`，非必须，当需要切换主题时提供，同编辑器的`theme`。

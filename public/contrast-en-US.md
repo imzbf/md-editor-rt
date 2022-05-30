@@ -6,7 +6,7 @@ This is the content that 2.x is incompatible with version 1.x only.
 
 | name                | description                              |
 | ------------------- | ---------------------------------------- |
-| editorClass         | rename to `class`                        |
+| editorClass         | rename to `className`                    |
 | hljs                | removed, use `MdEditor.config` to config |
 | highlightJs         | the same                                 |
 | highlightCss        | the same                                 |

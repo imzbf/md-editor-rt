@@ -22,11 +22,11 @@
   <MdEditor theme="dark" />
   ```
 
-### 🎀 class
+### 🎀 className
 
 - **type**: `string`
 - **default**: `''`
-- **description**: Editor `class`.
+- **description**: Editor `className`.
 
 ### 🤏🏼 historyLength
 
@@ -824,7 +824,7 @@ usage:
 - **props**
 
   - `editorId`: `string`, necessary, editor's `editorId`, used to register listening events.
-  - `class`: `string`, not necessary.
+  - `className`: `string`, not necessary.
   - `markedHeadingId`: `MarkedHeadingId`, not necessary, same as editor.
   - `scrollElement`: `string | HTMLElement`, not necessary, it is an element selector when its type is string. When `previewOnly` eq `true`, it is usually set to `document.documentElement`.
   - `theme`: 'light' | 'dark', not necessary, provide it when you want to change theme online, it is the same as Editor `theme`.

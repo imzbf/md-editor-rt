@@ -24,11 +24,11 @@ const Contrast = () => {
         <div className="content" style={{ width: '100%' }}>
           <MdEditor
             theme={state.theme}
+            codeTheme={state.codeTheme}
             modelValue={mdText}
             previewTheme={state.previewTheme}
             previewOnly
             showCodeRowNumber
-            codeTheme={state.codeTheme}
           />
         </div>
       </div>

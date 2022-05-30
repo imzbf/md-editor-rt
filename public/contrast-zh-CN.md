@@ -6,7 +6,7 @@
 
 | 名称                | 说明                              |
 | ------------------- | --------------------------------- |
-| editorClass         | 修改为`class`                     |
+| editorClass         | 修改为`className`                 |
 | hljs                | 已移除，使用`MdEditor.config`配置 |
 | highlightJs         | 同上                              |
 | highlightCss        | 同上                              |
