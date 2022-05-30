@@ -62,7 +62,7 @@
 
 - **type**: `string`
 - **default**: `'zh-CN'`
-- **description**: Build-in language('zh-CN','en-US').
+- **description**: Build-in language('zh-CN', 'en-US').
 
 ### 🧱 toolbars
 
@@ -221,7 +221,7 @@
     return (
       <MdEditor
         modelValue=""
-        toolbars=['github','=', 0]
+        toolbars=['github', '=', 0]
         defToolbars={[
           <NormalToolbar
             title="mark"
@@ -341,12 +341,12 @@
 ### 💾 onSave
 
 - **type**: `(v: string) => void`
-- **description**: Save Content event,`ctrl+s`and click button will trigger.
+- **description**: Save Content event, `ctrl+s` and click button will trigger.
 
 ### 📸 onUploadImg
 
-- **type**: `(files: Array<File>, callback: function) => void`
-- **description**: Upload picture event,when picture is uploading the modal will not close,please provide right urls to the callback function.
+- **type**: `(files: Array<File>, callback: (urls: Array<string>) => void) => void`
+- **description**: Upload picture event, when picture is uploading the modal will not close, please provide right urls to the callback function.
 
 ```js
 async onUploadImg(files, callback) {
@@ -375,7 +375,7 @@ async onUploadImg(files, callback) {
 ### ☎️ onHtmlChanged
 
 - **type**: `(h: string) => void`
-- **description**: Compile markdown successful event,you can use it to get the html code.
+- **description**: Compile markdown successful event, you can use it to get the html code.
 
 ### 🗒 onGetCatalog
 

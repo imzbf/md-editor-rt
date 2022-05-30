@@ -72,7 +72,7 @@
 
 - **类型**：`string`
 - **默认值**：`'zh-CN'`
-- **说明**：内置中英文(`'zh-CN'`,`'en-US'`)，可自行扩展其他语言，同时可覆盖内置的中英文。
+- **说明**：内置中英文(`'zh-CN'`, `'en-US'`)，可自行扩展其他语言，同时可覆盖内置的中英文。
 
 ### 🧱 toolbars
 
@@ -264,7 +264,7 @@
     return (
       <MdEditor
         modelValue=""
-        toolbars=['github','=', 0]
+        toolbars=['github', '=', 0]
         defToolbars={[
           <NormalToolbar
             title="mark"
@@ -394,7 +394,7 @@
 
 ### 📸 onUploadImg
 
-- **类型**：`(files: Array<File>, callback: function) => void`
+- **类型**：`(files: Array<File>, callback: (urls: Array<string>) => void) => void`
 - **说明**：上传图片事件，弹窗会等待上传结果，务必将上传后的 urls 作为 callback 入参回传。
 
 ```js
