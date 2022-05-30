@@ -1,6 +1,6 @@
 {
   "name": "md-editor-rt",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "keywords": [
     "react",
     "nextjs",
@@ -45,7 +45,7 @@
   },
   "dependencies": {
     "antd": "4.15.4",
-    "md-editor-rt": "^2.0.0",
+    "md-editor-rt": "^2.0.1",
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
     "react-redux": "^7.2.6",
