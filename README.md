@@ -340,7 +340,7 @@ Use `MdEditor.config(option: ConfigOption)` to reconfigure `renderer`.
 
   </details>
 
-### Shortcut key
+### Shortcut Key
 
 | key | function | description |
 | --- | --- | --- |
@@ -446,7 +446,7 @@ They are used as attributes of the editor component, eg: `Editor.DropdownToolbar
 
 ## Examples
 
-### Jsx module
+### Jsx Module
 
 ```js
 import React, { useState } from 'react';
@@ -460,7 +460,7 @@ export default () => {
 };
 ```
 
-### Upload picture
+### Upload Picture
 
 > Tips: When you paste and upload GIF, it will upload a static picture. So you should upload it by file system!
 
