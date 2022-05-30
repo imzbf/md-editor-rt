@@ -370,7 +370,7 @@ export const useMarked = (props: EditorContentProp) => {
     // ==========code==========end
 
     // ==========image=========start
-    renderer.image = (href, title, desc) => {
+    renderer.image = (href, title = '', desc = '') => {
       return `<span class="figure"><img src="${href}" title="${title}" alt="${desc}"><span class="figcaption">${desc}</span></span>`;
     };
     // ==========image=========end
