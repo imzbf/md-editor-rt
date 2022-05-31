@@ -1,13 +1,12 @@
 import React, { useEffect, lazy, Suspense } from 'react';
 import Header from './layouts/Header';
-
+import BackTop from '@/components/BackTop';
 import { Route, Routes } from 'react-router-dom';
 const Preview = lazy(() => import('./pages/Preview'));
 const Doc = lazy(() => import('./pages/Doc'));
 const Demo = lazy(() => import('./pages/Demo'));
 const About = lazy(() => import('./pages/About'));
 const Contrast = lazy(() => import('./pages/Contrast'));
-import { BackTop } from 'antd';
 import { StateType } from './store';
 import { useSelector } from 'react-redux';
 import Loading from '@/layouts/Loading';
@@ -37,9 +36,7 @@ function App() {
           <Route path="/md-editor-rt/contrast" element={<Contrast />} />
         </Routes>
       </Suspense>
-      <BackTop>
-        <span>UP</span>
-      </BackTop>
+      <BackTop></BackTop>
     </div>
   );
 }

@@ -1,18 +1,16 @@
 import React, { useMemo, useState } from 'react';
-import { StateType } from '@/store';
-import { Dropdown, Menu } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
+import { StateType } from '@/store';
+import IzDropdown from '@/components/Dropdown';
 import Navigation from '../Navigation';
-import './index.less';
 import { version } from '../../../package.json';
+import './index.less';
 
 export default () => {
   const state = useSelector<StateType>((state) => state) as StateType;
   const dispatch = useDispatch();
 
-  const [data, setData] = useState({
-    previewThemevisible: false,
-    codeThemevisible: false,
+  const [data] = useState({
     previewThemes: ['default', 'github', 'vuepress', 'mk-cute', 'smart-blue', 'cyanosis'],
     codeThemes: [
       'atom',
@@ -75,75 +73,56 @@ export default () => {
           >
             {texts.darkTheme}
           </button>
-          <Dropdown
-            placement="bottomCenter"
-            getPopupContainer={() => {
-              return document.querySelector('.docs-page') as HTMLElement;
-            }}
-            overlayStyle={{ pointerEvents: 'initial' }}
-            overlay={
-              <Menu theme={state.theme}>
-                {data.previewThemes.map((item) => {
-                  return (
-                    <Menu.Item
-                      onClick={() => {
-                        dispatch({
-                          type: 'changePreviewTheme',
-                          value: item
-                        });
-                      }}
-                      key={`preview-theme-${item}`}
-                    >
-                      {item}
-                    </Menu.Item>
-                  );
-                })}
-              </Menu>
+          <IzDropdown
+            content={
+              <IzDropdown.IzDropdownMenu>
+                <>
+                  {data.previewThemes.map((item) => {
+                    return (
+                      <IzDropdown.IzDropdownMenuItem
+                        onClick={() => {
+                          dispatch({
+                            type: 'changePreviewTheme',
+                            value: item
+                          });
+                        }}
+                        key={`preview-theme-${item}`}
+                      >
+                        {item}
+                      </IzDropdown.IzDropdownMenuItem>
+                    );
+                  })}
+                </>
+              </IzDropdown.IzDropdownMenu>
             }
-            visible={data.previewThemevisible}
-            onVisibleChange={(visible) => {
-              setData({
-                ...data,
-                previewThemevisible: visible
-              });
-            }}
           >
             <button className="btn btn-header">{texts.previewBtn}</button>
-          </Dropdown>
-          <Dropdown
-            placement="bottomCenter"
-            getPopupContainer={() => {
-              return document.querySelector('.docs-page') as HTMLElement;
-            }}
-            overlay={
-              <Menu theme={state.theme}>
-                {data.codeThemes.map((item) => {
-                  return (
-                    <Menu.Item
-                      onClick={() => {
-                        dispatch({
-                          type: 'changeCodeTheme',
-                          value: item
-                        });
-                      }}
-                      key={`code-theme-${item}`}
-                    >
-                      {item}
-                    </Menu.Item>
-                  );
-                })}
-              </Menu>
+          </IzDropdown>
+          <IzDropdown
+            content={
+              <IzDropdown.IzDropdownMenu>
+                <>
+                  {data.codeThemes.map((item) => {
+                    return (
+                      <IzDropdown.IzDropdownMenuItem
+                        onClick={() => {
+                          dispatch({
+                            type: 'changeCodeTheme',
+                            value: item
+                          });
+                        }}
+                        key={`code-theme-${item}`}
+                      >
+                        {item}
+                      </IzDropdown.IzDropdownMenuItem>
+                    );
+                  })}
+                </>
+              </IzDropdown.IzDropdownMenu>
             }
-            visible={data.codeThemevisible}
-            onVisibleChange={(visible) => {
-              setData({
-                ...data,
-                codeThemevisible: visible
-              });
-            }}
           >
             <button className="btn btn-header">{texts.codeBtn}</button>
-          </Dropdown>
+          </IzDropdown>
         </p>
       </section>
     </header>

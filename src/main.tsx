@@ -35,7 +35,7 @@ MdEditor.config({
 });
 
 import 'md-editor-rt/lib/style.css';
-import './style.less';
+import './styles/common.less';
 
 ReactDOM.createRoot(document.getElementById('app') as HTMLElement).render(
   <Provider store={store}>
