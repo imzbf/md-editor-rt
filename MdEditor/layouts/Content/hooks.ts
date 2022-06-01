@@ -296,40 +296,6 @@ export const useMarked = (props: EditorContentProp) => {
   const [renderer] = useState(() => {
     let renderer = new marked.Renderer();
 
-    // 保存默认heading
-    const markedheading = renderer.heading;
-
-    if (markedRenderer instanceof Function) {
-      renderer = markedRenderer(renderer);
-    }
-
-    // ========heading========start
-    // 判断是否有重写heading
-    const newHeading = renderer.heading;
-    const isNewHeading = markedheading !== newHeading;
-
-    renderer.heading = (text, level, raw, slugger) => {
-      heads.current.push({ text: raw, level });
-
-      // 如果heading被重写了，使用新的heading
-      if (isNewHeading) {
-        return newHeading.call(renderer, text, level, raw, slugger);
-      }
-
-      // return props.markedHeading(...headProps);
-      // 我们默认同一级别的标题，你不会定义两个相同的
-      const id = props.markedHeadingId(raw, level);
-
-      // 如果标题有markdown语法内容，会按照该语法添加标题，而不再自定义，但是仍然支持目录定位
-      if (text !== raw) {
-        return `<h${level} id="${id}">${text}</h${level}>`;
-      } else {
-        return `<h${level} id="${id}"><a href="#${id}">${raw}</a></h${level}>`;
-      }
-    };
-    // ========heading========end
-
-    // ==========code==========start
     const markedCode = renderer.code;
     renderer.code = (code, language, isEscaped) => {
       if (!props.noMermaid && language === 'mermaid') {
@@ -367,22 +333,50 @@ export const useMarked = (props: EditorContentProp) => {
 
       return markedCode.call(renderer, code, language, isEscaped);
     };
-    // ==========code==========end
 
-    // ==========image=========start
     renderer.image = (href, title = '', desc = '') => {
       return `<span class="figure"><img src="${href}" title="${title}" alt="${desc}"><span class="figcaption">${desc}</span></span>`;
     };
-    // ==========image=========end
 
-    // ===========list==========start
     renderer.listitem = (text: string, task: boolean) => {
       if (task) {
         return `<li class="li-task">${text}</li>`;
       }
       return `<li>${text}</li>`;
     };
-    // ===========list==========end
+
+    // 保存默认heading，对比是否更新过
+    const markedheading = renderer.heading;
+
+    if (markedRenderer instanceof Function) {
+      renderer = markedRenderer(renderer);
+    }
+
+    // ========heading========start
+    // 判断是否有重写heading
+    const newHeading = renderer.heading;
+    const isNewHeading = markedheading !== newHeading;
+
+    renderer.heading = (text, level, raw, slugger) => {
+      heads.current.push({ text: raw, level });
+
+      // 如果heading被重写了，使用新的heading
+      if (isNewHeading) {
+        return newHeading.call(renderer, text, level, raw, slugger);
+      }
+
+      // return props.markedHeading(...headProps);
+      // 我们默认同一级别的标题，你不会定义两个相同的
+      const id = props.markedHeadingId(raw, level);
+
+      // 如果标题有markdown语法内容，会按照该语法添加标题，而不再自定义，但是仍然支持目录定位
+      if (text !== raw) {
+        return `<h${level} id="${id}">${text}</h${level}>`;
+      } else {
+        return `<h${level} id="${id}"><a href="#${id}">${raw}</a></h${level}>`;
+      }
+    };
+    // ========heading========end
 
     marked.setOptions({
       breaks: true,
