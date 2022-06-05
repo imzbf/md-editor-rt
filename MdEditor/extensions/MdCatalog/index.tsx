@@ -8,6 +8,7 @@ import './style.less';
 export interface TocItem {
   text: string;
   level: number;
+  index: number;
   children?: Array<TocItem>;
 }
 
@@ -32,8 +33,8 @@ const MdCatalog = (props: CatalogProps) => {
   const catalogs = useMemo(() => {
     const tocItems: TocItem[] = [];
 
-    list.forEach(({ text, level }) => {
-      const item = { level, text };
+    list.forEach(({ text, level }, index) => {
+      const item = { level, text, index: index + 1 };
 
       if (tocItems.length === 0) {
         // 第一个 item 直接 push

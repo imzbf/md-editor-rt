@@ -98,6 +98,9 @@ interface PreviewProp {
   codeTheme: string;
 }
 
+const markedHeadingId = (_: string, __: string | number, index: number) =>
+  `heading-${index}`;
+
 export default ({ theme, previewTheme, codeTheme }: PreviewProp) => {
   const [md, setMd] = useState(() => {
     return {
@@ -136,7 +139,11 @@ export default ({ theme, previewTheme, codeTheme }: PreviewProp) => {
           right: '10px'
         }}
       >
-        <MdEditor.MdCatalog theme={theme} editorId="md-editor-preview" />
+        <MdEditor.MdCatalog
+          theme={theme}
+          editorId="md-editor-preview"
+          markedHeadingId={markedHeadingId}
+        />
       </div>
       <div className="container">
         <MdEditor
@@ -144,6 +151,7 @@ export default ({ theme, previewTheme, codeTheme }: PreviewProp) => {
           previewTheme={previewTheme}
           codeTheme={codeTheme}
           modelValue={md.text}
+          markedHeadingId={markedHeadingId}
           editorId="md-editor-preview"
           toolbars={[
             'bold',

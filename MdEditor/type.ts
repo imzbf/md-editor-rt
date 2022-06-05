@@ -143,7 +143,7 @@ export type PreviewThemes = string; // 'default' | 'github' | 'vuepress';
 //   }
 // ) => string;
 
-export type MarkedHeadingId = (text: string, level: number) => string;
+export type MarkedHeadingId = (text: string, level: number, index: number) => string;
 
 export interface EditorProp {
   modelValue: string;

@@ -9,18 +9,18 @@ export interface CatalogLinkProps {
   scrollElement: string | Element;
 }
 
-const CatalogLink = (props: CatalogLinkProps) => {
+const CatalogLink = ({ tocItem, markedHeadingId, scrollElement }: CatalogLinkProps) => {
   return (
     <div
       className={`${prefix}-catalog-link`}
       onClick={(e) => {
         e.stopPropagation();
-        const id = props.markedHeadingId(props.tocItem.text, props.tocItem.level);
+        const id = markedHeadingId(tocItem.text, tocItem.level, tocItem.index);
         const targetHeadEle = document.getElementById(id);
         const scrollContainer =
-          props.scrollElement instanceof Element
-            ? props.scrollElement
-            : document.querySelector(props.scrollElement);
+          scrollElement instanceof Element
+            ? scrollElement
+            : document.querySelector(scrollElement);
 
         if (targetHeadEle && scrollContainer) {
           let par = targetHeadEle.offsetParent as HTMLElement;
@@ -42,15 +42,15 @@ const CatalogLink = (props: CatalogLinkProps) => {
         }
       }}
     >
-      <span title={props.tocItem.text}>{props.tocItem.text}</span>
+      <span title={tocItem.text}>{tocItem.text}</span>
       <div className={`${prefix}-catalog-wrapper`}>
-        {props.tocItem.children &&
-          props.tocItem.children.map((item) => (
+        {tocItem.children &&
+          tocItem.children.map((item) => (
             <CatalogLink
-              markedHeadingId={props.markedHeadingId}
+              markedHeadingId={markedHeadingId}
               key={item.text}
               tocItem={item}
-              scrollElement={props.scrollElement}
+              scrollElement={scrollElement}
             />
           ))}
       </div>
