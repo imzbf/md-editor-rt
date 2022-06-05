@@ -303,3 +303,13 @@ export const getSelectionText = (textarea: HTMLTextAreaElement): string => {
 
   return window.getSelection()?.toString() || '';
 };
+
+/**
+ * 列表类生成
+ *
+ * @param classList 待赛选class列表
+ * @returns
+ */
+export const classnames = (classList: Array<string | false>) => {
+  return classList.filter((item) => item !== false).join(' ');
+};
