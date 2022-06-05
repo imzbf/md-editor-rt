@@ -1,7 +1,8 @@
 node_modules
 .DS_Store
 dist
-dist-ssr
 *.local
-
+.idea
+*.log*
 package-lock.json
+lib
