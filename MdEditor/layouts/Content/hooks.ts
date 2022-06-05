@@ -335,7 +335,7 @@ export const useMarked = (props: EditorContentProp) => {
     };
 
     renderer.image = (href, title = '', desc = '') => {
-      return `<span class="figure"><img src="${href}" title="${title}" alt="${desc}"><span class="figcaption">${desc}</span></span>`;
+      return `<span class="figure"><img src="${href}" title="${title}" alt="${desc}" zoom><span class="figcaption">${desc}</span></span>`;
     };
 
     renderer.listitem = (text: string, task: boolean) => {
@@ -739,7 +739,7 @@ export const userZoom = (html: string) => {
 
   useEffect(() => {
     zoomHander = debounce(() => {
-      const imgs = document.querySelectorAll(`#${editorId}-preview img`);
+      const imgs = document.querySelectorAll(`#${editorId}-preview img[zoom]`);
 
       if (imgs.length === 0) {
         return;
