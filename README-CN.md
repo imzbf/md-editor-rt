@@ -59,8 +59,8 @@ react 版本的 Markdown 编辑器，[md-editor-v3](https://imzbf.github.io/md-e
 | noMermaid | boolean | false | 如果你不希望使用图表展示内容，可以设置关闭 |
 | placeholder | string | '' |  |
 | noKatex | boolean | false | 不使用 katex 展示数学公式 |
-| defToolbars | Array<DropdownToolbar \| NormalToolbar \| ModalToolbar> | null | 使用内置的组件自定义扩展工具栏 |
-| codeTheme | 'atom' \| 'a11y' \| 'github' \| 'gradient' \| 'kimbie' \| 'paraiso' \| 'qtcreator' \| 'stackoverflow' | 'atom' | 代码块[highlight](https://www.jsdelivr.com/package/npm/highlight.js?path=styles)样式名称，扩展更多见下方 |
+| defToolbars | Array<DropdownToolbar \| NormalToolbar \| ModalToolbar> | [] | 使用内置的组件自定义扩展工具栏 |
+| codeTheme | 'atom' \| 'a11y' \| 'github' \| 'gradient' \| 'kimbie' \| 'paraiso' \| 'qtcreator' \| 'stackoverflow' | 'atom' | 代码块 highlight 样式名称，扩展更多见下方 |
 | markedHeadingId | (text: string, level: number, index: number) => string | (text) => text | 标题`ID`计算方式 |
 | sanitize | (html: string) => string | (html) => html | 在每次生成 html 后，通过该方法移除危险内容，比如 xss 相关 |
 | footers | Array<'markdownTotal' \| '=' \| 'scrollSwitch' \| number> | ['markdownTotal', '=', 'scrollSwitch'] | 页脚显示内容，`=`左右分割，设置为`[]`不显示页脚 |
@@ -211,6 +211,10 @@ export interface StaticTextDefaultValue {
     inline: string;
     // 块级公式
     block: string;
+  };
+  footer?: {
+    markdownTotal: string;
+    scrollAuto: string;
   };
 }
 ```
