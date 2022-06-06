@@ -68,7 +68,7 @@
 
 - **type**: `Array`
 - **default**: `[all]`
-- **description**: Show some item of toolbars, all keys.
+- **description**: Show contents of toolbar.
 
   You can sort the toolbar as you like, split tools by `'-'`, the left and right toolbars are divided by `'='`！
 
@@ -285,7 +285,7 @@
 
 ### 🎱 markedHeadingId
 
-- **type**: `(text: string, level: number) => string`
+- **type**: `(text: string, level: number, index: number) => string`
 - **default**: `(text) => text`
 - **description**: Title `ID` generator.
 
@@ -294,7 +294,7 @@
   ```js
   import MdEditor from 'md-editor-rt';
 
-  const generateId = (text, level) => `heading-${text}-${level}`;
+  const generateId = (_text, _level, index) => `heading-${index}`;
 
   MdEditor.config({
     markedRenderer(renderer) {
@@ -330,6 +330,26 @@
   ```jsx
   <MdEditor sanitize={sanitize} />
   ```
+
+### 🦶 footers
+
+- **type**: `Array<'markdownTotal' \| '=' \| 'scrollSwitch' \| number>`
+- **default**: `['markdownTotal', '=', 'scrollSwitch']`
+- **description**: Show contents of footer, they are divided by `'='`. Set it to [] to hidden footer.
+
+### 👨‍👦 scrollAuto
+
+- **type**: `boolean`
+- **default**: `true`
+- **description**: Scroll default setting.
+
+### 🦿 defFooters
+
+- **type**: `Array<string \| ReactElement>`
+- **default**: `[]`
+- **description**: Custom footer.
+
+  [Get](https://github.com/imzbf/md-editor-rt/blob/docs/src/pages/Preview/index.tsx) example code.
 
 ## 🪢 Event
 
@@ -530,6 +550,10 @@ Custom `marked renderer` in `MdEditor.config(option: ConfigOption)`.
           katex: {
             inline: 'inline',
             block: 'block'
+          },
+          footer: {
+            markdownTotal: 'Word Count',
+            scrollAuto: 'Scroll Auto'
           }
         },
         // mermaid template

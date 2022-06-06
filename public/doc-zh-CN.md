@@ -328,7 +328,7 @@
 
 ### 🎱 markedHeadingId
 
-- **类型**：`(text: string, level: number) => string`
+- **类型**：`(text: string, level: number, index: number) => string`
 - **默认值**：`(text) => text`
 - **说明**：构造标题`ID`的生成方式，在使用`MdEditor.config`定义了`renderer.heading`后，避免目录导航等失效。
 
@@ -339,7 +339,7 @@
   ```js
   import MdEditor from 'md-editor-rt';
 
-  const generateId = (text, level) => `heading-${text}-${level}`;
+  const generateId = (_text, _level, index) => `heading-${index}`;
 
   MdEditor.config({
     markedRenderer(renderer) {
@@ -377,6 +377,26 @@
   ```
 
   > 为什么不内置到编辑器：由于类似编辑器大多属于自行处理文本，自身即可确认内容是否安全，并不需要该功能。
+
+### 🦶 footers
+
+- **类型**：`Array<'markdownTotal' \| '=' \| 'scrollSwitch' \| number>`
+- **默认值**：`['markdownTotal', '=', 'scrollSwitch']`
+- **说明**：页脚显示内容，`'='`左右分割，设置为`[]`不显示页脚。
+
+### 👨‍👦 scrollAuto
+
+- **类型**：`boolean`
+- **默认值**：`true`
+- **说明**：默认左右同步滚动状态。
+
+### 🦿 defFooters
+
+- **类型**：`Array<string \| ReactElement>`
+- **默认值**：`[]`
+- **说明**：自定义扩展页脚。
+
+  示例代码见[文档页源码](https://github.com/imzbf/md-editor-rt/blob/docs/src/pages/Preview/index.tsx)。
 
 ## 🪢 绑定事件
 
@@ -471,7 +491,7 @@ async onUploadImg(files, callback) {
 - markedExtensions: `Array<marked.TokenizerExtension & marked.RendererExtension>`
 
   ```js
-  import MdEditor from 'md-editor-v3';
+  import MdEditor from 'md-editor-rt';
 
   MdEditor.config({
     markedExtensions: [your extension]
@@ -503,79 +523,83 @@ async onUploadImg(files, callback) {
     editorConfig: {
       // 语言
       languageUserDefined: {
-        'en-US': {
+        'my-lang': {
           toolbarTips: {
-            bold: 'bold',
-            underline: 'underline',
-            italic: 'italic',
-            strikeThrough: 'strikeThrough',
-            title: 'title',
-            sub: 'subscript',
-            sup: 'superscript',
-            quote: 'quote',
-            unorderedList: 'unordered list',
-            orderedList: 'ordered list',
-            codeRow: 'inline code',
-            code: 'block-level code',
-            link: 'link',
-            image: 'image',
-            table: 'table',
-            mermaid: 'mermaid',
-            katex: 'formula',
-            revoke: 'revoke',
-            next: 'undo revoke',
-            save: 'save',
-            prettier: 'prettier',
-            pageFullscreen: 'fullscreen in page',
-            fullscreen: 'fullscreen',
-            preview: 'preview',
-            htmlPreview: 'html preview',
-            catalog: 'catalog',
-            github: 'source code'
+            bold: '加粗',
+            underline: '下划线',
+            italic: '斜体',
+            strikeThrough: '删除线',
+            title: '标题',
+            sub: '下标',
+            sup: '上标',
+            quote: '引用',
+            unorderedList: '无序列表',
+            orderedList: '有序列表',
+            codeRow: '行内代码',
+            code: '块级代码',
+            link: '链接',
+            image: '图片',
+            table: '表格',
+            mermaid: 'mermaid图',
+            katex: '公式',
+            revoke: '后退',
+            next: '前进',
+            save: '保存',
+            prettier: '美化',
+            pageFullscreen: '浏览器全屏',
+            fullscreen: '屏幕全屏',
+            preview: '预览',
+            htmlPreview: 'html代码预览',
+            catalog: '目录',
+            github: '源码地址'
           },
           titleItem: {
-            h1: 'Lv1 Heading',
-            h2: 'Lv2 Heading',
-            h3: 'Lv3 Heading',
-            h4: 'Lv4 Heading',
-            h5: 'Lv5 Heading',
-            h6: 'Lv6 Heading'
+            h1: '一级标题',
+            h2: '二级标题',
+            h3: '三级标题',
+            h4: '四级标题',
+            h5: '五级标题',
+            h6: '六级标题'
           },
           imgTitleItem: {
-            link: 'Add Img Link',
-            upload: 'Upload Img',
-            clip2upload: 'Clip Upload'
+            link: '添加链接',
+            upload: '上传图片',
+            clip2upload: '裁剪上传'
           },
           linkModalTips: {
-            title: 'Add ',
-            descLable: 'Desc:',
-            descLablePlaceHolder: 'Enter a description...',
-            urlLable: 'Link:',
-            UrlLablePlaceHolder: 'Enter a link...',
-            buttonOK: 'OK'
+            title: '添加',
+            descLable: '链接描述：',
+            descLablePlaceHolder: '请输入描述...',
+            urlLable: '链接地址：',
+            UrlLablePlaceHolder: '请输入链接...',
+            buttonOK: '确定'
           },
           clipModalTips: {
-            title: 'Crop Image',
-            buttonUpload: 'Upload'
+            title: '裁剪图片上传',
+            buttonUpload: '上传'
           },
           copyCode: {
-            text: 'Copy',
-            successTips: 'Copied!',
-            failTips: 'Copy failed!'
+            text: '复制代码',
+            successTips: '已复制！',
+            failTips: '复制失败！'
           },
           mermaid: {
-            flow: 'flow',
-            sequence: 'sequence',
-            gantt: 'gantt',
-            class: 'class',
-            state: 'state',
-            pie: 'pie',
-            relationship: 'relationship',
-            journey: 'journey'
+            flow: '流程图',
+            sequence: '时序图',
+            gantt: '甘特图',
+            class: '类图',
+            state: '状态图',
+            pie: '饼图',
+            relationship: '关系图',
+            journey: '旅程图'
           },
           katex: {
-            inline: 'inline',
-            block: 'block'
+            inline: '行内公式',
+            block: '块级公式'
+          },
+          footer: {
+            markdownTotal: '字数',
+            scrollAuto: '同步滚动'
           }
         },
         // mermaid模板
@@ -618,7 +642,7 @@ async onUploadImg(files, callback) {
     <summary>[EditorExtensions]</summary>
 
   ```ts
-  import MdEditor from 'md-editor-v3';
+  import MdEditor from 'md-editor-rt';
 
   interface EditorExtensions {
     highlight?: {
