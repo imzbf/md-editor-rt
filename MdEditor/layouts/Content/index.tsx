@@ -41,6 +41,7 @@ export type EditorContentProp = Readonly<{
   // markedImage?: MarkedImage;
   mermaidTemplate?: MermaidTemplate;
   markedHeadingId: MarkedHeadingId;
+  scrollAuto: boolean;
 }>;
 
 const Content = (props: EditorContentProp) => {

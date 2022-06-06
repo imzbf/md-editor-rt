@@ -1,4 +1,4 @@
-import React, { createContext } from 'react';
+import React, { createContext, useState } from 'react';
 import {
   useCatalog,
   useConfig,
@@ -9,8 +9,15 @@ import {
 } from './hooks';
 import ToolBar from './layouts/Toolbar';
 import Content from './layouts/Content';
+import Footer from './layouts/Footer';
 import configFn from './utils/config';
-import { prefix, allToolbar, staticTextDefault, defaultEditorId } from './config';
+import {
+  prefix,
+  allToolbar,
+  staticTextDefault,
+  defaultEditorId,
+  allFooter
+} from './config';
 import { ContentType, EditorProp, ConfigOption } from './type';
 import DropdownToolbar from './extensions/DropdownToolbar';
 import NormalToolbar from './extensions/NormalToolbar';
@@ -59,10 +66,20 @@ const Editor = (props: EditorProp) => {
     onGetCatalog = () => {},
     sanitize = (text) => text,
     onError = () => {},
-    markedHeadingId = (text) => text
+    markedHeadingId = (text) => text,
+    footers = allFooter,
+    defFooters = []
   } = props;
 
   const extension = Editor.extension as ConfigOption;
+
+  const [state, setState] = useState<{
+    scrollAuto: boolean;
+  }>(() => {
+    return {
+      scrollAuto: props.scrollAuto === undefined ? true : !!props.scrollAuto
+    };
+  });
 
   // 快捷键监听
   useKeyBoard(props);
@@ -143,7 +160,24 @@ const Editor = (props: EditorProp) => {
           // markedImage={props.markedImage}
           mermaidTemplate={extension?.editorConfig?.mermaidTemplate}
           markedHeadingId={markedHeadingId}
+          scrollAuto={state.scrollAuto}
         />
+        {!previewOnly && footers?.length > 0 && (
+          <Footer
+            modelValue={props.modelValue}
+            footers={footers}
+            defFooters={defFooters}
+            scrollAuto={state.scrollAuto}
+            onScrollAutoChange={(v) => {
+              setState((_state) => {
+                return {
+                  ..._state,
+                  scrollAuto: v
+                };
+              });
+            }}
+          />
+        )}
         {catalogShow && (
           <MdCatalog
             theme={props.theme}

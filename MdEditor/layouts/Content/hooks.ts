@@ -633,9 +633,9 @@ export const useAutoScroll = (
     init() {}
   });
 
+  // 初始化滚动事件
   useEffect(() => {
-    // 初始化滚动事件
-    if (previewRef.current || htmlRef.current) {
+    if (!previewOnly && (previewRef.current || htmlRef.current)) {
       const [init, clear] = scrollAuto(
         textAreaRef.current as HTMLElement,
         (previewRef.current as HTMLElement) || htmlRef.current
@@ -648,9 +648,9 @@ export const useAutoScroll = (
     }
   }, []);
 
+  // 更新完毕后判断是否需要重新绑定滚动事件
   useEffect(() => {
-    // 更新完毕后判断是否需要重新绑定滚动事件
-    if (props.setting.preview && !previewOnly) {
+    if (props.setting.preview && !previewOnly && props.scrollAuto) {
       setTimeout(() => {
         scrollCb.clear();
         scrollCb.init();
@@ -658,15 +658,19 @@ export const useAutoScroll = (
     }
   }, [html]);
 
+  // 我们默认，不会发生直接将编辑器切换成预览模式的行为
+  // 分栏发生变化时，显示分栏时注册同步滚动，隐藏时清除同步滚动
   useEffect(() => {
-    // 我们默认不发生直接将编辑器切换成预览模式的行为
-    // 分栏发生变化时，显示分栏时注册同步滚动，隐藏是清除同步滚动
-    if (props.setting.preview && !previewOnly) {
+    if (
+      (props.setting.preview || props.setting.htmlPreview) &&
+      !previewOnly &&
+      props.scrollAuto
+    ) {
       scrollCb.clear();
       // 需要等到页面挂载完成后再注册，否则不能正确获取到预览dom
       const [init, clear] = scrollAuto(
         textAreaRef.current as HTMLElement,
-        previewRef.current as HTMLElement
+        (previewRef.current as HTMLElement) || (htmlRef.current as HTMLElement)
       );
 
       setScrollCb({
@@ -676,26 +680,16 @@ export const useAutoScroll = (
 
       init();
     }
-  }, [props.setting.preview, setScrollCb]);
+  }, [props.setting.preview, props.setting.htmlPreview]);
 
+  // 切换滚动状态时，重新设置同步滚动
   useEffect(() => {
-    // 分栏发生变化时，显示分栏时注册同步滚动，隐藏是清除同步滚动
-    if (props.setting.htmlPreview && !previewOnly) {
+    if (props.scrollAuto) {
+      scrollCb.init();
+    } else {
       scrollCb.clear();
-      // 需要等到页面挂载完成后再注册，否则不能正确获取到预览dom
-      const [init, clear] = scrollAuto(
-        textAreaRef.current as HTMLElement,
-        htmlRef.current as HTMLElement
-      );
-
-      setScrollCb({
-        init,
-        clear
-      });
-
-      init();
     }
-  }, [props.setting.htmlPreview, setScrollCb]);
+  }, [props.scrollAuto]);
 };
 
 export const usePasteUpload = (textAreaRef: RefObject<HTMLTextAreaElement>) => {
