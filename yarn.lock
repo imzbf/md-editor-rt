@@ -1704,6 +1704,11 @@ csstype@^3.0.2:
   resolved "https://registry.npmmirror.com/csstype/download/csstype-3.0.10.tgz#2ad3a7bed70f35b965707c092e5f30b327c290e5"
   integrity sha512-2u44ZG2OcNUO9HDp/Jl8C07x6pU/eTR3ncV91SiK3dhG9TWvRVsCoJw14Ckx5DgWkzGA3waZWO3d7pgqpUI/XA==
 
+dayjs@^1.11.3:
+  version "1.11.3"
+  resolved "https://registry.yarnpkg.com/dayjs/-/dayjs-1.11.3.tgz#4754eb694a624057b9ad2224b67b15d552589258"
+  integrity sha512-xxwlswWOlGhzgQ4TKzASQkUhqERI3egRNqgV4ScR8wlANA/A9tZ7miXa44vTTKEq5l7vWoL5G57bG3zA+Kow0A==
+
 debug@^3.2.6:
   version "3.2.7"
   resolved "https://registry.npmmirror.com/debug/download/debug-3.2.7.tgz#72580b7e9145fb39b6676f9c5e5fb100b934179a"
@@ -2708,10 +2713,10 @@ make-dir@^2.1.0:
     pify "^4.0.1"
     semver "^5.6.0"
 
-md-editor-rt@^2.0.1:
-  version "2.0.1"
-  resolved "https://registry.npmjs.org/md-editor-rt/-/md-editor-rt-2.0.1.tgz#68c1ea1723e16dd13f7763f83d516bcc7483ad1c"
-  integrity sha512-PNHEy9S4zAWYT3Hhj+7AwA2JGCpvHQtSZDMK5msJwjlPRF8tCgZ/EVqCwpC6W/L5KerMOXTgo/U+QpvQrWYAPw==
+md-editor-rt@^2.1.0:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/md-editor-rt/-/md-editor-rt-2.1.0.tgz#08edd0a0f500e9246c9d2a0ff6e4c3b9fce45fa8"
+  integrity sha512-Pj87cbyn/EEtBIndtEHyYi5p8gS8Z+hI60rvAKtn33JwxYGkJzH0CYbjKgiu+EnqZTfV2q1Y3WYCj9Nqln7l9g==
   dependencies:
     "@types/marked" "^4.0.3"
 
