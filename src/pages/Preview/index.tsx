@@ -10,6 +10,7 @@ import mdCN from '../../../public/preview-zh-CN.md';
 import EmojiExtension from '@/components/EmojiExtension';
 import MarkExtension from '@/components/MarkExtension';
 import ReadExtension from '@/components/ReadExtension';
+import TimeNow from '@/components/TimeNow';
 
 const editorId = 'editor-preview';
 
@@ -101,6 +102,8 @@ export default () => {
 
             callback(res.map((item: any) => item.data.url));
           }}
+          footers={['markdownTotal', '=', 0, 'scrollSwitch']}
+          defFooters={[<TimeNow key="time-now" />]}
         />
       </div>
     </div>
