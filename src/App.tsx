@@ -36,7 +36,7 @@ function App() {
           <Route path="/md-editor-rt/contrast" element={<Contrast />} />
         </Routes>
       </Suspense>
-      <BackTop></BackTop>
+      <BackTop />
     </div>
   );
 }

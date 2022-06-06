@@ -15,7 +15,7 @@ MdEditor.config({
       return `<h${level} id="${text}">${text}</h${level}>`;
     };
 
-    renderer.link = (href, title, text) => {
+    renderer.link = (href, title = '', text = '') => {
       return `<a href="${href}" title="${title}" target="_blank">${text}</a>`;
     };
 

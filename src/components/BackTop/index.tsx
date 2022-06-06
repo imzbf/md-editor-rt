@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import './index.less';
 
 const backTop = () => {
   document.documentElement.scroll({
@@ -15,6 +16,8 @@ const BackTop = () => {
       setScrollTop(document.documentElement.scrollTop);
     });
   }, []);
+
+  console.log(scrollTop);
 
   return scrollTop > 20 ? (
     <div className="back-top" onClick={backTop}>
