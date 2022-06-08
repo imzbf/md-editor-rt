@@ -15,7 +15,7 @@ export interface TocItem {
 export interface CatalogProps {
   editorId: string;
   className?: string;
-  markedHeadingId?: MarkedHeadingId;
+  markedHeadingId: MarkedHeadingId;
   // 指定滚动的容器，选择器需带上对应的符号，默认预览框
   // 元素必须定位！！！！！！
   scrollElement?: string | Element;
@@ -25,7 +25,7 @@ export interface CatalogProps {
 
 const MdCatalog = (props: CatalogProps) => {
   // 获取Id
-  const { editorId, markedHeadingId = (text) => text, theme = 'light' } = props;
+  const { editorId, markedHeadingId, theme = 'light' } = props;
 
   const [list, setList] = useState<Array<HeadList>>([]);
 
@@ -107,4 +107,4 @@ const MdCatalog = (props: CatalogProps) => {
   );
 };
 
-export default MdCatalog;
+export default React.memo(MdCatalog);
