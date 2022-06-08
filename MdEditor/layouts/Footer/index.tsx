@@ -1,4 +1,4 @@
-import React, { ReactElement, useMemo } from 'react';
+import React, { ReactElement, useCallback, useMemo } from 'react';
 import { allFooter, prefix } from '../../config';
 import { Footers } from '../../type';
 import MarkdownTotal from './MarkdownTotal';
@@ -13,7 +13,33 @@ interface FooterProp {
 }
 
 const Footer = (props: FooterProp) => {
-  const splitedItems = useMemo(() => {
+  const footerRender = useCallback(
+    (name: Footers) => {
+      if (allFooter.includes(name)) {
+        switch (name) {
+          case 'markdownTotal': {
+            return <MarkdownTotal modelValue={props.modelValue} key="markdown-total" />;
+          }
+          case 'scrollSwitch': {
+            return (
+              <ScrollAuto
+                scrollAuto={props.scrollAuto}
+                onScrollAutoChange={props.onScrollAutoChange}
+                key="scroll-auto"
+              />
+            );
+          }
+        }
+      } else if (props.defFooters instanceof Array) {
+        return props.defFooters[name as number] || '';
+      } else {
+        return '';
+      }
+    },
+    [props.modelValue, props.scrollAuto, props.onScrollAutoChange, props.defFooters]
+  );
+
+  const [LeftFooter, RightFooter] = useMemo(() => {
     const moduleSplitIndex = props.footers.indexOf('=');
 
     // 左侧部分
@@ -25,34 +51,11 @@ const Footer = (props: FooterProp) => {
         ? []
         : props.footers.slice(moduleSplitIndex, Number.MAX_SAFE_INTEGER);
 
-    return [barLeft, barRight];
-  }, [props.footers]);
-
-  const footerRender = (name: Footers) => {
-    if (allFooter.includes(name)) {
-      switch (name) {
-        case 'markdownTotal': {
-          return <MarkdownTotal modelValue={props.modelValue} key="markdown-total" />;
-        }
-        case 'scrollSwitch': {
-          return (
-            <ScrollAuto
-              scrollAuto={props.scrollAuto}
-              onScrollAutoChange={props.onScrollAutoChange}
-              key="scroll-auto"
-            />
-          );
-        }
-      }
-    } else if (props.defFooters instanceof Array) {
-      return props.defFooters[name as number] || '';
-    } else {
-      return '';
-    }
-  };
-
-  const LeftFooter = splitedItems[0].map((name) => footerRender(name));
-  const RightFooter = splitedItems[1].map((name) => footerRender(name));
+    return [
+      barLeft.map((name) => footerRender(name)),
+      barRight.map((name) => footerRender(name))
+    ];
+  }, [props.footers, footerRender]);
 
   return (
     <div className={`${prefix}-footer`}>
@@ -62,4 +65,4 @@ const Footer = (props: FooterProp) => {
   );
 };
 
-export default Footer;
+export default React.memo(Footer);
