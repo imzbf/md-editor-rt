@@ -10,6 +10,7 @@ import {
   usePasteUpload,
   userZoom
 } from './hooks';
+import { classnames } from '../../utils';
 
 export type EditorContentProp = Readonly<{
   value: string;
@@ -45,7 +46,7 @@ export type EditorContentProp = Readonly<{
 }>;
 
 const Content = (props: EditorContentProp) => {
-  const { onChange = () => {} } = props;
+  const { onChange } = props;
   const { editorId, previewOnly, previewTheme, showCodeRowNumber } =
     useContext(EditorContext);
   // 输入状态，在输入中文等时，暂停保存
@@ -104,13 +105,11 @@ const Content = (props: EditorContentProp) => {
           >
             <div
               id={`${editorId}-preview`}
-              className={[
+              className={classnames([
                 `${prefix}-preview`,
                 `${previewTheme}-theme`,
                 showCodeRowNumber && `${prefix}-scrn`
-              ]
-                .filter((c) => !!c)
-                .join(' ')}
+              ])}
               dangerouslySetInnerHTML={{ __html: html }}
             />
           </div>
@@ -129,4 +128,4 @@ const Content = (props: EditorContentProp) => {
   );
 };
 
-export default Content;
+export default React.memo(Content);

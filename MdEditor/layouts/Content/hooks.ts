@@ -495,6 +495,11 @@ export const useMarked = (props: EditorContentProp) => {
         const _html = props.sanitize(marked(props.value || '', { renderer }));
         onHtmlChanged(_html);
         setHtml(_html);
+
+        // 传递标题
+        onGetCatalog(heads.current);
+        // 生成目录，
+        bus.emit(editorId, 'catalogChanged', heads.current);
       },
       editorConfig?.renderDelay !== undefined ? editorConfig?.renderDelay : 500
     );
@@ -513,13 +518,6 @@ export const useMarked = (props: EditorContentProp) => {
       }
     });
   }, []);
-
-  useEffect(() => {
-    // 传递标题
-    onGetCatalog(heads.current);
-    // 生成目录，
-    bus.emit(editorId, 'catalogChanged', heads.current);
-  }, [heads.current]);
 
   useEffect(() => {
     // 重新设置复制按钮
