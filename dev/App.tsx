@@ -10,6 +10,7 @@ function App() {
   const [theme, setTheme] = useState<Theme>('light');
   const [previewTheme, setPreviewTheme] = useState<string>('default');
   const [codeTheme, setCodeTheme] = useState<string>('kimbie');
+  const [lang, setLang] = useState<'zh-CN' | 'en-US'>('zh-CN');
 
   return (
     <div className={['app', theme === 'dark' && 'theme-dark'].join(' ')}>
@@ -18,9 +19,15 @@ function App() {
         onChange={setTheme}
         onPreviewChange={setPreviewTheme}
         onCodeThemeChange={setCodeTheme}
+        onLangChange={setLang}
       />
       <div className="page-body">
-        <Preview theme={theme} previewTheme={previewTheme} codeTheme={codeTheme} />
+        <Preview
+          lang={lang}
+          theme={theme}
+          previewTheme={previewTheme}
+          codeTheme={codeTheme}
+        />
         <PreviewOnly theme={theme} previewTheme={previewTheme} codeTheme={codeTheme} />
       </div>
     </div>

@@ -7,6 +7,7 @@ interface HeaderProp {
   onChange: (v: Theme) => void;
   onPreviewChange: (v: string) => void;
   onCodeThemeChange: (v: string) => void;
+  onLangChange: (lang: 'zh-CN' | 'en-US') => void;
 }
 
 export default (props: HeaderProp) => (
@@ -18,6 +19,12 @@ export default (props: HeaderProp) => (
         </button>
         <button className="btn btn-header" onClick={() => props.onChange('dark')}>
           暗模式
+        </button>
+        <button className="btn btn-header" onClick={() => props.onLangChange('en-US')}>
+          英文
+        </button>
+        <button className="btn btn-header" onClick={() => props.onLangChange('zh-CN')}>
+          中文
         </button>
       </p>
       <p className="header-actions">

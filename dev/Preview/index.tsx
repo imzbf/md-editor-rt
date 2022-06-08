@@ -96,12 +96,13 @@ interface PreviewProp {
   theme: Theme;
   previewTheme: string;
   codeTheme: string;
+  lang: 'zh-CN' | 'en-US';
 }
 
 const markedHeadingId = (_: string, __: string | number, index: number) =>
   `heading-${index}`;
 
-export default ({ theme, previewTheme, codeTheme }: PreviewProp) => {
+export default ({ theme, previewTheme, codeTheme, lang }: PreviewProp) => {
   const [md, setMd] = useState(() => {
     return {
       text: localStorage.getItem(SAVE_KEY) || mdText,
@@ -148,6 +149,7 @@ export default ({ theme, previewTheme, codeTheme }: PreviewProp) => {
       <div className="container">
         <MdEditor
           theme={theme}
+          language={lang}
           previewTheme={previewTheme}
           codeTheme={codeTheme}
           modelValue={md.text}
