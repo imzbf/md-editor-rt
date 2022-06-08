@@ -386,8 +386,13 @@ export const useMarked = (props: EditorContentProp) => {
     // 提供了hljs，在创建阶段即完成设置
     if (highlightIns) {
       marked.setOptions({
-        highlight: (code) => {
-          const codeHtml = highlightIns.highlightAuto(code).value;
+        highlight: (code, language) => {
+          let codeHtml = '';
+          if (language) {
+            codeHtml = highlightIns.highlight(code, { language }).value;
+          } else {
+            codeHtml = highlightIns.highlightAuto(code).value;
+          }
 
           return showCodeRowNumber
             ? generateCodeRowNumber(codeHtml)
@@ -436,8 +441,14 @@ export const useMarked = (props: EditorContentProp) => {
 
   const highlightLoad = () => {
     marked.setOptions({
-      highlight(code) {
-        const codeHtml = window.hljs.highlightAuto(code).value;
+      highlight: (code, language) => {
+        let codeHtml = '';
+        if (language) {
+          codeHtml = window.hljs.highlight(code, { language }).value;
+        } else {
+          codeHtml = window.hljs.highlightAuto(code).value;
+        }
+
         return showCodeRowNumber
           ? generateCodeRowNumber(codeHtml)
           : `<span class="code-block">${codeHtml}</span>`;
@@ -447,23 +458,12 @@ export const useMarked = (props: EditorContentProp) => {
     setHighlightInited(true);
   };
 
-  // 添加扩展
+  // 添加highlight扩展
   useEffect(() => {
     let highlightLink: HTMLLinkElement;
     let highlightScript: HTMLScriptElement;
 
-    if (highlightIns) {
-      // 提供了hljs，在创建阶段即完成设置
-      marked.setOptions({
-        highlight: (code) => {
-          const codeHtml = highlightIns?.highlightAuto(code).value;
-
-          return showCodeRowNumber
-            ? generateCodeRowNumber(codeHtml)
-            : `<span class="code-block">${codeHtml}</span>`;
-        }
-      });
-    } else {
+    if (!highlightIns) {
       highlightLink = document.createElement('link');
       highlightLink.rel = 'stylesheet';
       highlightLink.href = highlight.css;
