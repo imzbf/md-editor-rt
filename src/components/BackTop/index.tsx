@@ -17,8 +17,6 @@ const BackTop = () => {
     });
   }, []);
 
-  console.log(scrollTop);
-
   return scrollTop > 20 ? (
     <div className="back-top" onClick={backTop}>
       <svg className="icon" aria-hidden="true">
