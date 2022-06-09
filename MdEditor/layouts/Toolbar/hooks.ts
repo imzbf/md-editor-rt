@@ -5,6 +5,7 @@ import { EditorContext } from '../../Editor';
 import { appendHandler } from '../../utils/dom';
 import { ToolbarProp } from './';
 import { ToolDirective } from '../../utils/content-help';
+import { HoverData } from './TableShape';
 
 export const useSreenfull = (props: ToolbarProp) => {
   const { previewOnly, extension, editorId } = useContext(EditorContext);
@@ -149,5 +150,120 @@ export const useModals = (
     setModalData,
     onCancel,
     onOk
+  };
+};
+
+export const useDropdownState = (
+  emitHandler: (direct: ToolDirective, params?: any) => void
+) => {
+  const [visible, setVisible] = useState({
+    title: false,
+    catalog: false,
+    // 图片上传下拉
+    image: false,
+    // 表格预选
+    table: false,
+    // mermaid
+    mermaid: false,
+    katex: false
+  });
+
+  const onTitleChange = useCallback((v: boolean) => {
+    setVisible((_visible) => {
+      return {
+        ..._visible,
+        title: v
+      };
+    });
+  }, []);
+
+  const onTitleClose = useCallback(() => {
+    setVisible((_visible) => {
+      return {
+        ..._visible,
+        title: false
+      };
+    });
+  }, []);
+
+  const onImageChange = useCallback((v: boolean) => {
+    setVisible((_vis) => {
+      return {
+        ..._vis,
+        image: v
+      };
+    });
+  }, []);
+
+  const onImageClose = useCallback(() => {
+    setVisible((_visible) => {
+      return {
+        ..._visible,
+        image: false
+      };
+    });
+  }, []);
+
+  const onTableChange = useCallback((v: boolean) => {
+    setVisible((_vis) => {
+      return {
+        ..._vis,
+        table: v
+      };
+    });
+  }, []);
+
+  const onTableSelected = useCallback((selectedShape: HoverData) => {
+    emitHandler('table', { selectedShape });
+  }, []);
+
+  const onMermaidChange = useCallback((v: boolean) => {
+    setVisible((_vis) => {
+      return {
+        ..._vis,
+        mermaid: v
+      };
+    });
+  }, []);
+
+  const onMermaidClose = useCallback(() => {
+    setVisible((_visible) => {
+      return {
+        ..._visible,
+        mermaid: false
+      };
+    });
+  }, []);
+
+  const onKatexChange = useCallback((v: boolean) => {
+    setVisible((_vis) => {
+      return {
+        ..._vis,
+        katex: v
+      };
+    });
+  }, []);
+
+  const onKatexClose = useCallback(() => {
+    setVisible((_visible) => {
+      return {
+        ..._visible,
+        katex: false
+      };
+    });
+  }, []);
+
+  return {
+    visible,
+    onTitleChange,
+    onTitleClose,
+    onImageChange,
+    onImageClose,
+    onTableChange,
+    onTableSelected,
+    onMermaidChange,
+    onMermaidClose,
+    onKatexChange,
+    onKatexClose
   };
 };

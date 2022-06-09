@@ -16,7 +16,7 @@ import Divider from '../../components/Divider';
 import Dropdown from '../../components/Dropdown';
 import Modals from '../Modals';
 import TableShape from './TableShape';
-import { useSreenfull, useModals } from './hooks';
+import { useSreenfull, useModals, useDropdownState } from './hooks';
 
 export interface ToolbarProp {
   noPrettier: boolean;
@@ -40,18 +40,6 @@ const Toolbar = (props: ToolbarProp) => {
   const { editorId, usedLanguageText } = useContext(EditorContext);
   const ult = usedLanguageText;
 
-  const [visible, setVisible] = useState({
-    title: false,
-    catalog: false,
-    // 图片上传下拉
-    image: false,
-    // 表格预选
-    table: false,
-    // mermaid
-    mermaid: false,
-    katex: false
-  });
-
   const [wrapperId] = useState(() => `${editorId}-toolbar-wrapper`);
   // 文件选择
   const uploadRef = useRef<HTMLInputElement>(null);
@@ -65,6 +53,264 @@ const Toolbar = (props: ToolbarProp) => {
   const { fullScreenHandler } = useSreenfull(props);
   // 多弹窗控制
   const { modalData, setModalData, onCancel, onOk } = useModals(uploadRef, emitHandler);
+  // 下拉菜单控制
+  const {
+    visible,
+    onTitleChange,
+    onTitleClose,
+    onImageChange,
+    onImageClose,
+    onTableChange,
+    onTableSelected,
+    onMermaidChange,
+    onMermaidClose,
+    onKatexChange,
+    onKatexClose
+  } = useDropdownState(emitHandler);
+
+  const TitleOverlay = useMemo(() => {
+    return (
+      <ul className={`${prefix}-menu`} onClick={onTitleClose}>
+        <li
+          className={`${prefix}-menu-item`}
+          onClick={() => {
+            emitHandler('h1');
+          }}
+        >
+          {ult.titleItem?.h1}
+        </li>
+        <li
+          className={`${prefix}-menu-item`}
+          onClick={() => {
+            emitHandler('h2');
+          }}
+        >
+          {ult.titleItem?.h2}
+        </li>
+        <li
+          className={`${prefix}-menu-item`}
+          onClick={() => {
+            emitHandler('h3');
+          }}
+        >
+          {ult.titleItem?.h3}
+        </li>
+        <li
+          className={`${prefix}-menu-item`}
+          onClick={() => {
+            emitHandler('h4');
+          }}
+        >
+          {ult.titleItem?.h4}
+        </li>
+        <li
+          className={`${prefix}-menu-item`}
+          onClick={() => {
+            emitHandler('h5');
+          }}
+        >
+          {ult.titleItem?.h5}
+        </li>
+        <li
+          className={`${prefix}-menu-item`}
+          onClick={() => {
+            emitHandler('h6');
+          }}
+        >
+          {ult.titleItem?.h6}
+        </li>
+      </ul>
+    );
+  }, [ult]);
+
+  const TitleTrigger = useMemo(() => {
+    return (
+      <div className={`${prefix}-toolbar-item`} title={ult.toolbarTips?.title}>
+        <svg className={`${prefix}-icon`} aria-hidden="true">
+          <use xlinkHref="#icon-title" />
+        </svg>
+      </div>
+    );
+  }, [ult]);
+
+  const ImageOverlay = useMemo(() => {
+    return (
+      <ul className={`${prefix}-menu`} onClick={onImageClose}>
+        <li
+          className={`${prefix}-menu-item`}
+          onClick={() => {
+            setModalData((_modalData) => {
+              return {
+                ..._modalData,
+                type: 'image',
+                linkVisible: true
+              };
+            });
+          }}
+        >
+          {ult.imgTitleItem?.link}
+        </li>
+        <li
+          className={`${prefix}-menu-item`}
+          onClick={() => {
+            (uploadRef.current as HTMLInputElement).click();
+          }}
+        >
+          {ult.imgTitleItem?.upload}
+        </li>
+        <li
+          className={`${prefix}-menu-item`}
+          onClick={() => {
+            setModalData({
+              ...modalData,
+              type: 'image',
+              clipVisible: true
+            });
+          }}
+        >
+          {ult.imgTitleItem?.clip2upload}
+        </li>
+      </ul>
+    );
+  }, [ult]);
+
+  const ImageTrigger = useMemo(() => {
+    return (
+      <div className={`${prefix}-toolbar-item`} title={ult.toolbarTips?.image}>
+        <svg className={`${prefix}-icon`} aria-hidden="true">
+          <use xlinkHref="#icon-image" />
+        </svg>
+      </div>
+    );
+  }, [ult]);
+
+  const TableOverlay = useMemo(() => {
+    return <TableShape tableShape={props.tableShape} onSelected={onTableSelected} />;
+  }, [props.tableShape]);
+
+  const TableTrigger = useMemo(() => {
+    return (
+      <div className={`${prefix}-toolbar-item`} title={ult.toolbarTips?.table}>
+        <svg className={`${prefix}-icon`} aria-hidden="true">
+          <use xlinkHref="#icon-table" />
+        </svg>
+      </div>
+    );
+  }, [ult]);
+
+  const MermaidOverlay = useMemo(() => {
+    return (
+      <ul className={`${prefix}-menu`} onClick={onMermaidClose}>
+        <li
+          className={`${prefix}-menu-item`}
+          onClick={() => {
+            emitHandler('flow');
+          }}
+        >
+          {ult.mermaid?.flow}
+        </li>
+        <li
+          className={`${prefix}-menu-item`}
+          onClick={() => {
+            emitHandler('sequence');
+          }}
+        >
+          {ult.mermaid?.sequence}
+        </li>
+        <li
+          className={`${prefix}-menu-item`}
+          onClick={() => {
+            emitHandler('gantt');
+          }}
+        >
+          {ult.mermaid?.gantt}
+        </li>
+        <li
+          className={`${prefix}-menu-item`}
+          onClick={() => {
+            emitHandler('class');
+          }}
+        >
+          {ult.mermaid?.class}
+        </li>
+        <li
+          className={`${prefix}-menu-item`}
+          onClick={() => {
+            emitHandler('state');
+          }}
+        >
+          {ult.mermaid?.state}
+        </li>
+        <li
+          className={`${prefix}-menu-item`}
+          onClick={() => {
+            emitHandler('pie');
+          }}
+        >
+          {ult.mermaid?.pie}
+        </li>
+        <li
+          className={`${prefix}-menu-item`}
+          onClick={() => {
+            emitHandler('relationship');
+          }}
+        >
+          {ult.mermaid?.relationship}
+        </li>
+        <li
+          className={`${prefix}-menu-item`}
+          onClick={() => {
+            emitHandler('journey');
+          }}
+        >
+          {ult.mermaid?.journey}
+        </li>
+      </ul>
+    );
+  }, [ult]);
+
+  const MermaidTrigger = useMemo(() => {
+    return (
+      <div className={`${prefix}-toolbar-item`} title={ult.toolbarTips?.mermaid}>
+        <svg className={`${prefix}-icon`} aria-hidden="true">
+          <use xlinkHref="#icon-mermaid" />
+        </svg>
+      </div>
+    );
+  }, [ult]);
+
+  const KatexOverlay = useMemo(() => {
+    return (
+      <ul className={`${prefix}-menu`} onClick={onKatexClose}>
+        <li
+          className={`${prefix}-menu-item`}
+          onClick={() => {
+            emitHandler('katexInline');
+          }}
+        >
+          {ult.katex?.inline}
+        </li>
+        <li
+          className={`${prefix}-menu-item`}
+          onClick={() => {
+            emitHandler('katexBlock');
+          }}
+        >
+          {ult.katex?.block}
+        </li>
+      </ul>
+    );
+  }, [ult]);
+
+  const KatexTrigger = useMemo(() => {
+    return (
+      <div className={`${prefix}-toolbar-item`} title={ult.toolbarTips?.katex}>
+        <svg className={`${prefix}-icon`} aria-hidden="true">
+          <use xlinkHref="#icon-formula" />
+        </svg>
+      </div>
+    );
+  }, [ult]);
 
   const barRender = useCallback(
     (barItem: ToolbarNames) => {
@@ -142,81 +388,11 @@ const Toolbar = (props: ToolbarProp) => {
               <Dropdown
                 relative={`#${wrapperId}`}
                 visible={visible.title}
-                onChange={(v) => {
-                  setVisible({
-                    ...visible,
-                    title: v
-                  });
-                }}
-                overlay={
-                  <ul
-                    className={`${prefix}-menu`}
-                    onClick={() => {
-                      setVisible((_vis) => {
-                        return {
-                          ..._vis,
-                          title: false
-                        };
-                      });
-                    }}
-                  >
-                    <li
-                      className={`${prefix}-menu-item`}
-                      onClick={() => {
-                        emitHandler('h1');
-                      }}
-                    >
-                      {ult.titleItem?.h1}
-                    </li>
-                    <li
-                      className={`${prefix}-menu-item`}
-                      onClick={() => {
-                        emitHandler('h2');
-                      }}
-                    >
-                      {ult.titleItem?.h2}
-                    </li>
-                    <li
-                      className={`${prefix}-menu-item`}
-                      onClick={() => {
-                        emitHandler('h3');
-                      }}
-                    >
-                      {ult.titleItem?.h3}
-                    </li>
-                    <li
-                      className={`${prefix}-menu-item`}
-                      onClick={() => {
-                        emitHandler('h4');
-                      }}
-                    >
-                      {ult.titleItem?.h4}
-                    </li>
-                    <li
-                      className={`${prefix}-menu-item`}
-                      onClick={() => {
-                        emitHandler('h5');
-                      }}
-                    >
-                      {ult.titleItem?.h5}
-                    </li>
-                    <li
-                      className={`${prefix}-menu-item`}
-                      onClick={() => {
-                        emitHandler('h6');
-                      }}
-                    >
-                      {ult.titleItem?.h6}
-                    </li>
-                  </ul>
-                }
+                onChange={onTitleChange}
+                overlay={TitleOverlay}
                 key="bar-title"
               >
-                <div className={`${prefix}-toolbar-item`} title={ult.toolbarTips?.title}>
-                  <svg className={`${prefix}-icon`} aria-hidden="true">
-                    <use xlinkHref="#icon-title" />
-                  </svg>
-                </div>
+                {TitleTrigger}
               </Dropdown>
             );
           }
@@ -357,65 +533,11 @@ const Toolbar = (props: ToolbarProp) => {
               <Dropdown
                 relative={`#${wrapperId}`}
                 visible={visible.image}
-                onChange={(v) => {
-                  setVisible((_vis) => {
-                    return {
-                      ..._vis,
-                      image: v
-                    };
-                  });
-                }}
-                overlay={
-                  <ul
-                    className={`${prefix}-menu`}
-                    onClick={() => {
-                      setVisible({
-                        ...visible,
-                        image: false
-                      });
-                    }}
-                  >
-                    <li
-                      className={`${prefix}-menu-item`}
-                      onClick={() => {
-                        setModalData({
-                          ...modalData,
-                          type: 'image',
-                          linkVisible: true
-                        });
-                      }}
-                    >
-                      {ult.imgTitleItem?.link}
-                    </li>
-                    <li
-                      className={`${prefix}-menu-item`}
-                      onClick={() => {
-                        (uploadRef.current as HTMLInputElement).click();
-                      }}
-                    >
-                      {ult.imgTitleItem?.upload}
-                    </li>
-                    <li
-                      className={`${prefix}-menu-item`}
-                      onClick={() => {
-                        setModalData({
-                          ...modalData,
-                          type: 'image',
-                          clipVisible: true
-                        });
-                      }}
-                    >
-                      {ult.imgTitleItem?.clip2upload}
-                    </li>
-                  </ul>
-                }
+                onChange={onImageChange}
+                overlay={ImageOverlay}
                 key="bar-image"
               >
-                <div className={`${prefix}-toolbar-item`} title={ult.toolbarTips?.image}>
-                  <svg className={`${prefix}-icon`} aria-hidden="true">
-                    <use xlinkHref="#icon-image" />
-                  </svg>
-                </div>
+                {ImageTrigger}
               </Dropdown>
             );
           }
@@ -424,29 +546,11 @@ const Toolbar = (props: ToolbarProp) => {
               <Dropdown
                 relative={`#${wrapperId}`}
                 visible={visible.table}
-                onChange={(v) => {
-                  setVisible((_vis) => {
-                    return {
-                      ..._vis,
-                      table: v
-                    };
-                  });
-                }}
+                onChange={onTableChange}
                 key="bar-table"
-                overlay={
-                  <TableShape
-                    tableShape={props.tableShape}
-                    onSelected={(selectedShape) => {
-                      emitHandler('table', { selectedShape });
-                    }}
-                  />
-                }
+                overlay={TableOverlay}
               >
-                <div className={`${prefix}-toolbar-item`} title={ult.toolbarTips?.table}>
-                  <svg className={`${prefix}-icon`} aria-hidden="true">
-                    <use xlinkHref="#icon-table" />
-                  </svg>
-                </div>
+                {TableTrigger}
               </Dropdown>
             );
           }
@@ -621,102 +725,11 @@ const Toolbar = (props: ToolbarProp) => {
               <Dropdown
                 relative={`#${wrapperId}`}
                 visible={visible.mermaid}
-                onChange={(v) => {
-                  setVisible((_vis) => {
-                    return {
-                      ..._vis,
-                      mermaid: v
-                    };
-                  });
-                }}
-                overlay={
-                  <ul
-                    className={`${prefix}-menu`}
-                    onClick={() => {
-                      setVisible((_vis) => {
-                        return {
-                          ..._vis,
-                          mermaid: false
-                        };
-                      });
-                    }}
-                  >
-                    <li
-                      className={`${prefix}-menu-item`}
-                      onClick={() => {
-                        emitHandler('flow');
-                      }}
-                    >
-                      {ult.mermaid?.flow}
-                    </li>
-                    <li
-                      className={`${prefix}-menu-item`}
-                      onClick={() => {
-                        emitHandler('sequence');
-                      }}
-                    >
-                      {ult.mermaid?.sequence}
-                    </li>
-                    <li
-                      className={`${prefix}-menu-item`}
-                      onClick={() => {
-                        emitHandler('gantt');
-                      }}
-                    >
-                      {ult.mermaid?.gantt}
-                    </li>
-                    <li
-                      className={`${prefix}-menu-item`}
-                      onClick={() => {
-                        emitHandler('class');
-                      }}
-                    >
-                      {ult.mermaid?.class}
-                    </li>
-                    <li
-                      className={`${prefix}-menu-item`}
-                      onClick={() => {
-                        emitHandler('state');
-                      }}
-                    >
-                      {ult.mermaid?.state}
-                    </li>
-                    <li
-                      className={`${prefix}-menu-item`}
-                      onClick={() => {
-                        emitHandler('pie');
-                      }}
-                    >
-                      {ult.mermaid?.pie}
-                    </li>
-                    <li
-                      className={`${prefix}-menu-item`}
-                      onClick={() => {
-                        emitHandler('relationship');
-                      }}
-                    >
-                      {ult.mermaid?.relationship}
-                    </li>
-                    <li
-                      className={`${prefix}-menu-item`}
-                      onClick={() => {
-                        emitHandler('journey');
-                      }}
-                    >
-                      {ult.mermaid?.journey}
-                    </li>
-                  </ul>
-                }
+                onChange={onMermaidChange}
+                overlay={MermaidOverlay}
                 key="bar-mermaid"
               >
-                <div
-                  className={`${prefix}-toolbar-item`}
-                  title={ult.toolbarTips?.mermaid}
-                >
-                  <svg className={`${prefix}-icon`} aria-hidden="true">
-                    <use xlinkHref="#icon-mermaid" />
-                  </svg>
-                </div>
+                {MermaidTrigger}
               </Dropdown>
             );
           }
@@ -725,49 +738,11 @@ const Toolbar = (props: ToolbarProp) => {
               <Dropdown
                 relative={`#${wrapperId}`}
                 visible={visible.katex}
-                onChange={(v) => {
-                  setVisible((_vis) => {
-                    return {
-                      ..._vis,
-                      katex: v
-                    };
-                  });
-                }}
-                overlay={
-                  <ul
-                    className={`${prefix}-menu`}
-                    onClick={() => {
-                      setVisible({
-                        ...visible,
-                        katex: false
-                      });
-                    }}
-                  >
-                    <li
-                      className={`${prefix}-menu-item`}
-                      onClick={() => {
-                        emitHandler('katexInline');
-                      }}
-                    >
-                      {ult.katex?.inline}
-                    </li>
-                    <li
-                      className={`${prefix}-menu-item`}
-                      onClick={() => {
-                        emitHandler('katexBlock');
-                      }}
-                    >
-                      {ult.katex?.block}
-                    </li>
-                  </ul>
-                }
+                onChange={onKatexChange}
+                overlay={KatexOverlay}
                 key="bar-katex"
               >
-                <div className={`${prefix}-toolbar-item`} title={ult.toolbarTips?.katex}>
-                  <svg className={`${prefix}-icon`} aria-hidden="true">
-                    <use xlinkHref="#icon-formula" />
-                  </svg>
-                </div>
+                {KatexTrigger}
               </Dropdown>
             );
           }
@@ -833,4 +808,5 @@ const Toolbar = (props: ToolbarProp) => {
   );
 };
 
+// memo do not work when use context
 export default Toolbar;
