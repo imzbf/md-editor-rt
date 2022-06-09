@@ -50,23 +50,27 @@ const ReadExtension = (props: ReadExtensionProp) => {
         </svg>
       }
     >
-      <div
-        style={{
-          height: '100%',
-          padding: '20px',
-          overflow: 'auto'
-        }}
-      >
-        <MdEditor
-          theme={store.theme}
-          language={store.lang}
-          previewTheme={store.previewTheme}
-          codeTheme={store.codeTheme}
-          editorId="edit2preview"
-          previewOnly
-          modelValue={props.mdText}
-        />
-      </div>
+      {state.visible ? (
+        <div
+          style={{
+            height: '100%',
+            padding: '20px',
+            overflow: 'auto'
+          }}
+        >
+          <MdEditor
+            theme={store.theme}
+            language={store.lang}
+            previewTheme={store.previewTheme}
+            codeTheme={store.codeTheme}
+            editorId="edit2preview"
+            previewOnly
+            modelValue={props.mdText}
+          />
+        </div>
+      ) : (
+        <></>
+      )}
     </ModalToolbar>
   );
 };
