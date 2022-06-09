@@ -2,7 +2,7 @@ import React, { CSSProperties, useEffect, useMemo, useState } from 'react';
 import bus from '../../utils/event-bus';
 import { HeadList, MarkedHeadingId, Themes } from '../../type';
 import CatalogLink from './CatalogLink';
-import { prefix } from '../../config';
+import { defaultProps, prefix } from '../../config';
 import './style.less';
 
 export interface TocItem {
@@ -25,7 +25,11 @@ export interface CatalogProps {
 
 const MdCatalog = (props: CatalogProps) => {
   // 获取Id
-  const { editorId, markedHeadingId, theme = 'light' } = props;
+  const {
+    editorId,
+    markedHeadingId = defaultProps.markedHeadingId,
+    theme = 'light'
+  } = props;
 
   const [list, setList] = useState<Array<HeadList>>([]);
 
