@@ -139,13 +139,6 @@ export const useModals = (
     };
 
     (uploadRef.current as HTMLInputElement).addEventListener('change', uploadHandler);
-
-    return () => {
-      (uploadRef.current as HTMLInputElement).removeEventListener(
-        'change',
-        uploadHandler
-      );
-    };
   }, []);
 
   return {
