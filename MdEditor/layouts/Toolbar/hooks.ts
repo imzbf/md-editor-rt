@@ -102,15 +102,18 @@ export const useModals = (
     });
   }, []);
 
-  const onOk = useCallback((data: any) => {
-    if (data) {
-      emitHandler(modalData.type, {
-        desc: data.desc,
-        url: data.url
-      });
-    }
-    onCancel();
-  }, []);
+  const onOk = useCallback(
+    (data: any) => {
+      if (data) {
+        emitHandler(modalData.type, {
+          desc: data.desc,
+          url: data.url
+        });
+      }
+      onCancel();
+    },
+    [modalData.type]
+  );
 
   useEffect(() => {
     bus.on(editorId, {
