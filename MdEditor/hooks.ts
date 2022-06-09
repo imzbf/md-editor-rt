@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { CSSProperties, useCallback, useEffect, useMemo, useState } from 'react';
 import bus from './utils/event-bus';
 import { ToolDirective } from './utils/content-help';
 import { ConfigOption, EditorProp, InnerError, SettingType, ToolbarNames } from './type';
@@ -467,7 +467,13 @@ export const useCatalog = (props: EditorProp) => {
     return !toolbarsExclude.includes('catalog') && toolbars.includes('catalog');
   }, [toolbars, toolbarsExclude]);
 
-  return [catalogVisible, catalogShow];
+  const catalogStyle = useMemo<CSSProperties>(() => {
+    return {
+      display: catalogVisible ? 'block' : 'none'
+    };
+  }, [catalogVisible]);
+
+  return { catalogShow, catalogStyle };
 };
 
 // 初始为空，渲染到页面后获取页面属性
@@ -520,7 +526,7 @@ export const useConfig = (props: EditorProp, extension: ConfigOption) => {
     htmlPreview: preview ? false : htmlPreview
   });
 
-  const updateSetting = (k: keyof typeof setting) => {
+  const updateSetting = useCallback((k: keyof typeof setting) => {
     setSetting((settingN) => {
       const nextSetting = {
         ...settingN,
@@ -535,7 +541,7 @@ export const useConfig = (props: EditorProp, extension: ConfigOption) => {
 
       return nextSetting;
     });
-  };
+  }, []);
 
   useEffect(() => {
     // 保存body部分样式

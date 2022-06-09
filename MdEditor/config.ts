@@ -267,3 +267,31 @@ export const codeCss: CodeCss = {
     dark: `${cdnBase}/highlight.js/11.5.1/styles/stackoverflow-dark.min.css`
   }
 };
+
+export const defaultProps = {
+  modelValue: '',
+  theme: 'light',
+  className: '',
+  toolbars: allToolbar,
+  toolbarsExclude: [],
+  defToolbars: [],
+  previewOnly: false,
+  editorId: defaultEditorId,
+  tabWidth: 2,
+  historyLength: 10,
+  showCodeRowNumber: false,
+  previewTheme: 'default',
+  noPrettier: false,
+  tableShape: [6, 4],
+  noMermaid: false,
+  noKatex: false,
+  placeholder: '',
+  onChange: () => {},
+  onHtmlChanged: () => {},
+  onGetCatalog: () => {},
+  sanitize: (text: string) => text,
+  onError: () => {},
+  markedHeadingId: (text: string) => text,
+  footers: allFooter,
+  defFooters: []
+};

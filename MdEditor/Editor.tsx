@@ -1,4 +1,4 @@
-import React, { createContext, useState } from 'react';
+import React, { createContext, useCallback, useState } from 'react';
 import {
   useCatalog,
   useConfig,
@@ -11,14 +11,8 @@ import ToolBar from './layouts/Toolbar';
 import Content from './layouts/Content';
 import Footer from './layouts/Footer';
 import configFn from './utils/config';
-import {
-  prefix,
-  allToolbar,
-  staticTextDefault,
-  defaultEditorId,
-  allFooter
-} from './config';
-import { ContentType, EditorProp, ConfigOption } from './type';
+import { prefix, staticTextDefault, defaultProps } from './config';
+import { ContentType, EditorProp, ConfigOption, Themes } from './type';
 import DropdownToolbar from './extensions/DropdownToolbar';
 import NormalToolbar from './extensions/NormalToolbar';
 import ModalToolbar from './extensions/ModalToolbar';
@@ -26,6 +20,7 @@ import MdCatalog from './extensions/MdCatalog';
 
 import './styles/index.less';
 import '@vavt/markdown-theme/css/all.css';
+import { classnames } from './utils';
 
 export const EditorContext = createContext<ContentType>({
   editorId: '',
@@ -45,30 +40,31 @@ export const EditorContext = createContext<ContentType>({
 
 const Editor = (props: EditorProp) => {
   const {
-    modelValue = '',
-    theme = 'light',
-    className = '',
-    toolbars = allToolbar,
-    toolbarsExclude = [],
-    previewOnly = false,
-    editorId = defaultEditorId,
-    tabWidth = 2,
-    historyLength = 10,
-    showCodeRowNumber = false,
-    previewTheme = 'default',
-    noPrettier = false,
-    tableShape = [6, 4],
-    noMermaid = false,
-    noKatex = false,
-    placeholder = '',
-    onChange = () => {},
-    onHtmlChanged = () => {},
-    onGetCatalog = () => {},
-    sanitize = (text) => text,
-    onError = () => {},
-    markedHeadingId = (text) => text,
-    footers = allFooter,
-    defFooters = []
+    modelValue = defaultProps.modelValue,
+    theme = defaultProps.theme as Themes,
+    className = defaultProps.className,
+    toolbars = defaultProps.toolbars,
+    toolbarsExclude = defaultProps.toolbarsExclude,
+    defToolbars = defaultProps.defToolbars,
+    previewOnly = defaultProps.previewOnly,
+    editorId = defaultProps.editorId,
+    tabWidth = defaultProps.tabWidth,
+    historyLength = defaultProps.historyLength,
+    showCodeRowNumber = defaultProps.showCodeRowNumber,
+    previewTheme = defaultProps.previewTheme,
+    noPrettier = defaultProps.noPrettier,
+    tableShape = defaultProps.tableShape as [number, number],
+    noMermaid = defaultProps.noMermaid,
+    noKatex = defaultProps.noKatex,
+    placeholder = defaultProps.placeholder,
+    onChange = defaultProps.onChange,
+    onHtmlChanged = defaultProps.onHtmlChanged,
+    onGetCatalog = defaultProps.onGetCatalog,
+    sanitize = defaultProps.sanitize,
+    onError = defaultProps.onError,
+    markedHeadingId = defaultProps.markedHeadingId,
+    footers = defaultProps.footers,
+    defFooters = defaultProps.defFooters
   } = props;
 
   const extension = Editor.extension as ConfigOption;
@@ -81,6 +77,18 @@ const Editor = (props: EditorProp) => {
     };
   });
 
+  const onScrollAutoChange = useCallback(
+    (v: boolean) => {
+      setState((_state) => {
+        return {
+          ..._state,
+          scrollAuto: v
+        };
+      });
+    },
+    [setState]
+  );
+
   // 快捷键监听
   useKeyBoard(props);
   // 扩展库引用
@@ -90,7 +98,7 @@ const Editor = (props: EditorProp) => {
   // 错误捕获
   useErrorCatcher(editorId, onError);
   // 目录状态
-  const [catalogVisible, catalogShow] = useCatalog(props);
+  const { catalogShow, catalogStyle } = useCatalog(props);
   // 部分配置重构
   const [highlight, usedLanguageText, setting, updateSetting] = useConfig(
     props,
@@ -114,15 +122,13 @@ const Editor = (props: EditorProp) => {
     >
       <div
         id={editorId}
-        className={[
+        className={classnames([
           prefix,
           className,
           theme === 'dark' && `${prefix}-dark`,
           setting.fullscreen || setting.pageFullScreen ? `${prefix}-fullscreen` : '',
           previewOnly && `${prefix}-previewOnly`
-        ]
-          .filter((c) => !!c)
-          .join(' ')}
+        ])}
         style={props.style}
       >
         {!previewOnly && (
@@ -135,7 +141,7 @@ const Editor = (props: EditorProp) => {
             setting={setting}
             updateSetting={updateSetting}
             tableShape={tableShape}
-            defToolbars={props.defToolbars}
+            defToolbars={defToolbars}
           />
         )}
         <Content
@@ -164,29 +170,20 @@ const Editor = (props: EditorProp) => {
         />
         {!previewOnly && footers?.length > 0 && (
           <Footer
-            modelValue={props.modelValue}
+            modelValue={modelValue}
             footers={footers}
             defFooters={defFooters}
             scrollAuto={state.scrollAuto}
-            onScrollAutoChange={(v) => {
-              setState((_state) => {
-                return {
-                  ..._state,
-                  scrollAuto: v
-                };
-              });
-            }}
+            onScrollAutoChange={onScrollAutoChange}
           />
         )}
         {catalogShow && (
           <MdCatalog
-            theme={props.theme}
-            style={{
-              display: catalogVisible ? 'block' : 'none'
-            }}
+            theme={theme}
+            style={catalogStyle}
             className={`${prefix}-catalog-editor`}
             editorId={editorId}
-            markedHeadingId={props.markedHeadingId}
+            markedHeadingId={markedHeadingId}
           />
         )}
       </div>
