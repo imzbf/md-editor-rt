@@ -62,13 +62,13 @@ mark and emoji extensions
 | noMermaid | boolean | false | Use mermaid or not |
 | placeholder | string | '' |  |
 | noKatex | boolean | false | Use katex or not |
-| defToolbars | Array<DropdownToolbar \| NormalToolbar \| ModalToolbar> | null | Custom toolbar in `DropdownToolbar`, `NormalToolbar` or `ModalToolbar` |
+| defToolbars | Array<DropdownToolbar \| NormalToolbar \| ModalToolbar> | [] | Custom toolbar in `DropdownToolbar`, `NormalToolbar` or `ModalToolbar` |
 | codeTheme | 'atom' \| 'a11y' \| 'github' \| 'gradient' \| 'kimbie' \| 'paraiso' \| 'qtcreator' \| 'stackoverflow' | 'atom' | Highlight code style, can be customized also |
 | markedHeadingId | (text: string, level: number, index: number) => string | (text) => text | H1-H6 `ID` generator |
 | sanitize | (html: string) => string | (html) => html | Sanitize the html, prevent XSS |
 | footers | Array<'markdownTotal' \| '=' \| 'scrollSwitch' \| number> | ['markdownTotal', '=', 'scrollSwitch'] | Show contents of footer, they are divided by `'='`. Set it to `[]` to hidden footer |
 | scrollAuto | boolean | true | Scroll default setting |
-| defFooters | Array<string \| ReactElement> | null | Custom footer |
+| defFooters | Array<string \| ReactElement> | [] | Custom footer |
 
 <details>
  <summary>[toolbars]</summary>
@@ -205,6 +205,10 @@ export interface StaticTextDefaultValue {
     inline: string;
     // formula block
     block: string;
+  };
+  footer?: {
+    markdownTotal: string;
+    scrollAuto: string;
   };
 }
 ```
