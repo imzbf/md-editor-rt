@@ -15,7 +15,7 @@ export interface TocItem {
 export interface CatalogProps {
   editorId: string;
   className?: string;
-  markedHeadingId: MarkedHeadingId;
+  markedHeadingId?: MarkedHeadingId;
   // 指定滚动的容器，选择器需带上对应的符号，默认预览框
   // 元素必须定位！！！！！！
   scrollElement?: string | Element;
