@@ -44,63 +44,67 @@ const LinkModal = (props: LinkModalProp) => {
     }
   }, [props.visible]);
 
-  return (
-    <Modal title={title} visible={props.visible} onClose={props.onCancel}>
-      <div className={`${prefix}-form-item`}>
-        <label className={`${prefix}-lable`} htmlFor={`link-desc-${editorId}`}>
-          {usedLanguageText.linkModalTips?.descLable}
-        </label>
-        <input
-          placeholder={usedLanguageText.linkModalTips?.descLablePlaceHolder}
-          className={`${prefix}-input`}
-          id={`link-desc-${editorId}`}
-          type="text"
-          value={linkData.desc}
-          onChange={(e) => {
-            setLinkData({
-              ...linkData,
-              desc: (e.target as HTMLInputElement).value
-            });
-          }}
-        />
-      </div>
-      <div className={`${prefix}-form-item`}>
-        <label className={`${prefix}-lable`} htmlFor={`link-url-${editorId}`}>
-          {usedLanguageText.linkModalTips?.urlLable}
-        </label>
-        <input
-          placeholder={usedLanguageText.linkModalTips?.UrlLablePlaceHolder}
-          className={`${prefix}-input`}
-          id={`link-url-${editorId}`}
-          type="text"
-          value={linkData.url}
-          onChange={(e) => {
-            setLinkData({
-              ...linkData,
-              url: (e.target as HTMLInputElement).value
-            });
-          }}
-        />
-      </div>
-      <div className={`${prefix}-form-item`}>
-        <button
-          className={`${prefix}-btn ${prefix}-btn-row`}
-          type="button"
-          onClick={() => {
-            props.onOk(linkData);
+  const _LinkModal = useMemo(() => {
+    return (
+      <Modal title={title} visible={props.visible} onClose={props.onCancel}>
+        <div className={`${prefix}-form-item`}>
+          <label className={`${prefix}-lable`} htmlFor={`link-desc-${editorId}`}>
+            {usedLanguageText.linkModalTips?.descLable}
+          </label>
+          <input
+            placeholder={usedLanguageText.linkModalTips?.descLablePlaceHolder}
+            className={`${prefix}-input`}
+            id={`link-desc-${editorId}`}
+            type="text"
+            value={linkData.desc}
+            onChange={(e) => {
+              setLinkData((_linkData) => ({
+                ..._linkData,
+                desc: (e.target as HTMLInputElement).value
+              }));
+            }}
+          />
+        </div>
+        <div className={`${prefix}-form-item`}>
+          <label className={`${prefix}-lable`} htmlFor={`link-url-${editorId}`}>
+            {usedLanguageText.linkModalTips?.urlLable}
+          </label>
+          <input
+            placeholder={usedLanguageText.linkModalTips?.UrlLablePlaceHolder}
+            className={`${prefix}-input`}
+            id={`link-url-${editorId}`}
+            type="text"
+            value={linkData.url}
+            onChange={(e) => {
+              setLinkData((_linkData) => ({
+                ..._linkData,
+                url: (e.target as HTMLInputElement).value
+              }));
+            }}
+          />
+        </div>
+        <div className={`${prefix}-form-item`}>
+          <button
+            className={`${prefix}-btn ${prefix}-btn-row`}
+            type="button"
+            onClick={() => {
+              props.onOk(linkData);
 
-            setLinkData({
-              ...linkData,
-              desc: '',
-              url: ''
-            });
-          }}
-        >
-          {usedLanguageText.linkModalTips?.buttonOK}
-        </button>
-      </div>
-    </Modal>
-  );
+              setLinkData((_linkData) => ({
+                ..._linkData,
+                desc: '',
+                url: ''
+              }));
+            }}
+          >
+            {usedLanguageText.linkModalTips?.buttonOK}
+          </button>
+        </div>
+      </Modal>
+    );
+  }, [title, props.visible, linkData.desc, linkData.url, editorId, usedLanguageText]);
+
+  return _LinkModal;
 };
 
 export default LinkModal;

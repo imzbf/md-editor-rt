@@ -1,4 +1,11 @@
-import React, { useContext, useEffect, useMemo, useRef, useState } from 'react';
+import React, {
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useRef,
+  useState
+} from 'react';
 import Modal from '../../components/Modal';
 import { EditorContext } from '../../Editor';
 import { prefix } from '../../config';
@@ -119,77 +126,83 @@ const ClipModal = (props: ClipModalProp) => {
     }));
   };
 
-  return (
-    <Modal
-      title={usedLanguageText.clipModalTips?.title}
-      visible={props.visible}
-      onClose={props.onCancel}
-      showAdjust
-      isFullscreen={data.isFullscreen}
-      onAdjust={(val) => {
-        setData({
-          ...data,
-          isFullscreen: val
-        });
-      }}
-      {...modalSize}
-    >
-      <div className={`${prefix}-form-item ${prefix}-clip`}>
-        <div className={`${prefix}-clip-main`}>
-          {data.imgSelected ? (
-            <div className={`${prefix}-clip-cropper`}>
-              <img src={data.imgSrc} ref={uploadImgRef} style={{ display: 'none' }} />
-              <div className={`${prefix}-clip-delete`} onClick={reset}>
+  const onAdjust = useCallback((isFullscreen: boolean) => {
+    setData((_data) => ({
+      ..._data,
+      isFullscreen
+    }));
+  }, []);
+
+  const _ClipModal = useMemo(() => {
+    return (
+      <Modal
+        title={usedLanguageText.clipModalTips?.title}
+        visible={props.visible}
+        onClose={props.onCancel}
+        showAdjust
+        isFullscreen={data.isFullscreen}
+        onAdjust={onAdjust}
+        {...modalSize}
+      >
+        <div className={`${prefix}-form-item ${prefix}-clip`}>
+          <div className={`${prefix}-clip-main`}>
+            {data.imgSelected ? (
+              <div className={`${prefix}-clip-cropper`}>
+                <img src={data.imgSrc} ref={uploadImgRef} style={{ display: 'none' }} />
+                <div className={`${prefix}-clip-delete`} onClick={reset}>
+                  <svg className={`${prefix}-icon`} aria-hidden="true">
+                    <use xlinkHref="#icon-delete" />
+                  </svg>
+                </div>
+              </div>
+            ) : (
+              <div
+                className={`${prefix}-clip-upload`}
+                onClick={() => {
+                  (uploadRef.current as HTMLInputElement).click();
+                }}
+              >
                 <svg className={`${prefix}-icon`} aria-hidden="true">
-                  <use xlinkHref="#icon-delete" />
+                  <use xlinkHref="#icon-upload" />
                 </svg>
               </div>
-            </div>
-          ) : (
-            <div
-              className={`${prefix}-clip-upload`}
-              onClick={() => {
-                (uploadRef.current as HTMLInputElement).click();
-              }}
-            >
-              <svg className={`${prefix}-icon`} aria-hidden="true">
-                <use xlinkHref="#icon-upload" />
-              </svg>
-            </div>
-          )}
+            )}
+          </div>
+          <div className={`${prefix}-clip-preview`}>
+            <div className={`${prefix}-clip-preview-target`} ref={previewTargetRef}></div>
+          </div>
         </div>
-        <div className={`${prefix}-clip-preview`}>
-          <div className={`${prefix}-clip-preview-target`} ref={previewTargetRef}></div>
-        </div>
-      </div>
-      <div className={`${prefix}-form-item`}>
-        <button
-          className={`${prefix}-btn`}
-          type="button"
-          onClick={() => {
-            const cvs = cropper.getCroppedCanvas();
-            bus.emit(
-              editorId,
-              'uploadImage',
-              [base642File(cvs.toDataURL('image/png'))],
-              props.onOk
-            );
+        <div className={`${prefix}-form-item`}>
+          <button
+            className={`${prefix}-btn`}
+            type="button"
+            onClick={() => {
+              const cvs = cropper.getCroppedCanvas();
+              bus.emit(
+                editorId,
+                'uploadImage',
+                [base642File(cvs.toDataURL('image/png'))],
+                props.onOk
+              );
 
-            reset();
-          }}
-        >
-          {usedLanguageText.linkModalTips?.buttonOK}
-        </button>
-      </div>
-      <input
-        ref={uploadRef}
-        accept="image/*"
-        type="file"
-        multiple={false}
-        style={{ display: 'none' }}
-      />
-    </Modal>
-  );
+              reset();
+            }}
+          >
+            {usedLanguageText.linkModalTips?.buttonOK}
+          </button>
+        </div>
+        <input
+          ref={uploadRef}
+          accept="image/*"
+          type="file"
+          multiple={false}
+          style={{ display: 'none' }}
+        />
+      </Modal>
+    );
+  }, [usedLanguageText, props.visible, data.imgSrc, data.imgSelected, data.isFullscreen]);
+
+  return _ClipModal;
 };
 
 export default ClipModal;
