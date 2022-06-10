@@ -49,7 +49,7 @@ const ClipModal = (props: ClipModalProp) => {
 
       // 直接定义onchange，防止创建新的实例时遗留事件
       (uploadRef.current as HTMLInputElement).onchange = () => {
-        if (!Cropper) {
+        if (!window.Cropper) {
           bus.emit(editorId, 'errorCatcher', {
             name: 'Cropper',
             message: 'Cropper is undefined'
@@ -74,7 +74,7 @@ const ClipModal = (props: ClipModalProp) => {
         }
       };
     }
-  }, [props.visible]);
+  }, [props.visible, data.cropperInited]);
 
   useEffect(() => {
     if (data.imgSrc) {

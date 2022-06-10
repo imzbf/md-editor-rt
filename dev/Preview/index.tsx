@@ -18,77 +18,77 @@ import mermaid from 'mermaid';
 
 import { cdnBase } from '../../MdEditor/config';
 
-MdEditor.config({
-  markedRenderer(renderer) {
-    renderer.link = (href, title, text) => {
-      return `<a href="${href}" title="${title}" target="_blank">${text}</a>`;
-    };
+// MdEditor.config({
+//   markedRenderer(renderer) {
+//     renderer.link = (href, title, text) => {
+//       return `<a href="${href}" title="${title}" target="_blank">${text}</a>`;
+//     };
 
-    renderer.image = (href: string, _: string, desc: string) => {
-      return `<img src="${href}" alt="${desc}">`;
-    };
+//     renderer.image = (href: string, _: string, desc: string) => {
+//       return `<img src="${href}" alt="${desc}">`;
+//     };
 
-    return renderer;
-  },
-  editorExtensions: {
-    highlight: {
-      css: {
-        'tokyo-night': {
-          light: `${cdnBase}/highlight.js/11.5.1/styles/tokyo-night-light.min.css`,
-          dark: `${cdnBase}/highlight.js/11.5.1/styles/tokyo-night-dark.min.css`
-        }
-      }
-    },
-    screenfull: {
-      instance: screenfull
-    },
-    katex: {
-      instance: katex
-    },
-    cropper: {
-      instance: Cropper
-    },
-    mermaid: {
-      instance: mermaid
-    }
-  },
-  editorConfig: {
-    mermaidTemplate: {
-      /**
-       * 流程图
-       */
-      flow: 'flow',
-      /**
-       * 时序图
-       */
-      sequence: 'sequence',
-      /**
-       * 甘特图
-       */
-      gantt: 'gantt',
-      /**
-       * 类图
-       */
-      class: 'class',
-      /**
-       * 状态图
-       */
-      state: 'state',
-      /**
-       * 饼图
-       */
-      pie: 'pie',
-      /**
-       * 关系图
-       */
-      relationship: 'relationship',
-      /**
-       * 旅程图
-       */
-      journey: 'journey'
-    }
-  }
-});
+//     return renderer;
+//   },
+//   editorExtensions: {
+//     highlight: {
+//       css: {
+//         'tokyo-night': {
+//           light: `${cdnBase}/highlight.js/11.5.1/styles/tokyo-night-light.min.css`,
+//           dark: `${cdnBase}/highlight.js/11.5.1/styles/tokyo-night-dark.min.css`
+//         }
+//       }
+//     },
+//     screenfull: {
+//       instance: screenfull
+//     },
+//     katex: {
+//       instance: katex
+//     },
+//     cropper: {
+//       instance: Cropper
+//     },
+//     mermaid: {
+//       instance: mermaid
+//     }
+//   },
+//   editorConfig: {
+//     mermaidTemplate: {
+//       /**
+//        * 流程图
+//        */
+//       flow: 'flow',
+//       /**
+//        * 时序图
+//        */
+//       sequence: 'sequence',
+//       /**
+//        * 甘特图
+//        */
+//       gantt: 'gantt',
+//       /**
+//        * 类图
+//        */
+//       class: 'class',
+//       /**
+//        * 状态图
+//        */
+//       state: 'state',
+//       /**
+//        * 饼图
+//        */
+//       pie: 'pie',
+//       /**
+//        * 关系图
+//        */
+//       relationship: 'relationship',
+//       /**
+//        * 旅程图
+//        */
+//       journey: 'journey'
+//     }
+//   }
+// });
 
 const SAVE_KEY = 'XHMPGLJIZTDB';
 
