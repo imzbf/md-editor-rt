@@ -45,7 +45,7 @@
   },
   "dependencies": {
     "dayjs": "^1.11.3",
-    "md-editor-rt": "^2.1.0",
+    "md-editor-rt": "^2.1.1",
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
     "react-redux": "^7.2.6",
