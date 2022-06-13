@@ -141,6 +141,11 @@ export const useHistory = (
   }, [props.value, completeStatus]);
 
   useEffect(() => {
+    // 更新后清除选中内容
+    bus.emit(editorId, 'selectTextChange');
+  }, [props.value]);
+
+  useEffect(() => {
     bus.on(editorId, {
       name: 'ctrlZ',
       callback() {
