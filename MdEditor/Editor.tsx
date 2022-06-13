@@ -17,6 +17,7 @@ import DropdownToolbar from './extensions/DropdownToolbar';
 import NormalToolbar from './extensions/NormalToolbar';
 import ModalToolbar from './extensions/ModalToolbar';
 import MdCatalog from './extensions/MdCatalog';
+import bus from './utils/event-bus';
 
 import './styles/index.less';
 import '@vavt/markdown-theme/css/all.css';
@@ -150,7 +151,11 @@ const Editor = (props: EditorProp) => {
           // mermaid={props.mermaid}
           // mermaidJs={props.mermaidJs}
           value={modelValue}
-          onChange={onChange}
+          onChange={(value) => {
+            // 可控组件，更新前保存选中位置
+            bus.emit(editorId, 'saveHistoryPos');
+            onChange(value);
+          }}
           setting={setting}
           onHtmlChanged={onHtmlChanged}
           onGetCatalog={onGetCatalog}
