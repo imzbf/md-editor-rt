@@ -39,6 +39,8 @@ interface HistoryDataType {
 
 // 防抖ID
 let saveHistoryId = -1;
+// 光标初始位置
+const POSITION_START = [0, 0];
 
 export const useHistory = (
   props: EditorContentProp,
@@ -60,7 +62,7 @@ export const useHistory = (
   });
 
   // 文本改变前的光标位置
-  const historyPos = useRef([0, 0]);
+  const historyPos = useRef(POSITION_START);
 
   const keyZCallback = (curr: number) => {
     // 保存当前的鼠标位置
@@ -75,6 +77,9 @@ export const useHistory = (
     history.current.curr = curr;
 
     const currHistory = history.current.list[history.current.curr];
+
+    // 恢复光标位置
+    historyPos.current = [currHistory.startPos, currHistory.endPos];
     props.onChange(currHistory.content);
 
     // 选中内容
@@ -113,6 +118,9 @@ export const useHistory = (
         lastStep.startPos = historyPos.current[0];
         lastStep.endPos = historyPos.current[1];
 
+        // 恢复初始位置历史
+        historyPos.current = POSITION_START;
+
         Array.prototype.push.call(history.current.list, lastStep, {
           content,
           startPos,
@@ -128,10 +136,13 @@ export const useHistory = (
   };
 
   const saveHistoryPos = () => {
-    historyPos.current = [
-      textAreaRef.current?.selectionStart || 0,
-      textAreaRef.current?.selectionEnd || 0
-    ];
+    // 如果不是初始值，代表上次记录未插入输入历史
+    if (historyPos.current === POSITION_START) {
+      historyPos.current = [
+        textAreaRef.current?.selectionStart || 0,
+        textAreaRef.current?.selectionEnd || 0
+      ];
+    }
   };
 
   useEffect(() => {
