@@ -81,7 +81,7 @@ const Content = (props: EditorContentProp) => {
               ref={textAreaRef}
               value={props.value}
               onKeyDown={() => {
-                bus.emit(editorId, 'saveHistoryPos');
+                bus.emit(editorId, 'saveHistoryPos', true);
               }}
               onCompositionStart={() => {
                 setCS(false);
