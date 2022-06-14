@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import MdEditor from 'md-editor-rt';
 import { useSelector } from 'react-redux';
 import axios from '@/utils/request';
@@ -26,6 +26,15 @@ export default () => {
       setMd(mdCN);
     } else {
       setMd(mdEN);
+    }
+  }, [state.lang]);
+
+  const tips = useMemo(() => {
+    switch (state.lang) {
+      case 'zh-CN':
+        return '示例中的标记、emoji、预览和时间扩展组件源码：';
+      default:
+        return 'Source code of mark, emoji, preview and time extension components in this page: ';
     }
   }, [state.lang]);
 
@@ -105,6 +114,16 @@ export default () => {
           footers={['markdownTotal', '=', 0, 'scrollSwitch']}
           defFooters={[<TimeNow key="time-now" />]}
         />
+        <br />
+        <span className="tips-text">
+          {tips}
+          <a
+            href="https://github.com/imzbf/md-editor-rt/tree/docs/src/components"
+            target="_blank"
+          >
+            components
+          </a>
+        </span>
       </div>
     </div>
   );
