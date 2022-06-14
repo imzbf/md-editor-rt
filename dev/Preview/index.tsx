@@ -16,6 +16,9 @@ import Cropper from 'cropperjs';
 import 'cropperjs/dist/cropper.css';
 import mermaid from 'mermaid';
 
+// import highlight from 'highlight.js';
+// import 'highlight.js/styles/tokyo-night-dark.css';
+
 import { cdnBase } from '../../MdEditor/config';
 
 MdEditor.config({
@@ -32,6 +35,7 @@ MdEditor.config({
   },
   editorExtensions: {
     highlight: {
+      // instance: highlight,
       css: {
         'tokyo-night': {
           light: `${cdnBase}/highlight.js/11.5.1/styles/tokyo-night-light.min.css`,
