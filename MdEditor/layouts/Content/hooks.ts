@@ -334,8 +334,10 @@ export const useMarked = (props: EditorContentProp) => {
       return markedCode.call(renderer, code, language, isEscaped);
     };
 
-    renderer.image = (href, title = '', desc = '') => {
-      return `<span class="figure"><img src="${href}" title="${title}" alt="${desc}" zoom><span class="figcaption">${desc}</span></span>`;
+    renderer.image = (href, title, desc) => {
+      return `<span class="figure"><img src="${href}" title="${title || ''}" alt="${
+        desc || ''
+      }" zoom><span class="figcaption">${desc || ''}</span></span>`;
     };
 
     renderer.listitem = (text: string, task: boolean) => {

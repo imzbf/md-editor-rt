@@ -21,7 +21,7 @@ import { cdnBase } from '../../MdEditor/config';
 MdEditor.config({
   markedRenderer(renderer) {
     renderer.link = (href, title, text) => {
-      return `<a href="${href}" title="${title}" target="_blank">${text}</a>`;
+      return `<a href="${href}" title="${title || ''}" target="_blank">${text}</a>`;
     };
 
     renderer.image = (href: string, _: string, desc: string) => {
