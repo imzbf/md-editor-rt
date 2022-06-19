@@ -30,7 +30,7 @@ export const useKeyBoard = (props: EditorProp) => {
 
   const keyDownHandler = (event: KeyboardEvent) => {
     // 只处理是编辑框内的内容
-    if (event.target !== document.querySelector(`#${props.editorId}-textarea`)) {
+    if (event.target !== document.querySelector(`#${editorId}-textarea`)) {
       return;
     }
 
@@ -346,7 +346,7 @@ export const useExpansion = (props: EditorProp, extension: ConfigOption) => {
     const prettierMDScript = document.createElement('script');
 
     prettierScript.src =
-      extension.editorExtensions?.prettier?.parserMarkdownJs || prettierUrl.main;
+      extension.editorExtensions?.prettier?.standaloneJs || prettierUrl.main;
     prettierScript.id = `${prefix}-prettier`;
 
     prettierMDScript.src =

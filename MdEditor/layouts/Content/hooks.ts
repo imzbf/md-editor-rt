@@ -39,6 +39,8 @@ interface HistoryDataType {
 
 // 防抖ID
 let saveHistoryId = -1;
+// 光标初始位置
+const POSITION_START = [0, 0];
 
 export const useHistory = (
   props: EditorContentProp,
@@ -60,7 +62,7 @@ export const useHistory = (
   });
 
   // 文本改变前的光标位置
-  const historyPos = useRef([0, 0]);
+  const historyPos = useRef(POSITION_START);
 
   const keyZCallback = (curr: number) => {
     // 保存当前的鼠标位置
@@ -75,6 +77,9 @@ export const useHistory = (
     history.current.curr = curr;
 
     const currHistory = history.current.list[history.current.curr];
+
+    // 恢复光标位置
+    historyPos.current = [currHistory.startPos, currHistory.endPos];
     props.onChange(currHistory.content);
 
     // 选中内容
@@ -82,7 +87,9 @@ export const useHistory = (
       textAreaRef.current as HTMLTextAreaElement,
       currHistory.startPos,
       currHistory.endPos
-    );
+    ).then(() => {
+      bus.emit(editorId, 'selectTextChange');
+    });
   };
 
   const saveHistory = (content: string) => {
@@ -111,6 +118,9 @@ export const useHistory = (
         lastStep.startPos = historyPos.current[0];
         lastStep.endPos = historyPos.current[1];
 
+        // 恢复初始位置历史
+        historyPos.current = POSITION_START;
+
         Array.prototype.push.call(history.current.list, lastStep, {
           content,
           startPos,
@@ -119,20 +129,23 @@ export const useHistory = (
 
         // 下标调整为最后一个位置
         history.current.curr = history.current.list.length - 1;
-
-        // 保存记录后重新记录位置
-        saveHistoryPos();
       } else {
         history.current.userUpdated = true;
       }
     }, 150);
   };
 
-  const saveHistoryPos = () => {
-    historyPos.current = [
-      textAreaRef.current?.selectionStart || 0,
-      textAreaRef.current?.selectionEnd || 0
-    ];
+  /**
+   * @param force 是否强制更新光标历史
+   */
+  const saveHistoryPos = (force: boolean) => {
+    // 如果不是初始值，代表上次记录未插入输入历史
+    if (historyPos.current === POSITION_START || force) {
+      historyPos.current = [
+        textAreaRef.current?.selectionStart || 0,
+        textAreaRef.current?.selectionEnd || 0
+      ];
+    }
   };
 
   useEffect(() => {
@@ -140,6 +153,11 @@ export const useHistory = (
       saveHistory(props.value);
     }
   }, [props.value, completeStatus]);
+
+  useEffect(() => {
+    // 更新后清除选中内容
+    bus.emit(editorId, 'selectTextChange');
+  }, [props.value]);
 
   useEffect(() => {
     bus.on(editorId, {
@@ -160,8 +178,10 @@ export const useHistory = (
       }
     });
 
-    // textAreaRef.value.addEventListener('keydown', saveHistoryPos);
-    textAreaRef.current?.addEventListener('click', saveHistoryPos);
+    bus.on(editorId, {
+      name: 'saveHistoryPos',
+      callback: saveHistoryPos
+    });
   }, []);
 };
 
@@ -390,8 +410,12 @@ export const useMarked = (props: EditorContentProp) => {
       marked.setOptions({
         highlight: (code, language) => {
           let codeHtml = '';
-          if (language) {
-            codeHtml = highlightIns.highlight(code, { language }).value;
+          const hljsLang = highlightIns.getLanguage(language);
+          if (language && hljsLang) {
+            codeHtml = highlightIns.highlight(code, {
+              language: hljsLang.name.split(/,|\s/)[0],
+              ignoreIllegals: true
+            }).value;
           } else {
             codeHtml = highlightIns.highlightAuto(code).value;
           }
@@ -445,8 +469,12 @@ export const useMarked = (props: EditorContentProp) => {
     marked.setOptions({
       highlight: (code, language) => {
         let codeHtml = '';
-        if (language) {
-          codeHtml = window.hljs.highlight(code, { language }).value;
+        const hljsLang = window.hljs.getLanguage(language);
+        if (language && hljsLang) {
+          codeHtml = window.hljs.highlight(code, {
+            language: hljsLang.name.split(/,|\s/)[0],
+            ignoreIllegals: true
+          }).value;
         } else {
           codeHtml = window.hljs.highlightAuto(code).value;
         }
