@@ -398,6 +398,23 @@
 
   示例代码见[文档页源码](https://github.com/imzbf/md-editor-rt/blob/docs/src/pages/Preview/index.tsx)。
 
+### 🤞🏼 noIconfont
+
+- **类型**：`boolean`
+- **默认值**：`true`
+- **说明**：不插入 iconfont 链接，你可以[下载](https://at.alicdn.com/t/font_2605852_pqekijay2ij.js)到本地自行引入。
+
+  ```jsx
+  import MdEditor from 'md-editor-rt';
+  import 'md-editor-rt/lib/style.css';
+
+  import '/assets/iconfont.js';
+
+  export default () => {
+    return <MdEditor noIconfont />;
+  };
+  ```
+
 ## 🪢 绑定事件
 
 目前支持的内容如下：
@@ -656,6 +673,10 @@ async onUploadImg(files, callback) {
       };
     };
     prettier?: {
+      // >= 2.2.0
+      prettierInstance?: any;
+      parserMarkdownInstance?: any;
+
       standaloneJs?: string;
       parserMarkdownJs?: string;
     };
@@ -890,7 +911,7 @@ async onUploadImg(files, callback) {
 
 [获取使用源码](https://github.com/imzbf/md-editor-rt/blob/docs/src/components/ReadExtension/index.tsx)
 
-### 🐻 Catalog
+### 🐻 MdCatalog
 
 `Editor.MdCatalog`
 
@@ -901,6 +922,10 @@ async onUploadImg(files, callback) {
   - `markedHeadingId`: `MarkedHeadingId`，非必须，特殊化编辑器标题的算法，与编辑器相同。
   - `scrollElement`: `string | HTMLElement`，非必须，为字符时应是一个元素选择器。仅预览模式中，整页滚动时，设置为`document.documentElement`。
   - `theme`: `'light' | 'dark'`，非必须，当需要切换主题时提供，同编辑器的`theme`。
+
+- **events**
+
+  - `onClick`: `(e: MouseEvent, t: TocItem) => void`，非必须，导航点击事件。
 
 > `scrollElement`说明：仅预览下，该元素必须已定位的并且支持滚动。
 

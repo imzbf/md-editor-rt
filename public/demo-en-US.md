@@ -476,6 +476,59 @@ Change background color in dark mode:
 }
 ```
 
+### 🙍🏻‍♂️ Import All Library
+
+```jsx
+import MdEditor from 'md-editor-rt';
+import 'md-editor-rt/lib/style.css';
+
+import screenfull from 'screenfull';
+
+import katex from 'katex';
+import 'katex/dist/katex.min.css';
+
+import Cropper from 'cropperjs';
+import 'cropperjs/dist/cropper.css';
+
+import mermaid from 'mermaid';
+
+import highlight from 'highlight.js';
+import 'highlight.js/styles/tokyo-night-dark.css';
+
+import prettier from 'prettier';
+import parserMarkdown from 'prettier/parser-markdown';
+
+MdEditor.config({
+  editorExtensions: {
+    prettier: {
+      prettierInstance: prettier,
+      parserMarkdownInstance: parserMarkdown
+    },
+    highlight: {
+      instance: highlight
+    },
+    screenfull: {
+      instance: screenfull
+    },
+    katex: {
+      instance: katex
+    },
+    cropper: {
+      instance: Cropper
+    },
+    mermaid: {
+      instance: mermaid
+    }
+  }
+});
+
+export default () => {
+  return <MdEditor modelValue="" />;
+};
+```
+
+> Tips: While import highlight styles by yourself, editor will not be able to change code styles.
+
 ## 🔒 xss
 
 after`1.3.0`, please use `sanitize` to sanitize `html`. eg: `sanitize-html`

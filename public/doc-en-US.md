@@ -351,6 +351,23 @@
 
   [Get](https://github.com/imzbf/md-editor-rt/blob/docs/src/pages/Preview/index.tsx) example code.
 
+### 🤞🏼 noIconfont
+
+- **类型**: `boolean`
+- **默认值**: `true`
+- **说明**: Not append iconfont script, [download](https://at.alicdn.com/t/font_2605852_pqekijay2ij.js) and import it by yourself.
+
+  ```jsx
+  import MdEditor from 'md-editor-rt';
+  import 'md-editor-rt/lib/style.css';
+
+  import '/assets/iconfont.js';
+
+  export default () => {
+    return <MdEditor noIconfont />;
+  };
+  ```
+
 ## 🪢 Event
 
 ### 📞 onChange
@@ -602,6 +619,10 @@ Custom `marked renderer` in `MdEditor.config(option: ConfigOption)`.
       };
     };
     prettier?: {
+      // >= 2.2.0
+      prettierInstance?: any;
+      parserMarkdownInstance?: any;
+
       standaloneJs?: string;
       parserMarkdownJs?: string;
     };
@@ -852,6 +873,10 @@ usage:
   - `markedHeadingId`: `MarkedHeadingId`, not necessary, same as editor.
   - `scrollElement`: `string | HTMLElement`, not necessary, it is an element selector when its type is string. When `previewOnly` eq `true`, it is usually set to `document.documentElement`.
   - `theme`: 'light' | 'dark', not necessary, provide it when you want to change theme online, it is the same as Editor `theme`.
+
+- **events**
+
+  - `onClick`: `(e: MouseEvent, t: TocItem) => void`, not necessary.
 
 usage:
 
