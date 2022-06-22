@@ -16,10 +16,13 @@ import Cropper from 'cropperjs';
 import 'cropperjs/dist/cropper.css';
 import mermaid from 'mermaid';
 
-// import highlight from 'highlight.js';
-// import 'highlight.js/styles/tokyo-night-dark.css';
+import highlight from 'highlight.js';
+import 'highlight.js/styles/tokyo-night-dark.css';
 
-import { cdnBase } from '../../MdEditor/config';
+import prettier from 'prettier';
+import parserMarkdown from 'prettier/parser-markdown';
+
+// import { cdnBase } from '../../MdEditor/config';
 
 MdEditor.config({
   markedRenderer(renderer) {
@@ -34,14 +37,18 @@ MdEditor.config({
     return renderer;
   },
   editorExtensions: {
+    prettier: {
+      prettierInstance: prettier,
+      parserMarkdownInstance: parserMarkdown
+    },
     highlight: {
-      // instance: highlight,
-      css: {
-        'tokyo-night': {
-          light: `${cdnBase}/highlight.js/11.5.1/styles/tokyo-night-light.min.css`,
-          dark: `${cdnBase}/highlight.js/11.5.1/styles/tokyo-night-dark.min.css`
-        }
-      }
+      instance: highlight
+      // css: {
+      //   'tokyo-night': {
+      //     light: `${cdnBase}/highlight.js/11.5.1/styles/tokyo-night-light.min.css`,
+      //     dark: `${cdnBase}/highlight.js/11.5.1/styles/tokyo-night-dark.min.css`
+      //   }
+      // }
     },
     screenfull: {
       instance: screenfull

@@ -194,6 +194,7 @@ export interface EditorProp {
   footers?: Array<Footers>;
   scrollAuto?: boolean;
   defFooters?: Array<string | ReactElement>;
+  noIconfont?: boolean;
 }
 
 export interface ContentType {
@@ -272,8 +273,8 @@ export interface ConfigOption {
       css?: CodeCss;
     };
     prettier?: {
-      // prettierInstance?: any;
-      // parserMarkdownInstance?: any;
+      prettierInstance?: any;
+      parserMarkdownInstance?: any;
 
       standaloneJs?: string;
       parserMarkdownJs?: string;

@@ -332,47 +332,64 @@ export const useKeyBoard = (props: EditorProp) => {
  * @param extension
  */
 export const useExpansion = (props: EditorProp) => {
-  const { noPrettier, previewOnly } = props;
+  const { noPrettier, previewOnly, noIconfont } = props;
+
+  const { editorExtensions } = configOption;
+
+  // 判断是否需要插入prettier标签
+  const noPrettierScript =
+    noPrettier || !!configOption.editorExtensions?.prettier?.prettierInstance;
+
+  // 判断是否需要插入prettier markdown扩展标签
+  const noParserMarkdownScript =
+    noPrettier || !!configOption.editorExtensions?.prettier?.parserMarkdownInstance;
+
+  // 判断是否需要插入裁剪图片标签
+  const noCropperScript = !!configOption.editorExtensions?.cropper?.instance;
 
   useEffect(() => {
     // 图标
     const iconfontScript = document.createElement('script');
-    iconfontScript.src = configOption.editorExtensions?.iconfont || iconfontUrl;
+    iconfontScript.src = editorExtensions?.iconfont || iconfontUrl;
     iconfontScript.id = `${prefix}-icon`;
 
     // prettier
     const prettierScript = document.createElement('script');
     const prettierMDScript = document.createElement('script');
 
-    prettierScript.src =
-      configOption.editorExtensions?.prettier?.standaloneJs || prettierUrl.main;
+    prettierScript.src = editorExtensions?.prettier?.standaloneJs || prettierUrl.main;
     prettierScript.id = `${prefix}-prettier`;
 
     prettierMDScript.src =
-      configOption.editorExtensions?.prettier?.parserMarkdownJs || prettierUrl.markdown;
+      editorExtensions?.prettier?.parserMarkdownJs || prettierUrl.markdown;
     prettierMDScript.id = `${prefix}-prettierMD`;
 
     // 裁剪图片
     const cropperLink = document.createElement('link');
     cropperLink.rel = 'stylesheet';
-    cropperLink.href = configOption.editorExtensions?.cropper?.css || cropperUrl.css;
+    cropperLink.href = editorExtensions?.cropper?.css || cropperUrl.css;
     cropperLink.id = `${prefix}-cropperCss`;
 
     const cropperScript = document.createElement('script');
-    cropperScript.src = configOption.editorExtensions?.cropper?.js || cropperUrl.js;
+    cropperScript.src = editorExtensions?.cropper?.js || cropperUrl.js;
     cropperScript.id = `${prefix}-cropper`;
 
     // 非仅预览模式才添加扩展
     if (!previewOnly) {
-      appendHandler(iconfontScript);
+      if (!noIconfont) {
+        appendHandler(iconfontScript);
+      }
 
-      if (!configOption.editorExtensions?.cropper?.instance) {
+      if (!noCropperScript) {
         appendHandler(cropperLink);
         appendHandler(cropperScript);
       }
 
-      if (!noPrettier) {
+      if (!noPrettierScript) {
         appendHandler(prettierScript);
+      }
+
+      if (!noParserMarkdownScript) {
         appendHandler(prettierMDScript);
       }
     }
