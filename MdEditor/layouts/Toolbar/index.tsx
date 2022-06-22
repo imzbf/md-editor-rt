@@ -25,8 +25,6 @@ export interface ToolbarProp {
   // 工具栏选择不显示
   toolbarsExclude: Array<ToolbarNames>;
   setting: SettingType;
-  // screenfull: any;
-  // screenfullJs: string;
   updateSetting: (k: keyof SettingType) => void;
   tableShape: [number, number];
   defToolbars?: Array<ReactElement>;

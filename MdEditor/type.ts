@@ -132,23 +132,6 @@ export type Themes = 'light' | 'dark';
 
 export type PreviewThemes = string; // 'default' | 'github' | 'vuepress';
 
-// marked heading方法
-// export type MarkedHeading = (
-//   text: string,
-//   level: 1 | 2 | 3 | 4 | 5 | 6,
-//   raw: string,
-//   // marked@2.1.3
-//   slugger: {
-//     seen: { [slugValue: string]: number };
-//     slug(
-//       value: string,
-//       options?: {
-//         dryrun: boolean;
-//       }
-//     ): string;
-//   }
-// ) => string;
-
 export type MarkedHeadingId = (text: string, level: number, index: number) => string;
 
 export interface EditorProp {
@@ -157,11 +140,6 @@ export interface EditorProp {
   theme?: Themes;
   // 外层扩展类名
   className?: string;
-  // 如果项目中有使用highlight.js或者没有外网访问权限，可以直接传递实例hljs并且手动导入css
-  // hljs?: any;
-  // 可以手动提供highlight.js的cdn链接
-  // highlightJs: string;
-  // highlightCss: string;
   // 历史记录最长条数，默认10
   historyLength?: number;
   // input回调事件
@@ -180,25 +158,14 @@ export interface EditorProp {
   previewOnly?: boolean;
   // 预设语言名称
   language?: StaticTextDefaultKey | string;
-  // 语言扩展，以标准的形式定义内容，设置language为key值即可替换
-  // languageUserDefined?: { [key: string]: StaticTextDefaultValue };
   // 工具栏选择显示
   toolbars?: Array<ToolbarNames>;
   // 工具栏选择不显示
   toolbarsExclude?: Array<ToolbarNames>;
   // 格式化md，默认true
   noPrettier?: boolean;
-  // prettierCDN: string;
-  // prettierMDCDN: string;
   // html变化事件
   onHtmlChanged?: (h: string) => void;
-  // 图片裁剪对象
-  // Cropper?: any;
-  // 图片裁剪
-  // cropperCss: string;
-  // cropperJs: string;
-  // 图标
-  // iconfontJs: string;
   // 获取目录结构
   onGetCatalog?: (list: HeadList[]) => void;
   // 编辑器唯一标识
@@ -206,37 +173,22 @@ export interface EditorProp {
   tabWidth?: number;
   // 预览中代码是否显示行号
   showCodeRowNumber?: boolean;
-  // screenfull?: any;
-  // screenfullJs: string;
   // 预览内容样式
   previewTheme?: PreviewThemes;
-  // markedHeading: MarkedHeading;
   markedHeadingId?: MarkedHeadingId;
   // 编辑器样式
   style?: CSSProperties;
   // 表格预设格子数
   tableShape?: [number, number];
-  // mermaid实例
-  // mermaid?: any;
-  // mermaid script链接
-  // mermaidJs: string;
   // 不使用该功能
   noMermaid?: boolean;
   // 不能保证文本正确的情况，在marked编译md文本后通过该方法处理
   // 推荐DOMPurify、sanitize-html
   sanitize?: (html: string) => string;
   placeholder?: string;
-  // katex实例
-  // katex?: any;
-  // katex script链接
-  // katexJs: string;
-  // katexCss: string;
   noKatex?: boolean;
   // 自定义的工具栏列表
   defToolbars?: Array<ReactElement>;
-  // 自定义marked扩展，只支持预设
-  // extensions?: Array<any>;
-  // markedImage?: MarkedImage;
   onError?: (err: InnerError) => void;
   codeTheme?: string;
   footers?: Array<Footers>;
@@ -258,8 +210,6 @@ export interface ContentType {
   theme: Themes;
   previewTheme: PreviewThemes;
 }
-
-// export type MarkedImage = (href: string, title: string, desc: string) => string;
 
 export interface MermaidTemplate {
   /**

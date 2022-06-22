@@ -15,33 +15,15 @@ import bus from '../../utils/event-bus';
 
 export type EditorContentProp = Readonly<{
   value: string;
-  // hljs?: Record<string, any>;
-  // highlightSet: {
-  //   js: string;
-  //   css: string;
-  // };
   onChange: (v: string) => void;
   setting: SettingType;
   onHtmlChanged?: (h: string) => void;
   onGetCatalog?: (list: HeadList[]) => void;
-  // markedHeading: MarkedHeading;
-  // mermaid实例
-  // mermaid?: any;
-  // mermaid script链接
-  // mermaidJs: string;
   // 不使用该功能
   noMermaid?: boolean;
   sanitize: (html: string) => string;
   placeholder: string;
-  // katex实例
-  // katex?: any;
-  // katex script链接
-  // katexJs: string;
-  // katexCss: string;
   noKatex?: boolean;
-  // extensions?: Array<any>;
-  // markedImage?: MarkedImage;
-  // mermaidTemplate?: MermaidTemplate;
   markedHeadingId: MarkedHeadingId;
   scrollAuto: boolean;
 }>;

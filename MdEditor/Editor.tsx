@@ -66,8 +66,6 @@ const Editor = (props: EditorProp) => {
     defFooters = defaultProps.defFooters
   } = props;
 
-  // const extension = Editor.extension as ConfigOption;
-
   const [state, setState] = useState<{
     scrollAuto: boolean;
   }>(() => {
@@ -138,8 +136,6 @@ const Editor = (props: EditorProp) => {
         {!previewOnly && (
           <ToolBar
             noPrettier={noPrettier}
-            // screenfull={screenfull}
-            // screenfullJs={screenfullJs}
             toolbars={toolbars}
             toolbarsExclude={toolbarsExclude}
             setting={setting}
@@ -149,26 +145,15 @@ const Editor = (props: EditorProp) => {
           />
         )}
         <Content
-          // hljs={props.hljs}
-          // highlightSet={highlightSet}
-          // mermaid={props.mermaid}
-          // mermaidJs={props.mermaidJs}
           value={modelValue}
           onChange={wrapOnChange}
           setting={setting}
           onHtmlChanged={onHtmlChanged}
           onGetCatalog={onGetCatalog}
-          // markedHeading={props.markedHeading}
           sanitize={sanitize}
           noMermaid={noMermaid}
           placeholder={placeholder}
-          // katex={props.katex}
-          // katexJs={props.katexJs}
-          // katexCss={props.katexCss}
           noKatex={noKatex}
-          // extensions={props.extensions}
-          // markedImage={props.markedImage}
-          // mermaidTemplate={extension?.editorConfig?.mermaidTemplate}
           markedHeadingId={markedHeadingId}
           scrollAuto={state.scrollAuto}
         />
