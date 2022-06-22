@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { MouseEvent } from 'react';
 import { prefix } from '../../config';
 import { TocItem } from './index';
 import { MarkedHeadingId } from '../../type';
@@ -7,13 +7,20 @@ export interface CatalogLinkProps {
   tocItem: TocItem;
   markedHeadingId: MarkedHeadingId;
   scrollElement: string | Element;
+  onClick?: (e: MouseEvent, t: TocItem) => void;
 }
 
-const CatalogLink = ({ tocItem, markedHeadingId, scrollElement }: CatalogLinkProps) => {
+const CatalogLink = ({
+  tocItem,
+  markedHeadingId,
+  scrollElement,
+  onClick
+}: CatalogLinkProps) => {
   return (
     <div
       className={`${prefix}-catalog-link`}
       onClick={(e) => {
+        onClick && onClick(e, tocItem);
         e.stopPropagation();
         const id = markedHeadingId(tocItem.text, tocItem.level, tocItem.index);
         const targetHeadEle = document.getElementById(id);
@@ -51,6 +58,7 @@ const CatalogLink = ({ tocItem, markedHeadingId, scrollElement }: CatalogLinkPro
               key={item.text}
               tocItem={item}
               scrollElement={scrollElement}
+              onClick={onClick}
             />
           ))}
       </div>

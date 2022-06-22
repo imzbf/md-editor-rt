@@ -1,4 +1,4 @@
-import React, { CSSProperties, useEffect, useMemo, useState } from 'react';
+import React, { CSSProperties, useEffect, useMemo, useState, MouseEvent } from 'react';
 import bus from '../../utils/event-bus';
 import { HeadList, MarkedHeadingId, Themes } from '../../type';
 import CatalogLink from './CatalogLink';
@@ -21,6 +21,7 @@ export interface CatalogProps {
   scrollElement?: string | Element;
   style?: CSSProperties;
   theme?: Themes;
+  onClick?: (e: MouseEvent, t: TocItem) => void;
 }
 
 const MdCatalog = (props: CatalogProps) => {
@@ -104,6 +105,7 @@ const MdCatalog = (props: CatalogProps) => {
             tocItem={item}
             key={item.text}
             scrollElement={scrollElement}
+            onClick={props.onClick}
           />
         );
       })}
