@@ -22,6 +22,25 @@ react 版本的 Markdown 编辑器，[md-editor-v3](https://imzbf.github.io/md-e
 - `mermaid`绘图（>=1.3.0），`katex`数学公式（>=1.4.0）。
 - 自定义工具栏顺序或显示，自定义扩展工具栏（支持点击类型、下拉菜单类型及弹窗类型）等。
 
+## 安装
+
+```shell
+yarn add md-editor-rt
+```
+
+## 用法
+
+```js
+import React, { useState } from 'react';
+import MdEditor from 'md-editor-rt';
+import 'md-editor-rt/lib/style.css';
+
+export default () => {
+  const [text, setText] = useState('hello md-editor-rt！');
+  return <MdEditor modelValue={text} onChange={setText} />;
+};
+```
+
 ## 预览图
 
 | 默认模式 | 暗黑模式 | 仅预览 |
@@ -467,19 +486,6 @@ export interface StaticTextDefaultValue {
   - `onClick`: `(e: MouseEvent, t: TocItem) => void`，非必须，导航点击事件。
 
 ## 部分示例
-
-### Jsx 语法项目
-
-```js
-import React, { useState } from 'react';
-import MdEditor from 'md-editor-rt';
-import 'md-editor-rt/lib/style.css';
-
-export default () => {
-  const [text, setText] = useState('hello md-editor-rt！');
-  return <MdEditor modelValue={text} onChange={setText} />;
-};
-```
 
 ### 上传图片
 

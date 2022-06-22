@@ -25,6 +25,26 @@ Markdown editor for `react`, developed in `jsx` and `typescript`.
 - `mermaid`(>=1.3.0), `katex` mathematical formula（>=1.4.0）.
 - Customize the toolbar as you like.
 
+## Install
+
+```shell
+yarn add md-editor-rt
+```
+
+## Usage
+
+```js
+import React, { useState } from 'react';
+import MdEditor from 'md-editor-rt';
+import 'md-editor-rt/lib/style.css';
+
+export default () => {
+  const [text, setText] = useState('# Hello Editor');
+
+  return <MdEditor modelValue={text} onChange={setText} />;
+};
+```
+
 ## Preview
 
 | Default theme | Dark theme | Preview only |
@@ -457,20 +477,6 @@ They are used as attributes of the editor component, eg: `Editor.DropdownToolbar
   - `onClick`: `(e: MouseEvent, t: TocItem) => void`, not necessary.
 
 ## Examples
-
-### Jsx Module
-
-```js
-import React, { useState } from 'react';
-import MdEditor from 'md-editor-rt';
-import 'md-editor-rt/lib/style.css';
-
-export default () => {
-  const [text, setText] = useState('# Hello Editor');
-
-  return <MdEditor modelValue={text} onChange={setText} />;
-};
-```
 
 ### Upload Picture
 
