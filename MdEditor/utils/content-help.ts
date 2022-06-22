@@ -1,6 +1,7 @@
 import copy from 'copy-to-clipboard';
 import { insert, setPosition } from '.';
 import eventBus from './event-bus';
+import { configOption } from '../config';
 
 export type ToolDirective =
   | 'bold'
@@ -113,7 +114,7 @@ export const directive2flag = (
   // 后半部分
   let subfixVal;
 
-  const mermaidTemplate = params?.mermaidTemplate;
+  const mermaidTemplate = configOption.editorConfig?.mermaidTemplate;
 
   if (/^h[1-6]{1}$/.test(direct)) {
     const pix = direct.replace(/^h(\d)/, (_, num) => {
@@ -136,6 +137,11 @@ export const directive2flag = (
       parser: 'markdown',
       plugins: window.prettierPlugins
     });
+
+    // return prettier.format(inputArea.value, {
+    //   parser: 'markdown',
+    //   plugins: [parsetMarkdown]
+    // });
   } else {
     switch (direct) {
       case 'bold': {

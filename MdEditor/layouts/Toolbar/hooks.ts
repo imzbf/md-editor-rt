@@ -1,6 +1,6 @@
 import { RefObject, useCallback, useContext, useEffect, useRef, useState } from 'react';
 import bus from '../../utils/event-bus';
-import { prefix, screenfullUrl } from '../../config';
+import { prefix, screenfullUrl, configOption } from '../../config';
 import { EditorContext } from '../../Editor';
 import { appendHandler } from '../../utils/dom';
 import { ToolbarProp } from './';
@@ -8,8 +8,8 @@ import { ToolDirective } from '../../utils/content-help';
 import { HoverData } from './TableShape';
 
 export const useSreenfull = (props: ToolbarProp) => {
-  const { previewOnly, extension, editorId } = useContext(EditorContext);
-  const screenfullConfig = extension.editorExtensions?.screenfull;
+  const { previewOnly, editorId } = useContext(EditorContext);
+  const screenfullConfig = configOption.editorExtensions?.screenfull;
   let screenfull = screenfullConfig?.instance;
   // 是否组件内部全屏标识
   const screenfullMe = useRef(false);

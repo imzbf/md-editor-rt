@@ -1,7 +1,7 @@
 import { CSSProperties, useCallback, useEffect, useMemo, useState } from 'react';
 import bus from './utils/event-bus';
 import { ToolDirective } from './utils/content-help';
-import { ConfigOption, EditorProp, InnerError, SettingType, ToolbarNames } from './type';
+import { EditorProp, InnerError, SettingType, ToolbarNames } from './type';
 import {
   prefix,
   iconfontUrl,
@@ -11,7 +11,8 @@ import {
   allToolbar,
   codeCss,
   highlightUrl,
-  staticTextDefault
+  staticTextDefault,
+  configOption
 } from './config';
 import { appendHandler } from './utils/dom';
 
@@ -332,13 +333,13 @@ export const useKeyBoard = (props: EditorProp) => {
  * @param props
  * @param extension
  */
-export const useExpansion = (props: EditorProp, extension: ConfigOption) => {
+export const useExpansion = (props: EditorProp) => {
   const { noPrettier, previewOnly } = props;
 
   useEffect(() => {
     // 图标
     const iconfontScript = document.createElement('script');
-    iconfontScript.src = extension.editorExtensions?.iconfont || iconfontUrl;
+    iconfontScript.src = configOption.editorExtensions?.iconfont || iconfontUrl;
     iconfontScript.id = `${prefix}-icon`;
 
     // prettier
@@ -346,28 +347,28 @@ export const useExpansion = (props: EditorProp, extension: ConfigOption) => {
     const prettierMDScript = document.createElement('script');
 
     prettierScript.src =
-      extension.editorExtensions?.prettier?.standaloneJs || prettierUrl.main;
+      configOption.editorExtensions?.prettier?.standaloneJs || prettierUrl.main;
     prettierScript.id = `${prefix}-prettier`;
 
     prettierMDScript.src =
-      extension.editorExtensions?.prettier?.parserMarkdownJs || prettierUrl.markdown;
+      configOption.editorExtensions?.prettier?.parserMarkdownJs || prettierUrl.markdown;
     prettierMDScript.id = `${prefix}-prettierMD`;
 
     // 裁剪图片
     const cropperLink = document.createElement('link');
     cropperLink.rel = 'stylesheet';
-    cropperLink.href = extension.editorExtensions?.cropper?.css || cropperUrl.css;
+    cropperLink.href = configOption.editorExtensions?.cropper?.css || cropperUrl.css;
     cropperLink.id = `${prefix}-cropperCss`;
 
     const cropperScript = document.createElement('script');
-    cropperScript.src = extension.editorExtensions?.cropper?.js || cropperUrl.js;
+    cropperScript.src = configOption.editorExtensions?.cropper?.js || cropperUrl.js;
     cropperScript.id = `${prefix}-cropper`;
 
     // 非仅预览模式才添加扩展
     if (!previewOnly) {
       appendHandler(iconfontScript);
 
-      if (!extension.editorExtensions?.cropper?.instance) {
+      if (!configOption.editorExtensions?.cropper?.instance) {
         appendHandler(cropperLink);
         appendHandler(cropperScript);
       }
@@ -486,11 +487,11 @@ let bodyOverflowHistory = '';
  * @param extension
  * @returns
  */
-export const useConfig = (props: EditorProp, extension: ConfigOption) => {
+export const useConfig = (props: EditorProp) => {
   const { theme = 'light', codeTheme = 'atom', language = 'zh-CN' } = props;
 
   const highlight = useMemo(() => {
-    const highlightConfig = extension?.editorExtensions?.highlight;
+    const highlightConfig = configOption?.editorExtensions?.highlight;
 
     const cssList = {
       ...codeCss,
@@ -507,7 +508,7 @@ export const useConfig = (props: EditorProp, extension: ConfigOption) => {
   const usedLanguageText = useMemo(() => {
     const allText: any = {
       ...staticTextDefault,
-      ...extension?.editorConfig?.languageUserDefined
+      ...configOption?.editorConfig?.languageUserDefined
     };
 
     if (allText[language]) {

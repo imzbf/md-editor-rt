@@ -257,7 +257,6 @@ export interface ContentType {
   usedLanguageText: StaticTextDefaultValue;
   theme: Themes;
   previewTheme: PreviewThemes;
-  extension: ConfigOption;
 }
 
 // export type MarkedImage = (href: string, title: string, desc: string) => string;
@@ -323,6 +322,9 @@ export interface ConfigOption {
       css?: CodeCss;
     };
     prettier?: {
+      // prettierInstance?: any;
+      // parserMarkdownInstance?: any;
+
       standaloneJs?: string;
       parserMarkdownJs?: string;
     };

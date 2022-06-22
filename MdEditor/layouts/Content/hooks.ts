@@ -15,7 +15,7 @@ import { directive2flag, ToolDirective } from '../../utils/content-help';
 import bus from '../../utils/event-bus';
 import { EditorContentProp } from './';
 import { EditorContext } from '../../Editor';
-import { prefix, katexUrl, mermaidUrl } from '../../config';
+import { prefix, katexUrl, mermaidUrl, configOption } from '../../config';
 import { appendHandler, updateHandler } from '../../utils/dom';
 import kaTexExtensions from '../../utils/katex';
 
@@ -267,7 +267,6 @@ export const useAutoGenrator = (
         {
           ...params,
           tabWidth,
-          mermaidTemplate: props.mermaidTemplate,
           editorId
         }
       )
@@ -293,12 +292,12 @@ export const useAutoGenrator = (
 
 export const useMarked = (props: EditorContentProp) => {
   const { onHtmlChanged = () => {}, onGetCatalog = () => {} } = props;
-  const { editorId, usedLanguageText, showCodeRowNumber, extension, highlight } =
+  const { editorId, usedLanguageText, showCodeRowNumber, highlight } =
     useContext(EditorContext);
 
-  const { markedRenderer, markedOptions, markedExtensions, editorConfig } = extension;
-  const highlightIns = extension.editorExtensions?.highlight?.instance;
-  const mermaidIns = extension.editorExtensions?.mermaid?.instance;
+  const { markedRenderer, markedOptions, markedExtensions, editorConfig } = configOption;
+  const highlightIns = configOption.editorExtensions?.highlight?.instance;
+  const mermaidIns = configOption.editorExtensions?.mermaid?.instance;
 
   // 当页面已经引入完成对应的库时，通过修改从状态完成marked重新编译
   const [highlightInited, setHighlightInited] = useState<boolean>(() => {
@@ -558,9 +557,9 @@ export const useMarked = (props: EditorContentProp) => {
 };
 
 export const useMermaid = (props: EditorContentProp) => {
-  const { theme, extension } = useContext(EditorContext);
+  const { theme } = useContext(EditorContext);
 
-  const mermaidConf = extension.editorExtensions?.mermaid;
+  const mermaidConf = configOption.editorExtensions?.mermaid;
 
   // 修改它触发重新编译
   const [reRender, setReRender] = useState<boolean>(false);
@@ -605,9 +604,8 @@ export const useMermaid = (props: EditorContentProp) => {
 };
 
 export const useKatex = (props: EditorContentProp, marked: any) => {
-  const { extension } = useContext(EditorContext);
   // 获取相应的扩展配置链接
-  const katexConf = extension.editorExtensions?.katex;
+  const katexConf = configOption.editorExtensions?.katex;
   const katexIns = katexConf?.instance;
 
   const [katexInited, setKatexInited] = useState(false);

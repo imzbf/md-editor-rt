@@ -8,7 +8,7 @@ import React, {
 } from 'react';
 import Modal from '../../components/Modal';
 import { EditorContext } from '../../Editor';
-import { prefix } from '../../config';
+import { prefix, configOption } from '../../config';
 import { base642File } from '../../utils';
 import bus from '../../utils/event-bus';
 
@@ -24,9 +24,9 @@ let cropper: any = null;
 
 const ClipModal = (props: ClipModalProp) => {
   const editorConext = useContext(EditorContext);
-  const { editorId, usedLanguageText, extension } = editorConext;
+  const { editorId, usedLanguageText } = editorConext;
 
-  const Cropper = extension.editorExtensions?.cropper?.instance;
+  const Cropper = configOption.editorExtensions?.cropper?.instance;
 
   const uploadRef = useRef<HTMLInputElement>(null);
   const uploadImgRef = useRef<HTMLImageElement>(null);

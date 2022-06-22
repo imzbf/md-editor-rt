@@ -10,9 +10,8 @@ import {
 import ToolBar from './layouts/Toolbar';
 import Content from './layouts/Content';
 import Footer from './layouts/Footer';
-import configFn from './utils/config';
-import { prefix, staticTextDefault, defaultProps } from './config';
-import { ContentType, EditorProp, ConfigOption, Themes } from './type';
+import { prefix, staticTextDefault, defaultProps, config } from './config';
+import { ContentType, EditorProp, Themes } from './type';
 import DropdownToolbar from './extensions/DropdownToolbar';
 import NormalToolbar from './extensions/NormalToolbar';
 import ModalToolbar from './extensions/ModalToolbar';
@@ -35,8 +34,7 @@ export const EditorContext = createContext<ContentType>({
   previewOnly: false,
   showCodeRowNumber: false,
   usedLanguageText: staticTextDefault['zh-CN'],
-  previewTheme: 'default',
-  extension: {}
+  previewTheme: 'default'
 });
 
 const Editor = (props: EditorProp) => {
@@ -68,7 +66,7 @@ const Editor = (props: EditorProp) => {
     defFooters = defaultProps.defFooters
   } = props;
 
-  const extension = Editor.extension as ConfigOption;
+  // const extension = Editor.extension as ConfigOption;
 
   const [state, setState] = useState<{
     scrollAuto: boolean;
@@ -102,7 +100,7 @@ const Editor = (props: EditorProp) => {
   // 快捷键监听
   useKeyBoard(props);
   // 扩展库引用
-  useExpansion(props, extension);
+  useExpansion(props);
   // 上传图片监控
   useUploadImg(props);
   // 错误捕获
@@ -110,10 +108,7 @@ const Editor = (props: EditorProp) => {
   // 目录状态
   const { catalogShow, catalogStyle } = useCatalog(props);
   // 部分配置重构
-  const [highlight, usedLanguageText, setting, updateSetting] = useConfig(
-    props,
-    extension
-  );
+  const [highlight, usedLanguageText, setting, updateSetting] = useConfig(props);
 
   return (
     <EditorContext.Provider
@@ -126,8 +121,7 @@ const Editor = (props: EditorProp) => {
         previewOnly,
         showCodeRowNumber,
         usedLanguageText,
-        previewTheme,
-        extension: extension
+        previewTheme
       }}
     >
       <div
@@ -174,7 +168,7 @@ const Editor = (props: EditorProp) => {
           noKatex={noKatex}
           // extensions={props.extensions}
           // markedImage={props.markedImage}
-          mermaidTemplate={extension?.editorConfig?.mermaidTemplate}
+          // mermaidTemplate={extension?.editorConfig?.mermaidTemplate}
           markedHeadingId={markedHeadingId}
           scrollAuto={state.scrollAuto}
         />
@@ -205,7 +199,7 @@ Editor.DropdownToolbar = DropdownToolbar;
 Editor.NormalToolbar = NormalToolbar;
 Editor.MdCatalog = MdCatalog;
 Editor.ModalToolbar = ModalToolbar;
-Editor.config = configFn;
+Editor.config = config;
 Editor.extension = {};
 
 export * from './type';

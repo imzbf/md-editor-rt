@@ -1,4 +1,11 @@
-import { CodeCss, Footers, StaticTextDefault, ToolbarNames } from './type';
+import {
+  CodeCss,
+  Config,
+  ConfigOption,
+  Footers,
+  StaticTextDefault,
+  ToolbarNames
+} from './type';
 
 export const prefix = 'md';
 
@@ -294,4 +301,26 @@ export const defaultProps = {
   markedHeadingId: (text: string) => text,
   footers: allFooter,
   defFooters: []
+};
+
+export const configOption: ConfigOption = {
+  markedRenderer: (r) => r,
+  markedExtensions: [],
+  markedOptions: {},
+  editorExtensions: {},
+  editorConfig: {}
+};
+
+export const config: Config = (option) => {
+  type OptionKey = keyof typeof option;
+
+  if (option) {
+    for (const key in option) {
+      const optionItem = option[key as OptionKey] as any;
+
+      if (optionItem) {
+        configOption[key as OptionKey] = optionItem;
+      }
+    }
+  }
 };

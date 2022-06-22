@@ -1,7 +1,7 @@
 import React, { useContext, useRef, useState } from 'react';
 import { prefix } from '../../config';
 import { EditorContext } from '../../Editor';
-import { SettingType, HeadList, MermaidTemplate, MarkedHeadingId } from '../../type';
+import { SettingType, HeadList, MarkedHeadingId } from '../../type';
 import {
   useAutoGenrator,
   useHistory,
@@ -41,7 +41,7 @@ export type EditorContentProp = Readonly<{
   noKatex?: boolean;
   // extensions?: Array<any>;
   // markedImage?: MarkedImage;
-  mermaidTemplate?: MermaidTemplate;
+  // mermaidTemplate?: MermaidTemplate;
   markedHeadingId: MarkedHeadingId;
   scrollAuto: boolean;
 }>;
