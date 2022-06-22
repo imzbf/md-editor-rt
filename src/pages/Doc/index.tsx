@@ -1,9 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import MdEditor from 'md-editor-rt';
 import mdEN from '../../../public/doc-en-US.md';
 import mdCN from '../../../public/doc-zh-CN.md';
 import { useSelector } from 'react-redux';
 import { StateType } from '@/store';
+
+import IzCatalog from '@/layouts/Catalog';
+import IzPreviewContent from '@/layouts/PreviewContent';
+
+const editorId = 'doc-preview';
 
 export default () => {
   const state = useSelector<StateType>((state) => state) as StateType;
@@ -21,27 +25,8 @@ export default () => {
   return (
     <div className="container">
       <div className="doc">
-        <div className="content">
-          <MdEditor
-            editorId="doc-preview"
-            theme={state.theme}
-            codeTheme={state.codeTheme}
-            language={state.lang}
-            modelValue={mdText}
-            previewTheme={state.previewTheme}
-            previewOnly
-            showCodeRowNumber
-          />
-        </div>
-        <div className="catalog">
-          <div className="affix">
-            <MdEditor.MdCatalog
-              editorId="doc-preview"
-              theme={state.theme}
-              scrollElement={document.documentElement}
-            />
-          </div>
-        </div>
+        <IzPreviewContent editorId={editorId} modelValue={mdText} />
+        <IzCatalog editorId={editorId} />
       </div>
     </div>
   );
