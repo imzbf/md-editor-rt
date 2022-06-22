@@ -292,7 +292,7 @@ export const useAutoGenrator = (
 
 export const useMarked = (props: EditorContentProp) => {
   const { onHtmlChanged = () => {}, onGetCatalog = () => {} } = props;
-  const { editorId, usedLanguageText, showCodeRowNumber, highlight } =
+  const { editorId, usedLanguageText, showCodeRowNumber, highlight, previewOnly } =
     useContext(EditorContext);
 
   const { markedRenderer, markedOptions, markedExtensions, editorConfig } = configOption;
@@ -530,7 +530,11 @@ export const useMarked = (props: EditorContentProp) => {
         // 生成目录，
         bus.emit(editorId, 'catalogChanged', heads.current);
       },
-      editorConfig?.renderDelay !== undefined ? editorConfig?.renderDelay : 500
+      editorConfig?.renderDelay !== undefined
+        ? editorConfig?.renderDelay
+        : previewOnly
+        ? 0
+        : 500
     );
 
     return () => {
