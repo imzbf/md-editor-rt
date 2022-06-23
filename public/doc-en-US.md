@@ -315,20 +315,24 @@
 
   1. Config `markedRenderer`
 
-  ```js
+  ```jsx
   import MdEditor from 'md-editor-rt';
 
   const generateId = (_text, _level, index) => `heading-${index}`;
 
   MdEditor.config({
     markedRenderer(renderer) {
-      renderer.heading = (text, level) => {
-        const id = generateId(text, level);
+      renderer.heading = (text, level, _r, _s, index) => {
+        const id = generateId(text, level, index);
         return `<h${level} id="${id}">${text}</h${level}>`;
       };
       return renderer;
     }
   });
+
+  export default () => {
+    return <MdEditor markedHeadingId={generateId} />;
+  };
   ```
 
   2. Set `markedHeadingId`
@@ -472,7 +476,7 @@ async onUploadImg(files, callback) {
 
 Custom `marked renderer` in `MdEditor.config(option: ConfigOption)`.
 
-- markedRenderer: `(renderer: Renderer) => Renderer`
+- markedRenderer: `(renderer: RewriteRenderer) => RewriteRenderer`
 
   Open target page in a new browser window:
 
@@ -482,7 +486,7 @@ Custom `marked renderer` in `MdEditor.config(option: ConfigOption)`.
   MdEditor.config({
     markedRenderer(renderer) {
       renderer.link = (href, title, text) => {
-        return `<a href="${href}" title="${title}" target="_blank">${text}</a>`;
+        return `<a href="${href}" title="${title || ''}" target="_blank">${text}</a>`;
       };
 
       return renderer;
@@ -490,7 +494,23 @@ Custom `marked renderer` in `MdEditor.config(option: ConfigOption)`.
   });
   ```
 
-  > docs: https://marked.js.org/using_pro#renderer
+  Set heading ID to `heading-${index}`:
+
+  ```js
+  import MdEditor from 'md-editor-rt';
+
+  MdEditor.config({
+    markedRenderer(renderer) {
+      renderer.heading = (text, level, raw, s, index) => {
+        return `<h${level} id="heading-${index}">${text}</h${level}>`;
+      };
+
+      return renderer;
+    }
+  });
+  ```
+
+  > Reference: https://marked.js.org/using_pro#renderer, RewriteRenderer extends Renderer and rewrites heading, now provides index as the fifth parameter.
 
 - markedExtensions: `Array<marked.TokenizerExtension & marked.RendererExtension>`
 
@@ -502,7 +522,7 @@ Custom `marked renderer` in `MdEditor.config(option: ConfigOption)`.
   });
   ```
 
-  > marked docs: https://marked.js.org/using_pro#extensions
+  > Reference: https://marked.js.org/using_pro#extensions
 
   [Docs page source code](https://github.com/imzbf/md-editor-rt/blob/docs/src/main.ts)
 
@@ -518,7 +538,7 @@ Custom `marked renderer` in `MdEditor.config(option: ConfigOption)`.
   });
   ```
 
-  > marked docs: https://marked.js.org/using_advanced#options
+  > Reference: https://marked.js.org/using_advanced#options
 
 - editorConfig: Add more languages, reset `mermaid` template or delay rendering time
 

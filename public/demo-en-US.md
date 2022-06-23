@@ -336,24 +336,19 @@ import React, { useState } from 'react';
 import MdEditor from 'md-editor-rt';
 import 'md-editor-rt/lib/style.css';
 
-const getId = (_text, level, _raw) => {
-  return `${level}-text`;
+const getId = (_text, _level, index) => {
+  return `heading-${index}`;
 };
 
 MdEditor.config({
   markedRenderer(renderer) {
-    renderer.heading = (text, level, raw) => {
+    renderer.heading = (text, level, raw, _s, index) => {
       // You can not use markedHeadingId method directly, but It's really simple.
       // If the ID you defined is not equal to `raw`(your title), be sure to tell the editor the algorithm for generating the ID by `marketheadingid`.
       // If not, the Catalog will not go right.
-      const id = getId(text, level, raw);
+      const id = getId(text, level, index);
 
-      if (/<a.*>.*<\/a>/.test(text)) {
-        return `<h${level} id="${id}">${text.replace(
-          /(?<=\<a.*)>(?=.*<\/a>)/,
-          ' target="_blank">'
-        )}</h${level}>`;
-      } else if (text !== raw) {
+      if (text !== raw) {
         return `<h${level} id="${id}">${text}</h${level}>`;
       } else {
         return `<h${level} id="${id}"><a href="#${id}">${raw}</a></h${level}>`;
