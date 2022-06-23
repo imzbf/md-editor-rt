@@ -6,7 +6,8 @@
 
 - **type**: `string`
 - **default**: `''`
-- **description**: Markdown content.
+
+  Markdown content.
 
   ```jsx
   <MdEditor v-model="xxx" />
@@ -16,7 +17,8 @@
 
 - **type**: `'light' | 'dark'`
 - **default**: `'light'`
-- **description**: Editor theme.
+
+  Editor theme.
 
   ```jsx
   <MdEditor theme="dark" />
@@ -26,49 +28,57 @@
 
 - **type**: `string`
 - **default**: `''`
-- **description**: Editor `className`.
+
+  Editor `className`.
 
 ### 🤏🏼 historyLength
 
 - **type**: `number`
 - **default**: `10`
-- **description**: The max length of history(if it is too big, editor will use more `RAM`).
+
+  The max length of history(if it is too big, editor will use more `RAM`).
 
 ### 💻 pageFullScreen
 
 - **type**: `boolean`
 - **default**: `false`
-- **description**: Screenfull in web page.
+
+  Screenfull in web page.
 
 ### 📱 preview
 
 - **type**: `boolean`
 - **default**: `true`
-- **description**: Preview content in editor.
+
+  Preview content in editor.
 
 ### 📀 htmlPreview
 
 - **type**: `boolean`
 - **default**: `false`
-- **description**: Preview html in editor.
+
+  Preview html in editor.
 
 ### 📺 previewOnly
 
 - **type**: `boolean`
 - **default**: `false`
-- **description**: Only render article content, no toolbar, no edit area.
+
+  Only render article content, no toolbar, no edit area.
 
 ### 🔤 language
 
 - **type**: `string`
 - **default**: `'zh-CN'`
-- **description**: Build-in language('zh-CN', 'en-US').
+
+  Build-in language('zh-CN', 'en-US').
 
 ### 🧱 toolbars
 
 - **type**: `Array`
 - **default**: `[all]`
-- **description**: Show contents of toolbar.
+
+  Show contents of toolbar.
 
   You can sort the toolbar as you like, split tools by `'-'`, the left and right toolbars are divided by `'='`！
 
@@ -112,37 +122,43 @@
 
 - **type**: `Array`
 - **default**: `[]`
-- **description**: Don't show some item of toolbars, all keys.
+
+  Don't show some item of toolbars, all keys.
 
 ### 🪒 noPrettier
 
 - **type**: `boolean`
 - **default**: `true`
-- **description**: Use prettier to beautify content or not.
+
+  Use prettier to beautify content or not.
 
 ### 🎲 editorId
 
 - **type**: `string`
 - **default**: `'md-editor-rt'`
-- **description**: Editor id, also the html id, it is used when there are two or more editor and server render.
+
+  Editor id, also the html id, it is used when there are two or more editor and server render.
 
 ### 🤏 tabWidth
 
 - **type**: `number`
 - **default**: `2`
-- **description**: One tab eq some space.
+
+  One tab eq some space.
 
 ### 🔢 showCodeRowNumber
 
 - **type**: `boolean`
 - **default**: `false`
-- **description**: Show row number for code block or not.
+
+  Show row number for code block or not.
 
 ### 🔦 previewTheme
 
 - **type**: `'default' | 'github' | 'vuepress' | 'mk-cute' | 'smart-blue' | 'cyanosis'`
 - **default**: `'default'`
-- **description**: Preview themes.
+
+  Preview themes.
 
   Custom:
 
@@ -166,13 +182,15 @@
 
 - **type**: `CSSProperties`
 - **default**: `{}`
-- **description**: Editor inline style.
+
+  Editor inline style.
 
 ### 📅 tableShape
 
 - **type**: `[number, number]`
 - **default**: `[6, 4]`
-- **description**: Preset the size of the table, [columns, rows].
+
+  Preset the size of the table, [columns, rows].
 
   ```jsx
   <MdEditor tableShape={[8, 4]}>
@@ -184,7 +202,8 @@
 
 - **type**: `boolean`
 - **default**: `false`
-- **description**: do not want to use `mermaid`, set it to `true`.
+
+  do not want to use `mermaid`, set it to `true`.
 
   ```jsx
   <MdEditor noMermaid />
@@ -194,19 +213,22 @@
 
 - **type**: `string`
 - **default**: `''`
-- **description**: em-\_-！
 
-### ☝️ noKatex
+  em-\_-！
+
+### ❌ noKatex
 
 - **type**: `boolean`
 - **default**: `false`
-- **description**: Do not want to use `katex`, set it to `true`.
+
+  Do not want to use `katex`, set it to `true`.
 
 ### 💪 defToolbars
 
 - **type**: `Array<VNode>`
 - **default**: `[]`
-- **description**: Custom toolbar in `DropdownToolbar`, `NormalToolbar` or `ModalToolbar`. To display them, put index of `defToolbars` into `toolbars`(this is not standard).
+
+  Custom toolbar in `DropdownToolbar`, `NormalToolbar` or `ModalToolbar`. To display them, put index of `defToolbars` into `toolbars`(this is not standard).
 
   ```jsx
   import MdEditor from 'md-editor-rt';
@@ -248,7 +270,8 @@
 
 - **type**: `'atom'|'a11y'|'github'|'gradient'|'kimbie'|'paraiso'|'qtcreator'|'stackoverflow'`
 - **default**: `'atom'`
-- **description**: Highlight code css name. Get Them from `highlight.js`.
+
+  Highlight code css name. Get Them from `highlight.js`.
 
   Custom:
 
@@ -287,7 +310,8 @@
 
 - **type**: `(text: string, level: number, index: number) => string`
 - **default**: `(text) => text`
-- **description**: Title `ID` generator.
+
+  Title `ID` generator.
 
   1. Config `markedRenderer`
 
@@ -317,7 +341,8 @@
 
 - **type**: `(html: string) => string`
 - **default**: `(html) => html`
-- **description**: Sanitize the html, prevent XSS. When you can be sure that your content is OK, ignore this.
+
+  Sanitize the html, prevent XSS. When you can be sure that your content is OK, ignore this.
 
   `sanitize-html` example:
 
@@ -335,19 +360,22 @@
 
 - **type**: `Array<'markdownTotal' \| '=' \| 'scrollSwitch' \| number>`
 - **default**: `['markdownTotal', '=', 'scrollSwitch']`
-- **description**: Show contents of footer, they are divided by `'='`. Set it to [] to hidden footer.
 
-### 👨‍👦 scrollAuto
+  Show contents of footer, they are divided by `'='`. Set it to [] to hidden footer.
+
+### ⛵️ scrollAuto
 
 - **type**: `boolean`
 - **default**: `true`
-- **description**: Scroll default setting.
+
+  Scroll default setting.
 
 ### 🦿 defFooters
 
 - **type**: `Array<string \| ReactElement>`
 - **default**: `[]`
-- **description**: Custom footer.
+
+  Custom footer.
 
   [Get](https://github.com/imzbf/md-editor-rt/blob/docs/src/pages/Preview/index.tsx) example code.
 
@@ -373,17 +401,20 @@
 ### 📞 onChange
 
 - **type**: `(v: string) => void`
-- **description**: Content changed event(bind to `oninput` of `textarea`).
+
+  Content changed event(bind to `oninput` of `textarea`).
 
 ### 💾 onSave
 
 - **type**: `(v: string) => void`
-- **description**: Save Content event, `ctrl+s` and click button will trigger.
+
+  Save Content event, `ctrl+s` and click button will trigger.
 
 ### 📸 onUploadImg
 
 - **type**: `(files: Array<File>, callback: (urls: Array<string>) => void) => void`
-- **description**: Upload picture event, when picture is uploading the modal will not close, please provide right urls to the callback function.
+
+  Upload picture event, when picture is uploading the modal will not close, please provide right urls to the callback function.
 
 ```js
 async onUploadImg(files, callback) {
@@ -409,20 +440,23 @@ async onUploadImg(files, callback) {
 }
 ```
 
-### ☎️ onHtmlChanged
+### 🚁 onHtmlChanged
 
 - **type**: `(h: string) => void`
-- **description**: Compile markdown successful event, you can use it to get the html code.
+
+  Compile markdown successful event, you can use it to get the html code.
 
 ### 🗒 onGetCatalog
 
 - **type**: `(list: HeadList[]) => void`
-- **description**: Get catalogue of article.
+
+  Get catalogue of article.
 
 ### 💀 onError
 
 - **type**: `(err: { name: string; message: string;}) => void`
-- **description**: Run-Time error event, only be called when `Cropper`, `fullScreen`, `prettier` is not loaded.
+
+  Run-Time error event, only be called when `Cropper`, `fullScreen`, `prettier` is not loaded.
 
   ```js
   const onError = (err) => {
