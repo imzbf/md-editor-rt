@@ -251,7 +251,7 @@ export interface StaticTextDefaultValue {
 
 Use `MdEditor.config(option: ConfigOption)` to reconfigure `renderer`.
 
-- markedRenderer: `(renderer: Renderer) => Renderer`
+- markedRenderer: `(renderer: RewriteRenderer) => RewriteRenderer`
 
   Open target page in a new browser window:
 
@@ -267,7 +267,7 @@ Use `MdEditor.config(option: ConfigOption)` to reconfigure `renderer`.
   });
   ```
 
-  > Reference: https://marked.js.org/using_pro#renderer
+  > Reference: https://marked.js.org/using_pro#renderer, RewriteRenderer extends Renderer and rewrites heading, now provides index as the fifth parameter.
 
 - markedExtensions: `Array<marked.TokenizerExtension & marked.RendererExtension>`
 
