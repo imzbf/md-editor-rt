@@ -1,8 +1,8 @@
 import { RefObject, useContext, useEffect, useRef, useState } from 'react';
 import copy from 'copy-to-clipboard';
 import mediumZoom from 'medium-zoom';
-import { marked } from 'marked';
-import { HeadList } from '../../type';
+import { marked, Renderer } from 'marked';
+import { HeadList, RewriteHeading } from '../../type';
 import {
   insert,
   setPosition,
@@ -370,7 +370,7 @@ export const useMarked = (props: EditorContentProp) => {
     const markedheading = renderer.heading;
 
     if (markedRenderer instanceof Function) {
-      renderer = markedRenderer(renderer);
+      renderer = markedRenderer(renderer) as Renderer;
     }
 
     // ========heading========start
@@ -383,7 +383,14 @@ export const useMarked = (props: EditorContentProp) => {
 
       // 如果heading被重写了，使用新的heading
       if (isNewHeading) {
-        return newHeading.call(renderer, text, level, raw, slugger);
+        return (newHeading as RewriteHeading).call(
+          renderer,
+          text,
+          level,
+          raw,
+          slugger,
+          heads.current.length
+        );
       }
 
       // return props.markedHeading(...headProps);
