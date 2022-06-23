@@ -2713,10 +2713,10 @@ make-dir@^2.1.0:
     pify "^4.0.1"
     semver "^5.6.0"
 
-md-editor-rt@^2.1.2:
-  version "2.1.2"
-  resolved "https://registry.npmjs.org/md-editor-rt/-/md-editor-rt-2.1.2.tgz#d4e823130404e4ffb258c65e4694a8976b8ec3f3"
-  integrity sha512-r5reYTnxF1WY2Wk6ILlRZrT3+y60hwC1Ctb8oZpQeNFK/PxNC5Bzez1aILZdGpeXt/jdHR0ZNuV7ISqz19j8fg==
+md-editor-rt@^2.2.0:
+  version "2.2.0"
+  resolved "https://registry.npmjs.org/md-editor-rt/-/md-editor-rt-2.2.0.tgz#3496e0fc62745e04d5f0c7d7deadc643e8a56aa8"
+  integrity sha512-0nSwstvnE1Ri2oQOHDY+97GILXmK+zyxJlCalXZx6ygmwXYkkOAp2/A1lev30uhXv6tON1aXG9QsDmv4S3t8yg==
   dependencies:
     "@types/marked" "^4.0.3"
 
