@@ -43,7 +43,7 @@ export const useSreenfull = (props: ToolbarProp) => {
     // 注册事件
     if (screenfull && screenfull.isEnabled) {
       screenfull.on('change', () => {
-        if (screenfullMe.current) {
+        if (screenfullMe.current || props.setting.fullscreen) {
           screenfullMe.current = false;
           props.updateSetting('fullscreen');
         }

@@ -725,7 +725,7 @@ const Toolbar = (props: ToolbarProp) => {
         return '';
       }
     },
-    [props.defToolbars, ult, visible]
+    [props.defToolbars, ult, visible, setting.pageFullScreen, setting.fullscreen]
   );
 
   // 通过'='分割左右
