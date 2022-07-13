@@ -45,7 +45,7 @@ const POSITION_START = [0, 0];
 export const useHistory = (
   props: EditorContentProp,
   textAreaRef: RefObject<HTMLTextAreaElement>,
-  completeStatus: boolean
+  completeStatus: RefObject<boolean>
 ) => {
   const { historyLength, editorId } = useContext(EditorContext);
 

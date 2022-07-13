@@ -1,4 +1,4 @@
-import React, { useContext, useRef, useState } from 'react';
+import React, { useContext, useRef } from 'react';
 import { prefix } from '../../config';
 import { EditorContext } from '../../Editor';
 import { SettingType, HeadList, MarkedHeadingId } from '../../type';
@@ -33,7 +33,7 @@ const Content = (props: EditorContentProp) => {
   const { editorId, previewOnly, previewTheme, showCodeRowNumber } =
     useContext(EditorContext);
   // 输入状态，在输入中文等时，暂停保存
-  const [completeStatus, setCS] = useState(true);
+  const completeStatus = useRef(true);
   // 输入框
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
   // 预览框
@@ -66,14 +66,13 @@ const Content = (props: EditorContentProp) => {
                 bus.emit(editorId, 'saveHistoryPos', true);
               }}
               onCompositionStart={() => {
-                setCS(false);
+                completeStatus.current = false;
               }}
               onInput={(e) => {
-                // 触发更新
                 onChange((e.target as HTMLTextAreaElement).value);
               }}
               onCompositionEnd={() => {
-                setCS(true);
+                completeStatus.current = true;
               }}
               className={
                 props.setting.preview || props.setting.htmlPreview ? '' : 'textarea-only'
