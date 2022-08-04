@@ -26,6 +26,7 @@ export type EditorContentProp = Readonly<{
   noKatex?: boolean;
   markedHeadingId: MarkedHeadingId;
   scrollAuto: boolean;
+  formatCopiedText?: (text: string) => string;
 }>;
 
 const Content = (props: EditorContentProp) => {

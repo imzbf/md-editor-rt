@@ -292,6 +292,9 @@ export default ({ theme, previewTheme, codeTheme, lang }: PreviewProp) => {
 
             callback(res.map((item: any) => item.data.url));
           }}
+          formatCopiedText={(text: string) => {
+            return `${text} \nfrom @imzbf`;
+          }}
         />
         <br />
         <MdEditor

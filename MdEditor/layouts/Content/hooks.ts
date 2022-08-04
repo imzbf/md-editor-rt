@@ -291,7 +291,11 @@ export const useAutoGenrator = (
 };
 
 export const useMarked = (props: EditorContentProp) => {
-  const { onHtmlChanged = () => {}, onGetCatalog = () => {} } = props;
+  const {
+    onHtmlChanged = () => {},
+    onGetCatalog = () => {},
+    formatCopiedText = (t: string) => t
+  } = props;
   const { editorId, usedLanguageText, showCodeRowNumber, highlight, previewOnly } =
     useContext(EditorContext);
 
@@ -456,7 +460,9 @@ export const useMarked = (props: EditorContentProp) => {
         copyButton.setAttribute('class', 'copy-button');
         copyButton.innerText = copyBtnText;
         copyButton.addEventListener('click', () => {
-          const success = copy((pre.querySelector('code') as HTMLElement).innerText);
+          const codeText = (pre.querySelector('code') as HTMLElement).innerText;
+
+          const success = copy(formatCopiedText(codeText));
 
           const succssTip = usedLanguageText.copyCode?.successTips || '已复制！';
           const failTip = usedLanguageText.copyCode?.failTips || '已复制！';

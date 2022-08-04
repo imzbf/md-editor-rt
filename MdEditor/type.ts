@@ -195,6 +195,7 @@ export interface EditorProp {
   scrollAuto?: boolean;
   defFooters?: Array<string | ReactElement>;
   noIconfont?: boolean;
+  formatCopiedText?: (text: string) => string;
 }
 
 export interface ContentType {

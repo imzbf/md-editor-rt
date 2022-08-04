@@ -156,6 +156,7 @@ const Editor = (props: EditorProp) => {
           noKatex={noKatex}
           markedHeadingId={markedHeadingId}
           scrollAuto={state.scrollAuto}
+          formatCopiedText={props.formatCopiedText}
         />
         {!previewOnly && footers?.length > 0 && (
           <Footer
