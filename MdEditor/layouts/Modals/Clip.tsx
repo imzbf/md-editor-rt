@@ -117,7 +117,9 @@ const ClipModal = (props: ClipModalProp) => {
   }, [data.isFullscreen]);
 
   const reset = () => {
+    cropper.clear();
     cropper.destroy();
+    cropper = null;
     (uploadRef.current as HTMLInputElement).value = '';
     setData((_data) => ({
       ..._data,
@@ -177,15 +179,17 @@ const ClipModal = (props: ClipModalProp) => {
             className={`${prefix}-btn`}
             type="button"
             onClick={() => {
-              const cvs = cropper.getCroppedCanvas();
-              bus.emit(
-                editorId,
-                'uploadImage',
-                [base642File(cvs.toDataURL('image/png'))],
-                props.onOk
-              );
+              if (cropper) {
+                const cvs = cropper.getCroppedCanvas();
+                bus.emit(
+                  editorId,
+                  'uploadImage',
+                  [base642File(cvs.toDataURL('image/png'))],
+                  props.onOk
+                );
 
-              reset();
+                reset();
+              }
             }}
           >
             {usedLanguageText.linkModalTips?.buttonOK}
