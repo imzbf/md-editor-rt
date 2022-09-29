@@ -243,7 +243,7 @@
     return (
       <MdEditor
         modelValue=""
-        toolbars=['github', '=', 0]
+        toolbars={['github', '=', 0]}
         defToolbars={[
           <NormalToolbar
             title="mark"
