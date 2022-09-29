@@ -11,7 +11,7 @@ export default ({ modelValue }: { modelValue: string }) => {
         <label className={`${prefix}-footer-label`}>
           {usedLanguageText.footer?.markdownTotal}:
         </label>
-        <span>{modelValue.length}</span>
+        <span>{modelValue.length || 0}</span>
       </div>
     );
   }, [usedLanguageText, modelValue]);
