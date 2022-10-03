@@ -400,6 +400,26 @@
   };
   ```
 
+### 💅 formatCopiedText
+
+- **type**: `(text: string) => string`
+- **default**: `(text) => text`
+
+  Format copied code
+
+  ```jsx
+  import MdEditor from 'md-editor-rt';
+  import 'md-editor-rt/lib/style.css';
+
+  export default () => {
+    const formatCopiedText = (text: string) => {
+      return `${text}  - from md-editor-rt`;
+    };
+
+    return <MdEditor formatCopiedText={formatCopiedText} />;
+  };
+  ```
+
 ## 🪢 Event
 
 ### 📞 onChange
@@ -927,6 +947,7 @@ usage:
   - `markedHeadingId`: `MarkedHeadingId`, not necessary, same as editor.
   - `scrollElement`: `string | HTMLElement`, not necessary, it is an element selector when its type is string. When `previewOnly` eq `true`, it is usually set to `document.documentElement`.
   - `theme`: 'light' | 'dark', not necessary, provide it when you want to change theme online, it is the same as Editor `theme`.
+  - `offsetTop`: `number`, not necessary, highlight current item of catalogs when title is `offsetTop` pixels from the top, defalut 20.
 
 - **events**
 
