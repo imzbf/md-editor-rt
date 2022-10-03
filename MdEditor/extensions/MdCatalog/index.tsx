@@ -109,7 +109,7 @@ const MdCatalog = (props: CatalogProps) => {
   }, []);
 
   useEffect(() => {
-    const scrollContainer =
+    const _scrollElement =
       scrollElement instanceof HTMLElement
         ? scrollElement
         : (document.querySelector(scrollElement) as HTMLElement);
@@ -128,7 +128,7 @@ const MdCatalog = (props: CatalogProps) => {
 
           if (linkEle instanceof HTMLElement) {
             // 获得当前标题相对滚动容器视窗的高度
-            const relativeTop = getRelativeTop(linkEle, scrollContainer);
+            const relativeTop = getRelativeTop(linkEle, _scrollElement);
 
             // 当前标题滚动到超出容器的顶部且相比其他的标题最近
             if (
@@ -167,8 +167,11 @@ const MdCatalog = (props: CatalogProps) => {
       );
     });
 
-    scrollContainer?.addEventListener('scroll', scrollHandler);
+    // 滚动区域为document.documentElement需要把监听事件绑定在window上
+    const scrollContainer =
+      _scrollElement === document.documentElement ? window : _scrollElement;
 
+    scrollContainer?.addEventListener('scroll', scrollHandler);
     return () => {
       scrollContainer?.removeEventListener('scroll', scrollHandler);
     };

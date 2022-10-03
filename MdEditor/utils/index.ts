@@ -362,6 +362,11 @@ export const classnames = (classList: Array<string | false>) => {
  */
 export const getRelativeTop = (element: HTMLElement, container: HTMLElement): number => {
   const eleRect = element?.getBoundingClientRect();
+
+  if (container === document.documentElement) {
+    return eleRect.top - container.clientTop;
+  }
+
   const conRect = container?.getBoundingClientRect();
 
   return eleRect.top - conRect.top;
