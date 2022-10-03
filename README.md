@@ -90,6 +90,7 @@ mark and emoji extensions
 | scrollAuto | boolean | true | Scroll default setting |
 | defFooters | Array<string \| ReactElement> | [] | Custom footer |
 | noIconfont | boolean | false | Not append iconfont script, [download](https://at.alicdn.com/t/font_2605852_pqekijay2ij.js) and import it by yourself |
+| formatCopiedText | (text: string) => string | (text: string) => text | Format copied code |
 
 <details>
  <summary>[toolbars]</summary>
@@ -471,6 +472,7 @@ They are used as attributes of the editor component, eg: `Editor.DropdownToolbar
   - `markedHeadingId`: `MarkedHeadingId`, not necessary, same as editor.
   - `scrollElement`: `string | HTMLElement`, not necessary, it is an element selector when its type is string. When `previewOnly` eq `true`, it is usually set to `document.documentElement`.
   - `theme`: `'light' | 'dark'`, not necessary, provide it when you want to change theme online, it is the same as Editor `theme`.
+  - `offsetTop`: `number`, not necessary, highlight current item of catalogs when title is `offsetTop` pixels from the top, defalut 20.
 
 - **events**
 
