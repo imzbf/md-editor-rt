@@ -1,12 +1,13 @@
 import React, { MouseEvent } from 'react';
 import { prefix } from '../../config';
 import { TocItem } from './index';
+import { classnames } from '../../utils';
 import { MarkedHeadingId } from '../../type';
 
 export interface CatalogLinkProps {
   tocItem: TocItem;
   markedHeadingId: MarkedHeadingId;
-  scrollElement: string | Element;
+  scrollElement: string | HTMLElement;
   onClick?: (e: MouseEvent, t: TocItem) => void;
 }
 
@@ -18,7 +19,10 @@ const CatalogLink = ({
 }: CatalogLinkProps) => {
   return (
     <div
-      className={`${prefix}-catalog-link`}
+      className={classnames([
+        `${prefix}-catalog-link`,
+        tocItem.active && `${prefix}-catalog-active`
+      ])}
       onClick={(e) => {
         onClick && onClick(e, tocItem);
         e.stopPropagation();

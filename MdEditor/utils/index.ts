@@ -247,6 +247,40 @@ export const debounce = (fn: (...params: Array<any>) => any, ms = 200) => {
 };
 
 /**
+ * 节流函数
+ *
+ * @param fn 目标方法
+ * @param ms 节流延迟
+ * @returns
+ */
+export const throttle = (fn: (...params: Array<any>) => any, ms = 200) => {
+  let start = 0;
+  let _params: null | Array<any> = null;
+
+  return (...params: Array<any>) => {
+    const handler = (timeStamp: number) => {
+      if (start === 0) {
+        start = timeStamp;
+      }
+
+      if (timeStamp - start >= ms) {
+        fn.apply(this, _params as Array<any>);
+        _params = null;
+        start = 0;
+      } else {
+        window.requestAnimationFrame(handler);
+      }
+    };
+
+    if (_params === null) {
+      window.requestAnimationFrame(handler);
+    }
+
+    _params = params;
+  };
+};
+
+/**
  * 事件循环
  *
  * @param stopEvent 停止条件
@@ -316,4 +350,19 @@ export const getSelectionText = (textarea: HTMLTextAreaElement): string => {
  */
 export const classnames = (classList: Array<string | false>) => {
   return classList.filter((item) => item !== false).join(' ');
+};
+
+/**
+ * 获取元素相对目标元素顶部位置
+ * 代码来自antd
+ *
+ * @param element
+ * @param container
+ * @returns
+ */
+export const getRelativeTop = (element: HTMLElement, container: HTMLElement): number => {
+  const eleRect = element?.getBoundingClientRect();
+  const conRect = container?.getBoundingClientRect();
+
+  return eleRect.top - conRect.top;
 };

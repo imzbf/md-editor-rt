@@ -3,12 +3,14 @@ import bus from '../../utils/event-bus';
 import { HeadList, MarkedHeadingId, Themes } from '../../type';
 import CatalogLink from './CatalogLink';
 import { defaultProps, prefix } from '../../config';
+import { throttle, getRelativeTop } from '../../utils';
 import './style.less';
 
 export interface TocItem {
   text: string;
   level: number;
   index: number;
+  active: boolean;
   children?: Array<TocItem>;
 }
 
@@ -18,10 +20,12 @@ export interface CatalogProps {
   markedHeadingId?: MarkedHeadingId;
   // 指定滚动的容器，选择器需带上对应的符号，默认预览框
   // 元素必须定位！！！！！！
-  scrollElement?: string | Element;
+  scrollElement?: string | HTMLElement;
   style?: CSSProperties;
   theme?: Themes;
   onClick?: (e: MouseEvent, t: TocItem) => void;
+  // 偏移量，默认20像素
+  offsetTop?: number;
 }
 
 const MdCatalog = (props: CatalogProps) => {
@@ -38,8 +42,8 @@ const MdCatalog = (props: CatalogProps) => {
   const catalogs = useMemo(() => {
     const tocItems: TocItem[] = [];
 
-    list.forEach(({ text, level }, index) => {
-      const item = { level, text, index: index + 1 };
+    list.forEach(({ text, level, active }, index) => {
+      const item = { level, text, index: index + 1, active: !!active };
 
       if (tocItems.length === 0) {
         // 第一个 item 直接 push
@@ -83,13 +87,92 @@ const MdCatalog = (props: CatalogProps) => {
     bus.on(editorId, {
       name: 'catalogChanged',
       callback: (_list: Array<HeadList>) => {
-        setList(_list);
+        setList(
+          _list.map((item, index) => {
+            if (index === 0) {
+              return {
+                ...item,
+                active: true
+              };
+            }
+
+            return {
+              ...item
+            };
+          })
+        );
       }
     });
 
     // 主动触发一次接收
     bus.emit(editorId, 'pushCatalog');
   }, []);
+
+  useEffect(() => {
+    const scrollContainer =
+      scrollElement instanceof HTMLElement
+        ? scrollElement
+        : (document.querySelector(scrollElement) as HTMLElement);
+
+    const scrollHandler = throttle(() => {
+      if (list.length === 0) {
+        return false;
+      }
+
+      // 获取标记当前位置的目录
+      const { activeHead } = list.reduce(
+        (activeData, link, index) => {
+          const linkEle = document.getElementById(
+            markedHeadingId(link.text, link.level, index + 1)
+          );
+
+          if (linkEle instanceof HTMLElement) {
+            // 获得当前标题相对滚动容器视窗的高度
+            const relativeTop = getRelativeTop(linkEle, scrollContainer);
+
+            // 当前标题滚动到超出容器的顶部且相比其他的标题最近
+            if (
+              relativeTop < (props.offsetTop || 20) &&
+              relativeTop > activeData.minTop
+            ) {
+              return {
+                activeHead: link,
+                minTop: relativeTop
+              };
+            }
+          }
+
+          return activeData;
+        },
+        {
+          activeHead: list[0],
+          minTop: Number.MIN_SAFE_INTEGER
+        }
+      );
+
+      setList(
+        list.map((item) => {
+          if (item === activeHead) {
+            return {
+              ...item,
+              active: true
+            };
+          }
+
+          return {
+            ...item,
+            active: false
+          };
+        })
+      );
+    });
+
+    scrollContainer?.addEventListener('scroll', scrollHandler);
+
+    return () => {
+      scrollContainer?.removeEventListener('scroll', scrollHandler);
+    };
+  }, [props.offsetTop, list, markedHeadingId]);
 
   return (
     <div

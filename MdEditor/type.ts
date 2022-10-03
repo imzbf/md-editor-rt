@@ -126,6 +126,7 @@ export interface SettingType {
 export interface HeadList {
   text: string;
   level: 1 | 2 | 3 | 4 | 5 | 6;
+  active?: boolean;
 }
 
 export type Themes = 'light' | 'dark';
