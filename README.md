@@ -31,6 +31,20 @@ Markdown editor for `react`, developed in `jsx` and `typescript`.
 yarn add md-editor-rt
 ```
 
+Please install `@types/marked` in your typescript project if you want to configure `renderer`:
+
+```shell
+yarn add @types/marked -D
+```
+
+Install existing extension of language and preview theme:
+
+```shell
+yarn add @vavt/md-editor-extension
+```
+
+For more ways to use or contribute, please refer to: [md-editor-extension](https://github.com/imzbf/md-editor-extension)
+
 ## Usage
 
 ```js
@@ -537,11 +551,11 @@ export default () => {
   --md-scrollbar-thumb-avtive-color: if(@isDark, #3a3a3a, #00000061);
 }
 
-.md {
+.md-editor {
   .css-vars(false);
 }
 
-.md-dark {
+.md-editor-dark {
   .css-vars(true);
 }
 ```
@@ -549,7 +563,7 @@ export default () => {
 Change background color in dark mode:
 
 ```css
-.md-dark {
+.md-editor-dark {
   --md-bk-color: #333 !important;
 }
 ```

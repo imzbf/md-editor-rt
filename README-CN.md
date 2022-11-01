@@ -28,6 +28,20 @@ react 版本的 Markdown 编辑器，[md-editor-v3](https://imzbf.github.io/md-e
 yarn add md-editor-rt
 ```
 
+如果你需要配置`renderer`并且你的项目使用了 typescript，需要将`@types/marked`安装到你的开发依赖中：
+
+```shell
+yarn add @types/marked -D
+```
+
+使用语言、预览主题扩展库：
+
+```shell
+yarn add @vavt/md-editor-extension
+```
+
+更多使用及贡献方式参考：[md-editor-extension](https://github.com/imzbf/md-editor-extension)
+
 ## 用法
 
 ```js
@@ -550,11 +564,11 @@ export default () => {
   --md-scrollbar-thumb-avtive-color: if(@isDark, #3a3a3a, #00000061);
 }
 
-.md {
+.md-editor {
   .css-vars(false);
 }
 
-.md-dark {
+.md-editor-dark {
   .css-vars(true);
 }
 ```
@@ -562,7 +576,7 @@ export default () => {
 只需要调整对应的 css 变量，比如调整暗夜模式下的背景：
 
 ```css
-.md-dark {
+.md-editor-dark {
   --md-bk-color: #333 !important;
 }
 ```
