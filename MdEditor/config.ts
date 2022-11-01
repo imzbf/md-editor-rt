@@ -7,7 +7,7 @@ import {
   ToolbarNames
 } from './type';
 
-export const prefix = 'md';
+export const prefix = 'md-editor';
 
 export const defaultEditorId = 'md-editor-rt';
 
