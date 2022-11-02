@@ -106,6 +106,7 @@ export default () => {
   'quote',
   'unorderedList',
   'orderedList',
+  'task', // ^2.4.0
   '-',
   'codeRow',
   'code',
@@ -149,6 +150,7 @@ export interface ToolbarTips {
   quote?: string;
   unorderedList?: string;
   orderedList?: string;
+  task?: string; // ^2.4.0
   codeRow?: string;
   code?: string;
   link?: string;

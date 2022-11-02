@@ -24,6 +24,7 @@ export interface ToolbarTips {
   quote?: string;
   unorderedList?: string;
   orderedList?: string;
+  task?: string;
   codeRow?: string;
   code?: string;
   link?: string;
