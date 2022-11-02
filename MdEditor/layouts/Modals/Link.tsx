@@ -70,7 +70,7 @@ const LinkModal = (props: LinkModalProp) => {
             {usedLanguageText.linkModalTips?.urlLable}
           </label>
           <input
-            placeholder={usedLanguageText.linkModalTips?.UrlLablePlaceHolder}
+            placeholder={usedLanguageText.linkModalTips?.urlLablePlaceHolder}
             className={`${prefix}-input`}
             id={`link-url-${editorId}`}
             type="text"

@@ -66,7 +66,7 @@ export interface StaticTextDefaultValue {
     descLable?: string;
     descLablePlaceHolder?: string;
     urlLable?: string;
-    UrlLablePlaceHolder?: string;
+    urlLablePlaceHolder?: string;
     buttonOK?: string;
   };
   clipModalTips?: {
