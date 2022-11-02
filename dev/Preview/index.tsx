@@ -178,6 +178,7 @@ export default ({ theme, previewTheme, codeTheme, lang }: PreviewProp) => {
             'quote',
             'unorderedList',
             'orderedList',
+            'task',
             '-',
             'codeRow',
             'code',

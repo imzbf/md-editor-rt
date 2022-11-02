@@ -486,6 +486,23 @@ const Toolbar = (props: ToolbarProp) => {
               </div>
             );
           }
+
+          case 'task': {
+            return (
+              <div
+                className={`${prefix}-toolbar-item`}
+                title={ult.toolbarTips?.task}
+                onClick={() => {
+                  emitHandler('task');
+                }}
+              >
+                <svg className={`${prefix}-icon`} aria-hidden="true">
+                  <use xlinkHref="#icon-task" />
+                </svg>
+              </div>
+            );
+          }
+
           case 'codeRow': {
             return (
               <div

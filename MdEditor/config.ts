@@ -15,7 +15,7 @@ export const defaultEditorId = 'md-editor-rt';
 export const iconScriptId = defaultEditorId;
 
 // 字体链接
-export const iconfontUrl = 'https://at.alicdn.com/t/font_2605852_pqekijay2ij.js';
+export const iconfontUrl = 'https://at.alicdn.com/t/c/font_2605852_lxu1yrwwsea.js';
 
 export const cdnBase = 'https://cdnjs.cloudflare.com/ajax/libs';
 
@@ -48,6 +48,7 @@ export const allToolbar: Array<ToolbarNames> = [
   'quote',
   'unorderedList',
   'orderedList',
+  'task',
   '-',
   'codeRow',
   'code',
@@ -85,6 +86,7 @@ export const staticTextDefault: StaticTextDefault = {
       quote: '引用',
       unorderedList: '无序列表',
       orderedList: '有序列表',
+      task: '任务列表',
       codeRow: '行内代码',
       code: '块级代码',
       link: '链接',
@@ -164,6 +166,7 @@ export const staticTextDefault: StaticTextDefault = {
       quote: 'quote',
       unorderedList: 'unordered list',
       orderedList: 'ordered list',
+      task: 'task list',
       codeRow: 'inline code',
       code: 'block-level code',
       link: 'link',
