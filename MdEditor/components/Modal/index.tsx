@@ -145,7 +145,11 @@ const Modal = (props: ModalProps) => {
               }}
             >
               <svg className={`${prefix}-icon`} aria-hidden="true">
-                <use xlinkHref={`#icon-${props.isFullscreen ? 'suoxiao' : 'fangda'}`} />
+                <use
+                  xlinkHref={`#md-editor-icon-${
+                    props.isFullscreen ? 'suoxiao' : 'fangda'
+                  }`}
+                />
               </svg>
             </div>
           )}
@@ -157,7 +161,7 @@ const Modal = (props: ModalProps) => {
             }}
           >
             <svg className={`${prefix}-icon`} aria-hidden="true">
-              <use xlinkHref="#icon-close" />
+              <use xlinkHref="#md-editor-icon-close" />
             </svg>
           </div>
         </div>

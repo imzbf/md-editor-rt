@@ -103,7 +103,7 @@ mark and emoji extensions
 | footers | Array<'markdownTotal' \| '=' \| 'scrollSwitch' \| number> | ['markdownTotal', '=', 'scrollSwitch'] | Show contents of footer, they are divided by `'='`. Set it to `[]` to hidden footer |
 | scrollAuto | boolean | true | Scroll default setting |
 | defFooters | Array<string \| ReactElement> | [] | Custom footer |
-| noIconfont | boolean | false | Not append iconfont script, [download](https://at.alicdn.com/t/font_2605852_pqekijay2ij.js) and import it by yourself |
+| noIconfont | boolean | false | Not append iconfont script, [download](https://at.alicdn.com/t/c/font_2605852_4cjr7o5jo0f.js) and import it by yourself |
 | formatCopiedText | (text: string) => string | (text: string) => text | Format copied code |
 
 <details>

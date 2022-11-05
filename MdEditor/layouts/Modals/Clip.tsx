@@ -153,7 +153,7 @@ const ClipModal = (props: ClipModalProp) => {
                 <img src={data.imgSrc} ref={uploadImgRef} style={{ display: 'none' }} />
                 <div className={`${prefix}-clip-delete`} onClick={reset}>
                   <svg className={`${prefix}-icon`} aria-hidden="true">
-                    <use xlinkHref="#icon-delete" />
+                    <use xlinkHref="#md-editor-icon-delete" />
                   </svg>
                 </div>
               </div>
@@ -165,7 +165,7 @@ const ClipModal = (props: ClipModalProp) => {
                 }}
               >
                 <svg className={`${prefix}-icon`} aria-hidden="true">
-                  <use xlinkHref="#icon-upload" />
+                  <use xlinkHref="#md-editor-icon-upload" />
                 </svg>
               </div>
             )}

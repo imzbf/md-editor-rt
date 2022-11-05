@@ -206,8 +206,8 @@ export default ({ theme, previewTheme, codeTheme, lang }: PreviewProp) => {
           defToolbars={[
             <MdEditor.NormalToolbar
               trigger={
-                <svg className={`md-icon`} aria-hidden="true">
-                  <use xlinkHref="#icon-strike-through" />
+                <svg className="md-editor-icon" aria-hidden="true">
+                  <use xlinkHref="#md-editor-icon-strike-through" />
                 </svg>
               }
               onClick={console.log}
@@ -216,8 +216,8 @@ export default ({ theme, previewTheme, codeTheme, lang }: PreviewProp) => {
             <MdEditor.DropdownToolbar
               visible={defVisible}
               trigger={
-                <svg className={`md-icon`} aria-hidden="true">
-                  <use xlinkHref="#icon-strike-through" />
+                <svg className="md-editor-icon" aria-hidden="true">
+                  <use xlinkHref="#md-editor-icon-strike-through" />
                 </svg>
               }
               onChange={setDefVisible}
@@ -238,8 +238,8 @@ export default ({ theme, previewTheme, codeTheme, lang }: PreviewProp) => {
                 });
               }}
               trigger={
-                <svg className="md-icon" aria-hidden="true">
-                  <use xlinkHref="#icon-strike-through" />
+                <svg className="md-editor-icon" aria-hidden="true">
+                  <use xlinkHref="#md-editor-icon-strike-through" />
                 </svg>
               }
               onClick={() => {
