@@ -63,7 +63,8 @@ const Editor = (props: EditorProp) => {
     onError = defaultProps.onError,
     markedHeadingId = defaultProps.markedHeadingId,
     footers = defaultProps.footers,
-    defFooters = defaultProps.defFooters
+    defFooters = defaultProps.defFooters,
+    noUploadImg = defaultProps.noUploadImg
   } = props;
 
   const [state, setState] = useState<{
@@ -142,6 +143,7 @@ const Editor = (props: EditorProp) => {
             updateSetting={updateSetting}
             tableShape={tableShape}
             defToolbars={defToolbars}
+            noUploadImg={noUploadImg}
           />
         )}
         <Content

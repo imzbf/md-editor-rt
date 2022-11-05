@@ -303,7 +303,8 @@ export const defaultProps = {
   onError: () => {},
   markedHeadingId: (text: string) => text,
   footers: allFooter,
-  defFooters: []
+  defFooters: [],
+  noUploadImg: false
 };
 
 export const configOption: ConfigOption = {

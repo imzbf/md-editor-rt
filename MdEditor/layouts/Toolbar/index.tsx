@@ -28,6 +28,7 @@ export interface ToolbarProp {
   updateSetting: (k: keyof SettingType, shouldScreenFull?: boolean) => void;
   tableShape: [number, number];
   defToolbars?: Array<ReactElement>;
+  noUploadImg: boolean;
 }
 
 let splitNum = 0;
@@ -168,10 +169,12 @@ const Toolbar = (props: ToolbarProp) => {
             <li
               className={`${prefix}-menu-item`}
               onClick={() => {
-                setModalData({
-                  ...modalData,
-                  type: 'image',
-                  clipVisible: true
+                setModalData((_modalData) => {
+                  return {
+                    ..._modalData,
+                    type: 'image',
+                    linkVisible: true
+                  };
                 });
               }}
             >
@@ -556,7 +559,28 @@ const Toolbar = (props: ToolbarProp) => {
             );
           }
           case 'image': {
-            return ImageDropdown;
+            return props.noUploadImg ? (
+              <div
+                className={`${prefix}-toolbar-item`}
+                title={ult.toolbarTips?.image}
+                onClick={() => {
+                  setModalData((_modalData) => {
+                    return {
+                      ..._modalData,
+                      type: 'image',
+                      linkVisible: true
+                    };
+                  });
+                }}
+                key="bar-image-no-upload"
+              >
+                <svg className={`${prefix}-icon`} aria-hidden="true">
+                  <use xlinkHref="#md-editor-icon-image" />
+                </svg>
+              </div>
+            ) : (
+              ImageDropdown
+            );
           }
           case 'table': {
             return TableDropdown;
