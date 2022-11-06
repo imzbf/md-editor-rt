@@ -73,6 +73,8 @@
 
   Build-in language('zh-CN', 'en-US').
 
+  You can install the existing language also: [md-editor-extension](https://github.com/imzbf/md-editor-extension). Refer to extension library for the usage and the way to contribute~
+
 ### 🧱 toolbars
 
 - **type**: `Array`
@@ -96,6 +98,7 @@
     'quote',
     'unorderedList',
     'orderedList',
+    'task',
     '-',
     'codeRow',
     'code',
@@ -249,7 +252,7 @@
             title="mark"
             onClick={handler}
             trigger={
-              <svg className="md-icon" aria-hidden="true">
+              <svg className="md-editor-icon" aria-hidden="true">
                 <use xlinkHref="#icon-mark"></use>
               </svg>
             }
@@ -385,9 +388,10 @@
 
 ### 🤞🏼 noIconfont
 
-- **类型**: `boolean`
-- **默认值**: `true`
-- **说明**: Not append iconfont script, [download](https://at.alicdn.com/t/font_2605852_pqekijay2ij.js) and import it by yourself.
+- **type**: `boolean`
+- **default**:`true`
+
+  Not append iconfont script, [download](https://at.alicdn.com/t/font_2605852_pqekijay2ij.js) and import it by yourself.
 
   ```jsx
   import MdEditor from 'md-editor-rt';
@@ -417,6 +421,22 @@
     };
 
     return <MdEditor formatCopiedText={formatCopiedText} />;
+  };
+  ```
+
+### 🥹 noUploadImg
+
+- **type**: `boolean`
+- **default**: `false`
+
+  Not show the entrance to upload pictures
+
+  ```jsx
+  import MdEditor from 'md-editor-rt';
+  import 'md-editor-rt/lib/style.css';
+
+  export default () => {
+    return <MdEditor noUploadImg />;
   };
   ```
 
@@ -616,7 +636,7 @@ Custom `marked renderer` in `MdEditor.config(option: ConfigOption)`.
             descLable: 'Desc:',
             descLablePlaceHolder: 'Enter a description...',
             urlLable: 'Link:',
-            UrlLablePlaceHolder: 'Enter a link...',
+            urlLablePlaceHolder: 'Enter a link...',
             buttonOK: 'OK'
           },
           clipModalTips: {
@@ -782,7 +802,7 @@ usage:
     <MdEditor.NormalToolbar
       title="mark"
       trigger={
-        <svg className="md-icon" aria-hidden="true">
+        <svg className="md-editor-icon" aria-hidden="true">
           <use xlinkHref="#icon-mark"></use>
         </svg>
       }
@@ -842,7 +862,7 @@ usage:
         </>
       }
       trigger={
-        <svg className="md-icon" aria-hidden="true">
+        <svg className="md-editor-icon" aria-hidden="true">
           <use xlinkHref="#icon-emoji"></use>
         </svg>
       }
@@ -884,8 +904,8 @@ usage:
       visible={state.visible}
       isFullscreen={state.modalFullscreen}
       showAdjust
-      title="弹窗预览"
-      modalTitle="编辑预览"
+      title="title"
+      modalTitle="modalTitle"
       width="870px"
       height="600px"
       onClick={() => {
@@ -907,7 +927,7 @@ usage:
         });
       }}
       trigger={
-        <svg className="md-icon" aria-hidden="true">
+        <svg className="md-editor-icon" aria-hidden="true">
           <use xlinkHref="#icon-read"></use>
         </svg>
       }

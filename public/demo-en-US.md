@@ -248,6 +248,7 @@ MdEditor.config({
           quote: 'quote',
           unorderedList: 'unordered list',
           orderedList: 'ordered list',
+          task: 'task list',
           codeRow: 'inline code',
           code: 'block-level code',
           link: 'link',
@@ -284,7 +285,7 @@ MdEditor.config({
           descLable: 'Desc:',
           descLablePlaceHolder: 'Enter a description...',
           urlLable: 'Link:',
-          UrlLablePlaceHolder: 'Enter a link...',
+          urlLablePlaceHolder: 'Enter a link...',
           buttonOK: 'OK'
         },
         clipModalTips: {
@@ -326,6 +327,8 @@ export default () => {
   return <MdEditor modelValue={text} onChange={setText} language={language} />;
 };
 ```
+
+You can install the existing language also: [md-editor-extension](https://github.com/imzbf/md-editor-extension). Refer to extension library for the usage and the way to contribute~
 
 ### 🛬 Modify Heading Structure
 
@@ -454,11 +457,11 @@ To get complete code, refer to [docs](https://github.com/imzbf/md-editor-rt/blob
   --md-scrollbar-thumb-avtive-color: if(@isDark, #3a3a3a, #00000061);
 }
 
-.md {
+.md-editor {
   .css-vars(false);
 }
 
-.md-dark {
+.md-editor-dark {
   .css-vars(true);
 }
 ```
@@ -466,7 +469,7 @@ To get complete code, refer to [docs](https://github.com/imzbf/md-editor-rt/blob
 Change background color in dark mode:
 
 ```css
-.md-dark {
+.md-editor-dark {
   --md-bk-color: #333 !important;
 }
 ```

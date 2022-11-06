@@ -83,6 +83,8 @@
 
   内置中英文(`'zh-CN'`, `'en-US'`)，可自行扩展其他语言，同时可覆盖内置的中英文。
 
+  你也可以使用现成的扩展语言：[md-editor-extension](https://github.com/imzbf/md-editor-extension)。使用及贡献方式见扩展库文档~
+
 ### 🧱 toolbars
 
 - **类型**：`Array`
@@ -106,6 +108,7 @@
     'quote',
     'unorderedList',
     'orderedList',
+    'task',
     '-',
     'codeRow',
     'code',
@@ -292,7 +295,7 @@
             title="mark"
             onClick={handler}
             trigger={
-              <svg className="md-icon" aria-hidden="true">
+              <svg className="md-editor-icon" aria-hidden="true">
                 <use xlinkHref="#icon-mark"></use>
               </svg>
             }
@@ -461,6 +464,22 @@
     };
 
     return <MdEditor formatCopiedText={formatCopiedText} />;
+  };
+  ```
+
+### 🥹 noUploadImg
+
+- **type**: `boolean`
+- **default**: `false`
+
+  工具栏不显示上传图片入口。
+
+  ```jsx
+  import MdEditor from 'md-editor-rt';
+  import 'md-editor-rt/lib/style.css';
+
+  export default () => {
+    return <MdEditor noUploadImg />;
   };
   ```
 
@@ -661,7 +680,7 @@ async onUploadImg(files, callback) {
             descLable: '链接描述：',
             descLablePlaceHolder: '请输入描述...',
             urlLable: '链接地址：',
-            UrlLablePlaceHolder: '请输入链接...',
+            urlLablePlaceHolder: '请输入链接...',
             buttonOK: '确定'
           },
           clipModalTips: {
@@ -834,7 +853,7 @@ async onUploadImg(files, callback) {
     <MdEditor.NormalToolbar
       title="标记"
       trigger={
-        <svg className="md-icon" aria-hidden="true">
+        <svg className="md-editor-icon" aria-hidden="true">
           <use xlinkHref="#icon-mark"></use>
         </svg>
       }
@@ -888,7 +907,7 @@ async onUploadImg(files, callback) {
         </div>
       }
       trigger={
-        <svg className="md-icon" aria-hidden="true">
+        <svg className="md-editor-icon" aria-hidden="true">
           <use xlinkHref="#icon-emoji"></use>
         </svg>
       }
@@ -955,7 +974,7 @@ async onUploadImg(files, callback) {
         });
       }}
       trigger={
-        <svg className="md-icon" aria-hidden="true">
+        <svg className="md-editor-icon" aria-hidden="true">
           <use xlinkHref="#icon-read"></use>
         </svg>
       }
@@ -1082,7 +1101,7 @@ export default () => {
     <MdEditor.NormalToolbar
       title="标记"
       trigger={
-        <svg className="md-icon" aria-hidden="true">
+        <svg className="md-editor-icon" aria-hidden="true">
           <use xlinkHref="#icon-mark"></use>
         </svg>
       }
@@ -1136,7 +1155,7 @@ export default () => {
         </div>
       }
       trigger={
-        <svg className="md-icon" aria-hidden="true">
+        <svg className="md-editor-icon" aria-hidden="true">
           <use xlinkHref="#icon-emoji"></use>
         </svg>
       }
@@ -1203,7 +1222,7 @@ export default () => {
         });
       }}
       trigger={
-        <svg className="md-icon" aria-hidden="true">
+        <svg className="md-editor-icon" aria-hidden="true">
           <use xlinkHref="#icon-read"></use>
         </svg>
       }

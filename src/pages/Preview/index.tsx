@@ -65,6 +65,7 @@ export default () => {
             'quote',
             'unorderedList',
             'orderedList',
+            'task',
             '-',
             'codeRow',
             'code',

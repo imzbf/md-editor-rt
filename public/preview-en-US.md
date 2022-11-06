@@ -1,6 +1,6 @@
 ## 😲 md-editor-rt
 
-Markdown Editor for React, developed by jsx and typescript, support different themes、beautify content by prettier.
+Markdown Editor for React, developed in jsx and typescript, support different themes、beautify content by prettier.
 
 ### 🤖 Base
 
@@ -32,9 +32,17 @@ The Old Man and the Sea served to reinvigorate Hemingway's literary reputation a
 
 ## 📈 Table
 
-| nickname | age | from            |
-| -------- | --- | --------------- |
-| zhijian  | 3   | China ChongQing |
+| nickname | from             |
+| -------- | ---------------- |
+| zhijian  | ChongQing, China |
+
+## 📏 Formula
+
+Inline: $x+y^{2x}$
+
+$$
+\sqrt[3]{x}
+$$
 
 ## 🧬 Diagram
 

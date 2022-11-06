@@ -8,6 +8,9 @@ import App from './App';
 
 import MarkExtension from './utils/marked-mark';
 
+import ZH_TW from '@vavt/md-editor-extension/dist/locale/zh-TW';
+import '@vavt/md-editor-extension/dist/previewTheme/arknights.css';
+
 MdEditor.config({
   markedExtensions: [MarkExtension],
   markedRenderer(renderer) {
@@ -20,6 +23,11 @@ MdEditor.config({
     };
 
     return renderer;
+  },
+  editorConfig: {
+    languageUserDefined: {
+      ZH_TW
+    }
   },
   editorExtensions: {
     highlight: {

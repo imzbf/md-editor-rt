@@ -11,7 +11,15 @@ export default () => {
   const dispatch = useDispatch();
 
   const [data] = useState({
-    previewThemes: ['default', 'github', 'vuepress', 'mk-cute', 'smart-blue', 'cyanosis'],
+    previewThemes: [
+      'default',
+      'github',
+      'vuepress',
+      'mk-cute',
+      'smart-blue',
+      'cyanosis',
+      'arknights'
+    ],
     codeThemes: [
       'atom',
       'a11y',

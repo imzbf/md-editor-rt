@@ -249,6 +249,7 @@ MdEditor.config({
           quote: '引用',
           unorderedList: '无序列表',
           orderedList: '有序列表',
+          task: '任务列表',
           codeRow: '行内代码',
           code: '块级代码',
           link: '链接',
@@ -285,7 +286,7 @@ MdEditor.config({
           descLable: '链接描述：',
           descLablePlaceHolder: '请输入描述...',
           urlLable: '链接地址：',
-          UrlLablePlaceHolder: '请输入链接...',
+          urlLablePlaceHolder: '请输入链接...',
           buttonOK: '确定'
         },
         clipModalTips: {
@@ -327,6 +328,8 @@ export default () => {
   return <MdEditor modelValue={text} onChange={setText} language={language} />;
 };
 ```
+
+你也可以使用现成的扩展语言：[md-editor-extension](https://github.com/imzbf/md-editor-extension)。使用及贡献方式见扩展库文档~
 
 ### 🛬 自定义目录结构
 
@@ -463,11 +466,11 @@ export default () => {
   --md-scrollbar-thumb-avtive-color: if(@isDark, #3a3a3a, #00000061);
 }
 
-.md {
+.md-editor {
   .css-vars(false);
 }
 
-.md-dark {
+.md-editor-dark {
   .css-vars(true);
 }
 ```
@@ -475,7 +478,7 @@ export default () => {
 只需要调整对应的 css 变量，比如调整暗夜模式下的背景：
 
 ```css
-.md-dark {
+.md-editor-dark {
   --md-bk-color: #333 !important;
 }
 ```

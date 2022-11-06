@@ -45,7 +45,7 @@ const ReadExtension = (props: ReadExtensionProp) => {
         });
       }}
       trigger={
-        <svg className="md-icon" aria-hidden="true">
+        <svg className="md-editor-icon" aria-hidden="true">
           <use xlinkHref="#icon-read"></use>
         </svg>
       }
