@@ -391,7 +391,7 @@
 - **type**: `boolean`
 - **default**:`true`
 
-  Not append iconfont script, [download](https://at.alicdn.com/t/font_2605852_pqekijay2ij.js) and import it by yourself.
+  Not append iconfont script, [download](https://at.alicdn.com/t/c/font_2605852_4cjr7o5jo0f.js) and import it by yourself.
 
   ```jsx
   import MdEditor from 'md-editor-rt';

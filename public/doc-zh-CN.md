@@ -434,7 +434,7 @@
 - **类型**：`boolean`
 - **默认值**：`true`
 
-  不插入 iconfont 链接，你可以[下载](https://at.alicdn.com/t/font_2605852_pqekijay2ij.js)到本地自行引入。
+  不插入 iconfont 链接，你可以[下载](https://at.alicdn.com/t/c/font_2605852_4cjr7o5jo0f.js)到本地自行引入。
 
   ```jsx
   import MdEditor from 'md-editor-rt';
