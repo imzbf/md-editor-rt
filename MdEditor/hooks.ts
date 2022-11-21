@@ -1,13 +1,12 @@
 import { CSSProperties, useCallback, useEffect, useMemo, useState } from 'react';
 import bus from './utils/event-bus';
 import { ToolDirective } from './utils/content-help';
-import { EditorProp, InnerError, SettingType, ToolbarNames } from './type';
+import { EditorProp, InnerError, SettingType, StaticProp, ToolbarNames } from './type';
 import {
   prefix,
   iconfontUrl,
   prettierUrl,
   cropperUrl,
-  defaultEditorId,
   allToolbar,
   codeCss,
   highlightUrl,
@@ -21,8 +20,9 @@ import { appendHandler } from './utils/dom';
  *
  * @param props
  */
-export const useKeyBoard = (props: EditorProp) => {
-  const { editorId = defaultEditorId, noPrettier } = props;
+export const useKeyBoard = (props: EditorProp, staticProps: StaticProp) => {
+  const { noPrettier } = props;
+  const { editorId, previewOnly } = staticProps;
 
   const initFunc = (name: ToolbarNames) =>
     props.toolbars?.includes(name) &&
@@ -292,13 +292,13 @@ export const useKeyBoard = (props: EditorProp) => {
   };
 
   useEffect(() => {
-    if (!props.previewOnly) {
+    if (!previewOnly) {
       window.addEventListener('keydown', keyDownHandler);
     }
 
     // 编辑器卸载时移除相应的监听事件
     return () => {
-      if (!props.previewOnly) {
+      if (!previewOnly) {
         window.removeEventListener('keydown', keyDownHandler);
       }
     };
@@ -306,7 +306,7 @@ export const useKeyBoard = (props: EditorProp) => {
 
   useEffect(() => {
     // 每次更新都重新注册save监听
-    if (props.previewOnly) {
+    if (previewOnly) {
       return;
     }
 
@@ -331,8 +331,9 @@ export const useKeyBoard = (props: EditorProp) => {
  * @param props
  * @param extension
  */
-export const useExpansion = (props: EditorProp) => {
-  const { noPrettier, previewOnly, noIconfont } = props;
+export const useExpansion = (props: EditorProp, staticProps: StaticProp) => {
+  const { noPrettier, noIconfont } = props;
+  const { previewOnly } = staticProps;
 
   const { editorExtensions } = configOption;
 
@@ -419,8 +420,8 @@ export const useErrorCatcher = (editorId: string, onError: (err: InnerError) => 
  * 上传图片事件
  * @param props
  */
-export const useUploadImg = (props: EditorProp) => {
-  const { editorId = defaultEditorId, previewOnly = false } = props;
+export const useUploadImg = (props: EditorProp, staticProps: StaticProp) => {
+  const { editorId, previewOnly } = staticProps;
 
   const uploadImageCallBack = (files: Array<File>, cb: () => void) => {
     const insertHanlder = (urls: Array<string>) => {
@@ -460,12 +461,9 @@ export const useUploadImg = (props: EditorProp) => {
  * @param props
  * @returns
  */
-export const useCatalog = (props: EditorProp) => {
-  const {
-    editorId = defaultEditorId,
-    toolbars = allToolbar,
-    toolbarsExclude = []
-  } = props;
+export const useCatalog = (props: EditorProp, staticProps: StaticProp) => {
+  const { toolbars = allToolbar, toolbarsExclude = [] } = props;
+  const { editorId } = staticProps;
 
   const [catalogVisible, setCatalogVisible] = useState(false);
 

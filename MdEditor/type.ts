@@ -350,3 +350,8 @@ export interface CodeCss {
     dark: string;
   };
 }
+
+export interface StaticProp {
+  previewOnly: boolean;
+  editorId: string;
+}

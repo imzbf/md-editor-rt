@@ -10,8 +10,9 @@ import {
 import ToolBar from './layouts/Toolbar';
 import Content from './layouts/Content';
 import Footer from './layouts/Footer';
+import { classnames } from './utils';
 import { prefix, staticTextDefault, defaultProps, config } from './config';
-import { ContentType, EditorProp, Themes } from './type';
+import { ContentType, EditorProp, StaticProp, Themes } from './type';
 import DropdownToolbar from './extensions/DropdownToolbar';
 import NormalToolbar from './extensions/NormalToolbar';
 import ModalToolbar from './extensions/ModalToolbar';
@@ -20,7 +21,6 @@ import bus from './utils/event-bus';
 
 import './styles/index.less';
 import '@vavt/markdown-theme/css/all.css';
-import { classnames } from './utils';
 
 export const EditorContext = createContext<ContentType>({
   editorId: '',
@@ -67,6 +67,13 @@ const Editor = (props: EditorProp) => {
     noUploadImg = defaultProps.noUploadImg
   } = props;
 
+  const [staticProps] = useState<StaticProp>(() => {
+    return {
+      previewOnly,
+      editorId
+    };
+  });
+
   const [state, setState] = useState<{
     scrollAuto: boolean;
   }>(() => {
@@ -90,51 +97,51 @@ const Editor = (props: EditorProp) => {
   const wrapOnChange = useCallback(
     (value: string) => {
       // 可控组件，更新前保存选中位置
-      bus.emit(editorId, 'saveHistoryPos');
+      bus.emit(staticProps.editorId, 'saveHistoryPos');
       onChange(value);
     },
     [onChange]
   );
 
   // 快捷键监听
-  useKeyBoard(props);
+  useKeyBoard(props, staticProps);
   // 扩展库引用
-  useExpansion(props);
+  useExpansion(props, staticProps);
   // 上传图片监控
-  useUploadImg(props);
+  useUploadImg(props, staticProps);
   // 错误捕获
-  useErrorCatcher(editorId, onError);
+  useErrorCatcher(staticProps.editorId, onError);
   // 目录状态
-  const { catalogShow, catalogStyle } = useCatalog(props);
+  const { catalogShow, catalogStyle } = useCatalog(props, staticProps);
   // 部分配置重构
   const [highlight, usedLanguageText, setting, updateSetting] = useConfig(props);
 
   return (
     <EditorContext.Provider
       value={{
-        editorId,
+        editorId: staticProps.editorId,
         tabWidth,
         theme,
         highlight,
         historyLength,
-        previewOnly,
+        previewOnly: staticProps.previewOnly,
         showCodeRowNumber,
         usedLanguageText,
         previewTheme
       }}
     >
       <div
-        id={editorId}
+        id={staticProps.editorId}
         className={classnames([
           prefix,
           className,
           theme === 'dark' && `${prefix}-dark`,
           setting.fullscreen || setting.pageFullScreen ? `${prefix}-fullscreen` : '',
-          previewOnly && `${prefix}-previewOnly`
+          staticProps.previewOnly && `${prefix}-previewOnly`
         ])}
         style={props.style}
       >
-        {!previewOnly && (
+        {!staticProps.previewOnly && (
           <ToolBar
             noPrettier={noPrettier}
             toolbars={toolbars}
@@ -160,7 +167,7 @@ const Editor = (props: EditorProp) => {
           scrollAuto={state.scrollAuto}
           formatCopiedText={props.formatCopiedText}
         />
-        {!previewOnly && footers?.length > 0 && (
+        {!staticProps.previewOnly && footers?.length > 0 && (
           <Footer
             modelValue={modelValue}
             footers={footers}
@@ -174,7 +181,7 @@ const Editor = (props: EditorProp) => {
             theme={theme}
             style={catalogStyle}
             className={`${prefix}-catalog-editor`}
-            editorId={editorId}
+            editorId={staticProps.editorId}
             markedHeadingId={markedHeadingId}
           />
         )}
