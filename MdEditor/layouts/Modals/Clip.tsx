@@ -138,6 +138,7 @@ const ClipModal = (props: ClipModalProp) => {
   const _ClipModal = useMemo(() => {
     return (
       <Modal
+        className={`${prefix}-modal-clip`}
         title={usedLanguageText.clipModalTips?.title}
         visible={props.visible}
         onClose={props.onCancel}

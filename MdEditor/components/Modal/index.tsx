@@ -13,6 +13,7 @@ export type ModalProps = Readonly<{
   isFullscreen?: boolean;
   onAdjust: (val: boolean) => void;
   children?: any;
+  className?: string;
 }>;
 
 const Modal = (props: ModalProps) => {
@@ -105,7 +106,7 @@ const Modal = (props: ModalProps) => {
   }, [props.visible]);
 
   return (
-    <div style={{ display: modalVisible ? 'block' : 'none' }}>
+    <div className={props.className} style={{ display: modalVisible ? 'block' : 'none' }}>
       <div className={`${prefix}-modal-mask`} onClick={onClose} />
       <div
         className={modalClass.join(' ')}
