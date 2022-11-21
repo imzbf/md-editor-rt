@@ -777,7 +777,7 @@ export const usePasteUpload = (textAreaRef: RefObject<HTMLTextAreaElement>) => {
   }, []);
 };
 
-export const userZoom = (html: string) => {
+export const userZoom = (props: EditorContentProp, html: string) => {
   const { editorId } = useContext(EditorContext);
 
   let zoomHander = () => {};
@@ -796,5 +796,5 @@ export const userZoom = (html: string) => {
     });
 
     zoomHander();
-  }, [html]);
+  }, [html, props.setting]);
 };
