@@ -173,7 +173,7 @@ const Toolbar = (props: ToolbarProp) => {
                   return {
                     ..._modalData,
                     type: 'image',
-                    linkVisible: true
+                    clipVisible: true
                   };
                 });
               }}
