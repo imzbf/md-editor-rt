@@ -498,6 +498,7 @@ const Toolbar = (props: ToolbarProp) => {
                 onClick={() => {
                   emitHandler('task');
                 }}
+                key="bar-task"
               >
                 <svg className={`${prefix}-icon`} aria-hidden="true">
                   <use xlinkHref="#md-editor-icon-task" />
