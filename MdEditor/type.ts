@@ -147,7 +147,7 @@ export interface EditorProp {
   // input回调事件
   onChange?: (v: string) => void;
   // 保存事件
-  onSave?: (v: string) => void;
+  onSave?: (v: string, h: Promise<string>) => void;
   // 上传图片事件
   onUploadImg?: (files: Array<File>, callBack: (urls: string[]) => void) => void;
   // 是否页面内全屏，默认false

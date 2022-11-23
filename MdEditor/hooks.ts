@@ -24,6 +24,13 @@ export const useKeyBoard = (props: EditorProp, staticProps: StaticProp) => {
   const { noPrettier } = props;
   const { editorId, previewOnly } = staticProps;
 
+  const [state, setState] = useState({
+    // 是否已编译成html
+    buildFinished: false,
+    // 存储当前最新的html
+    html: ''
+  });
+
   const initFunc = (name: ToolbarNames) =>
     props.toolbars?.includes(name) &&
     !props.toolbarsExclude?.includes(name) &&
@@ -294,6 +301,18 @@ export const useKeyBoard = (props: EditorProp, staticProps: StaticProp) => {
   useEffect(() => {
     if (!previewOnly) {
       window.addEventListener('keydown', keyDownHandler);
+
+      bus.on(editorId, {
+        name: 'buildFinished',
+        callback(html: string) {
+          setState(() => {
+            return {
+              buildFinished: true,
+              html
+            };
+          });
+        }
+      });
     }
 
     // 编辑器卸载时移除相应的监听事件
@@ -312,15 +331,46 @@ export const useKeyBoard = (props: EditorProp, staticProps: StaticProp) => {
 
     const callback = () => {
       if (props.onSave) {
-        props.onSave(props.modelValue);
+        const htmlPromise = new Promise<string>((rev) => {
+          if (state.buildFinished) {
+            rev(state.html);
+          } else {
+            // 构建完成出发方法
+            const buildFinishedCallback = (html: string) => {
+              rev(html);
+
+              bus.remove(editorId, 'buildFinished', buildFinishedCallback);
+            };
+
+            bus.on(editorId, {
+              name: 'buildFinished',
+              callback: buildFinishedCallback
+            });
+          }
+        });
+
+        props.onSave(props.modelValue, htmlPromise);
       }
     };
 
-    bus.remove(editorId, 'onSave', callback);
     // 注册保存事件
     bus.on(editorId, {
       name: 'onSave',
       callback
+    });
+
+    return () => {
+      bus.remove(editorId, 'onSave', callback);
+    };
+  }, [props.modelValue, state.buildFinished, state.html]);
+
+  useEffect(() => {
+    // 编辑后添加未编译完成标识
+    setState((_state) => {
+      return {
+        ..._state,
+        buildFinished: false
+      };
     });
   }, [props.modelValue]);
 };

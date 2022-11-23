@@ -545,7 +545,8 @@ export const useMarked = (props: EditorContentProp) => {
         const _html = props.sanitize(marked(props.value || '', { renderer }));
         onHtmlChanged(_html);
         setHtml(_html);
-
+        // 构建完成，传递onSave新的html
+        bus.emit(editorId, 'buildFinished', _html);
         // 传递标题
         onGetCatalog(heads.current);
         // 生成目录，

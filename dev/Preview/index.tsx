@@ -263,7 +263,11 @@ export default ({ theme, previewTheme, codeTheme, lang }: PreviewProp) => {
               ></div>
             </MdEditor.ModalToolbar>
           ]}
-          onSave={(v) => {
+          onSave={(v, h) => {
+            console.log('onSave');
+            h.then((html) => {
+              console.log('onSaveAsync', html);
+            });
             localStorage.setItem(SAVE_KEY, v);
           }}
           onChange={(value) =>
