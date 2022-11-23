@@ -16,10 +16,10 @@ const LinkModal = (props: LinkModalProp) => {
   const title = useMemo(() => {
     switch (props.type) {
       case 'link': {
-        return `${usedLanguageText.linkModalTips?.title}${usedLanguageText.toolbarTips?.link}`;
+        return usedLanguageText.linkModalTips?.linkTitle;
       }
       case 'image': {
-        return `${usedLanguageText.linkModalTips?.title}${usedLanguageText.toolbarTips?.image}`;
+        return usedLanguageText.linkModalTips?.imageTitle;
       }
       default: {
         return '';
@@ -48,11 +48,11 @@ const LinkModal = (props: LinkModalProp) => {
     return (
       <Modal title={title} visible={props.visible} onClose={props.onCancel}>
         <div className={`${prefix}-form-item`}>
-          <label className={`${prefix}-lable`} htmlFor={`link-desc-${editorId}`}>
-            {usedLanguageText.linkModalTips?.descLable}
+          <label className={`${prefix}-label`} htmlFor={`link-desc-${editorId}`}>
+            {usedLanguageText.linkModalTips?.descLabel}
           </label>
           <input
-            placeholder={usedLanguageText.linkModalTips?.descLablePlaceHolder}
+            placeholder={usedLanguageText.linkModalTips?.descLabelPlaceHolder}
             className={`${prefix}-input`}
             id={`link-desc-${editorId}`}
             type="text"
@@ -66,11 +66,11 @@ const LinkModal = (props: LinkModalProp) => {
           />
         </div>
         <div className={`${prefix}-form-item`}>
-          <label className={`${prefix}-lable`} htmlFor={`link-url-${editorId}`}>
-            {usedLanguageText.linkModalTips?.urlLable}
+          <label className={`${prefix}-label`} htmlFor={`link-url-${editorId}`}>
+            {usedLanguageText.linkModalTips?.urlLabel}
           </label>
           <input
-            placeholder={usedLanguageText.linkModalTips?.urlLablePlaceHolder}
+            placeholder={usedLanguageText.linkModalTips?.urlLabelPlaceHolder}
             className={`${prefix}-input`}
             id={`link-url-${editorId}`}
             type="text"
