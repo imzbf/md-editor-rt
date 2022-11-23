@@ -495,9 +495,27 @@
 
 ### 💾 onSave
 
-- **类型**：`(v: string) => void`
+- **类型**：`(v: string, h: Promise<string>) => void`
 
   保存事件，快捷键与保存按钮均会触发。
+
+  ```jsx
+  import MdEditor from 'md-editor-rt';
+
+  export default () => {
+    return (
+      <MdEditor
+        onSave={(v, h) => {
+          console.log(v);
+
+          h.then((html) => {
+            console.log(html);
+          });
+        }}
+      />
+    );
+  };
+  ```
 
 ### 📸 onUploadImg
 

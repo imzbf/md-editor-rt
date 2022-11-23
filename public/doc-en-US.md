@@ -450,9 +450,27 @@
 
 ### 💾 onSave
 
-- **type**: `(v: string) => void`
+- **type**: `(v: string, h: Promise<string>) => void`
 
   Save Content event, `ctrl+s` and click button will trigger.
+
+  ```jsx
+  import MdEditor from 'md-editor-rt';
+
+  export default () => {
+    return (
+      <MdEditor
+        onSave={(v, h) => {
+          console.log(v);
+
+          h.then((html) => {
+            console.log(html);
+          });
+        }}
+      />
+    );
+  };
+  ```
 
 ### 📸 onUploadImg
 
