@@ -355,4 +355,9 @@ export interface CodeCss {
 export interface StaticProp {
   previewOnly: boolean;
   editorId: string;
+  noMermaid: boolean;
+  noKatex: boolean;
+  noPrettier: boolean;
+  noUploadImg: boolean;
+  noIconfont: boolean;
 }

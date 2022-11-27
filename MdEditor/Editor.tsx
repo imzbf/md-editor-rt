@@ -38,6 +38,7 @@ export const EditorContext = createContext<ContentType>({
 });
 
 const Editor = (props: EditorProp) => {
+  // Editor.defaultProps在某些编辑器中不能被正确识别已设置默认情况
   const {
     modelValue = defaultProps.modelValue,
     theme = defaultProps.theme as Themes,
@@ -64,13 +65,19 @@ const Editor = (props: EditorProp) => {
     markedHeadingId = defaultProps.markedHeadingId,
     footers = defaultProps.footers,
     defFooters = defaultProps.defFooters,
+    noIconfont = defaultProps.noIconfont,
     noUploadImg = defaultProps.noUploadImg
   } = props;
 
   const [staticProps] = useState<StaticProp>(() => {
     return {
       previewOnly,
-      editorId
+      editorId,
+      noKatex,
+      noMermaid,
+      noPrettier,
+      noUploadImg,
+      noIconfont
     };
   });
 
@@ -106,7 +113,7 @@ const Editor = (props: EditorProp) => {
   // 快捷键监听
   useKeyBoard(props, staticProps);
   // 扩展库引用
-  useExpansion(props, staticProps);
+  useExpansion(staticProps);
   // 上传图片监控
   useUploadImg(props, staticProps);
   // 错误捕获
@@ -143,14 +150,14 @@ const Editor = (props: EditorProp) => {
       >
         {!staticProps.previewOnly && (
           <ToolBar
-            noPrettier={noPrettier}
+            noPrettier={staticProps.noPrettier}
             toolbars={toolbars}
             toolbarsExclude={toolbarsExclude}
             setting={setting}
             updateSetting={updateSetting}
             tableShape={tableShape}
             defToolbars={defToolbars}
-            noUploadImg={noUploadImg}
+            noUploadImg={staticProps.noUploadImg}
           />
         )}
         <Content
@@ -160,9 +167,9 @@ const Editor = (props: EditorProp) => {
           onHtmlChanged={onHtmlChanged}
           onGetCatalog={onGetCatalog}
           sanitize={sanitize}
-          noMermaid={noMermaid}
+          noMermaid={staticProps.noMermaid}
           placeholder={placeholder}
-          noKatex={noKatex}
+          noKatex={staticProps.noKatex}
           markedHeadingId={markedHeadingId}
           scrollAuto={state.scrollAuto}
           formatCopiedText={props.formatCopiedText}

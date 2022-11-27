@@ -21,8 +21,7 @@ import { appendHandler } from './utils/dom';
  * @param props
  */
 export const useKeyBoard = (props: EditorProp, staticProps: StaticProp) => {
-  const { noPrettier } = props;
-  const { editorId, previewOnly } = staticProps;
+  const { editorId, previewOnly, noPrettier } = staticProps;
 
   const [state, setState] = useState({
     // 是否已编译成html
@@ -379,9 +378,8 @@ export const useKeyBoard = (props: EditorProp, staticProps: StaticProp) => {
  * @param props
  * @param extension
  */
-export const useExpansion = (props: EditorProp, staticProps: StaticProp) => {
-  const { noPrettier, noIconfont } = props;
-  const { previewOnly } = staticProps;
+export const useExpansion = (staticProps: StaticProp) => {
+  const { noPrettier, noIconfont, previewOnly, noUploadImg } = staticProps;
 
   const { editorExtensions } = configOption;
 
@@ -394,7 +392,8 @@ export const useExpansion = (props: EditorProp, staticProps: StaticProp) => {
     noPrettier || !!configOption.editorExtensions?.prettier?.parserMarkdownInstance;
 
   // 判断是否需要插入裁剪图片标签
-  const noCropperScript = !!configOption.editorExtensions?.cropper?.instance;
+  const noCropperScript =
+    noUploadImg || !!configOption.editorExtensions?.cropper?.instance;
 
   useEffect(() => {
     // 图标

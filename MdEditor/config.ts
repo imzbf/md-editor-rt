@@ -306,6 +306,7 @@ export const defaultProps = {
   markedHeadingId: (text: string) => text,
   footers: allFooter,
   defFooters: [],
+  noIconfont: false,
   noUploadImg: false
 };
 
