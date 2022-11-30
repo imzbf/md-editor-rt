@@ -18,7 +18,6 @@ import Modals from '../Modals';
 import TableShape from './TableShape';
 import { useSreenfull, useModals, useDropdownState } from './hooks';
 import { ON_SAVE } from '../../static/event-name';
-
 export interface ToolbarProp {
   noPrettier: boolean;
   // 工具栏选择显示
@@ -680,7 +679,9 @@ const Toolbar = (props: ToolbarProp) => {
               <div
                 className={`${prefix}-toolbar-item`}
                 title={ult.toolbarTips?.fullscreen}
-                onClick={fullScreenHandler}
+                onClick={() => {
+                  fullScreenHandler();
+                }}
                 key="bar-fullscreen"
               >
                 <svg className={`${prefix}-icon`} aria-hidden="true">

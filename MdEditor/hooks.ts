@@ -32,7 +32,7 @@ import {
   defaultProps
 } from './config';
 import { appendHandler } from './utils/dom';
-import { CATALOG_SHOW, ON_SAVE } from './static/event-name';
+import { CATALOG_SHOW, FULL_SCREEN, ON_SAVE } from './static/event-name';
 
 /**
  * 键盘监听
@@ -622,33 +622,30 @@ export const useConfig = (props: EditorProp) => {
     htmlPreview: preview ? false : htmlPreview
   });
 
-  const updateSetting = useCallback(
-    (k: keyof typeof setting, shouldScreenFull: boolean) => {
-      setSetting((settingN) => {
-        const nextSetting = {
-          ...settingN,
-          [k]: !settingN[k]
-        } as SettingType;
+  const updateSetting = useCallback((k: keyof typeof setting, v: boolean) => {
+    setSetting((_setting) => {
+      const nextSetting = {
+        ..._setting,
+        [k]: v === undefined ? !_setting[k] : v
+      } as SettingType;
 
-        if (k === 'fullscreen') {
-          if (shouldScreenFull || settingN.fullscreen) {
-            nextSetting.fullscreen = !settingN[k];
-          } else {
-            nextSetting.fullscreen = settingN[k];
-          }
+      if (k === 'fullscreen') {
+        if (v || _setting.fullscreen) {
+          nextSetting.fullscreen = !_setting[k];
+        } else {
+          nextSetting.fullscreen = _setting[k];
         }
+      }
 
-        if (k === 'preview' && nextSetting.preview) {
-          nextSetting.htmlPreview = false;
-        } else if (k === 'htmlPreview' && nextSetting.htmlPreview) {
-          nextSetting.preview = false;
-        }
+      if (k === 'preview' && nextSetting.preview) {
+        nextSetting.htmlPreview = false;
+      } else if (k === 'htmlPreview' && nextSetting.htmlPreview) {
+        nextSetting.preview = false;
+      }
 
-        return nextSetting;
-      });
-    },
-    []
-  );
+      return nextSetting;
+    });
+  }, []);
 
   useEffect(() => {
     // 保存body部分样式
@@ -694,7 +691,7 @@ export const useExpose = (
           updateSetting('pageFullScreen', status);
         },
         toggleFullScreen(status) {
-          updateSetting('fullscreen', status);
+          bus.emit(editorId, FULL_SCREEN, status);
         },
         togglePreview(status) {
           updateSetting('preview', status);

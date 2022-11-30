@@ -167,15 +167,27 @@ export default ({ theme, previewTheme, codeTheme, lang }: PreviewProp) => {
         />
       </div>
       <button
+        style={{
+          position: 'absolute',
+          top: '10px',
+          left: '10px',
+          zIndex: 1000000
+        }}
         onClick={() => {
-          editorRef.current?.insert((selectedText) => {
-            return {
-              targetValue: `@${selectedText}@`,
-              select: false,
-              deviationStart: 0,
-              deviationEnd: 0
-            };
-          });
+          // editorRef.current?.toggleFullScreen();
+          // editorRef.current?.togglePageFullScreen();
+          // editorRef.current?.toggleCatalog();
+          // editorRef.current?.toggleHtmlPreview();
+          // editorRef.current?.togglePreview();
+          // editorRef.current?.triggerSave();
+          // editorRef.current?.insert((selectedText) => {
+          //   return {
+          //     targetValue: `@${selectedText}@`,
+          //     select: false,
+          //     deviationStart: 0,
+          //     deviationEnd: 0
+          //   };
+          // });
         }}
       >
         1

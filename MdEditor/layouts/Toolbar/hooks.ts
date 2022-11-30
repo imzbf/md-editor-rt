@@ -6,6 +6,7 @@ import { appendHandler } from '../../utils/dom';
 import { ToolbarProp } from './';
 import { ToolDirective } from '../../utils/content-help';
 import { HoverData } from './TableShape';
+import { FULL_SCREEN } from '../../static/event-name';
 
 export const useSreenfull = (props: ToolbarProp) => {
   const { previewOnly, editorId } = useContext(EditorContext);
@@ -16,26 +17,32 @@ export const useSreenfull = (props: ToolbarProp) => {
 
   // 该处使用useCallback并不是为了减少子组件渲染次数
   // 而是screenfull获取到实例后要正确的初始化该方法
-  const fullScreenHandler = useCallback(() => {
-    if (!screenfull) {
-      bus.emit(editorId, 'errorCatcher', {
-        name: 'fullScreen',
-        message: 'fullScreen is undefined'
-      });
-      return;
-    }
-
-    if (screenfull.isEnabled) {
-      screenfullMe.current = true;
-      if (screenfull.isFullscreen) {
-        screenfull.exit();
-      } else {
-        screenfull.request();
+  const fullScreenHandler = useCallback(
+    (status?: boolean) => {
+      if (!screenfull) {
+        bus.emit(editorId, 'errorCatcher', {
+          name: 'fullScreen',
+          message: 'fullScreen is undefined'
+        });
+        return;
       }
-    } else {
-      console.error('browser does not support screenfull!');
-    }
-  }, [screenfull]);
+
+      if (screenfull.isEnabled) {
+        screenfullMe.current = true;
+
+        const targetStatus = status === undefined ? !screenfull.isFullscreen : !!status;
+
+        if (targetStatus) {
+          screenfull.request();
+        } else {
+          screenfull.exit();
+        }
+      } else {
+        console.error('browser does not support screenfull!');
+      }
+    },
+    [screenfull]
+  );
 
   const screenfullLoad = () => {
     // 复制实例
@@ -75,6 +82,17 @@ export const useSreenfull = (props: ToolbarProp) => {
       });
     }
   }, []);
+
+  useEffect(() => {
+    if (!previewOnly) {
+      // 注册切换全屏监听
+      bus.on(editorId, {
+        name: FULL_SCREEN,
+        callback: fullScreenHandler
+      });
+    }
+  }, [fullScreenHandler]);
+
   return { fullScreenHandler };
 };
 

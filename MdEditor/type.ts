@@ -372,7 +372,7 @@ export interface StaticProp {
   noIconfont: boolean;
 }
 
-export type UpdateSetting = (k: keyof SettingType, v?: boolean) => void;
+export type UpdateSetting = (k: keyof SettingType, v?: boolean | undefined) => void;
 
 export type ChangeEvent = (v: string) => void;
 export type SaveEvent = (v: string, h: Promise<string>) => void;
@@ -419,28 +419,28 @@ export interface ExposeParam {
    *
    * @param status 是否页面全屏
    */
-  togglePageFullScreen(status: boolean): void;
+  togglePageFullScreen(status?: boolean): void;
 
   /**
    * 切换屏幕全屏
    *
    * @param status 是否屏幕全屏
    */
-  toggleFullScreen(status: boolean): void;
+  toggleFullScreen(status?: boolean): void;
 
   /**
    * 切换是否显示预览
    *
    * @param status 是否显示预览
    */
-  togglePreview(status: boolean): void;
+  togglePreview(status?: boolean): void;
 
   /**
    * 切换是否显示html预览
    *
    * @param status html预览状态
    */
-  toggleHtmlPreview(status: boolean): void;
+  toggleHtmlPreview(status?: boolean): void;
 
   /**
    * 切换是否显示目录
