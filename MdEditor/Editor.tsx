@@ -18,11 +18,8 @@ import ToolBar from './layouts/Toolbar';
 import Content from './layouts/Content';
 import Footer from './layouts/Footer';
 import { classnames } from './utils';
-import { prefix, staticTextDefault, defaultProps, config } from './config';
+import { prefix, staticTextDefault, defaultProps } from './config';
 import { ContentType, EditorProp, StaticProp, Themes } from './type';
-import DropdownToolbar from './extensions/DropdownToolbar';
-import NormalToolbar from './extensions/NormalToolbar';
-import ModalToolbar from './extensions/ModalToolbar';
 import MdCatalog from './extensions/MdCatalog';
 import bus from './utils/event-bus';
 
@@ -205,9 +202,5 @@ const Editor = forwardRef((props: EditorProp, ref: ForwardedRef<unknown>) => {
     </EditorContext.Provider>
   );
 });
-
-export * from './type';
-
-export { DropdownToolbar, NormalToolbar, MdCatalog, ModalToolbar, config };
 
 export default Editor;

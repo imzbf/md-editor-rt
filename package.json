@@ -31,11 +31,13 @@
     "lib"
   ],
   "type": "module",
-  "types": "./lib/MdEditor/Editor.d.ts",
+  "types": "./lib/MdEditor/index.d.ts",
+  "main": "./lib/md-editor-rt.umd.js",
   "module": "./lib/md-editor-rt.es.js",
   "exports": {
     ".": {
-      "import": "./lib/md-editor-rt.es.js"
+      "import": "./lib/md-editor-rt.es.js",
+      "require": "./lib/md-editor-rt.umd.js"
     },
     "./lib/style.css": "./lib/style.css"
   },

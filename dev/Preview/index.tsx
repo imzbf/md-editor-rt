@@ -1,13 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import axios from 'axios';
-import MdEditor, {
-  DropdownToolbar,
-  NormalToolbar,
-  MdCatalog,
-  ModalToolbar,
-  config,
-  ExposeParam
-} from '../../MdEditor/Editor';
+import MdEditor, { ExposeParam } from '../../MdEditor';
 // import Editor from '../../lib/md-editor-rt.es';
 import mdText from '../data.md';
 import { Theme } from '../App';
@@ -31,7 +24,7 @@ import parserMarkdown from 'prettier/parser-markdown';
 
 // import { cdnBase } from '../../MdEditor/config';
 
-config({
+MdEditor.config({
   markedRenderer(renderer) {
     renderer.link = (href, title, text) => {
       return `<a href="${href}" title="${title || ''}" target="_blank">${text}</a>`;
@@ -182,7 +175,7 @@ export default ({ theme, previewTheme, codeTheme, lang }: PreviewProp) => {
           right: '10px'
         }}
       >
-        <MdCatalog
+        <MdEditor.MdCatalog
           theme={theme}
           editorId="md-editor-preview"
           markedHeadingId={markedHeadingId}
@@ -262,7 +255,7 @@ export default ({ theme, previewTheme, codeTheme, lang }: PreviewProp) => {
             'github'
           ]}
           defToolbars={[
-            <NormalToolbar
+            <MdEditor.NormalToolbar
               trigger={
                 <svg className="md-editor-icon" aria-hidden="true">
                   <use xlinkHref="#md-editor-icon-strike-through" />
@@ -270,8 +263,8 @@ export default ({ theme, previewTheme, codeTheme, lang }: PreviewProp) => {
               }
               onClick={console.log}
               key="dddd"
-            ></NormalToolbar>,
-            <DropdownToolbar
+            ></MdEditor.NormalToolbar>,
+            <MdEditor.DropdownToolbar
               visible={defVisible}
               trigger={
                 <svg className="md-editor-icon" aria-hidden="true">
@@ -281,8 +274,8 @@ export default ({ theme, previewTheme, codeTheme, lang }: PreviewProp) => {
               onChange={setDefVisible}
               overlay={<div>下拉内容</div>}
               key="dddd3"
-            ></DropdownToolbar>,
-            <ModalToolbar
+            ></MdEditor.DropdownToolbar>,
+            <MdEditor.ModalToolbar
               key="ddd-modal"
               title="弹窗扩展"
               modalTitle="外置弹窗"
@@ -319,7 +312,7 @@ export default ({ theme, previewTheme, codeTheme, lang }: PreviewProp) => {
                   height: '300px'
                 }}
               ></div>
-            </ModalToolbar>
+            </MdEditor.ModalToolbar>
           ]}
           onSave={(v, h) => {
             console.log('onSave');

@@ -55,9 +55,9 @@ export default ({ mode }: ConfigEnv): UserConfigExport => {
         ? {
             outDir: path.resolve(__dirname, 'lib'),
             lib: {
-              entry: path.resolve(__dirname, './MdEditor/Editor.tsx'),
+              entry: path.resolve(__dirname, './MdEditor/index.ts'),
               name: 'MdEditorRT',
-              formats: ['es']
+              formats: ['es', 'umd']
               // fileName: (): string => 'md-editor-rt.js'
             },
             rollupOptions: {
