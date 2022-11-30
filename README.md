@@ -272,21 +272,22 @@ export interface StaticTextDefaultValue {
 
 After 2.5.0, Editor exposes several methods on the instance, used to get or change the internal status of the editor.
 
-```vue
-<template>
-  <md-editor ref="editorRef" />
-</template>
-<script setup>
-import { ref, onMounted } from 'vue';
-import MdEditor from 'md-editor-v3';
-import type { ExposeParam } from 'md-editor-v3';
-import 'md-editor-v3/lib/style.css';
-const editorRef = ref<ExposeParam>();
-onMounted(() => {
-  editorRef.value?.on('catalog', console.log);
-  editorRef.value?.toggleCatalog(true);
-});
-</script>
+```js
+import React, { useState, useEffect, useRef } from 'react';
+import MdEditor, { ExposeParam } from 'md-editor-rt';
+import 'md-editor-rt/lib/style.css';
+
+export default () => {
+  const [text, setText] = useState('#Hello Editor');
+
+  const editorRef = useRef<ExposeParam>();
+
+  useEffect(() => {
+    editorRef.current?.on('catalog', console.log);
+  }, []);
+
+  return <MdEditor ref={editorRef} modelValue={text} onChange={setText} />;
+};
 ```
 
 > Switched to the opposite status, if toggle without input parameter.
@@ -298,24 +299,31 @@ Get the internal state of the editor, including pageFullscreen, fullscreen, prev
 - pageFullscreen
 
   ```js
-  editorRef.value?.on('pageFullscreen', (status) => console.log(status));
+  editorRef.current?.on('pageFullscreen', (status) => console.log(status));
   ```
 
 - fullscreen
+
   ```js
-  editorRef.value?.on('fullscreen', (status) => console.log(status));
+  editorRef.current?.on('fullscreen', (status) => console.log(status));
   ```
+
 - preview
+
   ```js
-  editorRef.value?.on('preview', (status) => console.log(status));
+  editorRef.current?.on('preview', (status) => console.log(status));
   ```
+
 - htmlPreview
+
   ```js
-  editorRef.value?.on('htmlPreview', (status) => console.log(status));
+  editorRef.current?.on('htmlPreview', (status) => console.log(status));
   ```
+
 - catalog
+
   ```js
-  editorRef.value?.on('catalog', (status) => console.log(status));
+  editorRef.current?.on('catalog', (status) => console.log(status));
   ```
 
 ### 💻 togglePageFullscreen
@@ -323,7 +331,7 @@ Get the internal state of the editor, including pageFullscreen, fullscreen, prev
 Toggle status of fullscreen within the page.
 
 ```js
-editorRef.value?.togglePageFullscreen(true);
+editorRef.current?.togglePageFullscreen(true);
 ```
 
 ### 🖥 toggleFullscreen
@@ -331,7 +339,7 @@ editorRef.value?.togglePageFullscreen(true);
 Toggle status of fullscreen widthin browser.
 
 ```js
-editorRef.value?.toggleFullscreen(true);
+editorRef.current?.toggleFullscreen(true);
 ```
 
 ### 📖 togglePreview
@@ -339,7 +347,7 @@ editorRef.value?.toggleFullscreen(true);
 Toggle status of preview.
 
 ```js
-editorRef.value?.togglePreview(true);
+editorRef.current?.togglePreview(true);
 ```
 
 ### 📼 toggleHtmlPreview
@@ -347,7 +355,7 @@ editorRef.value?.togglePreview(true);
 Toggle status of htmlPreview.
 
 ```js
-editorRef.value?.toggleHtmlPreview(true);
+editorRef.current?.toggleHtmlPreview(true);
 ```
 
 ### 🧬 toggleCatalog
@@ -355,13 +363,13 @@ editorRef.value?.toggleHtmlPreview(true);
 Toggle status of catalog.
 
 ```js
-editorRef.value?.toggleCatalog(true);
+editorRef.current?.toggleCatalog(true);
 ```
 
 ### 💾 triggerSave
 
 ```js
-editorRef.value?.triggerSave();
+editorRef.current?.triggerSave();
 ```
 
 ### 💉 insert
@@ -372,7 +380,7 @@ Manually insert content into textarea.
 /**
  * @params selectedText
  */
-editorRef.value?.insert((selectedText) => {
+editorRef.current?.insert((selectedText) => {
   /**
    * @return targetValue    Content to be inserted
    * @return select         Automatically select content
