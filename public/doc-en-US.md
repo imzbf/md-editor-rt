@@ -38,7 +38,7 @@
 
   The max length of history(if it is too big, editor will use more `RAM`).
 
-### 💻 pageFullScreen
+### 💻 pageFullscreen
 
 - **type**: `boolean`
 - **default**: `false`
@@ -391,7 +391,7 @@
 - **type**: `boolean`
 - **default**:`true`
 
-  Not append iconfont script, [download](https://at.alicdn.com/t/c/font_2605852_4cjr7o5jo0f.js) and import it by yourself.
+  Not append iconfont script, [download](https://at.alicdn.com/t/c/font_2605852_gymddm8qwtd.js) and import it by yourself.
 
   ```jsx
   import MdEditor from 'md-editor-rt';
@@ -518,7 +518,7 @@ async onUploadImg(files, callback) {
 
 - **type**: `(err: { name: string; message: string;}) => void`
 
-  Run-Time error event, only be called when `Cropper`, `fullScreen`, `prettier` is not loaded.
+  Run-Time error event, only be called when `Cropper`, `fullscreen`, `prettier` is not loaded.
 
   ```js
   const onError = (err) => {
@@ -529,6 +529,135 @@ async onUploadImg(files, callback) {
   ```jsx
   <MdEditor onError={onError} />
   ```
+
+## 🤱🏼 Expose
+
+After 2.5.0, Editor exposes several methods on the instance, used to get or change the internal status of the editor.
+
+```js
+import React, { useState, useEffect, useRef } from 'react';
+import MdEditor, { ExposeParam } from 'md-editor-rt';
+import 'md-editor-rt/lib/style.css';
+
+export default () => {
+  const [text, setText] = useState('#Hello Editor');
+
+  const editorRef = useRef<ExposeParam>();
+
+  useEffect(() => {
+    editorRef.current?.on('catalog', console.log);
+  }, []);
+
+  return <MdEditor ref={editorRef} modelValue={text} onChange={setText} />;
+};
+```
+
+### 👂🏼 on
+
+Get the internal state of the editor, including pageFullscreen, fullscreen, preview, htmlPreview, catalog, etc.
+
+- pageFullscreen
+
+  ```js
+  editorRef.current?.on('pageFullscreen', (status) => console.log(status));
+  ```
+
+- fullscreen
+  ```js
+  editorRef.current?.on('fullscreen', (status) => console.log(status));
+  ```
+- preview
+  ```js
+  editorRef.current?.on('preview', (status) => console.log(status));
+  ```
+- htmlPreview
+  ```js
+  editorRef.current?.on('htmlPreview', (status) => console.log(status));
+  ```
+- catalog
+  ```js
+  editorRef.current?.on('catalog', (status) => console.log(status));
+  ```
+
+### 💻 togglePageFullscreen
+
+Toggle status of fullscreen within the page.
+
+```js
+editorRef.current?.togglePageFullscreen(true);
+```
+
+> Switched to the opposite status, without input parameter.
+
+### 🖥 toggleFullscreen
+
+Toggle status of fullscreen widthin browser.
+
+```js
+editorRef.current?.toggleFullscreen(true);
+```
+
+> Switched to the opposite status, without input parameter.
+
+### 📖 togglePreview
+
+Toggle status of preview.
+
+```js
+editorRef.current?.togglePreview(true);
+```
+
+> Switched to the opposite status, without input parameter.
+
+### 📼 toggleHtmlPreview
+
+Toggle status of htmlPreview.
+
+```js
+editorRef.current?.toggleHtmlPreview(true);
+```
+
+> Switched to the opposite status, without input parameter.
+
+### 🧬 toggleCatalog
+
+Toggle status of catalog.
+
+```js
+editorRef.current?.toggleCatalog(true);
+```
+
+> Switched to the opposite status, without input parameter.
+
+### 💾 triggerSave
+
+```js
+editorRef.current?.triggerSave();
+```
+
+### 💉 insert
+
+Manually insert content into textarea.
+
+```js
+/**
+ * @params selectedText
+ */
+editorRef.current?.insert((selectedText) => {
+  /**
+   * @return targetValue    Content to be inserted
+   * @return select         Automatically select content
+   * @return deviationStart Start position of the selected content
+   * @return deviationEnd   End position of the selected content
+   */
+  return {
+    targetValue: `${selectedText}`,
+    select: true,
+    deviationStart: 0,
+    deviationEnd: 0
+  };
+});
+```
 
 ## 💴 Config Editor
 

@@ -40,7 +40,7 @@
 
   最大记录操作数（太大会占用内存）。
 
-### 💻 pageFullScreen
+### 💻 pageFullscreen
 
 - **类型**：`boolean`
 - **默认值**：`false`
@@ -434,7 +434,7 @@
 - **类型**：`boolean`
 - **默认值**：`true`
 
-  不插入 iconfont 链接，你可以[下载](https://at.alicdn.com/t/c/font_2605852_4cjr7o5jo0f.js)到本地自行引入。
+  不插入 iconfont 链接，你可以[下载](https://at.alicdn.com/t/c/font_2605852_gymddm8qwtd.js)到本地自行引入。
 
   ```jsx
   import MdEditor from 'md-editor-rt';
@@ -563,7 +563,7 @@ async onUploadImg(files, callback) {
 
 - **类型**：`(err: { name: string; message: string;}) => void`
 
-  捕获执行错误事件，目前支持`Cropper`、`fullScreen`、`prettier`实例未加载完成操作错误。
+  捕获执行错误事件，目前支持`Cropper`、`fullscreen`、`prettier`实例未加载完成操作错误。
 
   ```js
   const onError = (err) => {
@@ -574,6 +574,137 @@ async onUploadImg(files, callback) {
   ```jsx
   <MdEditor onError={onError} />
   ```
+
+## 🤱🏼 实例暴露
+
+2.5.0 版本之后，编辑器暴露了若干方法在组件实例上，用来快捷监听编辑器内部状态或对调整内部状态。
+
+```jsx
+import React, { useState, useEffect, useRef } from 'react';
+import MdEditor, { ExposeParam } from 'md-editor-rt';
+import 'md-editor-rt/lib/style.css';
+
+export default () => {
+  const [text, setText] = useState('#Hello Editor');
+
+  const editorRef = useRef<ExposeParam>();
+
+  useEffect(() => {
+    editorRef.current?.on('catalog', console.log);
+  }, []);
+
+  return <MdEditor ref={editorRef} modelValue={text} onChange={setText} />;
+};
+```
+
+### 👂🏼 on
+
+监听编辑器内部状态，包括：屏幕全屏、浏览器全屏、预览文本、预览 html、目录等。
+
+- pageFullscreen
+
+  ```js
+  editorRef.value?.on('pageFullscreen', (status) => console.log(status));
+  ```
+
+- fullscreen
+  ```js
+  editorRef.value?.on('fullscreen', (status) => console.log(status));
+  ```
+- preview
+  ```js
+  editorRef.value?.on('preview', (status) => console.log(status));
+  ```
+- htmlPreview
+  ```js
+  editorRef.value?.on('htmlPreview', (status) => console.log(status));
+  ```
+- catalog
+  ```js
+  editorRef.value?.on('catalog', (status) => console.log(status));
+  ```
+
+### 💻 togglePageFullscreen
+
+切换页面内全屏。
+
+```js
+editorRef.value?.togglePageFullscreen(true);
+```
+
+> 不设置入参切换为相反状态
+
+### 🖥 toggleFullscreen
+
+切换屏幕全屏。
+
+```js
+editorRef.value?.toggleFullscreen(true);
+```
+
+> 不设置入参切换为相反状态
+
+### 📖 togglePreview
+
+切换是否显示预览。
+
+```js
+editorRef.value?.togglePreview(true);
+```
+
+> 不设置入参切换为相反状态
+
+### 📼 toggleHtmlPreview
+
+切换是否显示 html 预览。
+
+```js
+editorRef.value?.toggleHtmlPreview(true);
+```
+
+> 不设置入参切换为相反状态
+
+### 🧬 toggleCatalog
+
+切换是否显示目录。
+
+```js
+editorRef.value?.toggleCatalog(true);
+```
+
+> 不设置入参切换为相反状态
+
+### 💾 triggerSave
+
+触发保存。
+
+```js
+editorRef.value?.triggerSave();
+```
+
+### 💉 insert
+
+手动向文本框插入内容。
+
+```js
+/**
+ * @params selectedText 选中的内容
+ */
+editorRef.value?.insert((selectedText) => {
+  /**
+   * @return targetValue    待插入内容
+   * @return select         插入后是否自动选中内容
+   * @return deviationStart 插入后选中内容鼠标开始位置
+   * @return deviationEnd   插入后选中内容鼠标结束位置
+   */
+  return {
+    targetValue: `${selectedText}`,
+    select: true,
+    deviationStart: 0,
+    deviationEnd: 0
+  };
+});
+```
 
 ## 💴 配置编辑器
 
