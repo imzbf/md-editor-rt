@@ -17,7 +17,7 @@ import Dropdown from '../../components/Dropdown';
 import Modals from '../Modals';
 import TableShape from './TableShape';
 import { useSreenfull, useModals, useDropdownState } from './hooks';
-import { ON_SAVE } from '../../static/event-name';
+import { CHANGE_CATALOG_VISIBLE, ON_SAVE } from '../../static/event-name';
 export interface ToolbarProp {
   noPrettier: boolean;
   // 工具栏选择显示
@@ -700,7 +700,7 @@ const Toolbar = (props: ToolbarProp) => {
                 className={`${prefix}-toolbar-item`}
                 title={ult.toolbarTips?.catalog}
                 onClick={() => {
-                  bus.emit(editorId, 'catalogShow');
+                  bus.emit(editorId, CHANGE_CATALOG_VISIBLE);
                 }}
                 key="bar-catalog"
               >

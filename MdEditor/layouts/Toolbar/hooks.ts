@@ -6,7 +6,7 @@ import { appendHandler } from '../../utils/dom';
 import { ToolbarProp } from './';
 import { ToolDirective } from '../../utils/content-help';
 import { HoverData } from './TableShape';
-import { FULL_SCREEN } from '../../static/event-name';
+import { CHANGE_FULL_SCREEN } from '../../static/event-name';
 
 export const useSreenfull = (props: ToolbarProp) => {
   const { previewOnly, editorId } = useContext(EditorContext);
@@ -87,7 +87,7 @@ export const useSreenfull = (props: ToolbarProp) => {
     if (!previewOnly) {
       // 注册切换全屏监听
       bus.on(editorId, {
-        name: FULL_SCREEN,
+        name: CHANGE_FULL_SCREEN,
         callback: fullscreenHandler
       });
     }

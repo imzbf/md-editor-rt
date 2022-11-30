@@ -149,6 +149,28 @@ export default ({ theme, previewTheme, codeTheme, lang }: PreviewProp) => {
 
   const [defVisible, setDefVisible] = useState(false);
 
+  useEffect(() => {
+    editorRef.current?.on('preview', (status) => {
+      console.log('preview', status);
+    });
+
+    editorRef.current?.on('htmlPreview', (status) => {
+      console.log('htmlPreview', status);
+    });
+
+    editorRef.current?.on('pageFullscreen', (status) => {
+      console.log('pageFullscreen', status);
+    });
+
+    editorRef.current?.on('fullscreen', (status) => {
+      console.log('fullscreen', status);
+    });
+
+    editorRef.current?.on('catalog', (status) => {
+      console.log('catalog', status);
+    });
+  }, []);
+
   return (
     <div className="project-preview">
       <div

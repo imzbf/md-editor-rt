@@ -126,11 +126,11 @@ const Editor = forwardRef((props: EditorProp, ref: ForwardedRef<unknown>) => {
   // 错误捕获
   useErrorCatcher(staticProps.editorId, onError);
   // 目录状态
-  const { catalogShow, catalogStyle } = useCatalog(props, staticProps);
+  const { catalogVisible, catalogShow, catalogStyle } = useCatalog(props, staticProps);
   // 部分配置重构
   const [highlight, usedLanguageText, setting, updateSetting] = useConfig(props);
 
-  useExpose(ref, staticProps, updateSetting);
+  useExpose(ref, staticProps, catalogVisible, setting, updateSetting);
 
   return (
     <EditorContext.Provider

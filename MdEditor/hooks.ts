@@ -33,7 +33,16 @@ import {
   defaultProps
 } from './config';
 import { appendHandler } from './utils/dom';
-import { CATALOG_SHOW, FULL_SCREEN, ON_SAVE } from './static/event-name';
+import {
+  CHANGE_CATALOG_VISIBLE,
+  CHANGE_FULL_SCREEN,
+  ON_SAVE,
+  PAGE_FULL_SCREEN_CHANGED,
+  FULL_SCREEN_CHANGED,
+  PREVIEW_CHANGED,
+  HTML_PREVIEW_CHANGED,
+  CATALOG_VISIBLE_CHANGED
+} from './static/event-name';
 
 /**
  * 键盘监听
@@ -536,7 +545,7 @@ export const useCatalog = (props: EditorProp, staticProps: StaticProp) => {
 
   useEffect(() => {
     bus.on(editorId, {
-      name: CATALOG_SHOW,
+      name: CHANGE_CATALOG_VISIBLE,
       callback: (v: boolean | undefined) => {
         if (v === undefined) {
           setCatalogVisible((_catalogVisible) => !_catalogVisible);
@@ -558,7 +567,7 @@ export const useCatalog = (props: EditorProp, staticProps: StaticProp) => {
     };
   }, [catalogVisible]);
 
-  return { catalogShow, catalogStyle };
+  return { catalogVisible, catalogShow, catalogStyle };
 };
 
 // 初始为空，渲染到页面后获取页面属性
@@ -667,52 +676,90 @@ export const useConfig = (props: EditorProp) => {
 export const useExpose = (
   editorRef: ForwardedRef<unknown>,
   staticProps: StaticProp,
+  catalogVisible: boolean,
   setting: SettingType,
   updateSetting: UpdateSetting
 ) => {
   const { editorId } = staticProps;
 
   useEffect(() => {
-    bus.emit(editorId, '', setting.pageFullscreen);
+    bus.emit(editorId, PAGE_FULL_SCREEN_CHANGED, setting.pageFullscreen);
   }, [setting.pageFullscreen]);
 
   useEffect(() => {
-    bus.emit(editorId, '', setting.fullscreen);
+    bus.emit(editorId, FULL_SCREEN_CHANGED, setting.fullscreen);
   }, [setting.fullscreen]);
 
   useEffect(() => {
-    bus.emit(editorId, '', setting.preview);
+    bus.emit(editorId, PREVIEW_CHANGED, setting.preview);
   }, [setting.preview]);
 
   useEffect(() => {
-    bus.emit(editorId, '', setting.htmlPreview);
+    bus.emit(editorId, HTML_PREVIEW_CHANGED, setting.htmlPreview);
   }, [setting.htmlPreview]);
+
+  useEffect(() => {
+    bus.emit(editorId, CATALOG_VISIBLE_CHANGED, catalogVisible);
+  }, [catalogVisible]);
 
   useImperativeHandle(
     editorRef,
     () => {
       const exposeParam: ExposeParam = {
         on(eventName, callBack) {
-          console.log(eventName);
-
           switch (eventName) {
             case 'pageFullscreen': {
-              (callBack as ExposeEvent['pageFullscreen'])(true);
+              bus.on(editorId, {
+                name: PAGE_FULL_SCREEN_CHANGED,
+                callback(status: boolean) {
+                  (callBack as ExposeEvent['pageFullscreen'])(status);
+                }
+              });
+
+              break;
             }
             case 'fullscreen': {
-              (callBack as ExposeEvent['fullscreen'])(true);
+              bus.on(editorId, {
+                name: FULL_SCREEN_CHANGED,
+                callback(status: boolean) {
+                  (callBack as ExposeEvent['fullscreen'])(status);
+                }
+              });
+
+              break;
             }
 
             case 'preview': {
-              (callBack as ExposeEvent['preview'])(true);
+              bus.on(editorId, {
+                name: PREVIEW_CHANGED,
+                callback(status: boolean) {
+                  (callBack as ExposeEvent['preview'])(status);
+                }
+              });
+
+              break;
             }
 
             case 'htmlPreview': {
-              (callBack as ExposeEvent['htmlPreview'])(true);
+              bus.on(editorId, {
+                name: HTML_PREVIEW_CHANGED,
+                callback(status: boolean) {
+                  (callBack as ExposeEvent['htmlPreview'])(status);
+                }
+              });
+
+              break;
             }
 
             case 'catalog': {
-              (callBack as ExposeEvent['catalog'])(true);
+              bus.on(editorId, {
+                name: CATALOG_VISIBLE_CHANGED,
+                callback(status: boolean) {
+                  (callBack as ExposeEvent['catalog'])(status);
+                }
+              });
+
+              break;
             }
 
             default: {
@@ -724,7 +771,7 @@ export const useExpose = (
           updateSetting('pageFullscreen', status);
         },
         toggleFullscreen(status) {
-          bus.emit(editorId, FULL_SCREEN, status);
+          bus.emit(editorId, CHANGE_FULL_SCREEN, status);
         },
         togglePreview(status) {
           updateSetting('preview', status);
@@ -733,7 +780,7 @@ export const useExpose = (
           updateSetting('htmlPreview', status);
         },
         toggleCatalog(status) {
-          bus.emit(editorId, CATALOG_SHOW, status);
+          bus.emit(editorId, CHANGE_CATALOG_VISIBLE, status);
         },
         triggerSave() {
           bus.emit(editorId, ON_SAVE);
