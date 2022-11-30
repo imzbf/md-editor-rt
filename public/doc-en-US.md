@@ -440,6 +440,20 @@
   };
   ```
 
+### 🛁 codeStyleReverse
+
+- **type**: `boolean`
+- **default**: `true`
+
+  Code style will be reversed to dark while code block of the theme has a dark background.
+
+### 🧼 codeStyleReverseList
+
+- **type**: `Array`
+- **default**: `['default', 'mk-cute']`
+
+  Themes to be reversed.
+
 ## 🪢 Event
 
 ### 📞 onChange

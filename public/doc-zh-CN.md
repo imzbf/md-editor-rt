@@ -483,6 +483,20 @@
   };
   ```
 
+### 🛁 codeStyleReverse
+
+- **类型**：`boolean`
+- **默认值**：`true`
+
+  某些预览主题的代码模块背景是暗色系，将这个属性设置为 true，会自动在该主题下的 light 模式下使用暗色系的代码风格。
+
+### 🧼 codeStyleReverseList
+
+- **类型**：`Array`
+- **默认值**：`['default', 'mk-cute']`
+
+  需要自动调整的预览主题，已默认包含 default、mk-cute。
+
 ## 🪢 绑定事件
 
 目前支持的内容如下：
