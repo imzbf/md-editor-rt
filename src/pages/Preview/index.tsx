@@ -1,5 +1,5 @@
-import React, { useEffect, useMemo, useState } from 'react';
-import MdEditor from 'md-editor-rt';
+import React, { useEffect, useMemo, useState, useRef, useCallback } from 'react';
+import MdEditor, { ExposeParam, InsertContentGenerator } from 'md-editor-rt';
 import { useSelector } from 'react-redux';
 import axios from '@/utils/request';
 import './index.less';
@@ -21,6 +21,8 @@ export default () => {
     return state.lang === 'zh-CN' ? mdCN : mdEN;
   });
 
+  const editorRef = useRef<ExposeParam>();
+
   useEffect(() => {
     if (state.lang === 'zh-CN') {
       setMd(mdCN);
@@ -38,10 +40,15 @@ export default () => {
     }
   }, [state.lang]);
 
+  const onInsert = useCallback((generator: InsertContentGenerator) => {
+    editorRef.current?.insert(generator);
+  }, []);
+
   return (
     <div className="project-preview">
       <div className="container">
         <MdEditor
+          ref={editorRef}
           theme={state.theme}
           previewTheme={state.previewTheme}
           codeTheme={state.codeTheme}
@@ -49,8 +56,8 @@ export default () => {
           language={state.lang}
           editorId={editorId}
           defToolbars={[
-            <MarkExtension editorId={editorId} onChange={setMd} key="mark-extension" />,
-            <EmojiExtension editorId={editorId} onChange={setMd} key="emoji-extension" />,
+            <MarkExtension onInsert={onInsert} key="mark-extension" />,
+            <EmojiExtension onInsert={onInsert} key="emoji-extension" />,
             <ReadExtension mdText={md} key="read-extension" />
           ]}
           toolbars={[

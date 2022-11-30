@@ -4,8 +4,6 @@ import MdEditor from 'md-editor-rt';
 import type { TocItem } from 'md-editor-rt/lib/MdEditor/extensions/MdCatalog';
 import { StateType } from '@/store';
 
-const { MdCatalog } = MdEditor;
-
 interface IzCatalogProp {
   editorId: string;
 }
@@ -22,7 +20,7 @@ const IzCatalog = (props: IzCatalogProp) => {
   return (
     <div className="catalog">
       <div className="affix">
-        <MdCatalog
+        <MdEditor.MdCatalog
           editorId={props.editorId}
           theme={state.theme}
           scrollElement={scrollElement}
