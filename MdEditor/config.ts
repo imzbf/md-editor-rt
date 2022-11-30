@@ -293,6 +293,8 @@ export const defaultProps = {
   historyLength: 10,
   showCodeRowNumber: false,
   previewTheme: 'default',
+  codeTheme: 'atom',
+  language: 'zh-CN',
   noPrettier: false,
   tableShape: [6, 4],
   noMermaid: false,
@@ -307,7 +309,9 @@ export const defaultProps = {
   footers: allFooter,
   defFooters: [],
   noIconfont: false,
-  noUploadImg: false
+  noUploadImg: false,
+  codeStyleReverse: true,
+  codeStyleReverseList: ['default', 'mk-cute']
 };
 
 export const configOption: ConfigOption = {

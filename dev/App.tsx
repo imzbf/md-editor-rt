@@ -9,7 +9,7 @@ export type Theme = 'dark' | 'light';
 function App() {
   const [theme, setTheme] = useState<Theme>('light');
   const [previewTheme, setPreviewTheme] = useState<string>('default');
-  const [codeTheme, setCodeTheme] = useState<string>('kimbie');
+  const [codeTheme, setCodeTheme] = useState<string>('atom');
   const [lang, setLang] = useState<'zh-CN' | 'en-US'>('zh-CN');
 
   return (

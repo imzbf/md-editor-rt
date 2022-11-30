@@ -200,6 +200,16 @@ export interface EditorProp {
   noIconfont?: boolean;
   formatCopiedText?: (text: string) => string;
   noUploadImg?: boolean;
+  /**
+   * 某些预览主题的代码模块背景是暗色系
+   * 将这个属性设置为true，会自动在该主题下的light模式下使用暗色系的代码风格
+   */
+  codeStyleReverse?: boolean;
+  /**
+   * 需要自动调整的预览主题
+   * 已默认包含default、mk-cute
+   */
+  codeStyleReverseList?: Array<string>;
 }
 
 export interface ContentType {

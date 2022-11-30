@@ -1,7 +1,14 @@
 import { CSSProperties, useCallback, useEffect, useMemo, useState } from 'react';
 import bus from './utils/event-bus';
 import { ToolDirective } from './utils/content-help';
-import { EditorProp, InnerError, SettingType, StaticProp, ToolbarNames } from './type';
+import {
+  EditorProp,
+  InnerError,
+  SettingType,
+  StaticProp,
+  Themes,
+  ToolbarNames
+} from './type';
 import {
   prefix,
   iconfontUrl,
@@ -11,7 +18,8 @@ import {
   codeCss,
   highlightUrl,
   staticTextDefault,
-  configOption
+  configOption,
+  defaultProps
 } from './config';
 import { appendHandler } from './utils/dom';
 
@@ -548,7 +556,14 @@ let bodyOverflowHistory = '';
  * @returns
  */
 export const useConfig = (props: EditorProp) => {
-  const { theme = 'light', codeTheme = 'atom', language = 'zh-CN' } = props;
+  const {
+    theme = defaultProps.theme,
+    previewTheme = defaultProps.previewTheme,
+    codeTheme = defaultProps.codeTheme,
+    language = defaultProps.language,
+    codeStyleReverse = defaultProps.codeStyleReverse,
+    codeStyleReverseList = defaultProps.codeStyleReverseList
+  } = props;
 
   const highlight = useMemo(() => {
     const highlightConfig = configOption?.editorExtensions?.highlight;
@@ -557,6 +572,11 @@ export const useConfig = (props: EditorProp) => {
       ...codeCss,
       ...highlightConfig?.css
     };
+
+    const theme =
+      codeStyleReverse && codeStyleReverseList.includes(previewTheme)
+        ? 'dark'
+        : (props.theme as Themes);
 
     return {
       js: highlightConfig?.js || highlightUrl,
