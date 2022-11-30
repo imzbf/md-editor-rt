@@ -14,7 +14,20 @@ import TimeNow from '@/components/TimeNow';
 
 const editorId = 'editor-preview';
 
+declare global {
+  interface Window {
+    editorInstance: any;
+  }
+}
+
 export default () => {
+  const [isDebug] = useState(() => {
+    if (localStorage.getItem('debug')) {
+      return true;
+    }
+
+    return false;
+  });
   const state = useSelector((state: any) => state) as StateType;
 
   const [md, setMd] = useState(() => {
@@ -44,6 +57,28 @@ export default () => {
     editorRef.current?.insert(generator);
   }, []);
 
+  useEffect(() => {
+    if (isDebug) {
+      editorRef.current?.on('catalog', (v) => {
+        console.log('catalog', v);
+      });
+      editorRef.current?.on('fullscreen', (v) => {
+        console.log('fullscreen', v);
+      });
+      editorRef.current?.on('htmlPreview', (v) => {
+        console.log('htmlPreview', v);
+      });
+      editorRef.current?.on('pageFullscreen', (v) => {
+        console.log('pageFullscreen', v);
+      });
+      editorRef.current?.on('preview', (v) => {
+        console.log('preview', v);
+      });
+
+      window.editorInstance = editorRef.current;
+    }
+  }, [isDebug]);
+
   return (
     <div className="project-preview">
       <div className="container">
@@ -60,6 +95,13 @@ export default () => {
             <EmojiExtension onInsert={onInsert} key="emoji-extension" />,
             <ReadExtension mdText={md} key="read-extension" />
           ]}
+          onSave={(v, h) => {
+            console.log('v', v);
+
+            h.then((html) => {
+              console.log('h', html);
+            });
+          }}
           toolbars={[
             'bold',
             'underline',
