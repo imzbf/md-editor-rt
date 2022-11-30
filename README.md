@@ -1,4 +1,4 @@
-# md-editor-rt
+# 🎄 md-editor-rt
 
 ![](https://img.shields.io/github/package-json/v/imzbf/md-editor-rt) ![](https://img.shields.io/npm/dm/md-editor-rt) ![](https://img.shields.io/bundlephobia/min/md-editor-rt) ![](https://img.shields.io/github/license/imzbf/md-editor-rt) ![](https://img.shields.io/badge/ssr-%3E1.0.0-brightgreen)
 
@@ -12,7 +12,7 @@ Markdown editor for `react`, developed in `jsx` and `typescript`.
 
 - The same series editor for vue3：[md-editor-v3](https://github.com/imzbf/md-editor-v3)
 
-## Features
+## ⭐️ Features
 
 - Toolbar, screenfull or screenfull in web pages and so on.
 - Themes, Built-in default and dark themes.
@@ -25,7 +25,7 @@ Markdown editor for `react`, developed in `jsx` and `typescript`.
 - `mermaid`(>=1.3.0), `katex` mathematical formula（>=1.4.0）.
 - Customize the toolbar as you like.
 
-## Install
+## 📦 Install
 
 ```shell
 yarn add md-editor-rt
@@ -45,7 +45,7 @@ yarn add @vavt/md-editor-extension
 
 For more ways to use or contribute, please refer to: [md-editor-extension](https://github.com/imzbf/md-editor-extension)
 
-## Usage
+## 💡 Usage
 
 ```js
 import React, { useState } from 'react';
@@ -59,7 +59,7 @@ export default () => {
 };
 ```
 
-## Preview
+## 🗺 Preview
 
 | Default theme | Dark theme | Preview only |
 | --- | --- | --- |
@@ -69,9 +69,9 @@ mark and emoji extensions
 
 ![mark and emoji extension](https://imzbf.github.io/md-editor-rt/imgs/mark_emoji.gif)
 
-## Apis
+## 🎁 Apis
 
-### Props
+### 🔩 Props
 
 | name | type | default | description |
 | --- | --- | --- | --- |
@@ -257,7 +257,7 @@ export interface StaticTextDefaultValue {
 
 </details>
 
-### Event
+### 🪢 Event
 
 | name | parameter | description |
 | --- | --- | --- |
@@ -390,7 +390,7 @@ editorRef.value?.insert((selectedText) => {
 
 For more examples, refer to source code of [extension component](https://github.com/imzbf/md-editor-rt/blob/dev-docs/src/components/MarkExtension/index.tsx)
 
-## Config
+## 💴 Config
 
 Use `MdEditor.config(option: ConfigOption)` to reconfigure `renderer`.
 
@@ -511,7 +511,7 @@ Use `MdEditor.config(option: ConfigOption)` to reconfigure `renderer`.
 
   </details>
 
-### Shortcut Key
+### 🪡 Shortcut Key
 
 | key | function | description |
 | --- | --- | --- |
@@ -540,11 +540,11 @@ Use `MdEditor.config(option: ConfigOption)` to reconfigure `renderer`.
 | CTRL + ALT + C | code row |  |
 | CTRL + SHIFT + ALT + T | table | `\|table\|` |
 
-## Components
+## 🪤 Components
 
 They are used as attributes of the editor component, eg: `Editor.DropdownToolbar`. For more examples, refer to [document](https://imzbf.github.io/md-editor-rt).
 
-### NormalToolbar
+### 🐣 NormalToolbar
 
 `Editor.NormalToolbar`
 
@@ -560,7 +560,7 @@ They are used as attributes of the editor component, eg: `Editor.DropdownToolbar
 
   - `trigger`: `string | JSX.Element`, necessary, it is usually an icon, which is displayed on the toolbar.
 
-### DropdownToolbar
+### 🐼 DropdownToolbar
 
 `Editor.DropdownToolbar`
 
@@ -578,7 +578,7 @@ They are used as attributes of the editor component, eg: `Editor.DropdownToolbar
   - `trigger`: `string | JSX.Element`, necessary, it is usually an icon, which is displayed on the toolbar.
   - `overlay`: `string | JSX.Element`, necessary, content of dropdown box.
 
-### ModalToolbar
+### 🦉 ModalToolbar
 
 `Editor.ModalToolbar`
 
@@ -603,7 +603,7 @@ They are used as attributes of the editor component, eg: `Editor.DropdownToolbar
   - `trigger`: `string | JSX.Element`, necessary, it is usually an icon, which is displayed on the toolbar.
   - `overlay`: `string | JSX.Element`, necessary, content of Modal.
 
-### MdCatalog
+### 🐻 MdCatalog
 
 `Editor.MdCatalog`
 
@@ -620,9 +620,9 @@ They are used as attributes of the editor component, eg: `Editor.DropdownToolbar
 
   - `onClick`: `(e: MouseEvent, t: TocItem) => void`, not necessary.
 
-## Examples
+## 🗂 Examples
 
-### Upload Picture
+### 🥹 Upload Picture
 
 > Tips: When you paste and upload GIF, it will upload a static picture. So you should upload it by file system!
 
@@ -660,7 +660,7 @@ export default () => {
 };
 ```
 
-### Change Styles
+### 🧙‍♂️ Change Styles
 
 ```less
 .css-vars(@isDark) {

@@ -1,4 +1,4 @@
-# md-editor-rt
+# 🎄 md-editor-rt
 
 ![](https://img.shields.io/github/package-json/v/imzbf/md-editor-rt) ![](https://img.shields.io/npm/dm/md-editor-rt) ![](https://img.shields.io/bundlephobia/min/md-editor-rt) ![](https://img.shields.io/github/license/imzbf/md-editor-rt) ![](https://img.shields.io/badge/ssr-%3E1.0.0-brightgreen)
 
@@ -10,7 +10,7 @@ react 版本的 Markdown 编辑器，[md-editor-v3](https://imzbf.github.io/md-e
 
 - 在线尝试示例：[传送门](https://codesandbox.io/s/elated-khorana-65jmr)
 
-## 功能一览
+## ⭐️ 功能一览
 
 - 快捷插入内容工具栏、编辑器浏览器全屏、页面内全屏等。
 - 内置的白色主题和暗黑主题，支持绑定切换。
@@ -22,7 +22,7 @@ react 版本的 Markdown 编辑器，[md-editor-v3](https://imzbf.github.io/md-e
 - `mermaid`绘图（>=1.3.0），`katex`数学公式（>=1.4.0）。
 - 自定义工具栏顺序或显示，自定义扩展工具栏（支持点击类型、下拉菜单类型及弹窗类型）等。
 
-## 安装
+## 📦 安装
 
 ```shell
 yarn add md-editor-rt
@@ -42,7 +42,7 @@ yarn add @vavt/md-editor-extension
 
 更多使用及贡献方式参考：[md-editor-extension](https://github.com/imzbf/md-editor-extension)
 
-## 用法
+## 💡 用法
 
 ```js
 import React, { useState } from 'react';
@@ -55,7 +55,7 @@ export default () => {
 };
 ```
 
-## 预览图
+## 🗺 预览图
 
 | 默认模式 | 暗黑模式 | 仅预览 |
 | --- | --- | --- |
@@ -65,9 +65,9 @@ export default () => {
 
 ![mark and emoji extension](https://imzbf.github.io/md-editor-rt/imgs/mark_emoji.gif)
 
-## Apis
+## 🎁 Apis
 
-### Props
+### 🔩 Props
 
 | 名称 | 类型 | 默认值 | 说明 |
 | --- | --- | --- | --- |
@@ -262,7 +262,7 @@ export interface StaticTextDefaultValue {
 
 </details>
 
-### 事件绑定
+### 🪢 事件绑定
 
 | 名称 | 入参 | 说明 |
 | --- | --- | --- |
@@ -273,7 +273,7 @@ export interface StaticTextDefaultValue {
 | onGetCatalog | `list: Array<HeadList>` | 动态获取`markdown`目录 |
 | onError | `error: { name: string; message: string }` | 运行错误反馈事件，目前包括`Cropper`、`fullscreen`、`prettier`实例未加载完成操作错误 |
 
-## 实例暴露
+## 🤱🏼 实例暴露
 
 编辑器暴露了若干方法在组件实例上，用来快捷监听编辑器内部状态或对调整内部状态。
 
@@ -396,7 +396,7 @@ editorRef.value?.insert((selectedText) => {
 
 示例参考文档源码中的[扩展组件](https://github.com/imzbf/md-editor-rt/blob/dev-docs/src/components/MarkExtension/index.tsx)
 
-## 编辑器配置
+## 💴 编辑器配置
 
 使用`MdEditor.config(option: ConfigOption)`方法，可以对内部的`renderer`定制。
 
@@ -519,7 +519,7 @@ editorRef.value?.insert((selectedText) => {
 
   </details>
 
-### 快捷键
+### 🪡 快捷键
 
 主要以`CTRL`搭配对应功能英文单词首字母，冲突项添加`SHIFT`，再冲突替换为`ALT`。
 
@@ -550,11 +550,11 @@ editorRef.value?.insert((selectedText) => {
 | CTRL + ALT + C | 行内代码 | 行内代码块 |
 | CTRL + SHIFT + ALT + T | 表格 | `\|表格\|` |
 
-## 内部组件
+## 🪤 内部组件
 
 扩展组件作为编辑器组件的属性值来使用，例如：`Editor.DropdownToolbar`。使用参考：[文档页面](https://imzbf.github.io/md-editor-rt)
 
-### 普通扩展工具栏
+### 🐣 普通扩展工具栏
 
 `Editor.NormalToolbar`
 
@@ -570,7 +570,7 @@ editorRef.value?.insert((selectedText) => {
 
   - `trigger`: `string | JSX.Element`，必须，通常是个图标，用来展示在工具栏上。
 
-### 下拉扩展工具栏
+### 🐼 下拉扩展工具栏
 
 `Editor.DropdownToolbar`
 
@@ -588,7 +588,7 @@ editorRef.value?.insert((selectedText) => {
   - `trigger`: `string | JSX.Element`，必须，通常是个图标，用来展示在工具栏上。
   - `overlay`: `string | JSX.Element`，必须，下拉框中的内容。
 
-### 弹窗扩展工具栏
+### 🦉 弹窗扩展工具栏
 
 `Editor.ModalToolbar`
 
@@ -613,7 +613,7 @@ editorRef.value?.insert((selectedText) => {
   - `trigger`: `string | JSX.Element`，必须，通常是个图标，用来展示在工具栏上。
   - `overlay`: `string | JSX.Element`，必须，下拉框中的内容。
 
-### 目录导航
+### 🐻 目录导航
 
 `Editor.MdCatalog`
 
@@ -630,9 +630,9 @@ editorRef.value?.insert((selectedText) => {
 
   - `onClick`: `(e: MouseEvent, t: TocItem) => void`，非必须，导航点击事件。
 
-## 部分示例
+## 🗂 部分示例
 
-### 上传图片
+### 🥹 上传图片
 
 默认可以选择多张图片，支持粘贴板上传图片。
 
@@ -672,7 +672,7 @@ export default () => {
 };
 ```
 
-### 调整编辑器样式
+### 🧙‍♂️ 调整编辑器样式
 
 2.x 使用 css 变量定义了大部分内容：
 
