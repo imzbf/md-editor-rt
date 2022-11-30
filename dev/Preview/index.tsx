@@ -1,6 +1,13 @@
 import React, { useEffect, useRef, useState } from 'react';
 import axios from 'axios';
-import MdEditor from '../../MdEditor/Editor';
+import MdEditor, {
+  DropdownToolbar,
+  NormalToolbar,
+  MdCatalog,
+  ModalToolbar,
+  config,
+  ExposeParam
+} from '../../MdEditor/Editor';
 // import Editor from '../../lib/md-editor-rt.es';
 import mdText from '../data.md';
 import { Theme } from '../App';
@@ -24,7 +31,7 @@ import parserMarkdown from 'prettier/parser-markdown';
 
 // import { cdnBase } from '../../MdEditor/config';
 
-MdEditor.config({
+config({
   markedRenderer(renderer) {
     renderer.link = (href, title, text) => {
       return `<a href="${href}" title="${title || ''}" target="_blank">${text}</a>`;
@@ -114,6 +121,8 @@ const markedHeadingId = (_: string, __: string | number, index: number) =>
   `heading-${index}`;
 
 export default ({ theme, previewTheme, codeTheme, lang }: PreviewProp) => {
+  const editorRef = useRef<ExposeParam>();
+
   const [md, setMd] = useState(() => {
     return {
       text: localStorage.getItem(SAVE_KEY) || mdText,
@@ -151,14 +160,29 @@ export default ({ theme, previewTheme, codeTheme, lang }: PreviewProp) => {
           right: '10px'
         }}
       >
-        <MdEditor.MdCatalog
+        <MdCatalog
           theme={theme}
           editorId="md-editor-preview"
           markedHeadingId={markedHeadingId}
         />
       </div>
+      <button
+        onClick={() => {
+          editorRef.current?.insert((selectedText) => {
+            return {
+              targetValue: `@${selectedText}@`,
+              select: false,
+              deviationStart: 0,
+              deviationEnd: 0
+            };
+          });
+        }}
+      >
+        1
+      </button>
       <div className="container">
         <MdEditor
+          ref={editorRef}
           theme={theme}
           language={lang}
           previewTheme={previewTheme}
@@ -204,7 +228,7 @@ export default ({ theme, previewTheme, codeTheme, lang }: PreviewProp) => {
             'github'
           ]}
           defToolbars={[
-            <MdEditor.NormalToolbar
+            <NormalToolbar
               trigger={
                 <svg className="md-editor-icon" aria-hidden="true">
                   <use xlinkHref="#md-editor-icon-strike-through" />
@@ -212,8 +236,8 @@ export default ({ theme, previewTheme, codeTheme, lang }: PreviewProp) => {
               }
               onClick={console.log}
               key="dddd"
-            ></MdEditor.NormalToolbar>,
-            <MdEditor.DropdownToolbar
+            ></NormalToolbar>,
+            <DropdownToolbar
               visible={defVisible}
               trigger={
                 <svg className="md-editor-icon" aria-hidden="true">
@@ -223,8 +247,8 @@ export default ({ theme, previewTheme, codeTheme, lang }: PreviewProp) => {
               onChange={setDefVisible}
               overlay={<div>下拉内容</div>}
               key="dddd3"
-            ></MdEditor.DropdownToolbar>,
-            <MdEditor.ModalToolbar
+            ></DropdownToolbar>,
+            <ModalToolbar
               key="ddd-modal"
               title="弹窗扩展"
               modalTitle="外置弹窗"
@@ -261,7 +285,7 @@ export default ({ theme, previewTheme, codeTheme, lang }: PreviewProp) => {
                   height: '300px'
                 }}
               ></div>
-            </MdEditor.ModalToolbar>
+            </ModalToolbar>
           ]}
           onSave={(v, h) => {
             console.log('onSave');

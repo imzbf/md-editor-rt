@@ -1,4 +1,12 @@
-import { CSSProperties, useCallback, useEffect, useMemo, useState } from 'react';
+import {
+  CSSProperties,
+  ForwardedRef,
+  useCallback,
+  useEffect,
+  useImperativeHandle,
+  useMemo,
+  useState
+} from 'react';
 import bus from './utils/event-bus';
 import { ToolDirective } from './utils/content-help';
 import {
@@ -7,7 +15,9 @@ import {
   SettingType,
   StaticProp,
   Themes,
-  ToolbarNames
+  ToolbarNames,
+  ExposeParam,
+  UpdateSetting
 } from './type';
 import {
   prefix,
@@ -22,6 +32,7 @@ import {
   defaultProps
 } from './config';
 import { appendHandler } from './utils/dom';
+import { CATALOG_SHOW, ON_SAVE } from './static/event-name';
 
 /**
  * 键盘监听
@@ -62,7 +73,7 @@ export const useKeyBoard = (props: EditorProp, staticProps: StaticProp) => {
           } else {
             // 触发保存事件
             if (initFunc('save')) {
-              bus.emit(editorId, 'onSave', props.modelValue);
+              bus.emit(editorId, ON_SAVE, props.modelValue);
               event.preventDefault();
             }
           }
@@ -360,12 +371,12 @@ export const useKeyBoard = (props: EditorProp, staticProps: StaticProp) => {
 
     // 注册保存事件
     bus.on(editorId, {
-      name: 'onSave',
+      name: ON_SAVE,
       callback
     });
 
     return () => {
-      bus.remove(editorId, 'onSave', callback);
+      bus.remove(editorId, ON_SAVE, callback);
     };
   }, [props.modelValue, state.buildFinished, state.html]);
 
@@ -524,9 +535,13 @@ export const useCatalog = (props: EditorProp, staticProps: StaticProp) => {
 
   useEffect(() => {
     bus.on(editorId, {
-      name: 'catalogShow',
-      callback: () => {
-        setCatalogVisible((_catalogVisible) => !_catalogVisible);
+      name: CATALOG_SHOW,
+      callback: (v: boolean | undefined) => {
+        if (v === undefined) {
+          setCatalogVisible((_catalogVisible) => !_catalogVisible);
+        } else {
+          setCatalogVisible(v);
+        }
       }
     });
   }, []);
@@ -649,4 +664,57 @@ export const useConfig = (props: EditorProp) => {
   }, [setting.pageFullScreen, setting.fullscreen]);
 
   return [highlight, usedLanguageText, setting, updateSetting];
+};
+
+export const useExpose = (
+  editorRef: ForwardedRef<unknown>,
+  staticProps: StaticProp,
+  updateSetting: UpdateSetting
+) => {
+  const { editorId } = staticProps;
+
+  useImperativeHandle(
+    editorRef,
+    () => {
+      const exposeParam: ExposeParam = {
+        // on(eventName, callBack) {
+        //   console.log(eventName);
+
+        //   switch (eventName) {
+        //     case 'change': {
+        //       (callBack as ExposeEvent['change'])('');
+        //     }
+
+        //     default: {
+        //       //
+        //     }
+        //   }
+        // }
+        togglePageFullScreen(status) {
+          updateSetting('pageFullScreen', status);
+        },
+        toggleFullScreen(status) {
+          updateSetting('fullscreen', status);
+        },
+        togglePreview(status) {
+          updateSetting('preview', status);
+        },
+        toggleHtmlPreview(status) {
+          updateSetting('htmlPreview', status);
+        },
+        toggleCatalog(status) {
+          bus.emit(editorId, CATALOG_SHOW, status);
+        },
+        triggerSave() {
+          bus.emit(editorId, ON_SAVE);
+        },
+        insert(generate) {
+          bus.emit(editorId, 'replace', 'universal', { generate });
+        }
+      };
+
+      return exposeParam;
+    },
+    [updateSetting]
+  );
 };

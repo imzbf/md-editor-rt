@@ -6,7 +6,7 @@ import React, {
   useRef,
   useState
 } from 'react';
-import { ToolbarNames, SettingType } from '../../type';
+import { ToolbarNames, SettingType, UpdateSetting } from '../../type';
 import { EditorContext } from '../../Editor';
 import { goto } from '../../utils';
 import { ToolDirective } from '../../utils/content-help';
@@ -17,6 +17,7 @@ import Dropdown from '../../components/Dropdown';
 import Modals from '../Modals';
 import TableShape from './TableShape';
 import { useSreenfull, useModals, useDropdownState } from './hooks';
+import { ON_SAVE } from '../../static/event-name';
 
 export interface ToolbarProp {
   noPrettier: boolean;
@@ -25,7 +26,7 @@ export interface ToolbarProp {
   // 工具栏选择不显示
   toolbarsExclude: Array<ToolbarNames>;
   setting: SettingType;
-  updateSetting: (k: keyof SettingType, shouldScreenFull?: boolean) => void;
+  updateSetting: UpdateSetting; // (k: keyof SettingType, shouldScreenFull?: boolean) => void;
   tableShape: [number, number];
   defToolbars?: Array<ReactElement>;
   noUploadImg: boolean;
@@ -624,7 +625,7 @@ const Toolbar = (props: ToolbarProp) => {
                 className={`${prefix}-toolbar-item`}
                 title={ult.toolbarTips?.save}
                 onClick={() => {
-                  bus.emit(editorId, 'onSave');
+                  bus.emit(editorId, ON_SAVE);
                 }}
                 key="bar-save"
               >
@@ -794,13 +795,7 @@ const Toolbar = (props: ToolbarProp) => {
 
   return (
     <div className={`${prefix}-toolbar-wrapper`} id={wrapperId}>
-      <div
-        className={`${prefix}-toolbar`}
-        onMouseEnter={() => {
-          // 工具栏操作前，保存选中文本
-          bus.emit(editorId, 'selectTextChange');
-        }}
-      >
+      <div className={`${prefix}-toolbar`}>
         <div className={`${prefix}-toolbar-left`}>{splitedbar[0]}</div>
         <div className={`${prefix}-toolbar-right`}>{splitedbar[1]}</div>
       </div>

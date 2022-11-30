@@ -63,6 +63,10 @@ const Content = (props: EditorContentProp) => {
               id={`${editorId}-textarea`}
               ref={textAreaRef}
               value={props.value}
+              onBlur={() => {
+                // 失焦自动保存当前选中内容
+                bus.emit(editorId, 'selectTextChange');
+              }}
               onKeyDown={() => {
                 bus.emit(editorId, 'saveHistoryPos', true);
               }}

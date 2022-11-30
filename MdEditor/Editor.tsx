@@ -1,11 +1,18 @@
-import React, { createContext, useCallback, useState } from 'react';
+import React, {
+  createContext,
+  useCallback,
+  useState,
+  forwardRef,
+  ForwardedRef
+} from 'react';
 import {
   useCatalog,
   useConfig,
   useErrorCatcher,
   useExpansion,
   useKeyBoard,
-  useUploadImg
+  useUploadImg,
+  useExpose
 } from './hooks';
 import ToolBar from './layouts/Toolbar';
 import Content from './layouts/Content';
@@ -37,7 +44,7 @@ export const EditorContext = createContext<ContentType>({
   previewTheme: 'default'
 });
 
-const Editor = (props: EditorProp) => {
+const Editor = forwardRef((props: EditorProp, ref: ForwardedRef<unknown>) => {
   // Editor.defaultProps在某些编辑器中不能被正确识别已设置默认情况
   const {
     modelValue = defaultProps.modelValue,
@@ -123,6 +130,8 @@ const Editor = (props: EditorProp) => {
   // 部分配置重构
   const [highlight, usedLanguageText, setting, updateSetting] = useConfig(props);
 
+  useExpose(ref, staticProps, updateSetting);
+
   return (
     <EditorContext.Provider
       value={{
@@ -195,15 +204,10 @@ const Editor = (props: EditorProp) => {
       </div>
     </EditorContext.Provider>
   );
-};
-
-Editor.DropdownToolbar = DropdownToolbar;
-Editor.NormalToolbar = NormalToolbar;
-Editor.MdCatalog = MdCatalog;
-Editor.ModalToolbar = ModalToolbar;
-Editor.config = config;
-Editor.extension = {};
+});
 
 export * from './type';
+
+export { DropdownToolbar, NormalToolbar, MdCatalog, ModalToolbar, config };
 
 export default Editor;
