@@ -174,8 +174,8 @@ export default ({ theme, previewTheme, codeTheme, lang }: PreviewProp) => {
           zIndex: 1000000
         }}
         onClick={() => {
-          // editorRef.current?.toggleFullScreen();
-          // editorRef.current?.togglePageFullScreen();
+          // editorRef.current?.toggleFullscreen();
+          // editorRef.current?.togglePageFullscreen();
           // editorRef.current?.toggleCatalog();
           // editorRef.current?.toggleHtmlPreview();
           // editorRef.current?.togglePreview();

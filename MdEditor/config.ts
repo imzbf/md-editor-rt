@@ -15,7 +15,7 @@ export const defaultEditorId = 'md-editor-rt';
 export const iconScriptId = defaultEditorId;
 
 // 字体链接
-export const iconfontUrl = 'https://at.alicdn.com/t/c/font_2605852_4cjr7o5jo0f.js';
+export const iconfontUrl = 'https://at.alicdn.com/t/c/font_2605852_gymddm8qwtd.js';
 
 export const cdnBase = 'https://cdnjs.cloudflare.com/ajax/libs';
 

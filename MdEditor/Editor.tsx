@@ -152,7 +152,7 @@ const Editor = forwardRef((props: EditorProp, ref: ForwardedRef<unknown>) => {
           prefix,
           className,
           theme === 'dark' && `${prefix}-dark`,
-          setting.fullscreen || setting.pageFullScreen ? `${prefix}-fullscreen` : '',
+          setting.fullscreen || setting.pageFullscreen ? `${prefix}-fullscreen` : '',
           staticProps.previewOnly && `${prefix}-previewOnly`
         ])}
         style={props.style}

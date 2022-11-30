@@ -79,7 +79,7 @@ mark and emoji extensions
 | theme | `'light' \| 'dark'` | 'light' | Editor theme |
 | class | `string` | '' |  |
 | historyLength | `number` | 10 | The max length of history(if it is too big, editor will use more `RAM`) |
-| pageFullScreen | `boolean` | false | Screenfull in web page |
+| pageFullscreen | `boolean` | false | Screenfull in web page |
 | preview | `boolean` | true | Preview content in editor |
 | htmlPreview | `boolean` | false | Preview html in editor |
 | previewOnly | `boolean` | false | Only render article content, no toolbar, no edit area |
@@ -103,7 +103,7 @@ mark and emoji extensions
 | footers | `Array<'markdownTotal' \| '=' \| 'scrollSwitch' \| number>` | ['markdownTotal', '=', 'scrollSwitch'] | Show contents of footer, they are divided by `'='`. Set it to `[]` to hidden footer |
 | scrollAuto | `boolean` | true | Scroll default setting |
 | defFooters | `Array<string \| ReactElement>` | [] | Custom footer |
-| noIconfont | `boolean` | false | Not append iconfont script, [download](https://at.alicdn.com/t/c/font_2605852_4cjr7o5jo0f.js) and import it by yourself |
+| noIconfont | `boolean` | false | Not append iconfont script, [download](https://at.alicdn.com/t/c/font_2605852_gymddm8qwtd.js) and import it by yourself |
 | formatCopiedText | `(text: string) => string` | (text: string) => text | Format copied code |
 | noUploadImg | `boolean` | false | Not show the entrance to upload pictures |
 | codeStyleReverse | `boolean` | false | Code style will be reversed to dark while code block of the theme has a dark background |
@@ -266,7 +266,7 @@ export interface StaticTextDefaultValue {
 | onUploadImg | `files: Array<File>, callback: (urls: Array<string>) => void` | Upload picture event, when picture is uploading the modal will not close, please provide right urls to the callback function |
 | onHtmlChanged | `html: string` | Compile markdown successful event, you can use it to get the html code |
 | onGetCatalog | `list: Array<HeadList>` | Get catalog of article |
-| onError | `error: { name: string; message: string }` | Catch run-time error, `Cropper`, `fullScreen` and `prettier` are used when they are not loaded |
+| onError | `error: { name: string; message: string }` | Catch run-time error, `Cropper`, `fullscreen` and `prettier` are used when they are not loaded |
 
 ## Config
 

@@ -17,12 +17,12 @@ export const useSreenfull = (props: ToolbarProp) => {
 
   // 该处使用useCallback并不是为了减少子组件渲染次数
   // 而是screenfull获取到实例后要正确的初始化该方法
-  const fullScreenHandler = useCallback(
+  const fullscreenHandler = useCallback(
     (status?: boolean) => {
       if (!screenfull) {
         bus.emit(editorId, 'errorCatcher', {
-          name: 'fullScreen',
-          message: 'fullScreen is undefined'
+          name: 'fullscreen',
+          message: 'fullscreen is undefined'
         });
         return;
       }
@@ -88,12 +88,12 @@ export const useSreenfull = (props: ToolbarProp) => {
       // 注册切换全屏监听
       bus.on(editorId, {
         name: FULL_SCREEN,
-        callback: fullScreenHandler
+        callback: fullscreenHandler
       });
     }
-  }, [fullScreenHandler]);
+  }, [fullscreenHandler]);
 
-  return { fullScreenHandler };
+  return { fullscreenHandler };
 };
 
 export const useModals = (

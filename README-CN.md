@@ -75,7 +75,7 @@ export default () => {
 | theme | `'light' \| 'dark'` | 'light' | 主题切换 |
 | class | `string` | '' | 编辑器类名 |
 | historyLength | `number` | 10 | 最大记录操作数（太大会占用内存） |
-| pageFullScreen | `boolean` | false | 页面内全屏 |
+| pageFullscreen | `boolean` | false | 页面内全屏 |
 | preview | `boolean` | true | 是否预览 |
 | htmlPreview | `boolean` | false | 是否 html 预览 |
 | previewOnly | `boolean` | false | 仅预览模式，不显示 bar 和编辑框 |
@@ -99,7 +99,7 @@ export default () => {
 | footers | `Array<'markdownTotal' \| '=' \| 'scrollSwitch' \| number>` | ['markdownTotal', '=', 'scrollSwitch'] | 页脚显示内容，`=`左右分割，设置为`[]`不显示页脚 |
 | scrollAuto | `boolean` | true | 默认左右滚动状态 |
 | defFooters | `Array<string \| ReactElement>` | [] | 自定义扩展页脚 |
-| noIconfont | `boolean` | false | 不插入 iconfont 链接，你可以[下载](https://at.alicdn.com/t/c/font_2605852_4cjr7o5jo0f.js)到本地自行引入 |
+| noIconfont | `boolean` | false | 不插入 iconfont 链接，你可以[下载](https://at.alicdn.com/t/c/font_2605852_gymddm8qwtd.js)到本地自行引入 |
 | formatCopiedText | `(text: string) => string` | (text: string) => text | 格式化复制代码 |
 | noUploadImg | `boolean` | false | 不展示上传图片选项 |
 | codeStyleReverse | `boolean` | false | 代码块为暗色背景的预览主题，将代码风格设置为暗色风格 |
@@ -271,7 +271,7 @@ export interface StaticTextDefaultValue {
 | onUploadImg | `files: Array<File>, callback: (urls: Array<string>) => void` | 上传图片事件，弹窗会等待上传结果，务必将上传后的 urls 作为 callback 入参回传 |
 | onHtmlChanged | `html: string` | html 变化回调事件，用于获取预览 html 代码 |
 | onGetCatalog | `list: Array<HeadList>` | 动态获取`markdown`目录 |
-| onError | `error: { name: string; message: string }` | 运行错误反馈事件，目前包括`Cropper`、`fullScreen`、`prettier`实例未加载完成操作错误 |
+| onError | `error: { name: string; message: string }` | 运行错误反馈事件，目前包括`Cropper`、`fullscreen`、`prettier`实例未加载完成操作错误 |
 
 ## 编辑器配置
 

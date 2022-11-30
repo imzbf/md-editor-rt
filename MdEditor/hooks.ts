@@ -17,7 +17,8 @@ import {
   Themes,
   ToolbarNames,
   ExposeParam,
-  UpdateSetting
+  UpdateSetting,
+  ExposeEvent
 } from './type';
 import {
   prefix,
@@ -613,10 +614,10 @@ export const useConfig = (props: EditorProp) => {
     }
   }, [language]);
 
-  const { preview = true, htmlPreview = false, pageFullScreen = false } = props;
+  const { preview = true, htmlPreview = false, pageFullscreen = false } = props;
 
   const [setting, setSetting] = useState<SettingType>({
-    pageFullScreen: pageFullScreen,
+    pageFullscreen,
     fullscreen: false,
     preview: preview,
     htmlPreview: preview ? false : htmlPreview
@@ -653,12 +654,12 @@ export const useConfig = (props: EditorProp) => {
   }, []);
 
   useEffect(() => {
-    if (setting.pageFullScreen || setting.fullscreen) {
+    if (setting.pageFullscreen || setting.fullscreen) {
       document.body.style.overflow = 'hidden';
     } else {
       document.body.style.overflow = bodyOverflowHistory;
     }
-  }, [setting.pageFullScreen, setting.fullscreen]);
+  }, [setting.pageFullscreen, setting.fullscreen]);
 
   return [highlight, usedLanguageText, setting, updateSetting];
 };
@@ -666,31 +667,63 @@ export const useConfig = (props: EditorProp) => {
 export const useExpose = (
   editorRef: ForwardedRef<unknown>,
   staticProps: StaticProp,
+  setting: SettingType,
   updateSetting: UpdateSetting
 ) => {
   const { editorId } = staticProps;
+
+  useEffect(() => {
+    bus.emit(editorId, '', setting.pageFullscreen);
+  }, [setting.pageFullscreen]);
+
+  useEffect(() => {
+    bus.emit(editorId, '', setting.fullscreen);
+  }, [setting.fullscreen]);
+
+  useEffect(() => {
+    bus.emit(editorId, '', setting.preview);
+  }, [setting.preview]);
+
+  useEffect(() => {
+    bus.emit(editorId, '', setting.htmlPreview);
+  }, [setting.htmlPreview]);
 
   useImperativeHandle(
     editorRef,
     () => {
       const exposeParam: ExposeParam = {
-        // on(eventName, callBack) {
-        //   console.log(eventName);
+        on(eventName, callBack) {
+          console.log(eventName);
 
-        //   switch (eventName) {
-        //     case 'change': {
-        //       (callBack as ExposeEvent['change'])('');
-        //     }
+          switch (eventName) {
+            case 'pageFullscreen': {
+              (callBack as ExposeEvent['pageFullscreen'])(true);
+            }
+            case 'fullscreen': {
+              (callBack as ExposeEvent['fullscreen'])(true);
+            }
 
-        //     default: {
-        //       //
-        //     }
-        //   }
-        // }
-        togglePageFullScreen(status) {
-          updateSetting('pageFullScreen', status);
+            case 'preview': {
+              (callBack as ExposeEvent['preview'])(true);
+            }
+
+            case 'htmlPreview': {
+              (callBack as ExposeEvent['htmlPreview'])(true);
+            }
+
+            case 'catalog': {
+              (callBack as ExposeEvent['catalog'])(true);
+            }
+
+            default: {
+              //
+            }
+          }
         },
-        toggleFullScreen(status) {
+        togglePageFullscreen(status) {
+          updateSetting('pageFullscreen', status);
+        },
+        toggleFullscreen(status) {
           bus.emit(editorId, FULL_SCREEN, status);
         },
         togglePreview(status) {

@@ -49,7 +49,7 @@ const Toolbar = (props: ToolbarProp) => {
   }, []);
 
   // 全屏功能
-  const { fullScreenHandler } = useSreenfull(props);
+  const { fullscreenHandler } = useSreenfull(props);
   // 多弹窗控制
   const { modalData, setModalData, onCancel, onOk } = useModals(uploadRef, emitHandler);
   // 下拉菜单控制
@@ -659,14 +659,14 @@ const Toolbar = (props: ToolbarProp) => {
                   className={`${prefix}-toolbar-item`}
                   title={ult.toolbarTips?.pageFullscreen}
                   onClick={() => {
-                    updateSetting('pageFullScreen');
+                    updateSetting('pageFullscreen');
                   }}
                   key="bar-pageFullscreen"
                 >
                   <svg className={`${prefix}-icon`} aria-hidden="true">
                     <use
                       xlinkHref={`#md-editor-icon-${
-                        setting.pageFullScreen ? 'suoxiao' : 'fangda'
+                        setting.pageFullscreen ? 'suoxiao' : 'fangda'
                       }`}
                     />
                   </svg>
@@ -680,14 +680,14 @@ const Toolbar = (props: ToolbarProp) => {
                 className={`${prefix}-toolbar-item`}
                 title={ult.toolbarTips?.fullscreen}
                 onClick={() => {
-                  fullScreenHandler();
+                  fullscreenHandler();
                 }}
                 key="bar-fullscreen"
               >
                 <svg className={`${prefix}-icon`} aria-hidden="true">
                   <use
                     xlinkHref={`#md-editor-icon-${
-                      setting.fullscreen ? 'fullScreen-exit' : 'fullScreen'
+                      setting.fullscreen ? 'fullscreen-exit' : 'fullscreen'
                     }`}
                   />
                 </svg>
@@ -771,7 +771,7 @@ const Toolbar = (props: ToolbarProp) => {
         return '';
       }
     },
-    [props.defToolbars, ult, visible, setting.pageFullScreen, setting.fullscreen]
+    [props.defToolbars, ult, visible, setting.pageFullscreen, setting.fullscreen]
   );
 
   // 通过'='分割左右
