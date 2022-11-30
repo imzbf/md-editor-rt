@@ -3,7 +3,7 @@ import mdEN from '../../../public/demo-en-US.md';
 import mdCN from '../../../public/demo-zh-CN.md';
 import { useSelector } from 'react-redux';
 import { StateType } from '@/store';
-
+import { replaceVersion } from '@/utils';
 import IzCatalog from '@/layouts/Catalog';
 import IzPreviewContent from '@/layouts/PreviewContent';
 
@@ -17,7 +17,7 @@ export default () => {
   });
 
   const queryMd = () => {
-    setMdText(state.lang === 'en-US' ? mdEN : mdCN);
+    setMdText(replaceVersion(state.lang === 'en-US' ? mdEN : mdCN));
   };
 
   useEffect(queryMd, [state.lang]);

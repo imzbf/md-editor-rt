@@ -2,6 +2,35 @@
 
 目前一直在迭代开发，所以尽量安装最新版本。发布日志请前往：[releases](https://github.com/imzbf/md-editor-rt/releases)
 
+### 🤓 CDN 链接
+
+通过直接链接生产版本来使用，下面是一个小例子：
+
+```html
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <link
+      href="https://unpkg.com/md-editor-rt@${EDITOR_VERSION}/lib/style.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div id="md-editor-rt"></div>
+    <script src="https://unpkg.com/react@18.2.0/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@18.2.0/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/md-editor-rt@${EDITOR_VERSION}/lib/md-editor-rt.umd.js"></script>
+    <script>
+      ReactDOM.createRoot(document.getElementById('md-editor-rt')).render(
+        React.createElement(MdEditorRT, {
+          modelValue: 'Hello Editor!!'
+        })
+      );
+    </script>
+  </body>
+</html>
+```
+
 ### 🤖 NPM 安装
 
 ```shell

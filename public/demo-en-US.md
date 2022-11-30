@@ -2,6 +2,35 @@
 
 It has been developing iteratively, so update the latest version please. Publish logs: [releases](https://github.com/imzbf/md-editor-rt/releases)
 
+### 🤓 CDN
+
+Use production version in html directly:
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <link
+      href="https://unpkg.com/md-editor-rt@${EDITOR_VERSION}/lib/style.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div id="md-editor-rt"></div>
+    <script src="https://unpkg.com/react@18.2.0/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@18.2.0/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/md-editor-rt@${EDITOR_VERSION}/lib/md-editor-rt.umd.js"></script>
+    <script>
+      ReactDOM.createRoot(document.getElementById('md-editor-rt')).render(
+        React.createElement(MdEditorRT, {
+          modelValue: 'Hello Editor!!'
+        })
+      );
+    </script>
+  </body>
+</html>
+```
+
 ### 🤖 Npm Install
 
 ```shell
