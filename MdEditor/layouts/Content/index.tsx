@@ -93,7 +93,7 @@ const Content = (props: EditorContentProp) => {
             ref={previewRef}
             key="content-preview-wrapper"
           >
-            <div
+            <article
               id={`${editorId}-preview`}
               className={classnames([
                 `${prefix}-preview`,
