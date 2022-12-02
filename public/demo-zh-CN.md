@@ -16,12 +16,12 @@
     />
   </head>
   <body>
-    <div id="md-editor-rt"></div>
+    <div id="root"></div>
     <script src="https://unpkg.com/react@18.2.0/umd/react.production.min.js"></script>
     <script src="https://unpkg.com/react-dom@18.2.0/umd/react-dom.production.min.js"></script>
     <script src="https://unpkg.com/md-editor-rt@${EDITOR_VERSION}/lib/md-editor-rt.umd.js"></script>
     <script>
-      ReactDOM.createRoot(document.getElementById('md-editor-rt')).render(
+      ReactDOM.createRoot(document.getElementById('root')).render(
         React.createElement(MdEditorRT, {
           modelValue: 'Hello Editor!!'
         })
@@ -206,7 +206,7 @@ import 'md-editor-rt/lib/style.css';
 MdEditor.config({
   editorExtensions: {
     screenfull: {
-      js: 'https://localhost:8090/screenfull@6.0.1/index.js'
+      js: 'https://localhost:8090/screenfull@5.2.0/index.js'
     }
   }
 });

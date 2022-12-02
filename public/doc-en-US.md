@@ -18,7 +18,7 @@
 - **type**: `'light' | 'dark'`
 - **default**: `'light'`
 
-  Editor theme.
+  Editor's theme.
 
   ```jsx
   <MdEditor theme="dark" />
@@ -29,7 +29,7 @@
 - **type**: `string`
 - **default**: `''`
 
-  Editor `className`.
+  ...
 
 ### 🤏🏼 historyLength
 
@@ -140,7 +140,7 @@
 - **type**: `string`
 - **default**: `'md-editor-rt'`
 
-  Editor id, also the html id, it is used when there are two or more editor and server render.
+  Editor's id, also the html id, it is used when there are two or more editor and server render.
 
 ### 🤏 tabWidth
 
