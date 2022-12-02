@@ -1,6 +1,6 @@
 {
   "name": "md-editor-rt",
-  "version": "2.4.2",
+  "version": "2.5.0",
   "keywords": [
     "react",
     "nextjs",
@@ -46,7 +46,7 @@
   "dependencies": {
     "@vavt/md-editor-extension": "^1.2.0",
     "dayjs": "^1.11.3",
-    "md-editor-rt": "^2.5.0-beta.0",
+    "md-editor-rt": "^2.5.0",
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
     "react-redux": "^7.2.6",
