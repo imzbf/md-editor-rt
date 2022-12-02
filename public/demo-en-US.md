@@ -462,7 +462,7 @@ export default () => {
 
 There are examples of `mark` and `emoji`.
 
-To get complete code, refer to [docs](https://github.com/imzbf/md-editor-rt/blob/docs/src/pages/Preview/index.vue).
+To get complete code, refer to [docs](https://github.com/imzbf/md-editor-rt/blob/docs/src/pages/Preview/index.tsx).
 
 ![mark and Emoji extension](https://imzbf.github.io/md-editor-rt/imgs/mark_emoji.gif)
 

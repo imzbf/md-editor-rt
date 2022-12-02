@@ -469,7 +469,7 @@ export default () => {
 
 这里包含了`mark`标记扩展普通工具栏和`emoji`扩展下拉工具栏的类型
 
-可运行源码参考本文档[docs](https://github.com/imzbf/md-editor-rt/blob/docs/src/pages/Preview/index.jsx)。
+可运行源码参考本文档[docs](https://github.com/imzbf/md-editor-rt/blob/docs/src/pages/Preview/index.tsx)。
 
 ![标记及Emoji预览](https://imzbf.github.io/md-editor-rt/imgs/mark_emoji.gif)
 

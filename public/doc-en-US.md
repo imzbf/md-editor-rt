@@ -1116,7 +1116,7 @@ usage:
 />
 ```
 
-[ReadExtension Source Code](https://github.com/imzbf/md-editor-rt/blob/docs/src/components/ReadExtension/index.vue)
+[ReadExtension Source Code](https://github.com/imzbf/md-editor-rt/blob/docs/src/components/ReadExtension/index.tsx)
 
 ### 🐻 MdCatalog
 
