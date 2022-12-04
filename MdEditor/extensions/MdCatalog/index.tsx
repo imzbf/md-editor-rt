@@ -15,17 +15,34 @@ export interface TocItem {
 }
 
 export interface CatalogProps {
+  /**
+   * 编辑器的Id，务必与需要绑定的编辑器Id相同
+   */
   editorId: string;
   className?: string;
   markedHeadingId?: MarkedHeadingId;
-  // 指定滚动的容器，选择器需带上对应的符号，默认预览框
-  // 元素必须定位！！！！！！
+  /**
+   * 指定滚动的容器，选择器需带上对应的符号，默认预览框
+   * 元素必须定位！！！！！！
+   *
+   * 默认：#md-editor-preview-wrapper
+   */
   scrollElement?: string | HTMLElement;
   style?: CSSProperties;
   theme?: Themes;
   onClick?: (e: MouseEvent, t: TocItem) => void;
-  // 偏移量，默认20像素
+  /**
+   * 高亮标题相对滚动容器顶部偏移量，即距离该值时，高亮当前目录菜单项
+   *
+   * 默认：20px
+   */
   offsetTop?: number;
+  /**
+   * 滚动区域的固定顶部高度
+   *
+   * 默认：0
+   */
+  scrollElementOffsetTop?: number;
 }
 
 const MdCatalog = (props: CatalogProps) => {
@@ -192,6 +209,7 @@ const MdCatalog = (props: CatalogProps) => {
             key={item.text}
             scrollElement={scrollElement}
             onClick={props.onClick}
+            scrollElementOffsetTop={props.scrollElementOffsetTop}
           />
         );
       })}

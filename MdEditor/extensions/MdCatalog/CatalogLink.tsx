@@ -9,13 +9,15 @@ export interface CatalogLinkProps {
   markedHeadingId: MarkedHeadingId;
   scrollElement: string | HTMLElement;
   onClick?: (e: MouseEvent, t: TocItem) => void;
+  scrollElementOffsetTop?: number;
 }
 
 const CatalogLink = ({
   tocItem,
   markedHeadingId,
   scrollElement,
-  onClick
+  onClick,
+  scrollElementOffsetTop = 0
 }: CatalogLinkProps) => {
   return (
     <div
@@ -47,7 +49,7 @@ const CatalogLink = ({
           }
 
           scrollContainer?.scrollTo({
-            top: offsetTop,
+            top: offsetTop - scrollElementOffsetTop,
             behavior: 'smooth'
           });
         }
@@ -63,6 +65,7 @@ const CatalogLink = ({
               tocItem={item}
               scrollElement={scrollElement}
               onClick={onClick}
+              scrollElementOffsetTop={scrollElementOffsetTop}
             />
           ))}
       </div>
