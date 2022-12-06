@@ -24,11 +24,7 @@ const ModalToolbar = (props: ModalToolbarProp) => {
       <div
         className={`${prefix}-toolbar-item`}
         title={props.title}
-        onClick={() => {
-          if (props.onClick instanceof Function) {
-            props.onClick();
-          }
-        }}
+        onClick={props.onClick}
       >
         {props.trigger}
       </div>
@@ -37,11 +33,7 @@ const ModalToolbar = (props: ModalToolbarProp) => {
         height={height}
         title={props.modalTitle}
         visible={props.visible}
-        onClose={() => {
-          if (props.onClose instanceof Function) {
-            props.onClose();
-          }
-        }}
+        onClose={props.onClose}
         showAdjust={props.showAdjust}
         isFullscreen={props.isFullscreen}
         onAdjust={(v) => {

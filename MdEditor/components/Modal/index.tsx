@@ -11,7 +11,7 @@ export type ModalProps = Readonly<{
   onClose?: () => void;
   showAdjust?: boolean;
   isFullscreen?: boolean;
-  onAdjust: (val: boolean) => void;
+  onAdjust?: (val: boolean) => void;
   children?: any;
   className?: string;
 }>;
@@ -142,7 +142,7 @@ const Modal = (props: ModalProps) => {
                   }));
                 }
 
-                props.onAdjust(!props.isFullscreen);
+                props.onAdjust instanceof Function && props.onAdjust(!props.isFullscreen);
               }}
             >
               <svg className={`${prefix}-icon`} aria-hidden="true">

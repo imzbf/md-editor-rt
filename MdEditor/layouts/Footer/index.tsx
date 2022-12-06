@@ -30,10 +30,8 @@ const Footer = (props: FooterProp) => {
             );
           }
         }
-      } else if (props.defFooters instanceof Array) {
-        return props.defFooters[name as number] || '';
       } else {
-        return '';
+        return props.defFooters[name as number] || '';
       }
     },
     [props.modelValue, props.scrollAuto, props.onScrollAutoChange, props.defFooters]

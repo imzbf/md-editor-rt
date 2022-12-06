@@ -11,7 +11,7 @@ interface ScrollAutoProp {
 export default (props: ScrollAutoProp) => {
   const { usedLanguageText } = useContext(EditorContext);
 
-  const _ScrollAuto = useMemo(() => {
+  return useMemo(() => {
     return (
       <div className={`${prefix}-footer-item`}>
         <label
@@ -26,6 +26,4 @@ export default (props: ScrollAutoProp) => {
       </div>
     );
   }, [props.scrollAuto, props.onScrollAutoChange, usedLanguageText]);
-
-  return _ScrollAuto;
 };

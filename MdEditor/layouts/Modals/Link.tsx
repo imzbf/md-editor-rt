@@ -44,7 +44,7 @@ const LinkModal = (props: LinkModalProp) => {
     }
   }, [props.visible]);
 
-  const _LinkModal = useMemo(() => {
+  return useMemo(() => {
     return (
       <Modal title={title} visible={props.visible} onClose={props.onCancel}>
         <div className={`${prefix}-form-item`}>
@@ -103,8 +103,6 @@ const LinkModal = (props: LinkModalProp) => {
       </Modal>
     );
   }, [title, props.visible, linkData.desc, linkData.url, editorId, usedLanguageText]);
-
-  return _LinkModal;
 };
 
 export default LinkModal;

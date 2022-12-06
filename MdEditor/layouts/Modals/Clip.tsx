@@ -8,7 +8,7 @@ import React, {
 } from 'react';
 import Modal from '../../components/Modal';
 import { EditorContext } from '../../Editor';
-import { prefix, configOption } from '../../config';
+import { configOption, prefix } from '../../config';
 import { base642File } from '../../utils';
 import bus from '../../utils/event-bus';
 
@@ -135,7 +135,7 @@ const ClipModal = (props: ClipModalProp) => {
     }));
   }, []);
 
-  const _ClipModal = useMemo(() => {
+  return useMemo(() => {
     return (
       <Modal
         className={`${prefix}-modal-clip`}
@@ -151,7 +151,12 @@ const ClipModal = (props: ClipModalProp) => {
           <div className={`${prefix}-clip-main`}>
             {data.imgSelected ? (
               <div className={`${prefix}-clip-cropper`}>
-                <img src={data.imgSrc} ref={uploadImgRef} style={{ display: 'none' }} />
+                <img
+                  src={data.imgSrc}
+                  ref={uploadImgRef}
+                  style={{ display: 'none' }}
+                  alt=""
+                />
                 <div className={`${prefix}-clip-delete`} onClick={reset}>
                   <svg className={`${prefix}-icon`} aria-hidden="true">
                     <use xlinkHref="#md-editor-icon-delete" />
@@ -206,8 +211,6 @@ const ClipModal = (props: ClipModalProp) => {
       </Modal>
     );
   }, [usedLanguageText, props.visible, data.imgSrc, data.imgSelected, data.isFullscreen]);
-
-  return _ClipModal;
 };
 
 export default ClipModal;

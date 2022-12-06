@@ -5,7 +5,7 @@ import { EditorContext } from '../../Editor';
 export default ({ modelValue }: { modelValue: string }) => {
   const { usedLanguageText } = useContext(EditorContext);
 
-  const _MarkdownTotal = useMemo(() => {
+  return useMemo(() => {
     return (
       <div className={`${prefix}-footer-item`}>
         <label className={`${prefix}-footer-label`}>
@@ -15,6 +15,4 @@ export default ({ modelValue }: { modelValue: string }) => {
       </div>
     );
   }, [usedLanguageText, modelValue]);
-
-  return _MarkdownTotal;
 };

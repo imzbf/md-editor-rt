@@ -763,7 +763,7 @@ const Toolbar = (props: ToolbarProp) => {
             return KatexDropdown;
           }
         }
-      } else if (props.defToolbars && props.defToolbars instanceof Array) {
+      } else if (props.defToolbars) {
         const defItem = props.defToolbars[barItem as number];
 
         return defItem || '';
