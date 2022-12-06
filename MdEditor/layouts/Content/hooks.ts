@@ -18,6 +18,7 @@ import { EditorContext } from '../../Editor';
 import { prefix, katexUrl, mermaidUrl, configOption } from '../../config';
 import { appendHandler, updateHandler } from '../../utils/dom';
 import kaTexExtensions from '../../utils/katex';
+import { TEXTAREA_FOCUS } from '../../static/event-name';
 
 interface HistoryItemType {
   // 记录内容
@@ -768,7 +769,13 @@ export const usePasteUpload = (textAreaRef: RefObject<HTMLTextAreaElement>) => {
   }, []);
 };
 
-export const userZoom = (props: EditorContentProp, html: string) => {
+/**
+ * 放大图片
+ *
+ * @param props 基础属性
+ * @param html 编译后的html
+ */
+export const useZoom = (props: EditorContentProp, html: string) => {
   const { editorId } = useContext(EditorContext);
 
   let zoomHander = () => {};
@@ -788,4 +795,18 @@ export const userZoom = (props: EditorContentProp, html: string) => {
 
     zoomHander();
   }, [html, props.setting]);
+};
+
+/**
+ * 一些附带的设置
+ */
+export const useAttach = (textAreaRef: RefObject<HTMLTextAreaElement>) => {
+  const { editorId } = useContext(EditorContext);
+
+  bus.on(editorId, {
+    name: TEXTAREA_FOCUS,
+    callback() {
+      textAreaRef.current?.focus();
+    }
+  });
 };

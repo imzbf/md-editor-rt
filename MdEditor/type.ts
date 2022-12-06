@@ -133,83 +133,253 @@ export interface HeadList {
 
 export type Themes = 'light' | 'dark';
 
-export type PreviewThemes = string; // 'default' | 'github' | 'vuepress';
+/**
+ * 预览主题
+ *
+ * @list ['default', 'github', 'vuepress', 'mk-cute', 'smart-blue', 'cyanosis']
+ */
+export type PreviewThemes = string;
 
+/**
+ * 自定义标题ID
+ */
 export type MarkedHeadingId = (text: string, level: number, index: number) => string;
 
 export interface EditorProp {
   modelValue: string;
-  // 主题，默认light
+  /**
+   * 主题
+   *
+   * @default 'light'
+   */
   theme?: Themes;
-  // 外层扩展类名
+  /**
+   * 外层类名
+   *
+   * @default ''
+   */
   className?: string;
-  // 历史记录最长条数，默认10
+  /**
+   * 历史记录最长条数
+   *
+   * @default 10
+   */
   historyLength?: number;
-  // input回调事件
+  /**
+   * input回调事件
+   */
   onChange?: ChangeEvent;
-  // 保存事件
+  /**
+   * 保存事件
+   */
   onSave?: SaveEvent;
-  // 上传图片事件
+  /**
+   * 上传图片事件
+   */
   onUploadImg?: UploadImgEvent;
-  // 是否页面内全屏，默认false
+  /**
+   * 是否页面内全屏
+   *
+   * @default false
+   */
   pageFullscreen?: boolean;
-  // 是否展开预览，默认true
+  /**
+   * 是否展开预览
+   *
+   * @default true
+   */
   preview?: boolean;
-  // 是否展开html预览，默认false
+  /**
+   * 是否展开html预览
+   *
+   * @default false
+   */
   htmlPreview?: boolean;
-  // 仅预览模式，不显示toolbar和编辑框，默认false
+  /**
+   * 仅预览模式，不显示toolbar和编辑框
+   *
+   * @default false
+   */
   previewOnly?: boolean;
-  // 预设语言名称
+  /**
+   * 预设语言名称
+   *
+   * @default 'zh-CN'
+   */
   language?: StaticTextDefaultKey | string;
-  // 工具栏选择显示
+  /**
+   * 工具栏选择显示
+   *
+   * @default allToolbar
+   */
   toolbars?: Array<ToolbarNames>;
-  // 工具栏选择不显示
+  /**
+   * 工具栏选择不显示
+   *
+   * @default []
+   */
   toolbarsExclude?: Array<ToolbarNames>;
-  // 格式化md，默认true
+  /**
+   * 格式化md
+   *
+   * @default true
+   */
   noPrettier?: boolean;
-  // html变化事件
+  /**
+   * html变化事件
+   */
   onHtmlChanged?: HtmlChangedEvent;
-  // 获取目录结构
+  /**
+   * 获取目录结构
+   */
   onGetCatalog?: GetCatalogEvent;
-  // 编辑器唯一标识
+  /**
+   * 编辑器唯一标识
+   *
+   * @default 'md-editor-rt'
+   */
   editorId?: string;
+  /**
+   * 一个tab等于空格数
+   *
+   * @default 2
+   */
   tabWidth?: number;
-  // 预览中代码是否显示行号
+  /**
+   * 预览中代码是否显示行号
+   *
+   * @default false
+   */
   showCodeRowNumber?: boolean;
-  // 预览内容样式
+  /**
+   * 预览内容样式
+   *
+   * @default 'default'
+   */
   previewTheme?: PreviewThemes;
+  /**
+   * 标题的id生成方式
+   *
+   * @default (text: string) => text
+   */
   markedHeadingId?: MarkedHeadingId;
-  // 编辑器样式
+  /**
+   * 编辑器样式
+   */
   style?: CSSProperties;
-  // 表格预设格子数
+  /**
+   * 表格预设格子数
+   *
+   * @default [6, 4]
+   */
   tableShape?: [number, number];
-  // 不使用该功能
+  /**
+   * 不使用该mermaid
+   *
+   * @default false
+   */
   noMermaid?: boolean;
-  // 不能保证文本正确的情况，在marked编译md文本后通过该方法处理
-  // 推荐DOMPurify、sanitize-html
+  /**
+   *
+   * 不能保证文本正确的情况，在marked编译md文本后通过该方法处理
+   * 推荐DOMPurify、sanitize-html
+   *
+   * @default (text: string) => text
+   */
   sanitize?: (html: string) => string;
+  /**
+   * 空提示
+   *
+   * @default ''
+   */
   placeholder?: string;
+  /**
+   * 不使用katex
+   *
+   * @default false
+   */
   noKatex?: boolean;
-  // 自定义的工具栏列表
+  /**
+   * 自定义的工具栏列表
+   */
   defToolbars?: Array<ReactElement>;
+  /**
+   * 内部错误捕获
+   */
   onError?: ErrorEvent;
+  /**
+   * 代码主题
+   *
+   * @default 'atom'
+   */
   codeTheme?: string;
+  /**
+   * 页脚列表显示顺序
+   */
   footers?: Array<Footers>;
+  /**
+   * 是否默认激活输入框和预览框同步滚动
+   *
+   * @default true
+   */
   scrollAuto?: boolean;
+  /**
+   * 自定义的也叫工具组件列表
+   */
   defFooters?: Array<string | ReactElement>;
+  /**
+   * 不插入iconfont链接
+   *
+   * @default false
+   */
   noIconfont?: boolean;
+  /**
+   * 复制代码格式化方法
+   *
+   * @default (text) => text
+   */
   formatCopiedText?: (text: string) => string;
+  /**
+   * 是否禁用上传图片
+   *
+   * @default false
+   */
   noUploadImg?: boolean;
   /**
    * 某些预览主题的代码模块背景是暗色系
    * 将这个属性设置为true，会自动在该主题下的light模式下使用暗色系的代码风格
+   *
+   * @default true
    */
   codeStyleReverse?: boolean;
   /**
    * 需要自动调整的预览主题
-   * 已默认包含default、mk-cute
+   *
+   * @default ['default', 'mk-cute']
    */
   codeStyleReverseList?: Array<string>;
+  /**
+   * 文本区域自动获得焦点
+   *
+   * @default false
+   */
+  autoFocus?: boolean;
+  /**
+   * 禁用文本区域
+   *
+   * @default false
+   */
+  disabled?: boolean;
+  /**
+   * 文本区域为只读
+   *
+   * @default false
+   */
+  readOnly?: boolean;
+  /**
+   * 文本区域允许的最大字符数
+   */
+  maxLength?: number;
 }
 
 export interface ContentType {
@@ -472,4 +642,9 @@ export interface ExposeParam {
    *
    */
   insert(generate: InsertContentGenerator): void;
+
+  /**
+   * 手动聚焦
+   */
+  focus(): void;
 }

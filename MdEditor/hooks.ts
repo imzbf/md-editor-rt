@@ -41,13 +41,15 @@ import {
   FULL_SCREEN_CHANGED,
   PREVIEW_CHANGED,
   HTML_PREVIEW_CHANGED,
-  CATALOG_VISIBLE_CHANGED
+  CATALOG_VISIBLE_CHANGED,
+  TEXTAREA_FOCUS
 } from './static/event-name';
 
 /**
  * 键盘监听
  *
  * @param props
+ * @param staticProps
  */
 export const useKeyBoard = (props: EditorProp, staticProps: StaticProp) => {
   const { editorId, previewOnly, noPrettier } = staticProps;
@@ -404,8 +406,7 @@ export const useKeyBoard = (props: EditorProp, staticProps: StaticProp) => {
 /**
  * 插入扩展库
  *
- * @param props
- * @param extension
+ * @param staticProps
  */
 export const useExpansion = (staticProps: StaticProp) => {
   const { noPrettier, noIconfont, previewOnly, noUploadImg } = staticProps;
@@ -484,9 +485,7 @@ export const useErrorCatcher = (editorId: string, onError: (err: InnerError) => 
     bus.on(editorId, {
       name: 'errorCatcher',
       callback: (err: InnerError) => {
-        if (onError instanceof Function) {
-          onError(err);
-        }
+        onError(err);
       }
     });
   }, []);
@@ -495,6 +494,7 @@ export const useErrorCatcher = (editorId: string, onError: (err: InnerError) => 
 /**
  * 上传图片事件
  * @param props
+ * @param staticProps
  */
 export const useUploadImg = (props: EditorProp, staticProps: StaticProp) => {
   const { editorId, previewOnly } = staticProps;
@@ -535,6 +535,7 @@ export const useUploadImg = (props: EditorProp, staticProps: StaticProp) => {
  * 内部目录状态
  *
  * @param props
+ * @param staticProps
  * @returns
  */
 export const useCatalog = (props: EditorProp, staticProps: StaticProp) => {
@@ -577,7 +578,6 @@ let bodyOverflowHistory = '';
  * highlight及language重构
  * [SettingType, (k: keyof typeof setting) => void] => {}
  * @param props
- * @param extension
  * @returns
  */
 export const useConfig = (props: EditorProp) => {
@@ -673,6 +673,15 @@ export const useConfig = (props: EditorProp) => {
   return [highlight, usedLanguageText, setting, updateSetting];
 };
 
+/**
+ * 向外暴露属性
+ *
+ * @param editorRef 绑定的ref
+ * @param staticProps 静态属性
+ * @param catalogVisible 目录显示状态
+ * @param setting 内部状态集合
+ * @param updateSetting 更新内部集合
+ */
 export const useExpose = (
   editorRef: ForwardedRef<unknown>,
   staticProps: StaticProp,
@@ -787,6 +796,9 @@ export const useExpose = (
         },
         insert(generate) {
           bus.emit(editorId, 'replace', 'universal', { generate });
+        },
+        focus() {
+          bus.emit(editorId, TEXTAREA_FOCUS);
         }
       };
 

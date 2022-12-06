@@ -1,4 +1,4 @@
-import React, { useContext, useRef } from 'react';
+import React, { useContext, useMemo, useRef } from 'react';
 import { prefix } from '../../config';
 import { EditorContext } from '../../Editor';
 import { SettingType, HeadList, MarkedHeadingId } from '../../type';
@@ -8,9 +8,10 @@ import {
   useMarked,
   useAutoScroll,
   usePasteUpload,
-  userZoom
+  useZoom,
+  useAttach
 } from './hooks';
-import { classnames } from '../../utils';
+import { classnames, omit } from '../../utils';
 import bus from '../../utils/event-bus';
 
 export type EditorContentProp = Readonly<{
@@ -27,6 +28,10 @@ export type EditorContentProp = Readonly<{
   markedHeadingId: MarkedHeadingId;
   scrollAuto: boolean;
   formatCopiedText?: (text: string) => string;
+  autoFocus?: boolean;
+  disabled?: boolean;
+  readOnly?: boolean;
+  maxLength?: number;
 }>;
 
 const Content = (props: EditorContentProp) => {
@@ -52,7 +57,25 @@ const Content = (props: EditorContentProp) => {
   // 粘贴上传
   usePasteUpload(textAreaRef);
   // 图片点击放大
-  userZoom(props, html);
+  useZoom(props, html);
+  // 附带的设置
+  useAttach(textAreaRef);
+
+  // 原生属性
+  const attr = useMemo(() => {
+    return omit(props, [
+      'formatCopiedText',
+      'markedHeadingId',
+      'noKatex',
+      'noMermaid',
+      'onChange',
+      'onGetCatalog',
+      'onHtmlChanged',
+      'sanitize',
+      'scrollAuto',
+      'setting'
+    ]);
+  }, [props]);
 
   return (
     <>
@@ -60,9 +83,9 @@ const Content = (props: EditorContentProp) => {
         {!previewOnly && (
           <div className={`${prefix}-input-wrapper`}>
             <textarea
+              {...attr}
               id={`${editorId}-textarea`}
               ref={textAreaRef}
-              value={props.value}
               onBlur={() => {
                 // 失焦自动保存当前选中内容
                 bus.emit(editorId, 'selectTextChange');
@@ -82,7 +105,6 @@ const Content = (props: EditorContentProp) => {
               className={
                 props.setting.preview || props.setting.htmlPreview ? '' : 'textarea-only'
               }
-              placeholder={props.placeholder}
             />
           </div>
         )}

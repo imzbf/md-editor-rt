@@ -89,7 +89,7 @@ const Editor = forwardRef((props: EditorProp, ref: ForwardedRef<unknown>) => {
     scrollAuto: boolean;
   }>(() => {
     return {
-      scrollAuto: props.scrollAuto === undefined ? true : !!props.scrollAuto
+      scrollAuto: props.scrollAuto === undefined ? true : props.scrollAuto
     };
   });
 
@@ -179,6 +179,10 @@ const Editor = forwardRef((props: EditorProp, ref: ForwardedRef<unknown>) => {
           markedHeadingId={markedHeadingId}
           scrollAuto={state.scrollAuto}
           formatCopiedText={props.formatCopiedText}
+          autoFocus={props.autoFocus}
+          disabled={props.disabled}
+          readOnly={props.readOnly}
+          maxLength={props.maxLength}
         />
         {!staticProps.previewOnly && footers?.length > 0 && (
           <Footer

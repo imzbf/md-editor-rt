@@ -108,6 +108,10 @@ mark and emoji extensions
 | noUploadImg | `boolean` | false | Not show the entrance to upload pictures |
 | codeStyleReverse | `boolean` | true | Code style will be reversed to dark while code block of the theme has a dark background |
 | codeStyleReverseList | `Array<string>` | ['default', 'mk-cute'] | Themes to be reversed |
+| autoFocus | `boolean` | false | same as `autofocus` in native textarea |
+| disabled | `boolean` | false | same as `disabled` in native textarea |
+| readOnly | `boolean` | false | same as `readonly` in native textarea |
+| maxLength | `number` |  | same as `maxlength` in native textarea |
 
 <details>
  <summary>『toolbars』</summary>
@@ -398,7 +402,15 @@ editorRef.current?.insert((selectedText) => {
 
 For more examples, refer to source code of [extension component](https://github.com/imzbf/md-editor-rt/blob/dev-docs/src/components/MarkExtension/index.tsx)
 
-## 💴 Config
+### 🎯 focus
+
+focus the textarea.
+
+```js
+editorRef.current?.focus();
+```
+
+## 💴 Config Editor
 
 Use `MdEditor.config(option: ConfigOption)` to reconfigure `renderer`.
 

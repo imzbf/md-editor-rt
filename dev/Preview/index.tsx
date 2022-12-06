@@ -203,6 +203,7 @@ export default ({ theme, previewTheme, codeTheme, lang }: PreviewProp) => {
           //     deviationEnd: 0
           //   };
           // });
+          // editorRef.current?.focus();
         }}
       >
         1
@@ -353,7 +354,7 @@ export default ({ theme, previewTheme, codeTheme, lang }: PreviewProp) => {
           }}
         />
         <br />
-        <MdEditor
+        {/* <MdEditor
           theme={theme}
           previewTheme={previewTheme}
           codeTheme={codeTheme}
@@ -365,7 +366,7 @@ export default ({ theme, previewTheme, codeTheme, lang }: PreviewProp) => {
               text2: value
             });
           }}
-        />
+        /> */}
         <br />
         <span className="tips-text">
           tips：本页上方的编辑器有localstorage保存功能，可手动点击保存触发，每次操作后两秒会自己保存一次，可用于一些文档的编辑。下方的文档内容也是使用该编辑器完成~

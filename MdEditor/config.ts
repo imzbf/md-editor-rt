@@ -9,10 +9,8 @@ import {
 
 export const prefix = 'md-editor';
 
-export const defaultEditorId = 'md-editor-rt';
-
 // 编辑器ID
-export const iconScriptId = defaultEditorId;
+export const defaultEditorId = 'md-editor-rt';
 
 // 字体链接
 export const iconfontUrl = 'https://at.alicdn.com/t/c/font_2605852_gymddm8qwtd.js';
