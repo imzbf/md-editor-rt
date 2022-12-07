@@ -32,6 +32,7 @@ export type EditorContentProp = Readonly<{
   disabled?: boolean;
   readOnly?: boolean;
   maxLength?: number;
+  autoDetectCode?: boolean;
 }>;
 
 const Content = (props: EditorContentProp) => {
@@ -55,7 +56,7 @@ const Content = (props: EditorContentProp) => {
   // 自动监听生成md内容
   useAutoGenrator(props, textAreaRef);
   // 粘贴上传
-  usePasteUpload(textAreaRef);
+  usePasteUpload(props, textAreaRef);
   // 图片点击放大
   useZoom(props, html);
   // 附带的设置
@@ -73,7 +74,8 @@ const Content = (props: EditorContentProp) => {
       'onHtmlChanged',
       'sanitize',
       'scrollAuto',
-      'setting'
+      'setting',
+      'autoDetectCode'
     ]);
   }, [props]);
 

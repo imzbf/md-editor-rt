@@ -735,12 +735,20 @@ export const useAutoScroll = (
   }, [props.scrollAuto]);
 };
 
-export const usePasteUpload = (textAreaRef: RefObject<HTMLTextAreaElement>) => {
+export const usePasteUpload = (
+  props: EditorContentProp,
+  textAreaRef: RefObject<HTMLTextAreaElement>
+) => {
   const { editorId, previewOnly } = useContext(EditorContext);
 
   // 粘贴板上传
   const pasteHandler = (e: ClipboardEvent) => {
-    if (e.clipboardData && e.clipboardData.files.length > 0) {
+    if (!e.clipboardData) {
+      return;
+    }
+
+    // 处理文件
+    if (e.clipboardData.files.length > 0) {
       const { files } = e.clipboardData;
 
       bus.emit(
@@ -750,6 +758,18 @@ export const usePasteUpload = (textAreaRef: RefObject<HTMLTextAreaElement>) => {
           return /image\/.*/.test(file.type);
         })
       );
+
+      e.preventDefault();
+    }
+
+    // 识别vscode代码
+    if (props.autoDetectCode && e.clipboardData.types.includes('vscode-editor-data')) {
+      const vscCoodInfo = JSON.parse(e.clipboardData.getData('vscode-editor-data'));
+
+      bus.emit(editorId, 'replace', 'code', {
+        mode: vscCoodInfo.mode,
+        text: e.clipboardData.getData('text/plain')
+      });
 
       e.preventDefault();
     }

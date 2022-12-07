@@ -380,6 +380,13 @@ export interface EditorProp {
    * 文本区域允许的最大字符数
    */
   maxLength?: number;
+  /**
+   * 是否启用自动识别粘贴代码类别
+   * 目前支持 vscode 复制的代码识别
+   *
+   * @default false
+   */
+  autoDetectCode?: boolean;
 }
 
 export interface ContentType {
