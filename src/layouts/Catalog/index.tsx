@@ -21,6 +21,7 @@ const IzCatalog = (props: IzCatalogProp) => {
     <div className="catalog">
       <div className="affix">
         <MdEditor.MdCatalog
+          scrollElementOffsetTop={10}
           editorId={props.editorId}
           theme={state.theme}
           scrollElement={scrollElement}
