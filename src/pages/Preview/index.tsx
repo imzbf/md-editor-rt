@@ -90,6 +90,7 @@ export default () => {
           modelValue={md}
           language={state.lang}
           editorId={editorId}
+          autoDetectCode
           defToolbars={[
             <MarkExtension onInsert={onInsert} key="mark-extension" />,
             <EmojiExtension onInsert={onInsert} key="emoji-extension" />,

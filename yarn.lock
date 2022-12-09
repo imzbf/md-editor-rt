@@ -2718,10 +2718,10 @@ make-dir@^2.1.0:
     pify "^4.0.1"
     semver "^5.6.0"
 
-md-editor-rt@^2.5.0:
-  version "2.5.0"
-  resolved "https://registry.npmjs.org/md-editor-rt/-/md-editor-rt-2.5.0.tgz#3a78f26597556985ffb0c5b54e5741a99dfc3edb"
-  integrity sha512-yMlWO8V2dGeX4qhBEvUH1MkXydiTbTluP/S6o8jjdUdaeSdOMOM39RKbkIYY9SZufJGZkFZExvLszAHbFGb4Xw==
+md-editor-rt@^2.6.0:
+  version "2.6.0"
+  resolved "https://registry.npmmirror.com/md-editor-rt/-/md-editor-rt-2.6.0.tgz#20a6f256dc46da0d71dbf281f43c4917737eb4f0"
+  integrity sha512-7pY4vxHfp9WFbz5IlfYWAK1lJlz6Rkf9wq0cjAU3/w/F84NwUkjbDSbQ5SuzYfPZ/ZsvfFIicdnDk8JgKATIDg==
 
 merge2@^1.3.0, merge2@^1.4.1:
   version "1.4.1"
