@@ -26,6 +26,8 @@ import bus from './utils/event-bus';
 import './styles/index.less';
 import '@vavt/markdown-theme/css/all.css';
 
+import './styles/alert.less';
+
 export const EditorContext = createContext<ContentType>({
   editorId: '',
   tabWidth: 2,

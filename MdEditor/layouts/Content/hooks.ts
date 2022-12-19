@@ -18,6 +18,7 @@ import { EditorContext } from '../../Editor';
 import { prefix, katexUrl, mermaidUrl, configOption } from '../../config';
 import { appendHandler, updateHandler } from '../../utils/dom';
 import kaTexExtensions from '../../utils/katex';
+import alertExtension from '../../utils/alert';
 import { TEXTAREA_FOCUS } from '../../static/event-name';
 
 interface HistoryItemType {
@@ -442,6 +443,10 @@ export const useMarked = (props: EditorContentProp) => {
         extensions: markedExtensions
       });
     }
+
+    marked.use({
+      extensions: [alertExtension]
+    });
 
     return renderer;
   });
