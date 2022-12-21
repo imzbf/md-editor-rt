@@ -6,7 +6,17 @@ Markdown 编辑器，React 版本，使用 jsx 和 typescript 语法开发，支
 
 **加粗**，<u>下划线</u>，_斜体_，~删除线~，上标<sup>26</sup>，下标<sub>[1]</sub>，`inline code`，[超链接](https://imzbf.cc)
 
-> 引用：世界上没有绝对，只有相对
+> 引用：《I Have a Dream》
+
+1. So even though we face the difficulties of today and tomorrow, I still have a dream.
+2. It is a dream deeply rooted in the American dream.
+3. I have a dream that one day this nation will rise up.
+
+- [ ] 周五
+- [ ] 周六
+- [x] 周天
+
+![图片](https://imzbf.github.io/md-editor-rt/imgs/mark_emoji.gif)
 
 ## 🤗 代码演示
 
@@ -50,5 +60,13 @@ $$
 flowchart TD
   Start --> Stop
 ```
+
+## 🪄 提示
+
+!!! note 支持的类型
+
+note、abstract、info、tip、success、question、warning、failure、danger、bug、example、quote、hint、caution、error、attention
+
+!!!
 
 ## ☘️ 占个坑@！

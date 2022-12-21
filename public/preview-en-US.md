@@ -6,7 +6,17 @@ Markdown Editor for React, developed in jsx and typescript, support different th
 
 **bold**, <u>underline</u>, _italic_, ~line-through~, superscript<sup>26</sup>，subscript<sub>[1]</sub>，`inline code`，[link](https://imzbf.cc)
 
-> quote：hahaha
+> quote: I Have a Dream
+
+1. So even though we face the difficulties of today and tomorrow, I still have a dream.
+2. It is a dream deeply rooted in the American dream.
+3. I have a dream that one day this nation will rise up.
+
+- [ ] Friday
+- [ ] Saturday
+- [x] Sunday
+
+![Picture](https://imzbf.github.io/md-editor-rt/imgs/mark_emoji.gif)
 
 ## 🤗 Demo
 
@@ -50,5 +60,13 @@ $$
 flowchart TD
   Start --> Stop
 ```
+
+## 🪄 Alert
+
+!!! note Supported Types
+
+note、abstract、info、tip、success、question、warning、failure、danger、bug、example、quote、hint、caution、error、attention
+
+!!!
 
 ## ☘️ em...
