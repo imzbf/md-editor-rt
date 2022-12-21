@@ -37,6 +37,7 @@ const IzPreviewContent = (props: IzPreviewContentProp) => {
     <div className="content">
       <MdEditor
         editorId={props.editorId}
+        language={state.lang}
         theme={state.theme}
         modelValue={props.modelValue}
         previewTheme={state.previewTheme}
