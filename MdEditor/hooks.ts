@@ -335,6 +335,7 @@ export const useKeyBoard = (props: EditorProp, staticProps: StaticProp) => {
         }
       }
     },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [modelValue, initFunc]
   );
 
@@ -364,6 +365,7 @@ export const useKeyBoard = (props: EditorProp, staticProps: StaticProp) => {
         bus.remove(editorId, 'buildFinished', buildFinishedCb);
       }
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [keyDownHandler]);
 
   useEffect(() => {
@@ -405,7 +407,8 @@ export const useKeyBoard = (props: EditorProp, staticProps: StaticProp) => {
     return () => {
       bus.remove(editorId, ON_SAVE, callback);
     };
-  }, [modelValue, state.buildFinished, state.html]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [modelValue, props, state.buildFinished, state.html]);
 
   useEffect(() => {
     // 编辑后添加未编译完成标识
@@ -486,6 +489,7 @@ export const useExpansion = (staticProps: StaticProp) => {
         appendHandler(prettierMDScript);
       }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 };
 
@@ -499,11 +503,14 @@ export const useErrorCatcher = (editorId: string, onError: (err: InnerError) => 
   useEffect(() => {
     bus.on(editorId, {
       name: 'errorCatcher',
-      callback: (err: InnerError) => {
-        onError(err);
-      }
+      callback: onError
     });
-  }, []);
+
+    return () => {
+      bus.remove(editorId, 'errorCatcher', onError);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [onError]);
 };
 
 /**
@@ -514,24 +521,23 @@ export const useErrorCatcher = (editorId: string, onError: (err: InnerError) => 
 export const useUploadImg = (props: EditorProp, staticProps: StaticProp) => {
   const { editorId, previewOnly } = staticProps;
 
-  const uploadImageCallBack = (files: Array<File>, cb: () => void) => {
-    const insertHanlder = (urls: Array<string>) => {
-      bus.emit(editorId, 'replace', 'image', {
-        desc: '',
-        urls
-      });
+  useEffect(() => {
+    const uploadImageCallBack = (files: Array<File>, cb: () => void) => {
+      const insertHanlder = (urls: Array<string>) => {
+        bus.emit(editorId, 'replace', 'image', {
+          desc: '',
+          urls
+        });
 
-      cb && cb();
+        cb && cb();
+      };
+
+      if (props.onUploadImg) {
+        props.onUploadImg(files, insertHanlder);
+      }
     };
 
-    if (props.onUploadImg) {
-      props.onUploadImg(files, insertHanlder);
-    }
-  };
-
-  useEffect(() => {
     if (!previewOnly) {
-      bus.remove(editorId, 'uploadImage', uploadImageCallBack);
       // 监听上传图片
       bus.on(editorId, {
         name: 'uploadImage',
@@ -540,10 +546,10 @@ export const useUploadImg = (props: EditorProp, staticProps: StaticProp) => {
     }
 
     return () => {
-      // 清空所有的事件监听
-      bus.clear(editorId);
+      bus.remove(editorId, 'uploadImage', uploadImageCallBack);
     };
-  }, []);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [props.onUploadImg]);
 };
 
 /**
@@ -570,6 +576,7 @@ export const useCatalog = (props: EditorProp, staticProps: StaticProp) => {
         }
       }
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // 是否挂载目录组件
@@ -598,6 +605,9 @@ let bodyOverflowHistory = '';
 export const useConfig = (props: EditorProp) => {
   const {
     theme = defaultProps.theme,
+    preview = defaultProps.preview,
+    htmlPreview = defaultProps.htmlPreview,
+    pageFullscreen = defaultProps.pageFullscreen,
     previewTheme = defaultProps.previewTheme,
     codeTheme = defaultProps.codeTheme,
     language = defaultProps.language,
@@ -613,16 +623,16 @@ export const useConfig = (props: EditorProp) => {
       ...highlightConfig?.css
     };
 
-    const theme =
+    const _theme =
       codeStyleReverse && codeStyleReverseList.includes(previewTheme)
         ? 'dark'
-        : (props.theme as Themes);
+        : (theme as Themes);
 
     return {
       js: highlightConfig?.js || highlightUrl,
-      css: cssList[codeTheme] ? cssList[codeTheme][theme] : codeCss.atom[theme]
+      css: cssList[codeTheme] ? cssList[codeTheme][_theme] : codeCss.atom[_theme]
     };
-  }, [theme, codeTheme]);
+  }, [codeStyleReverse, codeStyleReverseList, previewTheme, theme, codeTheme]);
 
   // 缓存语言设置
   const usedLanguageText = useMemo(() => {
@@ -637,8 +647,6 @@ export const useConfig = (props: EditorProp) => {
       return staticTextDefault['zh-CN'];
     }
   }, [language]);
-
-  const { preview = true, htmlPreview = false, pageFullscreen = false } = props;
 
   const [setting, setSetting] = useState<SettingType>({
     pageFullscreen,
@@ -708,22 +716,27 @@ export const useExpose = (
 
   useEffect(() => {
     bus.emit(editorId, PAGE_FULL_SCREEN_CHANGED, setting.pageFullscreen);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [setting.pageFullscreen]);
 
   useEffect(() => {
     bus.emit(editorId, FULL_SCREEN_CHANGED, setting.fullscreen);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [setting.fullscreen]);
 
   useEffect(() => {
     bus.emit(editorId, PREVIEW_CHANGED, setting.preview);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [setting.preview]);
 
   useEffect(() => {
     bus.emit(editorId, HTML_PREVIEW_CHANGED, setting.htmlPreview);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [setting.htmlPreview]);
 
   useEffect(() => {
     bus.emit(editorId, CATALOG_VISIBLE_CHANGED, catalogVisible);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [catalogVisible]);
 
   useImperativeHandle(
@@ -819,6 +832,7 @@ export const useExpose = (
 
       return exposeParam;
     },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [updateSetting]
   );
 };

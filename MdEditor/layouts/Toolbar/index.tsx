@@ -46,6 +46,7 @@ const Toolbar = (props: ToolbarProp) => {
   // bar触发事件
   const emitHandler = useCallback((direct: ToolDirective, params?: any) => {
     bus.emit(editorId, 'replace', direct, params);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // 全屏功能
@@ -134,7 +135,20 @@ const Toolbar = (props: ToolbarProp) => {
         </div>
       </Dropdown>
     );
-  }, [ult, visible.title, onTitleChange, onTitleClose]);
+  }, [
+    wrapperId,
+    visible.title,
+    onTitleChange,
+    onTitleClose,
+    ult.titleItem?.h1,
+    ult.titleItem?.h2,
+    ult.titleItem?.h3,
+    ult.titleItem?.h4,
+    ult.titleItem?.h5,
+    ult.titleItem?.h6,
+    ult.toolbarTips?.title,
+    emitHandler
+  ]);
 
   const ImageDropdown = useMemo(() => {
     return (
@@ -191,7 +205,17 @@ const Toolbar = (props: ToolbarProp) => {
         </div>
       </Dropdown>
     );
-  }, [ult, visible.image, onImageChange, onImageClose]);
+  }, [
+    wrapperId,
+    visible.image,
+    onImageChange,
+    onImageClose,
+    ult.imgTitleItem?.link,
+    ult.imgTitleItem?.upload,
+    ult.imgTitleItem?.clip2upload,
+    ult.toolbarTips?.image,
+    setModalData
+  ]);
 
   const TableDropdown = useMemo(() => {
     return (
@@ -211,7 +235,14 @@ const Toolbar = (props: ToolbarProp) => {
         </div>
       </Dropdown>
     );
-  }, [ult, visible.table, props.tableShape, onTableChange, onTableSelected]);
+  }, [
+    wrapperId,
+    visible.table,
+    onTableChange,
+    props.tableShape,
+    onTableSelected,
+    ult.toolbarTips?.table
+  ]);
 
   const MermaidDropdown = useMemo(() => {
     return (
@@ -296,7 +327,22 @@ const Toolbar = (props: ToolbarProp) => {
         </div>
       </Dropdown>
     );
-  }, [ult, visible.mermaid, onMermaidChange, onMermaidClose]);
+  }, [
+    wrapperId,
+    visible.mermaid,
+    onMermaidChange,
+    onMermaidClose,
+    ult.mermaid?.flow,
+    ult.mermaid?.sequence,
+    ult.mermaid?.gantt,
+    ult.mermaid?.class,
+    ult.mermaid?.state,
+    ult.mermaid?.pie,
+    ult.mermaid?.relationship,
+    ult.mermaid?.journey,
+    ult.toolbarTips?.mermaid,
+    emitHandler
+  ]);
 
   const KatexDropdown = useMemo(() => {
     return (
@@ -333,7 +379,16 @@ const Toolbar = (props: ToolbarProp) => {
         </div>
       </Dropdown>
     );
-  }, [ult, visible.katex, onKatexChange, onKatexClose]);
+  }, [
+    wrapperId,
+    visible.katex,
+    onKatexChange,
+    onKatexClose,
+    ult.katex?.inline,
+    ult.katex?.block,
+    ult.toolbarTips?.katex,
+    emitHandler
+  ]);
 
   const barRender = useCallback(
     (barItem: ToolbarNames) => {
@@ -771,7 +826,48 @@ const Toolbar = (props: ToolbarProp) => {
         return '';
       }
     },
-    [props.defToolbars, ult, visible, setting.pageFullscreen, setting.fullscreen]
+    [
+      props.defToolbars,
+      props.noUploadImg,
+      props.noPrettier,
+      ult.toolbarTips?.bold,
+      ult.toolbarTips?.underline,
+      ult.toolbarTips?.italic,
+      ult.toolbarTips?.strikeThrough,
+      ult.toolbarTips?.sub,
+      ult.toolbarTips?.sup,
+      ult.toolbarTips?.quote,
+      ult.toolbarTips?.unorderedList,
+      ult.toolbarTips?.orderedList,
+      ult.toolbarTips?.task,
+      ult.toolbarTips?.codeRow,
+      ult.toolbarTips?.code,
+      ult.toolbarTips?.link,
+      ult.toolbarTips?.image,
+      ult.toolbarTips?.revoke,
+      ult.toolbarTips?.next,
+      ult.toolbarTips?.save,
+      ult.toolbarTips?.prettier,
+      ult.toolbarTips?.pageFullscreen,
+      ult.toolbarTips?.fullscreen,
+      ult.toolbarTips?.catalog,
+      ult.toolbarTips?.preview,
+      ult.toolbarTips?.htmlPreview,
+      ult.toolbarTips?.github,
+      emitHandler,
+      TitleDropdown,
+      setModalData,
+      modalData,
+      ImageDropdown,
+      TableDropdown,
+      editorId,
+      setting.fullscreen,
+      setting.pageFullscreen,
+      updateSetting,
+      fullscreenHandler,
+      MermaidDropdown,
+      KatexDropdown
+    ]
   );
 
   // 通过'='分割左右

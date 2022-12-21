@@ -123,6 +123,7 @@ const MdCatalog = (props: CatalogProps) => {
 
     // 主动触发一次接收
     bus.emit(editorId, 'pushCatalog');
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -192,7 +193,7 @@ const MdCatalog = (props: CatalogProps) => {
     return () => {
       scrollContainer?.removeEventListener('scroll', scrollHandler);
     };
-  }, [props.offsetTop, list, markedHeadingId]);
+  }, [props.offsetTop, list, markedHeadingId, scrollElement]);
 
   return (
     <div

@@ -1,4 +1,4 @@
-import { RefObject, useContext, useEffect, useRef, useState } from 'react';
+import { RefObject, useCallback, useContext, useEffect, useRef, useState } from 'react';
 import copy from 'copy-to-clipboard';
 import mediumZoom from 'medium-zoom';
 import { marked, Renderer } from 'marked';
@@ -66,125 +66,143 @@ export const useHistory = (
   // 文本改变前的光标位置
   const historyPos = useRef(POSITION_START);
 
-  const keyZCallback = (curr: number) => {
-    // 保存当前的鼠标位置
-    const startPos: number = textAreaRef.current?.selectionStart || 0;
-    const endPos: number = textAreaRef.current?.selectionEnd || 0;
+  const keyZCallback = useCallback(
+    (curr: number) => {
+      // 保存当前的鼠标位置
+      const startPos: number = textAreaRef.current?.selectionStart || 0;
+      const endPos: number = textAreaRef.current?.selectionEnd || 0;
 
-    history.current.list[history.current.curr].startPos = startPos;
-    history.current.list[history.current.curr].endPos = endPos;
+      history.current.list[history.current.curr].startPos = startPos;
+      history.current.list[history.current.curr].endPos = endPos;
 
-    // 移除状态
-    history.current.userUpdated = false;
-    history.current.curr = curr;
+      // 移除状态
+      history.current.userUpdated = false;
+      history.current.curr = curr;
 
-    const currHistory = history.current.list[history.current.curr];
+      const currHistory = history.current.list[history.current.curr];
 
-    // 恢复光标位置
-    historyPos.current = [currHistory.startPos, currHistory.endPos];
-    props.onChange(currHistory.content);
+      // 恢复光标位置
+      historyPos.current = [currHistory.startPos, currHistory.endPos];
+      props.onChange(currHistory.content);
 
-    // 选中内容
-    setPosition(
-      textAreaRef.current as HTMLTextAreaElement,
-      currHistory.startPos,
-      currHistory.endPos
-    ).then(() => {
-      bus.emit(editorId, 'selectTextChange');
-    });
-  };
-
-  const saveHistory = (content: string) => {
-    clearTimeout(saveHistoryId);
-    const startPos: number = textAreaRef.current?.selectionStart || 0;
-    const endPos: number = textAreaRef.current?.selectionEnd || 0;
-
-    saveHistoryId = <any>setTimeout(() => {
-      // 如果不是撤销操作，就记录
-      if (history.current.userUpdated) {
-        // 重置撤回之前的记录
-        if (history.current.curr < history.current.list.length - 1) {
-          history.current.list = history.current.list.slice(0, history.current.curr + 1);
-        }
-        if (history.current.list.length > historyLength) {
-          history.current.list.shift();
-        }
-
-        // 修改保存上次记录选中定位
-        const lastStep = history.current.list.pop() || {
-          startPos: 0,
-          endPos: 0,
-          content
-        };
-
-        lastStep.startPos = historyPos.current[0];
-        lastStep.endPos = historyPos.current[1];
-
-        // 恢复初始位置历史
-        historyPos.current = POSITION_START;
-
-        Array.prototype.push.call(history.current.list, lastStep, {
-          content,
-          startPos,
-          endPos
-        });
-
-        // 下标调整为最后一个位置
-        history.current.curr = history.current.list.length - 1;
-      } else {
-        history.current.userUpdated = true;
-      }
-    }, 150);
-  };
+      // 选中内容
+      setPosition(
+        textAreaRef.current as HTMLTextAreaElement,
+        currHistory.startPos,
+        currHistory.endPos
+      ).then(() => {
+        bus.emit(editorId, 'selectTextChange');
+      });
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [props, textAreaRef]
+  );
 
   /**
    * @param force 是否强制更新光标历史
    */
-  const saveHistoryPos = (force: boolean) => {
-    // 如果不是初始值，代表上次记录未插入输入历史
-    if (historyPos.current === POSITION_START || force) {
-      historyPos.current = [
-        textAreaRef.current?.selectionStart || 0,
-        textAreaRef.current?.selectionEnd || 0
-      ];
-    }
-  };
+  const saveHistoryPos = useCallback(
+    (force: boolean) => {
+      // 如果不是初始值，代表上次记录未插入输入历史
+      if (historyPos.current === POSITION_START || force) {
+        historyPos.current = [
+          textAreaRef.current?.selectionStart || 0,
+          textAreaRef.current?.selectionEnd || 0
+        ];
+      }
+    },
+    [textAreaRef]
+  );
 
   useEffect(() => {
     if (completeStatus) {
-      saveHistory(props.value);
+      clearTimeout(saveHistoryId);
+      const startPos: number = textAreaRef.current?.selectionStart || 0;
+      const endPos: number = textAreaRef.current?.selectionEnd || 0;
+
+      saveHistoryId = <any>setTimeout(() => {
+        // 如果不是撤销操作，就记录
+        if (history.current.userUpdated) {
+          // 重置撤回之前的记录
+          if (history.current.curr < history.current.list.length - 1) {
+            history.current.list = history.current.list.slice(
+              0,
+              history.current.curr + 1
+            );
+          }
+          if (history.current.list.length > historyLength) {
+            history.current.list.shift();
+          }
+
+          // 修改保存上次记录选中定位
+          const lastStep = history.current.list.pop() || {
+            startPos: 0,
+            endPos: 0,
+            content: props.value
+          };
+
+          lastStep.startPos = historyPos.current[0];
+          lastStep.endPos = historyPos.current[1];
+
+          // 恢复初始位置历史
+          historyPos.current = POSITION_START;
+
+          Array.prototype.push.call(history.current.list, lastStep, {
+            content: props.value,
+            startPos,
+            endPos
+          });
+
+          // 下标调整为最后一个位置
+          history.current.curr = history.current.list.length - 1;
+        } else {
+          history.current.userUpdated = true;
+        }
+      }, 150);
     }
-  }, [props.value, completeStatus]);
+  }, [props.value, completeStatus, textAreaRef, historyLength]);
 
   useEffect(() => {
     // 更新后清除选中内容
     bus.emit(editorId, 'selectTextChange');
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.value]);
 
   useEffect(() => {
+    const ctrlZHandler = () => {
+      keyZCallback(history.current.curr - 1 < 0 ? 0 : history.current.curr - 1);
+    };
+
+    const ctrlShiftZHandler = () => {
+      keyZCallback(
+        history.current.curr + 1 === history.current.list.length
+          ? history.current.curr
+          : history.current.curr + 1
+      );
+    };
+
     bus.on(editorId, {
       name: 'ctrlZ',
-      callback() {
-        keyZCallback(history.current.curr - 1 < 0 ? 0 : history.current.curr - 1);
-      }
+      callback: ctrlZHandler
     });
 
     bus.on(editorId, {
       name: 'ctrlShiftZ',
-      callback() {
-        keyZCallback(
-          history.current.curr + 1 === history.current.list.length
-            ? history.current.curr
-            : history.current.curr + 1
-        );
-      }
+      callback: ctrlShiftZHandler
     });
 
     bus.on(editorId, {
       name: 'saveHistoryPos',
       callback: saveHistoryPos
     });
-  }, []);
+
+    return () => {
+      bus.remove(editorId, 'ctrlZ', ctrlZHandler);
+      bus.remove(editorId, 'ctrlShiftZ', ctrlShiftZHandler);
+      bus.remove(editorId, 'saveHistoryPos', saveHistoryPos);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [keyZCallback, saveHistoryPos]);
 };
 
 export const useAutoGenrator = (
@@ -195,105 +213,118 @@ export const useAutoGenrator = (
   const { previewOnly, tabWidth, editorId } = useContext(EditorContext);
 
   useEffect(() => {
-    if (!previewOnly) {
-      textAreaRef.current?.addEventListener('keypress', (event: any) => {
-        if (event.key === 'Enter') {
-          const endPoint = textAreaRef.current?.selectionStart as number;
+    const textAreaOnKeypress = (event: any) => {
+      if (event.key === 'Enter') {
+        const endPoint = textAreaRef.current?.selectionStart as number;
 
-          // 前半部分
-          const prefixStr = textAreaRef.current?.value.substring(0, endPoint);
-          // 后半部分
-          const subStr = textAreaRef.current?.value.substring(endPoint);
-          // 前半部分最后一个换行符位置，用于分割当前行内容
-          const lastIndexBR = prefixStr?.lastIndexOf('\n');
+        // 前半部分
+        const prefixStr = textAreaRef.current?.value.substring(0, endPoint);
+        // 后半部分
+        const subStr = textAreaRef.current?.value.substring(endPoint);
+        // 前半部分最后一个换行符位置，用于分割当前行内容
+        const lastIndexBR = prefixStr?.lastIndexOf('\n');
 
-          const enterPressRow = prefixStr?.substring(
-            (lastIndexBR as number) + 1,
-            endPoint
-          ) as string;
+        const enterPressRow = prefixStr?.substring(
+          (lastIndexBR as number) + 1,
+          endPoint
+        ) as string;
 
-          // 是列表
-          if (/^\d+\.\s|^-\s/.test(enterPressRow)) {
-            event.cancelBubble = true;
-            event.preventDefault();
-            event.stopPropagation();
+        // 是列表
+        if (/^\d+\.\s|^-\s/.test(enterPressRow)) {
+          event.cancelBubble = true;
+          event.preventDefault();
+          event.stopPropagation();
 
-            // 如果列表当前行没有内容，则清空当前行
-            // '- ', '- [ ] ', '- [x] '，-同数字
-            if (/^(\d+\.|-)\s+(\[[x\s]\]\s+)?$/.test(enterPressRow)) {
-              const resetPrefixStr = prefixStr?.replace(
-                /(\d+\.|-)\s+(\[[x\s]\]\s+)?$/,
-                ''
-              );
+          // 如果列表当前行没有内容，则清空当前行
+          // '- ', '- [ ] ', '- [x] '，-同数字
+          if (/^(\d+\.|-)\s+(\[[x\s]\]\s+)?$/.test(enterPressRow)) {
+            const resetPrefixStr = prefixStr?.replace(/(\d+\.|-)\s+(\[[x\s]\]\s+)?$/, '');
 
-              props.onChange((resetPrefixStr as string) + subStr);
+            props.onChange((resetPrefixStr as string) + subStr);
 
-              // 手动定位光标到当前位置
-              setPosition(
-                textAreaRef.current as HTMLTextAreaElement,
-                resetPrefixStr?.length
-              );
-            } else if (/^-\s+.+/.test(enterPressRow)) {
-              const newLine = /^-\s+\[[x\s]\]/.test(enterPressRow) ? '\n- [ ] ' : '\n- ';
-              // 无序列表存在内容
-              props.onChange(
-                insert(textAreaRef.current as HTMLTextAreaElement, newLine, {})
-              );
-            } else {
-              const lastOrderMatch = enterPressRow?.match(/\d+(?=\.)/);
+            // 手动定位光标到当前位置
+            setPosition(
+              textAreaRef.current as HTMLTextAreaElement,
+              resetPrefixStr?.length
+            );
+          } else if (/^-\s+.+/.test(enterPressRow)) {
+            const newLine = /^-\s+\[[x\s]\]/.test(enterPressRow) ? '\n- [ ] ' : '\n- ';
+            // 无序列表存在内容
+            props.onChange(
+              insert(textAreaRef.current as HTMLTextAreaElement, newLine, {})
+            );
+          } else {
+            const lastOrderMatch = enterPressRow?.match(/\d+(?=\.)/);
 
-              const nextOrder = (lastOrderMatch && Number(lastOrderMatch[0]) + 1) || 1;
+            const nextOrder = (lastOrderMatch && Number(lastOrderMatch[0]) + 1) || 1;
 
-              const newLine = /^\d\.\s+\[[x\s]\]/.test(enterPressRow)
-                ? `\n${nextOrder}. [ ] `
-                : `\n${nextOrder}. `;
+            const newLine = /^\d\.\s+\[[x\s]\]/.test(enterPressRow)
+              ? `\n${nextOrder}. [ ] `
+              : `\n${nextOrder}. `;
 
-              props.onChange(
-                insert(textAreaRef.current as HTMLTextAreaElement, newLine, {})
-              );
-            }
+            props.onChange(
+              insert(textAreaRef.current as HTMLTextAreaElement, newLine, {})
+            );
           }
         }
-      });
+      }
+    };
+
+    const onSelectedTextChangd = () => {
+      selectedText.current = getSelectionText(textAreaRef.current as HTMLTextAreaElement);
+    };
+
+    if (!previewOnly) {
+      textAreaRef.current?.addEventListener('keypress', textAreaOnKeypress);
 
       // 注册修改选择内容事件
       bus.on(editorId, {
         name: 'selectTextChange',
-        callback() {
-          selectedText.current = getSelectionText(
-            textAreaRef.current as HTMLTextAreaElement
-          );
-        }
+        callback: onSelectedTextChangd
       });
     }
-  }, []);
 
-  const replaceCallBack = (direct: ToolDirective, params = {}) => {
-    props.onChange(
-      directive2flag(
-        direct,
-        selectedText.current,
-        textAreaRef.current as HTMLTextAreaElement,
-        {
-          ...params,
-          tabWidth,
-          editorId
-        }
-      )
-    );
-  };
+    return () => {
+      if (!previewOnly) {
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+        textAreaRef.current?.removeEventListener('keypress', textAreaOnKeypress);
+        bus.remove(editorId, 'selectTextChange', onSelectedTextChangd);
+      }
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [props.onChange]);
 
   useEffect(() => {
-    if (!previewOnly) {
-      bus.remove(editorId, 'replace', replaceCallBack);
+    const replaceCallBack = (direct: ToolDirective, params = {}) => {
+      props.onChange(
+        directive2flag(
+          direct,
+          selectedText.current,
+          textAreaRef.current as HTMLTextAreaElement,
+          {
+            ...params,
+            tabWidth,
+            editorId
+          }
+        )
+      );
+    };
 
+    if (!previewOnly) {
       // 注册指令替换内容事件
       bus.on(editorId, {
         name: 'replace',
         callback: replaceCallBack
       });
     }
-  }, [textAreaRef]);
+
+    return () => {
+      if (!previewOnly) {
+        bus.remove(editorId, 'replace', replaceCallBack);
+      }
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [props.onChange, tabWidth, textAreaRef]);
 
   return {
     selectedText
@@ -454,62 +485,35 @@ export const useMarked = (props: EditorContentProp) => {
   const katexInited = useKatex(props, marked);
   const { reRender, mermaidInited } = useMermaid(props);
 
-  // 向页面代码块注入复制按钮
-  const initCopyEntry = () => {
-    document
-      .querySelectorAll(`#${editorId} .${prefix}-preview pre`)
-      .forEach((pre: Element) => {
-        const copyBtnText = usedLanguageText.copyCode?.text || '复制代码';
-        const copyButton = document.createElement('span');
-        copyButton.setAttribute('class', 'copy-button');
-        copyButton.innerText = copyBtnText;
-        copyButton.addEventListener('click', () => {
-          const codeText = (pre.querySelector('code') as HTMLElement).innerText;
-
-          const success = copy(formatCopiedText(codeText));
-
-          const succssTip = usedLanguageText.copyCode?.successTips || '已复制！';
-          const failTip = usedLanguageText.copyCode?.failTips || '已复制！';
-
-          copyButton.innerText = success ? succssTip : failTip;
-
-          setTimeout(() => {
-            copyButton.innerText = copyBtnText;
-          }, 1500);
-        });
-        pre.appendChild(copyButton);
-      });
-  };
-
-  const highlightLoad = () => {
-    marked.setOptions({
-      highlight: (code, language) => {
-        let codeHtml = '';
-        const hljsLang = window.hljs.getLanguage(language);
-        if (language && hljsLang) {
-          codeHtml = window.hljs.highlight(code, {
-            language,
-            ignoreIllegals: true
-          }).value;
-        } else {
-          codeHtml = window.hljs.highlightAuto(code).value;
-        }
-
-        return showCodeRowNumber
-          ? generateCodeRowNumber(codeHtml)
-          : `<span class="code-block">${codeHtml}</span>`;
-      }
-    });
-
-    setHighlightInited(true);
-  };
-
   // 添加highlight扩展
   useEffect(() => {
     let highlightLink: HTMLLinkElement;
     let highlightScript: HTMLScriptElement;
 
     if (!highlightIns) {
+      const highlightLoad = () => {
+        marked.setOptions({
+          highlight: (code, language) => {
+            let codeHtml = '';
+            const hljsLang = window.hljs.getLanguage(language);
+            if (language && hljsLang) {
+              codeHtml = window.hljs.highlight(code, {
+                language,
+                ignoreIllegals: true
+              }).value;
+            } else {
+              codeHtml = window.hljs.highlightAuto(code).value;
+            }
+
+            return showCodeRowNumber
+              ? generateCodeRowNumber(codeHtml)
+              : `<span class="code-block">${codeHtml}</span>`;
+          }
+        });
+
+        setHighlightInited(true);
+      };
+
       highlightLink = document.createElement('link');
       highlightLink.rel = 'stylesheet';
       highlightLink.href = highlight.css;
@@ -523,6 +527,7 @@ export const useMarked = (props: EditorContentProp) => {
       appendHandler(highlightLink);
       appendHandler(highlightScript, 'hljs');
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -558,6 +563,7 @@ export const useMarked = (props: EditorContentProp) => {
     return () => {
       clearTimeout(timer);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.value, highlightInited, mermaidInited, reRender, katexInited]);
 
   // 添加目录主动触发接收监听
@@ -568,12 +574,45 @@ export const useMarked = (props: EditorContentProp) => {
         bus.emit(editorId, 'catalogChanged', heads.current);
       }
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
     // 重新设置复制按钮
-    initCopyEntry();
-  }, [html]);
+    document
+      .querySelectorAll(`#${editorId} .${prefix}-preview pre`)
+      .forEach((pre: Element) => {
+        // 移除旧的按钮
+        pre.querySelector('.copy-button')?.remove();
+
+        const copyBtnText = usedLanguageText.copyCode?.text || '复制代码';
+        const copyButton = document.createElement('span');
+        copyButton.setAttribute('class', 'copy-button');
+        copyButton.innerText = copyBtnText;
+        copyButton.addEventListener('click', () => {
+          const codeText = (pre.querySelector('code') as HTMLElement).innerText;
+
+          const success = copy(formatCopiedText(codeText));
+
+          const succssTip = usedLanguageText.copyCode?.successTips || '已复制！';
+          const failTip = usedLanguageText.copyCode?.failTips || '已复制！';
+
+          copyButton.innerText = success ? succssTip : failTip;
+
+          setTimeout(() => {
+            copyButton.innerText = copyBtnText;
+          }, 1500);
+        });
+        pre.appendChild(copyButton);
+      });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [
+    formatCopiedText,
+    html,
+    usedLanguageText.copyCode?.failTips,
+    usedLanguageText.copyCode?.successTips,
+    usedLanguageText.copyCode?.text
+  ]);
 
   return { html };
 };
@@ -601,6 +640,7 @@ export const useMermaid = (props: EditorContentProp) => {
       }
       setReRender((_reRender) => !_reRender);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [theme]);
 
   useEffect(() => {
@@ -620,6 +660,7 @@ export const useMermaid = (props: EditorContentProp) => {
 
       appendHandler(mermaidScript, 'mermaid');
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return { reRender, mermaidInited };
@@ -663,11 +704,20 @@ export const useKatex = (props: EditorContentProp, marked: any) => {
       appendHandler(katexScript, 'katex');
       appendHandler(katexLink);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return katexInited;
 };
 
+/**
+ * 自动滚动
+ * @param props
+ * @param html
+ * @param textAreaRef
+ * @param previewRef
+ * @param htmlRef
+ */
 export const useAutoScroll = (
   props: EditorContentProp,
   html: string,
@@ -694,27 +744,16 @@ export const useAutoScroll = (
         clear
       });
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // 更新完毕后判断是否需要重新绑定滚动事件
-  useEffect(() => {
-    if (props.setting.preview && !previewOnly && props.scrollAuto) {
-      setTimeout(() => {
-        scrollCb.clear();
-        scrollCb.init();
-      }, 0);
-    }
-  }, [html]);
-
-  // 我们默认，不会发生直接将编辑器切换成预览模式的行为
-  // 分栏发生变化时，显示分栏时注册同步滚动，隐藏时清除同步滚动
   useEffect(() => {
     if (
       (props.setting.preview || props.setting.htmlPreview) &&
       !previewOnly &&
       props.scrollAuto
     ) {
-      scrollCb.clear();
       // 需要等到页面挂载完成后再注册，否则不能正确获取到预览dom
       const [init, clear] = scrollAuto(
         textAreaRef.current as HTMLElement,
@@ -725,62 +764,93 @@ export const useAutoScroll = (
         init,
         clear
       });
-
-      init();
     }
-  }, [props.setting.preview, props.setting.htmlPreview]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [
+    html,
+    htmlRef,
+    previewRef,
+    textAreaRef,
+    props.scrollAuto,
+    props.setting.preview,
+    props.setting.htmlPreview
+  ]);
 
-  // 切换滚动状态时，重新设置同步滚动
+  // 我们默认，不会发生直接将编辑器切换成预览模式的行为
+  // 分栏发生变化时，显示分栏时注册同步滚动，隐藏时清除同步滚动
   useEffect(() => {
-    if (props.scrollAuto) {
+    if (
+      (props.setting.preview || props.setting.htmlPreview) &&
+      !previewOnly &&
+      props.scrollAuto
+    ) {
       scrollCb.init();
     } else {
       scrollCb.clear();
     }
-  }, [props.scrollAuto]);
+
+    return () => {
+      scrollCb.clear();
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [
+    scrollCb,
+    htmlRef,
+    previewRef,
+    textAreaRef,
+    props.scrollAuto,
+    props.setting.preview,
+    props.setting.htmlPreview
+  ]);
 };
 
+/**
+ * 粘贴板配置
+ *
+ * @param props
+ * @param textAreaRef
+ */
 export const usePasteUpload = (
   props: EditorContentProp,
   textAreaRef: RefObject<HTMLTextAreaElement>
 ) => {
   const { editorId, previewOnly } = useContext(EditorContext);
 
-  // 粘贴板上传
-  const pasteHandler = (e: ClipboardEvent) => {
-    if (!e.clipboardData) {
-      return;
-    }
-
-    // 处理文件
-    if (e.clipboardData.files.length > 0) {
-      const { files } = e.clipboardData;
-
-      bus.emit(
-        editorId,
-        'uploadImage',
-        Array.from(files).filter((file) => {
-          return /image\/.*/.test(file.type);
-        })
-      );
-
-      e.preventDefault();
-    }
-
-    // 识别vscode代码
-    if (props.autoDetectCode && e.clipboardData.types.includes('vscode-editor-data')) {
-      const vscCoodInfo = JSON.parse(e.clipboardData.getData('vscode-editor-data'));
-
-      bus.emit(editorId, 'replace', 'code', {
-        mode: vscCoodInfo.mode,
-        text: e.clipboardData.getData('text/plain')
-      });
-
-      e.preventDefault();
-    }
-  };
-
   useEffect(() => {
+    // 粘贴板上传
+    const pasteHandler = (e: ClipboardEvent) => {
+      if (!e.clipboardData) {
+        return;
+      }
+
+      // 处理文件
+      if (e.clipboardData.files.length > 0) {
+        const { files } = e.clipboardData;
+
+        bus.emit(
+          editorId,
+          'uploadImage',
+          Array.from(files).filter((file) => {
+            return /image\/.*/.test(file.type);
+          })
+        );
+
+        e.preventDefault();
+      }
+
+      // 识别vscode代码
+      if (props.autoDetectCode && e.clipboardData.types.includes('vscode-editor-data')) {
+        const vscCoodInfo = JSON.parse(e.clipboardData.getData('vscode-editor-data'));
+
+        bus.emit(editorId, 'replace', 'code', {
+          mode: vscCoodInfo.mode,
+          text: e.clipboardData.getData('text/plain')
+        });
+
+        e.preventDefault();
+      }
+    };
+
     if (!previewOnly) {
       textAreaRef.current?.addEventListener('paste', pasteHandler);
     }
@@ -788,10 +858,12 @@ export const usePasteUpload = (
     // 编辑器卸载时移除相应的监听事件
     return () => {
       if (!previewOnly) {
+        // eslint-disable-next-line react-hooks/exhaustive-deps
         textAreaRef.current?.removeEventListener('paste', pasteHandler);
       }
     };
-  }, []);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [props.autoDetectCode, textAreaRef]);
 };
 
 /**
@@ -803,10 +875,8 @@ export const usePasteUpload = (
 export const useZoom = (props: EditorContentProp, html: string) => {
   const { editorId } = useContext(EditorContext);
 
-  let zoomHander = () => {};
-
   useEffect(() => {
-    zoomHander = debounce(() => {
+    const zoomHander = debounce(() => {
       const imgs = document.querySelectorAll(`#${editorId}-preview img[zoom]`);
 
       if (imgs.length === 0) {
@@ -819,6 +889,7 @@ export const useZoom = (props: EditorContentProp, html: string) => {
     });
 
     zoomHander();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [html, props.setting]);
 };
 

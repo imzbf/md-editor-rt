@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, {
   ReactElement,
   cloneElement,
@@ -5,7 +6,8 @@ import React, {
   useEffect,
   useRef,
   useState,
-  JSXElementConstructor
+  JSXElementConstructor,
+  useCallback
 } from 'react';
 
 import './style.less';
@@ -43,7 +45,7 @@ const DropDown = (props: ModalProp) => {
   const triggerRef = useRef<HTMLDivElement>(null);
   const overlayRef = useRef<HTMLDivElement>(null);
 
-  const triggerHandler = () => {
+  const triggerHandler = useCallback(() => {
     if (props.trigger === 'hover') {
       status.current.triggerHover = true;
     }
@@ -76,7 +78,7 @@ const DropDown = (props: ModalProp) => {
     }));
 
     props.onChange(true);
-  };
+  }, [props]);
 
   const overlayHandler = () => {
     status.current.overlayHover = true;
@@ -102,33 +104,39 @@ const DropDown = (props: ModalProp) => {
   }, [props.visible]);
 
   // 点击非内容区域时触发关闭
-  const clickHidden = (e: MouseEvent) => {
-    const triggerEle = triggerRef.current as HTMLElement;
-    const overlayEle = overlayRef.current as HTMLElement;
+  const clickHidden = useCallback(
+    (e: MouseEvent) => {
+      const triggerEle = triggerRef.current as HTMLElement;
+      const overlayEle = overlayRef.current as HTMLElement;
 
-    if (
-      !triggerEle.contains(e.target as HTMLElement) &&
-      !overlayEle.contains(e.target as HTMLElement)
-    ) {
-      props.onChange(false);
-    }
-  };
-
-  const hiddenTimer = useRef(-1);
-  const leaveHidden = (e: MouseEvent) => {
-    if (triggerRef.current === e.target) {
-      status.current.triggerHover = false;
-    } else {
-      status.current.overlayHover = false;
-    }
-
-    clearTimeout(hiddenTimer.current);
-    hiddenTimer.current = window.setTimeout(() => {
-      if (!status.current.overlayHover && !status.current.triggerHover) {
+      if (
+        !triggerEle.contains(e.target as HTMLElement) &&
+        !overlayEle.contains(e.target as HTMLElement)
+      ) {
         props.onChange(false);
       }
-    }, 10);
-  };
+    },
+    [props]
+  );
+
+  const hiddenTimer = useRef(-1);
+  const leaveHidden = useCallback(
+    (e: MouseEvent) => {
+      if (triggerRef.current === e.target) {
+        status.current.triggerHover = false;
+      } else {
+        status.current.overlayHover = false;
+      }
+
+      clearTimeout(hiddenTimer.current);
+      hiddenTimer.current = window.setTimeout(() => {
+        if (!status.current.overlayHover && !status.current.triggerHover) {
+          props.onChange(false);
+        }
+      }, 10);
+    },
+    [props]
+  );
 
   useEffect(() => {
     if (props.trigger === 'click') {
@@ -172,7 +180,7 @@ const DropDown = (props: ModalProp) => {
         }
       }
     };
-  }, []);
+  }, [clickHidden, leaveHidden, props.trigger, triggerHandler]);
 
   const slotDefault = props.children as ReactElement<
     any,

@@ -3,7 +3,8 @@ import React, {
   useCallback,
   useState,
   forwardRef,
-  ForwardedRef
+  ForwardedRef,
+  useEffect
 } from 'react';
 import {
   useCatalog,
@@ -113,6 +114,7 @@ const Editor = forwardRef((props: EditorProp, ref: ForwardedRef<unknown>) => {
       bus.emit(staticProps.editorId, 'saveHistoryPos');
       onChange(value);
     },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [onChange]
   );
 
@@ -130,6 +132,15 @@ const Editor = forwardRef((props: EditorProp, ref: ForwardedRef<unknown>) => {
   const [highlight, usedLanguageText, setting, updateSetting] = useConfig(props);
 
   useExpose(ref, staticProps, catalogVisible, setting, updateSetting);
+
+  useEffect(() => {
+    return () => {
+      console.log('清空所有的事件监听');
+      // 清空所有的事件监听
+      bus.clear(editorId);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <EditorContext.Provider

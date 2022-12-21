@@ -74,6 +74,7 @@ const ClipModal = (props: ClipModalProp) => {
         }
       };
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.visible, data.cropperInited]);
 
   useEffect(() => {
@@ -210,7 +211,19 @@ const ClipModal = (props: ClipModalProp) => {
         />
       </Modal>
     );
-  }, [usedLanguageText, props.visible, data.imgSrc, data.imgSelected, data.isFullscreen]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [
+    usedLanguageText.clipModalTips?.title,
+    usedLanguageText.linkModalTips?.buttonOK,
+    props.visible,
+    props.onCancel,
+    props.onOk,
+    data.isFullscreen,
+    data.imgSelected,
+    data.imgSrc,
+    onAdjust,
+    modalSize
+  ]);
 };
 
 export default ClipModal;

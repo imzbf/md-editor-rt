@@ -46,7 +46,7 @@ const Modal = (props: ModalProps) => {
         height: props.height
       };
     }
-  }, [props.isFullscreen]);
+  }, [props.height, props.isFullscreen, props.width]);
 
   const [inited, setInited] = useState(false);
 
@@ -57,12 +57,14 @@ const Modal = (props: ModalProps) => {
       keyMoveClear = keyMove(
         modalHeaderRef.current as HTMLDivElement,
         (left: number, top: number) => {
-          setState({
-            ...state,
-            initPos: {
-              left: left + 'px',
-              top: top + 'px'
-            }
+          setState((_state) => {
+            return {
+              ..._state,
+              initPos: {
+                left: left + 'px',
+                top: top + 'px'
+              }
+            };
           });
         }
       );
@@ -78,17 +80,19 @@ const Modal = (props: ModalProps) => {
       const halfClientWidth = document.documentElement.clientWidth / 2;
       const halfClientHeight = document.documentElement.clientHeight / 2;
 
-      setState({
-        ...state,
-        initPos: {
-          left: halfClientWidth - halfWidth + 'px',
-          top: halfClientHeight - halfHeight + 'px'
-        }
+      setState((_state) => {
+        return {
+          ..._state,
+          initPos: {
+            left: halfClientWidth - halfWidth + 'px',
+            top: halfClientHeight - halfHeight + 'px'
+          }
+        };
       });
 
       !inited && setInited(true);
     }
-  }, [modalVisible]);
+  }, [inited, modalVisible]);
 
   useEffect(() => {
     const nVal = props.visible;
@@ -103,7 +107,7 @@ const Modal = (props: ModalProps) => {
         setMV(nVal);
       }, 150);
     }
-  }, [props.visible]);
+  }, [inited, props.visible]);
 
   return (
     <div className={props.className} style={{ display: modalVisible ? 'block' : 'none' }}>

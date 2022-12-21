@@ -102,7 +102,17 @@ const LinkModal = (props: LinkModalProp) => {
         </div>
       </Modal>
     );
-  }, [title, props.visible, linkData.desc, linkData.url, editorId, usedLanguageText]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [
+    title,
+    props,
+    usedLanguageText.linkModalTips?.descLabel,
+    usedLanguageText.linkModalTips?.descLabelPlaceHolder,
+    usedLanguageText.linkModalTips?.urlLabel,
+    usedLanguageText.linkModalTips?.urlLabelPlaceHolder,
+    usedLanguageText.linkModalTips?.buttonOK,
+    linkData
+  ]);
 };
 
 export default LinkModal;

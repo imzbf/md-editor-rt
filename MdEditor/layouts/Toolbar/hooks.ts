@@ -41,23 +41,9 @@ export const useSreenfull = (props: ToolbarProp) => {
         console.error('browser does not support screenfull!');
       }
     },
-    [screenfull]
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    []
   );
-
-  const screenfullLoad = () => {
-    // 复制实例
-    screenfull = window.screenfull;
-    // 注册事件
-    if (screenfull && screenfull.isEnabled) {
-      screenfull.on('change', () => {
-        props.updateSetting('fullscreen', screenfullMe.current);
-
-        if (screenfullMe.current) {
-          screenfullMe.current = false;
-        }
-      });
-    }
-  };
 
   useEffect(() => {
     let screenScript: HTMLScriptElement;
@@ -65,7 +51,21 @@ export const useSreenfull = (props: ToolbarProp) => {
     if (!previewOnly && !screenfull) {
       screenScript = document.createElement('script');
       screenScript.src = screenfullConfig?.js || screenfullUrl;
-      screenScript.onload = screenfullLoad;
+      screenScript.onload = () => {
+        // 复制实例
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+        screenfull = window.screenfull;
+        // 注册事件
+        if (screenfull && screenfull.isEnabled) {
+          screenfull.on('change', () => {
+            props.updateSetting('fullscreen', screenfullMe.current);
+
+            if (screenfullMe.current) {
+              screenfullMe.current = false;
+            }
+          });
+        }
+      };
       screenScript.id = `${prefix}-screenfull`;
 
       appendHandler(screenScript, 'screenfull');
@@ -81,6 +81,7 @@ export const useSreenfull = (props: ToolbarProp) => {
         }
       });
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -91,7 +92,8 @@ export const useSreenfull = (props: ToolbarProp) => {
         callback: fullscreenHandler
       });
     }
-  }, [fullscreenHandler]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return { fullscreenHandler };
 };
@@ -132,17 +134,19 @@ export const useModals = (
       }
       onCancel();
     },
-    [modalData.type]
+    [emitHandler, modalData.type, onCancel]
   );
 
   useEffect(() => {
     bus.on(editorId, {
       name: 'openModals',
       callback(type) {
-        setModalData({
-          ...modalData,
-          type,
-          linkVisible: true
+        setModalData((_modalData) => {
+          return {
+            ..._modalData,
+            type,
+            linkVisible: true
+          };
         });
       }
     });
@@ -159,6 +163,7 @@ export const useModals = (
     };
 
     (uploadRef.current as HTMLInputElement).addEventListener('change', uploadHandler);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return {
@@ -229,9 +234,12 @@ export const useDropdownState = (
     });
   }, []);
 
-  const onTableSelected = useCallback((selectedShape: HoverData) => {
-    emitHandler('table', { selectedShape });
-  }, []);
+  const onTableSelected = useCallback(
+    (selectedShape: HoverData) => {
+      emitHandler('table', { selectedShape });
+    },
+    [emitHandler]
+  );
 
   const onMermaidChange = useCallback((v: boolean) => {
     setVisible((_vis) => {

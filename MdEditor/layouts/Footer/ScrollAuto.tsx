@@ -25,5 +25,5 @@ export default (props: ScrollAutoProp) => {
         <Checkbox checked={props.scrollAuto} onChange={props.onScrollAutoChange} />
       </div>
     );
-  }, [props.scrollAuto, props.onScrollAutoChange, usedLanguageText]);
+  }, [usedLanguageText.footer?.scrollAuto, props]);
 };
