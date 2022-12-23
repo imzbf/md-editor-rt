@@ -6,7 +6,6 @@ const Preview = lazy(() => import('./pages/Preview'));
 const Doc = lazy(() => import('./pages/Doc'));
 const Demo = lazy(() => import('./pages/Demo'));
 const About = lazy(() => import('./pages/About'));
-const Contrast = lazy(() => import('./pages/Contrast'));
 const Grammar = lazy(() => import('./pages/Grammar'));
 import { StateType } from './store';
 import { useSelector } from 'react-redux';
@@ -34,7 +33,6 @@ function App() {
           <Route path="/md-editor-rt/docs" element={<Doc />} />
           <Route path="/md-editor-rt/demo" element={<Demo />} />
           <Route path="/md-editor-rt/about" element={<About />} />
-          <Route path="/md-editor-rt/contrast" element={<Contrast />} />
           <Route path="/md-editor-rt/grammar" element={<Grammar />} />
         </Routes>
       </Suspense>
