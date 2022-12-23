@@ -16,19 +16,26 @@ export interface StateType {
   lang: Lang;
 }
 
+let defaultState: StateType = {
+  theme: 'light',
+  previewTheme: 'default',
+  codeTheme: 'atom',
+  lang: 'en-US'
+};
+
+const themeMedia = window.matchMedia('(prefers-color-scheme: light)');
+if (themeMedia.matches) {
+} else {
+  defaultState.theme = 'dark';
+}
+
 const stagedStore = localStorage.getItem(STORAGED_STORE_KEY);
 
-const defaultState: StateType = stagedStore
-  ? JSON.parse(stagedStore)
-  : {
-      theme: 'light',
-      previewTheme: 'default',
-      codeTheme: 'atom',
-      lang: 'en-US'
-    };
-
-if (!defaultState.lang) {
-  defaultState.lang = 'en-US';
+if (stagedStore) {
+  defaultState = {
+    ...defaultState,
+    ...JSON.parse(stagedStore)
+  };
 }
 
 const setting = (state = defaultState, action: any) => {
@@ -56,4 +63,20 @@ const setting = (state = defaultState, action: any) => {
   return newState;
 };
 
-export default createStore(setting);
+const store = createStore(setting);
+
+themeMedia.addEventListener('change', (e) => {
+  if (e.matches) {
+    store.dispatch({
+      type: 'changeTheme',
+      value: 'light'
+    });
+  } else {
+    store.dispatch({
+      type: 'changeTheme',
+      value: 'dark'
+    });
+  }
+});
+
+export default store;
