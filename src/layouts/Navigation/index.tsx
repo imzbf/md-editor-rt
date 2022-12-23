@@ -15,6 +15,7 @@ export default () => {
           docs: '文档',
           demo: '示例',
           github: '源码',
+          grammar: '语法',
           about: '关于',
           lang: 'English',
           langIcon: '#icon-d-en',
@@ -25,6 +26,7 @@ export default () => {
           docs: 'Docs',
           demo: 'Demo',
           github: 'Github',
+          grammar: 'Grammar',
           about: 'About',
           lang: '中文',
           langIcon: '#icon-d-cn',
@@ -65,6 +67,14 @@ export default () => {
           </svg>
           {linkNames.github}
         </a>
+      </li>
+      <li className="nav-item">
+        <Link to="/md-editor-rt/grammar">
+          <svg className="icon" aria-hidden="true">
+            <use xlinkHref="#icon-grammar"></use>
+          </svg>
+          {linkNames.grammar}
+        </Link>
       </li>
       <li className="nav-item">
         <Link to="/md-editor-rt/about">

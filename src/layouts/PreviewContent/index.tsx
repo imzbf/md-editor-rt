@@ -7,6 +7,7 @@ import { debounce } from '@/utils';
 interface IzPreviewContentProp {
   editorId: string;
   modelValue: string;
+  showCodeRowNumber: boolean;
 }
 
 const onHtmlChanged = debounce(() => {
@@ -42,12 +43,16 @@ const IzPreviewContent = (props: IzPreviewContentProp) => {
         modelValue={props.modelValue}
         previewTheme={state.previewTheme}
         previewOnly
-        showCodeRowNumber
+        showCodeRowNumber={props.showCodeRowNumber}
         codeTheme={state.codeTheme}
         onHtmlChanged={onHtmlChanged}
       />
     </div>
   );
+};
+
+IzPreviewContent.defaultProps = {
+  showCodeRowNumber: true
 };
 
 export default IzPreviewContent;
