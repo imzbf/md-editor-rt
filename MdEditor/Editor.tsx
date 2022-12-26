@@ -135,7 +135,6 @@ const Editor = forwardRef((props: EditorProp, ref: ForwardedRef<unknown>) => {
 
   useEffect(() => {
     return () => {
-      console.log('清空所有的事件监听');
       // 清空所有的事件监听
       bus.clear(editorId);
     };
