@@ -8,8 +8,7 @@ import {
   setPosition,
   scrollAuto,
   generateCodeRowNumber,
-  getSelectionText,
-  debounce
+  getSelectionText
 } from '../../utils';
 import { directive2flag, ToolDirective } from '../../utils/content-help';
 import bus from '../../utils/event-bus';
@@ -876,23 +875,19 @@ export const useZoom = (props: EditorContentProp, html: string) => {
   const { editorId } = useContext(EditorContext);
 
   useEffect(() => {
-    const zoomHander = debounce(() => {
-      const imgs = Array.from(
-        document.querySelectorAll(`#${editorId}-preview img[zoom]`)
-      ).filter(
-        (item) => !item.classList.contains('medium-zoom-image')
-      ) as HTMLImageElement[];
+    const zoomHander = () => {
+      const imgs = document.querySelectorAll(`#${editorId}-preview img[zoom]`);
 
-      if (imgs.length === 0) {
-        return;
-      }
-
-      mediumZoom(imgs, {
+      const zoom = mediumZoom(imgs, {
         background: '#00000073'
       });
-    });
 
-    zoomHander();
+      return () => {
+        zoom.detach();
+      };
+    };
+
+    return zoomHander();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [html, props.setting]);
 };
