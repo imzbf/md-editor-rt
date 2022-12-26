@@ -891,11 +891,15 @@ const Toolbar = (props: ToolbarProp) => {
   }, [toolbars, toolbarsExclude, barRender]);
 
   return (
-    <div className={`${prefix}-toolbar-wrapper`} id={wrapperId}>
-      <div className={`${prefix}-toolbar`}>
-        <div className={`${prefix}-toolbar-left`}>{splitedbar[0]}</div>
-        <div className={`${prefix}-toolbar-right`}>{splitedbar[1]}</div>
-      </div>
+    <>
+      {toolbars.length > 0 && (
+        <div className={`${prefix}-toolbar-wrapper`} id={wrapperId}>
+          <div className={`${prefix}-toolbar`}>
+            <div className={`${prefix}-toolbar-left`}>{splitedbar[0]}</div>
+            <div className={`${prefix}-toolbar-right`}>{splitedbar[1]}</div>
+          </div>
+        </div>
+      )}
       <input
         ref={uploadRef}
         accept="image/*"
@@ -910,7 +914,7 @@ const Toolbar = (props: ToolbarProp) => {
         onCancel={onCancel}
         onOk={onOk}
       />
-    </div>
+    </>
   );
 };
 
