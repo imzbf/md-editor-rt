@@ -9,7 +9,7 @@ import { HoverData } from './TableShape';
 import { CHANGE_FULL_SCREEN } from '../../static/event-name';
 
 export const useSreenfull = (props: ToolbarProp) => {
-  const { previewOnly, editorId } = useContext(EditorContext);
+  const { editorId } = useContext(EditorContext);
   const screenfullConfig = configOption.editorExtensions?.screenfull;
   let screenfull = screenfullConfig?.instance;
   // 是否组件内部全屏标识
@@ -48,7 +48,7 @@ export const useSreenfull = (props: ToolbarProp) => {
   useEffect(() => {
     let screenScript: HTMLScriptElement;
     // 非预览模式且未提供screenfull时请求cdn
-    if (!previewOnly && !screenfull) {
+    if (!screenfull) {
       screenScript = document.createElement('script');
       screenScript.src = screenfullConfig?.js || screenfullUrl;
       screenScript.onload = () => {
@@ -72,7 +72,7 @@ export const useSreenfull = (props: ToolbarProp) => {
     }
 
     // 提供了对象直接监听事件，未提供通过screenfullLoad触发
-    if (!previewOnly && screenfull && screenfull.isEnabled) {
+    if (screenfull && screenfull.isEnabled) {
       screenfull.on('change', () => {
         props.updateSetting('fullscreen', screenfullMe.current);
 
@@ -85,13 +85,11 @@ export const useSreenfull = (props: ToolbarProp) => {
   }, []);
 
   useEffect(() => {
-    if (!previewOnly) {
-      // 注册切换全屏监听
-      bus.on(editorId, {
-        name: CHANGE_FULL_SCREEN,
-        callback: fullscreenHandler
-      });
-    }
+    // 注册切换全屏监听
+    bus.on(editorId, {
+      name: CHANGE_FULL_SCREEN,
+      callback: fullscreenHandler
+    });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
