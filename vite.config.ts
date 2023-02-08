@@ -38,6 +38,9 @@ export default ({ mode }: ConfigEnv): UserConfigExport => {
           javascriptEnabled: true
         }
       }
+    },
+    esbuild: {
+      logOverride: { 'this-is-undefined-in-esm': 'silent' }
     }
   };
 };
