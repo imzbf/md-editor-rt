@@ -4,7 +4,7 @@ import Head from 'next/head';
 import styles from '../styles/Home.module.css';
 
 export default function Home() {
-  const [text, setText] = useState('Hello!');
+  const [text, setText] = useState('# md-editor-v3');
 
   return (
     <div className={styles.container}>
