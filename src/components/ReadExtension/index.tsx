@@ -9,6 +9,15 @@ interface ReadExtensionProp {
 
 const ModalToolbar = MdEditor.ModalToolbar;
 
+/**
+ * modal-toolbar组件不会再关闭时销毁子组件，这时需要区别预览扩展组件的标题ID生成方式和编辑器的标题ID生成方式
+ *
+ * @see https://github.com/imzbf/md-editor-v3/issues/207
+ **/
+const readingHeadingId = (_text: string, _level: number, index: number) => {
+  return `read-ex-heading-${index}`;
+};
+
 const ReadExtension = (props: ReadExtensionProp) => {
   const [state, setState] = useState({
     visible: false,
@@ -50,27 +59,24 @@ const ReadExtension = (props: ReadExtensionProp) => {
         </svg>
       }
     >
-      {state.visible ? (
-        <div
-          style={{
-            height: '100%',
-            padding: '20px',
-            overflow: 'auto'
-          }}
-        >
-          <MdEditor
-            theme={store.theme}
-            language={store.lang}
-            previewTheme={store.previewTheme}
-            codeTheme={store.codeTheme}
-            editorId="edit2preview"
-            previewOnly
-            modelValue={props.mdText}
-          />
-        </div>
-      ) : (
-        <></>
-      )}
+      <div
+        style={{
+          height: '100%',
+          padding: '20px',
+          overflow: 'auto'
+        }}
+      >
+        <MdEditor
+          theme={store.theme}
+          language={store.lang}
+          previewTheme={store.previewTheme}
+          codeTheme={store.codeTheme}
+          editorId="edit2preview"
+          previewOnly
+          modelValue={props.mdText}
+          markedHeadingId={readingHeadingId}
+        />
+      </div>
     </ModalToolbar>
   );
 };
