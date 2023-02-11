@@ -406,30 +406,29 @@
 
   构造标题`ID`的生成方式，在使用`MdEditor.config`定义了`renderer.heading`后，避免目录导航等失效。
 
-  例：
-
-  1. 配置 renderer
-
-  ```js
+  ```jsx
   import MdEditor from 'md-editor-rt';
+  import 'md-editor-rt/lib/style.css';
 
-  const generateId = (_text, _level, index) => `heading-${index}`;
-
+  // 1. 配置 renderer
   MdEditor.config({
     markedRenderer(renderer) {
-      renderer.heading = (text, level) => {
-        const id = generateId(text, level);
-        return `<h${level} id="${id}">${text}</h${level}>`;
+      // 这里的'headingId'是通过你提供的'markedHeadingId'方法生成的。
+      renderer.heading = (text, level, _r, _s, _index, headingId) => {
+        // 这种方式通常用与处理使用配置了 'renderer.heading'，
+        // 同时又设置的具体编辑器的'markedHeadingId'属性带来的优先级问题。
+        return `<h${level} id="${headingId}">${text}</h${level}>`;
       };
       return renderer;
     }
   });
-  ```
 
-  2. 配置`markedHeadingId`
+  const generateId = (_text, _level, index) => `heading-${index}`;
 
-  ```jsx
-  <MdEditor markedHeadingId={generateId} />
+  // 2. 配置`markedHeadingId`
+  const App = () => {
+    return <MdEditor markedHeadingId={generateId} />;
+  };
   ```
 
 ---
@@ -899,16 +898,36 @@ editorRef.current?.focus();
 
   MdEditor.config({
     markedRenderer(renderer) {
-      renderer.heading = (text, level, raw, s, index) => {
-        return `<h${level} id="heading-${index}">${text}</h${level}>`;
+      // 这里的'headingId'是通过你提供的'markedHeadingId'方法生成的。
+      renderer.heading = (text, level, _raw, _s, _index, headingId) => {
+        // 这种方式通常用与处理使用配置了 'renderer.heading'，
+        // 同时又设置的具体编辑器的'markedHeadingId'属性带来的优先级问题。
+        return `<h${level} id="${headingId}">${text}</h${level}>`;
       };
 
       return renderer;
     }
   });
+
+  const markedHeadingId = (_text, _level, index) => `heading-${index}`;
+
+  export default () => {
+    return <MdEditor markedHeadingId={markedHeadingId} />;
+  };
   ```
 
-  > 参考：https://marked.js.org/using_pro#renderer，RewriteRenderer 继承了 Renderer 并重写了 heading 方法，提供了第 5 入参 index。
+  > 参考：https://marked.js.org/using_pro#renderer，RewriteRenderer 继承了 Renderer 并重写了 heading 方法，提供了第 5 入参 index 和第 6 入参 `headingId`。
+  >
+  > ```ts
+  > export type RewriteHeading = (
+  >   text: string,
+  >   level: 1 | 2 | 3 | 4 | 5 | 6,
+  >   raw: string,
+  >   slugger: Slugger,
+  >   index: number,
+  >   headingId: string
+  > ) => string;
+  > ```
 
 - markedExtensions: `Array<marked.TokenizerExtension & marked.RendererExtension>`
 
