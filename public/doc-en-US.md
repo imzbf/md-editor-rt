@@ -1072,7 +1072,7 @@ Custom `marked renderer` in `MdEditor.config(option: ConfigOption)`.
 
   </details>
 
-## 🪡 Shortcut key
+## 🪡 Shortcut Keys
 
 !!! warning Pay attention
 
@@ -1336,6 +1336,6 @@ export default () => {
 
 ---
 
-## ✍️ Edit this page
+## ✍️ Edit This Page
 
 [doc-en-US](https://github.com/imzbf/md-editor-rt/blob/dev-docs/public/doc-en-US.md)

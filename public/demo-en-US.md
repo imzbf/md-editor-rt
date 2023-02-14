@@ -441,7 +441,7 @@ export default () => {
   };
   ```
 
-### 🪚 Define toolbar
+### 🪚 Define Toolbar
 
 > after v1.2.0, You can sort the toolbar as you like, split tools by `'-'`, the left and right toolbars are divided by `'='`!
 
@@ -557,7 +557,7 @@ export default () => {
 
 > Tips: While import highlight styles by yourself, editor will not be able to change code styles.
 
-## 🔒 xss
+## 🔒 XSS
 
 after`1.3.0`, please use `sanitize` to sanitize `html`. eg: `sanitize-html`
 
@@ -576,6 +576,6 @@ export default () => {
 };
 ```
 
-## 🧻 Edit this page
+## 🧻 Edit This Page
 
 [demo-en-US](https://github.com/imzbf/md-editor-rt/blob/dev-docs/public/demo-en-US.md)
