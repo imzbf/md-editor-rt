@@ -4,6 +4,8 @@ import { HeadList, MarkedHeadingId, Themes } from '../../type';
 import CatalogLink from './CatalogLink';
 import { defaultProps, prefix } from '../../config';
 import { throttle, getRelativeTop } from '../../utils';
+import { PREVIEW_CHANGED } from '../../static/event-name';
+
 import './style.less';
 
 export interface TocItem {
@@ -100,6 +102,9 @@ const MdCatalog = (props: CatalogProps) => {
     return props.scrollElement || `#${editorId}-preview-wrapper`;
   });
 
+  // 预览内容状态
+  const [previewVisible, setPreiviewVisible] = useState(true);
+
   useEffect(() => {
     bus.on(editorId, {
       name: 'catalogChanged',
@@ -121,12 +126,23 @@ const MdCatalog = (props: CatalogProps) => {
       }
     });
 
+    bus.on(editorId, {
+      name: PREVIEW_CHANGED,
+      callback(status: boolean) {
+        setPreiviewVisible(status);
+      }
+    });
+
     // 主动触发一次接收
     bus.emit(editorId, 'pushCatalog');
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
+    if (!previewVisible) {
+      return;
+    }
+
     const _scrollElement =
       scrollElement instanceof HTMLElement
         ? scrollElement
@@ -193,7 +209,7 @@ const MdCatalog = (props: CatalogProps) => {
     return () => {
       scrollContainer?.removeEventListener('scroll', scrollHandler);
     };
-  }, [props.offsetTop, list, markedHeadingId, scrollElement]);
+  }, [props.offsetTop, list, markedHeadingId, scrollElement, previewVisible]);
 
   return (
     <div
