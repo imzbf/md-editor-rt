@@ -359,6 +359,25 @@ export const useMarked = (props: EditorContentProp) => {
   const [renderer] = useState(() => {
     let renderer = new marked.Renderer();
 
+    // 1. 设定可被覆盖的内部模块渲染方式
+    // 1.1 图片
+    renderer.image = (href, title, desc) => {
+      return `<span class="figure"><img src="${href}" title="${title || ''}" alt="${
+        desc || ''
+      }" zoom><span class="figcaption">${desc || ''}</span></span>`;
+    };
+    // 1.2 列表
+    renderer.listitem = (text: string, task: boolean) => {
+      return task ? `<li class="li-task">${text}</li>` : `<li>${text}</li>`;
+    };
+
+    // 2. 设定自定义的renderer
+    if (markedRenderer instanceof Function) {
+      renderer = markedRenderer(renderer) as Renderer;
+    }
+
+    // 3. 设定内部携带不可覆盖逻辑的模块
+    // 3.1 代码
     const markedCode = renderer.code;
     renderer.code = (code, language, isEscaped) => {
       if (!props.noMermaid && language === 'mermaid') {
@@ -387,30 +406,10 @@ export const useMarked = (props: EditorContentProp) => {
       return markedCode.call(renderer, code, language, isEscaped);
     };
 
-    renderer.image = (href, title, desc) => {
-      return `<span class="figure"><img src="${href}" title="${title || ''}" alt="${
-        desc || ''
-      }" zoom><span class="figcaption">${desc || ''}</span></span>`;
-    };
-
-    renderer.listitem = (text: string, task: boolean) => {
-      if (task) {
-        return `<li class="li-task">${text}</li>`;
-      }
-      return `<li>${text}</li>`;
-    };
-
-    // 保存默认heading，对比是否更新过
-    const markedheading = renderer.heading;
-
-    if (markedRenderer instanceof Function) {
-      renderer = markedRenderer(renderer) as Renderer;
-    }
-
-    // ========heading========start
-    // 判断是否有重写heading
+    // 3.2 标题
     const newHeading = renderer.heading;
-    const isNewHeading = markedheading !== newHeading;
+    // 判断是否有重写heading
+    const isNewHeading = newHeading !== new marked.Renderer().heading;
 
     renderer.heading = (text, level, raw, slugger) => {
       heads.current.push({ text: raw, level });
@@ -438,13 +437,9 @@ export const useMarked = (props: EditorContentProp) => {
         return `<h${level} id="${id}"><a href="#${id}">${raw}</a></h${level}>`;
       }
     };
-    // ========heading========end
 
-    marked.setOptions({
-      breaks: true,
-      ...markedOptions
-    });
-
+    // 4. 设定option
+    // 4.1
     // 提供了hljs，在创建阶段即完成设置
     if (highlightIns) {
       marked.setOptions({
@@ -467,13 +462,20 @@ export const useMarked = (props: EditorContentProp) => {
       });
     }
 
-    // 自定义的marked扩展
+    // 4.2 自定义option覆盖
+    marked.setOptions({
+      breaks: true,
+      ...markedOptions
+    });
+
+    // 5. 设置自定义的marked扩展
     if (markedExtensions instanceof Array && markedExtensions.length > 0) {
       marked.use({
         extensions: markedExtensions
       });
     }
 
+    // 5.1 内部扩展扩展
     marked.use({
       extensions: [alertExtension]
     });
