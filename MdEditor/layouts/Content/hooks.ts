@@ -588,14 +588,22 @@ export const useMarked = (props: EditorContentProp) => {
     document
       .querySelectorAll(`#${editorId} .${prefix}-preview pre`)
       .forEach((pre: Element) => {
+        // 恢复进程ID
+        let clearTimer = -1;
         // 移除旧的按钮
         pre.querySelector('.copy-button')?.remove();
 
         const copyBtnText = usedLanguageText.copyCode?.text || '复制代码';
         const copyButton = document.createElement('span');
         copyButton.setAttribute('class', 'copy-button');
-        copyButton.innerText = copyBtnText;
+        copyButton.dataset.tips = copyBtnText;
+
+        copyButton.innerHTML = `<svg class="${prefix}-icon" aria-hidden="true"><use xlink:href="#${prefix}-icon-copy"></use></svg>`;
+
         copyButton.addEventListener('click', () => {
+          // 多次点击移除上次的恢复进程
+          clearTimeout(clearTimer);
+
           const codeText = (pre.querySelector('code') as HTMLElement).innerText;
 
           const success = copy(formatCopiedText(codeText));
@@ -603,10 +611,10 @@ export const useMarked = (props: EditorContentProp) => {
           const succssTip = usedLanguageText.copyCode?.successTips || '已复制！';
           const failTip = usedLanguageText.copyCode?.failTips || '已复制！';
 
-          copyButton.innerText = success ? succssTip : failTip;
+          copyButton.dataset.tips = success ? succssTip : failTip;
 
-          setTimeout(() => {
-            copyButton.innerText = copyBtnText;
+          clearTimer = window.setTimeout(() => {
+            copyButton.dataset.tips = copyBtnText;
           }, 1500);
         });
         pre.appendChild(copyButton);
