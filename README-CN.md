@@ -99,7 +99,7 @@ export default () => {
 | footers | `Array<'markdownTotal' \| '=' \| 'scrollSwitch' \| number>` | ['markdownTotal', '=', 'scrollSwitch'] | 页脚显示内容，`=`左右分割，设置为`[]`不显示页脚 |
 | scrollAuto | `boolean` | true | 默认左右滚动状态 |
 | defFooters | `Array<string \| ReactElement>` | [] | 自定义扩展页脚 |
-| noIconfont | `boolean` | false | 不插入 iconfont 链接，你可以[下载](https://at.alicdn.com/t/c/font_2605852_gymddm8qwtd.js)到本地自行引入 |
+| noIconfont | `boolean` | false | 不插入 iconfont 链接，你可以[下载](https://at.alicdn.com/t/c/font_2605852_u82y61ve02.js)到本地自行引入 |
 | formatCopiedText | `(text: string) => string` | (text: string) => text | 格式化复制代码 |
 | noUploadImg | `boolean` | false | 不展示上传图片选项 |
 | codeStyleReverse | `boolean` | true | 代码块为暗色背景的预览主题，将代码风格设置为暗色风格 |
