@@ -277,6 +277,8 @@ export interface StaticTextDefaultValue {
 | onHtmlChanged | `html: string` | html 变化回调事件，用于获取预览 html 代码 |
 | onGetCatalog | `list: Array<HeadList>` | 动态获取`markdown`目录 |
 | onError | `error: { name: string; message: string }` | 运行错误反馈事件，目前包括`Cropper`、`fullscreen`、`prettier`实例未加载完成操作错误 |
+| onBlur | `event: FocusEvent<HTMLTextAreaElement, Element>` | 输入框失去焦点时触发事件 |
+| onFocus | `event: FocusEvent<HTMLTextAreaElement, Element>` | 输入框获得焦点时触发事件 |
 
 ## 🤱🏼 实例暴露
 

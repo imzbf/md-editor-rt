@@ -272,6 +272,8 @@ export interface StaticTextDefaultValue {
 | onHtmlChanged | `html: string` | Compile markdown successful event, you can use it to get the html code |
 | onGetCatalog | `list: Array<HeadList>` | Get catalog of article |
 | onError | `error: { name: string; message: string }` | Catch run-time error, `Cropper`, `fullscreen` and `prettier` are used when they are not loaded |
+| onBlur | `event: FocusEvent<HTMLTextAreaElement, Element>` | Blur the `textarea` element |
+| onFocus | `event: FocusEvent<HTMLTextAreaElement, Element>` | Focus the `textarea` element |
 
 ## 🤱🏼 Expose
 
