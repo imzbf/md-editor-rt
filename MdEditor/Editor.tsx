@@ -194,6 +194,8 @@ const Editor = forwardRef((props: EditorProp, ref: ForwardedRef<unknown>) => {
           readOnly={props.readOnly}
           maxLength={props.maxLength}
           autoDetectCode={props.autoDetectCode}
+          onBlur={props.onBlur}
+          onFocus={props.onFocus}
         />
         {!staticProps.previewOnly && footers?.length > 0 && (
           <Footer

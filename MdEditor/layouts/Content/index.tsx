@@ -1,4 +1,4 @@
-import React, { useContext, useMemo, useRef } from 'react';
+import React, { useContext, useMemo, useRef, FocusEvent } from 'react';
 import { prefix } from '../../config';
 import { EditorContext } from '../../Editor';
 import { SettingType, HeadList, MarkedHeadingId } from '../../type';
@@ -33,6 +33,14 @@ export type EditorContentProp = Readonly<{
   readOnly?: boolean;
   maxLength?: number;
   autoDetectCode?: boolean;
+  /**
+   * 输入框失去焦点时触发事件
+   */
+  onBlur?: (event: FocusEvent<HTMLTextAreaElement, Element>) => void;
+  /**
+   * 输入框获得焦点时触发事件
+   */
+  onFocus?: (event: FocusEvent<HTMLTextAreaElement, Element>) => void;
 }>;
 
 const Content = (props: EditorContentProp) => {
@@ -75,7 +83,9 @@ const Content = (props: EditorContentProp) => {
       'sanitize',
       'scrollAuto',
       'setting',
-      'autoDetectCode'
+      'autoDetectCode',
+      'onBlur',
+      'onFocus'
     ]);
   }, [props]);
 
@@ -87,11 +97,16 @@ const Content = (props: EditorContentProp) => {
             <textarea
               {...attr}
               id={`${editorId}-textarea`}
+              className={
+                props.setting.preview || props.setting.htmlPreview ? '' : 'textarea-only'
+              }
               ref={textAreaRef}
-              onBlur={() => {
+              onBlur={(e) => {
                 // 失焦自动保存当前选中内容
                 bus.emit(editorId, 'selectTextChange');
+                props.onBlur && props.onBlur(e);
               }}
+              onFocus={props.onFocus}
               onKeyDown={() => {
                 bus.emit(editorId, 'saveHistoryPos', true);
               }}
@@ -104,9 +119,6 @@ const Content = (props: EditorContentProp) => {
               onCompositionEnd={() => {
                 completeStatus.current = true;
               }}
-              className={
-                props.setting.preview || props.setting.htmlPreview ? '' : 'textarea-only'
-              }
             />
           </div>
         )}

@@ -1,4 +1,4 @@
-import { CSSProperties, ReactElement } from 'react';
+import { CSSProperties, ReactElement, FocusEvent } from 'react';
 import type { marked, Renderer, Slugger } from 'marked';
 
 declare global {
@@ -387,6 +387,14 @@ export interface EditorProp {
    * @default false
    */
   autoDetectCode?: boolean;
+  /**
+   * 输入框失去焦点时触发事件
+   */
+  onBlur?: (event: FocusEvent<HTMLTextAreaElement, Element>) => void;
+  /**
+   * 输入框获得焦点时触发事件
+   */
+  onFocus?: (event: FocusEvent<HTMLTextAreaElement, Element>) => void;
 }
 
 export interface ContentType {
