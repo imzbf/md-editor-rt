@@ -20,6 +20,7 @@ import { appendHandler, updateHandler } from '../../utils/dom';
 import kaTexExtensions from '../../utils/katex';
 import alertExtension from '../../utils/alert';
 import { TEXTAREA_FOCUS } from '../../static/event-name';
+import { isServer } from '../../static/env';
 
 interface HistoryItemType {
   // 记录内容
@@ -386,23 +387,34 @@ export const useMarked = (props: EditorContentProp) => {
         const idRand = uuid();
 
         try {
-          // 服务端渲染，如果提供了mermaid，就生成svg
-          // mermaid@10以后，不在服务端生成svg
-          if (mermaidIns && typeof window !== 'undefined') {
-            mermaidTasks.current.push(mermaidIns.render(idRand, code));
-          }
-          // 没有提供，则判断window对象是否可用，不可用则反回待解析的结构，在页面引入后再解析
-          else if (typeof window !== 'undefined' && window.mermaid) {
-            mermaidTasks.current.push(window.mermaid.render(idRand, code));
-          } else {
-            // 这块代码不会正确展示在页面上
+          // ==========
+          //   服务端
+          // ==========
+          if (isServer) {
+            // 无论是否提供实例，mermaid均不支持在node运行
+            // 这块图源码不会正确显示在页面上，但可被搜索引擎捕获
             return `<p class="${prefix}-mermaid-loading">${code}</p>`;
           }
+          // ==========
+          //   客户端
+          // ==========
+          else {
+            const mermaid = mermaidIns || window.mermaid;
 
-          mermaidIds.current.push(`=m=${idRand}=m=`);
+            if (mermaid) {
+              mermaidTasks.current.push(mermaid.mermaidAPI.render(idRand, code));
+            } else {
+              // 这块图源码不会正确展示在页面上
+              return `<p class="${prefix}-mermaid-loading">${code}</p>`;
+            }
+          }
+
+          const mermaidTemplate = `<script type="text/tmplate"<${idRand}</script>`;
+
+          mermaidIds.current.push(mermaidTemplate);
 
           // 返回占位符
-          return `=m=${idRand}=m=`;
+          return mermaidTemplate;
         } catch (error: any) {
           // 兼容@9及以下的错误提示
           return `<p class="${prefix}-mermaid-error">Error: ${error?.message || ''}</p>`;
@@ -643,10 +655,12 @@ export const useMermaid = (props: EditorContentProp) => {
       // 提供了外部实例
       if (mermaidConf?.instance) {
         mermaidConf?.instance.initialize({
+          startOnLoad: false,
           theme: theme === 'dark' ? 'dark' : 'default'
         });
       } else if (window.mermaid) {
         window.mermaid.initialize({
+          startOnLoad: false,
           theme: theme === 'dark' ? 'dark' : 'default'
         });
       }
@@ -664,13 +678,14 @@ export const useMermaid = (props: EditorContentProp) => {
       const jsSrc = mermaidConf?.js || mermaidUrl;
       if (/\.mjs/.test(jsSrc)) {
         mermaidScript.setAttribute('type', 'module');
-        mermaidScript.innerHTML = `import mermaid from "${jsSrc}";window.mermaid=mermaid;`;
+        mermaidScript.innerHTML = `import mermaid from "${jsSrc}";window.mermaid=mermaid;document.getElementById('${prefix}-mermaid').onload();`;
       } else {
         mermaidScript.src = jsSrc;
       }
 
       mermaidScript.onload = () => {
         window.mermaid.initialize({
+          startOnLoad: false,
           theme: theme === 'dark' ? 'dark' : 'default',
           logLevel: import.meta.env.MODE === 'development' ? 'Error' : 'Fatal'
         });
