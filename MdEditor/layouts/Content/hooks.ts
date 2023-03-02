@@ -205,6 +205,12 @@ export const useHistory = (
   }, [keyZCallback, saveHistoryPos]);
 };
 
+/**
+ * 处理输入框中的一些交互事件，例如：列表回车生成一个新的空行列表等
+ *
+ * @param props ContentProps
+ * @param textAreaRef 输入框
+ */
 export const useAutoGenrator = (
   props: EditorContentProp,
   textAreaRef: RefObject<HTMLTextAreaElement>
@@ -332,12 +338,8 @@ export const useAutoGenrator = (
 };
 
 export const useMarked = (props: EditorContentProp) => {
-  const {
-    onHtmlChanged = () => {},
-    onGetCatalog = () => {},
-    formatCopiedText = (t: string) => t
-  } = props;
-  const { editorId, usedLanguageText, showCodeRowNumber, highlight, previewOnly } =
+  const { onHtmlChanged = () => {}, onGetCatalog = () => {} } = props;
+  const { editorId, showCodeRowNumber, highlight, previewOnly } =
     useContext(EditorContext);
 
   const { markedRenderer, markedOptions, markedExtensions, editorConfig } = configOption;
@@ -620,54 +622,13 @@ export const useMarked = (props: EditorContentProp) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  useEffect(() => {
-    // 重新设置复制按钮
-    document
-      .querySelectorAll(`#${editorId} .${prefix}-preview pre`)
-      .forEach((pre: Element) => {
-        // 恢复进程ID
-        let clearTimer = -1;
-        // 移除旧的按钮
-        pre.querySelector('.copy-button')?.remove();
-
-        const copyBtnText = usedLanguageText.copyCode?.text || '复制代码';
-        const copyButton = document.createElement('span');
-        copyButton.setAttribute('class', 'copy-button');
-        copyButton.dataset.tips = copyBtnText;
-
-        copyButton.innerHTML = `<svg class="${prefix}-icon" aria-hidden="true"><use xlink:href="#${prefix}-icon-copy"></use></svg>`;
-
-        copyButton.addEventListener('click', () => {
-          // 多次点击移除上次的恢复进程
-          clearTimeout(clearTimer);
-
-          const codeText = (pre.querySelector('code') as HTMLElement).innerText;
-
-          const success = copy(formatCopiedText(codeText));
-
-          const succssTip = usedLanguageText.copyCode?.successTips || '已复制！';
-          const failTip = usedLanguageText.copyCode?.failTips || '已复制！';
-
-          copyButton.dataset.tips = success ? succssTip : failTip;
-
-          clearTimer = window.setTimeout(() => {
-            copyButton.dataset.tips = copyBtnText;
-          }, 1500);
-        });
-        pre.appendChild(copyButton);
-      });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [
-    formatCopiedText,
-    html,
-    usedLanguageText.copyCode?.failTips,
-    usedLanguageText.copyCode?.successTips,
-    usedLanguageText.copyCode?.text
-  ]);
-
   return { html };
 };
 
+/**
+ * 注册mermaid扩展到marked
+ *
+ */
 export const useMermaid = (props: EditorContentProp) => {
   const { theme } = useContext(EditorContext);
 
@@ -784,7 +745,8 @@ export const useAutoScroll = (
   previewRef: RefObject<HTMLElement>,
   htmlRef: RefObject<HTMLElement>
 ) => {
-  const { previewOnly } = useContext(EditorContext);
+  const { previewOnly, editorId, usedLanguageText } = useContext(EditorContext);
+  const { formatCopiedText = (t: string) => t } = props;
   const [scrollCb, setScrollCb] = useState({
     clear() {},
     init() {}
@@ -860,6 +822,54 @@ export const useAutoScroll = (
     props.scrollAuto,
     props.setting.preview,
     props.setting.htmlPreview
+  ]);
+
+  useEffect(() => {
+    if (props.setting.preview) {
+      // 重新设置复制按钮
+      document
+        .querySelectorAll(`#${editorId} .${prefix}-preview pre`)
+        .forEach((pre: Element) => {
+          // 恢复进程ID
+          let clearTimer = -1;
+          // 移除旧的按钮
+          pre.querySelector('.copy-button')?.remove();
+
+          const copyBtnText = usedLanguageText.copyCode?.text || '复制代码';
+          const copyButton = document.createElement('span');
+          copyButton.setAttribute('class', 'copy-button');
+          copyButton.dataset.tips = copyBtnText;
+
+          copyButton.innerHTML = `<svg class="${prefix}-icon" aria-hidden="true"><use xlink:href="#${prefix}-icon-copy"></use></svg>`;
+
+          copyButton.addEventListener('click', () => {
+            // 多次点击移除上次的恢复进程
+            clearTimeout(clearTimer);
+
+            const codeText = (pre.querySelector('code') as HTMLElement).innerText;
+
+            const success = copy(formatCopiedText(codeText));
+
+            const succssTip = usedLanguageText.copyCode?.successTips || '已复制！';
+            const failTip = usedLanguageText.copyCode?.failTips || '已复制！';
+
+            copyButton.dataset.tips = success ? succssTip : failTip;
+
+            clearTimer = window.setTimeout(() => {
+              copyButton.dataset.tips = copyBtnText;
+            }, 1500);
+          });
+          pre.appendChild(copyButton);
+        });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [
+    formatCopiedText,
+    html,
+    props.setting.preview,
+    usedLanguageText.copyCode?.failTips,
+    usedLanguageText.copyCode?.successTips,
+    usedLanguageText.copyCode?.text
   ]);
 };
 
