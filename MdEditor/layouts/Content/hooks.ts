@@ -8,7 +8,8 @@ import {
   setPosition,
   scrollAuto,
   generateCodeRowNumber,
-  getSelectionText
+  getSelectionText,
+  uuid
 } from '../../utils';
 import { directive2flag, ToolDirective } from '../../utils/content-help';
 import bus from '../../utils/event-bus';
@@ -349,12 +350,11 @@ export const useMarked = (props: EditorContentProp) => {
   });
 
   const heads = useRef<HeadList[]>([]);
-  // const heading: MarkedHeading = (...headProps) => {
-  //   const [, level, raw] = headProps;
-  //   heads.current.push({ text: raw, level });
 
-  //   return props.markedHeading(...headProps);
-  // };
+  // mermaid@10以后不再提供同步方法
+  // 调整为ID站位，异步转译后替换
+  const mermaidTasks = useRef<Array<Promise<any>>>([]);
+  const mermaidIds = useRef<Array<string>>([]);
 
   const [renderer] = useState(() => {
     let renderer = new marked.Renderer();
@@ -381,24 +381,28 @@ export const useMarked = (props: EditorContentProp) => {
     const markedCode = renderer.code;
     renderer.code = (code, language, isEscaped) => {
       if (!props.noMermaid && language === 'mermaid') {
-        const idRand = `${prefix}-mermaid-${Date.now().toString(36)}`;
+        const idRand = uuid();
 
         try {
-          let svgCode = '';
           // 服务端渲染，如果提供了mermaid，就生成svg
-          if (mermaidIns) {
-            svgCode = mermaidIns.render(idRand, code);
+          // mermaid@10以后，不在服务端生成svg
+          if (mermaidIns && typeof window !== 'undefined') {
+            mermaidTasks.current.push(mermaidIns.render(idRand, code));
           }
           // 没有提供，则判断window对象是否可用，不可用则反回待解析的结构，在页面引入后再解析
           else if (typeof window !== 'undefined' && window.mermaid) {
-            svgCode = window.mermaid.render(idRand, code);
+            mermaidTasks.current.push(window.mermaid.render(idRand, code));
           } else {
             // 这块代码不会正确展示在页面上
-            svgCode = `<p class="${prefix}-mermaid-loading">${code}</p>`;
+            return `<p class="${prefix}-mermaid-loading">${code}</p>`;
           }
 
-          return `<p class="${prefix}-mermaid">${svgCode}</p>`;
+          mermaidIds.current.push(`=m=${idRand}=m=`);
+
+          // 返回占位符
+          return `=m=${idRand}=m=`;
         } catch (error: any) {
+          // 兼容@9及以下的错误提示
           return `<p class="${prefix}-mermaid-error">Error: ${error?.message || ''}</p>`;
         }
       }
@@ -545,19 +549,52 @@ export const useMarked = (props: EditorContentProp) => {
     return props.sanitize(marked(props.value || '', { renderer }));
   });
 
+  /**
+   * 手动替换占位符
+   */
+  const asyncReplace = async () => {
+    /**
+     * 未处理占位符的html
+     */
+    let unresolveHtml = props.sanitize(marked(props.value || '', { renderer }));
+    const taskResults = await Promise.allSettled(mermaidTasks.current);
+    taskResults.forEach((r, index) => {
+      // 正常完成，替换模板
+      if (r.status === 'fulfilled') {
+        unresolveHtml = unresolveHtml.replace(
+          mermaidIds.current[index],
+          `<p class="${prefix}-mermaid">${
+            typeof r.value === 'string' ? r.value : r.value.svg
+          }</p>`
+        );
+      } else {
+        unresolveHtml = unresolveHtml.replace(
+          mermaidIds.current[index],
+          `<p class="${prefix}-mermaid-error">${r.reason || ''}</p>`
+        );
+      }
+    });
+    // 替换后移除占位信息
+    mermaidIds.current = [];
+    mermaidTasks.current = [];
+
+    return unresolveHtml;
+  };
+
   useEffect(() => {
     const timer = setTimeout(
       () => {
         heads.current = [];
-        const _html = props.sanitize(marked(props.value || '', { renderer }));
-        onHtmlChanged(_html);
-        setHtml(_html);
-        // 构建完成，传递onSave新的html
-        bus.emit(editorId, 'buildFinished', _html);
-        // 传递标题
-        onGetCatalog(heads.current);
-        // 生成目录，
-        bus.emit(editorId, 'catalogChanged', heads.current);
+        asyncReplace().then((resolveHtml) => {
+          setHtml(resolveHtml);
+          onHtmlChanged(resolveHtml);
+          // 构建完成，传递onSave新的html
+          bus.emit(editorId, 'buildFinished', resolveHtml);
+          // 传递标题
+          onGetCatalog(heads.current);
+          // 生成目录
+          bus.emit(editorId, 'catalogChanged', heads.current);
+        });
       },
       editorConfig?.renderDelay !== undefined
         ? editorConfig?.renderDelay
@@ -662,7 +699,15 @@ export const useMermaid = (props: EditorContentProp) => {
     // 引入mermaid
     if (!props.noMermaid && !mermaidConf?.instance) {
       mermaidScript = document.createElement('script');
-      mermaidScript.src = mermaidConf?.js || mermaidUrl;
+
+      const jsSrc = mermaidConf?.js || mermaidUrl;
+      if (/\.mjs/.test(jsSrc)) {
+        mermaidScript.setAttribute('type', 'module');
+        mermaidScript.innerHTML = `import mermaid from "${jsSrc}";window.mermaid=mermaid;`;
+      } else {
+        mermaidScript.src = jsSrc;
+      }
+
       mermaidScript.onload = () => {
         window.mermaid.initialize({
           theme: theme === 'dark' ? 'dark' : 'default',
