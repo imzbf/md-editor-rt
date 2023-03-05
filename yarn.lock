@@ -1198,10 +1198,10 @@
     "@typescript-eslint/types" "5.51.0"
     eslint-visitor-keys "^3.3.0"
 
-"@vavt/md-editor-extension@^1.2.0":
-  version "1.5.0"
-  resolved "https://registry.npmjs.org/@vavt/md-editor-extension/-/md-editor-extension-1.5.0.tgz#a74fbf32a352670dad8d81a0f904510c66bd5ca7"
-  integrity sha512-WK8dYvYUnQkMTTxsNHtGbO9izjuzfwDtyYv67Hu0ot6iEMlF0fw2QCEji9f+cB9jdcGC0NAQFFpHQm76cih7zg==
+"@vavt/md-editor-extension@^2.0.0":
+  version "2.0.0"
+  resolved "https://registry.npmjs.org/@vavt/md-editor-extension/-/md-editor-extension-2.0.0.tgz#b702715ac5f2d02eb2ad8f6150e5e38c65ebb236"
+  integrity sha512-pkJkGGzy6UoEjS90WsoLWCVzhdm36MVZ8qkGaEOMq3WQiXIhQsmPrVcwDb2JvEREC8A8BtqDsX1DhFNrYaIaQQ==
 
 "@vitejs/plugin-react-refresh@^1.3.6":
   version "1.3.6"

@@ -44,7 +44,7 @@
     "build": "vite build --mode=preview"
   },
   "dependencies": {
-    "@vavt/md-editor-extension": "^1.2.0",
+    "@vavt/md-editor-extension": "^2.0.0",
     "dayjs": "^1.11.3",
     "md-editor-rt": "^2.9.0",
     "react": "^18.1.0",
