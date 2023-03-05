@@ -321,6 +321,7 @@
 
   ```jsx
   import MdEditor from 'md-editor-rt';
+  import 'md-editor-rt/lib/style.css';
 
   const NormalToolbar = MdEditor.NormalToolbar;
 
@@ -442,14 +443,16 @@
 
   使用`sanitize-html`演示
 
-  ```js
+  ```jsx
+  import MdEditor from 'md-editor-rt';
+  import 'md-editor-rt/lib/style.css';
   import sanitizeHtml from 'sanitize-html';
 
   const sanitize = (html) => sanitizeHtml(html);
-  ```
 
-  ```jsx
-  <MdEditor sanitize={sanitize} />
+  export default () => {
+    return <MdEditor sanitize={sanitize} />;
+  };
   ```
 
   > 为什么不内置到编辑器：由于类似编辑器大多属于自行处理文本，自身即可确认内容是否安全，并不需要该功能。
@@ -490,7 +493,7 @@
 - **类型**：`boolean`
 - **默认值**：`true`
 
-  不插入 iconfont 链接，你可以[下载](https://at.alicdn.com/t/c/font_2605852_gymddm8qwtd.js)到本地自行引入。
+  不插入 iconfont 链接，你可以[下载](https://at.alicdn.com/t/c/font_2605852_u82y61ve02.js)到本地自行引入。
 
   ```jsx
   import MdEditor from 'md-editor-rt';
@@ -535,12 +538,7 @@
   工具栏不显示上传图片入口。
 
   ```jsx
-  import MdEditor from 'md-editor-rt';
-  import 'md-editor-rt/lib/style.css';
-
-  export default () => {
-    return <MdEditor noUploadImg />;
-  };
+  <MdEditor noUploadImg />
   ```
 
 ---
@@ -628,6 +626,7 @@
 
   ```jsx
   import MdEditor from 'md-editor-rt';
+  import 'md-editor-rt/lib/style.css';
 
   export default () => {
     return (
@@ -652,8 +651,12 @@
 
   上传图片事件，弹窗会等待上传结果，务必将上传后的 urls 作为 callback 入参回传。
 
-```js
-async onUploadImg(files, callback) {
+```jsx
+import MdEditor from 'md-editor-rt';
+import 'md-editor-rt/lib/style.css';
+import axios from 'axios';
+
+const onUploadImg = async (files, callback) => {
   const res = await Promise.all(
     files.map((file) => {
       return new Promise((rev, rej) => {
@@ -673,7 +676,11 @@ async onUploadImg(files, callback) {
   );
 
   callback(res.map((item) => item.data.url));
-}
+};
+
+export default () => {
+  return <MdEditor onUploadImg={onUploadImg} />;
+};
 ```
 
 ---
@@ -700,15 +707,37 @@ async onUploadImg(files, callback) {
 
   捕获执行错误事件，目前支持`Cropper`、`fullscreen`、`prettier`实例未加载完成操作错误。
 
-  ```js
+  ```jsx
   const onError = (err) => {
     alert(err.message);
   };
+
+  export default () => <MdEditor onError={onError} />;
   ```
 
+---
+
+### 🐾 onBlur
+
+- **类型**：`(event: FocusEvent) => void`
+
+  输入框失去焦点时触发事件。
+
   ```jsx
-  <MdEditor onError={onError} />
+  const onBlur = (err) => {
+    console.log('onBlur', e);
+  };
+
+  export default () => <MdEditor onBlur={onBlur} />;
   ```
+
+---
+
+### 🔖 onFocus
+
+- **类型**：`(event: FocusEvent) => void`
+
+  输入框获得焦点时触发事件。
 
 ---
 
@@ -893,8 +922,9 @@ editorRef.current?.focus();
 
   设置`heading-${index}`标题 ID 🌰
 
-  ```js
+  ```jsx
   import MdEditor from 'md-editor-rt';
+  import 'md-editor-rt/lib/style.css';
 
   MdEditor.config({
     markedRenderer(renderer) {
@@ -1185,22 +1215,29 @@ editorRef.current?.focus();
   - `trigger`: `string | ReactElement`，必须，通常是个图标，用来展示在工具栏上。
 
 ```jsx
-<MdEditor
-  modelValue=""
-  editorId="md-prev"
-  defToolbars={[
-    <MdEditor.NormalToolbar
-      title="标记"
-      trigger={
-        <svg className="md-editor-icon" aria-hidden="true">
-          <use xlinkHref="#icon-mark"></use>
-        </svg>
-      }
-      onClick={console.log}
-      key="mark-toolbar"
+import MdEditor from 'md-editor-rt';
+import 'md-editor-rt/lib/style.css';
+
+export default () => {
+  return (
+    <MdEditor
+      modelValue=""
+      editorId="md-prev"
+      defToolbars={[
+        <MdEditor.NormalToolbar
+          title="标记"
+          trigger={
+            <svg className="md-editor-icon" aria-hidden="true">
+              <use xlinkHref="#icon-mark"></use>
+            </svg>
+          }
+          onClick={console.log}
+          key="mark-toolbar"
+        />
+      ]}
     />
-  ]}
-/>
+  );
+};
 ```
 
 [获取使用源码](https://github.com/imzbf/md-editor-rt/blob/docs/src/components/MarkExtension/index.tsx)
@@ -1286,62 +1323,69 @@ editorRef.current?.focus();
   - `overlay`: `string | ReactElement`，必须，下拉框中的内容。
 
 ```jsx
-<MdEditor
-  modelValue=""
-  editorId="md-prev"
-  defToolbars={[
-    <MdEditor.ModalToolbar
-      visible={state.visible}
-      isFullscreen={state.modalFullscreen}
-      showAdjust
-      title="弹窗预览"
-      modalTitle="编辑预览"
-      width="870px"
-      height="600px"
-      onClick={() => {
-        setState({
-          ...state,
-          visible: true
-        });
-      }}
-      onClose={() => {
-        setState({
-          ...state,
-          visible: false
-        });
-      }}
-      onAdjust={() => {
-        setState({
-          ...state,
-          modalFullscreen: !state.modalFullscreen
-        });
-      }}
-      trigger={
-        <svg className="md-editor-icon" aria-hidden="true">
-          <use xlinkHref="#icon-read"></use>
-        </svg>
-      }
-    >
-      <div
-        style={{
-          height: '100%',
-          padding: '20px',
-          overflow: 'auto'
-        }}
-      >
-        <MdEditor
-          theme={store.theme}
-          language={store.lang}
-          previewTheme={store.previewTheme}
-          codeTheme={store.codeTheme}
-          editorId="edit2preview"
-          previewOnly
-          modelValue={props.mdText}
-        />
-      </div>
-    </MdEditor.ModalToolbar>
-  ]}
-/>
+import MdEditor from 'md-editor-rt';
+import 'md-editor-rt/lib/style.css';
+
+export default () => {
+  return (
+    <MdEditor
+      modelValue=""
+      editorId="md-prev"
+      defToolbars={[
+        <MdEditor.ModalToolbar
+          visible={state.visible}
+          isFullscreen={state.modalFullscreen}
+          showAdjust
+          title="弹窗预览"
+          modalTitle="编辑预览"
+          width="870px"
+          height="600px"
+          onClick={() => {
+            setState({
+              ...state,
+              visible: true
+            });
+          }}
+          onClose={() => {
+            setState({
+              ...state,
+              visible: false
+            });
+          }}
+          onAdjust={() => {
+            setState({
+              ...state,
+              modalFullscreen: !state.modalFullscreen
+            });
+          }}
+          trigger={
+            <svg className="md-editor-icon" aria-hidden="true">
+              <use xlinkHref="#icon-read"></use>
+            </svg>
+          }
+        >
+          <div
+            style={{
+              height: '100%',
+              padding: '20px',
+              overflow: 'auto'
+            }}
+          >
+            <MdEditor
+              theme={store.theme}
+              language={store.lang}
+              previewTheme={store.previewTheme}
+              codeTheme={store.codeTheme}
+              editorId="edit2preview"
+              previewOnly
+              modelValue={props.mdText}
+            />
+          </div>
+        </MdEditor.ModalToolbar>
+      ]}
+    />
+  );
+};
 ```
 
 [获取使用源码](https://github.com/imzbf/md-editor-rt/blob/docs/src/components/ReadExtension/index.tsx)
@@ -1369,6 +1413,9 @@ editorRef.current?.focus();
 > `scrollElement`说明：仅预览下，该元素必须已定位的并且支持滚动。
 
 ```jsx
+import MdEditor from 'md-editor-rt';
+import 'md-editor-rt/lib/style.css';
+
 const editorId = 'my-editor';
 
 export default () => {

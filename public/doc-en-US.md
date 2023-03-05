@@ -10,7 +10,7 @@
   Markdown content.
 
   ```jsx
-  <MdEditor v-model="xxx" />
+  <MdEditor modelValue="xxx" />
   ```
 
 ---
@@ -277,6 +277,7 @@
 
   ```jsx
   import MdEditor from 'md-editor-rt';
+  import 'md-editor-rt/lib/style.css';
 
   const NormalToolbar = MdEditor.NormalToolbar;
 
@@ -398,14 +399,16 @@
 
   `sanitize-html` example:
 
-  ```js
+  ```jsx
+  import MdEditor from 'md-editor-rt';
+  import 'md-editor-rt/lib/style.css';
   import sanitizeHtml from 'sanitize-html';
 
   const sanitize = (html) => sanitizeHtml(html);
-  ```
 
-  ```jsx
-  <MdEditor sanitize={sanitize} />
+  export default () => {
+    return <MdEditor sanitize={sanitize} />;
+  };
   ```
 
 ---
@@ -444,7 +447,7 @@
 - **type**: `boolean`
 - **default**:`true`
 
-  Not append iconfont script, [download](https://at.alicdn.com/t/c/font_2605852_gymddm8qwtd.js) and import it by yourself.
+  Not append iconfont script, [download](https://at.alicdn.com/t/c/font_2605852_u82y61ve02.js) and import it by yourself.
 
   ```jsx
   import MdEditor from 'md-editor-rt';
@@ -580,6 +583,7 @@
 
   ```jsx
   import MdEditor from 'md-editor-rt';
+  import 'md-editor-rt/lib/style.css';
 
   export default () => {
     return (
@@ -604,8 +608,12 @@
 
   Upload picture event, when picture is uploading the modal will not close, please provide right urls to the callback function.
 
-```js
-async onUploadImg(files, callback) {
+```jsx
+import MdEditor from 'md-editor-rt';
+import 'md-editor-rt/lib/style.css';
+import axios from 'axios';
+
+const onUploadImg = async (files, callback) => {
   const res = await Promise.all(
     files.map((file) => {
       return new Promise((rev, rej) => {
@@ -625,7 +633,11 @@ async onUploadImg(files, callback) {
   );
 
   callback(res.map((item) => item.data.url));
-}
+};
+
+export default () => {
+  return <MdEditor onUploadImg={onUploadImg} />;
+};
 ```
 
 ---
@@ -652,15 +664,37 @@ async onUploadImg(files, callback) {
 
   Run-Time error event, only be called when `Cropper`, `fullscreen`, `prettier` is not loaded.
 
-  ```js
+  ```jsx
   const onError = (err) => {
     alert(err.message);
   };
+
+  export default () => <MdEditor onError={onError} />;
   ```
 
+---
+
+### 🐾 onBlur
+
+- **type**: `(event: FocusEvent<HTMLTextAreaElement, Element>) => void`
+
+  Blur the textarea element.
+
   ```jsx
-  <MdEditor onError={onError} />
+  const onBlur = (err) => {
+    console.log('onBlur', e);
+  };
+
+  export default () => <MdEditor onBlur={onBlur} />;
   ```
+
+---
+
+### 🔖 onFocus
+
+- **type**: `(event: FocusEvent<HTMLTextAreaElement, Element>) => void`
+
+  Focus the textarea element
 
 ---
 
@@ -1130,21 +1164,29 @@ They are used as attributes of the editor component, eg: `Editor.DropdownToolbar
 usage:
 
 ```jsx
-<MdEditor
-  editorId="md-prev"
-  defToolbars={[
-    <MdEditor.NormalToolbar
-      title="mark"
-      trigger={
-        <svg className="md-editor-icon" aria-hidden="true">
-          <use xlinkHref="#icon-mark"></use>
-        </svg>
-      }
-      onClick={console.log}
-      key="mark-toolbar"
+import MdEditor from 'md-editor-rt';
+import 'md-editor-rt/lib/style.css';
+
+export default () => {
+  return (
+    <MdEditor
+      modelValue=""
+      editorId="md-prev"
+      defToolbars={[
+        <MdEditor.NormalToolbar
+          title="mark"
+          trigger={
+            <svg className="md-editor-icon" aria-hidden="true">
+              <use xlinkHref="#icon-mark"></use>
+            </svg>
+          }
+          onClick={console.log}
+          key="mark-toolbar"
+        />
+      ]}
     />
-  ]}
-/>
+  );
+};
 ```
 
 [MarkExtension Source Code](https://github.com/imzbf/md-editor-rt/blob/docs/src/components/MarkExtension/index.tsx)
@@ -1171,42 +1213,51 @@ usage:
 
 usage:
 
-```js
-<MdEditor
-  modelValue={md}
-  editorId="md-prev"
-  defToolbars={[
-    <MdEditor.DropdownToolbar
-      visible={emojiVisible}
-      onChange={setEmojiVisible}
-      overlay={
-        <>
-          <div className="emoji-container">
-            <ol className="emojis">
-              {emojis.map((emoji, index) => (
-                <li
-                  key={`emoji-${index}`}
-                  onClick={() => {
-                    emojiHandler(emoji);
-                  }}
-                >
-                  {emoji}
-                </li>
-              ))}
-            </ol>
-          </div>
-        </>
-      }
-      trigger={
-        <svg className="md-editor-icon" aria-hidden="true">
-          <use xlinkHref="#icon-emoji"></use>
-        </svg>
-      }
-      key="emoji-toolbar"
+```jsx
+import MdEditor from 'md-editor-rt';
+import 'md-editor-rt/lib/style.css';
+
+export default () => {
+  return (
+    <MdEditor
+      modelValue={md}
+      editorId="md-prev"
+      defToolbars={[
+        <MdEditor.DropdownToolbar
+          visible={emojiVisible}
+          onChange={setEmojiVisible}
+          overlay={
+            <>
+              <div className="emoji-container">
+                <ol className="emojis">
+                  {emojis.map((emoji, index) => (
+                    <li
+                      key={`emoji-${index}`}
+                      onClick={() => {
+                        emojiHandler(emoji);
+                      }}
+                    >
+                      {emoji}
+                    </li>
+                  ))}
+                </ol>
+              </div>
+            </>
+          }
+          trigger={
+            <svg className="md-editor-icon" aria-hidden="true">
+              <use xlinkHref="#icon-emoji"></use>
+            </svg>
+          }
+          key="emoji-toolbar"
+        />
+      ]}
     />
-  ]}
-/>
+  );
+};
 ```
+
+[EmojiExtension Source Code](https://github.com/imzbf/md-editor-rt/blob/docs/src/components/EmojiExtension/index.tsx)
 
 ---
 
@@ -1317,6 +1368,9 @@ usage:
 usage:
 
 ```jsx
+import MdEditor from 'md-editor-rt';
+import 'md-editor-rt/lib/style.css';
+
 const editorId = 'my-editor';
 
 export default () => {
@@ -1327,8 +1381,8 @@ export default () => {
 
   return (
     <>
-      <Editor modelValue={state.text} editorId={editorId} previewOnly />
-      <Editor.Catalog editorId={editorId} scrollElement={state.scrollElement} />
+      <MdEditor modelValue={state.text} editorId={editorId} previewOnly />
+      <MdEditor.MdCatalog editorId={editorId} scrollElement={state.scrollElement} />
     </>
   );
 };
