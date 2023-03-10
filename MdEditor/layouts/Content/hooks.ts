@@ -605,26 +605,29 @@ export const useMarked = (props: EditorContentProp) => {
      */
     // console.time(`${editorId}-asyncReplace`);
     let unresolveHtml = props.sanitize(marked(props.value || '', { renderer }));
-    const taskResults = await Promise.allSettled(mermaidTasks.current);
+
+    const mermaidIdsCopy = [...mermaidIds.current];
+    const mermaidTasksCopy = [...mermaidTasks.current];
+    // 移除占位信息
+    mermaidIds.current = [];
+    mermaidTasks.current = [];
+    const taskResults = await Promise.allSettled(mermaidTasksCopy);
     taskResults.forEach((r, index) => {
       // 正常完成，替换模板
       if (r.status === 'fulfilled') {
         unresolveHtml = unresolveHtml.replace(
-          mermaidIds.current[index],
+          mermaidIdsCopy[index],
           `<p class="${prefix}-mermaid" data-processed>${
             typeof r.value === 'string' ? r.value : r.value.svg
           }</p>`
         );
       } else {
         unresolveHtml = unresolveHtml.replace(
-          mermaidIds.current[index],
+          mermaidIdsCopy[index],
           `<p class="${prefix}-mermaid-error">${r.reason || ''}</p>`
         );
       }
     });
-    // 替换后移除占位信息
-    mermaidIds.current = [];
-    mermaidTasks.current = [];
 
     // console.timeEnd(`${editorId}-asyncReplace`);
     return unresolveHtml;
