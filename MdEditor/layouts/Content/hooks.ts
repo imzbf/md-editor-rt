@@ -1,4 +1,12 @@
-import { RefObject, useCallback, useContext, useEffect, useRef, useState } from 'react';
+import {
+  RefObject,
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useRef,
+  useState
+} from 'react';
 import copy from 'copy-to-clipboard';
 import mediumZoom from 'medium-zoom';
 import LRUCache from 'lru-cache';
@@ -368,7 +376,9 @@ export const useMarked = (props: EditorContentProp) => {
     });
   });
 
-  const [renderer] = useState(() => {
+  const { reRender, mermaidInited } = useMermaid(props);
+
+  const renderer = useMemo(() => {
     let renderer = new marked.Renderer();
 
     // 1. 设定可被覆盖的内部模块渲染方式
@@ -416,13 +426,13 @@ export const useMarked = (props: EditorContentProp) => {
 
             // 主动转换
             const mermaid = mermaidIns || window.mermaid;
-            if (mermaid) {
+            if (mermaidInited) {
               // @9以下使用renderAsync，@10以上使用render
               const render = mermaid.renderAsync || mermaid.render;
               const mermaidRenderTask = render(idRand, code);
               mermaidRenderTask.then((svg: any) => {
                 // 9:10
-                mermaidCache.set(code, svg instanceof String ? svg : svg.svg);
+                mermaidCache.set(code, typeof svg === 'string' ? svg : svg.svg);
               });
 
               mermaidTasks.current.push(mermaidRenderTask);
@@ -432,7 +442,7 @@ export const useMarked = (props: EditorContentProp) => {
             }
           }
 
-          const mermaidTemplate = `<script type="text/tmplate"<${idRand}</script>`;
+          const mermaidTemplate = `<script type="text/tmplate">${idRand}</script>`;
 
           mermaidIds.current.push(mermaidTemplate);
 
@@ -527,10 +537,10 @@ export const useMarked = (props: EditorContentProp) => {
     });
 
     return renderer;
-  });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [mermaidInited]);
 
   const katexInited = useKatex(props, marked);
-  const { reRender, mermaidInited } = useMermaid(props);
 
   // 添加highlight扩展
   useEffect(() => {
@@ -593,6 +603,7 @@ export const useMarked = (props: EditorContentProp) => {
     /**
      * 未处理占位符的html
      */
+    // console.time(`${editorId}-asyncReplace`);
     let unresolveHtml = props.sanitize(marked(props.value || '', { renderer }));
     const taskResults = await Promise.allSettled(mermaidTasks.current);
     taskResults.forEach((r, index) => {
@@ -615,6 +626,7 @@ export const useMarked = (props: EditorContentProp) => {
     mermaidIds.current = [];
     mermaidTasks.current = [];
 
+    // console.timeEnd(`${editorId}-asyncReplace`);
     return unresolveHtml;
   };
 
@@ -678,32 +690,35 @@ export const useMermaid = (props: EditorContentProp) => {
 
   // 修改它触发重新编译
   const [reRender, setReRender] = useState<boolean>(false);
-  const [mermaidInited, setMermaidInited] = useState<boolean>(!!mermaidConf?.instance);
+  const [mermaidInited, setMermaidInited] = useState<boolean>(false);
 
-  useEffect(() => {
-    if (!props.noMermaid) {
-      // 提供了外部实例
-      if (mermaidConf?.instance) {
-        mermaidConf?.instance.initialize({
-          startOnLoad: false,
-          theme: theme === 'dark' ? 'dark' : 'default'
-        });
-      } else if (window.mermaid) {
-        window.mermaid.initialize({
-          startOnLoad: false,
-          theme: theme === 'dark' ? 'dark' : 'default'
-        });
-      }
-      setReRender((_reRender) => !_reRender);
+  const setMermaidTheme = useCallback(() => {
+    const mermaid = mermaidConf?.instance || window.mermaid;
+
+    if (!props.noMermaid && mermaid) {
+      mermaid.initialize({
+        startOnLoad: false,
+        theme: theme === 'dark' ? 'dark' : 'default'
+      });
+
+      setReRender((r) => !r);
     }
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [theme]);
 
   useEffect(() => {
-    let mermaidScript: HTMLScriptElement;
-    // 引入mermaid
-    if (!props.noMermaid && !mermaidConf?.instance) {
-      mermaidScript = document.createElement('script');
+    setMermaidTheme();
+  }, [setMermaidTheme]);
+
+  useEffect(() => {
+    if (props.noMermaid) {
+      return;
+    }
+
+    // 没有提供实例，引入mermaid
+    if (!mermaidConf?.instance) {
+      const mermaidScript = document.createElement('script');
 
       const jsSrc = mermaidConf?.js || mermaidUrl;
       if (/\.mjs/.test(jsSrc)) {
@@ -714,16 +729,16 @@ export const useMermaid = (props: EditorContentProp) => {
       }
 
       mermaidScript.onload = () => {
-        window.mermaid.initialize({
-          startOnLoad: false,
-          theme: theme === 'dark' ? 'dark' : 'default',
-          logLevel: import.meta.env.MODE === 'development' ? 'Error' : 'Fatal'
-        });
+        setMermaidTheme();
         setMermaidInited(true);
       };
       mermaidScript.id = `${prefix}-mermaid`;
 
       appendHandler(mermaidScript, 'mermaid');
+    } else {
+      // 提供了实例，直接设置
+      setMermaidTheme();
+      setMermaidInited(true);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
