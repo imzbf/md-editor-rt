@@ -377,6 +377,13 @@ export const useMarked = (props: EditorContentProp) => {
   });
 
   const { reRender, mermaidInited } = useMermaid(props);
+  const katexInited = useKatex(props, marked);
+
+  // 三个影响编译内容的扩展同时初始化完成后再重新编译
+  // 减少编译次数
+  const extensionsInited = useMemo(() => {
+    return mermaidInited && highlightInited && katexInited;
+  }, [mermaidInited, highlightInited, katexInited]);
 
   const renderer = useMemo(() => {
     let renderer = new marked.Renderer();
@@ -538,9 +545,7 @@ export const useMarked = (props: EditorContentProp) => {
 
     return renderer;
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [mermaidInited]);
-
-  const katexInited = useKatex(props, marked);
+  }, [extensionsInited]);
 
   // 添加highlight扩展
   useEffect(() => {
@@ -599,12 +604,12 @@ export const useMarked = (props: EditorContentProp) => {
   /**
    * 手动替换占位符
    */
-  const asyncReplace = async () => {
+  const asyncReplace = async (value: string) => {
     /**
      * 未处理占位符的html
      */
     // console.time(`${editorId}-asyncReplace`);
-    let unresolveHtml = props.sanitize(marked(props.value || '', { renderer }));
+    let unresolveHtml = props.sanitize(marked(value, { renderer }));
 
     const mermaidIdsCopy = [...mermaidIds.current];
     const mermaidTasksCopy = [...mermaidTasks.current];
@@ -644,7 +649,7 @@ export const useMarked = (props: EditorContentProp) => {
     const timer = setTimeout(
       () => {
         heads.current = [];
-        asyncReplace().then((resolveHtml) => {
+        asyncReplace(props.value || '').then((resolveHtml) => {
           setHtml(resolveHtml);
           onHtmlChanged(resolveHtml);
           // 构建完成，传递onSave新的html
@@ -666,7 +671,7 @@ export const useMarked = (props: EditorContentProp) => {
       clearTimeout(timer);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [props.value, highlightInited, mermaidInited, reRender, katexInited]);
+  }, [props.value, renderer, reRender]);
 
   // 添加目录主动触发接收监听
   useEffect(() => {
@@ -726,7 +731,7 @@ export const useMermaid = (props: EditorContentProp) => {
       const jsSrc = mermaidConf?.js || mermaidUrl;
       if (/\.mjs/.test(jsSrc)) {
         mermaidScript.setAttribute('type', 'module');
-        mermaidScript.innerHTML = `import mermaid from "${jsSrc}";window.mermaid=mermaid;document.getElementById('${prefix}-mermaid').onload();`;
+        mermaidScript.innerHTML = `import mermaid from "${jsSrc}";window.mermaid=mermaid;document.getElementById('${prefix}-mermaid').dispatchEvent(new Event('load'));`;
       } else {
         mermaidScript.src = jsSrc;
       }
