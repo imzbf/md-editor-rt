@@ -382,7 +382,12 @@ export const useMarked = (props: EditorContentProp) => {
   // 三个影响编译内容的扩展同时初始化完成后再重新编译
   // 减少编译次数
   const extensionsInited = useMemo(() => {
-    return mermaidInited && highlightInited && katexInited;
+    return (
+      (props.noMermaid || mermaidInited) &&
+      highlightInited &&
+      (props.noKatex || katexInited)
+    );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [mermaidInited, highlightInited, katexInited]);
 
   const renderer = useMemo(() => {
