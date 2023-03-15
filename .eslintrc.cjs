@@ -22,9 +22,12 @@ module.exports = {
     semi: ['error', 'always'],
     '@typescript-eslint/no-explicit-any': 'off',
     '@typescript-eslint/no-empty-function': 'off',
-    'react/display-name': 'off', // 支持匿名组件
-    'react/react-in-jsx-scope': 'off', // 不需要每个组件都引入react
-    'react-hooks/rules-of-hooks': 'error', // 检查 Hook 的规则
-    'react-hooks/exhaustive-deps': 'warn' // 检查 effect 的依赖
+    // off允许匿名组件
+    'react/display-name': 'off',
+    // 要求组件引入React，配合tsconfig的compilerOptions.jsx设置为react或preserve而非react-jsx（主要兼容react@16）
+    'react/react-in-jsx-scope': 'error',
+    'react-hooks/rules-of-hooks': 'error',
+    // 提示hooks缓存依赖项
+    'react-hooks/exhaustive-deps': 'warn'
   }
 };
