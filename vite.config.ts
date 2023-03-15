@@ -1,10 +1,28 @@
 import path from 'path';
 import { UserConfigExport, ConfigEnv } from 'vite';
-import reactRefresh from '@vitejs/plugin-react-refresh';
+import react from '@vitejs/plugin-react';
 import nodeService from './vitePlugins/nodeService';
 import markdownImport from './vitePlugins/markdownImport';
 
 import dts from 'vite-plugin-dts';
+
+const OUT_DIR = 'lib';
+
+const libBuildOptions = {
+  outDir: path.resolve(__dirname, OUT_DIR),
+  lib: {
+    entry: path.resolve(__dirname, './MdEditor/index.ts'),
+    name: 'MdEditorRT'
+  },
+  rollupOptions: {
+    external: ['react'],
+    output: {
+      globals: {
+        react: 'React'
+      }
+    }
+  }
+};
 
 // https://vitejs.dev/config/
 export default ({ mode }: ConfigEnv): UserConfigExport => {
@@ -26,11 +44,12 @@ export default ({ mode }: ConfigEnv): UserConfigExport => {
       }
     },
     plugins: [
+      react(),
       mode !== 'production' && nodeService(),
       mode !== 'production' && markdownImport(),
-      mode !== 'production' && reactRefresh(),
       mode === 'production' &&
         dts({
+          outputDir: `${OUT_DIR}/MdEditor`,
           include: [
             './MdEditor/type.ts',
             './MdEditor/Editor.tsx',
@@ -50,25 +69,6 @@ export default ({ mode }: ConfigEnv): UserConfigExport => {
         }
       }
     },
-    build:
-      mode === 'production'
-        ? {
-            outDir: path.resolve(__dirname, 'lib'),
-            lib: {
-              entry: path.resolve(__dirname, './MdEditor/index.ts'),
-              name: 'MdEditorRT',
-              formats: ['es', 'umd']
-              // fileName: (): string => 'md-editor-rt.js'
-            },
-            rollupOptions: {
-              external: ['react'],
-              output: {
-                globals: {
-                  react: 'React'
-                }
-              }
-            }
-          }
-        : {}
+    build: mode === 'production' ? libBuildOptions : {}
   };
 };
