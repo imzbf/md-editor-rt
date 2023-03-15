@@ -47,7 +47,7 @@ For more ways to use or contribute, please refer to: [md-editor-extension](https
 
 ## 💡 Usage
 
-```js
+```jsx
 import React, { useState } from 'react';
 import MdEditor from 'md-editor-rt';
 import 'md-editor-rt/lib/style.css';
@@ -162,7 +162,7 @@ mark and emoji extensions
 
 Expand language, you need to replace all the content here:
 
-```ts
+```typescript
 export interface ToolbarTips {
   bold?: string;
   underline?: string;
@@ -279,7 +279,7 @@ export interface StaticTextDefaultValue {
 
 After 2.5.0, Editor exposes several methods on the instance, used to get or change the internal status of the editor.
 
-```js
+```jsx
 import React, { useState, useEffect, useRef } from 'react';
 import MdEditor, { ExposeParam } from 'md-editor-rt';
 import 'md-editor-rt/lib/style.css';
@@ -435,7 +435,7 @@ Use `MdEditor.config(option: ConfigOption)` to reconfigure `renderer`.
 
   > Reference: https://marked.js.org/using_pro#renderer, RewriteRenderer extends Renderer and rewrites heading, now provides `index` as the fifth parameter and `headingId` as the sixth parameter.
   >
-  > ```ts
+  > ```typescript
   > type RewriteHeading = (
   >   text: string,
   >   level: 1 | 2 | 3 | 4 | 5 | 6,
@@ -503,7 +503,7 @@ Use `MdEditor.config(option: ConfigOption)` to reconfigure `renderer`.
   <details>
     <summary>『EditorExtensions』</summary>
 
-  ```ts
+  ```typescript
   import MdEditor from 'md-editor-rt';
 
   interface EditorExtensions {
@@ -578,11 +578,11 @@ _Pay attention: shortcut keys are only available when the textarea is focused!_
 
 ## 🪤 Components
 
-They are used as attributes of the editor component, eg: `Editor.DropdownToolbar`. For more examples, refer to [document](https://imzbf.github.io/md-editor-rt).
+They are used as attributes of the editor component, eg: `MdEditor.DropdownToolbar`. For more examples, refer to [document](https://imzbf.github.io/md-editor-rt).
 
 ### 🐣 NormalToolbar
 
-`Editor.NormalToolbar`
+`MdEditor.NormalToolbar`
 
 - **props**
 
@@ -598,7 +598,7 @@ They are used as attributes of the editor component, eg: `Editor.DropdownToolbar
 
 ### 🐼 DropdownToolbar
 
-`Editor.DropdownToolbar`
+`MdEditor.DropdownToolbar`
 
 - **props**
 
@@ -616,7 +616,7 @@ They are used as attributes of the editor component, eg: `Editor.DropdownToolbar
 
 ### 🦉 ModalToolbar
 
-`Editor.ModalToolbar`
+`MdEditor.ModalToolbar`
 
 - **props**
 
@@ -641,7 +641,7 @@ They are used as attributes of the editor component, eg: `Editor.DropdownToolbar
 
 ### 🐻 MdCatalog
 
-`Editor.MdCatalog`
+`MdEditor.MdCatalog`
 
 - **props**
 
@@ -663,7 +663,7 @@ They are used as attributes of the editor component, eg: `Editor.DropdownToolbar
 
 > Tips: When you paste and upload GIF, it will upload a static picture. So you should upload it by file system!
 
-```js
+```jsx
 import React, { useState } from 'react';
 import MdEditor from 'md-editor-rt';
 import 'md-editor-rt/lib/style.css';

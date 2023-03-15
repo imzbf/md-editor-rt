@@ -44,7 +44,7 @@ yarn add @vavt/md-editor-extension
 
 ## 💡 用法
 
-```js
+```jsx
 import React, { useState } from 'react';
 import MdEditor from 'md-editor-rt';
 import 'md-editor-rt/lib/style.css';
@@ -160,7 +160,7 @@ export default () => {
 
 自定义语言，需要替换的下面的全部内容（某些字段若不主动提供，会造成页面不美观）：
 
-```ts
+```typescript
 export interface ToolbarTips {
   bold?: string;
   underline?: string;
@@ -284,7 +284,7 @@ export interface StaticTextDefaultValue {
 
 编辑器暴露了若干方法在组件实例上，用来快捷监听编辑器内部状态或对调整内部状态。
 
-```js
+```jsx
 import React, { useState, useEffect, useRef } from 'react';
 import MdEditor, { ExposeParam } from 'md-editor-rt';
 import 'md-editor-rt/lib/style.css';
@@ -512,7 +512,7 @@ editorRef.current?.focus();
   <details>
     <summary>『EditorExtensions』</summary>
 
-  ```ts
+  ```typescript
   import MdEditor from 'md-editor-rt';
 
   interface EditorExtensions {
@@ -589,11 +589,11 @@ _请注意，快捷键仅在输入框获取到焦点时可用！_
 
 ## 🪤 内部组件
 
-扩展组件作为编辑器组件的属性值来使用，例如：`Editor.DropdownToolbar`。使用参考：[文档页面](https://imzbf.github.io/md-editor-rt)
+扩展组件作为编辑器组件的属性值来使用，例如：`MdEditor.DropdownToolbar`。使用参考：[文档页面](https://imzbf.github.io/md-editor-rt)
 
 ### 🐣 普通扩展工具栏
 
-`Editor.NormalToolbar`
+`MdEditor.NormalToolbar`
 
 - **props**
 
@@ -609,7 +609,7 @@ _请注意，快捷键仅在输入框获取到焦点时可用！_
 
 ### 🐼 下拉扩展工具栏
 
-`Editor.DropdownToolbar`
+`MdEditor.DropdownToolbar`
 
 - **props**
 
@@ -627,7 +627,7 @@ _请注意，快捷键仅在输入框获取到焦点时可用！_
 
 ### 🦉 弹窗扩展工具栏
 
-`Editor.ModalToolbar`
+`MdEditor.ModalToolbar`
 
 - **props**
 
@@ -652,7 +652,7 @@ _请注意，快捷键仅在输入框获取到焦点时可用！_
 
 ### 🐻 目录导航
 
-`Editor.MdCatalog`
+`MdEditor.MdCatalog`
 
 - **props**
 
@@ -676,7 +676,7 @@ _请注意，快捷键仅在输入框获取到焦点时可用！_
 
 > 注意：粘贴板上传时，如果是网页上的 gif 图，无法正确上传为 gif 格式！
 
-```js
+```jsx
 import React, { useState } from 'react';
 import MdEditor from 'md-editor-rt';
 import 'md-editor-rt/lib/style.css';
