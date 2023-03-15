@@ -87,5 +87,9 @@
     "printWidth": 90,
     "proseWrap": "never",
     "endOfLine": "auto"
+  },
+  "peerDependencies": {
+    "react": ">=16.9.0",
+    "react-dom": ">=16.9.0"
   }
 }
