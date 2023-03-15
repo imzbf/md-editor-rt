@@ -19,7 +19,7 @@ Use production version in html directly:
     <div id="root"></div>
     <script src="https://unpkg.com/react@18.2.0/umd/react.production.min.js"></script>
     <script src="https://unpkg.com/react-dom@18.2.0/umd/react-dom.production.min.js"></script>
-    <script src="https://unpkg.com/md-editor-rt@${EDITOR_VERSION}/lib/md-editor-rt.umd.js"></script>
+    <script src="https://unpkg.com/md-editor-rt@${EDITOR_VERSION}/lib/md-editor-rt.umd.cjs"></script>
     <script>
       ReactDOM.createRoot(document.getElementById('root')).render(
         React.createElement(MdEditorRT, {
