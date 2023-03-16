@@ -44,7 +44,11 @@ export default ({ mode }: ConfigEnv): UserConfigExport => {
       }
     },
     plugins: [
-      react(),
+      react({
+        babel: {
+          babelrc: true
+        }
+      }),
       mode !== 'production' && nodeService(),
       mode !== 'production' && markdownImport(),
       mode === 'production' &&
