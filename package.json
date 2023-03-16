@@ -1,6 +1,6 @@
 {
   "name": "md-editor-rt",
-  "version": "2.9.3",
+  "version": "2.10.0",
   "keywords": [
     "react",
     "nextjs",
@@ -20,24 +20,6 @@
     "url": "https://imzbf.cc"
   },
   "homepage": "https://imzbf.github.io/md-editor-rt/",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/imzbf/md-editor-rt.git"
-  },
-  "bugs": {
-    "url": "https://github.com/imzbf/md-editor-rt/issues"
-  },
-  "files": [
-    "lib"
-  ],
-  "types": "./lib/MdEditor/Editor.d.ts",
-  "module": "./lib/md-editor-rt.es.js",
-  "exports": {
-    ".": {
-      "import": "./lib/md-editor-rt.es.js"
-    },
-    "./lib/style.css": "./lib/style.css"
-  },
   "license": "MIT",
   "scripts": {
     "dev": "vite",
@@ -46,9 +28,9 @@
   "dependencies": {
     "@vavt/md-editor-extension": "^2.0.0",
     "dayjs": "^1.11.3",
-    "md-editor-rt": "^2.9.3",
-    "react": "^18.1.0",
-    "react-dom": "^18.1.0",
+    "md-editor-rt": "^2.10.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
     "react-redux": "^7.2.6",
     "react-router-dom": "^6.0.2",
     "redux": "^4.1.2"
