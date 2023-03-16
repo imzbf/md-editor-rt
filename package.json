@@ -32,12 +32,12 @@
   ],
   "type": "module",
   "types": "./lib/MdEditor/index.d.ts",
-  "main": "./lib/md-editor-rt.umd.js",
-  "module": "./lib/md-editor-rt.es.js",
+  "main": "./lib/md-editor-rt.umd.cjs",
+  "module": "./lib/md-editor-rt.js",
   "exports": {
     ".": {
-      "import": "./lib/md-editor-rt.es.js",
-      "require": "./lib/md-editor-rt.umd.js"
+      "import": "./lib/md-editor-rt.js",
+      "require": "./lib/md-editor-rt.umd.cjs"
     },
     "./lib/style.css": "./lib/style.css"
   },
