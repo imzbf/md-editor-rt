@@ -1,18 +1,33 @@
 import path from 'path';
-import { UserConfigExport, ConfigEnv } from 'vite';
+import { UserConfigExport, ConfigEnv, BuildOptions } from 'vite';
 import react from '@vitejs/plugin-react';
+import dts from 'vite-plugin-dts';
 import nodeService from './vitePlugins/nodeService';
 import markdownImport from './vitePlugins/markdownImport';
 
-import dts from 'vite-plugin-dts';
+import { name } from './package.json';
 
 const OUT_DIR = 'lib';
 
-const libBuildOptions = {
+const libBuildOptions: BuildOptions = {
   outDir: path.resolve(__dirname, OUT_DIR),
   lib: {
     entry: path.resolve(__dirname, './MdEditor/index.ts'),
-    name: 'MdEditorRT'
+    name: 'MdEditorRT',
+    formats: ['es', 'cjs', 'umd'],
+    fileName(format) {
+      switch (format) {
+        case 'es': {
+          return `${name}.mjs`;
+        }
+        case 'cjs': {
+          return `${name}.cjs`;
+        }
+        case 'umd': {
+          return `${name}.umd.js`;
+        }
+      }
+    }
   },
   rollupOptions: {
     external: ['react'],
