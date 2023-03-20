@@ -3,7 +3,7 @@ import { UserConfigExport, ConfigEnv, BuildOptions } from 'vite';
 import react from '@vitejs/plugin-react';
 import dts from 'vite-plugin-dts';
 import nodeService from './vitePlugins/nodeService';
-import markdownImport from './vitePlugins/markdownImport';
+import markdown from '@vavt/vite-plugin-import-markdown';
 
 import { name } from './package.json';
 
@@ -65,7 +65,7 @@ export default ({ mode }: ConfigEnv): UserConfigExport => {
         }
       }),
       mode !== 'production' && nodeService(),
-      mode !== 'production' && markdownImport(),
+      mode !== 'production' && markdown(),
       mode === 'production' &&
         dts({
           outputDir: `${OUT_DIR}/MdEditor`,
