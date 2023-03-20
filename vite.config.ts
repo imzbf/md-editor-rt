@@ -2,7 +2,7 @@ import path from 'path';
 import { UserConfigExport, ConfigEnv } from 'vite';
 import reactRefresh from '@vitejs/plugin-react-refresh';
 import nodeService from './vitePlugins/nodeService';
-import markdownImport from './vitePlugins/markdownImport';
+import markdown from '@vavt/vite-plugin-import-markdown';
 import { homepage } from './package.json';
 
 // https://vitejs.dev/config/
@@ -27,7 +27,7 @@ export default ({ mode }: ConfigEnv): UserConfigExport => {
     plugins: [
       mode !== 'production' && nodeService(),
       mode !== 'production' && reactRefresh(),
-      markdownImport()
+      mode !== 'production' && markdown()
     ],
     css: {
       modules: {
