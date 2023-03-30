@@ -32,10 +32,14 @@ export default () => {
         };
   }, [lang]);
 
+  const routePrefix = useMemo(() => {
+    return `/md-editor-rt/${lang}`;
+  }, []);
+
   return (
     <ul className="nav-list">
       <li className="nav-item">
-        <Link to="/md-editor-rt">
+        <Link to={`${routePrefix}/index`}>
           <svg className="icon" aria-hidden="true">
             <use xlinkHref="#icon-d-online"></use>
           </svg>
@@ -43,7 +47,7 @@ export default () => {
         </Link>
       </li>
       <li className="nav-item">
-        <Link to="/md-editor-rt/docs">
+        <Link to={`${routePrefix}/docs`}>
           <svg className="icon" aria-hidden="true">
             <use xlinkHref="#icon-d-docs"></use>
           </svg>
@@ -51,7 +55,7 @@ export default () => {
         </Link>
       </li>
       <li className="nav-item">
-        <Link to="/md-editor-rt/demo">
+        <Link to={`${routePrefix}/demo`}>
           <svg className="icon" aria-hidden="true">
             <use xlinkHref="#icon-d-demo"></use>
           </svg>
@@ -67,7 +71,7 @@ export default () => {
         </a>
       </li>
       <li className="nav-item">
-        <Link to="/md-editor-rt/grammar">
+        <Link to={`${routePrefix}/grammar`}>
           <svg className="icon" aria-hidden="true">
             <use xlinkHref="#icon-grammar"></use>
           </svg>
@@ -75,7 +79,7 @@ export default () => {
         </Link>
       </li>
       <li className="nav-item">
-        <Link to="/md-editor-rt/about">
+        <Link to={`${routePrefix}/about`}>
           <svg className="icon" aria-hidden="true">
             <use xlinkHref="#icon-d-about"></use>
           </svg>

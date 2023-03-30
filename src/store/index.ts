@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { PreviewThemes } from 'md-editor-rt';
 import { createStore } from 'redux';
 import { STORAGED_STORE_KEY } from '@/config';
@@ -15,6 +16,8 @@ export interface StateType {
   // 语言
   lang: Lang;
 }
+
+const matches = location.href.match(/\/md-editor-rt\/([a-zA-Z-]+)\//);
 
 let defaultState: StateType = {
   theme: 'light',
@@ -34,7 +37,8 @@ const stagedStore = localStorage.getItem(STORAGED_STORE_KEY);
 if (stagedStore) {
   defaultState = {
     ...defaultState,
-    ...JSON.parse(stagedStore)
+    ...JSON.parse(stagedStore),
+    lang: matches![1] as Lang
   };
 }
 

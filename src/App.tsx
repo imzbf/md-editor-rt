@@ -1,7 +1,7 @@
 import React, { useEffect, lazy, Suspense } from 'react';
 import Header from './layouts/Header';
 import BackTop from '@/components/BackTop';
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes, Navigate, useNavigate } from 'react-router-dom';
 const Preview = lazy(() => import('./pages/Preview'));
 const Doc = lazy(() => import('./pages/Doc'));
 const Demo = lazy(() => import('./pages/Demo'));
@@ -14,7 +14,9 @@ import Loading from '@/layouts/Loading';
 export type Theme = 'dark' | 'light';
 
 function App() {
-  const theme = useSelector<StateType>((state) => state.theme);
+  const { theme, lang } = useSelector<StateType, StateType>((state) => state);
+
+  const nav = useNavigate();
 
   useEffect(() => {
     if (theme === 'dark') {
@@ -24,16 +26,23 @@ function App() {
     }
   }, [theme]);
 
+  useEffect(() => {
+    nav(
+      location.pathname.replace(/(\/md-editor-rt\/)[a-zA-Z-]+/, `/md-editor-rt/${lang}`)
+    );
+  }, [lang]);
+
   return (
     <div className="docs-page">
       <Header />
       <Suspense fallback={<Loading />}>
         <Routes>
-          <Route path="/md-editor-rt" element={<Preview />} />
-          <Route path="/md-editor-rt/docs" element={<Doc />} />
-          <Route path="/md-editor-rt/demo" element={<Demo />} />
-          <Route path="/md-editor-rt/about" element={<About />} />
-          <Route path="/md-editor-rt/grammar" element={<Grammar />} />
+          <Route path="/md-editor-rt/:l/index" element={<Preview />} />
+          <Route path="/md-editor-rt/:l/docs" element={<Doc />} />
+          <Route path="/md-editor-rt/:l/demo" element={<Demo />} />
+          <Route path="/md-editor-rt/:l/about" element={<About />} />
+          <Route path="/md-editor-rt/:l/grammar" element={<Grammar />} />
+          <Route path="*" element={<Navigate to="/md-editor-rt/en-US/index" replace />} />
         </Routes>
       </Suspense>
       <BackTop />
