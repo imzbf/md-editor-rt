@@ -28,6 +28,8 @@ module.exports = {
     'react/react-in-jsx-scope': 'error',
     'react-hooks/rules-of-hooks': 'error',
     // 提示hooks缓存依赖项
-    'react-hooks/exhaustive-deps': 'warn'
+    'react-hooks/exhaustive-deps': 'warn',
+    // a.x!
+    '@typescript-eslint/no-non-null-assertion': 'off'
   }
 };
