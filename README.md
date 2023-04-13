@@ -31,12 +31,6 @@ Markdown editor for `react`, developed in `jsx` and `typescript`.
 yarn add md-editor-rt
 ```
 
-Please install `@types/marked` in your typescript project if you want to configure `renderer`:
-
-```shell
-yarn add @types/marked -D
-```
-
 Install existing extension of language and theme of preview:
 
 ```shell

@@ -28,12 +28,6 @@ react 版本的 Markdown 编辑器，[md-editor-v3](https://imzbf.github.io/md-e
 yarn add md-editor-rt
 ```
 
-如果你需要配置`renderer`并且你的项目使用了 typescript，需要将`@types/marked`安装到你的开发依赖中：
-
-```shell
-yarn add @types/marked -D
-```
-
 使用语言、预览主题扩展库：
 
 ```shell
