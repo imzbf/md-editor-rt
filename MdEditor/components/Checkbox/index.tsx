@@ -3,12 +3,12 @@ import { prefix } from '../../config';
 import { classnames } from '../../utils';
 import './style.less';
 
-interface CheckBoxProp {
+interface CheckBoxProps {
   checked: boolean;
   onChange: (checked: boolean) => void;
 }
 
-export default (props: CheckBoxProp) => {
+export default (props: CheckBoxProps) => {
   return (
     <div
       className={classnames([

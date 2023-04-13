@@ -4,7 +4,7 @@ import { Footers } from '../../type';
 import MarkdownTotal from './MarkdownTotal';
 import ScrollAuto from './ScrollAuto';
 
-interface FooterProp {
+interface FooterProps {
   modelValue: string;
   footers: Array<Footers>;
   scrollAuto: boolean;
@@ -12,7 +12,7 @@ interface FooterProp {
   defFooters: Array<string | ReactElement>;
 }
 
-const Footer = (props: FooterProp) => {
+const Footer = (props: FooterProps) => {
   const footerRender = useCallback(
     (name: Footers) => {
       if (allFooter.includes(name)) {

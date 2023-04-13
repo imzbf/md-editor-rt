@@ -6,12 +6,12 @@ export interface HoverData {
   y: number;
 }
 
-interface TableShapeProp {
+interface TableShapeProps {
   tableShape: [number, number];
   onSelected: (data: HoverData) => void;
 }
 
-const TableShape = (props: TableShapeProp) => {
+const TableShape = (props: TableShapeProps) => {
   const [hoverPosition, setHoverPosition] = useState<HoverData>({
     x: -1,
     y: -1

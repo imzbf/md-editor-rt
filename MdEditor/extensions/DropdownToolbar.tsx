@@ -3,7 +3,7 @@ import { prefix } from '../config';
 import Dropdown from '../components/Dropdown';
 import { EditorContext } from '../Editor';
 
-export interface DropdownToolbarProp {
+export interface DropdownToolbarProps {
   title?: string;
   visible: boolean;
   trigger: string | ReactElement;
@@ -11,7 +11,7 @@ export interface DropdownToolbarProp {
   overlay: string | ReactElement;
 }
 
-const DropdownToolbar = (props: DropdownToolbarProp) => {
+const DropdownToolbar = (props: DropdownToolbarProps) => {
   const { editorId } = useContext(EditorContext);
 
   return (

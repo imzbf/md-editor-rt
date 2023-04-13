@@ -2,7 +2,7 @@ import React, { ReactElement } from 'react';
 import { prefix } from '../config';
 import Modal from '../components/Modal';
 
-export interface ModalToolbarProp {
+export interface ModalToolbarProps {
   title?: string;
   modalTitle?: string;
   visible: boolean;
@@ -17,7 +17,7 @@ export interface ModalToolbarProp {
   children?: any;
 }
 
-const ModalToolbar = (props: ModalToolbarProp) => {
+const ModalToolbar = (props: ModalToolbarProps) => {
   const { width = 'auto', height = 'auto' } = props;
   return (
     <>

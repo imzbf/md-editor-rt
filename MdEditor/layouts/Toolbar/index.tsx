@@ -18,7 +18,7 @@ import Modals from '../Modals';
 import TableShape from './TableShape';
 import { useSreenfull, useModals, useDropdownState } from './hooks';
 import { CHANGE_CATALOG_VISIBLE, ON_SAVE } from '../../static/event-name';
-export interface ToolbarProp {
+export interface ToolbarProps {
   noPrettier: boolean;
   // 工具栏选择显示
   toolbars: Array<ToolbarNames>;
@@ -33,7 +33,7 @@ export interface ToolbarProp {
 
 let splitNum = 0;
 
-const Toolbar = (props: ToolbarProp) => {
+const Toolbar = (props: ToolbarProps) => {
   const { toolbars, toolbarsExclude, setting, updateSetting } = props;
   // 获取ID，语言设置
   const { editorId, usedLanguageText } = useContext(EditorContext);

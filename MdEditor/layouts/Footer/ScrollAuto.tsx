@@ -3,12 +3,12 @@ import { prefix } from '../../config';
 import Checkbox from '../../components/Checkbox';
 import { EditorContext } from '../../Editor';
 
-interface ScrollAutoProp {
+interface ScrollAutoProps {
   scrollAuto: boolean;
   onScrollAutoChange: (v: boolean) => void;
 }
 
-export default (props: ScrollAutoProp) => {
+export default (props: ScrollAutoProps) => {
   const { usedLanguageText } = useContext(EditorContext);
 
   return useMemo(() => {

@@ -145,7 +145,7 @@ export type PreviewThemes = string;
  */
 export type MarkedHeadingId = (text: string, level: number, index: number) => string;
 
-export interface EditorProp {
+export interface EditorProps {
   modelValue: string;
   /**
    * 主题

@@ -14,7 +14,7 @@ import bus from '../../utils/event-bus';
 
 import './style.less';
 
-interface ClipModalProp {
+interface ClipModalProps {
   visible: boolean;
   onCancel: () => void;
   onOk: (data?: any) => void;
@@ -22,7 +22,7 @@ interface ClipModalProp {
 
 let cropper: any = null;
 
-const ClipModal = (props: ClipModalProp) => {
+const ClipModal = (props: ClipModalProps) => {
   const editorConext = useContext(EditorContext);
   const { editorId, usedLanguageText } = editorConext;
 

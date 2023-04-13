@@ -19,7 +19,7 @@ interface CtlTypes {
   // overlayHover: boolean;
 }
 
-interface ModalProp {
+interface ModalProps {
   trigger?: 'hover' | 'click';
   overlay: string | number | ReactElement;
   visible: boolean;
@@ -31,7 +31,7 @@ interface ModalProp {
 import { prefix } from '../../config';
 const HIDDEN_CLASS = `${prefix}-dropdown-hidden`;
 
-const DropDown = (props: ModalProp) => {
+const DropDown = (props: ModalProps) => {
   const [ctl, setCtl] = useState<CtlTypes>({
     overlayClass: HIDDEN_CLASS,
     overlayStyle: {}

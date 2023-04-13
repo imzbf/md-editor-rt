@@ -2,15 +2,15 @@ import React from 'react';
 import LinkModal from './Link';
 import ClipModal from './Clip';
 
-interface ModalsProp {
-  type: 'link' | 'image' | 'help';
+interface ModalsProps {
+  type: 'link' | 'image';
   linkVisible: boolean;
   clipVisible: boolean;
   onCancel: () => void;
   onOk: (data?: any) => void;
 }
 
-const Modals = (props: ModalsProp) => {
+const Modals = (props: ModalsProps) => {
   return (
     <>
       <LinkModal

@@ -8,7 +8,6 @@ import {
   useState
 } from 'react';
 import bus from './utils/event-bus';
-import { ToolDirective } from './utils/content-help';
 import {
   EditorProp,
   InnerError,
@@ -50,9 +49,9 @@ import {
  * @param props
  * @param staticProps
  */
-export const useKeyBoard = (props: EditorProp, staticProps: StaticProp) => {
+export const useOnSave = (props: EditorProp, staticProps: StaticProp) => {
   const { modelValue } = props;
-  const { editorId, previewOnly, noPrettier } = staticProps;
+  const { editorId, previewOnly } = staticProps;
 
   const [state, setState] = useState({
     // 是否已编译成html
@@ -60,224 +59,6 @@ export const useKeyBoard = (props: EditorProp, staticProps: StaticProp) => {
     // 存储当前最新的html
     html: ''
   });
-
-  const keyDownHandler = useCallback(
-    (event: KeyboardEvent) => {
-      // 只处理是编辑框内的内容
-      if (event.target !== document.querySelector(`#${editorId}-textarea`)) {
-        return;
-      }
-
-      // 使用快捷键时，保存选中文本
-      bus.emit(editorId, 'selectTextChange');
-
-      // macos中以meta键位配s键位为保存，windows中如此会被系统默认的事件替代
-      if (event.ctrlKey || event.metaKey) {
-        switch (event.code) {
-          case 'KeyS': {
-            if (event.shiftKey) {
-              // 删除线
-              bus.emit(editorId, 'replace', 'strikeThrough' as ToolDirective);
-            } else {
-              // 触发保存事件
-              bus.emit(editorId, ON_SAVE, modelValue);
-              event.preventDefault();
-            }
-            break;
-          }
-          case 'KeyB': {
-            bus.emit(editorId, 'replace', 'bold' as ToolDirective);
-            event.preventDefault();
-            break;
-          }
-          case 'KeyU': {
-            if (event.shiftKey) {
-              // ctrl+shift+u触发无需列表
-              bus.emit(editorId, 'replace', 'unorderedList' as ToolDirective);
-              event.preventDefault();
-            } else {
-              // ctrl+u触发下划线
-              bus.emit(editorId, 'replace', 'underline' as ToolDirective);
-              event.preventDefault();
-            }
-
-            break;
-          }
-          case 'KeyI': {
-            if (event.shiftKey) {
-              // ctrl+shift+l触发图片链接
-              bus.emit(editorId, 'openModals', 'image');
-              event.preventDefault();
-            } else {
-              bus.emit(editorId, 'replace', 'italic' as ToolDirective);
-              event.preventDefault();
-            }
-
-            break;
-          }
-          case 'Digit1': {
-            bus.emit(editorId, 'replace', 'h1' as ToolDirective);
-            event.preventDefault();
-            break;
-          }
-          case 'Digit2': {
-            bus.emit(editorId, 'replace', 'h2' as ToolDirective);
-            event.preventDefault();
-            break;
-          }
-          case 'Digit3': {
-            bus.emit(editorId, 'replace', 'h3' as ToolDirective);
-            event.preventDefault();
-            break;
-          }
-          case 'Digit4': {
-            bus.emit(editorId, 'replace', 'h4' as ToolDirective);
-            event.preventDefault();
-            break;
-          }
-          case 'Digit5': {
-            bus.emit(editorId, 'replace', 'h5' as ToolDirective);
-            event.preventDefault();
-            break;
-          }
-          case 'Digit6': {
-            bus.emit(editorId, 'replace', 'h6' as ToolDirective);
-            event.preventDefault();
-            break;
-          }
-          case 'ArrowUp': {
-            bus.emit(editorId, 'replace', 'sup' as ToolDirective);
-            event.preventDefault();
-            break;
-          }
-          case 'ArrowDown': {
-            bus.emit(editorId, 'replace', 'sub' as ToolDirective);
-            event.preventDefault();
-            break;
-          }
-          case 'KeyQ': {
-            if (event.key === 'a') {
-              (event.target as HTMLTextAreaElement).select();
-              return;
-            }
-
-            bus.emit(editorId, 'replace', 'quote' as ToolDirective);
-            event.preventDefault();
-            break;
-          }
-          case 'KeyA': {
-            if (event.key === 'q') {
-              bus.emit(editorId, 'replace', 'quote' as ToolDirective);
-              event.preventDefault();
-              break;
-            } else {
-              return;
-            }
-          }
-          case 'KeyO': {
-            bus.emit(editorId, 'replace', 'orderedList' as ToolDirective);
-            event.preventDefault();
-            break;
-          }
-          case 'KeyC': {
-            if (event.shiftKey) {
-              // ctrl+shift+c触发块级代码
-              bus.emit(editorId, 'replace', 'code' as ToolDirective);
-              event.preventDefault();
-            } else if (event.altKey) {
-              // ctrl+alt+c触发行内代码
-              bus.emit(editorId, 'replace', 'codeRow' as ToolDirective);
-              event.preventDefault();
-            } else {
-              // 接管复制快捷键
-              event.preventDefault();
-              bus.emit(editorId, 'replace', 'ctrlC');
-              break;
-            }
-            break;
-          }
-          case 'KeyL': {
-            // ctrl+l触发普通链接
-            bus.emit(editorId, 'openModals', 'link');
-            event.preventDefault();
-            break;
-          }
-          case 'KeyZ': {
-            if (event.key === 'w') {
-              return;
-            }
-
-            if (event.shiftKey) {
-              // ctrl+shift+z 前进一步
-              bus.emit(editorId, 'ctrlShiftZ');
-              event.preventDefault();
-            } else {
-              // ctrl+z 后退一步
-              bus.emit(editorId, 'ctrlZ');
-              event.preventDefault();
-            }
-
-            break;
-          }
-          case 'KeyW': {
-            if (event.key === 'z') {
-              if (event.shiftKey) {
-                // ctrl+shift+z 前进一步
-                bus.emit(editorId, 'ctrlShiftZ');
-                event.preventDefault();
-              } else {
-                // ctrl+z 后退一步
-                bus.emit(editorId, 'ctrlZ');
-                event.preventDefault();
-              }
-
-              break;
-            } else {
-              return;
-            }
-          }
-          case 'KeyF': {
-            // ctrl+shift+f 美化内容
-            if (event.shiftKey) {
-              if (!noPrettier) {
-                bus.emit(editorId, 'replace', 'prettier');
-                event.preventDefault();
-              }
-            }
-            break;
-          }
-          case 'KeyT': {
-            // ctrl+shift+alt+t 新增表格
-            if (event.altKey && event.shiftKey) {
-              bus.emit(editorId, 'replace', 'table');
-              event.preventDefault();
-            }
-            break;
-          }
-          case 'KeyX': {
-            bus.emit(editorId, 'replace', 'ctrlX');
-            event.preventDefault();
-            break;
-          }
-          case 'KeyD': {
-            event.preventDefault();
-            bus.emit(editorId, 'replace', 'ctrlD');
-            break;
-          }
-        }
-      } else if (event.code === 'Tab') {
-        event.preventDefault();
-        // 缩进
-        if (event.shiftKey) {
-          bus.emit(editorId, 'replace', 'shiftTab');
-        } else {
-          bus.emit(editorId, 'replace', 'tab');
-        }
-      }
-    },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [modelValue]
-  );
 
   useEffect(() => {
     const buildFinishedCb = (html: string) => {
@@ -290,8 +71,6 @@ export const useKeyBoard = (props: EditorProp, staticProps: StaticProp) => {
     };
 
     if (!previewOnly) {
-      window.addEventListener('keydown', keyDownHandler);
-
       bus.on(editorId, {
         name: 'buildFinished',
         callback: buildFinishedCb
@@ -301,12 +80,11 @@ export const useKeyBoard = (props: EditorProp, staticProps: StaticProp) => {
     // 编辑器卸载时移除相应的监听事件
     return () => {
       if (!previewOnly) {
-        window.removeEventListener('keydown', keyDownHandler);
         bus.remove(editorId, 'buildFinished', buildFinishedCb);
       }
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [keyDownHandler]);
+  }, []);
 
   useEffect(() => {
     // 每次更新都重新注册save监听

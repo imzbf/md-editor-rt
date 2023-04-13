@@ -1,10 +1,10 @@
-import { useContext, useEffect, useRef } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import { EditorView, basicSetup } from 'codemirror';
 import { EditorState } from '@codemirror/state';
 import { keymap } from '@codemirror/view';
 import { languages } from '@codemirror/language-data';
 import { markdown } from '@codemirror/lang-markdown';
-import { indentWithTab, undo, redo, deleteLine } from '@codemirror/commands';
+import { indentWithTab, undo, redo } from '@codemirror/commands';
 import bus from '~/utils/event-bus';
 import { directive2flag, ToolDirective } from '~/utils/content-help';
 import { EditorContext } from '~/Editor';
@@ -12,6 +12,7 @@ import { EditorContext } from '~/Editor';
 import CodeMirrorUt from '../codemirror';
 import { oneDark } from '../codemirror/themeOneDark';
 import { ContentProps } from '../props';
+import createCommands from '../codemirror/commands';
 
 import usePasteUpload from './usePasteUpload';
 import useAttach from './useAttach';
@@ -23,26 +24,20 @@ const useCodeMirror = (props: ContentProps) => {
 
   const codeMirrorUt = useRef<CodeMirrorUt>();
 
-  const defaultExtensions = [
-    keymap.of([
-      indentWithTab,
-      {
-        key: 'Ctrl-d',
-        mac: 'Cmd-d',
-        run: deleteLine,
-        preventDefault: true
-      }
-    ]),
-    basicSetup,
-    markdown({ codeLanguages: languages }),
-    // 横向换行
-    EditorView.lineWrapping,
-    // 主题
-    // oneDark,
-    EditorView.updateListener.of((update) => {
-      props.onChange(update.state.doc.toString());
-    })
-  ];
+  const [defaultExtensions] = useState(() => {
+    const mdEditorCommands = createCommands(editorId, props);
+
+    return [
+      keymap.of([...mdEditorCommands, indentWithTab]),
+      basicSetup,
+      markdown({ codeLanguages: languages }),
+      // 横向换行
+      EditorView.lineWrapping,
+      EditorView.updateListener.of((update) => {
+        props.onChange(update.state.doc.toString());
+      })
+    ];
+  });
 
   useEffect(() => {
     const startState = EditorState.create({

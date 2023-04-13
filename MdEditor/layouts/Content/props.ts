@@ -28,4 +28,5 @@ export type ContentProps = Readonly<{
    * 输入框获得焦点时触发事件
    */
   onFocus?: (event: FocusEvent<HTMLTextAreaElement, Element>) => void;
+  noPrettier?: boolean;
 }>;

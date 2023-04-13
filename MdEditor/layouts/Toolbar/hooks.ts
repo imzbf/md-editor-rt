@@ -3,12 +3,12 @@ import bus from '../../utils/event-bus';
 import { prefix, screenfullUrl, configOption } from '../../config';
 import { EditorContext } from '../../Editor';
 import { appendHandler } from '../../utils/dom';
-import { ToolbarProp } from './';
+import { ToolbarProps } from './';
 import { ToolDirective } from '../../utils/content-help';
 import { HoverData } from './TableShape';
 import { CHANGE_FULL_SCREEN } from '../../static/event-name';
 
-export const useSreenfull = (props: ToolbarProp) => {
+export const useSreenfull = (props: ToolbarProps) => {
   const { editorId } = useContext(EditorContext);
   const screenfullConfig = configOption.editorExtensions?.screenfull;
   let screenfull = screenfullConfig?.instance;
@@ -103,7 +103,7 @@ export const useModals = (
   const { editorId } = useContext(EditorContext);
 
   const [modalData, setModalData] = useState<{
-    type: 'link' | 'image' | 'help';
+    type: 'link' | 'image';
     linkVisible: boolean;
     clipVisible: boolean;
   }>({

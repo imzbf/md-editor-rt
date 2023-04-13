@@ -3,14 +3,14 @@ import Modal from '../../components/Modal';
 import { prefix } from '../../config';
 import { EditorContext } from '../../Editor';
 
-interface LinkModalProp {
+interface LinkModalProps {
   type: 'link' | 'image' | 'help';
   visible: boolean;
   onCancel: () => void;
   onOk: (data?: any) => void;
 }
 
-const LinkModal = (props: LinkModalProp) => {
+const LinkModal = (props: LinkModalProps) => {
   const { editorId, usedLanguageText } = useContext(EditorContext);
 
   const title = useMemo(() => {

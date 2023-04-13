@@ -7,11 +7,11 @@ import React, {
   useEffect
 } from 'react';
 import {
+  useOnSave,
   useCatalog,
   useConfig,
   useErrorCatcher,
   useExpansion,
-  // useKeyBoard,
   useUploadImg,
   useExpose
 } from './hooks';
@@ -20,7 +20,7 @@ import Content from './layouts/Content';
 import Footer from './layouts/Footer';
 import { classnames } from './utils';
 import { prefix, staticTextDefault, defaultProps } from './config';
-import { ContentType, EditorProp, StaticProp, Themes } from './type';
+import { ContentType, EditorProps, StaticProp, Themes } from './type';
 import MdCatalog from './extensions/MdCatalog';
 import bus from './utils/event-bus';
 
@@ -42,7 +42,7 @@ export const EditorContext = createContext<ContentType>({
   previewTheme: 'default'
 });
 
-const Editor = forwardRef((props: EditorProp, ref: ForwardedRef<unknown>) => {
+const Editor = forwardRef((props: EditorProps, ref: ForwardedRef<unknown>) => {
   // Editor.defaultProps在某些编辑器中不能被正确识别已设置默认情况
   const {
     modelValue = defaultProps.modelValue,
@@ -117,7 +117,7 @@ const Editor = forwardRef((props: EditorProp, ref: ForwardedRef<unknown>) => {
   );
 
   // 快捷键监听
-  // useKeyBoard(props, staticProps);
+  useOnSave(props, staticProps);
   // 扩展库引用
   useExpansion(staticProps);
   // 上传图片监控
@@ -184,6 +184,7 @@ const Editor = forwardRef((props: EditorProp, ref: ForwardedRef<unknown>) => {
           onGetCatalog={onGetCatalog}
           sanitize={sanitize}
           noMermaid={staticProps.noMermaid}
+          noPrettier={staticProps.noPrettier}
           placeholder={placeholder}
           noKatex={staticProps.noKatex}
           markedHeadingId={markedHeadingId}
