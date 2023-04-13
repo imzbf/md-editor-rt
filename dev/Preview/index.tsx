@@ -8,6 +8,8 @@ import { Theme } from '../App';
 
 import './index.less';
 
+// import { Extension } from '@codemirror/state';
+// import { lineNumbers } from '@codemirror/view';
 // import screenfull from 'screenfull';
 // import katex from 'katex';
 // import 'katex/dist/katex.min.css';
@@ -25,10 +27,12 @@ import highlight from 'highlight.js';
 // import { cdnBase } from '../../MdEditor/config';
 
 MdEditor.config({
-  // codeMirrorExtensions(theme, extensions, keyBindings) {
-  //   console.log(theme, extensions, keyBindings);
-  //   return extensions;
-  // },
+  codeMirrorExtensions(theme, extensions, keyBindings) {
+    console.log(theme, extensions, keyBindings);
+
+    return extensions;
+    // return [...extensions, lineNumbers()];
+  },
   //   markedRenderer(renderer) {
   //     renderer.link = (href, title, text) => {
   //       return `<a href="${href}" title="${title || ''}" target="_blank">${text}</a>`;

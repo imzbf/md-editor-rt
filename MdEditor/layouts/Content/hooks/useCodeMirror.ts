@@ -1,7 +1,7 @@
 import { useContext, useEffect, useRef, useState } from 'react';
 import { EditorView, minimalSetup } from 'codemirror';
 import { EditorState } from '@codemirror/state';
-import { keymap, lineNumbers } from '@codemirror/view';
+import { keymap } from '@codemirror/view';
 import { languages } from '@codemirror/language-data';
 import { markdown } from '@codemirror/lang-markdown';
 import { indentWithTab, undo, redo } from '@codemirror/commands';
@@ -12,6 +12,7 @@ import { EditorContext } from '~/Editor';
 
 import CodeMirrorUt from '../codemirror';
 import { oneDark } from '../codemirror/themeOneDark';
+import { oneLight } from '../codemirror/themeLight';
 import { ContentProps } from '../props';
 import createCommands from '../codemirror/commands';
 
@@ -34,7 +35,6 @@ const useCodeMirror = (props: ContentProps) => {
     return [
       keymap.of([...mdEditorCommands, indentWithTab]),
       minimalSetup,
-      lineNumbers(),
       markdown({ codeLanguages: languages }),
       // 横向换行
       EditorView.lineWrapping,
@@ -53,7 +53,7 @@ const useCodeMirror = (props: ContentProps) => {
     if (theme === 'light') {
       return configOption.codeMirrorExtensions!(
         theme,
-        defaultExtensions,
+        [...defaultExtensions, oneLight],
         mdEditorCommands
       );
     }
