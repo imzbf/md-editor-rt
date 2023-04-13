@@ -15,16 +15,16 @@ import {
   useUploadImg,
   useExpose
 } from './hooks';
-import ToolBar from './layouts/Toolbar';
-import Content from './layouts/Content';
-import Footer from './layouts/Footer';
-import { classnames } from './utils';
-import { prefix, staticTextDefault, defaultProps } from './config';
-import { ContentType, EditorProps, StaticProp, Themes } from './type';
-import MdCatalog from './extensions/MdCatalog';
-import bus from './utils/event-bus';
+import ToolBar from '~/layouts/Toolbar';
+import Content from '~/layouts/Content';
+import Footer from '~/layouts/Footer';
+import MdCatalog from '~/extensions/MdCatalog';
+import { classnames } from '~/utils';
+import { prefix, staticTextDefault, defaultProps } from '~/config';
+import { ContentType, EditorProps, StaticProp, Themes } from '~/type';
+import bus from '~/utils/event-bus';
 
-import './styles/index.less';
+import '~/styles/index.less';
 import '@vavt/markdown-theme/css/all.css';
 
 export const EditorContext = createContext<ContentType>({

@@ -329,7 +329,8 @@ export const configOption: ConfigOption = {
   markedExtensions: [],
   markedOptions: {},
   editorExtensions: {},
-  editorConfig: {}
+  editorConfig: {},
+  codeMirrorExtensions: (theme, innerExtensions) => innerExtensions
 };
 
 export const config: Config = (option) => {

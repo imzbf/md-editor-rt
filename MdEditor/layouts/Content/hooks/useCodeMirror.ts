@@ -5,6 +5,7 @@ import { keymap } from '@codemirror/view';
 import { languages } from '@codemirror/language-data';
 import { markdown } from '@codemirror/lang-markdown';
 import { indentWithTab, undo, redo } from '@codemirror/commands';
+import { configOption } from '~/config';
 import bus from '~/utils/event-bus';
 import { directive2flag, ToolDirective } from '~/utils/content-help';
 import { EditorContext } from '~/Editor';
@@ -24,9 +25,9 @@ const useCodeMirror = (props: ContentProps) => {
 
   const codeMirrorUt = useRef<CodeMirrorUt>();
 
-  const [defaultExtensions] = useState(() => {
-    const mdEditorCommands = createCommands(editorId, props);
+  const [mdEditorCommands] = useState(() => createCommands(editorId, props));
 
+  const [defaultExtensions] = useState(() => {
     return [
       keymap.of([...mdEditorCommands, indentWithTab]),
       basicSetup,
@@ -38,6 +39,22 @@ const useCodeMirror = (props: ContentProps) => {
       })
     ];
   });
+
+  const getExtensions = () => {
+    if (theme === 'light') {
+      return configOption.codeMirrorExtensions!(
+        theme,
+        defaultExtensions,
+        mdEditorCommands
+      );
+    }
+
+    return configOption.codeMirrorExtensions!(
+      theme,
+      [...defaultExtensions, oneDark],
+      mdEditorCommands
+    );
+  };
 
   useEffect(() => {
     const startState = EditorState.create({
@@ -52,7 +69,7 @@ const useCodeMirror = (props: ContentProps) => {
     codeMirrorUt.current = new CodeMirrorUt(view);
 
     codeMirrorUt.current?.setTabSize(tabWidth);
-    codeMirrorUt.current.setExtensions(defaultExtensions);
+    codeMirrorUt.current.setExtensions(getExtensions());
 
     // view.dispatch({
     //   changes: { from: 10, insert: '*' },
@@ -105,9 +122,9 @@ const useCodeMirror = (props: ContentProps) => {
 
   useEffect(() => {
     if (theme === 'dark') {
-      codeMirrorUt.current?.setExtensions([...defaultExtensions, oneDark]);
+      codeMirrorUt.current?.setExtensions(getExtensions());
     } else {
-      codeMirrorUt.current?.setExtensions(defaultExtensions);
+      codeMirrorUt.current?.setExtensions(getExtensions());
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [theme]);
