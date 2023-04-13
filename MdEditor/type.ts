@@ -161,12 +161,6 @@ export interface EditorProps {
    */
   className?: string;
   /**
-   * 历史记录最长条数
-   *
-   * @default 10
-   */
-  historyLength?: number;
-  /**
    * input回调事件
    */
   onChange?: ChangeEvent;
@@ -409,7 +403,6 @@ export interface ContentType {
     js: string;
     css: string;
   };
-  historyLength: number;
   previewOnly: boolean;
   showCodeRowNumber: boolean;
   usedLanguageText: StaticTextDefaultValue;

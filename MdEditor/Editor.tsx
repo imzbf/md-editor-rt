@@ -35,7 +35,6 @@ export const EditorContext = createContext<ContentType>({
     css: '',
     js: ''
   },
-  historyLength: 10,
   previewOnly: false,
   showCodeRowNumber: false,
   usedLanguageText: staticTextDefault['zh-CN'],
@@ -54,7 +53,6 @@ const Editor = forwardRef((props: EditorProps, ref: ForwardedRef<unknown>) => {
     previewOnly = defaultProps.previewOnly,
     editorId = defaultProps.editorId,
     tabWidth = defaultProps.tabWidth,
-    historyLength = defaultProps.historyLength,
     showCodeRowNumber = defaultProps.showCodeRowNumber,
     previewTheme = defaultProps.previewTheme,
     noPrettier = defaultProps.noPrettier,
@@ -138,7 +136,6 @@ const Editor = forwardRef((props: EditorProps, ref: ForwardedRef<unknown>) => {
         tabWidth,
         theme,
         highlight,
-        historyLength,
         previewOnly: staticProps.previewOnly,
         showCodeRowNumber,
         usedLanguageText,

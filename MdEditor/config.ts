@@ -283,7 +283,6 @@ export const defaultProps = {
   modelValue: '',
   theme: 'light',
   className: '',
-  historyLength: 10,
   onChange: () => {},
   onSave: () => {},
   pageFullscreen: false,
