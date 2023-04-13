@@ -7,7 +7,6 @@ import {
   useCodeMirror,
   useMarked,
   useZoom
-  // useAttach
 } from './hooks';
 import { classnames } from '../../utils';
 import { ContentProps } from './props';
@@ -34,8 +33,6 @@ const Content = (props: ContentProps) => {
   // useAutoGenrator(props, textAreaRef);
   // 图片点击放大
   useZoom(props, html);
-  // 附带的设置
-  // useAttach(textAreaRef);
 
   // 原生属性
   // const attr = useMemo(() => {
