@@ -1,8 +1,9 @@
 import { useEffect, useRef } from 'react';
 import { prefix, katexUrl, configOption } from '~/config';
 import { appendHandler } from '~/utils/dom';
-import kaTexExtensions from '~/utils/katex';
 import { ContentProps } from '../props';
+
+import kaTexExtensions from '../marked/katex';
 
 /**
  * 注册katex扩展到marked
@@ -10,7 +11,7 @@ import { ContentProps } from '../props';
  * @param props 内容组件props
  * @param marked -
  */
-export const useKatex = (props: ContentProps, marked: any) => {
+const useKatex = (props: ContentProps, marked: any) => {
   // 获取相应的扩展配置链接
   const katexConf = configOption.editorExtensions?.katex;
   const katexIns = katexConf?.instance;
@@ -51,3 +52,5 @@ export const useKatex = (props: ContentProps, marked: any) => {
 
   return katexInited;
 };
+
+export default useKatex;

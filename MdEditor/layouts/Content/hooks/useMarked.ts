@@ -1,17 +1,18 @@
 import { useContext, useEffect, useMemo, useRef, useState } from 'react';
 import { marked, Renderer } from 'marked';
 import LRUCache from 'lru-cache';
+import bus from '~/utils/event-bus';
 import { configOption, prefix } from '~/config';
 import { EditorContext } from '~/Editor';
 import { HeadList, RewriteHeading } from '~/type';
-import { ContentProps } from '../props';
-import { useKatex } from './useKatex';
-import useMermaid from './useMermaid';
 import { isServer } from '~/static/env';
 import { generateCodeRowNumber, uuid } from '~/utils';
-import alertExtension from '~/utils/alert';
 import { appendHandler, updateHandler } from '~/utils/dom';
-import bus from '~/utils/event-bus';
+import { ContentProps } from '../props';
+import useKatex from './useKatex';
+import useMermaid from './useMermaid';
+
+import alertExtension from '../marked/alert';
 
 const useMarked = (props: ContentProps) => {
   const { onHtmlChanged = () => {}, onGetCatalog = () => {} } = props;
