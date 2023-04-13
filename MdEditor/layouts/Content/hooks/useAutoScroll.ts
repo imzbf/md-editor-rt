@@ -36,7 +36,6 @@ const useAutoScroll = (
       const [init, clear] = scrollHandler(
         cmScroller!,
         previewRef.current! || htmlRef.current,
-        html,
         codeMirrorUt.current!
       );
 
@@ -62,7 +61,6 @@ const useAutoScroll = (
       const [init, clear] = scrollHandler(
         cmScroller!,
         previewRef.current! || htmlRef.current,
-        html,
         codeMirrorUt.current!
       );
 
