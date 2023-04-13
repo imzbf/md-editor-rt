@@ -130,7 +130,6 @@ const useCodeMirror = (props: ContentProps) => {
       name: 'replace',
       callback(direct: ToolDirective, params = {}) {
         const { text, options } = directive2flag(direct, codeMirrorUt.current!, params);
-
         codeMirrorUt.current?.replaceSelectedText(text, options);
       }
     });
