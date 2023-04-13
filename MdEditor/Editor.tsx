@@ -11,7 +11,7 @@ import {
   useConfig,
   useErrorCatcher,
   useExpansion,
-  useKeyBoard,
+  // useKeyBoard,
   useUploadImg,
   useExpose
 } from './hooks';
@@ -117,7 +117,7 @@ const Editor = forwardRef((props: EditorProp, ref: ForwardedRef<unknown>) => {
   );
 
   // 快捷键监听
-  useKeyBoard(props, staticProps);
+  // useKeyBoard(props, staticProps);
   // 扩展库引用
   useExpansion(staticProps);
   // 上传图片监控

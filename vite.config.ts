@@ -30,7 +30,17 @@ const libBuildOptions: BuildOptions = {
     }
   },
   rollupOptions: {
-    external: ['react'],
+    external: [
+      'react',
+      'marked',
+      'medium-zoom',
+      'lru-cache',
+      'copy-to-clipboard',
+      '@vavt/markdown-theme',
+      'codemirror',
+      /@codemirror\/.*/,
+      /@lezer\/.*/
+    ],
     output: {
       globals: {
         react: 'React'
@@ -55,7 +65,8 @@ export default ({ mode }: ConfigEnv): UserConfigExport => {
     resolve: {
       alias: {
         // 键必须以斜线开始和结束
-        '@': path.resolve(__dirname, './dev')
+        '@': path.resolve(__dirname, './dev'),
+        '~': path.resolve(__dirname, './MdEditor')
       }
     },
     plugins: [

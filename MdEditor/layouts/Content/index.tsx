@@ -1,100 +1,70 @@
-import React, { useContext, useMemo, useRef, FocusEvent } from 'react';
+import React, { useContext, useRef } from 'react';
 import { prefix } from '../../config';
 import { EditorContext } from '../../Editor';
-import { SettingType, HeadList, MarkedHeadingId } from '../../type';
 import {
-  useAutoGenrator,
-  useHistory,
-  useMarked,
+  // useAutoGenrator,
   useAutoScroll,
-  usePasteUpload,
-  useZoom,
-  useAttach
+  useCodeMirror,
+  useMarked,
+  // usePasteUpload,
+  useZoom
+  // useAttach
 } from './hooks';
-import { classnames, omit } from '../../utils';
-import bus from '../../utils/event-bus';
+import { classnames } from '../../utils';
+import { ContentProps } from './props';
 
-export type EditorContentProp = Readonly<{
-  value: string;
-  onChange: (v: string) => void;
-  setting: SettingType;
-  onHtmlChanged?: (h: string) => void;
-  onGetCatalog?: (list: HeadList[]) => void;
-  // 不使用该功能
-  noMermaid?: boolean;
-  sanitize: (html: string) => string;
-  placeholder: string;
-  noKatex?: boolean;
-  markedHeadingId: MarkedHeadingId;
-  scrollAuto: boolean;
-  formatCopiedText?: (text: string) => string;
-  autoFocus?: boolean;
-  disabled?: boolean;
-  readOnly?: boolean;
-  maxLength?: number;
-  autoDetectCode?: boolean;
-  /**
-   * 输入框失去焦点时触发事件
-   */
-  onBlur?: (event: FocusEvent<HTMLTextAreaElement, Element>) => void;
-  /**
-   * 输入框获得焦点时触发事件
-   */
-  onFocus?: (event: FocusEvent<HTMLTextAreaElement, Element>) => void;
-}>;
-
-const Content = (props: EditorContentProp) => {
-  const { onChange } = props;
+const Content = (props: ContentProps) => {
   const { editorId, previewOnly, previewTheme, showCodeRowNumber } =
     useContext(EditorContext);
   // 输入状态，在输入中文等时，暂停保存
-  const completeStatus = useRef(true);
+  // const completeStatus = useRef(true);
   // 输入框
-  const textAreaRef = useRef<HTMLTextAreaElement>(null);
+  // const textAreaRef = useRef<HTMLTextAreaElement>(null);
   // 预览框
   const previewRef = useRef<HTMLDivElement>(null);
   // html代码预览框
   const htmlRef = useRef<HTMLDivElement>(null);
+  const { inputWrapperRef } = useCodeMirror(props);
   // markdown => html
   const { html } = useMarked(props);
   // 自动滚动
-  useAutoScroll(props, html, textAreaRef, previewRef, htmlRef);
+  useAutoScroll(props, html, '.cm-scroller', previewRef, htmlRef);
   // 历史记录
-  useHistory(props, textAreaRef, completeStatus);
+  // useHistory(props, textAreaRef, completeStatus);
   // 自动监听生成md内容
-  useAutoGenrator(props, textAreaRef);
+  // useAutoGenrator(props, textAreaRef);
   // 粘贴上传
-  usePasteUpload(props, textAreaRef);
+  // usePasteUpload(props, textAreaRef);
   // 图片点击放大
   useZoom(props, html);
   // 附带的设置
-  useAttach(textAreaRef);
+  // useAttach(textAreaRef);
 
   // 原生属性
-  const attr = useMemo(() => {
-    return omit(props, [
-      'formatCopiedText',
-      'markedHeadingId',
-      'noKatex',
-      'noMermaid',
-      'onChange',
-      'onGetCatalog',
-      'onHtmlChanged',
-      'sanitize',
-      'scrollAuto',
-      'setting',
-      'autoDetectCode',
-      'onBlur',
-      'onFocus'
-    ]);
-  }, [props]);
+  // const attr = useMemo(() => {
+  //   return omit(props, [
+  //     'formatCopiedText',
+  //     'markedHeadingId',
+  //     'noKatex',
+  //     'noMermaid',
+  //     'onChange',
+  //     'onGetCatalog',
+  //     'onHtmlChanged',
+  //     'sanitize',
+  //     'scrollAuto',
+  //     'setting',
+  //     'autoDetectCode',
+  //     'onBlur',
+  //     'onFocus'
+  //   ]);
+  // }, [props]);
 
   return (
     <>
       <div className={`${prefix}-content`}>
         {!previewOnly && (
-          <div className={`${prefix}-input-wrapper`}>
-            <textarea
+          <div className={`${prefix}-input-wrapper`} ref={inputWrapperRef}>
+            {/* <textarea
               {...attr}
               id={`${editorId}-textarea`}
               className={
@@ -119,7 +89,7 @@ const Content = (props: EditorContentProp) => {
               onCompositionEnd={() => {
                 completeStatus.current = true;
               }}
-            />
+            /> */}
           </div>
         )}
         {props.setting.preview && (

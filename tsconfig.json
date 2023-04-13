@@ -17,7 +17,8 @@
     "jsx": "preserve", // react-jsx会提示不需要引用React，不支持16的版本
     "baseUrl": ".",
     "paths": {
-      "@/*": ["dev/*"]
+      "@/*": ["dev/*"],
+      "~/*": ["MdEditor/*"]
     }
   },
   "include": ["dev/**/*.ts", "dev/**/*.tsx", "MdEditor/**/*.ts", "MdEditor/**/*.tsx"],
