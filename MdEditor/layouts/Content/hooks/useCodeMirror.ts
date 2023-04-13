@@ -1,7 +1,7 @@
 import { useContext, useEffect, useRef, useState } from 'react';
-import { EditorView, basicSetup } from 'codemirror';
+import { EditorView, minimalSetup } from 'codemirror';
 import { EditorState } from '@codemirror/state';
-import { keymap } from '@codemirror/view';
+import { keymap, lineNumbers } from '@codemirror/view';
 import { languages } from '@codemirror/language-data';
 import { markdown } from '@codemirror/lang-markdown';
 import { indentWithTab, undo, redo } from '@codemirror/commands';
@@ -33,7 +33,8 @@ const useCodeMirror = (props: ContentProps) => {
   const [defaultExtensions] = useState(() => {
     return [
       keymap.of([...mdEditorCommands, indentWithTab]),
-      basicSetup,
+      minimalSetup,
+      lineNumbers(),
       markdown({ codeLanguages: languages }),
       // 横向换行
       EditorView.lineWrapping,
