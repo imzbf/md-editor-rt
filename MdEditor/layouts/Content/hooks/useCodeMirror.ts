@@ -165,7 +165,8 @@ const useCodeMirror = (props: ContentProps) => {
   useAttach(codeMirrorUt);
 
   return {
-    inputWrapperRef
+    inputWrapperRef,
+    codeMirrorUt
   };
 };
 

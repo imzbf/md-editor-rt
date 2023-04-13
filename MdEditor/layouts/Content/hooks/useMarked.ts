@@ -13,6 +13,7 @@ import useKatex from './useKatex';
 import useMermaid from './useMermaid';
 
 import alertExtension from '../marked/alert';
+import calcSourceLine, { SourceLine } from '../marked/calcSourceLine';
 
 const useMarked = (props: ContentProps) => {
   const { onHtmlChanged = () => {}, onGetCatalog = () => {} } = props;
@@ -42,6 +43,9 @@ const useMarked = (props: ContentProps) => {
       ttl: 600000
     });
   });
+
+  // 编辑区元素和展示区元素的关联数据，用于关联模块同步滚动
+  const relatedList = useRef<SourceLine[]>([]);
 
   const { reRender, mermaidInited } = useMermaid(props);
   const katexInited = useKatex(props, marked);
@@ -270,6 +274,8 @@ const useMarked = (props: ContentProps) => {
 
   // ---预览代码---
   const [html, setHtml] = useState(() => {
+    const tokenList = marked.lexer(props.value);
+    relatedList.current = calcSourceLine(tokenList);
     return props.sanitize(marked(props.value || '', { renderer }));
   });
 
@@ -281,6 +287,8 @@ const useMarked = (props: ContentProps) => {
      * 未处理占位符的html
      */
     // console.time(`${editorId}-asyncReplace`);
+    const tokenList = marked.lexer(value, { renderer });
+    relatedList.current = calcSourceLine(tokenList);
     let unresolveHtml = props.sanitize(marked(value, { renderer }));
 
     const mermaidIdsCopy = [...mermaidIds.current];
@@ -356,7 +364,7 @@ const useMarked = (props: ContentProps) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  return { html };
+  return { html, relatedList };
 };
 
 export default useMarked;
