@@ -6,7 +6,6 @@ import {
   useAutoScroll,
   useCodeMirror,
   useMarked,
-  // usePasteUpload,
   useZoom
   // useAttach
 } from './hooks';
@@ -33,8 +32,6 @@ const Content = (props: ContentProps) => {
   // useHistory(props, textAreaRef, completeStatus);
   // 自动监听生成md内容
   // useAutoGenrator(props, textAreaRef);
-  // 粘贴上传
-  // usePasteUpload(props, textAreaRef);
   // 图片点击放大
   useZoom(props, html);
   // 附带的设置

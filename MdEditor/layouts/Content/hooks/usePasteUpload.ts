@@ -8,7 +8,7 @@ import { ContentProps } from '../props';
  */
 const usePasteUpload = (
   props: ContentProps,
-  textAreaRef: RefObject<HTMLTextAreaElement>
+  inputWrapperRef: RefObject<HTMLDivElement>
 ) => {
   const { editorId, previewOnly } = useContext(EditorContext);
 
@@ -48,17 +48,17 @@ const usePasteUpload = (
     };
 
     if (!previewOnly) {
-      textAreaRef.current?.addEventListener('paste', pasteHandler);
+      inputWrapperRef.current?.addEventListener('paste', pasteHandler);
     }
 
     // 编辑器卸载时移除相应的监听事件
     return () => {
       if (!previewOnly) {
         // eslint-disable-next-line react-hooks/exhaustive-deps
-        textAreaRef.current?.removeEventListener('paste', pasteHandler);
+        inputWrapperRef.current?.removeEventListener('paste', pasteHandler);
       }
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [props.autoDetectCode, textAreaRef]);
+  }, [props.autoDetectCode, inputWrapperRef]);
 };
 export default usePasteUpload;

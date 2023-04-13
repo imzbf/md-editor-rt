@@ -4,14 +4,16 @@ import { EditorState } from '@codemirror/state';
 import { keymap } from '@codemirror/view';
 import { languages } from '@codemirror/language-data';
 import { markdown } from '@codemirror/lang-markdown';
-import { indentWithTab, undo, redo } from '@codemirror/commands';
+import { indentWithTab, undo, redo, deleteLine } from '@codemirror/commands';
 import bus from '~/utils/event-bus';
-
-import { ContentProps } from '../props';
-import CodeMirrorUt from '../codemirror/codemirror';
-import { oneDark } from '../codemirror/themeOneDark';
 import { directive2flag, ToolDirective } from '~/utils/content-help';
 import { EditorContext } from '~/Editor';
+
+import CodeMirrorUt from '../codemirror';
+import { oneDark } from '../codemirror/themeOneDark';
+import { ContentProps } from '../props';
+
+import usePasteUpload from './usePasteUpload';
 
 const useCodeMirror = (props: ContentProps) => {
   const { tabWidth, editorId, theme } = useContext(EditorContext);
@@ -20,9 +22,19 @@ const useCodeMirror = (props: ContentProps) => {
 
   const codeMirrorUt = useRef<CodeMirrorUt>();
 
+  usePasteUpload(props, inputWrapperRef);
+
   const defaultExtensions = [
+    keymap.of([
+      indentWithTab,
+      {
+        key: 'Ctrl-d',
+        mac: 'Cmd-d',
+        run: deleteLine,
+        preventDefault: true
+      }
+    ]),
     basicSetup,
-    keymap.of([indentWithTab]),
     markdown({ codeLanguages: languages }),
     // 横向换行
     EditorView.lineWrapping,
@@ -91,7 +103,6 @@ const useCodeMirror = (props: ContentProps) => {
       callback(direct: ToolDirective, params = {}) {
         const { text, options } = directive2flag(direct, codeMirrorUt.current!, params);
 
-        console.log({ text, options });
         codeMirrorUt.current?.replaceSelectedText(text, options);
       }
     });
