@@ -68,9 +68,9 @@ const useCodeMirror = (props: ContentProps) => {
 
     codeMirrorUt.current = new CodeMirrorUt(view);
 
-    codeMirrorUt.current?.setTabSize(tabWidth);
+    codeMirrorUt.current.setTabSize(tabWidth);
     codeMirrorUt.current.setExtensions(getExtensions());
-
+    codeMirrorUt.current.setPlaceholder(props.placeholder);
     // view.dispatch({
     //   changes: { from: 10, insert: '*' },
     //   selection: { anchor: 11 }
