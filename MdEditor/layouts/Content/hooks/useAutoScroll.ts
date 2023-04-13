@@ -1,6 +1,6 @@
 import { RefObject, useContext, useEffect, useState } from 'react';
 import { EditorContext } from '~/Editor';
-import scrollAuto from '~/utils/scroll-auto';
+import scrollAuto, { scrollAutoWithScale } from '~/utils/scroll-auto';
 import { ContentProps } from '../props';
 
 import CodeMirrorUt from '../codemirror';
@@ -31,8 +31,9 @@ const useAutoScroll = (
   useEffect(() => {
     if (!previewOnly && (previewRef.current || htmlRef.current)) {
       const cmScroller = document.querySelector<HTMLDivElement>('.cm-scroller');
+      const scrollHandler = previewRef.current ? scrollAuto : scrollAutoWithScale;
 
-      const [init, clear] = scrollAuto(
+      const [init, clear] = scrollHandler(
         cmScroller!,
         previewRef.current! || htmlRef.current,
         html,
@@ -55,8 +56,10 @@ const useAutoScroll = (
       props.scrollAuto
     ) {
       const cmScroller = document.querySelector<HTMLDivElement>('.cm-scroller');
+      const scrollHandler = previewRef.current ? scrollAuto : scrollAutoWithScale;
+
       // 需要等到页面挂载完成后再注册，否则不能正确获取到预览dom
-      const [init, clear] = scrollAuto(
+      const [init, clear] = scrollHandler(
         cmScroller!,
         previewRef.current! || htmlRef.current,
         html,

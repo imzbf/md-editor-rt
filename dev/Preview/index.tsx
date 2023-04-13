@@ -18,7 +18,7 @@ import './index.less';
 // import 'cropperjs/dist/cropper.css';
 // import mermaid from 'mermaid';
 
-import highlight from 'highlight.js';
+// import highlight from 'highlight.js';
 // import 'highlight.js/styles/tokyo-night-dark.css';
 
 // import prettier from 'prettier';
@@ -27,27 +27,27 @@ import highlight from 'highlight.js';
 // import { cdnBase } from '../../MdEditor/config';
 
 MdEditor.config({
-  codeMirrorExtensions(theme, extensions, keyBindings) {
-    console.log(theme, extensions, keyBindings);
+  // codeMirrorExtensions(theme, extensions, keyBindings) {
+  //   console.log(theme, extensions, keyBindings);
 
-    return extensions;
-    // return [...extensions, lineNumbers()];
-  },
+  //   return extensions;
+  //   // return [...extensions, lineNumbers()];
+  // },
   // markdownItConfig: (md) => {},
   editorExtensions: {
     //     prettier: {
     //       prettierInstance: prettier,
     //       parserMarkdownInstance: parserMarkdown
     //     },
-    highlight: {
-      instance: highlight
-      //     // css: {
-      //     //   'tokyo-night': {
-      //     //     light: `${cdnBase}/highlight.js/11.5.1/styles/tokyo-night-light.min.css`,
-      //     //     dark: `${cdnBase}/highlight.js/11.5.1/styles/tokyo-night-dark.min.css`
-      //     //   }
-      //     // }
-    }
+    // highlight: {
+    // instance: highlight
+    //     // css: {
+    //     //   'tokyo-night': {
+    //     //     light: `${cdnBase}/highlight.js/11.5.1/styles/tokyo-night-light.min.css`,
+    //     //     dark: `${cdnBase}/highlight.js/11.5.1/styles/tokyo-night-dark.min.css`
+    //     //   }
+    //     // }
+    // }
     //     screenfull: {
     //       instance: screenfull
     //     },
@@ -225,7 +225,7 @@ export default ({ theme, previewTheme, codeTheme, lang }: PreviewProp) => {
           // noMermaid
           // placeholder="placeholder"
           // noKatex
-          mdHeadingId={(t, l, index) => `heading-${index}`}
+          mdHeadingId={markedHeadingId}
           // sanitize={(h) => `<a href="#">aaa</a>${h}`}
           // scrollAuto={false}
           // noIconfont
