@@ -2,7 +2,7 @@ import React, { useContext, useRef } from 'react';
 import { prefix } from '~/config';
 import { EditorContext } from '~/Editor';
 import { classnames } from '~/utils';
-import { useAutoScroll, useCodeMirror, useMarked, useZoom } from './hooks';
+import { useAutoScroll, useCopyCode, useCodeMirror, useMarked, useZoom } from './hooks';
 import { ContentProps } from './props';
 
 const Content = (props: ContentProps) => {
@@ -12,11 +12,21 @@ const Content = (props: ContentProps) => {
   const previewRef = useRef<HTMLDivElement>(null);
   // html代码预览框
   const htmlRef = useRef<HTMLDivElement>(null);
-  const { inputWrapperRef } = useCodeMirror(props);
+  const { inputWrapperRef, codeMirrorUt } = useCodeMirror(props);
   // markdown => html
-  const { html } = useMarked(props);
+  const { html, relatedList } = useMarked(props);
   // 自动滚动
-  useAutoScroll(props, html, '.cm-scroller', previewRef, htmlRef);
+  useAutoScroll(
+    props,
+    html,
+    '.cm-scroller',
+    previewRef,
+    htmlRef,
+    relatedList,
+    codeMirrorUt
+  );
+  // 复制代码
+  useCopyCode(props, html);
   // 图片点击放大
   useZoom(props, html);
 
