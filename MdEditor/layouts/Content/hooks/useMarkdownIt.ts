@@ -128,7 +128,6 @@ const useMarkdownIt = (props: ContentProps) => {
         onGetCatalog(headsRef.current);
         // 生成目录
         bus.emit(editorId, 'catalogChanged', headsRef.current);
-        replaceMermaid();
       },
       editorConfig?.renderDelay !== undefined
         ? editorConfig?.renderDelay
@@ -141,7 +140,12 @@ const useMarkdownIt = (props: ContentProps) => {
       clearTimeout(timer);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [props.value, needReRender, reRenderRef]);
+  }, [props.value, needReRender, reRenderRef, theme]);
+
+  useEffect(() => {
+    replaceMermaid();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [html.current]);
 
   // watch([toRef(props, 'value'), needReRender, reRenderRef], markHtml);
 

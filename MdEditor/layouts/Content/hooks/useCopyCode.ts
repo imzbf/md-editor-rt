@@ -49,7 +49,7 @@ const useCopyCode = (props: ContentProps, html: RefObject<string>) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     formatCopiedText,
-    html,
+    html.current,
     props.setting.preview,
     usedLanguageText.copyCode?.failTips,
     usedLanguageText.copyCode?.successTips,
