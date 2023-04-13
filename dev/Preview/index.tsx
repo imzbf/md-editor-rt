@@ -176,7 +176,7 @@ export default ({ theme, previewTheme, codeTheme, lang }: PreviewProp) => {
         <MdEditor.MdCatalog
           theme={theme}
           editorId="md-editor-preview"
-          markedHeadingId={markedHeadingId}
+          mdHeadingId={markedHeadingId}
         />
       </div>
       <button
@@ -235,11 +235,11 @@ export default ({ theme, previewTheme, codeTheme, lang }: PreviewProp) => {
           // disabled
           // readOnly={true}
           // maxLength={10}
+          // noHighlight
           autoDetectCode
           // onHtmlChanged={console.log}
           // onBlur={console.log}
           // onFocus={console.log}
-          markedHeadingId={markedHeadingId}
           editorId="md-editor-preview"
           toolbars={[
             'bold',
