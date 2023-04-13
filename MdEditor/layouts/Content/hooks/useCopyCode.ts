@@ -1,10 +1,10 @@
-import { RefObject, useContext, useEffect } from 'react';
+import { useContext, useEffect } from 'react';
 import copy from 'copy-to-clipboard';
 import { prefix } from '~/config';
 import { ContentProps } from '../props';
 import { EditorContext } from '~/Editor';
 
-const useCopyCode = (props: ContentProps, html: RefObject<string>) => {
+const useCopyCode = (props: ContentProps, html: string) => {
   const { editorId, usedLanguageText } = useContext(EditorContext);
   const { formatCopiedText = (t: string) => t } = props;
 
@@ -49,7 +49,7 @@ const useCopyCode = (props: ContentProps, html: RefObject<string>) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     formatCopiedText,
-    html.current,
+    html,
     props.setting.preview,
     usedLanguageText.copyCode?.failTips,
     usedLanguageText.copyCode?.successTips,

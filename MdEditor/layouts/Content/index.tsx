@@ -47,7 +47,7 @@ const Content = (props: ContentProps) => {
               `${previewTheme}-theme`,
               showCodeRowNumber && `${prefix}-scrn`
             ])}
-            dangerouslySetInnerHTML={{ __html: html.current }}
+            dangerouslySetInnerHTML={{ __html: html }}
           />
         </div>
       )}
@@ -57,7 +57,7 @@ const Content = (props: ContentProps) => {
           ref={htmlRef}
           key="html-preview-wrapper"
         >
-          <div className={`${prefix}-html`}>{html.current}</div>
+          <div className={`${prefix}-html`}>{html}</div>
         </div>
       )}
     </div>

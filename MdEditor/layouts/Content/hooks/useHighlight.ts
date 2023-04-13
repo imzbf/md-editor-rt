@@ -1,4 +1,4 @@
-import { useContext, useEffect, useRef } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import { prefix, configOption } from '~/config';
 import { EditorContext } from '~/Editor';
 import { appendHandler, updateHandler } from '~/utils/dom';
@@ -17,6 +17,7 @@ const useHighlight = (props: ContentProps) => {
 
   // hljs是否已经提供
   const hljsRef = useRef(hljs);
+  const [hljsInited, setHljsInited] = useState(!!hljs);
 
   useEffect(() => {
     updateHandler(`${prefix}-hlCss`, 'href', highlight.css);
@@ -33,6 +34,7 @@ const useHighlight = (props: ContentProps) => {
       highlightScript.src = highlight.js;
       highlightScript.onload = () => {
         hljsRef.current = window.hljs;
+        setHljsInited(true);
       };
       highlightScript.id = `${prefix}-hljs`;
       appendHandler(highlightScript, 'hljs');
@@ -47,7 +49,7 @@ const useHighlight = (props: ContentProps) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  return hljsRef;
+  return { hljsRef, hljsInited };
 };
 
 export default useHighlight;

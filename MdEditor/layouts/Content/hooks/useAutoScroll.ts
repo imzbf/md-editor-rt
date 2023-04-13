@@ -16,7 +16,7 @@ import CodeMirrorUt from '../codemirror';
  */
 const useAutoScroll = (
   props: ContentProps,
-  html: RefObject<string>,
+  html: string,
   previewRef: RefObject<HTMLElement>,
   htmlRef: RefObject<HTMLElement>,
   codeMirrorUt: RefObject<CodeMirrorUt | undefined>

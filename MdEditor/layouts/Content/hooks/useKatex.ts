@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { prefix, katexUrl, configOption } from '~/config';
 import { appendHandler } from '~/utils/dom';
 import { ContentProps } from '../props';
@@ -15,16 +15,18 @@ const useKatex = (props: ContentProps) => {
   const katexIns = katexConf?.instance;
 
   // katex是否加载完成
-  const katex = useRef(katexIns);
+  const katexRef = useRef(katexIns);
+  const [katexInited, setKatexInited] = useState(!!katexIns);
 
   useEffect(() => {
     // 标签引入katex
-    if (!props.noKatex && !katex.current) {
+    if (!props.noKatex && !katexRef.current) {
       const katexScript = document.createElement('script');
 
       katexScript.src = katexConf?.js || katexUrl.js;
       katexScript.onload = () => {
-        katex.current = window.katex;
+        katexRef.current = window.katex;
+        setKatexInited(true);
       };
       katexScript.id = `${prefix}-katex`;
 
@@ -38,7 +40,7 @@ const useKatex = (props: ContentProps) => {
     }
   });
 
-  return katex;
+  return { katexRef, katexInited };
 };
 
 export default useKatex;

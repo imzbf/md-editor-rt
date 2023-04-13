@@ -39,9 +39,9 @@ const useMarkdownIt = (props: ContentProps) => {
     themeRef.current = theme;
   }, [theme]);
 
-  const hljsRef = useHighlight(props);
-  const katexRef = useKatex(props);
-  const { reRenderRef, replaceMermaid } = useMermaid(props);
+  const { hljsRef, hljsInited } = useHighlight(props);
+  const { katexRef, katexInited } = useKatex(props);
+  const { replaceMermaid } = useMermaid(props);
 
   const [md] = useState(() => {
     const md_ = mdit({
@@ -77,6 +77,7 @@ const useMarkdownIt = (props: ContentProps) => {
         if (props.noHighlight) {
           return str;
         }
+
         if (!hljsRef.current) {
           return str;
         }
@@ -94,8 +95,6 @@ const useMarkdownIt = (props: ContentProps) => {
           codeHtml = hljsRef.current.highlightAuto(str).value;
         }
 
-        // console.log(str, language);
-
         return showCodeRowNumber
           ? generateCodeRowNumber(codeHtml.trim())
           : `<span class="code-block">${codeHtml.trim()}</span>`;
@@ -107,23 +106,28 @@ const useMarkdownIt = (props: ContentProps) => {
     return md_;
   });
 
-  const html = useRef(props.sanitize(addCodeLanguageAttr(md.render(props.value))));
+  const [html, setHtml] = useState(() => {
+    return props.sanitize(addCodeLanguageAttr(md.render(props.value)));
+  });
 
   const needReRender = useMemo(() => {
-    return props.noHighlight || hljsRef.current;
+    return (props.noHighlight || hljsInited) && (props.noKatex || katexInited);
 
     // return (props.noKatex || katexRef.value) && (props.noHighlight || hljsRef.value);
-  }, [hljsRef, props.noHighlight]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [hljsInited, katexInited]);
 
   useEffect(() => {
     const timer = setTimeout(
       () => {
         // 清理历史标题
         headsRef.current = [];
-        html.current = props.sanitize(addCodeLanguageAttr(md.render(props.value)));
+        const html_ = props.sanitize(addCodeLanguageAttr(md.render(props.value)));
+        setHtml(html_);
+
         // 触发异步的保存事件（html总是会比text后更新）
-        bus.emit(editorId, 'buildFinished', html.current);
-        onHtmlChanged(html.current);
+        bus.emit(editorId, 'buildFinished', html_);
+        onHtmlChanged(html_);
         // 传递标题
         onGetCatalog(headsRef.current);
         // 生成目录
@@ -140,14 +144,12 @@ const useMarkdownIt = (props: ContentProps) => {
       clearTimeout(timer);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [props.value, needReRender, reRenderRef, theme]);
+  }, [props.value, needReRender, theme]);
 
   useEffect(() => {
     replaceMermaid();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [html.current]);
-
-  // watch([toRef(props, 'value'), needReRender, reRenderRef], markHtml);
+  }, [html]);
 
   // 添加目录主动触发接收监听
   useEffect(() => {
