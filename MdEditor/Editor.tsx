@@ -67,11 +67,12 @@ const Editor = forwardRef((props: EditorProps, ref: ForwardedRef<unknown>) => {
     onGetCatalog = defaultProps.onGetCatalog,
     sanitize = defaultProps.sanitize,
     onError = defaultProps.onError,
-    markedHeadingId = defaultProps.markedHeadingId,
+    mdHeadingId = defaultProps.mdHeadingId,
     footers = defaultProps.footers,
     defFooters = defaultProps.defFooters,
     noIconfont = defaultProps.noIconfont,
-    noUploadImg = defaultProps.noUploadImg
+    noUploadImg = defaultProps.noUploadImg,
+    noHighlight = defaultProps.noHighlight
   } = props;
 
   const [staticProps] = useState<StaticProps>(() => {
@@ -82,7 +83,8 @@ const Editor = forwardRef((props: EditorProps, ref: ForwardedRef<unknown>) => {
       noMermaid,
       noPrettier,
       noUploadImg,
-      noIconfont
+      noIconfont,
+      noHighlight
     };
   });
 
@@ -170,14 +172,15 @@ const Editor = forwardRef((props: EditorProps, ref: ForwardedRef<unknown>) => {
           value={modelValue}
           onChange={onChange}
           setting={setting}
+          mdHeadingId={mdHeadingId}
           onHtmlChanged={onHtmlChanged}
           onGetCatalog={onGetCatalog}
           sanitize={sanitize}
           noMermaid={staticProps.noMermaid}
           noPrettier={staticProps.noPrettier}
+          noHighlight={staticProps.noHighlight}
           placeholder={placeholder}
           noKatex={staticProps.noKatex}
-          markedHeadingId={markedHeadingId}
           scrollAuto={state.scrollAuto}
           formatCopiedText={props.formatCopiedText}
           autoFocus={props.autoFocus}
@@ -203,7 +206,7 @@ const Editor = forwardRef((props: EditorProps, ref: ForwardedRef<unknown>) => {
             style={catalogStyle}
             className={`${prefix}-catalog-editor`}
             editorId={staticProps.editorId}
-            markedHeadingId={markedHeadingId}
+            mdHeadingId={mdHeadingId}
           />
         )}
       </div>

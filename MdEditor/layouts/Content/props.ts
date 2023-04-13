@@ -1,4 +1,4 @@
-import { HeadList, MarkedHeadingId, SettingType } from '~/type';
+import { HeadList, MdHeadingId, SettingType } from '~/type';
 
 export type ContentProps = Readonly<{
   value: string;
@@ -11,7 +11,7 @@ export type ContentProps = Readonly<{
   sanitize: (html: string) => string;
   placeholder: string;
   noKatex?: boolean;
-  markedHeadingId: MarkedHeadingId;
+  mdHeadingId: MdHeadingId;
   scrollAuto: boolean;
   formatCopiedText?: (text: string) => string;
   autoFocus?: boolean;
@@ -28,4 +28,5 @@ export type ContentProps = Readonly<{
    */
   onFocus?: (event: FocusEvent) => void;
   noPrettier?: boolean;
+  noHighlight?: boolean;
 }>;

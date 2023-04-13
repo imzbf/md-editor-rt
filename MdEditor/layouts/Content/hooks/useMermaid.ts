@@ -1,11 +1,13 @@
-import { useCallback, useContext, useEffect, useState } from 'react';
+import { useCallback, useContext, useEffect, useRef, useState } from 'react';
+import LRUCache from 'lru-cache';
+import { uuid } from '~/utils';
 import { prefix, mermaidUrl, configOption } from '~/config';
 import { EditorContext } from '~/Editor';
 import { appendHandler } from '~/utils/dom';
 import { ContentProps } from '../props';
 
 /**
- * 注册katex扩展到marked
+ * 注册katex扩展到页面
  *
  */
 const useMermaid = (props: ContentProps) => {
@@ -14,12 +16,20 @@ const useMermaid = (props: ContentProps) => {
   const { editorExtensions } = configOption;
   const mermaidConf = editorExtensions?.mermaid;
 
-  const [mermaidData, setMermaidData] = useState({
-    reRender: false,
-    mermaidInited: false
-  });
+  const mermaidRef = useRef(mermaidConf?.instance);
+  const reRenderRef = useRef(false);
+
+  const [mermaidCache] = useState(
+    () =>
+      new LRUCache({
+        max: 1000,
+        // 缓存10分钟
+        ttl: 600000
+      })
+  );
 
   const setMermaidTheme = useCallback(() => {
+    mermaidCache.clear();
     const mermaid = mermaidConf?.instance || window.mermaid;
 
     if (!props.noMermaid && mermaid) {
@@ -28,10 +38,7 @@ const useMermaid = (props: ContentProps) => {
         theme: theme === 'dark' ? 'dark' : 'default'
       });
 
-      setMermaidData((_s) => ({
-        ..._s,
-        reRender: !_s.reRender
-      }));
+      reRenderRef.current = !reRenderRef.current;
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [theme]);
@@ -57,21 +64,48 @@ const useMermaid = (props: ContentProps) => {
         mermaidScript.src = jsSrc;
       }
       mermaidScript.onload = () => {
+        mermaidRef.current = window.mermaid;
         setMermaidTheme();
-        mermaidData.mermaidInited = true;
       };
 
       appendHandler(mermaidScript, 'mermaid');
-    } else {
-      // 提供了实例，直接设置
-      setMermaidTheme();
-      mermaidData.mermaidInited = true;
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  return mermaidData;
+  const replaceMermaid = () => {
+    if (!props.noMermaid && mermaidRef.current) {
+      const mermaidSourceEles = document.querySelectorAll<HTMLElement>(
+        `div.${prefix}-mermaid`
+      );
+
+      mermaidSourceEles.forEach(async (item) => {
+        let mermaidHtml = mermaidCache.get(item.innerText) as string;
+
+        if (!mermaidHtml) {
+          const idRand = uuid();
+          // @9以下使用renderAsync，@10以上使用render
+          const render = mermaidRef.current.renderAsync || mermaidRef.current.render;
+
+          const svg = await render(idRand, item.innerText);
+
+          // 9:10
+          mermaidHtml = typeof svg === 'string' ? svg : svg.svg;
+          mermaidCache.set(item.innerText, mermaidHtml);
+        }
+
+        const p = document.createElement('p');
+        p.className = `${prefix}-mermaid`;
+        p.setAttribute('data-processed', '');
+        p.innerHTML = mermaidHtml;
+
+        item.replaceWith(p);
+      });
+    }
+  };
+
+  return { mermaidRef, reRenderRef, replaceMermaid };
 };
 
 export default useMermaid;

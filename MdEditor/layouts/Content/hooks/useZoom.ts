@@ -1,4 +1,4 @@
-import { useContext, useEffect } from 'react';
+import { RefObject, useContext, useEffect } from 'react';
 import mediumZoom from 'medium-zoom';
 import { EditorContext } from '~/Editor';
 
@@ -10,12 +10,12 @@ import { ContentProps } from '../props';
  * @param props 基础属性
  * @param html 编译后的html
  */
-const useZoom = (props: ContentProps, html: string) => {
+const useZoom = (props: ContentProps, html: RefObject<string>) => {
   const { editorId } = useContext(EditorContext);
 
   useEffect(() => {
     const zoomHander = () => {
-      const imgs = document.querySelectorAll(`#${editorId}-preview img[zoom]`);
+      const imgs = document.querySelectorAll(`#${editorId}-preview img`);
 
       const zoom = mediumZoom(imgs, {
         background: '#00000073'

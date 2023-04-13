@@ -300,7 +300,7 @@ export const defaultProps = {
   tabWidth: 2,
   showCodeRowNumber: false,
   previewTheme: 'default',
-  markedHeadingId: (text: string) => text,
+  mdHeadingId: (text: string) => text,
   style: {},
   tableShape: [6, 4],
   noMermaid: false,
@@ -321,16 +321,18 @@ export const defaultProps = {
   autoFocus: false,
   disabled: false,
   readOnly: false,
-  autoDetectCode: false
+  autoDetectCode: false,
+  noHighlight: false
 };
 
 export const configOption: ConfigOption = {
-  markedRenderer: (r) => r,
-  markedExtensions: [],
-  markedOptions: {},
+  // markedRenderer: (r) => r,
+  // markedExtensions: [],
+  // markedOptions: {},
   editorExtensions: {},
   editorConfig: {},
-  codeMirrorExtensions: (_theme, innerExtensions) => innerExtensions
+  codeMirrorExtensions: (_theme, innerExtensions) => innerExtensions,
+  markdownItConfig: () => {}
 };
 
 export const config: Config = (option) => {

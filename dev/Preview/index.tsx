@@ -33,17 +33,7 @@ MdEditor.config({
     return extensions;
     // return [...extensions, lineNumbers()];
   },
-  //   markedRenderer(renderer) {
-  //     renderer.link = (href, title, text) => {
-  //       return `<a href="${href}" title="${title || ''}" target="_blank">${text}</a>`;
-  //     };
-
-  //     renderer.image = (href: string, _: string, desc: string) => {
-  //       return `<img src="${href}" alt="${desc}">`;
-  //     };
-
-  //     return renderer;
-  //   },
+  // markdownItConfig: (md) => {},
   editorExtensions: {
     //     prettier: {
     //       prettierInstance: prettier,
@@ -230,12 +220,12 @@ export default ({ theme, previewTheme, codeTheme, lang }: PreviewProp) => {
           // toolbarsExclude={['github']}
           // noPrettier
           // tabWidth={4}
-          // showCodeRowNumber
+          showCodeRowNumber
           // tableShape={[10, 10]}
           // noMermaid
           // placeholder="placeholder"
           // noKatex
-          // markedHeadingId={(t, l, index) => `heading-${index}`}
+          mdHeadingId={(t, l, index) => `heading-${index}`}
           // sanitize={(h) => `<a href="#">aaa</a>${h}`}
           // scrollAuto={false}
           // noIconfont
@@ -245,6 +235,8 @@ export default ({ theme, previewTheme, codeTheme, lang }: PreviewProp) => {
           // disabled
           // readOnly={true}
           // maxLength={10}
+          autoDetectCode
+          // onHtmlChanged={console.log}
           // onBlur={console.log}
           // onFocus={console.log}
           markedHeadingId={markedHeadingId}

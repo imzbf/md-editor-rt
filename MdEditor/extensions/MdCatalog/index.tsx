@@ -1,6 +1,6 @@
 import React, { CSSProperties, useEffect, useMemo, useState, MouseEvent } from 'react';
 import bus from '~/utils/event-bus';
-import { HeadList, MarkedHeadingId, Themes } from '~/type';
+import { HeadList, MdHeadingId, Themes } from '~/type';
 import { defaultProps, prefix } from '~/config';
 import { throttle, getRelativeTop } from '~/utils';
 import { PREVIEW_CHANGED } from '~/static/event-name';
@@ -22,7 +22,7 @@ export interface CatalogProps {
    */
   editorId: string;
   className?: string;
-  markedHeadingId?: MarkedHeadingId;
+  mdHeadingId?: MdHeadingId;
   /**
    * 指定滚动的容器，选择器需带上对应的符号，默认预览框
    * 元素必须定位！！！！！！
@@ -49,11 +49,7 @@ export interface CatalogProps {
 
 const MdCatalog = (props: CatalogProps) => {
   // 获取Id
-  const {
-    editorId,
-    markedHeadingId = defaultProps.markedHeadingId,
-    theme = 'light'
-  } = props;
+  const { editorId, mdHeadingId = defaultProps.mdHeadingId, theme = 'light' } = props;
 
   const [list, setList] = useState<Array<HeadList>>([]);
 
@@ -157,7 +153,7 @@ const MdCatalog = (props: CatalogProps) => {
       const { activeHead } = list.reduce(
         (activeData, link, index) => {
           const linkEle = document.getElementById(
-            markedHeadingId(link.text, link.level, index + 1)
+            mdHeadingId(link.text, link.level, index + 1)
           );
 
           if (linkEle instanceof HTMLElement) {
@@ -209,7 +205,7 @@ const MdCatalog = (props: CatalogProps) => {
     return () => {
       scrollContainer?.removeEventListener('scroll', scrollHandler);
     };
-  }, [props.offsetTop, list, markedHeadingId, scrollElement, previewVisible]);
+  }, [props.offsetTop, list, mdHeadingId, scrollElement, previewVisible]);
 
   return (
     <div
@@ -221,7 +217,7 @@ const MdCatalog = (props: CatalogProps) => {
       {catalogs.map((item) => {
         return (
           <CatalogLink
-            markedHeadingId={markedHeadingId}
+            mdHeadingId={mdHeadingId}
             tocItem={item}
             key={item.text}
             scrollElement={scrollElement}

@@ -3,24 +3,22 @@ import { EditorContext } from '~/Editor';
 import scrollAuto from '~/utils/scroll-auto';
 import { ContentProps } from '../props';
 
-import { SourceLine } from '../marked/calcSourceLine';
 import CodeMirrorUt from '../codemirror';
 
 /**
  * 自动滚动
+ *
  * @param props
  * @param html
- * @param textAreaRef
  * @param previewRef
  * @param htmlRef
+ * @param codeMirrorUt
  */
 const useAutoScroll = (
   props: ContentProps,
-  html: string,
-  inputWrapper: RefObject<HTMLElement> | string,
+  html: RefObject<string>,
   previewRef: RefObject<HTMLElement>,
   htmlRef: RefObject<HTMLElement>,
-  relatedListRef: RefObject<SourceLine[]>,
   codeMirrorUt: RefObject<CodeMirrorUt | undefined>
 ) => {
   const { previewOnly } = useContext(EditorContext);
@@ -37,7 +35,7 @@ const useAutoScroll = (
       const [init, clear] = scrollAuto(
         cmScroller!,
         previewRef.current! || htmlRef.current,
-        relatedListRef,
+        html,
         codeMirrorUt.current!
       );
 
@@ -61,7 +59,7 @@ const useAutoScroll = (
       const [init, clear] = scrollAuto(
         cmScroller!,
         previewRef.current! || htmlRef.current,
-        relatedListRef,
+        html,
         codeMirrorUt.current!
       );
 
@@ -75,7 +73,6 @@ const useAutoScroll = (
     html,
     htmlRef,
     previewRef,
-    inputWrapper,
     props.scrollAuto,
     props.setting.preview,
     props.setting.htmlPreview
@@ -102,7 +99,6 @@ const useAutoScroll = (
     scrollCb,
     htmlRef,
     previewRef,
-    inputWrapper,
     props.scrollAuto,
     props.setting.preview,
     props.setting.htmlPreview
