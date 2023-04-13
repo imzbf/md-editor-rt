@@ -1,6 +1,6 @@
 import React, { useContext, useMemo } from 'react';
-import { prefix } from '../../config';
-import { EditorContext } from '../../Editor';
+import { prefix } from '~/config';
+import { EditorContext } from '~/Editor';
 
 export default ({ modelValue }: { modelValue: string }) => {
   const { usedLanguageText } = useContext(EditorContext);

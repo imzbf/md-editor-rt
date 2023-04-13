@@ -1,5 +1,5 @@
 import React, { MouseEvent, ReactElement } from 'react';
-import { prefix } from '../config';
+import { prefix } from '~/config';
 
 export interface NormalToolbarProps {
   title?: string;

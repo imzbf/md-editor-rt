@@ -1,10 +1,10 @@
 import React, { CSSProperties, useEffect, useMemo, useState, MouseEvent } from 'react';
-import bus from '../../utils/event-bus';
-import { HeadList, MarkedHeadingId, Themes } from '../../type';
+import bus from '~/utils/event-bus';
+import { HeadList, MarkedHeadingId, Themes } from '~/type';
+import { defaultProps, prefix } from '~/config';
+import { throttle, getRelativeTop } from '~/utils';
+import { PREVIEW_CHANGED } from '~/static/event-name';
 import CatalogLink from './CatalogLink';
-import { defaultProps, prefix } from '../../config';
-import { throttle, getRelativeTop } from '../../utils';
-import { PREVIEW_CHANGED } from '../../static/event-name';
 
 import './style.less';
 

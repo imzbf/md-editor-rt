@@ -9,10 +9,10 @@ import {
 } from 'react';
 import bus from './utils/event-bus';
 import {
-  EditorProp,
+  EditorProps,
   InnerError,
   SettingType,
-  StaticProp,
+  StaticProps,
   Themes,
   ExposeParam,
   UpdateSetting,
@@ -49,7 +49,7 @@ import {
  * @param props
  * @param staticProps
  */
-export const useOnSave = (props: EditorProp, staticProps: StaticProp) => {
+export const useOnSave = (props: EditorProps, staticProps: StaticProps) => {
   const { modelValue } = props;
   const { editorId, previewOnly } = staticProps;
 
@@ -140,11 +140,11 @@ export const useOnSave = (props: EditorProp, staticProps: StaticProp) => {
 };
 
 /**
- * 插入扩展库
+ * 插入编辑器支持的扩展外链
  *
  * @param staticProps
  */
-export const useExpansion = (staticProps: StaticProp) => {
+export const useExpansion = (staticProps: StaticProps) => {
   const { noPrettier, noIconfont, previewOnly, noUploadImg } = staticProps;
 
   const { editorExtensions } = configOption;
@@ -236,7 +236,7 @@ export const useErrorCatcher = (editorId: string, onError: (err: InnerError) => 
  * @param props
  * @param staticProps
  */
-export const useUploadImg = (props: EditorProp, staticProps: StaticProp) => {
+export const useUploadImg = (props: EditorProps, staticProps: StaticProps) => {
   const { editorId, previewOnly } = staticProps;
 
   useEffect(() => {
@@ -277,7 +277,7 @@ export const useUploadImg = (props: EditorProp, staticProps: StaticProp) => {
  * @param staticProps
  * @returns
  */
-export const useCatalog = (props: EditorProp, staticProps: StaticProp) => {
+export const useCatalog = (props: EditorProps, staticProps: StaticProps) => {
   const { toolbars = allToolbar, toolbarsExclude = [] } = props;
   const { editorId } = staticProps;
 
@@ -315,12 +315,13 @@ export const useCatalog = (props: EditorProp, staticProps: StaticProp) => {
 let bodyOverflowHistory = '';
 
 /**
+ * 收集整理公共配置
  * highlight及language重构
  * [SettingType, (k: keyof typeof setting) => void] => {}
  * @param props
  * @returns
  */
-export const useConfig = (props: EditorProp) => {
+export const useConfig = (props: EditorProps) => {
   const {
     theme = defaultProps.theme,
     preview = defaultProps.preview,
@@ -425,7 +426,7 @@ export const useConfig = (props: EditorProp) => {
  */
 export const useExpose = (
   editorRef: ForwardedRef<unknown>,
-  staticProps: StaticProp,
+  staticProps: StaticProps,
   catalogVisible: boolean,
   setting: SettingType,
   updateSetting: UpdateSetting

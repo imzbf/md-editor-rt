@@ -6,11 +6,11 @@ import React, {
   useRef,
   useState
 } from 'react';
-import Modal from '../../components/Modal';
-import { EditorContext } from '../../Editor';
-import { configOption, prefix } from '../../config';
-import { base642File } from '../../utils';
-import bus from '../../utils/event-bus';
+import Modal from '~/components/Modal';
+import bus from '~/utils/event-bus';
+import { EditorContext } from '~/Editor';
+import { configOption, prefix } from '~/config';
+import { base642File } from '~/utils';
 
 import './style.less';
 

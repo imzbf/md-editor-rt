@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useMemo, useState } from 'react';
-import Modal from '../../components/Modal';
-import { prefix } from '../../config';
-import { EditorContext } from '../../Editor';
+import Modal from '~/components/Modal';
+import { prefix } from '~/config';
+import { EditorContext } from '~/Editor';
 
 interface LinkModalProps {
   type: 'link' | 'image' | 'help';

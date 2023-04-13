@@ -1,6 +1,7 @@
 import React, { useRef, useState, ReactElement, useEffect, useMemo } from 'react';
-import { prefix } from '../../config';
-import { keyMove } from '../../utils/dom';
+import { prefix } from '~/config';
+import { keyMove } from '~/utils/dom';
+
 import './style.less';
 
 export type ModalProps = Readonly<{

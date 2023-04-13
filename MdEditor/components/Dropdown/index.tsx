@@ -10,6 +10,8 @@ import React, {
   useCallback
 } from 'react';
 
+import { prefix } from '~/config';
+
 import './style.less';
 
 interface CtlTypes {
@@ -28,7 +30,6 @@ interface ModalProps {
   relative?: string;
 }
 
-import { prefix } from '../../config';
 const HIDDEN_CLASS = `${prefix}-dropdown-hidden`;
 
 const DropDown = (props: ModalProps) => {

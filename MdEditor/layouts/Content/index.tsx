@@ -1,6 +1,7 @@
 import React, { useContext, useRef } from 'react';
-import { prefix } from '../../config';
-import { EditorContext } from '../../Editor';
+import { prefix } from '~/config';
+import { EditorContext } from '~/Editor';
+import { classnames } from '~/utils';
 import {
   // useAutoGenrator,
   useAutoScroll,
@@ -8,7 +9,6 @@ import {
   useMarked,
   useZoom
 } from './hooks';
-import { classnames } from '../../utils';
 import { ContentProps } from './props';
 
 const Content = (props: ContentProps) => {

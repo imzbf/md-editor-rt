@@ -1,8 +1,8 @@
 import React, { MouseEvent } from 'react';
-import { prefix } from '../../config';
+import { prefix } from '~/config';
+import { classnames } from '~/utils';
+import { MarkedHeadingId } from '~/type';
 import { TocItem } from './index';
-import { classnames } from '../../utils';
-import { MarkedHeadingId } from '../../type';
 
 export interface CatalogLinkProps {
   tocItem: TocItem;

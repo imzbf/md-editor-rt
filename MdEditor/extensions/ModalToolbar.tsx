@@ -1,6 +1,6 @@
 import React, { ReactElement } from 'react';
-import { prefix } from '../config';
-import Modal from '../components/Modal';
+import { prefix } from '~/config';
+import Modal from '~/components/Modal';
 
 export interface ModalToolbarProps {
   title?: string;

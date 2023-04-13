@@ -1,6 +1,6 @@
 import React, { ReactElement, useCallback, useMemo } from 'react';
-import { allFooter, prefix } from '../../config';
-import { Footers } from '../../type';
+import { allFooter, prefix } from '~/config';
+import { Footers } from '~/type';
 import MarkdownTotal from './MarkdownTotal';
 import ScrollAuto from './ScrollAuto';
 

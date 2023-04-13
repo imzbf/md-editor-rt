@@ -1,12 +1,13 @@
 import { RefObject, useCallback, useContext, useEffect, useRef, useState } from 'react';
-import bus from '../../utils/event-bus';
-import { prefix, screenfullUrl, configOption } from '../../config';
-import { EditorContext } from '../../Editor';
-import { appendHandler } from '../../utils/dom';
+import bus from '~/utils/event-bus';
+import { prefix, screenfullUrl, configOption } from '~/config';
+import { EditorContext } from '~/Editor';
+import { appendHandler } from '~/utils/dom';
+import { ToolDirective } from '~/utils/content-help';
+import { CHANGE_FULL_SCREEN } from '~/static/event-name';
+
 import { ToolbarProps } from './';
-import { ToolDirective } from '../../utils/content-help';
 import { HoverData } from './TableShape';
-import { CHANGE_FULL_SCREEN } from '../../static/event-name';
 
 export const useSreenfull = (props: ToolbarProps) => {
   const { editorId } = useContext(EditorContext);

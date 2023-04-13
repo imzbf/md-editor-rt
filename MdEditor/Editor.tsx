@@ -21,7 +21,7 @@ import Footer from '~/layouts/Footer';
 import MdCatalog from '~/extensions/MdCatalog';
 import { classnames } from '~/utils';
 import { prefix, staticTextDefault, defaultProps } from '~/config';
-import { ContentType, EditorProps, StaticProp, Themes } from '~/type';
+import { ContentType, EditorProps, StaticProps, Themes } from '~/type';
 import bus from '~/utils/event-bus';
 
 import '~/styles/index.less';
@@ -74,7 +74,7 @@ const Editor = forwardRef((props: EditorProps, ref: ForwardedRef<unknown>) => {
     noUploadImg = defaultProps.noUploadImg
   } = props;
 
-  const [staticProps] = useState<StaticProp>(() => {
+  const [staticProps] = useState<StaticProps>(() => {
     return {
       previewOnly,
       editorId,
@@ -104,16 +104,6 @@ const Editor = forwardRef((props: EditorProps, ref: ForwardedRef<unknown>) => {
       });
     },
     [setState]
-  );
-
-  const wrapOnChange = useCallback(
-    (value: string) => {
-      // 可控组件，更新前保存选中位置
-      bus.emit(staticProps.editorId, 'saveHistoryPos');
-      onChange(value);
-    },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [onChange]
   );
 
   // 快捷键监听
@@ -178,7 +168,7 @@ const Editor = forwardRef((props: EditorProps, ref: ForwardedRef<unknown>) => {
         )}
         <Content
           value={modelValue}
-          onChange={wrapOnChange}
+          onChange={onChange}
           setting={setting}
           onHtmlChanged={onHtmlChanged}
           onGetCatalog={onGetCatalog}

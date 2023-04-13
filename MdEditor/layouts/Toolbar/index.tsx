@@ -6,18 +6,19 @@ import React, {
   useRef,
   useState
 } from 'react';
-import { ToolbarNames, SettingType, UpdateSetting } from '../../type';
-import { EditorContext } from '../../Editor';
-import { goto } from '../../utils';
-import { ToolDirective } from '../../utils/content-help';
-import { allToolbar, prefix } from '../../config';
-import bus from '../../utils/event-bus';
-import Divider from '../../components/Divider';
-import Dropdown from '../../components/Dropdown';
+import { ToolbarNames, SettingType, UpdateSetting } from '~/type';
+import { EditorContext } from '~/Editor';
+import { goto } from '~/utils';
+import { ToolDirective } from '~/utils/content-help';
+import { allToolbar, prefix } from '~/config';
+import bus from '~/utils/event-bus';
+import Divider from '~/components/Divider';
+import Dropdown from '~/components/Dropdown';
+import { CHANGE_CATALOG_VISIBLE, ON_SAVE } from '~/static/event-name';
 import Modals from '../Modals';
 import TableShape from './TableShape';
 import { useSreenfull, useModals, useDropdownState } from './hooks';
-import { CHANGE_CATALOG_VISIBLE, ON_SAVE } from '../../static/event-name';
+
 export interface ToolbarProps {
   noPrettier: boolean;
   // 工具栏选择显示

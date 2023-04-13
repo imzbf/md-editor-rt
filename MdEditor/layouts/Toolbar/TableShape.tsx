@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { prefix } from '../../config';
+import { prefix } from '~/config';
 
 export interface HoverData {
   x: number;
