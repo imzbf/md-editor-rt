@@ -27,6 +27,9 @@ const useCodeMirror = (props: ContentProps) => {
 
   const [mdEditorCommands] = useState(() => createCommands(editorId, props));
 
+  // 粘贴上传
+  const pasteHandler = usePasteUpload(props);
+
   const [defaultExtensions] = useState(() => {
     return [
       keymap.of([...mdEditorCommands, indentWithTab]),
@@ -36,6 +39,11 @@ const useCodeMirror = (props: ContentProps) => {
       EditorView.lineWrapping,
       EditorView.updateListener.of((update) => {
         props.onChange(update.state.doc.toString());
+      }),
+      EditorView.domEventHandlers({
+        paste: pasteHandler,
+        blur: props.onBlur,
+        focus: props.onFocus
       })
     ];
   });
@@ -89,8 +97,10 @@ const useCodeMirror = (props: ContentProps) => {
 
     // console.log(view.state.selection.main);
     // console.log(view.state.sliceDoc());
+    if (props.autoFocus) {
+      view.focus();
+    }
 
-    view.focus();
     // console.log()
     // view.dispatch(view.state.replaceSelection('`vscode`'));
 
@@ -136,8 +146,20 @@ const useCodeMirror = (props: ContentProps) => {
     }
   }, [props.value]);
 
-  // 粘贴上传
-  usePasteUpload(props, inputWrapperRef);
+  useEffect(() => {
+    codeMirrorUt.current?.setDisabled(props.disabled!);
+  }, [props.disabled]);
+
+  useEffect(() => {
+    codeMirrorUt.current?.setDisabled(props.readOnly!);
+  }, [props.readOnly]);
+
+  useEffect(() => {
+    if (props.maxLength) {
+      codeMirrorUt.current?.setMaxLength(props.maxLength);
+    }
+  }, [props.maxLength]);
+
   // 附带的设置
   useAttach(codeMirrorUt);
 

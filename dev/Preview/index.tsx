@@ -220,6 +220,29 @@ export default ({ theme, previewTheme, codeTheme, lang }: PreviewProp) => {
           previewTheme={previewTheme}
           codeTheme={codeTheme}
           modelValue={md.text}
+          // pageFullscreen
+          // preview={false}
+          // htmlPreview
+          // toolbarsExclude={['github']}
+          // noPrettier
+          // tabWidth={4}
+          // showCodeRowNumber
+          // tableShape={[10, 10]}
+          // noMermaid
+          // placeholder="placeholder"
+          // noKatex
+          // markedHeadingId={(t, l, index) => `heading-${index}`}
+          // sanitize={(h) => `<a href="#">aaa</a>${h}`}
+          // scrollAuto={false}
+          // noIconfont
+          // codeStyleReverse={false}
+          // codeStyleReverseList={['mk-cute']}
+          // autoFocus
+          // disabled
+          // readOnly={true}
+          // maxLength={10}
+          // onBlur={console.log}
+          // onFocus={console.log}
           markedHeadingId={markedHeadingId}
           editorId="md-editor-preview"
           toolbars={[

@@ -35,9 +35,15 @@ export default class CodeMirrorUt {
    */
   setExtensions: (extensions: Extension[]) => void;
 
-  getValue = () => {
+  toggleDisabled: (extensions: Extension[]) => void;
+
+  toggleReadOnly: (extensions: Extension[]) => void;
+
+  toggleMaxlength: (extensions: Extension[]) => void;
+
+  getValue() {
     return this.view.state.doc.toString();
-  };
+  }
 
   /**
    * 设置内容
@@ -46,7 +52,7 @@ export default class CodeMirrorUt {
    * @param from 插入开始位置
    * @param to 插入结束位置
    */
-  setValue = (insert: string, from = 0, to = this.view.state.doc.length) => {
+  setValue(insert: string, from = 0, to = this.view.state.doc.length) {
     this.view.dispatch({
       changes: {
         from,
@@ -54,15 +60,15 @@ export default class CodeMirrorUt {
         insert
       }
     });
-  };
+  }
 
   /**
    * 获取选中的文本
    */
-  getSelectedText = () => {
+  getSelectedText() {
     const { from, to } = this.view.state.selection.main;
     return this.view.state.sliceDoc(from, to);
-  };
+  }
 
   /**
    * 使用新的内容替换选中的内容
@@ -70,7 +76,7 @@ export default class CodeMirrorUt {
    * @param text 待替换内容
    * @param options 替换后是否选中
    */
-  replaceSelectedText = (
+  replaceSelectedText(
     text: string,
     options = {
       // 是否选中
@@ -80,7 +86,7 @@ export default class CodeMirrorUt {
       // 结束的偏移量
       deviationEnd: 0
     }
-  ) => {
+  ) {
     const { from } = this.view.state.selection.main;
 
     this.view.dispatch(this.view.state.replaceSelection(text));
@@ -99,7 +105,7 @@ export default class CodeMirrorUt {
 
       this.view.focus();
     }
-  };
+  }
 
   constructor(view: EditorView) {
     this.view = view;
@@ -108,6 +114,9 @@ export default class CodeMirrorUt {
     this.togglePlaceholder = toggleWith(this.view);
 
     this.setExtensions = toggleWith(this.view);
+    this.toggleDisabled = toggleWith(this.view);
+    this.toggleReadOnly = toggleWith(this.view);
+    this.toggleMaxlength = toggleWith(this.view);
   }
 
   /**
@@ -133,5 +142,21 @@ export default class CodeMirrorUt {
 
   focus() {
     this.view.focus();
+  }
+
+  setDisabled(d: boolean) {
+    this.toggleDisabled([EditorView.editable.of(!d)]);
+  }
+
+  setReadOnly(r: boolean) {
+    this.toggleReadOnly([EditorState.readOnly.of(r)]);
+  }
+
+  setMaxLength(ml: number) {
+    this.toggleMaxlength([
+      EditorState.changeFilter.of((tr) => {
+        return tr.newDoc.length <= ml;
+      })
+    ]);
   }
 }

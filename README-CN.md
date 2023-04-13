@@ -74,7 +74,7 @@ export default () => {
 | modelValue | `string` | '' | md 编辑内容 |
 | theme | `'light' \| 'dark'` | 'light' | 主题切换 |
 | class | `string` | '' | 编辑器类名 |
-| historyLength | `number` | 10 | 最大记录操作数（太大会占用内存） |
+| historyLength<sup>`deprecated^3.0.0`</sup> | `number` | 10 | 最大记录操作数（太大会占用内存）。`^3.0.0`使用`@codemirror/commands`的`history`扩展替代。 |
 | pageFullscreen | `boolean` | false | 页面内全屏 |
 | preview | `boolean` | true | 是否预览 |
 | htmlPreview | `boolean` | false | 是否 html 预览 |
@@ -574,7 +574,7 @@ _请注意，快捷键仅在输入框获取到焦点时可用！_
 | CTRL + 1-6 | 1-6 级标题 | `# 标题` |
 | CTRL + ↑ | 上角标 | `<sup>上角标</sup>` |
 | CTRL + ↓ | 下角标 | `<sub>下角标</sub>` |
-| CTRL + Q | 引用 | 原`> 引用`，`^3.0.0`已废弃 |
+| CTRL + Q<sup>`已废弃^3.0.0`</sup> | 引用 | `> 引用` |
 | CTRL + O | 有序列表 | `1. 有序列表` |
 | CTRL + L | 链接 | `[链接](https://imzbf.cc)` |
 | CTRL + Z | 撤回 | 触发编辑器内内容撤回，与系统无关 |

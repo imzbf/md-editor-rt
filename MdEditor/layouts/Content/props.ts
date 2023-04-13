@@ -1,4 +1,3 @@
-import { FocusEvent } from 'react';
 import { HeadList, MarkedHeadingId, SettingType } from '~/type';
 
 export type ContentProps = Readonly<{
@@ -23,10 +22,10 @@ export type ContentProps = Readonly<{
   /**
    * 输入框失去焦点时触发事件
    */
-  onBlur?: (event: FocusEvent<HTMLTextAreaElement, Element>) => void;
+  onBlur?: (event: FocusEvent) => void;
   /**
    * 输入框获得焦点时触发事件
    */
-  onFocus?: (event: FocusEvent<HTMLTextAreaElement, Element>) => void;
+  onFocus?: (event: FocusEvent) => void;
   noPrettier?: boolean;
 }>;
