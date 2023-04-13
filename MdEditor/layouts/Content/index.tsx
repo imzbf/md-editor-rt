@@ -2,22 +2,12 @@ import React, { useContext, useRef } from 'react';
 import { prefix } from '~/config';
 import { EditorContext } from '~/Editor';
 import { classnames } from '~/utils';
-import {
-  // useAutoGenrator,
-  useAutoScroll,
-  useCodeMirror,
-  useMarked,
-  useZoom
-} from './hooks';
+import { useAutoScroll, useCodeMirror, useMarked, useZoom } from './hooks';
 import { ContentProps } from './props';
 
 const Content = (props: ContentProps) => {
   const { editorId, previewOnly, previewTheme, showCodeRowNumber } =
     useContext(EditorContext);
-  // 输入状态，在输入中文等时，暂停保存
-  // const completeStatus = useRef(true);
-  // 输入框
-  // const textAreaRef = useRef<HTMLTextAreaElement>(null);
   // 预览框
   const previewRef = useRef<HTMLDivElement>(null);
   // html代码预览框
@@ -27,64 +17,14 @@ const Content = (props: ContentProps) => {
   const { html } = useMarked(props);
   // 自动滚动
   useAutoScroll(props, html, '.cm-scroller', previewRef, htmlRef);
-  // 历史记录
-  // useHistory(props, textAreaRef, completeStatus);
-  // 自动监听生成md内容
-  // useAutoGenrator(props, textAreaRef);
   // 图片点击放大
   useZoom(props, html);
-
-  // 原生属性
-  // const attr = useMemo(() => {
-  //   return omit(props, [
-  //     'formatCopiedText',
-  //     'markedHeadingId',
-  //     'noKatex',
-  //     'noMermaid',
-  //     'onChange',
-  //     'onGetCatalog',
-  //     'onHtmlChanged',
-  //     'sanitize',
-  //     'scrollAuto',
-  //     'setting',
-  //     'autoDetectCode',
-  //     'onBlur',
-  //     'onFocus'
-  //   ]);
-  // }, [props]);
 
   return (
     <>
       <div className={`${prefix}-content`}>
         {!previewOnly && (
-          <div className={`${prefix}-input-wrapper`} ref={inputWrapperRef}>
-            {/* <textarea
-              {...attr}
-              id={`${editorId}-textarea`}
-              className={
-                props.setting.preview || props.setting.htmlPreview ? '' : 'textarea-only'
-              }
-              ref={textAreaRef}
-              onBlur={(e) => {
-                // 失焦自动保存当前选中内容
-                bus.emit(editorId, 'selectTextChange');
-                props.onBlur && props.onBlur(e);
-              }}
-              onFocus={props.onFocus}
-              onKeyDown={() => {
-                bus.emit(editorId, 'saveHistoryPos', true);
-              }}
-              onCompositionStart={() => {
-                completeStatus.current = false;
-              }}
-              onInput={(e) => {
-                onChange((e.target as HTMLTextAreaElement).value);
-              }}
-              onCompositionEnd={() => {
-                completeStatus.current = true;
-              }}
-            /> */}
-          </div>
+          <div className={`${prefix}-input-wrapper`} ref={inputWrapperRef}></div>
         )}
         {props.setting.preview && (
           <div
