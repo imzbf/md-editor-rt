@@ -703,7 +703,7 @@ export const useMermaid = (props: EditorContentProp) => {
 
   // 修改它触发重新编译
   const [reRender, setReRender] = useState<boolean>(false);
-  const [mermaidInited, setMermaidInited] = useState<boolean>(false);
+  const [mermaidInited, setMermaidInited] = useState<boolean>(!!mermaidConf?.instance);
 
   const setMermaidTheme = useCallback(() => {
     const mermaid = mermaidConf?.instance || window.mermaid;
@@ -764,7 +764,7 @@ export const useKatex = (props: EditorContentProp, marked: any) => {
   const katexConf = configOption.editorExtensions?.katex;
   const katexIns = katexConf?.instance;
 
-  const [katexInited, setKatexInited] = useState(false);
+  const [katexInited, setKatexInited] = useState(!!katexIns);
 
   // 当没有设置不使用katex，直接扩展组件
   if (!props.noKatex) {
