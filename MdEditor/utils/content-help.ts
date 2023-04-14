@@ -210,7 +210,6 @@ export const directive2flag = (
       case 'task': {
         targetValue = `- [ ] ${selectedText}`;
         deviationStart = 6;
-        deviationEnd = targetValue.length;
         select = true;
         break;
       }
