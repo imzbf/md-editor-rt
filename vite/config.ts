@@ -56,7 +56,7 @@ export default ({ mode }: ConfigEnv): UserConfigExport => {
 
   return {
     base: '/',
-    publicDir: mode === 'production' ? false : '../dev/public',
+    publicDir: mode === 'production' ? false : './dev/public',
     server: {
       host: 'localhost',
       open: true,

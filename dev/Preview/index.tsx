@@ -236,7 +236,7 @@ export default ({ theme, previewTheme, codeTheme, lang }: PreviewProp) => {
           // readOnly={true}
           // maxLength={10}
           // noHighlight
-          autoDetectCode
+          // autoDetectCode
           // onHtmlChanged={console.log}
           // onBlur={console.log}
           // onFocus={console.log}
