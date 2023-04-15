@@ -41,7 +41,7 @@ const useMarkdownIt = (props: ContentProps) => {
 
   const { hljsRef, hljsInited } = useHighlight(props);
   const { katexRef, katexInited } = useKatex(props);
-  const { replaceMermaid } = useMermaid(props);
+  const { reRender, replaceMermaid } = useMermaid(props);
 
   const [md] = useState(() => {
     const md_ = mdit({
@@ -149,7 +149,7 @@ const useMarkdownIt = (props: ContentProps) => {
   useEffect(() => {
     replaceMermaid();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [html]);
+  }, [html, reRender]);
 
   // 添加目录主动触发接收监听
   useEffect(() => {
@@ -159,7 +159,8 @@ const useMarkdownIt = (props: ContentProps) => {
         bus.emit(editorId, 'catalogChanged', headsRef.current);
       }
     });
-  });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return { html };
 };

@@ -17,7 +17,7 @@ const useMermaid = (props: ContentProps) => {
   const mermaidConf = editorExtensions?.mermaid;
 
   const mermaidRef = useRef(mermaidConf?.instance);
-  const reRenderRef = useRef(false);
+  const [reRender, setReRender] = useState(false);
 
   const [mermaidCache] = useState(
     () =>
@@ -38,7 +38,7 @@ const useMermaid = (props: ContentProps) => {
         theme: theme === 'dark' ? 'dark' : 'default'
       });
 
-      reRenderRef.current = !reRenderRef.current;
+      setReRender((_r) => !_r);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [theme]);
@@ -104,8 +104,7 @@ const useMermaid = (props: ContentProps) => {
       });
     }
   };
-
-  return { mermaidRef, reRenderRef, replaceMermaid };
+  return { mermaidRef, reRender, replaceMermaid };
 };
 
 export default useMermaid;
