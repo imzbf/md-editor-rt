@@ -19,6 +19,42 @@ import HeadingPlugin from '../markdownIt/heading';
 import { useContext, useEffect, useMemo, useRef, useState } from 'react';
 import { EditorContext } from '~/Editor';
 
+const initLineNumber = (md: mdit) => {
+  [
+    'paragraph_open',
+    'table_open',
+    'ordered_list_open',
+    'bullet_list_open',
+    'blockquote_open',
+    'hr'
+  ].forEach((rule) => {
+    md.renderer.rules[rule] = (tokens, idx, options, _env, self) => {
+      let line;
+      if (tokens[idx].map && tokens[idx].level === 0) {
+        line = tokens[idx].map![0];
+        tokens[idx].attrSet('data-line', String(line));
+      }
+      return self.renderToken(tokens, idx, options);
+    };
+  });
+
+  ['html_block', 'fence'].forEach((rule) => {
+    const backup = md.renderer.rules[rule];
+
+    md.renderer.rules[rule] = (tokens, idx, options, env, self) => {
+      let line;
+      const _htmlCode = backup!(tokens, idx, options, env, self);
+
+      if (tokens[idx].map && tokens[idx].level === 0) {
+        line = tokens[idx].map![0];
+        return _htmlCode.replace(/^(<[^>]*)/, `$1 data-line="${line}"`);
+      }
+
+      return _htmlCode;
+    };
+  });
+};
+
 const useMarkdownIt = (props: ContentProps) => {
   const { onHtmlChanged = () => {}, onGetCatalog = () => {} } = props;
   const { editorConfig, markdownItConfig } = configOption;
@@ -52,21 +88,6 @@ const useMarkdownIt = (props: ContentProps) => {
       md.use(MermaidPlugin, { themeRef });
     }
 
-    md_.renderer.rules.paragraph_open = md_.renderer.rules.table_open = (
-      tokens,
-      idx,
-      options,
-      _env,
-      self
-    ) => {
-      let line;
-      if (tokens[idx].map && tokens[idx].level === 0) {
-        line = tokens[idx].map![0];
-        tokens[idx].attrSet('data-line', String(line));
-      }
-      return self.renderToken(tokens, idx, options);
-    };
-
     md_.set({
       highlight: (str, language) => {
         let codeHtml;
@@ -93,6 +114,8 @@ const useMarkdownIt = (props: ContentProps) => {
         return `<pre><code class="language-${language}" language=${language}>${codeSpan}</code></pre>`;
       }
     });
+
+    initLineNumber(md_);
 
     markdownItConfig!(md_);
 
