@@ -85,7 +85,7 @@ const useMarkdownIt = (props: ContentProps) => {
     md_.use(HeadingPlugin, { mdHeadingId: props.mdHeadingId, headsRef });
 
     if (!props.noMermaid) {
-      md.use(MermaidPlugin, { themeRef });
+      md_.use(MermaidPlugin, { themeRef });
     }
 
     md_.set({
