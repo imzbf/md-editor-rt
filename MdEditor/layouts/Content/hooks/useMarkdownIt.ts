@@ -49,12 +49,15 @@ const useMarkdownIt = (props: ContentProps) => {
       breaks: true
     });
 
-    md_.use(MermaidPlugin, { themeRef });
     md_.use(KatexPlugin, { katexRef });
     md_.use(ImageFiguresPlugin, { figcaption: true });
     md_.use(AdmonitionPlugin);
     md_.use(TaskListPlugin);
     md_.use(HeadingPlugin, { mdHeadingId: props.mdHeadingId, headsRef });
+
+    if (!props.noMermaid) {
+      md.use(MermaidPlugin, { themeRef });
+    }
 
     md_.renderer.rules.paragraph_open = md_.renderer.rules.table_open = (
       tokens,
