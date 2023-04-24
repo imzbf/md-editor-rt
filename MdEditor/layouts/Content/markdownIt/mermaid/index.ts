@@ -8,7 +8,15 @@ const MermaidPlugin = (md: markdownit, options: { themeRef: RefObject<Themes> })
     const token = tokens[idx];
     const code = token.content.trim();
     if (token.info === 'mermaid') {
-      return `<div class="${prefix}-mermaid" data-mermaid-theme=${options.themeRef.current}>${code}</div>`;
+      let line;
+      if (tokens[idx].map && tokens[idx].level === 0) {
+        line = tokens[idx].map![0];
+        tokens[idx].attrSet('data-line', String(line));
+      }
+
+      return `<div class="${prefix}-mermaid" ${
+        line !== undefined ? 'data-line=' + line : ''
+      } data-mermaid-theme=${options.themeRef.current}>${code}</div>`;
     }
 
     return temp!(tokens, idx, ops, env, slf);
