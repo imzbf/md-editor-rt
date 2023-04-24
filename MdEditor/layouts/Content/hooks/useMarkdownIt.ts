@@ -19,13 +19,6 @@ import HeadingPlugin from '../markdownIt/heading';
 import { useContext, useEffect, useMemo, useRef, useState } from 'react';
 import { EditorContext } from '~/Editor';
 
-const addCodeLanguageAttr = (html: string) => {
-  return html.replace(
-    /<pre><code\sclass="language-([^>]*)">/g,
-    '<pre><code class="language-$1" language="$1">'
-  );
-};
-
 const useMarkdownIt = (props: ContentProps) => {
   const { onHtmlChanged = () => {}, onGetCatalog = () => {} } = props;
   const { editorConfig, markdownItConfig } = configOption;
@@ -76,31 +69,28 @@ const useMarkdownIt = (props: ContentProps) => {
 
     md_.set({
       highlight: (str, language) => {
-        // 不高亮或者没有实例，返回默认
-        if (props.noHighlight) {
-          return str;
-        }
-
-        if (!hljsRef.current) {
-          return str;
-        }
-
-        // 如果是mermaid
-
-        const hljsLang = hljsRef.current.getLanguage(language);
         let codeHtml;
-        if (hljsLang) {
-          codeHtml = hljsRef.current.highlight(str, {
-            language,
-            ignoreIllegals: true
-          }).value;
+
+        // 不高亮或者没有实例，返回默认
+        if (!props.noHighlight && hljsRef.current) {
+          const hljsLang = hljsRef.current.getLanguage(language);
+          if (hljsLang) {
+            codeHtml = hljsRef.current.highlight(str, {
+              language,
+              ignoreIllegals: true
+            }).value;
+          } else {
+            codeHtml = hljsRef.current.highlightAuto(str).value;
+          }
         } else {
-          codeHtml = hljsRef.current.highlightAuto(str).value;
+          codeHtml = md.utils.escapeHtml(str);
         }
 
-        return showCodeRowNumber
+        const codeSpan = showCodeRowNumber
           ? generateCodeRowNumber(codeHtml.trim())
           : `<span class="code-block">${codeHtml.trim()}</span>`;
+
+        return `<pre><code class="language-${language}" language=${language}>${codeSpan}</code></pre>`;
       }
     });
 
@@ -110,7 +100,7 @@ const useMarkdownIt = (props: ContentProps) => {
   });
 
   const [html, setHtml] = useState(() => {
-    return props.sanitize(addCodeLanguageAttr(md.render(props.value)));
+    return props.sanitize(md.render(props.value));
   });
 
   const needReRender = useMemo(() => {
@@ -125,7 +115,7 @@ const useMarkdownIt = (props: ContentProps) => {
       () => {
         // 清理历史标题
         headsRef.current = [];
-        const html_ = props.sanitize(addCodeLanguageAttr(md.render(props.value)));
+        const html_ = props.sanitize(md.render(props.value));
         setHtml(html_);
 
         // 触发异步的保存事件（html总是会比text后更新）
