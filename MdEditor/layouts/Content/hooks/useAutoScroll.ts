@@ -38,8 +38,7 @@ const useAutoScroll = (
       const [init, clear] = scrollHandler(
         cmScroller!,
         previewRef.current! || htmlRef.current,
-        codeMirrorUt.current!,
-        props.value
+        codeMirrorUt.current!
       );
 
       setScrollCb({

@@ -2,11 +2,6 @@ import CodeMirrorUt from '~/layouts/Content/codemirror';
 import { debounce } from '.';
 import smoothScroll from './smooth-scroll';
 
-const getOffsetTopWithOutMarginTop = (ele: HTMLElement) => {
-  const { marginTop } = getComputedStyle(ele);
-  return ele.offsetTop - parseFloat(marginTop);
-};
-
 /**
  * 两块区域同步滚动
  *
@@ -78,229 +73,170 @@ export const scrollAutoWithScale = (pEle: HTMLElement, cEle: HTMLElement) => {
  * @param cEle 寄主区域
  * @returns 清除监听的方法
  */
-const scrollAuto = (
-  pEle: HTMLElement,
-  cEle: HTMLElement,
-  codeMirrorUt: CodeMirrorUt,
-  text: string
-) => {
+const scrollAuto = (pEle: HTMLElement, cEle: HTMLElement, codeMirrorUt: CodeMirrorUt) => {
   const { view } = codeMirrorUt;
 
-  // 为0时可以重新注册事件，否则不可以
-  let lock = 0;
-
-  // 注册一个防抖监听事件函数
-  const addEvent = debounce(() => {
-    // 宿主绑定事件
-    pEle.removeEventListener('scroll', scrollHandler);
-    pEle.addEventListener('scroll', scrollHandler);
-
-    // 寄主绑定事件
-    cEle.removeEventListener('scroll', scrollHandler);
-    cEle.addEventListener('scroll', scrollHandler);
-  }, 50);
-
-  // codeMirror的虚拟滚动可能导致获取不到虚拟区域的正确行高
-  // 在每次文本变化后，生成所有的行高数据
-  let sourceLineHeightMap: Array<{
-    lineHeight: number;
-    scrollHeight: number;
-  }> = [];
-
-  /**
-   * 这个方法效仿markdown-it的demo的一部分
-   */
-  const buildMap = () => {
-    // 先清空旧数据
-    sourceLineHeightMap = [];
-
-    // 模拟一个codeMirror的环境
-    const { width, lineHeight, fontFamily, fontSize, whiteSpace } = getComputedStyle(
-      document.querySelector('.cm-content') as HTMLElement
-    );
-    const tempEle = document.createElement('div');
-    tempEle.style.visibility = 'none';
-    tempEle.style.zIndex = '-1';
-    tempEle.style.width = width;
-    tempEle.style.lineHeight = lineHeight;
-    tempEle.style.fontFamily = fontFamily;
-    tempEle.style.fontSize = fontSize;
-    tempEle.style.whiteSpace = whiteSpace;
-    document.body.appendChild(tempEle);
-
-    // 累计行高
-    let addup = 0;
-
-    text.split('\n').forEach((textRow) => {
-      tempEle.innerText = textRow || '-';
-
-      addup += tempEle.offsetHeight;
-      const lineData = {
-        lineHeight: tempEle.offsetHeight,
-        scrollHeight: addup
-      };
-      sourceLineHeightMap.push(lineData);
-    });
-
-    tempEle.remove();
+  const getTopByLine = (line: number) => {
+    return view.lineBlockAt(view.state.doc.line(line).from).top;
   };
 
-  const scrollHandler = debounce((e: Event) => {
-    // 加把锁，当前滚动结束后再减掉。
-    lock++;
+  const getHeightByLine = (line: number) => {
+    return view.lineBlockAt(view.state.doc.line(line).from).height;
+  };
 
-    const blockInfo = view.lineBlockAtHeight(view.scrollDOM.scrollTop);
-    const firstLineInView = view.state.doc.lineAt(blockInfo.from);
+  // 在每次文本变化后，生成所有的行高数据
+  let blockMap: Array<{
+    start: number;
+    end: number;
+  }> = [];
+
+  // /**
+  //  * 这个方法效仿markdown-it的demo的一部分
+  //  */
+  const buildMap = () => {
+    blockMap = [];
 
     // 预览框中带有源行号的元素
-    const elesHasLineNumer = Array.from(cEle.children[0].children).filter((item) =>
-      item.hasAttribute('data-line')
-    ) as HTMLElement[];
+    const startLines = Array.from(cEle.querySelectorAll<HTMLElement>('[data-line]')).map(
+      (item) => Number(item.dataset.line) + 1
+    );
+
+    const { lines } = view.state.doc;
+
+    let start = 1;
+    let end = startLines.shift() ?? lines;
+
+    for (let i = 1; i <= lines; i++) {
+      if (i === end) {
+        start = i;
+        end = startLines.shift() || lines + 1;
+      }
+
+      blockMap.push({
+        start,
+        end: end - 1
+      });
+    }
+  };
+
+  // 为0时可以重新注册事件，否则不可以
+  let pLock = 0;
+  let cLock = 0;
+
+  const scrollHandler = (e: Event) => {
+    if (!cEle.firstElementChild?.firstElementChild) {
+      return;
+    }
+
+    const blockInfo = view.lineBlockAtHeight(view.scrollDOM.scrollTop);
+    // 可视区域第一行行号
+    const { number: currLine } = view.state.doc.lineAt(blockInfo.from);
+
+    if (currLine > blockMap.length) {
+      return;
+    }
+
+    // 可能是修改文本之前引发的滚动，判断后消除
+    if (view.state.doc.lines < blockMap[blockMap.length - 1].end) {
+      return;
+    }
 
     if (e.target === pEle) {
-      // console.log('编辑滚动');
-      cEle.removeEventListener('scroll', scrollHandler);
-
-      // 如果到底部了
-      if (pEle.scrollTop + pEle.clientHeight >= pEle.scrollHeight) {
-        smoothScroll(cEle, cEle.scrollHeight - cEle.clientHeight, () => {
-          if (--lock !== 0) {
-            return;
-          }
-          addEvent();
-        });
+      if (cLock !== 0) {
         return;
       }
+      // 加把锁，当前滚动结束后再减掉。
+      pLock++;
 
-      // 可视区域第一行行号
-      const { number: currLine } = firstLineInView;
+      const blockData = blockMap[currLine - 1];
 
-      // 找到当前行对应的元素区间
-      let startEle = cEle.firstElementChild?.firstElementChild as HTMLElement;
-      let startLine = 1;
-      let endEle: HTMLElement =
-        elesHasLineNumer.length === 0
-          ? (cEle.firstElementChild?.lastElementChild as HTMLElement)
-          : elesHasLineNumer[0];
-      let endLine =
-        elesHasLineNumer.length === 0 ? 0 : Number(elesHasLineNumer[0].dataset.line);
-
-      for (let i = 0; i < elesHasLineNumer.length; i++) {
-        const startLine_ = Number(elesHasLineNumer[i].dataset.line) + 1;
-        const endLine_ = Number(
-          i + 1 >= elesHasLineNumer.length ? -2 : elesHasLineNumer[i + 1].dataset.line
-        );
-        if (currLine >= startLine_ && currLine <= endLine_) {
-          startEle = elesHasLineNumer[i];
-          endEle = elesHasLineNumer[i + 1];
-
-          // mdit的行号从0开始
-          startLine = startLine_;
-          endLine = endLine_;
-
-          break;
-        }
-      }
-
-      // 没有找到目标，不滚动本次
-      if (!startEle!) {
-        lock--;
-        return;
-      }
+      const endLinePosition =
+        getTopByLine(blockData.end) + getHeightByLine(blockData.end);
 
       // 计算一个高度比
-      const scale =
-        (view.scrollDOM.scrollTop -
-          sourceLineHeightMap[startLine - 1].scrollHeight +
-          sourceLineHeightMap[startLine - 1].lineHeight) /
-        (sourceLineHeightMap[endLine - 1].scrollHeight -
-          sourceLineHeightMap[startLine - 1].scrollHeight +
-          sourceLineHeightMap[startLine - 1].lineHeight);
+      let scale = 0;
+      const startTop = getTopByLine(blockData.start);
 
-      const { marginTop: startEleMarginTop } = getComputedStyle(startEle!);
-      const startEleOffetTop = startEle!.offsetTop - parseFloat(startEleMarginTop);
+      const startEle: HTMLElement =
+        cEle.querySelector<HTMLElement>(`[data-line="${blockData.start - 1}"]`) ||
+        (cEle.firstElementChild?.firstElementChild as HTMLElement);
+      const endEle: HTMLElement =
+        cEle.querySelector<HTMLElement>(`[data-line="${blockData.end}"]`) ||
+        (cEle.lastElementChild?.lastElementChild as HTMLElement);
 
-      const { marginTop } = getComputedStyle(endEle!);
-      const endEleOffetTop = endEle.offsetTop - parseFloat(marginTop);
+      let blockHeight = 0;
+      let startEleOffetTop = 0;
 
-      const blockHeight = endEleOffetTop - startEleOffetTop;
+      if (startTop === 0) {
+        scale = (view.scrollDOM.scrollTop - startTop) / (endLinePosition - startTop);
+        blockHeight = endEle.offsetTop;
+      }
+      // 如果结束块已经在滚动到底部时的可视区了，那么就将当前块到末尾视为一个整体，达到左侧滚动到底部时，右侧同步滚动到底部的目标
+      else if (
+        endLinePosition >
+        view.scrollDOM.scrollHeight - view.scrollDOM.clientHeight
+      ) {
+        scale =
+          (view.scrollDOM.scrollTop - startTop) /
+          (view.scrollDOM.scrollHeight - view.scrollDOM.clientHeight - startTop);
 
-      const scrollToTop = startEleOffetTop + blockHeight * scale;
+        startEleOffetTop = startEle.offsetTop;
+        blockHeight = cEle.scrollHeight - cEle.clientHeight - startEleOffetTop + 10;
+      } else {
+        scale = (view.scrollDOM.scrollTop - startTop) / (endLinePosition - startTop);
 
+        startEleOffetTop = startEle.offsetTop;
+        const endEleOffetTop = endEle.offsetTop;
+        blockHeight = endEleOffetTop - startEleOffetTop;
+      }
+
+      // 减去了10的滚动区域paddingTop
+      const scrollToTop = startEleOffetTop - 10 + blockHeight * scale;
       smoothScroll(cEle, scrollToTop, () => {
-        if (--lock !== 0) {
-          return;
-        }
-        // console.log(lock);
-
-        addEvent();
+        pLock--;
       });
     } else {
-      // console.log('预览滚动');
-      // 清除宿主监听
-      pEle.removeEventListener('scroll', scrollHandler);
+      if (pLock !== 0) {
+        return;
+      }
+      cLock++;
 
-      // 如果到顶部了
-      if (cEle.scrollTop === 0) {
-        smoothScroll(pEle, 0, () => {
-          if (--lock !== 0) {
-            return;
-          }
-          addEvent();
-        });
-        return;
-      }
-      // 底部
-      else if (cEle.scrollTop + cEle.clientHeight >= cEle.scrollHeight) {
-        smoothScroll(pEle, pEle.scrollHeight - pEle.clientHeight, () => {
-          if (--lock !== 0) {
-            return;
-          }
-          addEvent();
-        });
-        return;
-      }
+      // 预览框中带有源行号的元素
+      const elesHasLineNumer = Array.from(
+        cEle.querySelectorAll<HTMLElement>('[data-line]')
+      );
 
       // 已经滚动的高度
       const cScrollTop = cEle.scrollTop;
       const cScrollHeight = cEle.scrollHeight;
-
-      // 计算一个可能的行号位置
-      let vLineNumber = Math.floor(
-        Number(elesHasLineNumer[elesHasLineNumer.length - 1].dataset.line) *
-          (cScrollTop / cScrollHeight)
-      );
+      // 可能的行号位置
+      let vLineNumber =
+        elesHasLineNumer.length === 0
+          ? 1
+          : Math.ceil(
+              Number(elesHasLineNumer[elesHasLineNumer.length - 1].dataset.line) *
+                (cScrollTop / cScrollHeight)
+            );
 
       // 找到相对这个行号较近的有明确标记的元素
-      let vEle: HTMLElement;
+      let vEle = cEle.firstElementChild?.firstElementChild as HTMLElement;
       for (let i = vLineNumber; i >= 0; i--) {
         const vEle_ = cEle.querySelector(`[data-line="${i}"]`) as HTMLElement;
-
         if (vEle_) {
           vEle = vEle_;
           vLineNumber = i;
           break;
         }
       }
-
-      // 没有找到目标，不滚动本次
-      if (!vEle!) {
-        lock--;
-        return;
-      }
-
       // 寻找真实的开始和结束节点
-      let eleStart: HTMLElement;
-      let eleEnd: HTMLElement;
-
-      for (;;) {
-        const vEleIndex = elesHasLineNumer.indexOf(vEle!);
+      let eleStart = cEle.firstElementChild?.firstElementChild as HTMLElement;
+      let eleEnd = cEle.firstElementChild?.lastElementChild as HTMLElement;
+      for (; elesHasLineNumer.length > 0; ) {
+        const vEleIndex = elesHasLineNumer.indexOf(vEle);
         const vEleNext = elesHasLineNumer[vEleIndex + 1];
-
         // 判断这个元素是否在可视区域上方，下一个有明确标记的元素是否处于下方
-        const vEleOffsetTopWithOutMarginTop = getOffsetTopWithOutMarginTop(vEle!);
-
-        if (vEleOffsetTopWithOutMarginTop > cScrollTop) {
+        const vEleOffsetTop = vEle.offsetTop;
+        if (vEleOffsetTop > cScrollTop) {
           if (vEleIndex === 0) {
             eleStart = vEle!;
             eleEnd = vEleNext;
@@ -309,57 +245,72 @@ const scrollAuto = (
           vEle = elesHasLineNumer[vEleIndex - 1];
           continue;
         }
-
-        const vEleNextOffsetTopWithOutMarginTop = getOffsetTopWithOutMarginTop(vEleNext);
-
-        if (
-          vEleOffsetTopWithOutMarginTop <= cScrollTop &&
-          vEleNextOffsetTopWithOutMarginTop > cScrollTop
-        ) {
+        const vEleNextOffsetTop = vEleNext.offsetTop;
+        if (vEleOffsetTop <= cScrollTop && vEleNextOffsetTop > cScrollTop) {
           eleStart = vEle!;
           eleEnd = vEleNext;
           break;
         }
-
         vEle = vEleNext;
       }
 
       // 计算滚动比例
-      const eleStartOffsetTopWithOutMarginTop = getOffsetTopWithOutMarginTop(eleStart);
-      const eleEndOffsetTopWithOutMarginTop = getOffsetTopWithOutMarginTop(eleEnd);
-      const scale =
-        (cScrollTop - eleStartOffsetTopWithOutMarginTop) /
-        (eleEndOffsetTopWithOutMarginTop - eleStartOffsetTopWithOutMarginTop);
+      const eleStartOffsetTop = eleStart.offsetTop;
+      const eleEndOffsetTop = eleEnd.offsetTop;
 
-      const startLine = Number(eleStart.dataset.line);
-      const endLine = Number(eleEnd.dataset.line);
+      let scale = 0;
 
-      // 开始行的滚动高度
-      const firstLineScrollTop = sourceLineHeightMap[startLine].scrollHeight;
+      const { start, end } = blockMap[Number(eleStart.dataset.line || 0)];
+      // 开始行的滚动高度（包括自身高度）
+      const firstLineScrollTop = getTopByLine(start);
       // 结束行的滚动高度
-      const endLineScrollTop = sourceLineHeightMap[endLine].scrollHeight;
-      // 这个模块的综合高度
-      const blockHeight = endLineScrollTop - firstLineScrollTop;
+      let endLineScrollTop = getTopByLine(end);
+      const endLineHeight = getHeightByLine(end);
+      let blockHeight = 0;
+
+      if (eleStart === cEle.firstElementChild?.firstElementChild) {
+        scale = Math.max(cScrollTop / eleEndOffsetTop, 0);
+        blockHeight = endLineScrollTop + endLineHeight - firstLineScrollTop;
+      } else if (
+        endLineScrollTop >
+        view.scrollDOM.scrollHeight - view.scrollDOM.clientHeight
+      ) {
+        scale = Math.max(
+          (cScrollTop - eleStartOffsetTop) /
+            (cEle.scrollHeight - eleStartOffsetTop - cEle.clientHeight),
+          0
+        );
+
+        endLineScrollTop =
+          getTopByLine(view.state.doc.lines) + getHeightByLine(view.state.doc.lines);
+        // 8是编辑区的padding
+        blockHeight = 8 + endLineScrollTop - firstLineScrollTop - pEle.clientHeight;
+      } else {
+        scale = Math.max(
+          (cScrollTop - eleStartOffsetTop) / (eleEndOffsetTop - eleStartOffsetTop),
+          0
+        );
+        // 这个模块的综合高度
+        blockHeight = endLineScrollTop + endLineHeight - firstLineScrollTop;
+      }
 
       smoothScroll(pEle, firstLineScrollTop + blockHeight * scale, () => {
-        if (--lock !== 0) {
-          return;
-        }
-        addEvent();
+        cLock--;
       });
     }
-  }, 6);
+  };
 
   return [
     () => {
       buildMap();
-      addEvent().finally(() => {
-        pEle.dispatchEvent(new Event('scroll'));
-      });
+
+      pEle.addEventListener('scroll', scrollHandler);
+      cEle.addEventListener('scroll', scrollHandler);
+
+      pEle.dispatchEvent(new Event('scroll'));
     },
     () => {
-      lock = 0;
-      // buildMap();
+      blockMap = [];
       pEle.removeEventListener('scroll', scrollHandler);
       cEle.removeEventListener('scroll', scrollHandler);
     }
