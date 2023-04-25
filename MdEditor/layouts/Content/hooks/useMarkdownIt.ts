@@ -1,6 +1,7 @@
 import mdit from 'markdown-it';
 import ImageFiguresPlugin from 'markdown-it-image-figures';
 import TaskListPlugin from 'markdown-it-task-lists';
+import CodeTabs from 'markdown-it-codetabs';
 
 import bus from '~/utils/event-bus';
 import { generateCodeRowNumber } from '~/utils';
@@ -83,6 +84,7 @@ const useMarkdownIt = (props: ContentProps) => {
     md_.use(AdmonitionPlugin);
     md_.use(TaskListPlugin);
     md_.use(HeadingPlugin, { mdHeadingId: props.mdHeadingId, headsRef });
+    md_.use(CodeTabs);
 
     if (!props.noMermaid) {
       md_.use(MermaidPlugin, { themeRef });
