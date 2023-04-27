@@ -11,10 +11,10 @@ const MarkExtension = (props: MarkExtensionProp) => {
   const markHandler = () => {
     const generator: InsertContentGenerator = (selectedText) => {
       return {
-        targetValue: `@${selectedText}@`,
+        targetValue: `==${selectedText}==`,
         select: true,
-        deviationStart: 0,
-        deviationEnd: 0
+        deviationStart: 2,
+        deviationEnd: -2
       };
     };
 

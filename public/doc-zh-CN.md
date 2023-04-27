@@ -39,15 +39,6 @@
 
 ---
 
-### 🤏🏼 historyLength
-
-- **类型**：`number`
-- **默认值**：`10`
-
-  最大记录操作数（太大会占用内存）。
-
----
-
 ### 💻 pageFullscreen
 
 - **类型**：`boolean`
@@ -71,7 +62,7 @@
 - **类型**：`boolean`
 - **默认值**：`false`
 
-  是否显示 html 预览，为`true`时需设置`preview=false`。
+  是否显示 html 预览。当设置为`true`时，需要将`preview`设置为`false`
 
   ```jsx
   <MdEditor htmlPreview preview={false} />
@@ -400,35 +391,21 @@
 
 ---
 
-### 🎱 markedHeadingId
+### 🎱 mdHeadingId
 
 - **类型**：`(text: string, level: number, index: number) => string`
 - **默认值**：`(text) => text`
 
-  构造标题`ID`的生成方式，在使用`MdEditor.config`定义了`renderer.heading`后，避免目录导航等失效。
+  构造标题`ID`的生成方式。
 
   ```jsx
   import MdEditor from 'md-editor-rt';
   import 'md-editor-rt/lib/style.css';
 
-  // 1. 配置 renderer
-  MdEditor.config({
-    markedRenderer(renderer) {
-      // 这里的'headingId'是通过你提供的'markedHeadingId'方法生成的。
-      renderer.heading = (text, level, _r, _s, _index, headingId) => {
-        // 这种方式通常用与处理使用配置了 'renderer.heading'，
-        // 同时又设置的具体编辑器的'markedHeadingId'属性带来的优先级问题。
-        return `<h${level} id="${headingId}">${text}</h${level}>`;
-      };
-      return renderer;
-    }
-  });
+  const mdHeadingId = (_text, _level, index) => `heading-${index}`;
 
-  const generateId = (_text, _level, index) => `heading-${index}`;
-
-  // 2. 配置`markedHeadingId`
-  const App = () => {
-    return <MdEditor markedHeadingId={generateId} />;
+  export default () => {
+    return <MdEditor mdHeadingId={mdHeadingId} />;
   };
   ```
 
@@ -461,7 +438,7 @@
 
 ### 🦶 footers
 
-- **类型**：`Array<'markdownTotal' \| '=' \| 'scrollSwitch' \| number>`
+- **类型**：`Array<'markdownTotal' | '=' | 'scrollSwitch' | number>`
 - **默认值**：`['markdownTotal', '=', 'scrollSwitch']`
 
   页脚显示内容，`'='`左右分割，设置为`[]`不显示页脚。
@@ -741,6 +718,15 @@ export default () => {
 
 ---
 
+### 🕊 noHighlight
+
+- **类型**：`boolean`
+- **默认值**：`false`
+
+  不高亮代码，也不会加载相应的扩展库
+
+---
+
 ## 🤱🏼 实例暴露
 
 2.5.0 版本之后，编辑器暴露了若干方法在组件实例上，用来快捷监听编辑器内部状态或对调整内部状态。
@@ -900,90 +886,39 @@ editorRef.current?.focus();
 
 ## 💴 配置编辑器
 
-使用`MdEditor.config(option: ConfigOption)`方法，可以对内部的`renderer`定制。
+使用`MdEditor.config(option: ConfigOption)`方法，可以对构建实例进行定制。
 
-- markedRenderer: `(renderer: RewriteRenderer) => RewriteRenderer`
+- codeMirrorExtensions: 根据主题和内部默认的 codeMirror 扩展自定义新的扩展。
 
-  设置链接在新窗口打开 🌰
+  使用示例：编辑器默认不显示输入框的行号，需要手动添加扩展
 
   ```js
   import MdEditor from 'md-editor-rt';
+  import { lineNumbers } from '@codemirror/view';
 
   MdEditor.config({
-    markedRenderer(renderer) {
-      renderer.link = (href, title, text) => {
-        return `<a href="${href}" title="${title || ''}" target="_blank">${text}</a>`;
-      };
-
-      return renderer;
+    codeMirrorExtensions(_theme, extensions) {
+      return [...extensions, lineNumbers()];
     }
   });
   ```
 
-  设置`heading-${index}`标题 ID 🌰
+- markdownItConfig: 自定义 markdown-it 核心库扩展、属性等。
 
-  ```jsx
+  使用示例：配置使用`markdown-it-anchor`并在标题右侧显示一个超链接符号
+
+  ```js
   import MdEditor from 'md-editor-rt';
-  import 'md-editor-rt/lib/style.css';
+  import ancher from 'markdown-it-anchor';
 
   MdEditor.config({
-    markedRenderer(renderer) {
-      // 这里的'headingId'是通过你提供的'markedHeadingId'方法生成的。
-      renderer.heading = (text, level, _raw, _s, _index, headingId) => {
-        // 这种方式通常用与处理使用配置了 'renderer.heading'，
-        // 同时又设置的具体编辑器的'markedHeadingId'属性带来的优先级问题。
-        return `<h${level} id="${headingId}">${text}</h${level}>`;
-      };
-
-      return renderer;
+    markdownItConfig(mdit) {
+      mdit.use(ancher, {
+        permalink: true
+      });
     }
   });
-
-  const markedHeadingId = (_text, _level, index) => `heading-${index}`;
-
-  export default () => {
-    return <MdEditor markedHeadingId={markedHeadingId} />;
-  };
   ```
-
-  > 参考：https://marked.js.org/using_pro#renderer，RewriteRenderer 继承了 Renderer 并重写了 heading 方法，提供了第 5 入参 index 和第 6 入参 `headingId`。
-  >
-  > ```ts
-  > export type RewriteHeading = (
-  >   text: string,
-  >   level: 1 | 2 | 3 | 4 | 5 | 6,
-  >   raw: string,
-  >   slugger: Slugger,
-  >   index: number,
-  >   headingId: string
-  > ) => string;
-  > ```
-
-- markedExtensions: `Array<marked.TokenizerExtension & marked.RendererExtension>`
-
-  ```js
-  import MdEditor from 'md-editor-rt';
-
-  MdEditor.config({
-    markedExtensions: [your extension]
-  });
-  ```
-
-  > 参考：https://marked.js.org/using_pro#extensions
-
-  [文档示例源码](https://github.com/imzbf/md-editor-rt/blob/docs/src/main.tsx)
-
-- markedOptions: `marked.MarkedOptions`，设置输入空白行不渲染出来 🌰：
-
-  ```js
-  import MdEditor from 'md-editor-rt';
-
-  MdEditor.config({
-    markedOptions: { breaks: false }
-  });
-  ```
-
-  > 参考：https://marked.js.org/using_advanced#options
 
 - editorConfig: 编辑器常规配置，语言、`mermaid`默认模板、渲染延迟：
 
@@ -1183,7 +1118,6 @@ editorRef.current?.focus();
 | CTRL + 1-6 | 1-6 级标题 | `# 标题` |
 | CTRL + ↑ | 上角标 | `<sup>上角标</sup>` |
 | CTRL + ↓ | 下角标 | `<sub>下角标</sub>` |
-| CTRL + Q | 引用 | `> 引用` |
 | CTRL + O | 有序列表 | `1. 有序列表` |
 | CTRL + L | 链接 | `[链接](https://imzbf.cc)` |
 | CTRL + Z | 撤回 | 触发编辑器内内容撤回，与系统无关 |
@@ -1400,7 +1334,7 @@ export default () => {
 
   - `editorId`: `string`，必须，对应编辑器的`editorId`，在内部注册目录变化监听事件。
   - `className`: `string`，非必须，目录组件最外层类名。
-  - `markedHeadingId`: `MarkedHeadingId`，非必须，特殊化编辑器标题的算法，与编辑器相同。
+  - `mdHeadingId`: `mdHeadingId`，非必须，特殊化编辑器标题的算法，与编辑器相同。
   - `scrollElement`: `string | HTMLElement`，非必须，为字符时应是一个元素选择器。仅预览模式中，整页滚动时，设置为`document.documentElement`。
   - `theme`: `'light' | 'dark'`，非必须，当需要切换主题时提供，同编辑器的`theme`。
   - `offsetTop`: `number`，非必须，标题距离顶部该像素时高亮当前目录项，默认 20 像素。

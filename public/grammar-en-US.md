@@ -28,10 +28,10 @@ _It is a dream deeply rooted in the American dream._
 
 ## 🐹 Strikethrough
 
-~It is a dream deeply rooted in the American dream.~
+~~It is a dream deeply rooted in the American dream.~~
 
 ```markdown
-~It is a dream deeply rooted in the American dream.~
+~~It is a dream deeply rooted in the American dream.~~
 ```
 
 ---
@@ -104,6 +104,36 @@ import MdEditor from 'md-editor-rt';
 import 'md-editor-rt/lib/style.css';
 ```
 ````
+
+### 🗄 Combination
+
+```shell [id:yarn]
+yarn add md-editor-rt
+```
+
+```shell [id:npm]
+npm install md-editor-rt
+```
+
+```shell [id:pnpm]
+pnpm install md-editor-rt
+```
+
+````markdown
+```shell [id:yarn]
+yarn add md-editor-rt
+```
+
+```shell [id:npm]
+npm install md-editor-rt
+```
+
+```shell [id:pnpm]
+pnpm install md-editor-rt
+```
+````
+
+---
 
 ## 🐻‍❄️ Quote
 
@@ -183,6 +213,8 @@ $x+y^{2x}$
 $x+y^{2x}$
 ```
 
+---
+
 ### 🐸 Block
 
 $$\sqrt[3]{x}$$
@@ -240,6 +272,8 @@ gitGraph
 ````
 
 For more usage: [https://mermaid.js.org/syntax/flowchart.html](https://mermaid.js.org/syntax/flowchart.html)
+
+---
 
 ## 🙈 Alert
 
