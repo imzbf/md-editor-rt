@@ -74,7 +74,7 @@ const ReadExtension = (props: ReadExtensionProp) => {
           editorId="edit2preview"
           previewOnly
           modelValue={props.mdText}
-          markedHeadingId={readingHeadingId}
+          mdHeadingId={readingHeadingId}
         />
       </div>
     </ModalToolbar>

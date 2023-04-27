@@ -16,6 +16,7 @@ export default () => {
           demo: '示例',
           github: '源码',
           grammar: '语法',
+          contrast: '对比',
           about: '关于',
           lang: 'English',
           langIcon: '#icon-d-en'
@@ -26,6 +27,7 @@ export default () => {
           demo: 'Demo',
           github: 'Github',
           grammar: 'Grammar',
+          contrast: 'Contrast',
           about: 'About',
           lang: '中文',
           langIcon: '#icon-d-cn'
@@ -76,6 +78,14 @@ export default () => {
             <use xlinkHref="#icon-grammar"></use>
           </svg>
           {linkNames.grammar}
+        </Link>
+      </li>
+      <li className="nav-item">
+        <Link to={`${routePrefix}/contrast`}>
+          <svg className="icon" aria-hidden="true">
+            <use xlinkHref="#icon-wenda"></use>
+          </svg>
+          {linkNames.contrast}
         </Link>
       </li>
       <li className="nav-item">

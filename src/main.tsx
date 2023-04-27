@@ -6,23 +6,26 @@ import MdEditor from 'md-editor-rt';
 import store from './store';
 import App from './App';
 
-import MarkExtension from './utils/marked-mark';
+import MarkExtension from 'markdown-it-mark';
+
+import { lineNumbers } from '@codemirror/view';
+// import { basicSetup } from 'codemirror';
+
+import 'md-editor-rt/lib/style.css';
+import './styles/common.less';
 
 import ZH_TW from '@vavt/md-editor-extension/dist/locale/zh-TW';
 import '@vavt/md-editor-extension/dist/previewTheme/arknights.css';
 
 MdEditor.config({
-  markedExtensions: [MarkExtension],
-  markedRenderer(renderer) {
-    renderer.heading = (text, level, _r, _s, _index, headingId) => {
-      return `<h${level} id="${headingId}"><a href="#${headingId}">${text}</a></h${level}>`;
-    };
+  markdownItConfig(md) {
+    md.use(MarkExtension);
+  },
+  codeMirrorExtensions(theme, extensions) {
+    const _exs = [...extensions, lineNumbers()];
 
-    renderer.link = (href, title = '', text = '') => {
-      return `<a href="${href}" title="${title}" target="_blank">${text}</a>`;
-    };
-
-    return renderer;
+    // _exs[1] = basicSetup;
+    return _exs;
   },
   editorConfig: {
     languageUserDefined: {
@@ -30,9 +33,6 @@ MdEditor.config({
     }
   }
 });
-
-import 'md-editor-rt/lib/style.css';
-import './styles/common.less';
 
 ReactDOM.createRoot(document.getElementById('app') as HTMLElement).render(
   <Provider store={store}>

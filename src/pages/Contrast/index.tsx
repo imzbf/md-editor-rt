@@ -4,8 +4,8 @@ import { StateType } from '@/store';
 
 import IzPreviewContent from '@/layouts/PreviewContent';
 
-import mdEN from '../../../public/contrast-en-US.md';
-import mdCN from '../../../public/contrast-zh-CN.md';
+import mdEN from '../../../public/contrast-en-US-3.md';
+import mdCN from '../../../public/contrast-zh-CN-3.md';
 
 const Contrast = () => {
   const state = useSelector<StateType>((state) => state) as StateType;

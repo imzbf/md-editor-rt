@@ -14,7 +14,7 @@ export default ({ mode }: ConfigEnv): UserConfigExport => {
     publicDir: mode === 'production' ? false : './public',
     server: {
       host: 'localhost',
-      open: '/md-editor-rt/en-US/index',
+      open: '/md-editor-rt/zh-CN/index',
       port: 2234,
       https: false
     },
