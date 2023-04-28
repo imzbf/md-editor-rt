@@ -554,15 +554,6 @@ export const useMarked = (props: EditorContentProp) => {
 
   // 添加highlight扩展
   useEffect(() => {
-    let highlightScript: HTMLScriptElement;
-
-    const highlightLink: HTMLLinkElement = document.createElement('link');
-    highlightLink.rel = 'stylesheet';
-    highlightLink.href = highlight.css;
-    highlightLink.id = `${prefix}-hlCss`;
-
-    appendHandler(highlightLink);
-
     if (!highlightIns) {
       const highlightLoad = () => {
         marked.setOptions({
@@ -587,12 +578,19 @@ export const useMarked = (props: EditorContentProp) => {
         setHighlightInited(true);
       };
 
-      highlightScript = document.createElement('script');
+      const highlightScript: HTMLScriptElement = document.createElement('script');
       highlightScript.src = highlight.js;
       highlightScript.onload = highlightLoad;
       highlightScript.id = `${prefix}-hljs`;
 
       appendHandler(highlightScript, 'hljs');
+
+      const highlightLink: HTMLLinkElement = document.createElement('link');
+      highlightLink.rel = 'stylesheet';
+      highlightLink.href = highlight.css;
+      highlightLink.id = `${prefix}-hlCss`;
+
+      appendHandler(highlightLink);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
