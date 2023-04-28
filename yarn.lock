@@ -1595,15 +1595,15 @@
     "@typescript-eslint/types" "5.51.0"
     eslint-visitor-keys "^3.3.0"
 
-"@vavt/markdown-theme@^3.0.0-bata.1":
-  version "3.0.0-beta.0"
-  resolved "https://registry.npmjs.org/@vavt/markdown-theme/-/markdown-theme-3.0.0-beta.0.tgz#ebf817362ae59f85f5f1b7f1ad7e4fa6a8773a96"
-  integrity sha512-R/bW5DFObnR1Rmvn24t7gjN7d3rZuCk7V40TekuI9HPbIcpfb2FkuEVdVFh4X+shAztmdtK5XxFmaxciY4mKiA==
+"@vavt/markdown-theme@^3.0.0":
+  version "3.0.0"
+  resolved "https://registry.npmjs.org/@vavt/markdown-theme/-/markdown-theme-3.0.0.tgz#ce7433428f65ee3397fde6abe5bc14ad70520b07"
+  integrity sha512-Vp/q1woesYOodIyQFUIeDflwrnXdRtLljbQa5tm3IUI75RDNB3K1R9NU/aPUhafkITQvnwl7U2uOXnXd2JJRBA==
 
-"@vavt/md-editor-extension@^3.0.0-beta.1":
-  version "3.0.0-beta.1"
-  resolved "https://registry.npmjs.org/@vavt/md-editor-extension/-/md-editor-extension-3.0.0-beta.1.tgz#8959398a6b2c066396ff6574be22c7e04178f0b7"
-  integrity sha512-Em+mnc1zN9lLi87DriZL2Yx550l97yZLpcBsx60f+k1lms97cKnQKnI66xdT/NTMDM9WIGPaO0aSdi6MdPVqsw==
+"@vavt/md-editor-extension@^3.0.0":
+  version "3.0.0"
+  resolved "https://registry.npmjs.org/@vavt/md-editor-extension/-/md-editor-extension-3.0.0.tgz#23b71c5e46addc312942bc02d2aca8ad0a159942"
+  integrity sha512-ysM/shZo8x5ESPRSK65tqI3UaNE+r/EWlG69TxvNjhE+BnlNeSq2vPw121KCzq09vX0rRnOijN6hiQ3wi9JIMQ==
 
 "@vavt/vite-plugin-import-markdown@^1.0.0":
   version "1.0.0"
@@ -2994,15 +2994,15 @@ markdown-it@^13.0.1:
     mdurl "^1.0.1"
     uc.micro "^1.0.5"
 
-md-editor-rt@^3.0.0-beta.5:
-  version "3.0.0-beta.5"
-  resolved "https://registry.npmjs.org/md-editor-rt/-/md-editor-rt-3.0.0-beta.5.tgz#287ba2319964de28883d33510676cd68de37eacb"
-  integrity sha512-mwwR4g3/sUJMASxajGFGr3nSilwfdJZ41N04CMg8v9Le5iZ89jG0yZdPa3IOQqzM3t5VLEac83cIcze3CgDscQ==
+md-editor-rt@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.npmjs.org/md-editor-rt/-/md-editor-rt-3.0.0.tgz#cfdc209f2b194c33b4303a81cd46a4c5ec454ce6"
+  integrity sha512-lj+63ILmtPqIVgMnPq5laxmocNXyhRYdIFG44z13PQLj855sZ6NwvlSAmAa+1Q9NrJQfwG+nEKxxAWv6flnstQ==
   dependencies:
     "@codemirror/lang-markdown" "^6.1.1"
     "@codemirror/language-data" "^6.3.0"
     "@types/markdown-it" "^12.2.3"
-    "@vavt/markdown-theme" "^3.0.0-bata.1"
+    "@vavt/markdown-theme" "^3.0.0"
     codemirror "^6.0.1"
     copy-to-clipboard "^3.3.3"
     lru-cache "^8.0.4"
