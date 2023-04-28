@@ -38,14 +38,15 @@ const useHighlight = (props: ContentProps) => {
       };
       highlightScript.id = `${prefix}-hljs`;
       appendHandler(highlightScript, 'hljs');
+
+      const highlightLink = document.createElement('link');
+      highlightLink.rel = 'stylesheet';
+      highlightLink.href = highlight.css;
+      highlightLink.id = `${prefix}-hlCss`;
+
+      appendHandler(highlightLink);
     }
 
-    const highlightLink = document.createElement('link');
-    highlightLink.rel = 'stylesheet';
-    highlightLink.href = highlight.css;
-    highlightLink.id = `${prefix}-hlCss`;
-
-    appendHandler(highlightLink);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
