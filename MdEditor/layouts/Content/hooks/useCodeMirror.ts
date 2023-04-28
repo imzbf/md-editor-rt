@@ -60,14 +60,14 @@ const useCodeMirror = (props: ContentProps) => {
       return configOption.codeMirrorExtensions!(
         theme,
         [...defaultExtensions, oneLight],
-        mdEditorCommands
+        [...mdEditorCommands]
       );
     }
 
     return configOption.codeMirrorExtensions!(
       theme,
       [...defaultExtensions, oneDark],
-      mdEditorCommands
+      [...mdEditorCommands]
     );
   };
 
