@@ -33,8 +33,12 @@ Use production version in html directly:
 
 ### 🤖 Npm Install
 
-```shell
+```shell [install:yarn]
 yarn add md-editor-rt
+```
+
+```shell [install:npm]
+npm install md-editor-rt
 ```
 
 ### 🤓 Jsx Template
@@ -53,6 +57,187 @@ export default () => {
 ## 🥂 Api usage
 
 Usages of some APIs.
+
+### 🥶 Customize Shortcut Key
+
+Source code for built-in shortcut key configuration: [commands.ts](https://github.com/imzbf/md-editor-rt/blob/develop/MdEditor/layouts/Content/codemirror/commands.ts). They have been added as extensions to `codemirror`.
+
+The basic principle of replacing or deleting shortcut keys is to find the corresponding extension, and handle it.
+
+In fact, The Second input parameter `extensions` of `codeMirrorExtensions` is an array, The first item in the array is the shortcut key extension. The third input parameter is the default shortcut key configuration.
+
+#### 💅 Modify Shortcut Key
+
+Change `Ctrl-b` to `Ctrl-m`
+
+```js
+import MdEditor from 'md-editor-rt';
+import { keymap } from '@codemirror/view';
+
+MdEditor.config({
+  // [keymap, minimalSetup, markdown, EditorView.lineWrapping, EditorView.updateListener, EditorView.domEventHandlers, oneDark??oneLight]
+  codeMirrorExtensions(theme, extensions, mdEditorCommands) {
+    const newExtensions = [...extensions];
+    // 1. Remove the default shortcut key extension first
+    newExtensions.shift();
+
+    // 2. Reference the source code for shortcut key configuration
+    // Find the location of the configuration item for CtrlB in mdEditorCommands
+    const CtrlB = mdEditorCommands[0];
+
+    // 3. Document for configuring shortcut keys of codemirror
+    // https://codemirror.net/docs/ref/#commands
+    const CtrlM = {
+      // We need the run method in CtrlB here
+      ...CtrlB,
+      key: 'Ctrl-m',
+      mac: 'Cmd-m'
+    };
+
+    // 4. Add the modified shortcut key to the array
+    const newMdEditorCommands = [
+      CtrlM,
+      ...mdEditorCommands.filter((i) => i.key !== 'Ctrl-b')
+    ];
+
+    newExtensions.push(keymap.of(newMdEditorCommands));
+
+    return newExtensions;
+  }
+});
+```
+
+#### ✂️ Delete Shortcut Key
+
+Disable all shortcut keys
+
+```js
+import MdEditor from 'md-editor-rt';
+
+MdEditor.config({
+  // [keymap, minimalSetup, markdown, EditorView.lineWrapping, EditorView.updateListener, EditorView.domEventHandlers, oneDark??oneLight]
+  codeMirrorExtensions(theme, extensions) {
+    const newExtensions = [...extensions];
+    // 1. Remove default shortcut key extensions
+    newExtensions.shift();
+
+    // 2. Return extension list
+    return newExtensions;
+  }
+});
+```
+
+#### 💉 Add Shortcut Key
+
+If you want to insert content into the edit box, you need to use the `insert` method bound on the instance of editor, reference: [Insert content into the edit box](/md-editor-rt/ed-US/docs#%F0%9F%92%89%20insert).
+
+If you are not using `MdEditor.config` in the component where the editor is located, you are unable to obtain instance of editor at this time. You may need to use `EventBus`.
+
+Add shortcut key `Ctrl+m`, to insert a marking module into the editing box(`==mark==`)
+
+`index.ts`
+
+```js
+import MdEditor from 'md-editor-rt';
+import { keymap, KeyBinding } from '@codemirror/view';
+// If you used EventBus
+import bus from '@/utils/event-bus';
+
+MdEditor.config({
+  // [keymap, minimalSetup, markdown, EditorView.lineWrapping, EditorView.updateListener, EditorView.domEventHandlers, oneDark??oneLight]
+  codeMirrorExtensions(theme, extensions, mdEditorCommands) {
+    const newExtensions = [...extensions];
+    // 1. Remove the default shortcut key extension first
+    newExtensions.shift();
+
+    // 2. Create a new shortcut key configuration, reference: https://codemirror.net/docs/ref/#commands
+    const CtrlM: KeyBinding = {
+      key: 'Ctrl-m',
+      mac: 'Cmd-m',
+      run: () => {
+        bus.emit('insertMarkBlock');
+        return true;
+      }
+    };
+
+    // 4. Add a new shortcut key to the array
+    const newMdEditorCommands = [...mdEditorCommands, CtrlM];
+
+    newExtensions.push(keymap.of(newMdEditorCommands));
+
+    return newExtensions;
+  }
+});
+```
+
+Next, listening 'insertMarkBlock' in the component where the editor is located
+
+`App.tsx`
+
+```tsx
+import React, { useState, useRef, useEffect } from 'react';
+import MdEditor from 'md-editor-rt';
+import type { ExposeParam } from 'md-editor-rt';
+// If you used EventBus
+import bus from '@/utils/event-bus';
+
+const App = () => {
+  const [text] = useState('## md-editor-rt\n\n');
+  const mdEditorRef = useRef<ExposeParam>();
+
+  useEffect(() => {
+    bus.on('insertMarkBlock', () => {
+      mdEditorRef.current?.insert((selectedText) => {
+        return {
+          targetValue: `==${selectedText}==`,
+          select: true,
+          deviationStart: 2,
+          deviationEnd: -2
+        };
+      });
+    });
+  }, []);
+
+  return <MdEditor modelValue={text} ref={mdEditorRef} />;
+};
+```
+
+Attach: Simple version of `EventBus`
+
+```ts
+/* eslint-disable @typescript-eslint/ban-types */
+class EventBus {
+  private events: Map<string, Function[]>;
+
+  constructor() {
+    this.events = new Map();
+  }
+
+  on(eventName: string, fn: Function) {
+    if (!eventName) {
+      console.error('Get a wrong eventName');
+      return false;
+    }
+
+    if (!(fn instanceof Function)) {
+      console.error('Get a wrong callback');
+      return false;
+    }
+
+    const fns = this.events.get(eventName) || [];
+    fns.push(fn);
+    this.events.set(eventName, fns);
+  }
+
+  emit(eventName: string, ...args: any[]) {
+    this.events.get(eventName)?.forEach((fn) => {
+      fn(args);
+    });
+  }
+}
+
+export default new EventBus();
+```
 
 ### 🍦 Change Theme
 
