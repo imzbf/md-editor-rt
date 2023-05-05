@@ -125,7 +125,17 @@ const useMarkdownIt = (props: ContentProps) => {
   });
 
   const [html, setHtml] = useState(() => {
-    return props.sanitize(md.render(props.value));
+    const html_ = props.sanitize(md.render(props.value));
+
+    // 触发异步的保存事件（html总是会比text后更新）
+    bus.emit(editorId, 'buildFinished', html_);
+    onHtmlChanged(html_);
+    // 传递标题
+    onGetCatalog(headsRef.current);
+    // 生成目录
+    bus.emit(editorId, 'catalogChanged', headsRef.current);
+
+    return html_;
   });
 
   const needReRender = useMemo(() => {
@@ -135,7 +145,17 @@ const useMarkdownIt = (props: ContentProps) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [hljsInited, katexInited]);
 
+  // 开始已经render一次了，如果提供了实例，那么也正确生成了内容
+  // 如果没有提过实例，那么相对来讲第一次useEffect执行一定会快于script的onload
+  // 所以忽略多余的一次render
+  const ignoreFirstRender = useRef(true);
+
   useEffect(() => {
+    if (ignoreFirstRender.current) {
+      ignoreFirstRender.current = false;
+      return;
+    }
+
     const timer = setTimeout(
       () => {
         // 清理历史标题
