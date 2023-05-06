@@ -38,7 +38,7 @@ if (stagedStore) {
   defaultState = {
     ...defaultState,
     ...JSON.parse(stagedStore),
-    lang: matches![1] as Lang
+    lang: matches ? (matches![1] as Lang) : 'en-US'
   };
 }
 
