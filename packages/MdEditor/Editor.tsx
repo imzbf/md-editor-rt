@@ -18,7 +18,7 @@ import {
 import ToolBar from '~/layouts/Toolbar';
 import Content from '~/layouts/Content';
 import Footer from '~/layouts/Footer';
-import MdCatalog from '~/extensions/MdCatalog';
+import MdCatalog from '~~/MdCatalog';
 import { classnames } from '~/utils';
 import { prefix, staticTextDefault, defaultProps } from '~/config';
 import { ContentType, EditorProps, StaticProps, Themes } from '~/type';

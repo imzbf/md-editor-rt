@@ -1,5 +1,5 @@
 import React from 'react';
-import Editor from '../../MdEditor/Editor';
+import Editor from '~/Editor';
 import { Theme } from '../App';
 import mdText from '../data.md';
 

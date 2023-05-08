@@ -1,8 +1,8 @@
 import Editor from './Editor';
-import NormalToolbar from './extensions/NormalToolbar';
-import DropdownToolbar from './extensions/DropdownToolbar';
-import MdCatalog from './extensions/MdCatalog';
-import ModalToolbar from './extensions/ModalToolbar';
+import NormalToolbar from '~~/NormalToolbar';
+import DropdownToolbar from '~~/DropdownToolbar';
+import MdCatalog from '~~/MdCatalog';
+import ModalToolbar from '~~/ModalToolbar';
 
 import { config } from './config';
 

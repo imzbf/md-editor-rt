@@ -18,9 +18,10 @@
     "baseUrl": ".",
     "paths": {
       "@/*": ["dev/*"],
-      "~/*": ["MdEditor/*"]
+      "~~/*": ["packages/*"],
+      "~/*": ["packages/MdEditor/*"]
     }
   },
-  "include": ["dev/**/*.ts", "dev/**/*.tsx", "MdEditor/**/*.ts", "MdEditor/**/*.tsx"],
+  "include": ["dev/**/*.ts", "dev/**/*.tsx", "packages/**/*.ts", "packages/**/*.tsx"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }
