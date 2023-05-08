@@ -146,7 +146,7 @@ export type PreviewThemes = string;
  */
 export type MdHeadingId = (text: string, level: number, index: number) => string;
 
-export interface EditorProps {
+export interface MdPreviewProps {
   modelValue: string;
   /**
    * 主题
@@ -160,6 +160,112 @@ export interface EditorProps {
    * @default ''
    */
   className?: string;
+  /**
+   * 预设语言名称
+   *
+   * @default 'zh-CN'
+   */
+  language?: StaticTextDefaultKey | string;
+  /**
+   * html变化事件
+   */
+  onHtmlChanged?: HtmlChangedEvent;
+  /**
+   * 获取目录结构
+   */
+  onGetCatalog?: GetCatalogEvent;
+
+  /**
+   * 编辑器唯一标识
+   *
+   * @default 'md-editor-rt'
+   */
+  editorId?: string;
+  /**
+   * 预览中代码是否显示行号
+   *
+   * @default false
+   */
+  showCodeRowNumber?: boolean;
+  /**
+   * 预览内容样式
+   *
+   * @default 'default'
+   */
+  previewTheme?: PreviewThemes;
+  /**
+   * 标题的id生成方式
+   *
+   * @default (text: string) => text
+   */
+  mdHeadingId?: MdHeadingId;
+  /**
+   * 编辑器样式
+   */
+  style?: CSSProperties;
+  /**
+   * 不使用该mermaid
+   *
+   * @default false
+   */
+  noMermaid?: boolean;
+  /**
+   *
+   * 不能保证文本正确的情况，在marked编译md文本后通过该方法处理
+   * 推荐DOMPurify、sanitize-html
+   *
+   * @default (text: string) => text
+   */
+  sanitize?: (html: string) => string;
+  /**
+   * 不使用katex
+   *
+   * @default false
+   */
+  noKatex?: boolean;
+  /**
+   * 代码主题
+   *
+   * @default 'atom'
+   */
+  codeTheme?: string;
+  /**
+   * 不插入iconfont链接
+   *
+   * @default false
+   */
+  noIconfont?: boolean;
+  /**
+   * 复制代码格式化方法
+   *
+   * @default (text) => text
+   */
+  formatCopiedText?: (text: string) => string;
+  /**
+   * 是否禁用上传图片
+   *
+   * @default false
+   */
+  /**
+   * 某些预览主题的代码模块背景是暗色系
+   * 将这个属性设置为true，会自动在该主题下的light模式下使用暗色系的代码风格
+   *
+   * @default true
+   */
+  codeStyleReverse?: boolean;
+  /**
+   * 需要自动调整的预览主题
+   *
+   * @default ['default', 'mk-cute']
+   */
+  codeStyleReverseList?: Array<string>;
+  /**
+   * 是否启用代码高亮
+   */
+  noHighlight?: boolean;
+}
+
+export interface EditorProps extends MdPreviewProps {
   /**
    * input回调事件
    */
@@ -196,12 +302,7 @@ export interface EditorProps {
    * @default false
    */
   previewOnly?: boolean;
-  /**
-   * 预设语言名称
-   *
-   * @default 'zh-CN'
-   */
-  language?: StaticTextDefaultKey | string;
+
   /**
    * 工具栏选择显示
    *
@@ -220,80 +321,28 @@ export interface EditorProps {
    * @default true
    */
   noPrettier?: boolean;
-  /**
-   * html变化事件
-   */
-  onHtmlChanged?: HtmlChangedEvent;
-  /**
-   * 获取目录结构
-   */
-  onGetCatalog?: GetCatalogEvent;
-  /**
-   * 编辑器唯一标识
-   *
-   * @default 'md-editor-rt'
-   */
-  editorId?: string;
+
   /**
    * 一个tab等于空格数
    *
    * @default 2
    */
   tabWidth?: number;
-  /**
-   * 预览中代码是否显示行号
-   *
-   * @default false
-   */
-  showCodeRowNumber?: boolean;
-  /**
-   * 预览内容样式
-   *
-   * @default 'default'
-   */
-  previewTheme?: PreviewThemes;
-  /**
-   * 标题的id生成方式
-   *
-   * @default (text: string) => text
-   */
-  mdHeadingId?: MdHeadingId;
-  /**
-   * 编辑器样式
-   */
-  style?: CSSProperties;
+
   /**
    * 表格预设格子数
    *
    * @default [6, 4]
    */
   tableShape?: [number, number];
-  /**
-   * 不使用该mermaid
-   *
-   * @default false
-   */
-  noMermaid?: boolean;
-  /**
-   *
-   * 不能保证文本正确的情况，在marked编译md文本后通过该方法处理
-   * 推荐DOMPurify、sanitize-html
-   *
-   * @default (text: string) => text
-   */
-  sanitize?: (html: string) => string;
+
   /**
    * 空提示
    *
    * @default ''
    */
   placeholder?: string;
-  /**
-   * 不使用katex
-   *
-   * @default false
-   */
-  noKatex?: boolean;
+
   /**
    * 自定义的工具栏列表
    */
@@ -302,12 +351,7 @@ export interface EditorProps {
    * 内部错误捕获
    */
   onError?: ErrorEvent;
-  /**
-   * 代码主题
-   *
-   * @default 'atom'
-   */
-  codeTheme?: string;
+
   /**
    * 页脚列表显示顺序
    */
@@ -322,37 +366,9 @@ export interface EditorProps {
    * 自定义的也叫工具组件列表
    */
   defFooters?: Array<string | ReactElement>;
-  /**
-   * 不插入iconfont链接
-   *
-   * @default false
-   */
-  noIconfont?: boolean;
-  /**
-   * 复制代码格式化方法
-   *
-   * @default (text) => text
-   */
-  formatCopiedText?: (text: string) => string;
-  /**
-   * 是否禁用上传图片
-   *
-   * @default false
-   */
+
   noUploadImg?: boolean;
-  /**
-   * 某些预览主题的代码模块背景是暗色系
-   * 将这个属性设置为true，会自动在该主题下的light模式下使用暗色系的代码风格
-   *
-   * @default true
-   */
-  codeStyleReverse?: boolean;
-  /**
-   * 需要自动调整的预览主题
-   *
-   * @default ['default', 'mk-cute']
-   */
-  codeStyleReverseList?: Array<string>;
+
   /**
    * 文本区域自动获得焦点
    *
@@ -390,10 +406,6 @@ export interface EditorProps {
    * 输入框获得焦点时触发事件
    */
   onFocus?: (event: FocusEvent) => void;
-  /**
-   * 是否启用代码高亮
-   */
-  noHighlight?: boolean;
 }
 
 export interface ContentType {
@@ -537,15 +549,18 @@ export interface CodeCss {
   };
 }
 
-export interface StaticProps {
-  previewOnly: boolean;
+export interface MdPreviewStaticProps {
   editorId: string;
   noMermaid: boolean;
   noKatex: boolean;
-  noPrettier: boolean;
-  noUploadImg: boolean;
   noIconfont: boolean;
   noHighlight: boolean;
+}
+
+export interface StaticProps extends MdPreviewStaticProps {
+  previewOnly: boolean;
+  noPrettier: boolean;
+  noUploadImg: boolean;
 }
 
 export type UpdateSetting = (k: keyof SettingType, v?: boolean | undefined) => void;

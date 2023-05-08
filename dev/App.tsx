@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Header from './Header';
-import Preview from './Preview';
+// import Preview from './Preview';
 import PreviewOnly from './PreviewOnly';
 import './style.less';
 
@@ -37,12 +37,12 @@ function App() {
         onLangChange={setLang}
       />
       <div className="page-body">
-        <Preview
+        {/* <Preview
           lang={lang}
           theme={theme}
           previewTheme={previewTheme}
           codeTheme={codeTheme}
-        />
+        /> */}
         <PreviewOnly theme={theme} previewTheme={previewTheme} codeTheme={codeTheme} />
       </div>
     </div>

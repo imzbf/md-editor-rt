@@ -4,13 +4,13 @@ import { uuid } from '~/utils';
 import { prefix, mermaidUrl, configOption } from '~/config';
 import { EditorContext } from '~/Editor';
 import { appendHandler } from '~/utils/dom';
-import { ContentProps } from '../props';
+import { ContentPreviewProps } from '../ContentPreview';
 
 /**
  * 注册katex扩展到页面
  *
  */
-const useMermaid = (props: ContentProps) => {
+const useMermaid = (props: ContentPreviewProps) => {
   const { theme } = useContext(EditorContext);
 
   const { editorExtensions } = configOption;

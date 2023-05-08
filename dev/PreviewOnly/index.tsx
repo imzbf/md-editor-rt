@@ -1,5 +1,5 @@
 import React from 'react';
-import Editor from '~/Editor';
+import { MdPreview } from '~~/index';
 import { Theme } from '../App';
 import mdText from '../data.md';
 
@@ -13,12 +13,11 @@ const PreviewOnly = (props: PreviewOnlyProp) => {
   return (
     <div className="doc">
       <div className="container">
-        <Editor
+        <MdPreview
           theme={props.theme}
           previewTheme={props.previewTheme}
           codeTheme={props.codeTheme}
           modelValue={mdText}
-          previewOnly
           showCodeRowNumber
         />
       </div>
