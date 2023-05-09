@@ -21,6 +21,7 @@ react 版本的 Markdown 编辑器，[md-editor-v3](https://imzbf.github.io/md-e
 - 预览主题，内置`defalut`、`vuepress`、`github` 、`cyanosis`、`mk-cute`、`smart-blue` 6 种预览主题（不完全相同），支持自定义主题（参考文档 demo 页示例）。
 - `mermaid`绘图（>=1.3.0），`katex`数学公式（>=1.4.0）。
 - 自定义工具栏顺序或显示，自定义扩展工具栏（支持点击类型、下拉菜单类型及弹窗类型）等。
+- 按需引用(>=4.0.0)。
 
 ## 📦 安装
 
@@ -38,14 +39,40 @@ yarn add @vavt/md-editor-extension
 
 ## 💡 用法
 
+### ✍🏻 编辑器模式
+
 ```jsx
 import React, { useState } from 'react';
-import MdEditor from 'md-editor-rt';
-import 'md-editor-rt/lib/style.css';
+import { MdEditor } from 'md-editor-rt';
 
 export default () => {
-  const [text, setText] = useState('hello md-editor-rt！');
+  const [text, setText] = useState('# Hello Editor');
   return <MdEditor modelValue={text} onChange={setText} />;
+};
+```
+
+> 从`v4.0.0`开始，内部组件支持按需引用，并且自动引入样式。
+
+> 如果页面存在多个编辑器，请给组件设置不相同的`editorId`。
+
+### 📖 仅预览模式
+
+```jsx
+import React, { useState } from 'react';
+import { MdEditor, MdCatalog } from 'md-editor-rt';
+
+const scrollElement = document.documentElement;
+
+export default () => {
+  const [text] = useState('# Hello Editor');
+  const [id] = useState('preview-only');
+
+  return (
+    <>
+      <MdEditor editorId={id} modelValue={text} />
+      <MdCatalog editorId={id} scrollElement={scrollElement} />
+    </>
+  );
 };
 ```
 
@@ -61,50 +88,54 @@ export default () => {
 
 ## 🎁 Apis
 
-### 🔩 Props
+### 🔖 MdPreivew Props
 
 | 名称 | 类型 | 默认值 | 说明 |
 | --- | --- | --- | --- |
 | modelValue | `string` | '' | md 编辑内容 |
-| theme | `'light' \| 'dark'` | 'light' | 主题切换 |
-| class | `string` | '' | 编辑器类名 |
-| historyLength<sup>`deleted^3.0.0`</sup> | `number` | 10 | 最大记录操作数（太大会占用内存）。`^3.0.0`使用`@codemirror/commands`的`history`扩展替代。 |
-| pageFullscreen | `boolean` | false | 页面内全屏 |
-| preview | `boolean` | true | 是否预览 |
-| htmlPreview | `boolean` | false | 是否 html 预览 |
-| previewOnly | `boolean` | false | 仅预览模式，不显示 bar 和编辑框 |
+| theme | `light \| dark` | 'light' | 主题切换 |
+| className | `string` | '' | 编辑器类名 |
 | language | `string` | 'zh-CN' | 内置中英文('zh-CN','en-US')，可自行扩展其他语言，同时可覆盖内置的中英文 |
-| toolbars | `Array<ToolbarNames \| number>` | [toolbars] | 选择性展示工具栏，可选内容<sup>见下方`toolbars`</sup> |
-| toolbarsExclude | `Array<ToolbarNames \| number>` | [] | 选择性不展示工具栏，内容同`toolbars` |
-| noPrettier | `boolean` | false | 是否启用 prettier 优化 md 内容 |
 | editorId | `string` | 'md-editor-rt' | 编辑器唯一标识，非必须项，当相同页面存在两个编辑器时，请务必区别该属性 |
-| tabWidth | `number` | 2 | 编辑器 TAB 键位等于空格数 |
 | showCodeRowNumber | `boolean` | false | 代码块是否显示行号 |
 | previewTheme | `'default' \| 'github' \| 'vuepress' \| 'mk-cute' \| 'smart-blue' \| 'cyanosis'` | 'default' | 预览内容主题，自定义主题规则见下方 |
 | style | `string \| CSSProperties` | {} | 编辑器内联样式 |
-| tableShape | `[number, number]` | [6, 4] | 标题栏添加表格时，预设待选表格大小，第一个代表最大列数，第二个代表最大行数 |
 | noMermaid | `boolean` | false | 如果你不希望使用图表展示内容，可以设置关闭 |
-| placeholder | `string` | '' |  |
 | noKatex | `boolean` | false | 不使用 katex 展示数学公式 |
-| defToolbars | `Array<DropdownToolbar \| NormalToolbar \| ModalToolbar>` | [] | 使用内置的组件自定义扩展工具栏 |
 | codeTheme | `'atom' \| 'a11y' \| 'github' \| 'gradient' \| 'kimbie' \| 'paraiso' \| 'qtcreator' \| 'stackoverflow'` | 'atom' | 代码块 highlight 样式名称，扩展更多见下方 |
-| markedHeadingId<sup>`deleted^3.0.0`</sup> | `(text: string, level: number, index: number) => string` | (text) => text | 使用`mdHeadingId`代替 |
 | mdHeadingId | `(text: string, level: number, index: number) => string` | (text) => text | 标题`ID`计算方式 |
-| sanitize | `(html: string) => string` | (html) => html | 在每次生成 html 后，通过该方法移除危险内容，比如 xss 相关 |
+| sanitize | `(html: string) => string` | (html) => html | 在每次生成 html 后，通过该方法移除危险内容，比如 xss 相关。 |
+| noIconfont | `boolean` | false | 不插入 iconfont 链接，你可以[下载](https://at.alicdn.com/t/c/font_2605852_u82y61ve02.js)到本地自行引入 |
+| formatCopiedText | `(text: string) => string` | (text: string) => text | 格式化复制代码 |
+| codeStyleReverse | `boolean` | true | 代码块为暗色背景的预览主题，将代码风格设置为暗色风格 |
+| codeStyleReverseList | `Array<string>` | ['default', 'mk-cute'] | 代码块为暗色背景的预览主题 |
+| noHighlight | `boolean` | false | 永远不高亮代码 |
+
+### 🔩 MdEditor Props
+
+除去和`MdPreivew`相同的以外：
+
+| 名称 | 类型 | 默认值 | 说明 |
+| --- | --- | --- | --- |
+| pageFullscreen | `boolean` | false | 页面内全屏 |
+| preview | `boolean` | true | 是否预览 |
+| htmlPreview | `boolean` | false | 是否 html 预览 |
+| toolbars | `Array<ToolbarNames \| number>` | [toolbars] | 选择性展示工具栏，可选内容<sup>见下方`toolbars`</sup> |
+| toolbarsExclude | `Array<ToolbarNames \| number>` | [] | 选择性不展示工具栏，内容同`toolbars` |
+| noPrettier | `boolean` | false | 是否启用 prettier 优化 md 内容 |
+| tabWidth | `number` | 2 | 编辑器 TAB 键位等于空格数 |
+| tableShape | `[number, number]` | [6, 4] | 标题栏添加表格时，预设待选表格大小，第一个代表最大列数，第二个代表最大行数 |
+| placeholder | `string` | '' |  |
+| defToolbars | `Array<DropdownToolbar \| NormalToolbar \| ModalToolbar>` | [] | 使用内置的组件自定义扩展工具栏 |
 | footers | `Array<'markdownTotal' \| '=' \| 'scrollSwitch' \| number>` | ['markdownTotal', '=', 'scrollSwitch'] | 页脚显示内容，`=`左右分割，设置为`[]`不显示页脚 |
 | scrollAuto | `boolean` | true | 默认左右滚动状态 |
 | defFooters | `Array<string \| ReactElement>` | [] | 自定义扩展页脚 |
-| noIconfont | `boolean` | false | 不插入 iconfont 链接，你可以[下载](https://at.alicdn.com/t/c/font_2605852_u82y61ve02.js)到本地自行引入 |
-| formatCopiedText | `(text: string) => string` | (text: string) => text | 格式化复制代码 |
 | noUploadImg | `boolean` | false | 不展示上传图片选项 |
-| codeStyleReverse | `boolean` | true | 代码块为暗色背景的预览主题，将代码风格设置为暗色风格 |
-| codeStyleReverseList | `Array<string>` | ['default', 'mk-cute'] | 代码块为暗色背景的预览主题 |
 | autoFocus | `boolean` | false | 文本区域自动获得焦点 |
 | disabled | `boolean` | false | 禁用文本区域 |
 | readOnly | `boolean` | false | 文本区域为只读 |
 | maxLength | `number` |  | 文本区域允许的最大字符数 |
 | autoDetectCode | `boolean` | false | 是否启用自动识别粘贴代码类别，目前仅支持从`vscode`复制的内容 |
-| noHighlight | `boolean` | false | 永远不高亮代码 |
 
 > 如果你重新定义了标题，请务必通过`mdHeadingId`告诉编辑器你生成标题 ID 的算法。以便生成的内部目录能够正确导航。
 
@@ -263,18 +294,24 @@ export interface StaticTextDefaultValue {
 
 </details>
 
-### 🪢 事件绑定
+### 🧵 MdPreview 绑定事件
+
+| 名称          | 入参                    | 说明                                      |
+| ------------- | ----------------------- | ----------------------------------------- |
+| onHtmlChanged | `html: string`          | html 变化回调事件，用于获取预览 html 代码 |
+| onGetCatalog  | `list: Array<HeadList>` | 动态获取`markdown`目录                    |
+
+### 🪢 MdEditor 绑定事件
+
+除去和`MdPreivew`相同的以外：
 
 | 名称 | 入参 | 说明 |
 | --- | --- | --- |
 | onChange | `value: string` | 内容变化事件（当前与`textare`的`oninput`事件绑定，每输入一个单字即会触发） |
 | onSave | `value: string, html: Promise<string>` | 保存事件，快捷键与保存按钮均会触发 |
 | onUploadImg | `files: Array<File>, callback: (urls: Array<string>) => void` | 上传图片事件，弹窗会等待上传结果，务必将上传后的 urls 作为 callback 入参回传 |
-| onHtmlChanged | `html: string` | html 变化回调事件，用于获取预览 html 代码 |
-| onGetCatalog | `list: Array<HeadList>` | 动态获取`markdown`目录 |
-| onError | `error: { name: string; message: string }` | 运行错误反馈事件，目前包括`Cropper`、`fullscreen`、`prettier`实例未加载完成操作错误 |
-| onBlur | `event: FocusEvent<HTMLTextAreaElement, Element>` | 输入框失去焦点时触发事件 |
-| onFocus | `event: FocusEvent<HTMLTextAreaElement, Element>` | 输入框获得焦点时触发事件 |
+
+| onError | `error: { name: string; message: string }` | 运行错误反馈事件，目前包括`Cropper`、`fullscreen`、`prettier`实例未加载完成操作错误 | | onBlur | `event: FocusEvent<HTMLTextAreaElement, Element>` | 输入框失去焦点时触发事件 | | onFocus | `event: FocusEvent<HTMLTextAreaElement, Element>` | 输入框获得焦点时触发事件 |
 
 ## 🤱🏼 实例暴露
 
@@ -282,8 +319,7 @@ export interface StaticTextDefaultValue {
 
 ```jsx
 import React, { useState, useEffect, useRef } from 'react';
-import MdEditor, { ExposeParam } from 'md-editor-rt';
-import 'md-editor-rt/lib/style.css';
+import { MdEditor, ExposeParam } from 'md-editor-rt';
 
 export default () => {
   const [text, setText] = useState('#Hello Editor');
@@ -418,17 +454,17 @@ editorRef.current?.focus();
 
 ## 💴 编辑器配置
 
-使用`MdEditor.config(option: ConfigOption)`方法，可以对构建实例进行定制。
+使用`config(option: ConfigOption)`方法，可以对构建实例进行定制。
 
 - codeMirrorExtensions: 根据主题和内部默认的 codeMirror 扩展自定义新的扩展。
 
   使用示例：编辑器默认不显示输入框的行号，需要手动添加扩展
 
   ```js
-  import MdEditor from 'md-editor-rt';
+  import { config } from 'md-editor-rt';
   import { lineNumbers } from '@codemirror/view';
 
-  MdEditor.config({
+  config({
     codeMirrorExtensions(_theme, extensions) {
       return [...extensions, lineNumbers()];
     }
@@ -440,10 +476,10 @@ editorRef.current?.focus();
   使用示例：配置使用`markdown-it-anchor`并在标题右侧显示一个超链接符号
 
   ```js
-  import MdEditor from 'md-editor-rt';
+  import { config } from 'md-editor-rt';
   import ancher from 'markdown-it-anchor';
 
-  MdEditor.config({
+  config({
     markdownItConfig(mdit) {
       mdit.use(ancher, {
         permalink: true
@@ -455,9 +491,9 @@ editorRef.current?.focus();
 - editorConfig: 编辑器常规配置，语言、`mermaid`默认模板和渲染延迟：
 
   ```js
-  import MdEditor from 'md-editor-rt';
+  import { config } from 'md-editor-rt';
 
-  MdEditor.config({
+  config({
     editorConfig: {
       // 语言
       languageUserDefined: { lang: StaticTextDefaultValue },
@@ -475,9 +511,9 @@ editorRef.current?.focus();
 - editorExtensions: 类型如下，用于配置编辑器内部的扩展
 
   ```js
-  import MdEditor from 'md-editor-rt';
+  import { config } from 'md-editor-rt';
 
-  MdEditor.config({
+  config({
     editorExtensions: { iconfont: 'https://xxx.cc' }
   });
   ```
@@ -486,9 +522,7 @@ editorRef.current?.focus();
     <summary>『EditorExtensions』</summary>
 
   ```typescript
-  import MdEditor from 'md-editor-rt';
-
-  interface EditorExtensions {
+  export interface EditorExtensions {
     highlight?: {
       instance?: any;
       js?: string;
@@ -547,14 +581,13 @@ _请注意，快捷键仅在输入框获取到焦点时可用！_
 | CTRL + 1-6 | 1-6 级标题 | `# 标题` |
 | CTRL + ↑ | 上角标 | `<sup>上角标</sup>` |
 | CTRL + ↓ | 下角标 | `<sub>下角标</sub>` |
-| CTRL + Q<sup>`deleted^3.0.0`</sup> | 引用 | `> 引用` |
 | CTRL + O | 有序列表 | `1. 有序列表` |
-| CTRL + L | 链接 | `[链接](https://imzbf.cc)` |
+| CTRL + L | 链接 | `[链接](https://github.com/imzbf/md-editor-rt)` |
 | CTRL + Z | 撤回 | 触发编辑器内内容撤回，与系统无关 |
 | CTRL + SHIFT + S | 删除线 | `~删除线~` |
 | CTRL + SHIFT + U | 无序列表 | `- 无序列表` |
 | CTRL + SHIFT + C | 块级代码 | 多行代码块 |
-| CTRL + SHIFT + I | 图片链接 | `![图片](https://imzbf.cc)` |
+| CTRL + SHIFT + I | 图片链接 | `![图片](https://imzbf.github.io/md-editor-rt/imgs/preview-light.png)` |
 | CTRL + SHIFT + Z | 前进一步 | 触发编辑器内内容前进，与系统无关 |
 | CTRL + SHIFT + F | 美化内容 |  |
 | CTRL + ALT + C | 行内代码 | 行内代码块 |
@@ -562,11 +595,17 @@ _请注意，快捷键仅在输入框获取到焦点时可用！_
 
 ## 🪤 内部组件
 
-扩展组件作为编辑器组件的属性值来使用，例如：`MdEditor.DropdownToolbar`。使用参考：[文档页面](https://imzbf.github.io/md-editor-rt)
+按需引入内部扩展组件：
+
+```js
+import { NormalToolbar } from 'md-editor-rt';
+```
+
+使用参考：[文档页面](https://imzbf.github.io/md-editor-rt)
 
 ### 🐣 普通扩展工具栏
 
-`MdEditor.NormalToolbar`
+`NormalToolbar`
 
 - **props**
 
@@ -582,7 +621,7 @@ _请注意，快捷键仅在输入框获取到焦点时可用！_
 
 ### 🐼 下拉扩展工具栏
 
-`MdEditor.DropdownToolbar`
+`DropdownToolbar`
 
 - **props**
 
@@ -600,7 +639,7 @@ _请注意，快捷键仅在输入框获取到焦点时可用！_
 
 ### 🦉 弹窗扩展工具栏
 
-`MdEditor.ModalToolbar`
+`ModalToolbar`
 
 - **props**
 
@@ -625,13 +664,12 @@ _请注意，快捷键仅在输入框获取到焦点时可用！_
 
 ### 🐻 目录导航
 
-`MdEditor.MdCatalog`
+`MdCatalog`
 
 - **props**
 
   - `editorId`: `string`，必须，对应编辑器的`editorId`，在内部注册目录变化监听事件。
   - `class`: `string`，非必须，目录组件最外层类名。
-  - `markedHeadingId`<sup>`deleted^3.0.0`</sup>: 使用`mdHeadingId`代替。
   - `mdHeadingId`: `MdHeadingId`，非必须，特殊化编辑器标题的算法，与编辑器相同。
   - `scrollElement`: `string | HTMLElement`，非必须，为字符时应是一个元素选择器。仅预览模式中，整页滚动时，设置为`document.documentElement`。
   - `theme`: `'light' | 'dark'`，非必须，当需要切换主题时提供，同编辑器的`theme`。
@@ -652,8 +690,7 @@ _请注意，快捷键仅在输入框获取到焦点时可用！_
 
 ```jsx
 import React, { useState } from 'react';
-import MdEditor from 'md-editor-rt';
-import 'md-editor-rt/lib/style.css';
+import { MdEditor } from 'md-editor-rt';
 
 export default () => {
   const [text, setText] = useState('#Hello Editor');
