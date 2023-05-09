@@ -37,8 +37,6 @@ const useAutoScroll = (
       `[id="${editorId}-html-wrapper"][data-show="true"]`
     );
 
-    console.log(previewEle, htmlEle);
-
     if (previewEle || htmlEle) {
       const scrollHandler = previewEle ? scrollAuto : scrollAutoWithScale;
       const cEle = previewEle || htmlEle;
