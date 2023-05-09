@@ -19,6 +19,7 @@ export interface ContentPreviewProps {
   formatCopiedText?: (text: string) => string;
   noHighlight?: boolean;
   previewOnly?: boolean;
+  show?: boolean;
 }
 
 const ContentPreview = (props: ContentPreviewProps) => {
@@ -35,6 +36,7 @@ const ContentPreview = (props: ContentPreviewProps) => {
     <div
       id={`${editorId}-preview-wrapper`}
       className={`${prefix}-preview-wrapper`}
+      data-show={props.show}
       key="content-preview-wrapper"
     >
       <article
@@ -48,6 +50,10 @@ const ContentPreview = (props: ContentPreviewProps) => {
       />
     </div>
   );
+};
+
+ContentPreview.defaultProps = {
+  show: true
 };
 
 export default ContentPreview;
