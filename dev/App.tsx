@@ -43,7 +43,12 @@ function App() {
           previewTheme={previewTheme}
           codeTheme={codeTheme}
         />
-        <PreviewOnly theme={theme} previewTheme={previewTheme} codeTheme={codeTheme} />
+        <PreviewOnly
+          lang={lang}
+          theme={theme}
+          previewTheme={previewTheme}
+          codeTheme={codeTheme}
+        />
       </div>
     </div>
   );

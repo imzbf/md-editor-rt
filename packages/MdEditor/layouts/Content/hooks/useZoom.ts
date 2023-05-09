@@ -2,7 +2,7 @@ import { useContext, useEffect } from 'react';
 import mediumZoom from 'medium-zoom';
 import { EditorContext } from '~/Editor';
 
-import { ContentProps } from '../props';
+import { ContentPreviewProps } from '../ContentPreview';
 
 /**
  * 放大图片
@@ -10,7 +10,7 @@ import { ContentProps } from '../props';
  * @param props 基础属性
  * @param html 编译后的html
  */
-const useZoom = (props: ContentProps, html: string) => {
+const useZoom = (props: ContentPreviewProps, html: string) => {
   const { editorId } = useContext(EditorContext);
 
   useEffect(() => {

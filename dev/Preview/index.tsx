@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import axios from 'axios';
-import MdEditor, { ExposeParam } from '~/index';
+import { MdEditor, ExposeParam } from '~~/index';
 // import Editor from '../../lib/md-editor-rt.es';
 import mdText from '../data.md';
 import { Theme } from '../App';

@@ -4,8 +4,8 @@ export type ContentProps = Readonly<{
   value: string;
   onChange: (v: string) => void;
   setting: SettingType;
-  onHtmlChanged?: (h: string) => void;
-  onGetCatalog?: (list: HeadList[]) => void;
+  onHtmlChanged: (h: string) => void;
+  onGetCatalog: (list: HeadList[]) => void;
   // 不使用该功能
   noMermaid?: boolean;
   sanitize: (html: string) => string;

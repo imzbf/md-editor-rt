@@ -17,11 +17,9 @@ import CodeMirrorUt from '../codemirror';
 const useAutoScroll = (
   props: ContentProps,
   html: string,
-  previewRef: RefObject<HTMLElement>,
-  htmlRef: RefObject<HTMLElement>,
   codeMirrorUt: RefObject<CodeMirrorUt | undefined>
 ) => {
-  const { previewOnly } = useContext(EditorContext);
+  const { previewOnly, editorId } = useContext(EditorContext);
   const [scrollCb, setScrollCb] = useState({
     clear() {},
     init() {}
@@ -32,14 +30,14 @@ const useAutoScroll = (
     scrollCb.clear();
     const cmScroller = document.querySelector<HTMLDivElement>('.cm-scroller');
 
-    if (!previewOnly && (previewRef.current || htmlRef.current)) {
-      const scrollHandler = previewRef.current ? scrollAuto : scrollAutoWithScale;
+    const previewEle = document.getElementById(`${editorId}-preview-wrapper`);
+    const htmlEle = document.getElementById(`${editorId}-html-wrapper`);
 
-      const [init, clear] = scrollHandler(
-        cmScroller!,
-        previewRef.current! || htmlRef.current,
-        codeMirrorUt.current!
-      );
+    if (!previewOnly && (previewEle || htmlEle)) {
+      const scrollHandler = previewEle ? scrollAuto : scrollAutoWithScale;
+      const cEle = previewEle || htmlEle;
+
+      const [init, clear] = scrollHandler(cmScroller!, cEle!, codeMirrorUt.current!);
 
       setScrollCb({
         init,

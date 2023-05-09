@@ -16,7 +16,8 @@ import {
   Themes,
   ExposeParam,
   UpdateSetting,
-  ExposeEvent
+  ExposeEvent,
+  MdPreviewStaticProps
 } from './type';
 import {
   prefix,
@@ -145,7 +146,7 @@ export const useOnSave = (props: EditorProps, staticProps: StaticProps) => {
  * @param staticProps
  */
 export const useExpansion = (staticProps: StaticProps) => {
-  const { noPrettier, noIconfont, previewOnly, noUploadImg } = staticProps;
+  const { noPrettier, previewOnly, noUploadImg } = staticProps;
 
   const { editorExtensions } = configOption;
 
@@ -162,11 +163,6 @@ export const useExpansion = (staticProps: StaticProps) => {
     noUploadImg || !!configOption.editorExtensions?.cropper?.instance;
 
   useEffect(() => {
-    // 图标
-    const iconfontScript = document.createElement('script');
-    iconfontScript.src = editorExtensions?.iconfont || iconfontUrl;
-    iconfontScript.id = `${prefix}-icon`;
-
     // prettier
     const prettierScript = document.createElement('script');
     const prettierMDScript = document.createElement('script');
@@ -188,10 +184,6 @@ export const useExpansion = (staticProps: StaticProps) => {
     cropperScript.src = editorExtensions?.cropper?.js || cropperUrl.js;
     cropperScript.id = `${prefix}-cropper`;
 
-    if (!noIconfont) {
-      appendHandler(iconfontScript);
-    }
-
     // 非仅预览模式才添加扩展
     if (!previewOnly) {
       if (!noCropperScript) {
@@ -207,6 +199,23 @@ export const useExpansion = (staticProps: StaticProps) => {
         appendHandler(prettierMDScript);
       }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useExpansionPreview(staticProps);
+};
+
+export const useExpansionPreview = ({ noIconfont }: MdPreviewStaticProps) => {
+  useEffect(() => {
+    // 图标
+    const iconfontScript = document.createElement('script');
+    iconfontScript.src = configOption.editorExtensions?.iconfont || iconfontUrl;
+    iconfontScript.id = `${prefix}-icon`;
+
+    if (!noIconfont) {
+      appendHandler(iconfontScript);
+    }
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 };
