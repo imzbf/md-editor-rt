@@ -4,6 +4,8 @@ import { Footers } from '~/type';
 import MarkdownTotal from './MarkdownTotal';
 import ScrollAuto from './ScrollAuto';
 
+import './index.less';
+
 interface FooterProps {
   modelValue: string;
   footers: Array<Footers>;

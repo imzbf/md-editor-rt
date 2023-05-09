@@ -6,4 +6,6 @@ export { default as DropdownToolbar } from './DropdownToolbar';
 export { default as ModalToolbar } from './ModalToolbar';
 export { default as MdCatalog } from './MdCatalog';
 
+export { default as config } from './config';
+
 export * from '~/type';

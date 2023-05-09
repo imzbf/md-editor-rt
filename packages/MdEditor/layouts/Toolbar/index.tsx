@@ -19,6 +19,8 @@ import Modals from '../Modals';
 import TableShape from './TableShape';
 import { useSreenfull, useModals, useDropdownState } from './hooks';
 
+import './index.less';
+
 export interface ToolbarProps {
   noPrettier: boolean;
   // 工具栏选择显示
