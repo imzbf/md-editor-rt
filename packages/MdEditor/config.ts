@@ -288,7 +288,6 @@ export const defaultProps = {
   pageFullscreen: false,
   preview: true,
   htmlPreview: false,
-  previewOnly: false,
   language: 'zh-CN',
   toolbars: allToolbar,
   toolbarsExclude: [],

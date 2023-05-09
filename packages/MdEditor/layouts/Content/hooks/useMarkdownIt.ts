@@ -56,11 +56,11 @@ const initLineNumber = (md: mdit) => {
   });
 };
 
-const useMarkdownIt = (props: ContentPreviewProps) => {
+const useMarkdownIt = (props: ContentPreviewProps, previewOnly: boolean) => {
   const { onHtmlChanged = () => {}, onGetCatalog = () => {} } = props;
   const { editorConfig, markdownItConfig } = configOption;
   //
-  const { editorId, showCodeRowNumber, previewOnly, theme } = useContext(EditorContext);
+  const { editorId, showCodeRowNumber, theme } = useContext(EditorContext);
 
   const headsRef = useRef<HeadList[]>([]);
 

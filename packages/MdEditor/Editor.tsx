@@ -35,7 +35,6 @@ export const EditorContext = createContext<ContentType>({
     css: '',
     js: ''
   },
-  previewOnly: false,
   showCodeRowNumber: false,
   usedLanguageText: staticTextDefault['zh-CN'],
   previewTheme: 'default'
@@ -50,7 +49,6 @@ const Editor = forwardRef((props: EditorProps, ref: ForwardedRef<unknown>) => {
     toolbars = defaultProps.toolbars,
     toolbarsExclude = defaultProps.toolbarsExclude,
     defToolbars = defaultProps.defToolbars,
-    previewOnly = defaultProps.previewOnly,
     editorId = defaultProps.editorId,
     tabWidth = defaultProps.tabWidth,
     showCodeRowNumber = defaultProps.showCodeRowNumber,
@@ -75,7 +73,6 @@ const Editor = forwardRef((props: EditorProps, ref: ForwardedRef<unknown>) => {
 
   const [staticProps] = useState<StaticProps>(() => {
     return {
-      previewOnly,
       editorId,
       noKatex,
       noMermaid,
@@ -136,7 +133,6 @@ const Editor = forwardRef((props: EditorProps, ref: ForwardedRef<unknown>) => {
         tabWidth,
         theme,
         highlight,
-        previewOnly: staticProps.previewOnly,
         showCodeRowNumber,
         usedLanguageText,
         previewTheme
@@ -148,23 +144,20 @@ const Editor = forwardRef((props: EditorProps, ref: ForwardedRef<unknown>) => {
           prefix,
           className,
           theme === 'dark' && `${prefix}-dark`,
-          setting.fullscreen || setting.pageFullscreen ? `${prefix}-fullscreen` : '',
-          staticProps.previewOnly && `${prefix}-previewOnly`
+          setting.fullscreen || setting.pageFullscreen ? `${prefix}-fullscreen` : ''
         ])}
         style={props.style}
       >
-        {!staticProps.previewOnly && (
-          <ToolBar
-            noPrettier={staticProps.noPrettier}
-            toolbars={toolbars}
-            toolbarsExclude={toolbarsExclude}
-            setting={setting}
-            updateSetting={updateSetting}
-            tableShape={tableShape}
-            defToolbars={defToolbars}
-            noUploadImg={staticProps.noUploadImg}
-          />
-        )}
+        <ToolBar
+          noPrettier={staticProps.noPrettier}
+          toolbars={toolbars}
+          toolbarsExclude={toolbarsExclude}
+          setting={setting}
+          updateSetting={updateSetting}
+          tableShape={tableShape}
+          defToolbars={defToolbars}
+          noUploadImg={staticProps.noUploadImg}
+        />
         <Content
           value={modelValue}
           onChange={onChange}
@@ -188,7 +181,7 @@ const Editor = forwardRef((props: EditorProps, ref: ForwardedRef<unknown>) => {
           onBlur={props.onBlur}
           onFocus={props.onFocus}
         />
-        {!staticProps.previewOnly && footers?.length > 0 && (
+        {footers?.length > 0 && (
           <Footer
             modelValue={modelValue}
             footers={footers}

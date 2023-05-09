@@ -1,13 +1,10 @@
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import { prefix } from '~/config';
-import { EditorContext } from '~/Editor';
 import ContentPreview from './ContentPreview';
 import { useAutoScroll, useCodeMirror } from './hooks';
 import { ContentProps } from './props';
 
 const Content = (props: ContentProps) => {
-  const { previewOnly } = useContext(EditorContext);
-
   const [html, setHtml] = useState<string>('');
 
   const { inputWrapperRef, codeMirrorUt } = useCodeMirror(props);
@@ -16,9 +13,7 @@ const Content = (props: ContentProps) => {
 
   return (
     <div className={`${prefix}-content`}>
-      {!previewOnly && (
-        <div className={`${prefix}-input-wrapper`} ref={inputWrapperRef}></div>
-      )}
+      <div className={`${prefix}-input-wrapper`} ref={inputWrapperRef}></div>
       {props.setting.preview && (
         <ContentPreview
           value={props.value}

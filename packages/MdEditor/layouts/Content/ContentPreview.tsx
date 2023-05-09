@@ -18,13 +18,14 @@ export interface ContentPreviewProps {
   noKatex?: boolean;
   formatCopiedText?: (text: string) => string;
   noHighlight?: boolean;
+  previewOnly?: boolean;
 }
 
 const ContentPreview = (props: ContentPreviewProps) => {
   const { editorId, previewTheme, showCodeRowNumber } = useContext(EditorContext);
 
   // markdown => html
-  const { html } = useMarkdownIt(props);
+  const { html } = useMarkdownIt(props, !!props.previewOnly);
   // 复制代码
   useCopyCode(props, html);
   // 图片点击放大

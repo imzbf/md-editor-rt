@@ -60,7 +60,6 @@ const MdPreview = (props: MdPreviewProps) => {
         tabWidth: 2,
         theme,
         highlight,
-        previewOnly: false,
         showCodeRowNumber,
         usedLanguageText,
         previewTheme
@@ -88,6 +87,7 @@ const MdPreview = (props: MdPreviewProps) => {
           noHighlight={staticProps.noHighlight}
           noKatex={staticProps.noKatex}
           formatCopiedText={props.formatCopiedText}
+          previewOnly
           key="preview-only"
         />
       </div>

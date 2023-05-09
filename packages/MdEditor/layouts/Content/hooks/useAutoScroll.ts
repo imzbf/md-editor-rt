@@ -19,7 +19,7 @@ const useAutoScroll = (
   html: string,
   codeMirrorUt: RefObject<CodeMirrorUt | undefined>
 ) => {
-  const { previewOnly, editorId } = useContext(EditorContext);
+  const { editorId } = useContext(EditorContext);
   const [scrollCb, setScrollCb] = useState({
     clear() {},
     init() {}
@@ -33,7 +33,7 @@ const useAutoScroll = (
     const previewEle = document.getElementById(`${editorId}-preview-wrapper`);
     const htmlEle = document.getElementById(`${editorId}-html-wrapper`);
 
-    if (!previewOnly && (previewEle || htmlEle)) {
+    if (previewEle || htmlEle) {
       const scrollHandler = previewEle ? scrollAuto : scrollAutoWithScale;
       const cEle = previewEle || htmlEle;
 

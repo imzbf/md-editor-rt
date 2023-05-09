@@ -297,13 +297,6 @@ export interface EditorProps extends MdPreviewProps {
    */
   htmlPreview?: boolean;
   /**
-   * 仅预览模式，不显示toolbar和编辑框
-   *
-   * @default false
-   */
-  previewOnly?: boolean;
-
-  /**
    * 工具栏选择显示
    *
    * @default allToolbar
@@ -415,7 +408,6 @@ export interface ContentType {
     js: string;
     css: string;
   };
-  previewOnly: boolean;
   showCodeRowNumber: boolean;
   usedLanguageText: StaticTextDefaultValue;
   theme: Themes;
@@ -558,7 +550,6 @@ export interface MdPreviewStaticProps {
 }
 
 export interface StaticProps extends MdPreviewStaticProps {
-  previewOnly: boolean;
   noPrettier: boolean;
   noUploadImg: boolean;
 }

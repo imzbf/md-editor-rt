@@ -52,7 +52,7 @@ import {
  */
 export const useOnSave = (props: EditorProps, staticProps: StaticProps) => {
   const { modelValue } = props;
-  const { editorId, previewOnly } = staticProps;
+  const { editorId } = staticProps;
 
   const [state, setState] = useState({
     // 是否已编译成html
@@ -71,28 +71,19 @@ export const useOnSave = (props: EditorProps, staticProps: StaticProps) => {
       });
     };
 
-    if (!previewOnly) {
-      bus.on(editorId, {
-        name: 'buildFinished',
-        callback: buildFinishedCb
-      });
-    }
+    bus.on(editorId, {
+      name: 'buildFinished',
+      callback: buildFinishedCb
+    });
 
     // 编辑器卸载时移除相应的监听事件
     return () => {
-      if (!previewOnly) {
-        bus.remove(editorId, 'buildFinished', buildFinishedCb);
-      }
+      bus.remove(editorId, 'buildFinished', buildFinishedCb);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
-    // 每次更新都重新注册save监听
-    if (previewOnly) {
-      return;
-    }
-
     const callback = () => {
       if (props.onSave) {
         const htmlPromise = new Promise<string>((rev) => {
@@ -146,7 +137,7 @@ export const useOnSave = (props: EditorProps, staticProps: StaticProps) => {
  * @param staticProps
  */
 export const useExpansion = (staticProps: StaticProps) => {
-  const { noPrettier, previewOnly, noUploadImg } = staticProps;
+  const { noPrettier, noUploadImg } = staticProps;
 
   const { editorExtensions } = configOption;
 
@@ -185,19 +176,17 @@ export const useExpansion = (staticProps: StaticProps) => {
     cropperScript.id = `${prefix}-cropper`;
 
     // 非仅预览模式才添加扩展
-    if (!previewOnly) {
-      if (!noCropperScript) {
-        appendHandler(cropperLink);
-        appendHandler(cropperScript);
-      }
+    if (!noCropperScript) {
+      appendHandler(cropperLink);
+      appendHandler(cropperScript);
+    }
 
-      if (!noPrettierScript) {
-        appendHandler(prettierScript);
-      }
+    if (!noPrettierScript) {
+      appendHandler(prettierScript);
+    }
 
-      if (!noParserMarkdownScript) {
-        appendHandler(prettierMDScript);
-      }
+    if (!noParserMarkdownScript) {
+      appendHandler(prettierMDScript);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -246,7 +235,7 @@ export const useErrorCatcher = (editorId: string, onError: (err: InnerError) => 
  * @param staticProps
  */
 export const useUploadImg = (props: EditorProps, staticProps: StaticProps) => {
-  const { editorId, previewOnly } = staticProps;
+  const { editorId } = staticProps;
 
   useEffect(() => {
     const uploadImageCallBack = (files: Array<File>, cb: () => void) => {
@@ -264,13 +253,11 @@ export const useUploadImg = (props: EditorProps, staticProps: StaticProps) => {
       }
     };
 
-    if (!previewOnly) {
-      // 监听上传图片
-      bus.on(editorId, {
-        name: 'uploadImage',
-        callback: uploadImageCallBack
-      });
-    }
+    // 监听上传图片
+    bus.on(editorId, {
+      name: 'uploadImage',
+      callback: uploadImageCallBack
+    });
 
     return () => {
       bus.remove(editorId, 'uploadImage', uploadImageCallBack);
