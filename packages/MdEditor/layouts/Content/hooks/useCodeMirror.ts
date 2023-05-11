@@ -1,6 +1,5 @@
 import { useContext, useEffect, useRef, useState } from 'react';
 import { EditorView, minimalSetup } from 'codemirror';
-import { EditorState } from '@codemirror/state';
 import { keymap } from '@codemirror/view';
 import { languages } from '@codemirror/language-data';
 import { markdown } from '@codemirror/lang-markdown';
@@ -72,12 +71,8 @@ const useCodeMirror = (props: ContentProps) => {
   };
 
   useEffect(() => {
-    const startState = EditorState.create({
-      doc: props.value
-    });
-
     const view = new EditorView({
-      state: startState,
+      doc: props.value,
       parent: inputWrapperRef.current!
     });
 
@@ -85,7 +80,6 @@ const useCodeMirror = (props: ContentProps) => {
 
     codeMirrorUt.current.setTabSize(tabWidth);
     codeMirrorUt.current.setExtensions(getExtensions());
-    codeMirrorUt.current.setPlaceholder(props.placeholder);
     // view.dispatch({
     //   changes: { from: 10, insert: '*' },
     //   selection: { anchor: 11 }
@@ -146,11 +140,15 @@ const useCodeMirror = (props: ContentProps) => {
   }, [theme]);
 
   useEffect(() => {
-    // 可控组件，只有不是输入的时候才手动设置编辑区的内容
+    // 只有不是输入的时候才手动设置编辑区的内容
     if (codeMirrorUt.current?.getValue() !== props.value) {
       codeMirrorUt.current?.setValue(props.value);
     }
   }, [props.value]);
+
+  useEffect(() => {
+    props.placeholder && codeMirrorUt.current?.setPlaceholder(props.placeholder);
+  }, [props.placeholder]);
 
   useEffect(() => {
     codeMirrorUt.current?.setDisabled(props.disabled!);
