@@ -19,7 +19,6 @@ export interface ContentPreviewProps {
   formatCopiedText?: (text: string) => string;
   noHighlight?: boolean;
   previewOnly?: boolean;
-  show?: boolean;
 }
 
 const ContentPreview = (props: ContentPreviewProps) => {
@@ -33,27 +32,39 @@ const ContentPreview = (props: ContentPreviewProps) => {
   useZoom(props, html);
 
   return (
-    <div
-      id={`${editorId}-preview-wrapper`}
-      className={`${prefix}-preview-wrapper`}
-      data-show={props.show}
-      key="content-preview-wrapper"
-    >
-      <article
-        id={`${editorId}-preview`}
-        className={classnames([
-          `${prefix}-preview`,
-          `${previewTheme}-theme`,
-          showCodeRowNumber && `${prefix}-scrn`
-        ])}
-        dangerouslySetInnerHTML={{ __html: html }}
-      />
-    </div>
+    <>
+      <div
+        id={`${editorId}-preview-wrapper`}
+        className={`${prefix}-preview-wrapper`}
+        data-show={props.setting.preview}
+        key="content-preview-wrapper"
+      >
+        <article
+          id={`${editorId}-preview`}
+          className={classnames([
+            `${prefix}-preview`,
+            `${previewTheme}-theme`,
+            showCodeRowNumber && `${prefix}-scrn`
+          ])}
+          dangerouslySetInnerHTML={{ __html: html }}
+        />
+      </div>
+      {!props.previewOnly && (
+        <div
+          id={`${editorId}-html-wrapper`}
+          className={`${prefix}-preview-wrapper`}
+          data-show={props.setting.htmlPreview}
+          key="html-preview-wrapper"
+        >
+          <div className={`${prefix}-html`}>{html}</div>
+        </div>
+      )}
+    </>
   );
 };
 
 ContentPreview.defaultProps = {
-  show: true
+  previewOnly: false
 };
 
 export default ContentPreview;

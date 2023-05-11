@@ -151,7 +151,7 @@ const useMarkdownIt = (props: ContentPreviewProps, previewOnly: boolean) => {
     // 生成目录
     bus.emit(editorId, 'catalogChanged', headsRef.current);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [html]);
 
   useEffect(() => {
     if (ignoreFirstRender.current) {
@@ -166,13 +166,13 @@ const useMarkdownIt = (props: ContentPreviewProps, previewOnly: boolean) => {
         const html_ = props.sanitize(md.render(props.value));
         setHtml(html_);
 
-        // 触发异步的保存事件（html总是会比text后更新）
-        bus.emit(editorId, 'buildFinished', html_);
-        onHtmlChanged(html_);
-        // 传递标题
-        onGetCatalog(headsRef.current);
-        // 生成目录
-        bus.emit(editorId, 'catalogChanged', headsRef.current);
+        // // 触发异步的保存事件（html总是会比text后更新）
+        // bus.emit(editorId, 'buildFinished', html_);
+        // onHtmlChanged(html_);
+        // // 传递标题
+        // onGetCatalog(headsRef.current);
+        // // 生成目录
+        // bus.emit(editorId, 'catalogChanged', headsRef.current);
       },
       editorConfig?.renderDelay !== undefined
         ? editorConfig?.renderDelay

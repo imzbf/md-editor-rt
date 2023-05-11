@@ -1,13 +1,10 @@
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import { prefix } from '~/config';
-import { EditorContext } from '~/Editor';
 import ContentPreview from './ContentPreview';
 import { useAutoScroll, useCodeMirror } from './hooks';
 import { ContentProps } from './props';
 
 const Content = (props: ContentProps) => {
-  const { editorId } = useContext(EditorContext);
-
   const [html, setHtml] = useState<string>('');
 
   const { inputWrapperRef, codeMirrorUt } = useCodeMirror(props);
@@ -31,17 +28,8 @@ const Content = (props: ContentProps) => {
         noKatex={props.noKatex}
         formatCopiedText={props.formatCopiedText}
         noHighlight={props.noHighlight}
-        show={props.setting.preview}
         key="display-editor"
       />
-      <div
-        id={`${editorId}-html-wrapper`}
-        className={`${prefix}-preview-wrapper`}
-        data-show={props.setting.htmlPreview}
-        key="html-preview-wrapper"
-      >
-        <div className={`${prefix}-html`}>{html}</div>
-      </div>
     </div>
   );
 };
