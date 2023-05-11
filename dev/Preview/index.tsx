@@ -15,6 +15,7 @@ import { Theme } from '../App';
 // import '../../lib/style.css';
 
 import './index.less';
+import '~/styles/style.less';
 
 // import { Extension } from '@codemirror/state';
 // import { lineNumbers } from '@codemirror/view';

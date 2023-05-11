@@ -5,8 +5,6 @@ import ContentPreview from './ContentPreview';
 import { useAutoScroll, useCodeMirror } from './hooks';
 import { ContentProps } from './props';
 
-import './index.less';
-
 const Content = (props: ContentProps) => {
   const { editorId } = useContext(EditorContext);
 

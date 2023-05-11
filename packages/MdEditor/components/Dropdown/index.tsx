@@ -12,8 +12,6 @@ import React, {
 
 import { prefix } from '~/config';
 
-import './style.less';
-
 interface CtlTypes {
   overlayClass: string;
   overlayStyle: CSSProperties;

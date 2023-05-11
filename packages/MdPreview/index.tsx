@@ -8,9 +8,6 @@ import bus from '~/utils/event-bus';
 import { EditorContext } from '~/Editor';
 import ContentPreview from '~/layouts/Content/ContentPreview';
 
-import '~/styles/index.less';
-import '@vavt/markdown-theme/css/all.css';
-
 const MdPreview = (props: MdPreviewProps) => {
   // Editor.defaultProps在某些编辑器中不能被正确识别已设置默认情况
   const {

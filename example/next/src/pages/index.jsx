@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import MdEditor from 'md-editor-rt';
+import { MdEditor } from 'md-editor-rt';
 import Head from 'next/head';
 import styles from '../styles/Home.module.css';
 

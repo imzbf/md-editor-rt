@@ -1,7 +1,6 @@
 import React from 'react';
 import { prefix } from '~/config';
 import { classnames } from '~/utils';
-import './style.less';
 
 interface CheckBoxProps {
   checked: boolean;

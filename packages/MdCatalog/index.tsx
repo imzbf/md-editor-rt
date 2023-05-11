@@ -6,8 +6,6 @@ import { throttle, getRelativeTop } from '~/utils';
 import { PREVIEW_CHANGED } from '~/static/event-name';
 import CatalogLink from './CatalogLink';
 
-import './style.less';
-
 export interface TocItem {
   text: string;
   level: number;

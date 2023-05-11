@@ -1,6 +1,7 @@
 {
   "name": "md-editor-rt",
   "version": "3.0.1",
+  "license": "MIT",
   "keywords": [
     "react",
     "nextjs",
@@ -17,7 +18,7 @@
   "description": "Markdown editor for react, developed in jsx and typescript, dark theme、beautify content by prettier、render articles directly、paste or clip the picture and upload it...",
   "author": {
     "name": "zbf",
-    "url": "https://imzbf.cc"
+    "url": "https://imzbf.top"
   },
   "homepage": "https://imzbf.github.io/md-editor-rt/",
   "repository": {
@@ -28,15 +29,15 @@
     "url": "https://github.com/imzbf/md-editor-rt/issues"
   },
   "files": [
-    "cjs",
-    "es",
-    "umd"
+    "lib"
   ],
   "type": "module",
-  "types": "./es/index.d.ts",
-  "main": "./cjs/index.cjs",
-  "module": "./es/index.mjs",
-  "license": "MIT",
+  "types": "./lib/types/index.d.ts",
+  "main": "./lib/cjs/index.cjs",
+  "module": "./lib/es/index.mjs",
+  "sideEffects": [
+    "**/*.css"
+  ],
   "scripts": {
     "dev": "tsx ./scripts/dev",
     "build": "tsc && tsx ./scripts/build"
@@ -85,8 +86,7 @@
     "tsx": "^3.12.7",
     "typescript": "^5.0.4",
     "vite": "^4.3.5",
-    "vite-plugin-dts": "^2.3.0",
-    "vite-plugin-lib-inject-css": "^1.2.0"
+    "vite-plugin-dts": "^2.3.0"
   },
   "prettier": {
     "singleQuote": true,

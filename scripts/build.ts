@@ -1,38 +1,46 @@
 import path from 'path';
 import { fileURLToPath } from 'url';
-import { build } from 'vite';
+import { build, LibraryFormats } from 'vite';
 import react from '@vitejs/plugin-react';
 import dts from 'vite-plugin-dts';
-import { libInjectCss } from 'vite-plugin-lib-inject-css';
+import { removeDir } from './u';
 
 const __dirname = fileURLToPath(new URL('..', import.meta.url));
 const resolvePath = (p: string) => path.resolve(__dirname, p);
 
-const fileConfig = {
-  es: {
-    format: 'es',
-    extname: 'mjs'
-  },
-  cjs: {
-    format: 'cjs',
-    extname: 'cjs'
-  },
-  umd: {
-    format: 'umd',
-    extname: 'js'
-  }
-};
-
-let targetArr = process.argv.slice(2).filter((i) => Object.keys(fileConfig).includes(i));
-
-// 没有指定就打包全部
-targetArr = targetArr.length === 0 ? Object.keys(fileConfig) : targetArr;
-
 !(async () => {
-  await Promise.all(
-    targetArr.map((t) => {
-      const { format, extname } = fileConfig[t];
+  const moduleEntry = {
+    index: resolvePath('packages'),
+    MdEditor: resolvePath('packages/MdEditor'),
+    MdPreview: resolvePath('packages/MdPreview'),
+    NormalToolbar: resolvePath('packages/NormalToolbar'),
+    DropdownToolbar: resolvePath('packages/DropdownToolbar'),
+    ModalToolbar: resolvePath('packages/ModalToolbar'),
+    MdCatalog: resolvePath('packages/MdCatalog'),
+    config: resolvePath('packages/config')
+  };
+  const formats: LibraryFormats[] = ['es', 'cjs', 'umd'];
 
+  const entries = {
+    es: {
+      ...moduleEntry,
+      // 这里只有利用vite构建的assetFileNames为文件名的特性构建样式文件
+      preview: resolvePath('packages/MdEditor/styles/preview.less'),
+      style: resolvePath('packages/MdEditor/styles/style.less')
+    },
+    cjs: moduleEntry,
+    umd: resolvePath('packages')
+  };
+
+  const extnames = {
+    es: 'mjs',
+    cjs: 'cjs'
+  };
+
+  removeDir(resolvePath('lib'));
+
+  await Promise.all(
+    formats.map((t) => {
       return build({
         base: '/',
         publicDir: false,
@@ -44,10 +52,9 @@ targetArr = targetArr.length === 0 ? Object.keys(fileConfig) : targetArr;
         },
         plugins: [
           react(),
-          libInjectCss(),
-          ['es', 'cjs'].includes(format) &&
+          t === 'es' &&
             dts({
-              outputDir: resolvePath(format),
+              outputDir: resolvePath('lib/types'),
               include: [resolvePath('packages')]
             })
         ],
@@ -62,27 +69,30 @@ targetArr = targetArr.length === 0 ? Object.keys(fileConfig) : targetArr;
           }
         },
         build: {
-          outDir: resolvePath(format),
+          emptyOutDir: false,
+          cssCodeSplit: true,
+          outDir: resolvePath('lib'),
           lib: {
-            entry:
-              format === 'umd'
-                ? resolvePath('packages')
-                : {
-                    index: resolvePath('packages'),
-                    MdEditor: resolvePath('packages/MdEditor'),
-                    MdPreview: resolvePath('packages/MdPreview'),
-                    NormalToolbar: resolvePath('packages/NormalToolbar'),
-                    DropdownToolbar: resolvePath('packages/DropdownToolbar'),
-                    ModalToolbar: resolvePath('packages/ModalToolbar'),
-                    MdCatalog: resolvePath('packages/MdCatalog'),
-                    config: resolvePath('packages/config')
-                  },
+            entry: entries[t],
             name: 'MdEditorRT',
-            formats: [format]
+            formats: [t],
+            fileName(format) {
+              switch (format) {
+                case 'es': {
+                  return 'es/[name].mjs';
+                }
+                case 'cjs': {
+                  return 'cjs/[name].cjs';
+                }
+                default: {
+                  return 'umd/index.js';
+                }
+              }
+            }
           },
           rollupOptions: {
             external:
-              format === 'umd'
+              t === 'umd'
                 ? ['react']
                 : [
                     'react',
@@ -96,24 +106,14 @@ targetArr = targetArr.length === 0 ? Object.keys(fileConfig) : targetArr;
                     /markdown-it.*/
                   ],
             output: {
-              dir: resolvePath(format),
-              entryFileNames: (info) => {
-                switch (info.name) {
-                  case 'index': {
-                    return `index.${extname}`;
-                  }
-                  default: {
-                    return `${info.name}.${extname}`;
-                  }
-                }
-              },
-              chunkFileNames: (info) => {
-                return 'chunks/' + info.name.replace(/([\w]+)\.?.*/, `$1.${extname}`);
-              },
-              assetFileNames: 'assets/[name][extname]',
-              globals: {
-                react: 'React'
-              }
+              chunkFileNames: `${t}/chunks/[name].${extnames[t]}`,
+              assetFileNames: '[name][extname]',
+              globals:
+                t === 'umd'
+                  ? {
+                      react: 'React'
+                    }
+                  : {}
             }
           }
         }

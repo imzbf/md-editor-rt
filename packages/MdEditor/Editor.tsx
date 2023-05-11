@@ -24,9 +24,6 @@ import { prefix, staticTextDefault, defaultProps } from '~/config';
 import { ContentType, EditorProps, StaticProps, Themes } from '~/type';
 import bus from '~/utils/event-bus';
 
-import './index.less';
-import '@vavt/markdown-theme/css/all.css';
-
 export const EditorContext = createContext<ContentType>({
   editorId: '',
   tabWidth: 2,

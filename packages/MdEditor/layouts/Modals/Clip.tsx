@@ -12,8 +12,6 @@ import { EditorContext } from '~/Editor';
 import { configOption, prefix } from '~/config';
 import { base642File } from '~/utils';
 
-import './style.less';
-
 interface ClipModalProps {
   visible: boolean;
   onCancel: () => void;
