@@ -47,6 +47,7 @@ For more ways to use or contribute, please refer to: [md-editor-extension](https
 ```jsx
 import React, { useState } from 'react';
 import { MdEditor } from 'md-editor-rt';
+import 'md-editor-rt/lib/style.css';
 
 export default () => {
   const [text, setText] = useState('# Hello Editor');
@@ -54,7 +55,7 @@ export default () => {
 };
 ```
 
-> `^4.0.0`, internal components can be imported on-demand and styles are automatically imported too.
+> `^4.0.0`, internal components can be imported on-demand.
 
 > If there are multiple editors on the page, please set different `editorId` for each editor!
 
@@ -63,6 +64,7 @@ export default () => {
 ```jsx
 import React, { useState } from 'react';
 import { MdEditor, MdCatalog } from 'md-editor-rt';
+import 'md-editor-rt/lib/preview.css';
 
 const scrollElement = document.documentElement;
 
@@ -315,6 +317,7 @@ After 2.5.0, Editor exposes several methods on the instance, used to get or chan
 ```jsx
 import React, { useState, useEffect, useRef } from 'react';
 import { MdEditor, ExposeParam } from 'md-editor-rt';
+import 'md-editor-rt/lib/style.css';
 
 export default () => {
   const [text, setText] = useState('#Hello Editor');
@@ -676,6 +679,7 @@ For more examples, refer to [document](https://imzbf.github.io/md-editor-rt).
 ```jsx
 import React, { useState } from 'react';
 import { MdEditor } from 'md-editor-rt';
+import 'md-editor-rt/lib/style.css';
 
 export default () => {
   const [text, setText] = useState('# Hello Editor');

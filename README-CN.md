@@ -44,6 +44,7 @@ yarn add @vavt/md-editor-extension
 ```jsx
 import React, { useState } from 'react';
 import { MdEditor } from 'md-editor-rt';
+import 'md-editor-rt/lib/style.css';
 
 export default () => {
   const [text, setText] = useState('# Hello Editor');
@@ -51,7 +52,7 @@ export default () => {
 };
 ```
 
-> 从`v4.0.0`开始，内部组件支持按需引用，并且自动引入样式。
+> 从`v4.0.0`开始，内部组件支持按需引用。
 
 > 如果页面存在多个编辑器，请给组件设置不相同的`editorId`。
 
@@ -60,6 +61,7 @@ export default () => {
 ```jsx
 import React, { useState } from 'react';
 import { MdEditor, MdCatalog } from 'md-editor-rt';
+import 'md-editor-rt/lib/preview.css';
 
 const scrollElement = document.documentElement;
 
@@ -320,6 +322,7 @@ export interface StaticTextDefaultValue {
 ```jsx
 import React, { useState, useEffect, useRef } from 'react';
 import { MdEditor, ExposeParam } from 'md-editor-rt';
+import 'md-editor-rt/lib/style.css';
 
 export default () => {
   const [text, setText] = useState('#Hello Editor');
@@ -691,6 +694,7 @@ import { NormalToolbar } from 'md-editor-rt';
 ```jsx
 import React, { useState } from 'react';
 import { MdEditor } from 'md-editor-rt';
+import 'md-editor-rt/lib/style.css';
 
 export default () => {
   const [text, setText] = useState('#Hello Editor');
