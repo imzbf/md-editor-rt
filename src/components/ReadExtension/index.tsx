@@ -1,13 +1,11 @@
 import React, { useState } from 'react';
-import MdEditor from 'md-editor-rt';
+import { MdPreview, ModalToolbar } from 'md-editor-rt';
 import { useSelector } from 'react-redux';
 import { StateType } from '@/store';
 
 interface ReadExtensionProp {
   mdText: string;
 }
-
-const ModalToolbar = MdEditor.ModalToolbar;
 
 /**
  * modal-toolbar组件不会再关闭时销毁子组件，这时需要区别预览扩展组件的标题ID生成方式和编辑器的标题ID生成方式
@@ -66,13 +64,12 @@ const ReadExtension = (props: ReadExtensionProp) => {
           overflow: 'auto'
         }}
       >
-        <MdEditor
+        <MdPreview
           theme={store.theme}
           language={store.lang}
           previewTheme={store.previewTheme}
           codeTheme={store.codeTheme}
           editorId="edit2preview"
-          previewOnly
           modelValue={props.mdText}
           mdHeadingId={readingHeadingId}
         />

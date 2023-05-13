@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
-import MdEditor from 'md-editor-rt';
+import { config } from 'md-editor-rt';
 import store from './store';
 import App from './App';
 
@@ -17,7 +17,7 @@ import './styles/common.less';
 import ZH_TW from '@vavt/md-editor-extension/dist/locale/zh-TW';
 import '@vavt/md-editor-extension/dist/previewTheme/arknights.css';
 
-MdEditor.config({
+config({
   markdownItConfig(md) {
     md.use(MarkExtension);
   },

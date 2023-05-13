@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import MdEditor from 'md-editor-rt';
+import { MdPreview } from 'md-editor-rt';
 import { StateType } from '@/store';
 import { debounce } from '@/utils';
 
@@ -36,13 +36,12 @@ const IzPreviewContent = (props: IzPreviewContentProp) => {
 
   return (
     <div className="content">
-      <MdEditor
+      <MdPreview
         editorId={props.editorId}
         language={state.lang}
         theme={state.theme}
         modelValue={props.modelValue}
         previewTheme={state.previewTheme}
-        previewOnly
         showCodeRowNumber={props.showCodeRowNumber}
         codeTheme={state.codeTheme}
         onHtmlChanged={onHtmlChanged}

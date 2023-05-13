@@ -22,7 +22,7 @@ Markdown 编辑器，React 版本，使用 jsx 和 typescript 语法开发，支
 
 ```js
 import { defineComponent, ref } from 'vue';
-import MdEditor from 'md-editor-rt';
+import { MdEditor } from 'md-editor-rt';
 import 'md-editor-rt/lib/style.css';
 
 export default defineComponent({

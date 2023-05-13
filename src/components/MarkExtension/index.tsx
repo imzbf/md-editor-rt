@@ -1,7 +1,5 @@
 import React from 'react';
-import MdEditor, { InsertContentGenerator } from 'md-editor-rt';
-
-const NormalToolbar = MdEditor.NormalToolbar;
+import { NormalToolbar, InsertContentGenerator } from 'md-editor-rt';
 
 interface MarkExtensionProp {
   onInsert: (generator: InsertContentGenerator) => void;

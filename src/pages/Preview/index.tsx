@@ -1,8 +1,7 @@
 import React, { useEffect, useMemo, useState, useRef, useCallback } from 'react';
-import MdEditor, { ExposeParam, InsertContentGenerator } from 'md-editor-rt';
+import { MdEditor, ExposeParam, InsertContentGenerator } from 'md-editor-rt';
 import { useSelector } from 'react-redux';
 import axios from '@/utils/request';
-import './index.less';
 import { StateType } from '@/store';
 import mdEN from '../../../public/preview-en-US.md';
 import mdCN from '../../../public/preview-zh-CN.md';
@@ -11,6 +10,8 @@ import EmojiExtension from '@/components/EmojiExtension';
 import MarkExtension from '@/components/MarkExtension';
 import ReadExtension from '@/components/ReadExtension';
 import TimeNow from '@/components/TimeNow';
+
+import './index.less';
 
 const editorId = 'editor-preview';
 

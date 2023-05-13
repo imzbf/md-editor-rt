@@ -19,10 +19,10 @@
     <div id="root"></div>
     <script src="https://unpkg.com/react@18.2.0/umd/react.production.min.js"></script>
     <script src="https://unpkg.com/react-dom@18.2.0/umd/react-dom.production.min.js"></script>
-    <script src="https://unpkg.com/md-editor-rt@${EDITOR_VERSION}/lib/md-editor-rt.umd.js"></script>
+    <script src="https://unpkg.com/md-editor-rt@${EDITOR_VERSION}/lib/umd/index.js"></script>
     <script>
       ReactDOM.createRoot(document.getElementById('root')).render(
-        React.createElement(MdEditorRT, {
+        React.createElement(MdEditorRT.MdEditor, {
           modelValue: 'Hello Editor!!'
         })
       );
@@ -41,16 +41,37 @@ yarn add md-editor-rt
 npm install md-editor-rt
 ```
 
-### 🤓 基本使用
+#### 🤓 基本使用
 
 ```jsx
 import React, { useState } from 'react';
-import MdEditor from 'md-editor-rt';
+import { MdEditor } from 'md-editor-rt';
 import 'md-editor-rt/lib/style.css';
 
 export default () => {
   const [text, setText] = useState('hello md-editor-rt！');
   return <MdEditor modelValue={text} onChange={setText} />;
+};
+```
+
+#### 📖 仅预览
+
+```jsx
+import React, { useState } from 'react';
+import { MdPreview, MdCatalog } from 'md-editor-rt';
+import 'md-editor-rt/lib/preview.css';
+
+export default () => {
+  const [id] = useState('preview-only');
+  const [scrollElement] = useState(document.documentElement);
+  const [text] = useState('hello md-editor-rt！');
+
+  return (
+    <>
+      <MdPreview editorId={id} modelValue={text} />
+      <MdCatalog editorId={id} scrollElement={scrollElement} />
+    </>
+  );
 };
 ```
 
@@ -60,21 +81,21 @@ export default () => {
 
 ### 🥶 自定义快捷键
 
-内置的快捷键配置的源码：[commands.ts](https://github.com/imzbf/md-editor-rt/blob/develop/MdEditor/layouts/Content/codemirror/commands.ts)，它们作为扩展项被添加到了`codemirror`。
+内置的快捷键配置的源码：[commands.ts](https://github.com/imzbf/md-editor-rt/blob/develop/packages/MdEditor/layouts/Content/codemirror/commands.ts)，它们作为扩展项被添加到了`codemirror`。
 
 想要替换、删除快捷键的基本原理是找到对应的扩展，然后遍历这个快捷键配置的数组，找到并处理它。
 
-事实上，`MdEditor.config`中`codeMirrorExtensions`的第二入参`extensions`是一个数组，它的第一项就是快捷键扩展，第三入参就是默认的快捷键配置。
+事实上，`config`中`codeMirrorExtensions`的第二入参`extensions`是一个数组，它的第一项就是快捷键扩展，第三入参就是默认的快捷键配置。
 
 #### 💅 修改快捷键
 
 将`Ctrl-b`修改为`Ctrl-m`
 
 ```js
-import MdEditor from 'md-editor-rt';
+import { config } from 'md-editor-rt';
 import { keymap } from '@codemirror/view';
 
-MdEditor.config({
+config({
   // [keymap, minimalSetup, markdown, EditorView.lineWrapping, EditorView.updateListener, EditorView.domEventHandlers, oneDark??oneLight]
   codeMirrorExtensions(theme, extensions, mdEditorCommands) {
     const newExtensions = [...extensions];
@@ -111,9 +132,9 @@ MdEditor.config({
 禁用所有快捷键
 
 ```js
-import MdEditor from 'md-editor-rt';
+import { config } from 'md-editor-rt';
 
-MdEditor.config({
+config({
   // [keymap, minimalSetup, markdown, EditorView.lineWrapping, EditorView.updateListener, EditorView.domEventHandlers, oneDark??oneLight]
   codeMirrorExtensions(theme, extensions) {
     const newExtensions = [...extensions];
@@ -130,19 +151,19 @@ MdEditor.config({
 
 如果涉及到向编辑框插入内容，这是需要借助组件实例上绑定的`insert`方法，参考[手动向文本框插入内容](/md-editor-rt/zh-CN/docs#%F0%9F%92%89%20insert)。
 
-如果不是在编辑器所在的组件中使用`MdEditor.config`，这是无法拿到编辑器组件实例，这时，你可能需要借助`event-bus`。
+如果不是在编辑器所在的组件中使用`config`，这是无法拿到编辑器组件实例，这时，你可能需要借助`event-bus`。
 
 示例实现`Ctrl+m`向编辑框插入标记模块(`==mark==`)
 
 `index.ts`
 
 ```js
-import MdEditor from 'md-editor-rt';
+import { config } from 'md-editor-rt';
 import { keymap, KeyBinding } from '@codemirror/view';
 // 假设你使用了EventBus
 import bus from '@/utils/event-bus';
 
-MdEditor.config({
+config({
   // [keymap, minimalSetup, markdown, EditorView.lineWrapping, EditorView.updateListener, EditorView.domEventHandlers, oneDark??oneLight]
   codeMirrorExtensions(theme, extensions, mdEditorCommands) {
     const newExtensions = [...extensions];
@@ -175,10 +196,11 @@ MdEditor.config({
 
 ```tsx
 import React, { useState, useRef, useEffect } from 'react';
-import MdEditor from 'md-editor-rt';
-import type { ExposeParam } from 'md-editor-rt';
+import { MdEditor, ExposeParam } from 'md-editor-rt';
 // 假设你使用了EventBus
 import bus from '@/utils/event-bus';
+
+import 'md-editor-rt/lib/style.css';
 
 const App = () => {
   const [text] = useState('## md-editor-rt\n\n');
@@ -248,7 +270,7 @@ export default new EventBus();
 
 ```jsx
 import React, { useState } from 'react';
-import MdEditor from 'md-editor-rt';
+import { MdEditor } from 'md-editor-rt';
 import 'md-editor-rt/lib/style.css';
 
 export default () => {
@@ -264,7 +286,7 @@ export default () => {
 
 ```jsx
 import React, { useState } from 'react';
-import MdEditor from 'md-editor-rt';
+import { MdEditor } from 'md-editor-rt';
 import 'md-editor-rt/lib/style.css';
 
 export default () => {
@@ -306,7 +328,7 @@ export default () => {
 
   ```jsx
   import React, { useState } from 'react';
-  import MdEditor from 'md-editor-rt';
+  import { MdEditor } from 'md-editor-rt';
   import 'md-editor-rt/lib/style.css';
 
   export default () => {
@@ -321,9 +343,9 @@ export default () => {
   1. 找到你喜欢的代码主题，最好支持暗夜模式
 
   ```js
-  import MdEditor from 'md-editor-rt';
+  import { config } from 'md-editor-rt';
 
-  MdEditor.config({
+  config({
     editorExtensions: {
       highlight: {
         css: {
@@ -359,12 +381,12 @@ highlight、prettier、cropper、screenfull 均使用外链引入，在无外网
 
 ```jsx
 import React, { useState } from 'react';
-import MdEditor from 'md-editor-rt';
+import { MdEditor, config } from 'md-editor-rt';
 import 'md-editor-rt/lib/style.css';
 // 引用screenfull
 import screenfull from 'screenfull';
 
-MdEditor.config({
+config({
   editorExtensions: {
     screenfull: {
       instance: screenfull
@@ -384,10 +406,10 @@ export default () => {
 
 ```jsx
 import React, { useState } from 'react';
-import MdEditor from 'md-editor-rt';
+import { MdEditor, config } from 'md-editor-rt';
 import 'md-editor-rt/lib/style.css';
 
-MdEditor.config({
+config({
   editorExtensions: {
     screenfull: {
       js: 'https://localhost:8090/screenfull@5.2.0/index.js'
@@ -409,7 +431,7 @@ export default () => {
 
 ```jsx
 import React, { useState } from 'react';
-import MdEditor from 'md-editor-rt';
+import { MdEditor } from 'md-editor-rt';
 import 'md-editor-rt/lib/style.css';
 
 const onUploadImg = async (files, callback) => {
@@ -444,10 +466,10 @@ export default () => {
 
 ```js
 import React, { useState } from 'react';
-import MdEditor from 'md-editor-rt';
+import { MdEditor, config } from 'md-editor-rt';
 import 'md-editor-rt/lib/style.css';
 
-MdEditor.config({
+config({
   editorConfig: {
     languageUserDefined: {
       'my-lang': {
@@ -551,7 +573,7 @@ export default () => {
 
   ```jsx
   import React, { useState } from 'react';
-  import MdEditor from 'md-editor-rt';
+  import { MdEditor } from 'md-editor-rt';
   import 'md-editor-rt/lib/style.css';
 
   export default () => {
@@ -564,12 +586,12 @@ export default () => {
 
 - 展示
 
-  使用内置`MdEditor.MdCatalog`组件
+  使用内置`MdCatalog`组件
 
   ```jsx
   import React, { useState } from 'react';
-  import MdEditor from 'md-editor-rt';
-  import 'md-editor-rt/lib/style.css';
+  import { MdPreview, MdCatalog } from 'md-editor-rt';
+  import 'md-editor-rt/lib/preview.css';
 
   const editorId = 'my-editor';
 
@@ -581,8 +603,8 @@ export default () => {
 
     return (
       <>
-        <MdEditor modelValue={state.text} editorId={editorId} previewOnly />
-        <MdEditor.MdCatalog editorId={editorId} scrollElement={state.scrollElement} />
+        <MdPreview modelValue={state.text} editorId={editorId} />
+        <MdCatalog editorId={editorId} scrollElement={state.scrollElement} />
       </>
     );
   };
@@ -594,7 +616,7 @@ export default () => {
 
 ```jsx
 import React, { useState } from 'react';
-import MdEditor from 'md-editor-rt';
+import { MdEditor } from 'md-editor-rt';
 import 'md-editor-rt/lib/style.css';
 
 export default () => {
@@ -658,7 +680,7 @@ export default () => {
 这里给出一个完全不使用外部链接，全部自行引入的示例：
 
 ```jsx
-import MdEditor from 'md-editor-rt';
+import { MdEditor, config } from 'md-editor-rt';
 import 'md-editor-rt/lib/style.css';
 
 // <=5.2.0
@@ -678,7 +700,7 @@ import 'highlight.js/styles/tokyo-night-dark.css';
 import prettier from 'prettier';
 import parserMarkdown from 'prettier/parser-markdown';
 
-MdEditor.config({
+config({
   editorExtensions: {
     prettier: {
       prettierInstance: prettier,
@@ -719,7 +741,7 @@ yarn add sanitize-html
 
 ```jsx
 import React from 'react';
-import MdEditor from 'md-editor-rt';
+import { MdEditor } from 'md-editor-rt';
 import 'md-editor-rt/lib/style.css';
 import sanitizeHtml from 'sanitize-html';
 

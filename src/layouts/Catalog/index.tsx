@@ -1,7 +1,7 @@
 import React, { MouseEvent } from 'react';
 import { useSelector } from 'react-redux';
-import MdEditor from 'md-editor-rt';
-import type { TocItem } from 'md-editor-rt/lib/MdEditor/extensions/MdCatalog';
+import { MdCatalog } from 'md-editor-rt';
+import type { TocItem } from 'md-editor-rt/lib/types/MdCatalog';
 import { StateType } from '@/store';
 
 interface IzCatalogProp {
@@ -20,7 +20,7 @@ const IzCatalog = (props: IzCatalogProp) => {
   return (
     <div className="catalog">
       <div className="affix">
-        <MdEditor.MdCatalog
+        <MdCatalog
           scrollElementOffsetTop={10}
           editorId={props.editorId}
           theme={state.theme}

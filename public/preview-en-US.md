@@ -22,7 +22,7 @@ Markdown Editor for React, developed in jsx and typescript, support different th
 
 ```js
 import { defineComponent, ref } from 'vue';
-import MdEditor from 'md-editor-rt';
+import { MdEditor } from 'md-editor-rt';
 import 'md-editor-rt/lib/style.css';
 
 export default defineComponent({

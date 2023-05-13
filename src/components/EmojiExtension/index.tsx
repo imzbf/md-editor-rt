@@ -1,9 +1,7 @@
 import React, { useState } from 'react';
-import MdEditor, { InsertContentGenerator } from 'md-editor-rt';
+import { DropdownToolbar, InsertContentGenerator } from 'md-editor-rt';
 
 import { emojis } from './data';
-
-const DropdownToolbar = MdEditor.DropdownToolbar;
 
 interface EmojiExtensionProp {
   onInsert: (generator: InsertContentGenerator) => void;
