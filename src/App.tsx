@@ -29,8 +29,10 @@ function App() {
   }, [theme]);
 
   useEffect(() => {
+    console.log(lang, location.hash);
     nav(
-      location.pathname.replace(/(\/md-editor-rt\/)[a-zA-Z-]+/, `/md-editor-rt/${lang}`)
+      location.pathname.replace(/(\/md-editor-rt\/)[a-zA-Z-]+/, `/md-editor-rt/${lang}`) +
+        location.hash
     );
   }, [lang]);
 
