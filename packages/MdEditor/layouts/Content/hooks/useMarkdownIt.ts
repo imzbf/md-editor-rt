@@ -1,8 +1,7 @@
+import { useContext, useEffect, useMemo, useRef, useState } from 'react';
 import mdit from 'markdown-it';
 import ImageFiguresPlugin from 'markdown-it-image-figures';
 import TaskListPlugin from 'markdown-it-task-lists';
-import CodeTabs from 'markdown-it-codetabs';
-
 import bus from '~/utils/event-bus';
 import { generateCodeRowNumber } from '~/utils';
 import { HeadList, Themes } from '~/type';
@@ -16,7 +15,7 @@ import MermaidPlugin from '../markdownIt/mermaid';
 import KatexPlugin from '../markdownIt/katex';
 import AdmonitionPlugin from '../markdownIt/admonition';
 import HeadingPlugin from '../markdownIt/heading';
-import { useContext, useEffect, useMemo, useRef, useState } from 'react';
+import CodeTabsPlugin from '../markdownIt/codetabs';
 import { EditorContext } from '~/Editor';
 import { ContentPreviewProps } from '../ContentPreview';
 
@@ -84,7 +83,7 @@ const useMarkdownIt = (props: ContentPreviewProps, previewOnly: boolean) => {
     md_.use(AdmonitionPlugin);
     md_.use(TaskListPlugin);
     md_.use(HeadingPlugin, { mdHeadingId: props.mdHeadingId, headsRef });
-    md_.use(CodeTabs);
+    md_.use(CodeTabsPlugin, { editorId });
 
     if (!props.noMermaid) {
       md_.use(MermaidPlugin, { themeRef });
