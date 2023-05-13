@@ -1,9 +1,15 @@
-import React, { CSSProperties, useEffect, useMemo, useState, MouseEvent } from 'react';
+import React, {
+  CSSProperties,
+  useEffect,
+  useMemo,
+  useState,
+  MouseEvent,
+  useCallback
+} from 'react';
 import bus from '~/utils/event-bus';
 import { HeadList, MdHeadingId, Themes } from '~/type';
 import { defaultProps, prefix } from '~/config';
 import { throttle, getRelativeTop } from '~/utils';
-import { PREVIEW_CHANGED } from '~/static/event-name';
 import CatalogLink from './CatalogLink';
 
 export interface TocItem {
@@ -47,16 +53,29 @@ export interface CatalogProps {
 
 const MdCatalog = (props: CatalogProps) => {
   // 获取Id
-  const { editorId, mdHeadingId = defaultProps.mdHeadingId, theme = 'light' } = props;
+  const {
+    editorId,
+    mdHeadingId = defaultProps.mdHeadingId,
+    theme = 'light',
+    offsetTop = 20
+  } = props;
 
   const [list, setList] = useState<Array<HeadList>>([]);
+
+  const [activeItem, setActiveItem] = useState<HeadList>();
 
   // 重构的列表
   const catalogs = useMemo(() => {
     const tocItems: TocItem[] = [];
 
-    list.forEach(({ text, level, active }, index) => {
-      const item = { level, text, index: index + 1, active: !!active };
+    list.forEach((listItem, index) => {
+      const { text, level } = listItem;
+      const item = {
+        level,
+        text,
+        index: index + 1,
+        active: activeItem === listItem
+      };
 
       if (tocItems.length === 0) {
         // 第一个 item 直接 push
@@ -90,79 +109,41 @@ const MdCatalog = (props: CatalogProps) => {
     });
 
     return tocItems;
-  }, [list]);
+  }, [activeItem, list]);
 
   const [scrollElement] = useState(() => {
     return props.scrollElement || `#${editorId}-preview-wrapper`;
   });
 
-  // 预览内容状态
-  const [previewVisible, setPreiviewVisible] = useState(true);
-
-  useEffect(() => {
-    bus.on(editorId, {
-      name: 'catalogChanged',
-      callback: (_list: Array<HeadList>) => {
-        setList(
-          _list.map((item, index) => {
-            if (index === 0) {
-              return {
-                ...item,
-                active: true
-              };
-            }
-
-            return {
-              ...item
-            };
-          })
-        );
-      }
-    });
-
-    bus.on(editorId, {
-      name: PREVIEW_CHANGED,
-      callback(status: boolean) {
-        setPreiviewVisible(status);
-      }
-    });
-
-    // 主动触发一次接收
-    bus.emit(editorId, 'pushCatalog');
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  useEffect(() => {
-    if (!previewVisible) {
-      return;
-    }
-
-    const _scrollElement =
+  const getScrollElement = useCallback(() => {
+    const scrollElement_ =
       scrollElement instanceof HTMLElement
         ? scrollElement
         : (document.querySelector(scrollElement) as HTMLElement);
 
-    const scrollHandler = throttle(() => {
-      if (list.length === 0) {
+    return scrollElement_;
+  }, [scrollElement]);
+
+  useEffect(() => {
+    const findActiveHeading = throttle((list_: HeadList[]) => {
+      if (list_.length === 0) {
         return false;
       }
 
       // 获取标记当前位置的目录
-      const { activeHead } = list.reduce(
+      const { activeHead } = list_.reduce(
         (activeData, link, index) => {
           const linkEle = document.getElementById(
             mdHeadingId(link.text, link.level, index + 1)
           );
 
           if (linkEle instanceof HTMLElement) {
+            const scrollElement = getScrollElement();
             // 获得当前标题相对滚动容器视窗的高度
-            const relativeTop = getRelativeTop(linkEle, _scrollElement);
+            const relativeTop = getRelativeTop(linkEle, scrollElement);
 
             // 当前标题滚动到超出容器的顶部且相比其他的标题最近
-            if (
-              relativeTop < (props.offsetTop || 20) &&
-              relativeTop > activeData.minTop
-            ) {
+            if (relativeTop < offsetTop && relativeTop > activeData.minTop) {
               return {
                 activeHead: link,
                 minTop: relativeTop
@@ -173,37 +154,40 @@ const MdCatalog = (props: CatalogProps) => {
           return activeData;
         },
         {
-          activeHead: list[0],
+          activeHead: list_[0],
           minTop: Number.MIN_SAFE_INTEGER
         }
       );
 
-      setList(
-        list.map((item) => {
-          if (item === activeHead) {
-            return {
-              ...item,
-              active: true
-            };
-          }
-
-          return {
-            ...item,
-            active: false
-          };
-        })
-      );
+      setActiveItem(activeHead);
+      setList(list_);
     });
+
+    bus.on(editorId, {
+      name: 'catalogChanged',
+      callback: findActiveHeading
+    });
+
+    const scrollElement_ = getScrollElement();
 
     // 滚动区域为document.documentElement需要把监听事件绑定在window上
     const scrollContainer =
-      _scrollElement === document.documentElement ? window : _scrollElement;
+      scrollElement_ === document.documentElement ? window : scrollElement_;
+
+    // 主动触发一次接收
+    bus.emit(editorId, 'pushCatalog');
+
+    const scrollHandler = () => {
+      findActiveHeading(list);
+    };
 
     scrollContainer?.addEventListener('scroll', scrollHandler);
     return () => {
+      bus.remove(editorId, 'catalogChanged', findActiveHeading);
       scrollContainer?.removeEventListener('scroll', scrollHandler);
     };
-  }, [props.offsetTop, list, mdHeadingId, scrollElement, previewVisible]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [offsetTop, list, mdHeadingId, getScrollElement]);
 
   return (
     <div

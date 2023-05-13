@@ -1,5 +1,4 @@
 import {
-  CSSProperties,
   ForwardedRef,
   useCallback,
   useEffect,
@@ -277,16 +276,16 @@ export const useCatalog = (props: EditorProps, staticProps: StaticProps) => {
   const { toolbars = allToolbar, toolbarsExclude = [] } = props;
   const { editorId } = staticProps;
 
-  const [catalogVisible, setCatalogVisible] = useState(false);
+  const [catalogShow, setCatalogShow] = useState(false);
 
   useEffect(() => {
     bus.on(editorId, {
       name: CHANGE_CATALOG_VISIBLE,
       callback: (v: boolean | undefined) => {
         if (v === undefined) {
-          setCatalogVisible((_catalogVisible) => !_catalogVisible);
+          setCatalogShow((_catalogShow) => !_catalogShow);
         } else {
-          setCatalogVisible(v);
+          setCatalogShow(v);
         }
       }
     });
@@ -294,17 +293,13 @@ export const useCatalog = (props: EditorProps, staticProps: StaticProps) => {
   }, []);
 
   // 是否挂载目录组件
-  const catalogShow = useMemo(() => {
-    return !toolbarsExclude.includes('catalog') && toolbars.includes('catalog');
-  }, [toolbars, toolbarsExclude]);
+  const catalogVisible = useMemo(() => {
+    return (
+      !toolbarsExclude.includes('catalog') && toolbars.includes('catalog') && catalogShow
+    );
+  }, [catalogShow, toolbars, toolbarsExclude]);
 
-  const catalogStyle = useMemo<CSSProperties>(() => {
-    return {
-      display: catalogVisible ? 'block' : 'none'
-    };
-  }, [catalogVisible]);
-
-  return { catalogVisible, catalogShow, catalogStyle };
+  return catalogVisible;
 };
 
 // 初始为空，渲染到页面后获取页面属性

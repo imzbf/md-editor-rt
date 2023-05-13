@@ -109,7 +109,7 @@ const Editor = forwardRef((props: EditorProps, ref: ForwardedRef<unknown>) => {
   // 错误捕获
   useErrorCatcher(staticProps.editorId, onError);
   // 目录状态
-  const { catalogVisible, catalogShow, catalogStyle } = useCatalog(props, staticProps);
+  const catalogVisible = useCatalog(props, staticProps);
   // 部分配置重构
   const [highlight, usedLanguageText, setting, updateSetting] = useConfig(props);
 
@@ -187,13 +187,13 @@ const Editor = forwardRef((props: EditorProps, ref: ForwardedRef<unknown>) => {
             onScrollAutoChange={onScrollAutoChange}
           />
         )}
-        {catalogShow && (
+        {catalogVisible && (
           <MdCatalog
             theme={theme}
-            style={catalogStyle}
             className={`${prefix}-catalog-editor`}
             editorId={staticProps.editorId}
             mdHeadingId={mdHeadingId}
+            key="internal-catalog"
           />
         )}
       </div>
