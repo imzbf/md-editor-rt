@@ -127,6 +127,7 @@ const MdCatalog = (props: CatalogProps) => {
   useEffect(() => {
     const findActiveHeading = throttle((list_: HeadList[]) => {
       if (list_.length === 0) {
+        setList([]);
         return false;
       }
 
