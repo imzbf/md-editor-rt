@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, StrictMode } from 'react';
 import Header from './Header';
 import Preview from './Preview';
 import PreviewOnly from './PreviewOnly';
@@ -28,29 +28,31 @@ function App() {
   }, [codeTheme, lang, previewTheme, theme]);
 
   return (
-    <div className={['app', theme === 'dark' && 'theme-dark'].join(' ')}>
-      <Header
-        theme={theme}
-        onChange={setTheme}
-        onPreviewChange={setPreviewTheme}
-        onCodeThemeChange={setCodeTheme}
-        onLangChange={setLang}
-      />
-      <div className="page-body">
-        <Preview
-          lang={lang}
+    <StrictMode>
+      <div className={['app', theme === 'dark' && 'theme-dark'].join(' ')}>
+        <Header
           theme={theme}
-          previewTheme={previewTheme}
-          codeTheme={codeTheme}
+          onChange={setTheme}
+          onPreviewChange={setPreviewTheme}
+          onCodeThemeChange={setCodeTheme}
+          onLangChange={setLang}
         />
-        <PreviewOnly
-          lang={lang}
-          theme={theme}
-          previewTheme={previewTheme}
-          codeTheme={codeTheme}
-        />
+        <div className="page-body">
+          <Preview
+            lang={lang}
+            theme={theme}
+            previewTheme={previewTheme}
+            codeTheme={codeTheme}
+          />
+          <PreviewOnly
+            lang={lang}
+            theme={theme}
+            previewTheme={previewTheme}
+            codeTheme={codeTheme}
+          />
+        </div>
       </div>
-    </div>
+    </StrictMode>
   );
 }
 

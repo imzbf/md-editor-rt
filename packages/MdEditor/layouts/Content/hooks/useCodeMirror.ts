@@ -80,30 +80,10 @@ const useCodeMirror = (props: ContentProps) => {
 
     codeMirrorUt.current.setTabSize(tabWidth);
     codeMirrorUt.current.setExtensions(getExtensions());
-    // view.dispatch({
-    //   changes: { from: 10, insert: '*' },
-    //   selection: { anchor: 11 }
-    // });
 
-    // view.dispatch({
-    //   selection: EditorSelection.create(
-    //     [
-    //       EditorSelection.range(20, 32),
-    //       // EditorSelection.range(6, 7),
-    //       EditorSelection.cursor(32)
-    //     ],
-    //     1
-    //   )
-    // });
-
-    // console.log(view.state.selection.main);
-    // console.log(view.state.sliceDoc());
     if (props.autoFocus) {
       view.focus();
     }
-
-    // console.log()
-    // view.dispatch(view.state.replaceSelection('`vscode`'));
 
     bus.on(editorId, {
       name: 'ctrlZ',
@@ -127,6 +107,11 @@ const useCodeMirror = (props: ContentProps) => {
         codeMirrorUt.current?.replaceSelectedText(text, options);
       }
     });
+
+    return () => {
+      // react18的严格模式会强制在开发环境让useEffect执行两次
+      view.destroy();
+    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
