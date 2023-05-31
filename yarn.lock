@@ -3121,10 +3121,10 @@ markdown-it@^13.0.1:
     mdurl "^1.0.1"
     uc.micro "^1.0.5"
 
-md-editor-rt@^4.0.2:
-  version "4.0.2"
-  resolved "https://registry.npmjs.org/md-editor-rt/-/md-editor-rt-4.0.2.tgz#4db24e3d3cf4db477e118d06dc942e6d335d01ba"
-  integrity sha512-svqMqD5vuRXIziv2K3hqanxhj+edaXNnLIlqJGFqxulGxWe4MYwI5HPqMLV/alNhJiFKDE2oOghaERVbNbtlyA==
+md-editor-rt@^4.0.3:
+  version "4.0.3"
+  resolved "https://registry.yarnpkg.com/md-editor-rt/-/md-editor-rt-4.0.3.tgz#03bac2a07974374ada01754e1c21331b8211bb2b"
+  integrity sha512-6rnDPpp4coohqwOobbElFesq3OYkoNQ7bUnghqJ8EAvJtJBxUf6BRmit2VvYjspYneEqzURSGwCaSYB799pDyw==
   dependencies:
     "@codemirror/lang-markdown" "^6.1.1"
     "@codemirror/language-data" "^6.3.0"
@@ -3136,6 +3136,7 @@ md-editor-rt@^4.0.2:
     markdown-it-image-figures "^2.1.1"
     markdown-it-task-lists "^2.1.1"
     medium-zoom "^1.0.8"
+    punycode "^2.3.0"
 
 mdurl@^1.0.1:
   version "1.0.1"
@@ -3434,7 +3435,7 @@ prr@~1.0.1:
   resolved "https://registry.npmjs.org/prr/-/prr-1.0.1.tgz#d3fc114ba06995a45ec6893f484ceb1d78f5f476"
   integrity sha512-yPw4Sng1gWghHQWj0B3ZggWUm4qVbPwPFcRG8KyxiU7J2OHFSoEHKS+EZ3fv5l1t9CyCiop6l/ZYeWbrgoQejw==
 
-punycode@^2.1.0:
+punycode@^2.1.0, punycode@^2.3.0:
   version "2.3.0"
   resolved "https://registry.npmjs.org/punycode/-/punycode-2.3.0.tgz#f67fa67c94da8f4d0cfff981aee4118064199b8f"
   integrity sha512-rRV+zQD8tVFys26lAGR9WUuS4iUAngJScM+ZRSKtvl5tKeZ2t5bvdNFdNHBW9FWR4guGHlgmsZ1G7BSm2wTbuA==
