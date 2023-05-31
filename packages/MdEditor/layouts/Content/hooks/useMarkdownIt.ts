@@ -78,6 +78,8 @@ const useMarkdownIt = (props: ContentPreviewProps, previewOnly: boolean) => {
       breaks: true
     });
 
+    markdownItConfig!(md_);
+
     md_.use(KatexPlugin, { katexRef });
     md_.use(ImageFiguresPlugin, { figcaption: true });
     md_.use(AdmonitionPlugin);
@@ -117,8 +119,6 @@ const useMarkdownIt = (props: ContentPreviewProps, previewOnly: boolean) => {
     });
 
     initLineNumber(md_);
-
-    markdownItConfig!(md_);
 
     return md_;
   });
