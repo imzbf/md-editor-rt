@@ -6,9 +6,9 @@ import React, {
   useRef,
   useState
 } from 'react';
+import { linkTo } from '@vavt/util';
 import { ToolbarNames, SettingType, UpdateSetting } from '~/type';
 import { EditorContext } from '~/Editor';
-import { goto } from '~/utils';
 import { ToolDirective } from '~/utils/content-help';
 import { allToolbar, prefix } from '~/config';
 import bus from '~/utils/event-bus';
@@ -803,7 +803,7 @@ const Toolbar = (props: ToolbarProps) => {
               <div
                 className={`${prefix}-toolbar-item`}
                 title={ult.toolbarTips?.github}
-                onClick={() => goto('https://github.com/imzbf/md-editor-rt')}
+                onClick={() => linkTo('https://github.com/imzbf/md-editor-rt')}
                 key="bar-github"
               >
                 <svg className={`${prefix}-icon`} aria-hidden="true">
