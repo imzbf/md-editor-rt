@@ -47,10 +47,6 @@ const useAutoScroll = (
         init,
         clear
       });
-
-      if (props.scrollAuto) {
-        init();
-      }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
