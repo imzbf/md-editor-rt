@@ -579,7 +579,7 @@ _Pay attention: shortcut keys are only available when the textarea is focused!_
 | CTRL + SHIFT + S | line-through | `~line-through~` |
 | CTRL + SHIFT + U | unordered list | `- unordered list` |
 | CTRL + SHIFT + C | code block |  |
-| CTRL + SHIFT + I | picture | `![picture](https://imzbf.cc)` |
+| CTRL + SHIFT + I | picture | `![picture](https://imzbf.github.io/md-editor-rt/imgs/preview-light.png)` |
 | CTRL + SHIFT + Z | forward | Forward history in editor, not the function of system |
 | CTRL + SHIFT + F | Beautify |  |
 | CTRL + ALT + C | code row |  |
