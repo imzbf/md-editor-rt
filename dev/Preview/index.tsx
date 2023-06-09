@@ -17,8 +17,9 @@ import { Theme } from '../App';
 import './index.less';
 import '~/styles/style.less';
 
+import { autocompletion, CompletionContext } from '@codemirror/autocomplete';
 // import { Extension } from '@codemirror/state';
-// import { lineNumbers } from '@codemirror/view';
+import { lineNumbers } from '@codemirror/view';
 // import screenfull from 'screenfull';
 // import katex from 'katex';
 // import 'katex/dist/katex.min.css';
@@ -35,13 +36,30 @@ import '~/styles/style.less';
 
 // import { cdnBase } from '../../MdEditor/config';
 
-config({
-  // codeMirrorExtensions(theme, extensions, keyBindings) {
-  //   console.log(theme, extensions, keyBindings);
+const myCompletions = (context: CompletionContext) => {
+  const word = context.matchBefore(/@|\w*/);
+  if (word!.from == word!.to && !context.explicit) return null;
 
-  //   return extensions;
-  //   // return [...extensions, lineNumbers()];
-  // },
+  return {
+    from: word!.from,
+    options: [
+      { label: '@imzbf', type: 'text' },
+      { label: '@github', type: 'text' },
+      { label: 'match', type: 'keyword' },
+      { label: 'hello', type: 'variable', info: '(World)' },
+      { label: 'helo', type: 'variable', info: '(MD)' },
+      { label: 'magic', type: 'text', apply: '⠁⭒*.✩.*⭒⠁', detail: 'macro' }
+    ]
+  };
+};
+
+config({
+  codeMirrorExtensions(theme, extensions, keyBindings) {
+    console.log(theme, extensions, keyBindings);
+
+    // return extensions;
+    return [...extensions, lineNumbers(), autocompletion({ override: [myCompletions] })];
+  },
   // markdownItConfig: (md) => {},
   editorExtensions: {
     //     prettier: {
