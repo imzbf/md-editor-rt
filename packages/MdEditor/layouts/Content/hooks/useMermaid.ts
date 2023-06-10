@@ -95,7 +95,12 @@ const useMermaid = (props: ContentPreviewProps) => {
           // @9以下使用renderAsync，@10以上使用render
           const render = mermaidRef.current.renderAsync || mermaidRef.current.render;
 
-          const svg = await render(idRand, item.innerText);
+          let svg: { svg: string } | string = '';
+          try {
+            svg = await render(idRand, item.innerText);
+          } catch (error) {
+            // console.error(error);
+          }
 
           // 9:10
           mermaidHtml = typeof svg === 'string' ? svg : svg.svg;
