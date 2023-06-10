@@ -17,9 +17,9 @@ import { Theme } from '../App';
 import './index.less';
 import '~/styles/style.less';
 
-import { autocompletion, CompletionContext } from '@codemirror/autocomplete';
 // import { Extension } from '@codemirror/state';
 import { lineNumbers } from '@codemirror/view';
+import { CompletionSource } from '@codemirror/autocomplete';
 // import screenfull from 'screenfull';
 // import katex from 'katex';
 // import 'katex/dist/katex.min.css';
@@ -36,29 +36,12 @@ import { lineNumbers } from '@codemirror/view';
 
 // import { cdnBase } from '../../MdEditor/config';
 
-const myCompletions = (context: CompletionContext) => {
-  const word = context.matchBefore(/@|\w*/);
-  if (word!.from == word!.to && !context.explicit) return null;
-
-  return {
-    from: word!.from,
-    options: [
-      { label: '@imzbf', type: 'text' },
-      { label: '@github', type: 'text' },
-      { label: 'match', type: 'keyword' },
-      { label: 'hello', type: 'variable', info: '(World)' },
-      { label: 'helo', type: 'variable', info: '(MD)' },
-      { label: 'magic', type: 'text', apply: '⠁⭒*.✩.*⭒⠁', detail: 'macro' }
-    ]
-  };
-};
-
 config({
   codeMirrorExtensions(theme, extensions, keyBindings) {
     console.log(theme, extensions, keyBindings);
 
     // return extensions;
-    return [...extensions, lineNumbers(), autocompletion({ override: [myCompletions] })];
+    return [...extensions, lineNumbers()];
   },
   // markdownItConfig: (md) => {},
   editorExtensions: {
@@ -167,6 +150,34 @@ export default ({ theme, previewTheme, codeTheme, lang }: PreviewProp) => {
 
   const [defVisible, setDefVisible] = useState(false);
 
+  const [completions, setCompletions] = useState<Array<CompletionSource>>([]);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setCompletions(() => {
+        return [
+          (context) => {
+            const word = context.matchBefore(/^>\s*/);
+
+            if (word === null || (word.from == word!.to && context.explicit)) {
+              return null;
+            }
+
+            return {
+              from: word.from,
+              options: [
+                {
+                  label: '> ',
+                  type: 'text'
+                }
+              ]
+            };
+          }
+        ];
+      });
+    }, 5000);
+  }, []);
+
   useEffect(() => {
     editorRef.current?.on('preview', (status) => {
       console.log('preview', status);
@@ -235,6 +246,7 @@ export default ({ theme, previewTheme, codeTheme, lang }: PreviewProp) => {
       </button>
       <div className="container">
         <MdEditor
+          completions={completions}
           ref={editorRef}
           theme={theme}
           language={lang}

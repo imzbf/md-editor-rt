@@ -177,6 +177,7 @@ const Editor = forwardRef((props: EditorProps, ref: ForwardedRef<unknown>) => {
           autoDetectCode={props.autoDetectCode}
           onBlur={props.onBlur}
           onFocus={props.onFocus}
+          completions={props.completions}
         />
         {footers?.length > 0 && (
           <Footer

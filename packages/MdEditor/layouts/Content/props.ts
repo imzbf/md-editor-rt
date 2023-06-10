@@ -1,3 +1,4 @@
+import { CompletionSource } from '@codemirror/autocomplete';
 import { HeadList, MdHeadingId, SettingType } from '~/type';
 
 export type ContentProps = Readonly<{
@@ -29,4 +30,5 @@ export type ContentProps = Readonly<{
   onFocus?: (event: FocusEvent) => void;
   noPrettier?: boolean;
   noHighlight?: boolean;
+  completions?: Array<CompletionSource>;
 }>;

@@ -1,4 +1,5 @@
 import { CSSProperties, ReactElement } from 'react';
+import { CompletionSource } from '@codemirror/autocomplete';
 import { Extension } from '@codemirror/state';
 import { KeyBinding } from '@codemirror/view';
 
@@ -399,6 +400,17 @@ export interface EditorProps extends MdPreviewProps {
    * 输入框获得焦点时触发事件
    */
   onFocus?: (event: FocusEvent) => void;
+  /**
+   * @codemirror/autocomplete匹配关键词的方法列表
+   *
+   * 它会被像下面这样嵌入编辑器
+   *
+   * import { autocompletion } from '@codemirror/autocomplete';
+   * autocompletion({
+   *   override: [...completions]
+   * })
+   */
+  completions?: Array<CompletionSource>;
 }
 
 export interface ContentType {

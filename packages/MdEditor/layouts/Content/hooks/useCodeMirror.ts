@@ -1,4 +1,4 @@
-import { useContext, useEffect, useRef, useState } from 'react';
+import { useContext, useEffect, useMemo, useRef, useState } from 'react';
 import { EditorView, minimalSetup } from 'codemirror';
 import { keymap } from '@codemirror/view';
 import { languages } from '@codemirror/language-data';
@@ -12,6 +12,7 @@ import { EditorContext } from '~/Editor';
 import CodeMirrorUt from '../codemirror';
 import { oneDark } from '../codemirror/themeOneDark';
 import { oneLight } from '../codemirror/themeLight';
+import createAutocompletion from '../codemirror/autocompletion';
 import { ContentProps } from '../props';
 import createCommands from '../codemirror/commands';
 
@@ -54,21 +55,18 @@ const useCodeMirror = (props: ContentProps) => {
     ];
   });
 
-  const getExtensions = () => {
-    if (theme === 'light') {
-      return configOption.codeMirrorExtensions!(
-        theme,
-        [...defaultExtensions, oneLight],
-        [...mdEditorCommands]
-      );
-    }
-
+  const extensions = useMemo(() => {
     return configOption.codeMirrorExtensions!(
       theme,
-      [...defaultExtensions, oneDark],
+      [
+        ...defaultExtensions,
+        theme === 'light' ? oneLight : oneDark,
+        createAutocompletion(props.completions)
+      ],
       [...mdEditorCommands]
     );
-  };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [props.completions, theme]);
 
   useEffect(() => {
     const view = new EditorView({
@@ -79,7 +77,7 @@ const useCodeMirror = (props: ContentProps) => {
     codeMirrorUt.current = new CodeMirrorUt(view);
 
     codeMirrorUt.current.setTabSize(tabWidth);
-    codeMirrorUt.current.setExtensions(getExtensions());
+    // codeMirrorUt.current.setExtensions(extensions);
 
     if (props.autoFocus) {
       view.focus();
@@ -116,13 +114,8 @@ const useCodeMirror = (props: ContentProps) => {
   }, []);
 
   useEffect(() => {
-    if (theme === 'dark') {
-      codeMirrorUt.current?.setExtensions(getExtensions());
-    } else {
-      codeMirrorUt.current?.setExtensions(getExtensions());
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [theme]);
+    codeMirrorUt.current?.setExtensions(extensions);
+  }, [extensions]);
 
   useEffect(() => {
     // 只有不是输入的时候才手动设置编辑区的内容
