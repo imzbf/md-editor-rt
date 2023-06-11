@@ -581,6 +581,50 @@
 
 ---
 
+### 📝 completions
+
+- **类型**：`Array<CompletionSource>`
+- **默认值**：`[]`
+
+  添加额外的输入自动完成来源。
+
+  ```tsx
+  import { useMemo, useState } from 'react';
+  import { CompletionSource } from '@codemirror/autocomplete';
+  import { MdEditor } from 'md-editor-rt';
+  import 'md-editor-rt/lib/style.css';
+
+  export default () => {
+    const [t, s] = useState('');
+
+    const completions = useMemo<Array<CompletionSource>>(() => {
+      return [
+        (context) => {
+          const word = context.matchBefore(/@\w*/);
+
+          if (word === null || (word.from == word.to && context.explicit)) {
+            return null;
+          }
+
+          return {
+            from: word.from,
+            options: [
+              {
+                label: '@imzbf',
+                type: 'text'
+              }
+            ]
+          };
+        }
+      ];
+    }, []);
+
+    return <MdEditor modelValue={t} onChange={s} completions={completions} />;
+  };
+  ```
+
+---
+
 ## 🧵 MdPreview 绑定事件
 
 ### 🚁 onHtmlChanged
