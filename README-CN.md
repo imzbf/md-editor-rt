@@ -84,9 +84,9 @@ export default () => {
 | --- | --- | --- |
 | ![默认模式](https://imzbf.github.io/md-editor-rt/imgs/preview-light.png) | ![暗黑模式](https://imzbf.github.io/md-editor-rt/imgs/preview-dark.png) | ![](https://imzbf.github.io/md-editor-rt/imgs/preview-previewOnly.png) |
 
-简单的标记和表情扩展预览
+输入提示和自定义简单的标记、表情扩展预览
 
-![mark and emoji extension](https://imzbf.github.io/md-editor-rt/imgs/mark_emoji.gif)
+![](https://imzbf.github.io/md-editor-rt/imgs/mark_emoji.gif)
 
 ## 🎁 Apis
 

@@ -87,9 +87,9 @@ export default () => {
 | --- | --- | --- |
 | ![](https://imzbf.github.io/md-editor-rt/imgs/preview-light.png) | ![](https://imzbf.github.io/md-editor-rt/imgs/preview-dark.png) | ![](https://imzbf.github.io/md-editor-rt/imgs/preview-previewOnly.png) |
 
-mark and emoji extensions
+Inputing prompt and mark, emoji extensions
 
-![mark and emoji extension](https://imzbf.github.io/md-editor-rt/imgs/mark_emoji.gif)
+![](https://imzbf.github.io/md-editor-rt/imgs/mark_emoji.gif)
 
 ## 🎁 Apis
 
