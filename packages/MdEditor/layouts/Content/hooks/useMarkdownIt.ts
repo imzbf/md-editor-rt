@@ -88,7 +88,7 @@ const useMarkdownIt = (props: ContentPreviewProps, previewOnly: boolean) => {
     md_.use(CodeTabsPlugin, { editorId });
 
     if (!props.noMermaid) {
-      md_.use(MermaidPlugin, { themeRef });
+      md_.use(MermaidPlugin, { themeRef, noMermaid: props.noMermaid });
     }
 
     md_.set({
