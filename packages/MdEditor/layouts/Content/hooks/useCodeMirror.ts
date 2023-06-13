@@ -34,6 +34,9 @@ const useCodeMirror = (props: ContentProps) => {
 
   const [mdEditorCommands] = useState(() => createCommands(editorId, props));
 
+  // 第一次延迟设置codemirror属性
+  const noSet = useRef(true);
+
   // 粘贴上传
   const pasteHandler = usePasteUpload(props);
 
@@ -74,14 +77,20 @@ const useCodeMirror = (props: ContentProps) => {
       parent: inputWrapperRef.current!
     });
 
-    codeMirrorUt.current = new CodeMirrorUt(view);
+    const nc = new CodeMirrorUt(view);
+    codeMirrorUt.current = nc;
 
-    codeMirrorUt.current.setTabSize(tabWidth);
-    // codeMirrorUt.current.setExtensions(extensions);
+    setTimeout(() => {
+      nc.setTabSize(tabWidth);
+      nc.setDisabled(props.disabled!);
+      nc.setReadOnly(props.readOnly!);
+      nc.setExtensions(extensions);
+      props.placeholder && nc.setPlaceholder(props.placeholder);
+      typeof props.maxLength === 'number' && nc.setMaxLength(props.maxLength);
+      props.autoFocus && view.focus();
 
-    if (props.autoFocus) {
-      view.focus();
-    }
+      noSet.current = false;
+    }, 0);
 
     bus.on(editorId, {
       name: 'ctrlZ',
@@ -109,11 +118,16 @@ const useCodeMirror = (props: ContentProps) => {
     return () => {
       // react18的严格模式会强制在开发环境让useEffect执行两次
       view.destroy();
+      noSet.current = true;
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
+    if (noSet.current) {
+      return;
+    }
+
     codeMirrorUt.current?.setExtensions(extensions);
   }, [extensions]);
 
@@ -125,19 +139,42 @@ const useCodeMirror = (props: ContentProps) => {
   }, [props.value]);
 
   useEffect(() => {
-    props.placeholder && codeMirrorUt.current?.setPlaceholder(props.placeholder);
+    if (noSet.current) {
+      return;
+    }
+    codeMirrorUt.current?.setTabSize(tabWidth);
+  }, [tabWidth]);
+
+  useEffect(() => {
+    if (noSet.current) {
+      return;
+    }
+
+    codeMirrorUt.current?.setPlaceholder(props.placeholder);
   }, [props.placeholder]);
 
   useEffect(() => {
+    if (noSet.current) {
+      return;
+    }
+
     codeMirrorUt.current?.setDisabled(props.disabled!);
   }, [props.disabled]);
 
   useEffect(() => {
+    if (noSet.current) {
+      return;
+    }
+
     codeMirrorUt.current?.setDisabled(props.readOnly!);
   }, [props.readOnly]);
 
   useEffect(() => {
-    if (props.maxLength) {
+    if (noSet.current) {
+      return;
+    }
+
+    if (typeof props.maxLength === 'number') {
       codeMirrorUt.current?.setMaxLength(props.maxLength);
     }
   }, [props.maxLength]);
