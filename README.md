@@ -305,11 +305,11 @@ Except for the same as `MdPreview`:
 | name | parameter | description |
 | --- | --- | --- |
 | onChange | `value: string` | Content changed event(bind to `oninput` of `textarea`) |
-| onSave | `value: string, html: Promise<string>` | Save content event, `ctrl+s` and click button will be triggered also |
-| onUploadImg | `files: Array<File>, callback: (urls: Array<string>) => void` | Upload picture event, when picture is uploading the modal will not close, please provide right urls to the callback function |
+| onSave | `value: string, html: Promise<string>` | Saving content event, `ctrl+s` and clicking button will trigger it |
+| onUploadImg | `files: Array<File>, callback: (urls: Array<string>) => void` | Uploading picture event, when picture is uploading the modal will not close, please provide right urls to the callback function |
 | onError | `error: { name: string; message: string }` | Catch run-time error, `Cropper`, `fullscreen` and `prettier` are used when they are not loaded |
-| onBlur | `event: FocusEvent<HTMLTextAreaElement, Element>` | Blur the `textarea` element |
-| onFocus | `event: FocusEvent<HTMLTextAreaElement, Element>` | Focus the `textarea` element |
+| onBlur | `event: FocusEvent<HTMLTextAreaElement, Element>` | Textarea has lost focus |
+| onFocus | `event: FocusEvent<HTMLTextAreaElement, Element>` | Textarea has received focus |
 
 ## 🤱🏼 Expose
 
@@ -443,10 +443,15 @@ For more examples, refer to source code of [extension component](https://github.
 
 ### 🎯 focus
 
-focus the textarea.
+Focus on textarea.
 
-```js
-editorRef.current?.focus();
+```ts
+import type { FocusOption } from 'md-editor-rt';
+
+const option: FocusOption | undefined = 'start';
+
+// Cursor position when focusing on textarea, default: position when it last lost focus
+editorRef.current?.focus(option);
 ```
 
 ## 💴 Config Editor
@@ -558,7 +563,7 @@ Use `config(option: ConfigOption)` to reconfigure `markdown-it` and so on.
 
 ### 🪡 Shortcut Key
 
-_Pay attention: shortcut keys are only available when the textarea is focused!_
+_Pay attention: shortcut keys are only available when the textarea has received focus!_
 
 | key | function | description |
 | --- | --- | --- |

@@ -452,8 +452,13 @@ editorRef.current?.insert((selectedText) => {
 
 手动聚焦输入框。
 
-```js
-editorRef.current?.focus();
+```ts
+import type { FocusOption } from 'md-editor-rt';
+
+const option: FocusOption | undefined = 'start';
+
+// 聚焦时光标的位置，不提供默认上次失焦时的位置
+editorRef.current?.focus(option);
 ```
 
 ## 💴 编辑器配置
