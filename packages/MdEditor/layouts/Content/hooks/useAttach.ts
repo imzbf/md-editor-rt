@@ -12,8 +12,8 @@ const useAttach = (codeMirrorUt: RefObject<CodeMirrorUt | undefined>) => {
 
   eventBus.on(editorId, {
     name: TEXTAREA_FOCUS,
-    callback() {
-      codeMirrorUt.current?.focus();
+    callback(options) {
+      codeMirrorUt.current?.focus(options);
     }
   });
 };

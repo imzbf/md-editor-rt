@@ -16,7 +16,8 @@ import {
   ExposeParam,
   UpdateSetting,
   ExposeEvent,
-  MdPreviewStaticProps
+  MdPreviewStaticProps,
+  FocusOption
 } from './type';
 import {
   prefix,
@@ -535,8 +536,8 @@ export const useExpose = (
         insert(generate) {
           bus.emit(editorId, 'replace', 'universal', { generate });
         },
-        focus() {
-          bus.emit(editorId, TEXTAREA_FOCUS);
+        focus(options: FocusOption) {
+          bus.emit(editorId, TEXTAREA_FOCUS, options);
         }
       };
 
