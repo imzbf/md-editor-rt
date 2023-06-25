@@ -12,6 +12,7 @@ import {
 // import Editor from '../../lib/md-editor-rt.es';
 import mdText from '../data.md';
 import { Theme } from '../App';
+// import TargetBlankExtension from './image/TargetBlankExtension.js';
 // import '../../lib/style.css';
 
 import './index.less';
@@ -37,13 +38,18 @@ import { CompletionSource } from '@codemirror/autocomplete';
 // import { cdnBase } from '../../MdEditor/config';
 
 config({
-  codeMirrorExtensions(theme, extensions, keyBindings) {
-    console.log(theme, extensions, keyBindings);
+  codeMirrorExtensions(theme, extensions) {
+    // console.log(theme, extensions, keyBindings);
 
     // return extensions;
     return [...extensions, lineNumbers()];
   },
-  // markdownItConfig: (md) => {},
+  // markdownItConfig: (mdit) => {
+  // mdit.use(ancher, {
+  //   permalink: true
+  // });
+  // mdit.use(TargetBlankExtension);
+  // },
   editorExtensions: {
     //     prettier: {
     //       prettierInstance: prettier,
