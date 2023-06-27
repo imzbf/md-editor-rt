@@ -20,7 +20,6 @@ interface CtlTypes {
 }
 
 interface ModalProps {
-  trigger?: 'hover' | 'click';
   overlay: string | number | ReactElement;
   visible: boolean;
   children?: string | number | ReactElement;
@@ -45,9 +44,7 @@ const DropDown = (props: ModalProps) => {
   const overlayRef = useRef<HTMLDivElement>(null);
 
   const triggerHandler = useCallback(() => {
-    if (props.trigger === 'hover') {
-      status.current.triggerHover = true;
-    }
+    status.current.triggerHover = true;
 
     const triggerEle = triggerRef.current as HTMLElement;
     const overlayEle = overlayRef.current as HTMLElement;
@@ -102,22 +99,6 @@ const DropDown = (props: ModalProps) => {
     }
   }, [props.visible]);
 
-  // 点击非内容区域时触发关闭
-  const clickHidden = useCallback(
-    (e: MouseEvent) => {
-      const triggerEle = triggerRef.current as HTMLElement;
-      const overlayEle = overlayRef.current as HTMLElement;
-
-      if (
-        !triggerEle.contains(e.target as HTMLElement) &&
-        !overlayEle.contains(e.target as HTMLElement)
-      ) {
-        props.onChange(false);
-      }
-    },
-    [props]
-  );
-
   const hiddenTimer = useRef(-1);
   const leaveHidden = useCallback(
     (e: MouseEvent) => {
@@ -138,48 +119,38 @@ const DropDown = (props: ModalProps) => {
   );
 
   useEffect(() => {
-    if (props.trigger === 'click') {
-      (triggerRef.current as HTMLElement).addEventListener('click', triggerHandler);
-      document.addEventListener('click', clickHidden);
-    } else {
-      (triggerRef.current as HTMLElement).addEventListener('mouseenter', triggerHandler);
-      (triggerRef.current as HTMLElement).addEventListener('mouseleave', leaveHidden);
+    (triggerRef.current as HTMLElement).addEventListener('mouseenter', triggerHandler);
+    (triggerRef.current as HTMLElement).addEventListener('mouseleave', leaveHidden);
 
-      (overlayRef.current as HTMLElement).addEventListener('mouseenter', overlayHandler);
-      (overlayRef.current as HTMLElement).addEventListener('mouseleave', leaveHidden);
-    }
+    (overlayRef.current as HTMLElement).addEventListener('mouseenter', overlayHandler);
+    (overlayRef.current as HTMLElement).addEventListener('mouseleave', leaveHidden);
 
     // 卸载组件时清除事件监听
     return () => {
-      if (props.trigger === 'click' && triggerRef.current) {
-        (triggerRef.current as HTMLElement).removeEventListener('click', triggerHandler);
-        document.removeEventListener('click', clickHidden);
-      } else {
-        if (triggerRef.current) {
-          (triggerRef.current as HTMLElement).removeEventListener(
-            'mouseenter',
-            triggerHandler
-          );
-          (triggerRef.current as HTMLElement).removeEventListener(
-            'mouseleave',
-            leaveHidden
-          );
-        }
+      if (triggerRef.current) {
+        (triggerRef.current as HTMLElement).removeEventListener(
+          'mouseenter',
+          triggerHandler
+        );
+        (triggerRef.current as HTMLElement).removeEventListener(
+          'mouseleave',
+          leaveHidden
+        );
+      }
 
-        if (overlayRef.current) {
-          // 同时移除内容区域监听
-          (overlayRef.current as HTMLElement).removeEventListener(
-            'mouseenter',
-            overlayHandler
-          );
-          (overlayRef.current as HTMLElement).removeEventListener(
-            'mouseleave',
-            leaveHidden
-          );
-        }
+      if (overlayRef.current) {
+        // 同时移除内容区域监听
+        (overlayRef.current as HTMLElement).removeEventListener(
+          'mouseenter',
+          overlayHandler
+        );
+        (overlayRef.current as HTMLElement).removeEventListener(
+          'mouseleave',
+          leaveHidden
+        );
       }
     };
-  }, [clickHidden, leaveHidden, props.trigger, triggerHandler]);
+  }, [leaveHidden, triggerHandler]);
 
   const slotDefault = props.children as ReactElement<
     any,
