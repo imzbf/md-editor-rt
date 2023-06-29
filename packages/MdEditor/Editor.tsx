@@ -18,7 +18,6 @@ import {
 import ToolBar from '~/layouts/Toolbar';
 import Content from '~/layouts/Content';
 import Footer from '~/layouts/Footer';
-import MdCatalog from '~~/MdCatalog';
 import { classnames } from '~/utils';
 import { prefix, staticTextDefault, defaultProps } from '~/config';
 import { ContentType, EditorProps, StaticProps, Themes } from '~/type';
@@ -178,6 +177,8 @@ const Editor = forwardRef((props: EditorProps, ref: ForwardedRef<unknown>) => {
           onBlur={props.onBlur}
           onFocus={props.onFocus}
           completions={props.completions}
+          catalogVisible={catalogVisible}
+          theme={props.theme}
         />
         {footers?.length > 0 && (
           <Footer
@@ -186,15 +187,6 @@ const Editor = forwardRef((props: EditorProps, ref: ForwardedRef<unknown>) => {
             defFooters={defFooters}
             scrollAuto={state.scrollAuto}
             onScrollAutoChange={onScrollAutoChange}
-          />
-        )}
-        {catalogVisible && (
-          <MdCatalog
-            theme={theme}
-            className={`${prefix}-catalog-editor`}
-            editorId={staticProps.editorId}
-            mdHeadingId={mdHeadingId}
-            key="internal-catalog"
           />
         )}
       </div>

@@ -1,5 +1,5 @@
 import { CompletionSource } from '@codemirror/autocomplete';
-import { HeadList, MdHeadingId, SettingType } from '~/type';
+import { HeadList, MdHeadingId, SettingType, Themes } from '~/type';
 
 export type ContentProps = Readonly<{
   value: string;
@@ -31,4 +31,6 @@ export type ContentProps = Readonly<{
   noPrettier?: boolean;
   noHighlight?: boolean;
   completions?: Array<CompletionSource>;
+  catalogVisible: boolean;
+  theme?: Themes;
 }>;

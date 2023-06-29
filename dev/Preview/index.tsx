@@ -424,6 +424,8 @@ export default ({ theme, previewTheme, codeTheme, lang }: PreviewProp) => {
           formatCopiedText={(text: string) => {
             return `${text} \nfrom @imzbf`;
           }}
+          footers={['markdownTotal', '=', 0, 'scrollSwitch']}
+          defFooters={[<span key={'dev-footer-demo'}>^_^</span>]}
         />
         <br />
         {/* <MdEditor
