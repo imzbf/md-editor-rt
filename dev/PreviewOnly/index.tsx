@@ -3,6 +3,8 @@ import { MdPreview } from '~~/index';
 import { Theme } from '../App';
 import mdText from '../data.md';
 
+import '~/styles/preview.less';
+
 interface PreviewOnlyProp {
   theme: Theme;
   previewTheme: string;
