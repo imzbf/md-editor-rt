@@ -677,7 +677,6 @@ Change background color in dark mode:
 import { MdEditor, config } from 'md-editor-rt';
 import 'md-editor-rt/lib/style.css';
 
-// <=5.2.0
 import screenfull from 'screenfull';
 
 import katex from 'katex';
@@ -689,10 +688,17 @@ import 'cropperjs/dist/cropper.css';
 import mermaid from 'mermaid';
 
 import highlight from 'highlight.js';
-import 'highlight.js/styles/tokyo-night-dark.css';
+import 'highlight.js/styles/atom-one-dark.css';
 
+// <3.0
 import prettier from 'prettier';
 import parserMarkdown from 'prettier/parser-markdown';
+// >=3.0
+import * as prettier from 'prettier';
+import parserMarkdown from 'prettier/plugins/markdown';
+
+// https://at.alicdn.com/t/c/font_2605852_u82y61ve02.js
+import './assets/iconfont.js';
 
 config({
   editorExtensions: {
@@ -719,7 +725,7 @@ config({
 });
 
 export default () => {
-  return <MdEditor modelValue="" />;
+  return <MdEditor modelValue="" noIconfont />;
 };
 ```
 
