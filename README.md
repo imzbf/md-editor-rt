@@ -100,7 +100,7 @@ Inputing prompt and mark, emoji extensions
 | modelValue | `string` | '' | Markdown content |
 | theme | `'light' \| 'dark'` | 'light' | Editor theme |
 | className | `string` | '' |  |
-| language | `string` | 'zh-CN' | Build-in language('zh-CN','en-US') |
+| language | `string` | 'zh-CN' | Built-in language('zh-CN','en-US', 'id-ID', 'jv-ID') |
 | editorId | `string` | 'md-editor-rt' | Editor id, it is used when there are more than two editors in the same page |
 | showCodeRowNumber | `boolean` | false | Show row number for code block or not |
 | previewTheme | `'default' \| 'github' \| 'vuepress' \| 'mk-cute' \| 'smart-blue' \| 'cyanosis'` | 'default' | Preview theme, can be customized |
