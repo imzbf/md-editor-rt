@@ -22,10 +22,11 @@ export interface ContentPreviewProps {
 }
 
 const ContentPreview = (props: ContentPreviewProps) => {
+  const { previewOnly = false } = props;
   const { editorId, previewTheme, showCodeRowNumber } = useContext(EditorContext);
 
   // markdown => html
-  const { html } = useMarkdownIt(props, !!props.previewOnly);
+  const { html } = useMarkdownIt(props, !!previewOnly);
   // 复制代码
   useCopyCode(props, html);
   // 图片点击放大
@@ -49,7 +50,7 @@ const ContentPreview = (props: ContentPreviewProps) => {
           dangerouslySetInnerHTML={{ __html: html }}
         />
       </div>
-      {!props.previewOnly && (
+      {!previewOnly && (
         <div
           id={`${editorId}-html-wrapper`}
           className={`${prefix}-preview-wrapper`}
@@ -61,10 +62,6 @@ const ContentPreview = (props: ContentPreviewProps) => {
       )}
     </>
   );
-};
-
-ContentPreview.defaultProps = {
-  previewOnly: false
 };
 
 export default ContentPreview;

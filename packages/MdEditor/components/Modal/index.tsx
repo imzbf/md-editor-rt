@@ -16,7 +16,7 @@ export type ModalProps = Readonly<{
 }>;
 
 const Modal = (props: ModalProps) => {
-  const { onClose = () => {} } = props;
+  const { onClose = () => {}, onAdjust = () => {} } = props;
   const [modalVisible, setMV] = useState(props.visible);
   const [modalClass, setModalClass] = useState([`${prefix}-modal`]);
   const modalRef = useRef<HTMLDivElement>(null);
@@ -145,7 +145,7 @@ const Modal = (props: ModalProps) => {
                   }));
                 }
 
-                props.onAdjust instanceof Function && props.onAdjust(!props.isFullscreen);
+                onAdjust instanceof Function && onAdjust(!props.isFullscreen);
               }}
             >
               <svg className={`${prefix}-icon`} aria-hidden="true">
@@ -174,9 +174,5 @@ const Modal = (props: ModalProps) => {
     </div>
   );
 };
-
-Modal.defaultProps = {
-  onAdjust() {}
-} as ModalProps;
 
 export default Modal;

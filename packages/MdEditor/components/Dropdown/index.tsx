@@ -30,6 +30,7 @@ interface ModalProps {
 const HIDDEN_CLASS = `${prefix}-dropdown-hidden`;
 
 const DropDown = (props: ModalProps) => {
+  const { relative = 'html' } = props;
   const [ctl, setCtl] = useState<CtlTypes>({
     overlayClass: HIDDEN_CLASS,
     overlayStyle: {}
@@ -61,8 +62,7 @@ const DropDown = (props: ModalProps) => {
     const triggerHeight = triggerInfo.height;
     const triggerWidth = triggerInfo.width;
 
-    const relativecrollLeft =
-      document.querySelector(props.relative as string)?.scrollLeft || 0;
+    const relativecrollLeft = document.querySelector(relative as string)?.scrollLeft || 0;
 
     // 设置好正对位置
     setCtl((_ctl) => ({
@@ -79,7 +79,7 @@ const DropDown = (props: ModalProps) => {
     }));
 
     props.onChange(true);
-  }, [props]);
+  }, [props, relative]);
 
   const overlayHandler = () => {
     status.current.overlayHover = true;
@@ -124,36 +124,20 @@ const DropDown = (props: ModalProps) => {
   );
 
   useEffect(() => {
-    (triggerRef.current as HTMLElement).addEventListener('mouseenter', triggerHandler);
-    (triggerRef.current as HTMLElement).addEventListener('mouseleave', leaveHidden);
+    triggerRef.current?.addEventListener('mouseenter', triggerHandler);
+    triggerRef.current?.addEventListener('mouseleave', leaveHidden);
 
-    (overlayRef.current as HTMLElement).addEventListener('mouseenter', overlayHandler);
-    (overlayRef.current as HTMLElement).addEventListener('mouseleave', leaveHidden);
+    overlayRef.current?.addEventListener('mouseenter', overlayHandler);
+    overlayRef.current?.addEventListener('mouseleave', leaveHidden);
 
     // 卸载组件时清除事件监听
     return () => {
-      if (triggerRef.current) {
-        (triggerRef.current as HTMLElement).removeEventListener(
-          'mouseenter',
-          triggerHandler
-        );
-        (triggerRef.current as HTMLElement).removeEventListener(
-          'mouseleave',
-          leaveHidden
-        );
-      }
+      triggerRef.current?.removeEventListener('mouseenter', triggerHandler);
+      triggerRef.current?.removeEventListener('mouseleave', leaveHidden);
 
-      if (overlayRef.current) {
-        // 同时移除内容区域监听
-        (overlayRef.current as HTMLElement).removeEventListener(
-          'mouseenter',
-          overlayHandler
-        );
-        (overlayRef.current as HTMLElement).removeEventListener(
-          'mouseleave',
-          leaveHidden
-        );
-      }
+      // 同时移除内容区域监听
+      overlayRef.current?.removeEventListener('mouseenter', overlayHandler);
+      overlayRef.current?.removeEventListener('mouseleave', leaveHidden);
     };
   }, [leaveHidden, triggerHandler]);
 
@@ -190,11 +174,6 @@ const DropDown = (props: ModalProps) => {
       {overlay}
     </>
   );
-};
-
-DropDown.defaultProps = {
-  trigger: 'hover',
-  relative: 'html'
 };
 
 export default DropDown;
