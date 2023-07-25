@@ -4,10 +4,11 @@ import React, {
   useContext,
   useMemo,
   useRef,
-  useState
+  useState,
+  cloneElement
 } from 'react';
 import { linkTo } from '@vavt/util';
-import { ToolbarNames, SettingType, UpdateSetting } from '~/type';
+import { ToolbarNames, SettingType, UpdateSetting, InsertContentGenerator } from '~/type';
 import { EditorContext } from '~/Editor';
 import { ToolDirective } from '~/utils/content-help';
 import { allToolbar, prefix } from '~/config';
@@ -822,7 +823,17 @@ const Toolbar = (props: ToolbarProps) => {
       } else if (props.defToolbars) {
         const defItem = props.defToolbars[barItem as number];
 
-        return defItem || '';
+        if (defItem) {
+          const defItemCloned = cloneElement(defItem, {
+            insert(generate: InsertContentGenerator) {
+              bus.emit(editorId, 'replace', 'universal', { generate });
+            }
+          });
+
+          return defItemCloned;
+        }
+
+        return '';
       } else {
         return '';
       }
