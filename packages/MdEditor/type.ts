@@ -597,7 +597,15 @@ export interface InsertParam {
   deviationEnd: number;
 }
 
+/**
+ * 插入的内容的构造函数
+ */
 export type InsertContentGenerator = (selectedText: string) => InsertParam;
+
+/**
+ * 插入内容的通用函数类型
+ */
+export type Insert = (generate: InsertContentGenerator) => void;
 
 export type FocusOption =
   | 'start'
@@ -677,7 +685,7 @@ export interface ExposeParam {
    * deviationEnd   插入后选中位置的结束偏移量
    *
    */
-  insert(generate: InsertContentGenerator): void;
+  insert: Insert;
 
   /**
    * 手动聚焦
