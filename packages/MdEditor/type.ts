@@ -411,6 +411,12 @@ export interface EditorProps extends MdPreviewProps {
    * })
    */
   completions?: Array<CompletionSource>;
+  /**
+   * 是否在工具栏下面显示对应的文字名称
+   *
+   * @default false
+   */
+  showToolbarName?: boolean;
 }
 
 export interface ContentType {

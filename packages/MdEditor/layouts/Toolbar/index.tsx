@@ -5,9 +5,10 @@ import React, {
   useMemo,
   useRef,
   useState,
-  cloneElement
+  cloneElement,
+  useEffect
 } from 'react';
-import { linkTo } from '@vavt/util';
+import { linkTo, draggingScroll } from '@vavt/util';
 import { ToolbarNames, SettingType, UpdateSetting, InsertContentGenerator } from '~/type';
 import { EditorContext } from '~/Editor';
 import { ToolDirective } from '~/utils/content-help';
@@ -19,6 +20,7 @@ import { CHANGE_CATALOG_VISIBLE, ON_SAVE } from '~/static/event-name';
 import Modals from '../Modals';
 import TableShape from './TableShape';
 import { useSreenfull, useModals, useDropdownState } from './hooks';
+import { classnames } from '~~/MdEditor/utils';
 
 export interface ToolbarProps {
   noPrettier: boolean;
@@ -31,6 +33,7 @@ export interface ToolbarProps {
   tableShape: [number, number];
   defToolbars?: Array<ReactElement>;
   noUploadImg: boolean;
+  showToolbarName?: boolean;
 }
 
 let splitNum = 0;
@@ -42,6 +45,7 @@ const Toolbar = (props: ToolbarProps) => {
   const ult = usedLanguageText;
 
   const [wrapperId] = useState(() => `${editorId}-toolbar-wrapper`);
+  const wrapperRef = useRef<HTMLDivElement>(null);
   // 文件选择
   const uploadRef = useRef<HTMLInputElement>(null);
 
@@ -134,6 +138,10 @@ const Toolbar = (props: ToolbarProps) => {
           <svg className={`${prefix}-icon`} aria-hidden="true">
             <use xlinkHref="#md-editor-icon-title" />
           </svg>
+
+          {props.showToolbarName && (
+            <div className={`${prefix}-toolbar-item-name`}>{ult.toolbarTips?.title}</div>
+          )}
         </div>
       </Dropdown>
     );
@@ -142,13 +150,9 @@ const Toolbar = (props: ToolbarProps) => {
     visible.title,
     onTitleChange,
     onTitleClose,
-    ult.titleItem?.h1,
-    ult.titleItem?.h2,
-    ult.titleItem?.h3,
-    ult.titleItem?.h4,
-    ult.titleItem?.h5,
-    ult.titleItem?.h6,
-    ult.toolbarTips?.title,
+    ult.titleItem,
+    ult.toolbarTips,
+    props.showToolbarName,
     emitHandler
   ]);
 
@@ -204,6 +208,10 @@ const Toolbar = (props: ToolbarProps) => {
           <svg className={`${prefix}-icon`} aria-hidden="true">
             <use xlinkHref="#md-editor-icon-image" />
           </svg>
+
+          {props.showToolbarName && (
+            <div className={`${prefix}-toolbar-item-name`}>{ult.toolbarTips?.image}</div>
+          )}
         </div>
       </Dropdown>
     );
@@ -212,10 +220,9 @@ const Toolbar = (props: ToolbarProps) => {
     visible.image,
     onImageChange,
     onImageClose,
-    ult.imgTitleItem?.link,
-    ult.imgTitleItem?.upload,
-    ult.imgTitleItem?.clip2upload,
-    ult.toolbarTips?.image,
+    ult.imgTitleItem,
+    ult.toolbarTips,
+    props.showToolbarName,
     setModalData
   ]);
 
@@ -234,6 +241,10 @@ const Toolbar = (props: ToolbarProps) => {
           <svg className={`${prefix}-icon`} aria-hidden="true">
             <use xlinkHref="#md-editor-icon-table" />
           </svg>
+
+          {props.showToolbarName && (
+            <div className={`${prefix}-toolbar-item-name`}>{ult.toolbarTips?.table}</div>
+          )}
         </div>
       </Dropdown>
     );
@@ -242,8 +253,9 @@ const Toolbar = (props: ToolbarProps) => {
     visible.table,
     onTableChange,
     props.tableShape,
+    props.showToolbarName,
     onTableSelected,
-    ult.toolbarTips?.table
+    ult.toolbarTips
   ]);
 
   const MermaidDropdown = useMemo(() => {
@@ -326,6 +338,12 @@ const Toolbar = (props: ToolbarProps) => {
           <svg className={`${prefix}-icon`} aria-hidden="true">
             <use xlinkHref="#md-editor-icon-mermaid" />
           </svg>
+
+          {props.showToolbarName && (
+            <div className={`${prefix}-toolbar-item-name`}>
+              {ult.toolbarTips?.mermaid}
+            </div>
+          )}
         </div>
       </Dropdown>
     );
@@ -334,15 +352,9 @@ const Toolbar = (props: ToolbarProps) => {
     visible.mermaid,
     onMermaidChange,
     onMermaidClose,
-    ult.mermaid?.flow,
-    ult.mermaid?.sequence,
-    ult.mermaid?.gantt,
-    ult.mermaid?.class,
-    ult.mermaid?.state,
-    ult.mermaid?.pie,
-    ult.mermaid?.relationship,
-    ult.mermaid?.journey,
-    ult.toolbarTips?.mermaid,
+    ult.mermaid,
+    ult.toolbarTips,
+    props.showToolbarName,
     emitHandler
   ]);
 
@@ -378,6 +390,10 @@ const Toolbar = (props: ToolbarProps) => {
           <svg className={`${prefix}-icon`} aria-hidden="true">
             <use xlinkHref="#md-editor-icon-formula" />
           </svg>
+
+          {props.showToolbarName && (
+            <div className={`${prefix}-toolbar-item-name`}>{ult.toolbarTips?.katex}</div>
+          )}
         </div>
       </Dropdown>
     );
@@ -386,9 +402,9 @@ const Toolbar = (props: ToolbarProps) => {
     visible.katex,
     onKatexChange,
     onKatexClose,
-    ult.katex?.inline,
-    ult.katex?.block,
-    ult.toolbarTips?.katex,
+    ult.katex,
+    ult.toolbarTips,
+    props.showToolbarName,
     emitHandler
   ]);
 
@@ -412,6 +428,12 @@ const Toolbar = (props: ToolbarProps) => {
                 <svg className={`${prefix}-icon`} aria-hidden="true">
                   <use xlinkHref="#md-editor-icon-bold" />
                 </svg>
+
+                {props.showToolbarName && (
+                  <div className={`${prefix}-toolbar-item-name`}>
+                    {ult.toolbarTips?.bold}
+                  </div>
+                )}
               </div>
             );
           }
@@ -428,6 +450,12 @@ const Toolbar = (props: ToolbarProps) => {
                 <svg className={`${prefix}-icon`} aria-hidden="true">
                   <use xlinkHref="#md-editor-icon-underline" />
                 </svg>
+
+                {props.showToolbarName && (
+                  <div className={`${prefix}-toolbar-item-name`}>
+                    {ult.toolbarTips?.underline}
+                  </div>
+                )}
               </div>
             );
           }
@@ -444,6 +472,12 @@ const Toolbar = (props: ToolbarProps) => {
                 <svg className={`${prefix}-icon`} aria-hidden="true">
                   <use xlinkHref="#md-editor-icon-italic" />
                 </svg>
+
+                {props.showToolbarName && (
+                  <div className={`${prefix}-toolbar-item-name`}>
+                    {ult.toolbarTips?.italic}
+                  </div>
+                )}
               </div>
             );
           }
@@ -460,6 +494,12 @@ const Toolbar = (props: ToolbarProps) => {
                 <svg className={`${prefix}-icon`} aria-hidden="true">
                   <use xlinkHref="#md-editor-icon-strike-through" />
                 </svg>
+
+                {props.showToolbarName && (
+                  <div className={`${prefix}-toolbar-item-name`}>
+                    {ult.toolbarTips?.strikeThrough}
+                  </div>
+                )}
               </div>
             );
           }
@@ -479,6 +519,12 @@ const Toolbar = (props: ToolbarProps) => {
                 <svg className={`${prefix}-icon`} aria-hidden="true">
                   <use xlinkHref="#md-editor-icon-sub" />
                 </svg>
+
+                {props.showToolbarName && (
+                  <div className={`${prefix}-toolbar-item-name`}>
+                    {ult.toolbarTips?.sub}
+                  </div>
+                )}
               </div>
             );
           }
@@ -495,6 +541,12 @@ const Toolbar = (props: ToolbarProps) => {
                 <svg className={`${prefix}-icon`} aria-hidden="true">
                   <use xlinkHref="#md-editor-icon-sup" />
                 </svg>
+
+                {props.showToolbarName && (
+                  <div className={`${prefix}-toolbar-item-name`}>
+                    {ult.toolbarTips?.sup}
+                  </div>
+                )}
               </div>
             );
           }
@@ -511,6 +563,12 @@ const Toolbar = (props: ToolbarProps) => {
                 <svg className={`${prefix}-icon`} aria-hidden="true">
                   <use xlinkHref="#md-editor-icon-quote" />
                 </svg>
+
+                {props.showToolbarName && (
+                  <div className={`${prefix}-toolbar-item-name`}>
+                    {ult.toolbarTips?.quote}
+                  </div>
+                )}
               </div>
             );
           }
@@ -527,6 +585,11 @@ const Toolbar = (props: ToolbarProps) => {
                 <svg className={`${prefix}-icon`} aria-hidden="true">
                   <use xlinkHref="#md-editor-icon-unordered-list" />
                 </svg>
+                {props.showToolbarName && (
+                  <div className={`${prefix}-toolbar-item-name`}>
+                    {ult.toolbarTips?.unorderedList}
+                  </div>
+                )}
               </div>
             );
           }
@@ -543,6 +606,12 @@ const Toolbar = (props: ToolbarProps) => {
                 <svg className={`${prefix}-icon`} aria-hidden="true">
                   <use xlinkHref="#md-editor-icon-ordered-list" />
                 </svg>
+
+                {props.showToolbarName && (
+                  <div className={`${prefix}-toolbar-item-name`}>
+                    {ult.toolbarTips?.orderedList}
+                  </div>
+                )}
               </div>
             );
           }
@@ -560,6 +629,12 @@ const Toolbar = (props: ToolbarProps) => {
                 <svg className={`${prefix}-icon`} aria-hidden="true">
                   <use xlinkHref="#md-editor-icon-task" />
                 </svg>
+
+                {props.showToolbarName && (
+                  <div className={`${prefix}-toolbar-item-name`}>
+                    {ult.toolbarTips?.task}
+                  </div>
+                )}
               </div>
             );
           }
@@ -577,6 +652,12 @@ const Toolbar = (props: ToolbarProps) => {
                 <svg className={`${prefix}-icon`} aria-hidden="true">
                   <use xlinkHref="#md-editor-icon-code-row" />
                 </svg>
+
+                {props.showToolbarName && (
+                  <div className={`${prefix}-toolbar-item-name`}>
+                    {ult.toolbarTips?.codeRow}
+                  </div>
+                )}
               </div>
             );
           }
@@ -593,6 +674,12 @@ const Toolbar = (props: ToolbarProps) => {
                 <svg className={`${prefix}-icon`} aria-hidden="true">
                   <use xlinkHref="#md-editor-icon-code" />
                 </svg>
+
+                {props.showToolbarName && (
+                  <div className={`${prefix}-toolbar-item-name`}>
+                    {ult.toolbarTips?.code}
+                  </div>
+                )}
               </div>
             );
           }
@@ -613,6 +700,12 @@ const Toolbar = (props: ToolbarProps) => {
                 <svg className={`${prefix}-icon`} aria-hidden="true">
                   <use xlinkHref="#md-editor-icon-link" />
                 </svg>
+
+                {props.showToolbarName && (
+                  <div className={`${prefix}-toolbar-item-name`}>
+                    {ult.toolbarTips?.link}
+                  </div>
+                )}
               </div>
             );
           }
@@ -635,6 +728,12 @@ const Toolbar = (props: ToolbarProps) => {
                 <svg className={`${prefix}-icon`} aria-hidden="true">
                   <use xlinkHref="#md-editor-icon-image" />
                 </svg>
+
+                {props.showToolbarName && (
+                  <div className={`${prefix}-toolbar-item-name`}>
+                    {ult.toolbarTips?.image}
+                  </div>
+                )}
               </div>
             ) : (
               ImageDropdown
@@ -656,6 +755,12 @@ const Toolbar = (props: ToolbarProps) => {
                 <svg className={`${prefix}-icon`} aria-hidden="true">
                   <use xlinkHref="#md-editor-icon-revoke" />
                 </svg>
+
+                {props.showToolbarName && (
+                  <div className={`${prefix}-toolbar-item-name`}>
+                    {ult.toolbarTips?.revoke}
+                  </div>
+                )}
               </div>
             );
           }
@@ -672,6 +777,12 @@ const Toolbar = (props: ToolbarProps) => {
                 <svg className={`${prefix}-icon`} aria-hidden="true">
                   <use xlinkHref="#md-editor-icon-next" />
                 </svg>
+
+                {props.showToolbarName && (
+                  <div className={`${prefix}-toolbar-item-name`}>
+                    {ult.toolbarTips?.next}
+                  </div>
+                )}
               </div>
             );
           }
@@ -688,6 +799,12 @@ const Toolbar = (props: ToolbarProps) => {
                 <svg className={`${prefix}-icon`} aria-hidden="true">
                   <use xlinkHref="#md-editor-icon-baocun" />
                 </svg>
+
+                {props.showToolbarName && (
+                  <div className={`${prefix}-toolbar-item-name`}>
+                    {ult.toolbarTips?.save}
+                  </div>
+                )}
               </div>
             );
           }
@@ -706,6 +823,12 @@ const Toolbar = (props: ToolbarProps) => {
                 <svg className={`${prefix}-icon`} aria-hidden="true">
                   <use xlinkHref="#md-editor-icon-prettier" />
                 </svg>
+
+                {props.showToolbarName && (
+                  <div className={`${prefix}-toolbar-item-name`}>
+                    {ult.toolbarTips?.prettier}
+                  </div>
+                )}
               </div>
             );
           }
@@ -727,6 +850,12 @@ const Toolbar = (props: ToolbarProps) => {
                       }`}
                     />
                   </svg>
+
+                  {props.showToolbarName && (
+                    <div className={`${prefix}-toolbar-item-name`}>
+                      {ult.toolbarTips?.pageFullscreen}
+                    </div>
+                  )}
                 </div>
               )
             );
@@ -748,6 +877,12 @@ const Toolbar = (props: ToolbarProps) => {
                     }`}
                   />
                 </svg>
+
+                {props.showToolbarName && (
+                  <div className={`${prefix}-toolbar-item-name`}>
+                    {ult.toolbarTips?.fullscreen}
+                  </div>
+                )}
               </div>
             );
           }
@@ -764,6 +899,12 @@ const Toolbar = (props: ToolbarProps) => {
                 <svg className={`${prefix}-icon`} aria-hidden="true">
                   <use xlinkHref="#md-editor-icon-catalog" />
                 </svg>
+
+                {props.showToolbarName && (
+                  <div className={`${prefix}-toolbar-item-name`}>
+                    {ult.toolbarTips?.catalog}
+                  </div>
+                )}
               </div>
             );
           }
@@ -780,6 +921,12 @@ const Toolbar = (props: ToolbarProps) => {
                 <svg className={`${prefix}-icon`} aria-hidden="true">
                   <use xlinkHref="#md-editor-icon-preview" />
                 </svg>
+
+                {props.showToolbarName && (
+                  <div className={`${prefix}-toolbar-item-name`}>
+                    {ult.toolbarTips?.preview}
+                  </div>
+                )}
               </div>
             );
           }
@@ -796,6 +943,12 @@ const Toolbar = (props: ToolbarProps) => {
                 <svg className={`${prefix}-icon`} aria-hidden="true">
                   <use xlinkHref="#md-editor-icon-coding" />
                 </svg>
+
+                {props.showToolbarName && (
+                  <div className={`${prefix}-toolbar-item-name`}>
+                    {ult.toolbarTips?.htmlPreview}
+                  </div>
+                )}
               </div>
             );
           }
@@ -810,6 +963,12 @@ const Toolbar = (props: ToolbarProps) => {
                 <svg className={`${prefix}-icon`} aria-hidden="true">
                   <use xlinkHref="#md-editor-icon-github" />
                 </svg>
+
+                {props.showToolbarName && (
+                  <div className={`${prefix}-toolbar-item-name`}>
+                    {ult.toolbarTips?.github}
+                  </div>
+                )}
               </div>
             );
           }
@@ -840,32 +999,10 @@ const Toolbar = (props: ToolbarProps) => {
     },
     [
       props.defToolbars,
+      props.showToolbarName,
       props.noUploadImg,
       props.noPrettier,
-      ult.toolbarTips?.bold,
-      ult.toolbarTips?.underline,
-      ult.toolbarTips?.italic,
-      ult.toolbarTips?.strikeThrough,
-      ult.toolbarTips?.sub,
-      ult.toolbarTips?.sup,
-      ult.toolbarTips?.quote,
-      ult.toolbarTips?.unorderedList,
-      ult.toolbarTips?.orderedList,
-      ult.toolbarTips?.task,
-      ult.toolbarTips?.codeRow,
-      ult.toolbarTips?.code,
-      ult.toolbarTips?.link,
-      ult.toolbarTips?.image,
-      ult.toolbarTips?.revoke,
-      ult.toolbarTips?.next,
-      ult.toolbarTips?.save,
-      ult.toolbarTips?.prettier,
-      ult.toolbarTips?.pageFullscreen,
-      ult.toolbarTips?.fullscreen,
-      ult.toolbarTips?.catalog,
-      ult.toolbarTips?.preview,
-      ult.toolbarTips?.htmlPreview,
-      ult.toolbarTips?.github,
+      ult.toolbarTips,
       emitHandler,
       TitleDropdown,
       setModalData,
@@ -902,11 +1039,28 @@ const Toolbar = (props: ToolbarProps) => {
     ];
   }, [toolbars, toolbarsExclude, barRender]);
 
+  useEffect(() => {
+    let rl = () => {};
+
+    if (wrapperRef.current) {
+      rl = draggingScroll(wrapperRef.current);
+    }
+
+    return () => {
+      rl();
+    };
+  }, [toolbars]);
+
   return (
     <>
       {toolbars.length > 0 && (
-        <div className={`${prefix}-toolbar-wrapper`} id={wrapperId}>
-          <div className={`${prefix}-toolbar`}>
+        <div className={`${prefix}-toolbar-wrapper`} ref={wrapperRef} id={wrapperId}>
+          <div
+            className={classnames([
+              `${prefix}-toolbar`,
+              props.showToolbarName! && `${prefix}-stn`
+            ])}
+          >
             <div className={`${prefix}-toolbar-left`}>{splitedbar[0]}</div>
             <div className={`${prefix}-toolbar-right`}>{splitedbar[1]}</div>
           </div>

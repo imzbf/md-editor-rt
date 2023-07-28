@@ -153,6 +153,7 @@ const Editor = forwardRef((props: EditorProps, ref: ForwardedRef<unknown>) => {
           tableShape={tableShape}
           defToolbars={defToolbars}
           noUploadImg={staticProps.noUploadImg}
+          showToolbarName={props.showToolbarName}
         />
         <Content
           value={modelValue}
