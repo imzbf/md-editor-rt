@@ -15,7 +15,7 @@ const useZoom = (props: ContentPreviewProps, html: string) => {
 
   useEffect(() => {
     const zoomHander = () => {
-      const imgs = document.querySelectorAll(`#${editorId}-preview img`);
+      const imgs = document.querySelectorAll(`#${editorId}-preview img.md-zoom`);
 
       const zoom = mediumZoom(imgs, {
         background: '#00000073'
