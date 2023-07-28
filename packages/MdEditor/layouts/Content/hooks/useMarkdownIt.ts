@@ -124,7 +124,7 @@ const useMarkdownIt = (props: ContentPreviewProps, previewOnly: boolean) => {
     }
 
     markdownItPlugins!(plugins).forEach((item) => {
-      md.use(item.plugin, item.options);
+      md_.use(item.plugin, item.options);
     });
 
     md_.set({
