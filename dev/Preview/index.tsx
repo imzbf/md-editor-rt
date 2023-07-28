@@ -50,6 +50,10 @@ config({
   // });
   // mdit.use(TargetBlankExtension);
   // },
+  // markdownItPlugins(plugins) {
+  //   console.log(plugins);
+  //   return [];
+  // },
   editorExtensions: {
     //     prettier: {
     //       prettierInstance: prettier,

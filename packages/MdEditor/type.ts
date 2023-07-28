@@ -1,4 +1,5 @@
 import { CSSProperties, ReactElement } from 'react';
+import markdownit from 'markdown-it/lib';
 import { CompletionSource } from '@codemirror/autocomplete';
 import { Extension } from '@codemirror/state';
 import { KeyBinding } from '@codemirror/view';
@@ -467,6 +468,12 @@ export interface MermaidTemplate {
   journey?: string;
 }
 
+export interface MarkdownItConfigPlugin {
+  type: string;
+  plugin: markdownit.PluginWithParams;
+  options: any;
+}
+
 export interface ConfigOption {
   /**
    * 编辑器内部依赖库
@@ -537,6 +544,15 @@ export interface ConfigOption {
    * 自定义markdown-it核心库扩展、属性等
    */
   markdownItConfig?: (md: markdownit) => void;
+  /**
+   * 挑选编辑器已预设的markdownIt的扩展
+   *
+   * @param plugins markdownIt的扩展，带编辑器已设定的属性
+   * @returns plugins
+   */
+  markdownItPlugins?: (
+    plugins: Array<MarkdownItConfigPlugin>
+  ) => Array<MarkdownItConfigPlugin>;
 }
 
 /**
