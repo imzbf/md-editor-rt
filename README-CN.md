@@ -18,7 +18,7 @@ react 版本的 Markdown 编辑器，[md-editor-v3](https://imzbf.github.io/md-e
 - 多语言，支持自行扩展语言；
 - 粘贴上传图片，图片裁剪上传；
 - 仅预览模式（不显示编辑器，只显示 md 预览内容，无额外监听）；
-- 预览主题，支持`defalut`、`vuepress`、`github` 样式（不完全相同）。
+- 预览主题，支持`default`、`vuepress`、`github` 样式（不完全相同）。
 
 > 更多功能待后续更新，如果你有新的想法或者使用发现有问题，请留言告诉我~
 

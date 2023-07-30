@@ -21,7 +21,7 @@ Markdown editor for `react`, developed by `jsx` and `typescript`.
 - Multi-language, build-in Chinese and English(default: Chinese).
 - Upload picture, paste or clip the picture and upload it.
 - Render article directly(no editor，no event listener, only preview content).
-- Preview themes, support `defalut`、`vuepress`、`github` styles(not identical).
+- Preview themes, support `default`、`vuepress`、`github` styles(not identical).
 
 > More features are developing, if you have some ideas or find issues, please tell it to me~
 

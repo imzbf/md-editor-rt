@@ -465,7 +465,7 @@ Except for the same as `MdPreview`:
 
 ### 🦿 defFooters
 
-- **type**: `Array<string \| ReactElement>`
+- **type**: `Array<ReactNode>`
 - **default**: `[]`
 
   Custom footer.
@@ -1183,14 +1183,11 @@ On-demand import, eg: `import { DropdownToolbar } from 'md-editor-rt'`.
 - **props**
 
   - `title`: `string`, not necessary, title of toolbar.
+  - `trigger`: `ReactNode`, necessary, it is usually an icon, which is displayed on the toolbar.
 
 - **events**
 
   - `onClick`: `(e: MouseEvent) => void`, necessary.
-
-- **slots**
-
-  - `trigger`: `string | ReactElement`, necessary, it is usually an icon, which is displayed on the toolbar.
 
 usage:
 
@@ -1254,15 +1251,12 @@ export default () => {
 
   - `title`: `string`, not necessary, title of toolbar.
   - `visible`: `boolean`, necessary.
+  - `trigger`: `ReactNode`, necessary, it is usually an icon, which is displayed on the toolbar.
+  - `overlay`: `ReactNode`, necessary, content of dropdown box.
 
 - **events**
 
   - `onChange`: `(visible: boolean) => void`, necessary.
-
-- **slots**
-
-  - `trigger`: `string | ReactElement`, necessary, it is usually an icon, which is displayed on the toolbar.
-  - `overlay`: `string | ReactElement`, necessary, content of dropdown box.
 
 usage:
 
@@ -1332,23 +1326,20 @@ export default () => {
 - **props**
 
   - `title`: `string`, not necessary, title of toolbar.
-  - `modalTitle`: `string`, not necessary, title of the Modal.
+  - `modalTitle`: `ReactNode`, not necessary, title of the Modal.
   - `visible`: `boolean`, necessary, visibility of Modal.
   - `width`: `string`, not necessary, width of Modal, default `auto`.
   - `height`: `string`, same as `width`.
   - `showAdjust`: `boolean`, not necessary, visibility of fullscreen button.
   - `isFullscreen`: `boolean`, necessary when `showAdjust = true`, status of fullscreen.
+  - `trigger`: `ReactNode`, necessary, it is usually an icon, which is displayed on the toolbar.
+  - `children`: `ReactNode`, necessary, content of Modal.
 
 - **events**
 
   - `onClick`: `() => void`, necessary.
   - `onClose`: `() => void`, necessary, close event.
   - `onAdjust`: `(val: boolean) => void`, fullscreen button click event.
-
-- **slots**
-
-  - `trigger`: `string | ReactElement`, necessary, it is usually an icon, which is displayed on the toolbar.
-  - `overlay`: `string | ReactElement`, necessary, content of Modal.
 
 ```jsx
 import { useCallback, useRef, useState } from 'react';
@@ -1437,8 +1428,8 @@ export default () => {
   - `mdHeadingId`: `mdHeadingId`, not necessary, same as editor.
   - `scrollElement`: `string | HTMLElement`, not necessary, it is an element selector when its type is string. When using `MdPreview`, it is usually set to `document.documentElement`.
   - `theme`: 'light' | 'dark', not necessary, provide it when you want to change theme online, it is the same as Editor `theme`.
-  - `offsetTop`: `number`, not necessary, highlight current item of catalogs when title is `offsetTop` pixels from the top, defalut 20.
-  - `scrollElementOffsetTop`: `number`, not necessary, offsetTop of the scroll container，defalut 0.
+  - `offsetTop`: `number`, not necessary, highlight current item of catalogs when title is `offsetTop` pixels from the top, default 20.
+  - `scrollElementOffsetTop`: `number`, not necessary, offsetTop of the scroll container，default 0.
 
 - **events**
 

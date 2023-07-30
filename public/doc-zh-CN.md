@@ -410,7 +410,7 @@
 
 ### 💪 defToolbars
 
-- **类型**：`Array<ReactElement>`
+- **类型**：`Array<ReactNode>`
 - **默认值**：`[]`
 
   自定义工具栏插槽，通过使用内置的`NormalToolbar`普通点击触发事件组件，`DropdownToolbar`下拉点击触发事件组件，和`ModalToolbar`弹窗组件进行扩展。将`defToolbars`插槽中的组件下标穿插在`toolbars`实现展示（这并不规范）
@@ -505,7 +505,7 @@
 
 ### 🦿 defFooters
 
-- **类型**：`Array<string \| ReactElement>`
+- **类型**：`Array<ReactNode>`
 - **默认值**：`[]`
 
   自定义扩展页脚。
@@ -1231,14 +1231,11 @@ export interface EditorExtensions {
 - **props**
 
   - `title`: `string`，非必须，作为工具栏上的 hover 提示。
+  - `trigger`: `ReactNode`，必须，通常是个图标，用来展示在工具栏上。
 
 - **events**
 
   - `onClick`: `(e: MouseEvent) => void`，必须，点击事件。
-
-- **slots**
-
-  - `trigger`: `string | ReactElement`，必须，通常是个图标，用来展示在工具栏上。
 
 ```jsx
 import { useCallback, useRef, useState } from 'react';
@@ -1307,15 +1304,12 @@ export default () => {
 
   - `title`: `string`，非必须，作为工具栏上的 hover 提示。
   - `visible`: `boolean`，必须，下拉状态。
+  - `trigger`: `ReactNode`，必须，通常是个图标，用来展示在工具栏上。
+  - `overlay`: `ReactNode`，必须，下拉框中的内容。
 
 - **events**
 
   - `onChange`: `(visible: boolean) => void`，必须，状态变化事件。
-
-- **slots**
-
-  - `trigger`: `string | ReactElement`，必须，通常是个图标，用来展示在工具栏上。
-  - `overlay`: `string | ReactElement`，必须，下拉框中的内容。
 
 ```jsx
 import { useCallback, useRef, useState } from 'react';
@@ -1383,23 +1377,20 @@ export default () => {
 - **props**
 
   - `title`: `string`，非必须，作为工具栏上的 hover 提示。
-  - `modalTitle`: `string`，非必须，弹窗的标题。
+  - `modalTitle`: `ReactNode`，非必须，弹窗的标题。
   - `visible`: `boolean`，必须，弹窗显示状态。
   - `width`: `string`，非必须，弹窗宽度，默认`auto`。
   - `height`：`string`，同`width`。
   - `showAdjust`: `boolean`，非必须，是否显示弹窗全屏按钮。
   - `isFullscreen`: `boolean`，显示全屏按钮时必须，弹窗全屏状态。
+  - `trigger`: `ReactNode`，必须，通常是个图标，用来展示在工具栏上。
+  - `children`: `ReactNode`，必须，弹窗中的内容。
 
 - **events**
 
   - `onClick`: `() => void`，必须，工具栏点击事件。
   - `onClose`：`() => void`，必须，弹窗点击关闭事件。
   - `onAdjust`：`(val: boolean) => void`，弹窗全屏按钮点击事件。
-
-- **slots**
-
-  - `trigger`: `string | ReactElement`，必须，通常是个图标，用来展示在工具栏上。
-  - `overlay`: `string | ReactElement`，必须，下拉框中的内容。
 
 ```jsx
 import { useCallback, useRef, useState } from 'react';
