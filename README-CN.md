@@ -647,14 +647,11 @@ import { NormalToolbar } from 'md-editor-rt';
 - **props**
 
   - `title`: `string`，非必须，作为工具栏上的 hover 提示。
+  - `trigger`: `ReactNode`，必须，通常是个图标，用来展示在工具栏上。
 
 - **events**
 
   - `onClick`: `(e: MouseEvent) => void`，必须，点击事件。
-
-- **slots**
-
-  - `trigger`: `string | JSX.Element`，必须，通常是个图标，用来展示在工具栏上。
 
 ### 🐼 下拉扩展工具栏
 
@@ -664,15 +661,12 @@ import { NormalToolbar } from 'md-editor-rt';
 
   - `title`: `string`，非必须，作为工具栏上的 hover 提示。
   - `visible`: `boolean`，必须，下拉状态。
+  - `trigger`: `ReactNode`，必须，通常是个图标，用来展示在工具栏上。
+  - `overlay`: `ReactNode`，必须，下拉框中的内容。
 
 - **events**
 
   - `onChange`: `(visible: boolean) => void`，必须，状态变化事件。
-
-- **slots**
-
-  - `trigger`: `string | JSX.Element`，必须，通常是个图标，用来展示在工具栏上。
-  - `overlay`: `string | JSX.Element`，必须，下拉框中的内容。
 
 ### 🦉 弹窗扩展工具栏
 
@@ -681,23 +675,20 @@ import { NormalToolbar } from 'md-editor-rt';
 - **props**
 
   - `title`: `string`，非必须，作为工具栏上的 hover 提示。
-  - `modalTitle`: `string`，非必须，弹窗的标题。
+  - `modalTitle`: `ReactNode`，非必须，弹窗的标题。
   - `visible`: `boolean`，必须，弹窗显示状态。
   - `width`: `string`，非必须，弹窗宽度，默认`auto`。
   - `height`: `string`，同`width`。
   - `showAdjust`: `boolean`，非必须，是否显示弹窗全屏按钮。
   - `isFullscreen`: `boolean`，显示全屏按钮时必须，弹窗全屏状态。
+  - `trigger`: `ReactNode`，必须，通常是个图标，用来展示在工具栏上。
+  - `children`: `ReactNode`，必须，弹窗中的内容。
 
 - **events**
 
   - `onClick`: `() => void`，必须，工具栏点击事件。
   - `onClose`: `() => void`，必须，弹窗点击关闭事件。
   - `onAdjust`: `(val: boolean) => void`，弹窗全屏按钮点击事件。
-
-- **slots**
-
-  - `trigger`: `string | JSX.Element`，必须，通常是个图标，用来展示在工具栏上。
-  - `overlay`: `string | JSX.Element`，必须，下拉框中的内容。
 
 ### 🐻 目录导航
 
@@ -716,6 +707,27 @@ import { NormalToolbar } from 'md-editor-rt';
 - **events**
 
   - `onClick`: `(e: MouseEvent, t: TocItem) => void`，非必须，导航点击事件。
+
+### 🛸 弹窗组件
+
+`MdModal`
+
+- **props**
+
+  - `title`: `ReactNode`，非必须，弹窗标题栏。
+  - `visible`: `boolean`，必须，弹窗显示状态。
+  - `width`: `string`，非必须，弹窗宽度，默认`auto`。
+  - `height`: `string`，同`width`。
+  - `showAdjust`: `boolean`，非必须，是否显示弹窗全屏按钮。
+  - `isFullscreen`: `boolean`，显示全屏按钮时必须，弹窗全屏状态。
+  - `children`: `ReactNode`，非必须，弹窗显示的内容。
+  - `className`: `string`，非必须，类名。
+  - `style`: `CSSProperties`，非必须，样式。
+
+- **events**
+
+  - `onClose`: `() => void`，必须，弹窗点击关闭事件。
+  - `onAdjust`: `(val: boolean) => void`，弹窗全屏按钮点击事件。
 
 ## 🗂 部分示例
 
