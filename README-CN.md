@@ -18,7 +18,7 @@ react 版本的 Markdown 编辑器，[md-editor-v3](https://imzbf.github.io/md-e
 - 多语言，支持自行扩展语言。
 - 粘贴上传图片，图片裁剪上传。
 - 仅预览模式（不显示编辑器，只显示 md 预览内容，无额外监听）。
-- 预览主题，内置`defalut`、`vuepress`、`github` 、`cyanosis`、`mk-cute`、`smart-blue` 6 种预览主题（不完全相同），支持自定义主题（参考文档 demo 页示例）。
+- 预览主题，内置`default`、`vuepress`、`github` 、`cyanosis`、`mk-cute`、`smart-blue` 6 种预览主题（不完全相同），支持自定义主题（参考文档 demo 页示例）。
 - `mermaid`绘图（>=1.3.0），`katex`数学公式（>=1.4.0）。
 - 自定义工具栏顺序或显示，自定义扩展工具栏（支持点击类型、下拉菜单类型及弹窗类型）等。
 - 按需引用(>=4.0.0)。

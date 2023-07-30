@@ -21,7 +21,7 @@ Markdown editor for `react`, developed in `jsx` and `typescript`.
 - Multi-language, build-in Chinese and English(default: Chinese).
 - Upload picture, paste or clip the picture and upload it.
 - Render article directly(no editor, no event listener, only preview content).
-- Theme of preview, `defalut`, `vuepress`, `github`, `cyanosis`, `mk-cute`, `smart-blue` styles(not identical). It can be customized also(Refer to example page).
+- Theme of preview, `default`, `vuepress`, `github`, `cyanosis`, `mk-cute`, `smart-blue` styles(not identical). It can be customized also(Refer to example page).
 - `mermaid`(>=1.3.0), `katex` mathematical formula（>=1.4.0）.
 - Customize the toolbar as you like.
 - On-demand Import(>=4.0.0).
@@ -688,8 +688,8 @@ For more examples, refer to [document](https://imzbf.github.io/md-editor-rt).
   - `mdHeadingId`: `MdHeadingId`, not necessary, same as editor.
   - `scrollElement`: `string | HTMLElement`, not necessary, it is an element selector when its type is string. When `previewOnly` eq `true`, it is usually set to `document.documentElement`.
   - `theme`: `'light' | 'dark'`, not necessary, provide it when you want to change theme online, it is the same as Editor `theme`.
-  - `offsetTop`: `number`, not necessary, highlight current item of catalogs when title is `offsetTop` pixels from the top, defalut 20.
-  - `scrollElementOffsetTop`: `number`, not necessary, offsetTop of the scroll container，defalut 0.
+  - `offsetTop`: `number`, not necessary, highlight current item of catalogs when title is `offsetTop` pixels from the top, default 20.
+  - `scrollElementOffsetTop`: `number`, not necessary, offsetTop of the scroll container，default 0.
 
 - **events**
 
