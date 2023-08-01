@@ -1226,6 +1226,8 @@ export interface EditorExtensions {
 
 按需引用编辑器的扩展组件，例如：`import { DropdownToolbar } from 'md-editor-rt'`。
 
+在`v4.3.0`以后, `insert`方法会由编辑器自动向组件的组件注入。
+
 ### 🐣 NormalToolbar
 
 - **props**
@@ -1238,63 +1240,63 @@ export interface EditorExtensions {
   - `onClick`: `(e: MouseEvent) => void`，必须，点击事件。
 
 ```jsx
-import { useCallback, useRef, useState } from 'react';
-import { MdEditor, DropdownToolbar, ExposeParam } from 'md-editor-rt';
+import { useState } from 'react';
+import { MdEditor, NormalToolbar, InsertContentGenerator } from 'md-editor-rt';
 import 'md-editor-rt/lib/style.css';
 
-export default () => {
-  const [visible, setVisible] = useState(false);
-  const [value, setValue] = useState('');
-  const editorRef = useRef<ExposeParam>();
+interface MyToolbarProps {
+  insert?: (generator: InsertContentGenerator) => void;
+}
 
-  const insert = useCallback(() => {
-    editorRef.current?.insert((selectedText) => {
-      /**
-       * @return targetValue    待插入内容
-       * @return select         插入后是否自动选中内容
-       * @return deviationStart 插入后选中内容鼠标开始位置
-       * @return deviationEnd   插入后选中内容鼠标结束位置
-       */
-      return {
-        targetValue: `==${selectedText}==`,
-        select: true,
-        deviationStart: 0,
-        deviationEnd: 0
-      };
-    });
-  }, []);
+/**
+ * `insert`方法会由编辑器自动向组件的组件注入。
+ */
+const MyToolbar = ({ insert = () => {} }: MyToolbarProps) => {
+  return (
+    <NormalToolbar
+      title="mark"
+      trigger={
+        <svg className="md-editor-icon" aria-hidden="true">
+          <use xlinkHref="#icon-mark"></use>
+        </svg>
+      }
+      onClick={() => {
+        insert((selectedText) => {
+          /**
+           * @return targetValue    待插入内容
+           * @return select         插入后是否自动选中内容
+           * @return deviationStart 插入后选中内容鼠标开始位置
+           * @return deviationEnd   插入后选中内容鼠标结束位置
+           */
+          return {
+            targetValue: `==${selectedText}==`,
+            select: true,
+            deviationStart: 0,
+            deviationEnd: 0
+          };
+        });
+      }}
+      key="mark-toolbar"
+    />
+  );
+};
+
+export default () => {
+  const [value, setValue] = useState('');
 
   return (
     <MdEditor
-      ref={editorRef}
       modelValue={value}
       editorId="md-prev"
       toolbars={['bold', 0, '=', 'github']}
-      defToolbars={[
-        <DropdownToolbar
-          visible={visible}
-          onChange={setVisible}
-          overlay={
-            <ul>
-              <li onClick={insert}>option 1</li>
-              <li>option 2</li>
-            </ul>
-          }
-          trigger={
-            <svg className="md-editor-icon" aria-hidden="true">
-              <use xlinkHref="#icon-emoji"></use>
-            </svg>
-          }
-          key="emoji-toolbar"
-        />
-      ]}
+      defToolbars={[<MyToolbar />]}
       onChange={setValue}
     />
   );
 };
 ```
 
-[获取使用源码](https://github.com/imzbf/md-editor-rt/blob/docs/src/components/MarkExtension/index.tsx)
+[标记组件的源码](https://github.com/imzbf/md-editor-rt/blob/docs/src/components/MarkExtension/index.tsx)
 
 ---
 
@@ -1312,63 +1314,75 @@ export default () => {
   - `onChange`: `(visible: boolean) => void`，必须，状态变化事件。
 
 ```jsx
-import { useCallback, useRef, useState } from 'react';
-import { MdEditor, DropdownToolbar, ExposeParam } from 'md-editor-rt';
+import { useState } from 'react';
+import { MdEditor, DropdownToolbar, InsertContentGenerator } from 'md-editor-rt';
 import 'md-editor-rt/lib/style.css';
 
-export default () => {
-  const [visible, setVisible] = useState(false);
-  const [value, setValue] = useState('');
-  const editorRef = useRef<ExposeParam>();
+interface MyToolbarProps {
+  insert?: (generator: InsertContentGenerator) => void;
+}
 
-  const insert = useCallback(() => {
-    editorRef.current?.insert((selectedText) => {
-      /**
-       * @return targetValue    待插入内容
-       * @return select         插入后是否自动选中内容
-       * @return deviationStart 插入后选中内容鼠标开始位置
-       * @return deviationEnd   插入后选中内容鼠标结束位置
-       */
-      return {
-        targetValue: `==${selectedText}==`,
-        select: true,
-        deviationStart: 0,
-        deviationEnd: 0
-      };
-    });
-  }, []);
+/**
+ * `insert`方法会由编辑器自动向组件的组件注入。
+ */
+const MyToolbar = ({ insert = () => {} }: MyToolbarProps) => {
+  const [visible, setVisible] = useState(false);
+
+  return (
+    <DropdownToolbar
+      visible={visible}
+      onChange={setVisible}
+      overlay={
+        <ul>
+          <li
+            onClick={() => {
+              insert((selectedText) => {
+                /**
+                 * @return targetValue    待插入内容
+                 * @return select         插入后是否自动选中内容
+                 * @return deviationStart 插入后选中内容鼠标开始位置
+                 * @return deviationEnd   插入后选中内容鼠标结束位置
+                 */
+                return {
+                  targetValue: `==${selectedText}==`,
+                  select: true,
+                  deviationStart: 0,
+                  deviationEnd: 0
+                };
+              });
+            }}
+          >
+            option 1
+          </li>
+          <li>option 2</li>
+        </ul>
+      }
+      trigger={
+        <svg className="md-editor-icon" aria-hidden="true">
+          <use xlinkHref="#icon-emoji"></use>
+        </svg>
+      }
+      key="emoji-toolbar"
+    />
+  );
+};
+
+export default () => {
+  const [value, setValue] = useState('');
 
   return (
     <MdEditor
-      ref={editorRef}
       modelValue={value}
       editorId="md-prev"
       toolbars={['bold', 0, '=', 'github']}
-      defToolbars={[
-        <DropdownToolbar
-          visible={visible}
-          onChange={setVisible}
-          overlay={
-            <ul>
-              <li onClick={insert}>选项 1</li>
-              <li>选项 2</li>
-            </ul>
-          }
-          trigger={
-            <svg className="md-editor-icon" aria-hidden="true">
-              <use xlinkHref="#icon-emoji"></use>
-            </svg>
-          }
-          key="emoji-toolbar"
-        />
-      ]}
+      defToolbars={[<MyToolbar />]}
       onChange={setValue}
     />
   );
 };
 ```
 
-[获取使用源码](https://github.com/imzbf/md-editor-rt/blob/docs/src/components/EmojiExtension/index.tsx)
+[Emoji 组件的源码](https://github.com/imzbf/md-editor-rt/blob/docs/src/components/EmojiExtension/index.tsx)
 
 ---
 
@@ -1393,80 +1407,93 @@ export default () => {
   - `onAdjust`：`(val: boolean) => void`，弹窗全屏按钮点击事件。
 
 ```jsx
-import { useCallback, useRef, useState } from 'react';
-import { MdEditor, ModalToolbar, ExposeParam } from 'md-editor-rt';
+import { useState } from 'react';
+import { MdEditor, ModalToolbar, InsertContentGenerator } from 'md-editor-rt';
 import 'md-editor-rt/lib/style.css';
 
-export default () => {
+interface MyToolbarProps {
+  insert?: (generator: InsertContentGenerator) => void;
+}
+
+/**
+ * `insert`方法会由编辑器自动向组件的组件注入。
+ */
+const MyToolbar = ({ insert = () => {} }: MyToolbarProps) => {
   const [visible, setVisible] = useState(false);
   const [isFullscreen, setIsFullscreen] = useState(false);
-  const [value, setValue] = useState('');
-  const editorRef = useRef<ExposeParam>();
 
-  const insert = useCallback(() => {
-    editorRef.current?.insert((selectedText) => {
-      /**
-       * @return targetValue    待插入内容
-       * @return select         插入后是否自动选中内容
-       * @return deviationStart 插入后选中内容鼠标开始位置
-       * @return deviationEnd   插入后选中内容鼠标结束位置
-       */
-      return {
-        targetValue: `==${selectedText}==`,
-        select: true,
-        deviationStart: 0,
-        deviationEnd: 0
-      };
-    });
-  }, []);
+  return (
+    <ModalToolbar
+      visible={visible}
+      isFullscreen={isFullscreen}
+      showAdjust
+      title="hover-title"
+      modalTitle="modalTitle"
+      width="870px"
+      height="600px"
+      onClick={() => {
+        setVisible(true);
+      }}
+      onClose={() => {
+        setVisible(false);
+      }}
+      onAdjust={() => {
+        setIsFullscreen((i) => !i);
+      }}
+      trigger={
+        <svg className="md-editor-icon" aria-hidden="true">
+          <use xlinkHref="#icon-read"></use>
+        </svg>
+      }
+    >
+      <div
+        style={{
+          height: '100%',
+          padding: '20px',
+          overflow: 'auto'
+        }}
+      >
+        <button
+          onClick={() => {
+            insert((selectedText) => {
+              /**
+               * @return targetValue    待插入内容
+               * @return select         插入后是否自动选中内容
+               * @return deviationStart 插入后选中内容鼠标开始位置
+               * @return deviationEnd   插入后选中内容鼠标结束位置
+               */
+              return {
+                targetValue: `==${selectedText}==`,
+                select: true,
+                deviationStart: 0,
+                deviationEnd: 0
+              };
+            });
+          }}
+        >
+          click me
+        </button>
+      </div>
+    </ModalToolbar>
+  );
+};
+
+export default () => {
+  const [value, setValue] = useState('');
+
   return (
     <MdEditor
-      ref={editorRef}
       modelValue={value}
       editorId="md-prev"
       toolbars={['bold', 0, '=', 'github']}
-      defToolbars={[
-        <ModalToolbar
-          visible={visible}
-          isFullscreen={isFullscreen}
-          showAdjust
-          title="hover-title"
-          modalTitle="modalTitle"
-          width="870px"
-          height="600px"
-          onClick={() => {
-            setVisible(true);
-          }}
-          onClose={() => {
-            setVisible(false);
-          }}
-          onAdjust={() => {
-            setIsFullscreen((i) => !i);
-          }}
-          trigger={
-            <svg className="md-editor-icon" aria-hidden="true">
-              <use xlinkHref="#icon-read"></use>
-            </svg>
-          }
-        >
-          <div
-            style={{
-              height: '100%',
-              padding: '20px',
-              overflow: 'auto'
-            }}
-          >
-            <button onClick={insert}>点击</button>
-          </div>
-        </ModalToolbar>
-      ]}
+      defToolbars={[<MyToolbar />]}
       onChange={setValue}
     />
   );
 };
 ```
 
-[获取使用源码](https://github.com/imzbf/md-editor-rt/blob/docs/src/components/ReadExtension/index.tsx)
+[阅读组件的源码](https://github.com/imzbf/md-editor-rt/blob/docs/src/components/ReadExtension/index.tsx)
 
 ---
 
@@ -1509,6 +1536,94 @@ export default () => {
   );
 };
 ```
+
+---
+
+### 🛸 MdModal
+
+编辑器内部的弹窗组件，它通常配合下拉工具栏组件使用。
+
+- **props**
+
+  - `title`: `ReactNode`，非必须，弹窗标题栏。
+  - `visible`: `boolean`，必须，弹窗显示状态。
+  - `width`: `string`，非必须，弹窗宽度，默认`auto`。
+  - `height`: `string`，同`width`。
+  - `showAdjust`: `boolean`，非必须，是否显示弹窗全屏按钮。
+  - `isFullscreen`: `boolean`，显示全屏按钮时必须，弹窗全屏状态。
+  - `children`: `ReactNode`，非必须，弹窗显示的内容。
+  - `className`: `string`，非必须，类名。
+  - `style`: `CSSProperties`，非必须，样式。
+
+- **events**
+
+  - `onClose`: `() => void`，必须，弹窗点击关闭事件。
+  - `onAdjust`: `(val: boolean) => void`，弹窗全屏按钮点击事件。
+
+```jsx
+import { useState } from 'react';
+import { MdEditor, DropdownToolbar, MdModal } from 'md-editor-rt';
+import 'md-editor-rt/lib/style.css';
+
+/**
+ * `insert`方法会由编辑器自动向组件的组件注入。
+ */
+const MyToolbar = () => {
+  const [visible, setVisible] = useState(false);
+  const [mVisible, setMvisible] = useState(false);
+
+  return (
+    <DropdownToolbar
+      visible={visible}
+      onChange={setVisible}
+      overlay={
+        <ul>
+          <li
+            onClick={() => {
+              setMvisible(true);
+            }}
+          >
+            option 1
+          </li>
+          <li>option 2</li>
+        </ul>
+      }
+      trigger={
+        <svg className="md-editor-icon" aria-hidden="true">
+          <use xlinkHref="#icon-emoji"></use>
+        </svg>
+      }
+      key="emoji-toolbar"
+    >
+      <MdModal
+        title={'title'}
+        visible={mVisible}
+        onClose={() => {
+          setMvisible(false);
+        }}
+      >
+        Content, Content
+      </MdModal>
+    </DropdownToolbar>
+  );
+};
+
+export default () => {
+  const [value, setValue] = useState('');
+
+  return (
+    <MdEditor
+      modelValue={value}
+      editorId="md-prev"
+      toolbars={['bold', 0, '=', 'github']}
+      defToolbars={[<MyToolbar />]}
+      onChange={setValue}
+    />
+  );
+};
+```
+
+---
 
 ## ✍️ 编辑此页面
 
