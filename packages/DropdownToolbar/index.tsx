@@ -1,4 +1,4 @@
-import React, { ReactElement, useContext } from 'react';
+import React, { ReactElement, ReactNode, useContext } from 'react';
 import { prefix } from '~/config';
 import Dropdown from '~/components/Dropdown';
 import { EditorContext } from '~/Editor';
@@ -9,6 +9,7 @@ export interface DropdownToolbarProps {
   trigger: string | ReactElement;
   onChange: (visible: boolean) => void;
   overlay: string | ReactElement;
+  children?: ReactNode;
 }
 
 const DropdownToolbar = (props: DropdownToolbarProps) => {
@@ -23,6 +24,7 @@ const DropdownToolbar = (props: DropdownToolbarProps) => {
     >
       <div className={`${prefix}-toolbar-item`} title={props.title || ''}>
         {props.trigger}
+        {props.children}
       </div>
     </Dropdown>
   );
