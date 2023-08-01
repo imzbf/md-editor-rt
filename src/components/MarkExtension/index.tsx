@@ -2,10 +2,10 @@ import React from 'react';
 import { NormalToolbar, InsertContentGenerator } from 'md-editor-rt';
 
 interface MarkExtensionProp {
-  onInsert: (generator: InsertContentGenerator) => void;
+  insert?: (generator: InsertContentGenerator) => void;
 }
 
-const MarkExtension = (props: MarkExtensionProp) => {
+const MarkExtension = ({ insert = () => {} }: MarkExtensionProp) => {
   const markHandler = () => {
     const generator: InsertContentGenerator = (selectedText) => {
       return {
@@ -16,7 +16,7 @@ const MarkExtension = (props: MarkExtensionProp) => {
       };
     };
 
-    props.onInsert(generator);
+    insert(generator);
   };
 
   return (

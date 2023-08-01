@@ -1,5 +1,5 @@
-import React, { useEffect, useMemo, useState, useRef, useCallback } from 'react';
-import { MdEditor, ExposeParam, InsertContentGenerator } from 'md-editor-rt';
+import React, { useEffect, useMemo, useState, useRef } from 'react';
+import { MdEditor, ExposeParam } from 'md-editor-rt';
 import { useSelector } from 'react-redux';
 import axios from '@/utils/request';
 import { StateType } from '@/store';
@@ -54,10 +54,6 @@ export default () => {
     }
   }, [state.lang]);
 
-  const onInsert = useCallback((generator: InsertContentGenerator) => {
-    editorRef.current?.insert(generator);
-  }, []);
-
   useEffect(() => {
     if (isDebug) {
       editorRef.current?.on('catalog', (v) => {
@@ -93,8 +89,8 @@ export default () => {
           editorId={editorId}
           autoDetectCode
           defToolbars={[
-            <MarkExtension onInsert={onInsert} key="mark-extension" />,
-            <EmojiExtension onInsert={onInsert} key="emoji-extension" />,
+            <MarkExtension key="mark-extension" />,
+            <EmojiExtension key="emoji-extension" />,
             <ReadExtension mdText={md} key="read-extension" />
           ]}
           onSave={(v, h) => {

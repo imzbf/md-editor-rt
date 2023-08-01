@@ -4,10 +4,10 @@ import { DropdownToolbar, InsertContentGenerator } from 'md-editor-rt';
 import { emojis } from './data';
 
 interface EmojiExtensionProp {
-  onInsert: (generator: InsertContentGenerator) => void;
+  insert?: (generator: InsertContentGenerator) => void;
 }
 
-const EmojiExtension = (props: EmojiExtensionProp) => {
+const EmojiExtension = ({ insert = () => {} }: EmojiExtensionProp) => {
   const [state, setState] = useState({
     visible: false
   });
@@ -22,7 +22,7 @@ const EmojiExtension = (props: EmojiExtensionProp) => {
       };
     };
 
-    props.onInsert(generator);
+    insert(generator);
   };
 
   const onChange = (visible: boolean) => {
