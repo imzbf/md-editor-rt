@@ -310,12 +310,14 @@ export interface StaticTextDefaultValue {
 除去和`MdPreivew`相同的以外：
 
 | 名称 | 入参 | 说明 |
-| --- | --- | --- |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | onChange | `value: string` | 内容变化事件（当前与`textare`的`oninput`事件绑定，每输入一个单字即会触发） |
 | onSave | `value: string, html: Promise<string>` | 保存事件，快捷键与保存按钮均会触发 |
 | onUploadImg | `files: Array<File>, callback: (urls: Array<string>) => void` | 上传图片事件，弹窗会等待上传结果，务必将上传后的 urls 作为 callback 入参回传 |
-
-| onError | `error: { name: string; message: string }` | 运行错误反馈事件，目前包括`Cropper`、`fullscreen`、`prettier`实例未加载完成操作错误 | | onBlur | `event: FocusEvent<HTMLTextAreaElement, Element>` | 输入框失去焦点时触发事件 | | onFocus | `event: FocusEvent<HTMLTextAreaElement, Element>` | 输入框获得焦点时触发事件 |
+| onError | `error: { name: string; message: string }` | 运行错误反馈事件，目前包括`Cropper`、`fullscreen`、`prettier`实例未加载完成操作错误 |  | onBlur | `event: FocusEvent<HTMLTextAreaElement, Element>` | 输入框失去焦点时触发事件 |  | onFocus | `event: FocusEvent<HTMLTextAreaElement, Element>` | 输入框获得焦点时触发事件 |
+| onBlur | `event: FocusEvent` | 输入框失去焦点时触发事件 |
+| onFocus | `event: FocusEvent` | 输入框获得焦点时触发事件 |
+| onInput | `event: Event` | 输入框键入内容事件 |
 
 ## 🤱🏼 实例暴露
 

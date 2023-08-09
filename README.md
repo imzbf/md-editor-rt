@@ -311,6 +311,7 @@ Except for the same as `MdPreview`:
 | onError | `error: { name: string; message: string }` | Catch run-time error, `Cropper`, `fullscreen` and `prettier` are used when they are not loaded |
 | onBlur | `event: FocusEvent<HTMLTextAreaElement, Element>` | Textarea has lost focus |
 | onFocus | `event: FocusEvent<HTMLTextAreaElement, Element>` | Textarea has received focus |
+| onInput | `event: Event` | Element gets input |
 
 ## 🤱🏼 Expose
 
