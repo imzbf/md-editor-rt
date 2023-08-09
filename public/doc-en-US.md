@@ -727,6 +727,14 @@ export default () => {
 
 ---
 
+### 🔖 onInput
+
+- **type**: `(event: Event) => void`
+
+  Element gets input.
+
+---
+
 ## 🤱🏼 Expose
 
 After 2.5.0, Editor exposes several methods on the instance, used to get or change the internal status of the editor.
