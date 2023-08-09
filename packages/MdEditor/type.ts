@@ -418,6 +418,10 @@ export interface EditorProps extends MdPreviewProps {
    * @default false
    */
   showToolbarName?: boolean;
+  /**
+   * 字符输入事件
+   */
+  onInput?: (e: Event) => void;
 }
 
 export interface ContentType {

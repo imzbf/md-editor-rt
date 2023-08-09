@@ -53,7 +53,8 @@ const useCodeMirror = (props: ContentProps) => {
       EditorView.domEventHandlers({
         paste: pasteHandler,
         blur: props.onBlur,
-        focus: props.onFocus
+        focus: props.onFocus,
+        input: props.onInput
       })
     ];
   });

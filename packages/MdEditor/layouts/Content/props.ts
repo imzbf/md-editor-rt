@@ -33,4 +33,5 @@ export type ContentProps = Readonly<{
   completions?: Array<CompletionSource>;
   catalogVisible: boolean;
   theme?: Themes;
+  onInput?: (e: Event) => void;
 }>;
