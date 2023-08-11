@@ -40,7 +40,7 @@ const useCodeMirror = (props: ContentProps) => {
   // 粘贴上传
   const pasteHandler = usePasteUpload(props);
 
-  const [defaultExtensions] = useState(() => {
+  const defaultExtensions = useMemo(() => {
     return [
       keymap.of([...mdEditorCommands, indentWithTab]),
       minimalSetup,
@@ -54,10 +54,22 @@ const useCodeMirror = (props: ContentProps) => {
         paste: pasteHandler,
         blur: props.onBlur,
         focus: props.onFocus,
-        input: props.onInput
+        input: (e) => {
+          props.onInput && props.onInput(e);
+
+          const { data } = e as any;
+          if (props.maxLength && props.value.length + data.length > props.maxLength) {
+            bus.emit(editorId, 'errorCatcher', {
+              name: 'overlength',
+              message: 'The input text is too long',
+              data: data
+            });
+          }
+        }
       })
     ];
-  });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [mdEditorCommands, pasteHandler, props]);
 
   const extensions = useMemo(() => {
     return configOption.codeMirrorExtensions!(
@@ -69,8 +81,7 @@ const useCodeMirror = (props: ContentProps) => {
       ],
       [...mdEditorCommands]
     );
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [props.completions, theme]);
+  }, [defaultExtensions, mdEditorCommands, props.completions, theme]);
 
   useEffect(() => {
     const view = new EditorView({
@@ -112,7 +123,7 @@ const useCodeMirror = (props: ContentProps) => {
       name: 'replace',
       callback(direct: ToolDirective, params = {}) {
         const { text, options } = directive2flag(direct, codeMirrorUt.current!, params);
-        codeMirrorUt.current?.replaceSelectedText(text, options);
+        codeMirrorUt.current?.replaceSelectedText(text, options, editorId);
       }
     });
 

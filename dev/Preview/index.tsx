@@ -296,6 +296,7 @@ export default ({ theme, previewTheme, codeTheme, lang }: PreviewProp) => {
           editorId="md-editor-preview"
           // showToolbarName
           // onInput={console.log}
+          // onError={console.log}
           toolbars={[
             'bold',
             'underline',
