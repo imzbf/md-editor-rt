@@ -625,6 +625,17 @@
 
 ---
 
+### 📥 showToolbarName
+
+- **类型**：`boolean`
+- **默认值**：`false`
+
+  是否在工具栏下面显示对应的文字名称
+
+![](https://imzbf.github.io/md-editor-rt/imgs/showToolbarName.jpg)
+
+---
+
 ## 🧵 MdPreview 绑定事件
 
 ### 🚁 onHtmlChanged
