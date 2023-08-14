@@ -126,6 +126,7 @@ const MdCatalog = (props: CatalogProps) => {
   }, [scrollElement]);
 
   useEffect(() => {
+    let cacheList: HeadList[] = [];
     const findActiveHeading = throttle((list_: HeadList[]) => {
       if (list_.length === 0) {
         setList([]);
@@ -163,6 +164,7 @@ const MdCatalog = (props: CatalogProps) => {
 
       setActiveItem(activeHead);
       setList(list_);
+      cacheList = list_;
     });
 
     bus.on(editorId, {
@@ -180,7 +182,7 @@ const MdCatalog = (props: CatalogProps) => {
     bus.emit(editorId, 'pushCatalog');
 
     const scrollHandler = () => {
-      findActiveHeading(list);
+      findActiveHeading(cacheList);
     };
 
     scrollContainer?.addEventListener('scroll', scrollHandler);
@@ -189,7 +191,7 @@ const MdCatalog = (props: CatalogProps) => {
       scrollContainer?.removeEventListener('scroll', scrollHandler);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [offsetTop, list, mdHeadingId, getScrollElement]);
+  }, [offsetTop, mdHeadingId, getScrollElement]);
 
   return (
     <div
@@ -203,7 +205,7 @@ const MdCatalog = (props: CatalogProps) => {
           <CatalogLink
             mdHeadingId={mdHeadingId}
             tocItem={item}
-            key={item.text}
+            key={`${item.text}-${item.index}`}
             scrollElement={scrollElement}
             onClick={props.onClick}
             scrollElementOffsetTop={props.scrollElementOffsetTop}

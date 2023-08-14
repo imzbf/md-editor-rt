@@ -61,7 +61,7 @@ const CatalogLink = ({
           tocItem.children.map((item) => (
             <CatalogLink
               mdHeadingId={mdHeadingId}
-              key={item.text}
+              key={`${item.text}-${item.index}`}
               tocItem={item}
               scrollElement={scrollElement}
               onClick={onClick}
