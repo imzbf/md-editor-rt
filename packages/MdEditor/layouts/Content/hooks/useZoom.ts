@@ -2,7 +2,7 @@ import { useContext, useEffect } from 'react';
 import mediumZoom from 'medium-zoom';
 import { EditorContext } from '~/Editor';
 
-import { ContentPreviewProps } from '../ContentPreview';
+import { ContentPreviewProps } from '../props';
 
 /**
  * 放大图片
@@ -14,8 +14,12 @@ const useZoom = (props: ContentPreviewProps, html: string) => {
   const { editorId } = useContext(EditorContext);
 
   useEffect(() => {
+    if (props.noImgZoomIn) {
+      return;
+    }
+
     const zoomHander = () => {
-      const imgs = document.querySelectorAll(`#${editorId}-preview img.md-zoom`);
+      const imgs = document.querySelectorAll(`#${editorId}-preview img`);
 
       const zoom = mediumZoom(imgs, {
         background: '#00000073'

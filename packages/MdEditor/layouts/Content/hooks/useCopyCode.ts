@@ -2,7 +2,7 @@ import { useContext, useEffect } from 'react';
 import copy from 'copy-to-clipboard';
 import { prefix } from '~/config';
 import { EditorContext } from '~/Editor';
-import { ContentPreviewProps } from '../ContentPreview';
+import { ContentPreviewProps } from '../props';
 
 const useCopyCode = (props: ContentPreviewProps, html: string) => {
   const { editorId, usedLanguageText } = useContext(EditorContext);

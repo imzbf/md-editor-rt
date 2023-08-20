@@ -18,11 +18,11 @@ const Content = (props: ContentProps) => {
     <div className={`${prefix}-content`}>
       <div className={`${prefix}-input-wrapper`} ref={inputWrapperRef}></div>
       <ContentPreview
-        value={props.value}
+        modelValue={props.modelValue}
         setting={props.setting}
         onHtmlChanged={(html_) => {
           setHtml(html_);
-          props.onHtmlChanged(html_);
+          props.onHtmlChanged && props.onHtmlChanged(html_);
         }}
         onGetCatalog={props.onGetCatalog}
         mdHeadingId={props.mdHeadingId}
@@ -31,6 +31,7 @@ const Content = (props: ContentProps) => {
         noKatex={props.noKatex}
         formatCopiedText={props.formatCopiedText}
         noHighlight={props.noHighlight}
+        noImgZoomIn={props.noImgZoomIn}
         key="display-editor"
       />
       {props.catalogVisible && (

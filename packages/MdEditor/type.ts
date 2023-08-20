@@ -265,6 +265,10 @@ export interface MdPreviewProps {
    * 是否启用代码高亮
    */
   noHighlight?: boolean;
+  /**
+   * 是否关闭编辑器默认的放大功能
+   */
+  noImgZoomIn?: boolean;
 }
 
 export interface EditorProps extends MdPreviewProps {

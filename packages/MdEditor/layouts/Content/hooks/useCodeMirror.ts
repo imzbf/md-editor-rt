@@ -58,7 +58,10 @@ const useCodeMirror = (props: ContentProps) => {
           props.onInput && props.onInput(e);
 
           const { data } = e as any;
-          if (props.maxLength && props.value.length + data.length > props.maxLength) {
+          if (
+            props.maxLength &&
+            props.modelValue.length + data.length > props.maxLength
+          ) {
             bus.emit(editorId, 'errorCatcher', {
               name: 'overlength',
               message: 'The input text is too long',
@@ -85,7 +88,7 @@ const useCodeMirror = (props: ContentProps) => {
 
   useEffect(() => {
     const view = new EditorView({
-      doc: props.value,
+      doc: props.modelValue,
       parent: inputWrapperRef.current!
     });
 
@@ -145,10 +148,10 @@ const useCodeMirror = (props: ContentProps) => {
 
   useEffect(() => {
     // 只有不是输入的时候才手动设置编辑区的内容
-    if (codeMirrorUt.current?.getValue() !== props.value) {
-      codeMirrorUt.current?.setValue(props.value);
+    if (codeMirrorUt.current?.getValue() !== props.modelValue) {
+      codeMirrorUt.current?.setValue(props.modelValue);
     }
-  }, [props.value]);
+  }, [props.modelValue]);
 
   useEffect(() => {
     if (noSet.current) {

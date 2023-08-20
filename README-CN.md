@@ -111,7 +111,8 @@ export default () => {
 | formatCopiedText | `(text: string) => string` | (text: string) => text | 格式化复制代码 |
 | codeStyleReverse | `boolean` | true | 代码块为暗色背景的预览主题，将代码风格设置为暗色风格 |
 | codeStyleReverseList | `Array<string>` | ['default', 'mk-cute'] | 代码块为暗色背景的预览主题 |
-| noHighlight | `boolean` | false | 永远不高亮代码 |
+| noHighlight | `boolean` | false | 是否不高亮代码 |
+| noImgZoomIn | `boolean` | false | 是否关闭编辑器默认的放大功能 |
 
 ### 🔩 MdEditor Props
 

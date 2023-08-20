@@ -297,6 +297,7 @@ export default ({ theme, previewTheme, codeTheme, lang }: PreviewProp) => {
           // showToolbarName
           // onInput={console.log}
           // onError={console.log}
+          noImgZoomIn
           toolbars={[
             'bold',
             'underline',

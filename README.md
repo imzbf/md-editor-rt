@@ -114,7 +114,8 @@ Inputing prompt and mark, emoji extensions
 | formatCopiedText | `(text: string) => string` | (text: string) => text | Format copied code |
 | codeStyleReverse | `boolean` | true | Code style will be reversed to dark while code block of the theme has a dark background |
 | codeStyleReverseList | `Array<string>` | ['default', 'mk-cute'] | Themes to be reversed |
-| noHighlight | `boolean` | false | never highlight code |
+| noHighlight | `boolean` | false | Highlight code or not |
+| noImgZoomIn | `boolean` | false | Enable the function of enlarging images |
 
 ### 🔩 MdEditor Props
 

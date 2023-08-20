@@ -64,7 +64,8 @@ const Editor = forwardRef((props: EditorProps, ref: ForwardedRef<unknown>) => {
     defFooters = defaultProps.defFooters,
     noIconfont = defaultProps.noIconfont,
     noUploadImg = defaultProps.noUploadImg,
-    noHighlight = defaultProps.noHighlight
+    noHighlight = defaultProps.noHighlight,
+    noImgZoomIn = defaultProps.noImgZoomIn
   } = props;
 
   const [staticProps] = useState<StaticProps>(() => {
@@ -156,7 +157,7 @@ const Editor = forwardRef((props: EditorProps, ref: ForwardedRef<unknown>) => {
           showToolbarName={props.showToolbarName}
         />
         <Content
-          value={modelValue}
+          modelValue={modelValue}
           onChange={onChange}
           setting={setting}
           mdHeadingId={mdHeadingId}
@@ -181,6 +182,7 @@ const Editor = forwardRef((props: EditorProps, ref: ForwardedRef<unknown>) => {
           completions={props.completions}
           catalogVisible={catalogVisible}
           theme={props.theme}
+          noImgZoomIn={noImgZoomIn}
         />
         {footers?.length > 0 && (
           <Footer

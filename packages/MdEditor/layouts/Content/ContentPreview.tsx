@@ -4,22 +4,7 @@ import { EditorContext } from '~/Editor';
 import { classnames } from '~/utils';
 
 import { useCopyCode, useMarkdownIt, useZoom } from './hooks';
-
-import type { HeadList, SettingType, MdHeadingId } from '~/type';
-
-export interface ContentPreviewProps {
-  value: string;
-  setting: SettingType;
-  onHtmlChanged?: (h: string) => void;
-  onGetCatalog?: (list: HeadList[]) => void;
-  mdHeadingId: MdHeadingId;
-  noMermaid?: boolean;
-  sanitize: (html: string) => string;
-  noKatex?: boolean;
-  formatCopiedText?: (text: string) => string;
-  noHighlight?: boolean;
-  previewOnly?: boolean;
-}
+import { ContentPreviewProps } from './props';
 
 const ContentPreview = (props: ContentPreviewProps) => {
   const { previewOnly = false } = props;

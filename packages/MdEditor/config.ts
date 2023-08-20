@@ -320,7 +320,8 @@ export const defaultProps = {
   disabled: false,
   readOnly: false,
   autoDetectCode: false,
-  noHighlight: false
+  noHighlight: false,
+  noImgZoomIn: false
 };
 
 export const configOption: ConfigOption = {

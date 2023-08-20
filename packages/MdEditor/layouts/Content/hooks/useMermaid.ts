@@ -4,7 +4,7 @@ import { uuid } from '~/utils';
 import { prefix, mermaidUrl, configOption } from '~/config';
 import { EditorContext } from '~/Editor';
 import { appendHandler } from '~/utils/dom';
-import { ContentPreviewProps } from '../ContentPreview';
+import { ContentPreviewProps } from '../props';
 
 /**
  * 注册katex扩展到页面

@@ -46,7 +46,10 @@ const usePasteUpload = (props: ContentProps) => {
       }
 
       const targetValue = e.clipboardData.getData('text/plain');
-      if (props.maxLength && targetValue.length + props.value.length > props.maxLength) {
+      if (
+        props.maxLength &&
+        targetValue.length + props.modelValue.length > props.maxLength
+      ) {
         bus.emit(editorId, 'errorCatcher', {
           name: 'overlength',
           message: 'The input text is too long',
@@ -55,7 +58,7 @@ const usePasteUpload = (props: ContentProps) => {
       }
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [props.autoDetectCode, props.maxLength, props.value]
+    [props.autoDetectCode, props.maxLength, props.modelValue]
   );
 
   return pasteHandler;

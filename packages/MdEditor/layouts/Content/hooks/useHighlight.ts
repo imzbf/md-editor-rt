@@ -2,7 +2,7 @@ import { useContext, useEffect, useRef, useState } from 'react';
 import { prefix, configOption } from '~/config';
 import { EditorContext } from '~/Editor';
 import { appendHandler, updateHandler } from '~/utils/dom';
-import { ContentPreviewProps } from '../ContentPreview';
+import { ContentPreviewProps } from '../props';
 
 /**
  * 注册代码高亮扩展到页面

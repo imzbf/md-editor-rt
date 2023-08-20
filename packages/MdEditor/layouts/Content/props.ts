@@ -1,37 +1,43 @@
 import { CompletionSource } from '@codemirror/autocomplete';
 import { HeadList, MdHeadingId, SettingType, Themes } from '~/type';
 
-export type ContentProps = Readonly<{
-  value: string;
-  onChange: (v: string) => void;
+export interface ContentPreviewProps {
+  modelValue: string;
   setting: SettingType;
-  onHtmlChanged: (h: string) => void;
-  onGetCatalog: (list: HeadList[]) => void;
-  // 不使用该功能
+  onHtmlChanged?: (h: string) => void;
+  onGetCatalog?: (list: HeadList[]) => void;
+  mdHeadingId: MdHeadingId;
   noMermaid?: boolean;
   sanitize: (html: string) => string;
-  placeholder: string;
   noKatex?: boolean;
-  mdHeadingId: MdHeadingId;
-  scrollAuto: boolean;
   formatCopiedText?: (text: string) => string;
-  autoFocus?: boolean;
-  disabled?: boolean;
-  readOnly?: boolean;
-  maxLength?: number;
-  autoDetectCode?: boolean;
-  /**
-   * 输入框失去焦点时触发事件
-   */
-  onBlur?: (event: FocusEvent) => void;
-  /**
-   * 输入框获得焦点时触发事件
-   */
-  onFocus?: (event: FocusEvent) => void;
-  noPrettier?: boolean;
   noHighlight?: boolean;
-  completions?: Array<CompletionSource>;
-  catalogVisible: boolean;
-  theme?: Themes;
-  onInput?: (e: Event) => void;
-}>;
+  previewOnly?: boolean;
+  noImgZoomIn?: boolean;
+}
+
+export type ContentProps = Readonly<
+  {
+    onChange: (v: string) => void;
+    placeholder: string;
+    scrollAuto: boolean;
+    autoFocus?: boolean;
+    disabled?: boolean;
+    readOnly?: boolean;
+    maxLength?: number;
+    autoDetectCode?: boolean;
+    /**
+     * 输入框失去焦点时触发事件
+     */
+    onBlur?: (event: FocusEvent) => void;
+    /**
+     * 输入框获得焦点时触发事件
+     */
+    onFocus?: (event: FocusEvent) => void;
+    noPrettier?: boolean;
+    completions?: Array<CompletionSource>;
+    catalogVisible: boolean;
+    theme?: Themes;
+    onInput?: (e: Event) => void;
+  } & ContentPreviewProps
+>;

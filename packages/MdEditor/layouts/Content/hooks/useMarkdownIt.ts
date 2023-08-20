@@ -17,7 +17,7 @@ import AdmonitionPlugin from '../markdownIt/admonition';
 import HeadingPlugin from '../markdownIt/heading';
 import CodeTabsPlugin from '../markdownIt/codetabs';
 import { EditorContext } from '~/Editor';
-import { ContentPreviewProps } from '../ContentPreview';
+import { ContentPreviewProps } from '../props';
 
 const initLineNumber = (md: mdit) => {
   [
@@ -160,7 +160,7 @@ const useMarkdownIt = (props: ContentPreviewProps, previewOnly: boolean) => {
   });
 
   const [html, setHtml] = useState(() => {
-    const html_ = props.sanitize(md.render(props.value));
+    const html_ = props.sanitize(md.render(props.modelValue));
 
     return html_;
   });
@@ -198,7 +198,7 @@ const useMarkdownIt = (props: ContentPreviewProps, previewOnly: boolean) => {
       () => {
         // 清理历史标题
         headsRef.current = [];
-        const html_ = props.sanitize(md.render(props.value));
+        const html_ = props.sanitize(md.render(props.modelValue));
         setHtml(html_);
 
         // // 触发异步的保存事件（html总是会比text后更新）
@@ -220,7 +220,7 @@ const useMarkdownIt = (props: ContentPreviewProps, previewOnly: boolean) => {
       clearTimeout(timer);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [props.value, needReRender, theme]);
+  }, [props.modelValue, needReRender, theme]);
 
   useEffect(() => {
     replaceMermaid();
