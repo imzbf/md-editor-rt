@@ -503,10 +503,10 @@ editorRef.current?.focus(option);
 
 - markdownItPlugins: 挑选、新增 markdown-it 核心库已预设的扩展。
 
-  使用示例：取消使用内部放大查看图片的功能。
+  使用示例：修改图片的类名
 
   ```js
-  import { config } from 'md-editor-v3';
+  import { config } from 'md-editor-rt';
 
   config({
     markdownItPlugins(plugins) {
@@ -516,8 +516,7 @@ editorRef.current?.focus(option);
             ...p,
             options: {
               ...p.options,
-              // 移除'md-zoom'类即可
-              classes: ''
+              classes: 'my-class'
             }
           };
         }

@@ -495,10 +495,10 @@ Use `config(option: ConfigOption)` to reconfigure `markdown-it` and so on.
 
 - markdownItPlugins: Select and add built-in plugins to `markdown-it`.
 
-  Example: Disable image zoom functionality.
+  Example: Modify the class name of the image.
 
   ```js
-  import { config } from 'md-editor-v3';
+  import { config } from 'md-editor-rt';
 
   config({
     markdownItPlugins(plugins) {
@@ -508,8 +508,7 @@ Use `config(option: ConfigOption)` to reconfigure `markdown-it` and so on.
             ...p,
             options: {
               ...p.options,
-              // just remove classname 'md-zoom'
-              classes: ''
+              classes: 'my-class'
             }
           };
         }
