@@ -979,7 +979,7 @@ Select and add built-in plugins to `markdown-it`.
 
 Example: Modify the class name of the image.
 
-````js
+```js
 import { config } from 'md-editor-rt';
 
 config({
@@ -1642,4 +1642,7 @@ export default () => {
 ## ✍️ Edit This Page
 
 [doc-en-US](https://github.com/imzbf/md-editor-rt/blob/dev-docs/public/doc-en-US.md)
-````
+
+```
+
+```
