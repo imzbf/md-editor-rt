@@ -280,6 +280,15 @@ This is the props of `MdPreview`, which is also part of `MdEditor`:
 
 ---
 
+### 🕊 noImgZoomIn
+
+- **type**: `boolean`
+- **default**: `false`
+
+  Enable the function of enlarging images.
+
+---
+
 ## 🔩 MdEditor Props
 
 Except for the same as `MdPreview`:
@@ -964,6 +973,36 @@ config({
 
 ---
 
+### 🍤 markdownItPlugins
+
+Select and add built-in plugins to `markdown-it`.
+
+Example: Modify the class name of the image.
+
+````js
+import { config } from 'md-editor-rt';
+
+config({
+  markdownItPlugins(plugins) {
+    return plugins.map((p) => {
+      if (p.type === 'image') {
+        return {
+          ...p,
+          options: {
+            ...p.options,
+            classes: 'my-class'
+          }
+        };
+      }
+
+      return p;
+    });
+  }
+});
+```
+
+---
+
 ### 🍙 editorConfig
 
 Add more languages, reset `mermaid` template or delay rendering time
@@ -1603,3 +1642,4 @@ export default () => {
 ## ✍️ Edit This Page
 
 [doc-en-US](https://github.com/imzbf/md-editor-rt/blob/dev-docs/public/doc-en-US.md)
+````

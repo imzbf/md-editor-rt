@@ -3126,10 +3126,10 @@ markdown-it@^13.0.1:
     mdurl "^1.0.1"
     uc.micro "^1.0.5"
 
-md-editor-rt@^4.3.0:
-  version "4.3.0"
-  resolved "https://registry.npmjs.org/md-editor-rt/-/md-editor-rt-4.3.0.tgz#cea6ee59156fe0a7c4f52f0694067d841e5e92a2"
-  integrity sha512-641xPZ5ZzVH6Kb2WbGDV+jGnvh5E9RR776ZDVvSvxu2naSEoSOFPj57Tpo3RswOFo0BPbJyKBAaV5gG3p78abA==
+md-editor-rt@^4.4.0:
+  version "4.4.0"
+  resolved "https://registry.npmjs.org/md-editor-rt/-/md-editor-rt-4.4.0.tgz#894b8e885c77069a24ccb753bb0233e59ac0a400"
+  integrity sha512-lO08EApkZtjz5B4RPoi7BwWZ9bGSq7+vPj4BphOfkVZdL/v8m+hvzeUQ9h92PivTXH8A+0EplN1qz9CzmR8BVw==
   dependencies:
     "@codemirror/lang-markdown" "^6.1.1"
     "@codemirror/language-data" "^6.3.0"
