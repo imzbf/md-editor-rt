@@ -748,7 +748,7 @@ export interface ExposeParam {
 export type CustomIcon = {
   [key in IconName]?: {
     component: any;
-    props: {
+    props?: {
       [key: string | number | symbol]: any;
     };
   };
