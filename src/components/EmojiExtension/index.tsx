@@ -3,6 +3,8 @@ import { DropdownToolbar, InsertContentGenerator } from 'md-editor-rt';
 
 import { emojis } from './data';
 
+import './style.less';
+
 interface EmojiExtensionProp {
   insert?: (generator: InsertContentGenerator) => void;
 }
