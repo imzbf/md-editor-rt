@@ -611,7 +611,7 @@ export interface EditorExtensions {
 
 </details>
 
-### iconfontType
+### 🫨 iconfontType
 
 固定使用那种方式展示图标，可以切换展示的方式
 

@@ -601,7 +601,7 @@ export interface EditorExtensions {
 
 </details>
 
-### iconfontType
+### 🫨 iconfontType
 
 Set the way to display icons:
 
