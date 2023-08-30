@@ -29,7 +29,8 @@ import {
   highlightUrl,
   staticTextDefault,
   configOption,
-  defaultProps
+  defaultProps,
+  iconfontClassUrl
 } from './config';
 import { appendHandler } from './utils/dom';
 import {
@@ -196,13 +197,22 @@ export const useExpansion = (staticProps: StaticProps) => {
 
 export const useExpansionPreview = ({ noIconfont }: MdPreviewStaticProps) => {
   useEffect(() => {
-    // 图标
-    const iconfontScript = document.createElement('script');
-    iconfontScript.src = configOption.editorExtensions?.iconfont || iconfontUrl;
-    iconfontScript.id = `${prefix}-icon`;
-
     if (!noIconfont) {
-      appendHandler(iconfontScript);
+      if (configOption.iconfontType === 'svg') {
+        // 图标
+        const iconfontScript = document.createElement('script');
+        iconfontScript.src = configOption.editorExtensions?.iconfont || iconfontUrl;
+        iconfontScript.id = `${prefix}-icon`;
+        appendHandler(iconfontScript);
+      } else {
+        const iconfontLink = document.createElement('link');
+        iconfontLink.rel = 'stylesheet';
+        iconfontLink.href =
+          configOption.editorExtensions?.iconfontClass || iconfontClassUrl;
+        iconfontLink.id = `${prefix}-icon-class`;
+
+        appendHandler(iconfontLink);
+      }
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps

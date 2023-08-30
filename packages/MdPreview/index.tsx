@@ -60,7 +60,8 @@ const MdPreview = (props: MdPreviewProps) => {
         highlight,
         showCodeRowNumber,
         usedLanguageText,
-        previewTheme
+        previewTheme,
+        customIcon: props.customIcon || {}
       }}
     >
       <div

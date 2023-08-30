@@ -11,6 +11,7 @@ import bus from '~/utils/event-bus';
 import { EditorContext } from '~/Editor';
 import { configOption, prefix } from '~/config';
 import { base642File } from '~/utils';
+import Icon from '~/components/Icon';
 
 interface ClipModalProps {
   visible: boolean;
@@ -157,9 +158,7 @@ const ClipModal = (props: ClipModalProps) => {
                   alt=""
                 />
                 <div className={`${prefix}-clip-delete`} onClick={reset}>
-                  <svg className={`${prefix}-icon`} aria-hidden="true">
-                    <use xlinkHref="#md-editor-icon-delete" />
-                  </svg>
+                  <Icon name="delete" />
                 </div>
               </div>
             ) : (
@@ -169,9 +168,7 @@ const ClipModal = (props: ClipModalProps) => {
                   (uploadRef.current as HTMLInputElement).click();
                 }}
               >
-                <svg className={`${prefix}-icon`} aria-hidden="true">
-                  <use xlinkHref="#md-editor-icon-upload" />
-                </svg>
+                <Icon name="upload" />
               </div>
             )}
           </div>

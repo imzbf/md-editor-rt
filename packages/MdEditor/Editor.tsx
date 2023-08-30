@@ -33,7 +33,8 @@ export const EditorContext = createContext<ContentType>({
   },
   showCodeRowNumber: false,
   usedLanguageText: staticTextDefault['zh-CN'],
-  previewTheme: 'default'
+  previewTheme: 'default',
+  customIcon: {}
 });
 
 const Editor = forwardRef((props: EditorProps, ref: ForwardedRef<unknown>) => {
@@ -132,7 +133,8 @@ const Editor = forwardRef((props: EditorProps, ref: ForwardedRef<unknown>) => {
         highlight,
         showCodeRowNumber,
         usedLanguageText,
-        previewTheme
+        previewTheme,
+        customIcon: props.customIcon || {}
       }}
     >
       <div

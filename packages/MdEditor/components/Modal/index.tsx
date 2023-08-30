@@ -8,6 +8,7 @@ import React, {
 } from 'react';
 import { prefix } from '~/config';
 import { keyMove } from '~/utils/dom';
+import Icon from '../Icon';
 
 export type ModalProps = Readonly<{
   title?: string | ReactElement;
@@ -159,13 +160,7 @@ const Modal = (props: ModalProps) => {
                 onAdjust instanceof Function && onAdjust(!props.isFullscreen);
               }}
             >
-              <svg className={`${prefix}-icon`} aria-hidden="true">
-                <use
-                  xlinkHref={`#md-editor-icon-${
-                    props.isFullscreen ? 'suoxiao' : 'fangda'
-                  }`}
-                />
-              </svg>
+              <Icon name={props.isFullscreen ? 'suoxiao' : 'fangda'} />
             </div>
           )}
           <div
@@ -175,9 +170,7 @@ const Modal = (props: ModalProps) => {
               props.onClose && props.onClose();
             }}
           >
-            <svg className={`${prefix}-icon`} aria-hidden="true">
-              <use xlinkHref="#md-editor-icon-close" />
-            </svg>
+            <Icon name="close" />
           </div>
         </div>
         <div className={`${prefix}-modal-body`}>{props.children}</div>

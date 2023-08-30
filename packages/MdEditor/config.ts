@@ -14,6 +14,7 @@ export const defaultEditorId = 'md-editor-rt';
 
 // 字体链接
 export const iconfontUrl = 'https://at.alicdn.com/t/c/font_2605852_u82y61ve02.js';
+export const iconfontClassUrl = 'https://at.alicdn.com/t/c/font_2605852_qm4cjcggwma.css';
 
 export const cdnBase = 'https://cdnjs.cloudflare.com/ajax/libs';
 
@@ -325,14 +326,12 @@ export const defaultProps = {
 };
 
 export const configOption: ConfigOption = {
-  // markedRenderer: (r) => r,
-  // markedExtensions: [],
-  // markedOptions: {},
   editorExtensions: {},
   editorConfig: {},
   codeMirrorExtensions: (_theme, innerExtensions) => innerExtensions,
   markdownItConfig: () => {},
-  markdownItPlugins: (s) => s
+  markdownItPlugins: (s) => s,
+  iconfontType: 'svg'
 };
 
 export const config: Config = (option) => {

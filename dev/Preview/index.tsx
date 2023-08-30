@@ -17,7 +17,7 @@ import { Theme } from '../App';
 
 import './index.less';
 import '~/styles/style.less';
-
+import Icon from '~/components/Icon';
 // import { Extension } from '@codemirror/state';
 import { lineNumbers } from '@codemirror/view';
 import { CompletionSource } from '@codemirror/autocomplete';
@@ -44,6 +44,7 @@ config({
     // return extensions;
     return [...extensions, lineNumbers()];
   },
+  // iconfontType: 'class',
   // markdownItConfig: (mdit) => {
   // mdit.use(ancher, {
   //   permalink: true
@@ -297,7 +298,26 @@ export default ({ theme, previewTheme, codeTheme, lang }: PreviewProp) => {
           // showToolbarName
           // onInput={console.log}
           // onError={console.log}
-          noImgZoomIn
+          // noImgZoomIn
+          // customIcon={{
+          //   bold: {
+          //     component: 'A',
+          //     props: {}
+          //   },
+          //   copy: '<i class="fa fa-car"></i>',
+          //   preview: {
+          //     component: '<i class="fa fa-car"></i>',
+          //     props: {
+          //       name: 'copy'
+          //     }
+          //   },
+          //   github: {
+          //     component: Icon,
+          //     props: {
+          //       name: 'italic'
+          //     }
+          //   }
+          // }}
           toolbars={[
             'bold',
             'underline',
@@ -337,21 +357,13 @@ export default ({ theme, previewTheme, codeTheme, lang }: PreviewProp) => {
           ]}
           defToolbars={[
             <NormalToolbar
-              trigger={
-                <svg className="md-editor-icon" aria-hidden="true">
-                  <use xlinkHref="#md-editor-icon-strike-through" />
-                </svg>
-              }
+              trigger={<Icon name="strike-through" />}
               onClick={console.log}
               key="dddd"
             ></NormalToolbar>,
             <DropdownToolbar
               visible={defVisible}
-              trigger={
-                <svg className="md-editor-icon" aria-hidden="true">
-                  <use xlinkHref="#md-editor-icon-strike-through" />
-                </svg>
-              }
+              trigger={<Icon name="strike-through" />}
               onChange={setDefVisible}
               overlay={<div>下拉内容</div>}
               key="dddd3"
@@ -369,11 +381,7 @@ export default ({ theme, previewTheme, codeTheme, lang }: PreviewProp) => {
                   isFullscreen
                 });
               }}
-              trigger={
-                <svg className="md-editor-icon" aria-hidden="true">
-                  <use xlinkHref="#md-editor-icon-strike-through" />
-                </svg>
-              }
+              trigger={<Icon name="strike-through" />}
               onClick={() => {
                 setMd({
                   ...md,

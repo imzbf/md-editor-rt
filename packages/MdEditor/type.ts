@@ -3,6 +3,7 @@ import markdownit from 'markdown-it/lib';
 import { CompletionSource } from '@codemirror/autocomplete';
 import { Extension } from '@codemirror/state';
 import { KeyBinding } from '@codemirror/view';
+import { IconName } from './components/Icon/Icon';
 
 declare global {
   interface Window {
@@ -269,6 +270,10 @@ export interface MdPreviewProps {
    * 是否关闭编辑器默认的放大功能
    */
   noImgZoomIn?: boolean;
+  /**
+   * 自定义的图标
+   */
+  customIcon?: CustomIcon;
 }
 
 export interface EditorProps extends MdPreviewProps {
@@ -439,6 +444,7 @@ export interface ContentType {
   usedLanguageText: StaticTextDefaultValue;
   theme: Themes;
   previewTheme: PreviewThemes;
+  customIcon: CustomIcon;
 }
 
 export interface MermaidTemplate {
@@ -486,7 +492,7 @@ export interface ConfigOption {
   /**
    * 编辑器内部依赖库
    */
-  editorExtensions?: {
+  editorExtensions: {
     highlight?: {
       instance?: any;
       js?: string;
@@ -505,6 +511,10 @@ export interface ConfigOption {
       css?: string;
     };
     iconfont?: string;
+    /**
+     * class方式的图标
+     */
+    iconfontClass?: string;
     screenfull?: {
       instance?: any;
       js?: string;
@@ -519,7 +529,7 @@ export interface ConfigOption {
       css?: string;
     };
   };
-  editorConfig?: {
+  editorConfig: {
     /**
      * 自定义提示语言
      */
@@ -543,7 +553,7 @@ export interface ConfigOption {
    *
    * @params keyBindings md-editor-v3内置的快捷键
    */
-  codeMirrorExtensions?: (
+  codeMirrorExtensions: (
     theme: Themes,
     extensions: Array<Extension>,
     keyBindings: Array<KeyBinding>
@@ -551,22 +561,28 @@ export interface ConfigOption {
   /**
    * 自定义markdown-it核心库扩展、属性等
    */
-  markdownItConfig?: (md: markdownit) => void;
+  markdownItConfig: (md: markdownit) => void;
   /**
    * 挑选编辑器已预设的markdownIt的扩展
    *
    * @param plugins markdownIt的扩展，带编辑器已设定的属性
    * @returns plugins
    */
-  markdownItPlugins?: (
+  markdownItPlugins: (
     plugins: Array<MarkdownItConfigPlugin>
   ) => Array<MarkdownItConfigPlugin>;
+  /**
+   * 如果使用内部的图标，可以切换展示的方式
+   *
+   * 以规避某些问题，例如Shadow Dom对Svg use的支持问题
+   */
+  iconfontType: 'svg' | 'class';
 }
 
 /**
  * 扩展编辑器内部功能，包括marked和一些内部依赖实例，如highlight、cropper等
  */
-export type Config = (options: ConfigOption) => void;
+export type Config = (options: Partial<ConfigOption>) => void;
 
 /**
  * 编辑器操作潜在的错误
@@ -725,3 +741,17 @@ export interface ExposeParam {
    */
   focus(options?: FocusOption): void;
 }
+
+/**
+ * 自定义图标的数据类型
+ */
+export type CustomIcon = {
+  [key in IconName]?: {
+    component: any;
+    props: {
+      [key: string | number | symbol]: any;
+    };
+  };
+} & {
+  copy?: string;
+};

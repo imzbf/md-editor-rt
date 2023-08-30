@@ -3,9 +3,10 @@ import copy from 'copy-to-clipboard';
 import { prefix } from '~/config';
 import { EditorContext } from '~/Editor';
 import { ContentPreviewProps } from '../props';
+import StrIcon from '~/components/Icon/Str';
 
 const useCopyCode = (props: ContentPreviewProps, html: string) => {
-  const { editorId, usedLanguageText } = useContext(EditorContext);
+  const { editorId, usedLanguageText, customIcon } = useContext(EditorContext);
   const { formatCopiedText = (t: string) => t } = props;
 
   useEffect(() => {
@@ -24,7 +25,7 @@ const useCopyCode = (props: ContentPreviewProps, html: string) => {
           copyButton.setAttribute('class', 'copy-button');
           copyButton.dataset.tips = copyBtnText;
 
-          copyButton.innerHTML = `<svg class="${prefix}-icon" aria-hidden="true"><use xlink:href="#${prefix}-icon-copy"></use></svg>`;
+          copyButton.innerHTML = StrIcon('copy', customIcon);
 
           copyButton.addEventListener('click', () => {
             // 多次点击移除上次的恢复进程
