@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useMemo } from 'react';
 import { prefix } from '~/config';
 import { EditorContext } from '~/Editor';
 import { classnames } from '~/utils';
@@ -17,6 +17,20 @@ const ContentPreview = (props: ContentPreviewProps) => {
   // 图片点击放大
   useZoom(props, html);
 
+  const content = useMemo(() => {
+    return (
+      <article
+        id={`${editorId}-preview`}
+        className={classnames([
+          `${prefix}-preview`,
+          `${previewTheme}-theme`,
+          showCodeRowNumber && `${prefix}-scrn`
+        ])}
+        dangerouslySetInnerHTML={{ __html: html }}
+      />
+    );
+  }, [editorId, html, previewTheme, showCodeRowNumber]);
+
   return (
     <>
       <div
@@ -25,15 +39,7 @@ const ContentPreview = (props: ContentPreviewProps) => {
         data-show={props.setting.preview}
         key="content-preview-wrapper"
       >
-        <article
-          id={`${editorId}-preview`}
-          className={classnames([
-            `${prefix}-preview`,
-            `${previewTheme}-theme`,
-            showCodeRowNumber && `${prefix}-scrn`
-          ])}
-          dangerouslySetInnerHTML={{ __html: html }}
-        />
+        {content}
       </div>
       {!previewOnly && (
         <div
