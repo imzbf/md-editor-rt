@@ -63,7 +63,7 @@ export default () => {
 
 ```jsx
 import React, { useState } from 'react';
-import { MdEditor, MdCatalog } from 'md-editor-rt';
+import { MdPreview, MdCatalog } from 'md-editor-rt';
 import 'md-editor-rt/lib/preview.css';
 
 const scrollElement = document.documentElement;
@@ -74,7 +74,7 @@ export default () => {
 
   return (
     <>
-      <MdEditor editorId={id} modelValue={text} />
+      <MdPreview editorId={id} modelValue={text} />
       <MdCatalog editorId={id} scrollElement={scrollElement} />
     </>
   );
