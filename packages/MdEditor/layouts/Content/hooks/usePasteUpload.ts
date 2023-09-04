@@ -1,6 +1,8 @@
 import { useCallback, useContext } from 'react';
 import { EditorContext } from '~/Editor';
 import bus from '~/utils/event-bus';
+import { ERROR_CATCHER, REPLACE, UPLOAD_IMAGE } from '~/static/event-name';
+
 import { ContentProps } from '../props';
 
 /**
@@ -22,7 +24,7 @@ const usePasteUpload = (props: ContentProps) => {
 
         bus.emit(
           editorId,
-          'uploadImage',
+          UPLOAD_IMAGE,
           Array.from(files).filter((file) => {
             return /image\/.*/.test(file.type);
           })
@@ -36,7 +38,7 @@ const usePasteUpload = (props: ContentProps) => {
       if (props.autoDetectCode && e.clipboardData.types.includes('vscode-editor-data')) {
         const vscCoodInfo = JSON.parse(e.clipboardData.getData('vscode-editor-data'));
 
-        bus.emit(editorId, 'replace', 'code', {
+        bus.emit(editorId, REPLACE, 'code', {
           mode: vscCoodInfo.mode,
           text: e.clipboardData.getData('text/plain')
         });
@@ -50,7 +52,7 @@ const usePasteUpload = (props: ContentProps) => {
         props.maxLength &&
         targetValue.length + props.modelValue.length > props.maxLength
       ) {
-        bus.emit(editorId, 'errorCatcher', {
+        bus.emit(editorId, ERROR_CATCHER, {
           name: 'overlength',
           message: 'The input text is too long',
           data: targetValue

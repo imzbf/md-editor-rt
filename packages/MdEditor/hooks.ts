@@ -42,7 +42,11 @@ import {
   PREVIEW_CHANGED,
   HTML_PREVIEW_CHANGED,
   CATALOG_VISIBLE_CHANGED,
-  TEXTAREA_FOCUS
+  TEXTAREA_FOCUS,
+  BUILD_FINISHED,
+  ERROR_CATCHER,
+  REPLACE,
+  UPLOAD_IMAGE
 } from './static/event-name';
 
 /**
@@ -73,13 +77,13 @@ export const useOnSave = (props: EditorProps, staticProps: StaticProps) => {
     };
 
     bus.on(editorId, {
-      name: 'buildFinished',
+      name: BUILD_FINISHED,
       callback: buildFinishedCb
     });
 
     // 编辑器卸载时移除相应的监听事件
     return () => {
-      bus.remove(editorId, 'buildFinished', buildFinishedCb);
+      bus.remove(editorId, BUILD_FINISHED, buildFinishedCb);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -95,11 +99,11 @@ export const useOnSave = (props: EditorProps, staticProps: StaticProps) => {
             const buildFinishedCallback = (html: string) => {
               rev(html);
 
-              bus.remove(editorId, 'buildFinished', buildFinishedCallback);
+              bus.remove(editorId, BUILD_FINISHED, buildFinishedCallback);
             };
 
             bus.on(editorId, {
-              name: 'buildFinished',
+              name: BUILD_FINISHED,
               callback: buildFinishedCallback
             });
           }
@@ -228,12 +232,12 @@ export const useExpansionPreview = ({ noIconfont }: MdPreviewStaticProps) => {
 export const useErrorCatcher = (editorId: string, onError: (err: InnerError) => void) => {
   useEffect(() => {
     bus.on(editorId, {
-      name: 'errorCatcher',
+      name: ERROR_CATCHER,
       callback: onError
     });
 
     return () => {
-      bus.remove(editorId, 'errorCatcher', onError);
+      bus.remove(editorId, ERROR_CATCHER, onError);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [onError]);
@@ -250,7 +254,7 @@ export const useUploadImg = (props: EditorProps, staticProps: StaticProps) => {
   useEffect(() => {
     const uploadImageCallBack = (files: Array<File>, cb: () => void) => {
       const insertHanlder = (urls: Array<string>) => {
-        bus.emit(editorId, 'replace', 'image', {
+        bus.emit(editorId, REPLACE, 'image', {
           desc: '',
           urls
         });
@@ -265,12 +269,12 @@ export const useUploadImg = (props: EditorProps, staticProps: StaticProps) => {
 
     // 监听上传图片
     bus.on(editorId, {
-      name: 'uploadImage',
+      name: UPLOAD_IMAGE,
       callback: uploadImageCallBack
     });
 
     return () => {
-      bus.remove(editorId, 'uploadImage', uploadImageCallBack);
+      bus.remove(editorId, UPLOAD_IMAGE, uploadImageCallBack);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.onUploadImg]);
@@ -544,7 +548,7 @@ export const useExpose = (
           bus.emit(editorId, ON_SAVE);
         },
         insert(generate) {
-          bus.emit(editorId, 'replace', 'universal', { generate });
+          bus.emit(editorId, REPLACE, 'universal', { generate });
         },
         focus(options: FocusOption) {
           bus.emit(editorId, TEXTAREA_FOCUS, options);

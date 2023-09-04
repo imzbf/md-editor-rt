@@ -16,7 +16,13 @@ import { allToolbar, prefix } from '~/config';
 import bus from '~/utils/event-bus';
 import Divider from '~/components/Divider';
 import Dropdown from '~/components/Dropdown';
-import { CHANGE_CATALOG_VISIBLE, ON_SAVE } from '~/static/event-name';
+import {
+  CHANGE_CATALOG_VISIBLE,
+  CTRL_SHIFT_Z,
+  CTRL_Z,
+  ON_SAVE,
+  REPLACE
+} from '~/static/event-name';
 import Modals from '../Modals';
 import TableShape from './TableShape';
 import { useSreenfull, useModals, useDropdownState } from './hooks';
@@ -52,7 +58,7 @@ const Toolbar = (props: ToolbarProps) => {
 
   // bar触发事件
   const emitHandler = useCallback((direct: ToolDirective, params?: any) => {
-    bus.emit(editorId, 'replace', direct, params);
+    bus.emit(editorId, REPLACE, direct, params);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -712,7 +718,7 @@ const Toolbar = (props: ToolbarProps) => {
                 className={`${prefix}-toolbar-item`}
                 title={ult.toolbarTips?.revoke}
                 onClick={() => {
-                  bus.emit(editorId, 'ctrlZ');
+                  bus.emit(editorId, CTRL_Z);
                 }}
                 key="bar-revoke"
               >
@@ -732,7 +738,7 @@ const Toolbar = (props: ToolbarProps) => {
                 className={`${prefix}-toolbar-item`}
                 title={ult.toolbarTips?.next}
                 onClick={() => {
-                  bus.emit(editorId, 'ctrlShiftZ');
+                  bus.emit(editorId, CTRL_SHIFT_Z);
                 }}
                 key="bar-next"
               >
@@ -923,7 +929,7 @@ const Toolbar = (props: ToolbarProps) => {
         if (defItem) {
           const defItemCloned = cloneElement(defItem, {
             insert(generate: InsertContentGenerator) {
-              bus.emit(editorId, 'replace', 'universal', { generate });
+              bus.emit(editorId, REPLACE, 'universal', { generate });
             }
           });
 

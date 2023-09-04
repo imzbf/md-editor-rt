@@ -4,7 +4,12 @@ import { prefix, screenfullUrl, configOption } from '~/config';
 import { EditorContext } from '~/Editor';
 import { appendHandler } from '~/utils/dom';
 import { ToolDirective } from '~/utils/content-help';
-import { CHANGE_FULL_SCREEN } from '~/static/event-name';
+import {
+  CHANGE_FULL_SCREEN,
+  ERROR_CATCHER,
+  OPEN_MODALS,
+  UPLOAD_IMAGE
+} from '~/static/event-name';
 
 import { ToolbarProps } from './';
 import { HoverData } from './TableShape';
@@ -21,7 +26,7 @@ export const useSreenfull = (props: ToolbarProps) => {
   const fullscreenHandler = useCallback(
     (status?: boolean) => {
       if (!screenfull) {
-        bus.emit(editorId, 'errorCatcher', {
+        bus.emit(editorId, ERROR_CATCHER, {
           name: 'fullscreen',
           message: 'fullscreen is undefined'
         });
@@ -138,7 +143,7 @@ export const useModals = (
 
   useEffect(() => {
     bus.on(editorId, {
-      name: 'openModals',
+      name: OPEN_MODALS,
       callback(type) {
         setModalData((_modalData) => {
           return {
@@ -153,7 +158,7 @@ export const useModals = (
     const uploadHandler = () => {
       bus.emit(
         editorId,
-        'uploadImage',
+        UPLOAD_IMAGE,
         Array.from((uploadRef.current as HTMLInputElement).files || [])
       );
 

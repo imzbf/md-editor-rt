@@ -6,6 +6,7 @@ import bus from '~/utils/event-bus';
 import { generateCodeRowNumber } from '~/utils';
 import { HeadList, MarkdownItConfigPlugin, Themes } from '~/type';
 import { configOption } from '~/config';
+import { BUILD_FINISHED, CATALOG_CHANGED, PUSH_CATALOG } from '~/static/event-name';
 
 import useHighlight from './useHighlight';
 import useMermaid from './useMermaid';
@@ -179,12 +180,12 @@ const useMarkdownIt = (props: ContentPreviewProps, previewOnly: boolean) => {
 
   useEffect(() => {
     // 触发异步的保存事件（html总是会比text后更新）
-    bus.emit(editorId, 'buildFinished', html);
+    bus.emit(editorId, BUILD_FINISHED, html);
     onHtmlChanged(html);
     // 传递标题
     onGetCatalog(headsRef.current);
     // 生成目录
-    bus.emit(editorId, 'catalogChanged', headsRef.current);
+    bus.emit(editorId, CATALOG_CHANGED, headsRef.current);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [html]);
 
@@ -202,12 +203,12 @@ const useMarkdownIt = (props: ContentPreviewProps, previewOnly: boolean) => {
         setHtml(html_);
 
         // // 触发异步的保存事件（html总是会比text后更新）
-        // bus.emit(editorId, 'buildFinished', html_);
+        // bus.emit(editorId, BUILD_FINISHED, html_);
         // onHtmlChanged(html_);
         // // 传递标题
         // onGetCatalog(headsRef.current);
         // // 生成目录
-        // bus.emit(editorId, 'catalogChanged', headsRef.current);
+        // bus.emit(editorId, CATALOG_CHANGED, headsRef.current);
       },
       editorConfig?.renderDelay !== undefined
         ? editorConfig?.renderDelay
@@ -230,9 +231,9 @@ const useMarkdownIt = (props: ContentPreviewProps, previewOnly: boolean) => {
   // 添加目录主动触发接收监听
   useEffect(() => {
     bus.on(editorId, {
-      name: 'pushCatalog',
+      name: PUSH_CATALOG,
       callback() {
-        bus.emit(editorId, 'catalogChanged', headsRef.current);
+        bus.emit(editorId, CATALOG_CHANGED, headsRef.current);
       }
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps

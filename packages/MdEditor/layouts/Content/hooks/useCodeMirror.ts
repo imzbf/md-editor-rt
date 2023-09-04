@@ -8,6 +8,7 @@ import { configOption } from '~/config';
 import bus from '~/utils/event-bus';
 import { directive2flag, ToolDirective } from '~/utils/content-help';
 import { EditorContext } from '~/Editor';
+import { CTRL_SHIFT_Z, CTRL_Z, ERROR_CATCHER, REPLACE } from '~/static/event-name';
 
 import CodeMirrorUt from '../codemirror';
 import { oneDark } from '../codemirror/themeOneDark';
@@ -62,7 +63,7 @@ const useCodeMirror = (props: ContentProps) => {
             props.maxLength &&
             props.modelValue.length + data.length > props.maxLength
           ) {
-            bus.emit(editorId, 'errorCatcher', {
+            bus.emit(editorId, ERROR_CATCHER, {
               name: 'overlength',
               message: 'The input text is too long',
               data: data
@@ -108,14 +109,14 @@ const useCodeMirror = (props: ContentProps) => {
     }, 0);
 
     bus.on(editorId, {
-      name: 'ctrlZ',
+      name: CTRL_Z,
       callback() {
         undo(view);
       }
     });
 
     bus.on(editorId, {
-      name: 'ctrlShiftZ',
+      name: CTRL_SHIFT_Z,
       callback() {
         redo(view);
       }
@@ -123,7 +124,7 @@ const useCodeMirror = (props: ContentProps) => {
 
     // 注册指令替换内容事件
     bus.on(editorId, {
-      name: 'replace',
+      name: REPLACE,
       callback(direct: ToolDirective, params = {}) {
         const { text, options } = directive2flag(direct, codeMirrorUt.current!, params);
         codeMirrorUt.current?.replaceSelectedText(text, options, editorId);
