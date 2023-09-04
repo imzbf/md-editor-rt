@@ -314,6 +314,7 @@ Except for the same as `MdPreview`:
 | onBlur | `event: FocusEvent<HTMLTextAreaElement, Element>` | Textarea has lost focus |
 | onFocus | `event: FocusEvent<HTMLTextAreaElement, Element>` | Textarea has received focus |
 | onInput | `event: Event` | Element gets input |
+| onDrop | `event: DragEvent` | The event occurs when a selection is being dragged |
 
 ## 🤱🏼 Expose
 

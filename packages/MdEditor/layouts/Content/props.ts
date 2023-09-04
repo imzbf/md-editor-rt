@@ -39,5 +39,12 @@ export type ContentProps = Readonly<
     catalogVisible: boolean;
     theme?: Themes;
     onInput?: (e: Event) => void;
+    /**
+     * 拖放事件
+     *
+     * @param event
+     * @returns
+     */
+    onDrop?: (event: DragEvent) => void;
   } & ContentPreviewProps
 >;

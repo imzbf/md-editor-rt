@@ -3,6 +3,7 @@ import Header from './Header';
 import Preview from './Preview';
 import PreviewOnly from './PreviewOnly';
 import './style.less';
+import SecEditor from './SecEditor';
 
 export type Theme = 'dark' | 'light';
 
@@ -44,6 +45,7 @@ function App() {
             previewTheme={previewTheme}
             codeTheme={codeTheme}
           />
+          <SecEditor />
           <PreviewOnly
             lang={lang}
             theme={theme}

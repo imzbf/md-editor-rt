@@ -431,6 +431,12 @@ export interface EditorProps extends MdPreviewProps {
    * 字符输入事件
    */
   onInput?: (e: Event) => void;
+  /**
+   * 拖放事件
+   *
+   * @param event
+   */
+  onDrop?: (event: DragEvent) => void;
 }
 
 export interface ContentType {
