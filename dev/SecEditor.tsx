@@ -10,6 +10,7 @@ export default () => {
       <MdEditor
         modelValue={text}
         onChange={setText}
+        scrollAuto={false}
         // onDrop={(e) => {
         //   console.log('ee', e);
         // }}

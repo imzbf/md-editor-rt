@@ -28,7 +28,9 @@ const useAutoScroll = (
   // 更新完毕后判断是否需要重新绑定滚动事件
   useEffect(() => {
     scrollCb.clear();
-    const cmScroller = document.querySelector<HTMLDivElement>('.cm-scroller');
+    const cmScroller = document.querySelector<HTMLDivElement>(
+      `#${editorId} .cm-scroller`
+    );
 
     const previewEle = document.querySelector<HTMLElement>(
       `[id="${editorId}-preview-wrapper"][data-show="true"]`
