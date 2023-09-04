@@ -46,7 +46,7 @@ export interface ToolbarProps {
 let splitNum = 0;
 
 const Toolbar = (props: ToolbarProps) => {
-  const { toolbars, toolbarsExclude, setting, updateSetting } = props;
+  const { toolbars, toolbarsExclude, updateSetting } = props;
   // 获取ID，语言设置
   const { editorId, usedLanguageText } = useContext(EditorContext);
   const ult = usedLanguageText;
@@ -796,7 +796,7 @@ const Toolbar = (props: ToolbarProps) => {
           }
           case 'pageFullscreen': {
             return (
-              !setting.fullscreen && (
+              !props.setting.fullscreen && (
                 <div
                   className={`${prefix}-toolbar-item`}
                   title={ult.toolbarTips?.pageFullscreen}
@@ -958,7 +958,6 @@ const Toolbar = (props: ToolbarProps) => {
       props.setting.pageFullscreen,
       props.showToolbarName,
       setModalData,
-      setting.fullscreen,
       ult.toolbarTips,
       updateSetting
     ]

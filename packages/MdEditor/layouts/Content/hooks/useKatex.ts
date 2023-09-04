@@ -38,7 +38,8 @@ const useKatex = (props: ContentPreviewProps) => {
       appendHandler(katexScript, 'katex');
       appendHandler(katexLink);
     }
-  });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return { katexRef, katexInited };
 };

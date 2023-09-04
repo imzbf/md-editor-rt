@@ -34,7 +34,7 @@ export const useSreenfull = (props: ToolbarProps) => {
       }
 
       if (screenfull.isEnabled) {
-        screenfullMe.current = true;
+        screenfullMe.current = !screenfullMe.current;
 
         const targetStatus = status === undefined ? !screenfull.isFullscreen : status;
 
@@ -53,6 +53,14 @@ export const useSreenfull = (props: ToolbarProps) => {
 
   useEffect(() => {
     let screenScript: HTMLScriptElement;
+
+    const changedEvent = () => {
+      props.updateSetting('fullscreen', screenfullMe.current);
+    };
+
+    // 延后插入标签
+    let timer = -1;
+
     // 非预览模式且未提供screenfull时请求cdn
     if (!screenfull) {
       screenScript = document.createElement('script');
@@ -63,30 +71,32 @@ export const useSreenfull = (props: ToolbarProps) => {
         screenfull = window.screenfull;
         // 注册事件
         if (screenfull && screenfull.isEnabled) {
-          screenfull.on('change', () => {
-            props.updateSetting('fullscreen', screenfullMe.current);
-
-            if (screenfullMe.current) {
-              screenfullMe.current = false;
-            }
-          });
+          screenfull.on('change', changedEvent);
         }
       };
       screenScript.id = `${prefix}-screenfull`;
 
-      appendHandler(screenScript, 'screenfull');
+      timer = requestAnimationFrame(() => {
+        appendHandler(screenScript, 'screenfull');
+      });
     }
 
     // 提供了对象直接监听事件，未提供通过screenfullLoad触发
     if (screenfull && screenfull.isEnabled) {
-      screenfull.on('change', () => {
-        props.updateSetting('fullscreen', screenfullMe.current);
-
-        if (screenfullMe.current) {
-          screenfullMe.current = false;
-        }
-      });
+      screenfull.on('change', changedEvent);
     }
+
+    return () => {
+      // 严格模式下，需要取消一次嵌入标签
+      if (!screenfull) {
+        cancelAnimationFrame(timer);
+      }
+
+      if (screenfull && screenfull.isEnabled) {
+        screenfull.off('change', changedEvent);
+      }
+    };
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

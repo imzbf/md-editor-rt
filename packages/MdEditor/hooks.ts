@@ -387,14 +387,6 @@ export const useConfig = (props: EditorProps) => {
         [k]: v === undefined ? !_setting[k] : v
       } as SettingType;
 
-      if (k === 'fullscreen') {
-        if (v || _setting.fullscreen) {
-          nextSetting.fullscreen = !_setting[k];
-        } else {
-          nextSetting.fullscreen = _setting[k];
-        }
-      }
-
       if (k === 'preview' && nextSetting.preview) {
         nextSetting.htmlPreview = false;
       } else if (k === 'htmlPreview' && nextSetting.htmlPreview) {
