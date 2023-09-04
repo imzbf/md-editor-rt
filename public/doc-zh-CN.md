@@ -884,6 +884,34 @@ export default () => {
 
 ---
 
+### 🔖 onDrop
+
+- **类型**：`(event: DragEvent) => void`
+
+  拖放内容事件。
+
+  ```jsx
+  import { useState } from 'react';
+  import { MdEditor } from 'md-editor-rt';
+  import 'md-editor-rt/lib/style.css';
+
+  export default () => {
+    const [text, setText] = useState('');
+    return (
+      <MdEditor
+        modelValue={text}
+        onChange={setText}
+        onDrop={(e) => {
+          e.preventDefault();
+          console.log(e.dataTransfer?.files[0]);
+        }}
+      />
+    );
+  };
+  ```
+
+---
+
 ## 🤱🏼 实例暴露
 
 2.5.0 版本之后，编辑器暴露了若干方法在组件实例上，用来快捷监听编辑器内部状态或对调整内部状态。

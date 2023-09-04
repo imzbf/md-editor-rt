@@ -849,6 +849,34 @@ export default () => {
 
 ---
 
+### 🔖 onDrop
+
+- **type**: `(event: DragEvent) => void`
+
+  The event occurs when a selection is being dragged.
+
+  ```jsx
+  import { useState } from 'react';
+  import { MdEditor } from 'md-editor-rt';
+  import 'md-editor-rt/lib/style.css';
+
+  export default () => {
+    const [text, setText] = useState('');
+    return (
+      <MdEditor
+        modelValue={text}
+        onChange={setText}
+        onDrop={(e) => {
+          e.preventDefault();
+          console.log(e.dataTransfer?.files[0]);
+        }}
+      />
+    );
+  };
+  ```
+
+---
+
 ## 🤱🏼 Expose
 
 After 2.5.0, Editor exposes several methods on the instance, used to get or change the internal status of the editor.
