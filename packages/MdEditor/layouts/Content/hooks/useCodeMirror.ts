@@ -1,8 +1,9 @@
-import { useContext, useEffect, useMemo, useRef, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import { EditorView, minimalSetup } from 'codemirror';
 import { keymap } from '@codemirror/view';
 import { languages } from '@codemirror/language-data';
 import { markdown } from '@codemirror/lang-markdown';
+import { Compartment } from '@codemirror/state';
 import { indentWithTab, undo, redo } from '@codemirror/commands';
 import { configOption } from '~/config';
 import bus from '~/utils/event-bus';
@@ -33,6 +34,16 @@ const useCodeMirror = (props: ContentProps) => {
 
   const codeMirrorUt = useRef<CodeMirrorUt>();
 
+  const [comp] = useState(() => {
+    return {
+      language: new Compartment(),
+      theme: new Compartment(),
+      autocompletion: new Compartment(),
+      update: new Compartment(),
+      domEvent: new Compartment()
+    };
+  });
+
   const [mdEditorCommands] = useState(() => createCommands(editorId, props));
 
   // 第一次延迟设置codemirror属性
@@ -41,57 +52,61 @@ const useCodeMirror = (props: ContentProps) => {
   // 粘贴上传
   const pasteHandler = usePasteUpload(props);
 
-  const defaultExtensions = useMemo(() => {
+  const [defaultExtensions] = useState(() => {
     return [
       keymap.of([...mdEditorCommands, indentWithTab]),
       minimalSetup,
-      markdown({ codeLanguages: languages }),
+      comp.language.of(markdown({ codeLanguages: languages })),
       // 横向换行
       EditorView.lineWrapping,
-      EditorView.updateListener.of((update) => {
-        update.docChanged && props.onChange(update.state.doc.toString());
-      }),
-      EditorView.domEventHandlers({
-        paste: pasteHandler,
-        blur: props.onBlur,
-        focus: props.onFocus,
-        drop: props.onDrop,
-        input: (e) => {
-          props.onInput && props.onInput(e);
+      comp.update.of(
+        EditorView.updateListener.of((update) => {
+          update.docChanged && props.onChange(update.state.doc.toString());
+        })
+      ),
+      comp.domEvent.of(
+        EditorView.domEventHandlers({
+          paste: pasteHandler,
+          blur: props.onBlur,
+          focus: props.onFocus,
+          drop: props.onDrop,
+          input: (e) => {
+            props.onInput && props.onInput(e);
 
-          const { data } = e as any;
-          if (
-            props.maxLength &&
-            props.modelValue.length + data.length > props.maxLength
-          ) {
-            bus.emit(editorId, ERROR_CATCHER, {
-              name: 'overlength',
-              message: 'The input text is too long',
-              data: data
-            });
+            const { data } = e as any;
+            if (
+              props.maxLength &&
+              props.modelValue.length + data.length > props.maxLength
+            ) {
+              bus.emit(editorId, ERROR_CATCHER, {
+                name: 'overlength',
+                message: 'The input text is too long',
+                data: data
+              });
+            }
           }
-        }
-      })
+        })
+      )
     ];
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [mdEditorCommands, pasteHandler, props]);
+  });
 
-  const extensions = useMemo(() => {
+  const [extensions] = useState(() => {
     return configOption.codeMirrorExtensions!(
       theme,
       [
         ...defaultExtensions,
-        theme === 'light' ? oneLight : oneDark,
-        createAutocompletion(props.completions)
+        comp.theme.of(theme === 'light' ? oneLight : oneDark),
+        comp.autocompletion.of(createAutocompletion(props.completions))
       ],
       [...mdEditorCommands]
     );
-  }, [defaultExtensions, mdEditorCommands, props.completions, theme]);
+  });
 
   useEffect(() => {
     const view = new EditorView({
       doc: props.modelValue,
-      parent: inputWrapperRef.current!
+      parent: inputWrapperRef.current!,
+      extensions
     });
 
     const nc = new CodeMirrorUt(view);
@@ -101,7 +116,6 @@ const useCodeMirror = (props: ContentProps) => {
       nc.setTabSize(tabWidth);
       nc.setDisabled(props.disabled!);
       nc.setReadOnly(props.readOnly!);
-      nc.setExtensions(extensions);
       props.placeholder && nc.setPlaceholder(props.placeholder);
       typeof props.maxLength === 'number' && nc.setMaxLength(props.maxLength);
       props.autoFocus && view.focus();
@@ -140,13 +154,57 @@ const useCodeMirror = (props: ContentProps) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  useEffect(() => {
-    if (noSet.current) {
-      return;
-    }
+  // =================
 
-    codeMirrorUt.current?.setExtensions(extensions);
-  }, [extensions]);
+  // 主题变化切换扩展
+  useEffect(() => {
+    setTimeout(() => {
+      codeMirrorUt.current?.view.dispatch({
+        effects: comp.theme.reconfigure(theme === 'light' ? oneLight : oneDark)
+      });
+    }, 0);
+  }, [comp.theme, theme]);
+
+  // 更新方法变化
+  useEffect(() => {
+    setTimeout(() => {
+      codeMirrorUt.current?.view.dispatch({
+        effects: [
+          comp.update.reconfigure(
+            EditorView.updateListener.of((update) => {
+              update.docChanged && props.onChange(update.state.doc.toString());
+            })
+          ),
+          comp.domEvent.reconfigure(
+            EditorView.domEventHandlers({
+              paste: pasteHandler,
+              blur: props.onBlur,
+              focus: props.onFocus,
+              drop: props.onDrop,
+              input: (e) => {
+                props.onInput && props.onInput(e);
+                const { data } = e as any;
+                if (
+                  props.maxLength &&
+                  props.modelValue.length + data.length > props.maxLength
+                ) {
+                  bus.emit(editorId, ERROR_CATCHER, {
+                    name: 'overlength',
+                    message: 'The input text is too long',
+                    data: data
+                  });
+                }
+              }
+            })
+          ),
+          comp.autocompletion.reconfigure(createAutocompletion(props.completions))
+        ]
+      });
+    }, 0);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [comp.domEvent, comp.update, pasteHandler, props]);
+
+  // =================end
 
   useEffect(() => {
     // 只有不是输入的时候才手动设置编辑区的内容
