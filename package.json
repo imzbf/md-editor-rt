@@ -27,7 +27,7 @@
   },
   "dependencies": {
     "@vavt/cm-extension": "^1.0.0",
-    "@vavt/rt-extension": "^1.0.1",
+    "@vavt/rt-extension": "^1.0.2",
     "dayjs": "^1.11.3",
     "markdown-it-mark": "^3.0.1",
     "md-editor-rt": "^4.7.0",
