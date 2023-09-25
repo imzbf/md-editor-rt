@@ -14,8 +14,8 @@ import { lineNumbers } from '@codemirror/view';
 import 'md-editor-rt/lib/style.css';
 import './styles/common.less';
 
-import ZH_TW from '@vavt/md-editor-extension/dist/locale/zh-TW';
-import '@vavt/md-editor-extension/dist/previewTheme/arknights.css';
+import ZH_TW from '@vavt/cm-extension/dist/locale/zh-TW';
+import '@vavt/cm-extension/dist/previewTheme/arknights.css';
 
 config({
   markdownItConfig(md) {

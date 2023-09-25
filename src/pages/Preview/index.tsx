@@ -1,13 +1,14 @@
 import React, { useEffect, useMemo, useState, useRef } from 'react';
 import { MdEditor, ExposeParam } from 'md-editor-rt';
 import { useSelector } from 'react-redux';
+import { Emoji, Mark, ExportPDF } from '@vavt/rt-extension';
+import '@vavt/rt-extension/lib/asset/style.css';
+
 import axios from '@/utils/request';
 import { StateType } from '@/store';
 import mdEN from '../../../public/preview-en-US.md';
 import mdCN from '../../../public/preview-zh-CN.md';
 
-import EmojiExtension from '@/components/EmojiExtension';
-import MarkExtension from '@/components/MarkExtension';
 import ReadExtension from '@/components/ReadExtension';
 import TimeNow from '@/components/TimeNow';
 
@@ -89,9 +90,33 @@ export default () => {
           editorId={editorId}
           autoDetectCode
           defToolbars={[
-            <MarkExtension key="mark-extension" />,
-            <EmojiExtension key="emoji-extension" />,
-            <ReadExtension mdText={md} key="read-extension" />
+            <Mark
+              key="mark-extension"
+              trigger={
+                <svg className="md-editor-icon" aria-hidden="true">
+                  <use xlinkHref="#icon-mark"></use>
+                </svg>
+              }
+            />,
+            <Emoji
+              key="emoji-extension"
+              trigger={
+                <svg className="md-editor-icon" aria-hidden="true">
+                  <use xlinkHref="#icon-emoji"></use>
+                </svg>
+              }
+            />,
+            <ReadExtension mdText={md} key="read-extension" />,
+            <ExportPDF
+              key="ExportPDF"
+              modelValue={md}
+              height="700px"
+              trigger={
+                <svg className="md-editor-icon" aria-hidden="true">
+                  <use xlinkHref="#icon-export"></use>
+                </svg>
+              }
+            />
           ]}
           onSave={(v, h) => {
             console.log('v', v);
@@ -124,6 +149,7 @@ export default () => {
             0,
             1,
             2,
+            3,
             '-',
             'revoke',
             'next',

@@ -1427,7 +1427,17 @@ config({
 
 按需引用编辑器的扩展组件，例如：`import { DropdownToolbar } from 'md-editor-rt'`。
 
-在`v4.3.0`以后, `insert`方法会由编辑器自动向组件的组件注入。
+!!! info 内置属性提示
+
+为了帮助开发者快速插入和使用编辑器的属性，编辑器组件已经默认向编写的扩展组件添加了下面的属性的值：
+
+| 名称 | 使用示例 |
+| --- | --- |
+| insert | 参考下方的`DropdownToolbar`组件示例 |
+| theme | 参考扩展组件中的[ExportPDF](https://github.com/imzbf/md-editor-extension/blob/main/packages/rt/components/ExportPDF/ExportPDF.tsx#L71) |
+| language | 同上 |
+
+!!!
 
 ### 🐣 NormalToolbar
 
