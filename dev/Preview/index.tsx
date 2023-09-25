@@ -2,7 +2,6 @@ import React, { useEffect, useRef, useState } from 'react';
 import axios from 'axios';
 import {
   MdEditor,
-  NormalToolbar,
   DropdownToolbar,
   ModalToolbar,
   MdCatalog,
@@ -21,6 +20,7 @@ import Icon from '~/components/Icon';
 // import { Extension } from '@codemirror/state';
 import { lineNumbers } from '@codemirror/view';
 import { CompletionSource } from '@codemirror/autocomplete';
+import Normal from './Normal';
 // import screenfull from 'screenfull';
 // import katex from 'katex';
 // import 'katex/dist/katex.min.css';
@@ -356,11 +356,7 @@ export default ({ theme, previewTheme, codeTheme, lang }: PreviewProp) => {
             'github'
           ]}
           defToolbars={[
-            <NormalToolbar
-              trigger={<Icon name="strike-through" />}
-              onClick={console.log}
-              key="dddd"
-            ></NormalToolbar>,
+            <Normal key="ddd1" />,
             <DropdownToolbar
               visible={defVisible}
               trigger={<Icon name="strike-through" />}

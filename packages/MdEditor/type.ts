@@ -449,6 +449,7 @@ export interface ContentType {
   showCodeRowNumber: boolean;
   usedLanguageText: StaticTextDefaultValue;
   theme: Themes;
+  language: string;
   previewTheme: PreviewThemes;
   customIcon: CustomIcon;
 }

@@ -48,7 +48,7 @@ let splitNum = 0;
 const Toolbar = (props: ToolbarProps) => {
   const { toolbars, toolbarsExclude, updateSetting } = props;
   // 获取ID，语言设置
-  const { editorId, usedLanguageText } = useContext(EditorContext);
+  const { editorId, usedLanguageText, theme, language } = useContext(EditorContext);
   const ult = usedLanguageText;
 
   const [wrapperId] = useState(() => `${editorId}-toolbar-wrapper`);
@@ -928,6 +928,8 @@ const Toolbar = (props: ToolbarProps) => {
 
         if (defItem) {
           const defItemCloned = cloneElement(defItem, {
+            theme,
+            language,
             insert(generate: InsertContentGenerator) {
               bus.emit(editorId, REPLACE, 'universal', { generate });
             }
@@ -959,7 +961,9 @@ const Toolbar = (props: ToolbarProps) => {
       props.showToolbarName,
       setModalData,
       ult.toolbarTips,
-      updateSetting
+      updateSetting,
+      theme,
+      language
     ]
   );
 

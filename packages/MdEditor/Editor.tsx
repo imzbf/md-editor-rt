@@ -27,6 +27,7 @@ export const EditorContext = createContext<ContentType>({
   editorId: '',
   tabWidth: 2,
   theme: 'light',
+  language: 'zh-CN',
   highlight: {
     css: '',
     js: ''
@@ -66,7 +67,8 @@ const Editor = forwardRef((props: EditorProps, ref: ForwardedRef<unknown>) => {
     noIconfont = defaultProps.noIconfont,
     noUploadImg = defaultProps.noUploadImg,
     noHighlight = defaultProps.noHighlight,
-    noImgZoomIn = defaultProps.noImgZoomIn
+    noImgZoomIn = defaultProps.noImgZoomIn,
+    language = defaultProps.language
   } = props;
 
   const [staticProps] = useState<StaticProps>(() => {
@@ -130,6 +132,7 @@ const Editor = forwardRef((props: EditorProps, ref: ForwardedRef<unknown>) => {
         editorId: staticProps.editorId,
         tabWidth,
         theme,
+        language,
         highlight,
         showCodeRowNumber,
         usedLanguageText,
