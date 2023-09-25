@@ -25,7 +25,8 @@ const MdPreview = (props: MdPreviewProps) => {
     mdHeadingId = defaultProps.mdHeadingId,
     noIconfont = defaultProps.noIconfont,
     noHighlight = defaultProps.noHighlight,
-    noImgZoomIn = defaultProps.noImgZoomIn
+    noImgZoomIn = defaultProps.noImgZoomIn,
+    language = defaultProps.language
   } = props;
 
   const [staticProps] = useState<MdPreviewStaticProps>(() => {
@@ -57,6 +58,7 @@ const MdPreview = (props: MdPreviewProps) => {
         editorId: staticProps.editorId,
         tabWidth: 2,
         theme,
+        language,
         highlight,
         showCodeRowNumber,
         usedLanguageText,
