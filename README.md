@@ -145,7 +145,7 @@ Except for the same as `MdPreview`:
 | autoDetectCode | `boolean` | false | auto detect the type of pasted code, only support that copied from `vscode` |
 | completions | `Array<CompletionSource>` | [] | `@codemirror/autocomplete` List of function to match keywords |
 | showToolbarName | `boolean` | false | Show toolbar name or not |
-| inputBoxWitdh | 'string' | '50%' | Default width of input box |
+| inputBoxWitdh | `string` | '50%' | Default width of input box |
 
 <details>
  <summary>『toolbars』</summary>
@@ -738,6 +738,21 @@ For more examples, refer to [document](https://imzbf.github.io/md-editor-rt).
 
   - `onClose`: `() => void`, necessary, close event.
   - `onAdjust`: `(val: boolean) => void`, fullscreen button click event.
+
+## 🪤 Internal Configuration
+
+```js
+import {
+  iconfontClassUrl,
+  iconfontUrl,
+  allToolbar,
+  allFooter,
+  zh_CN,
+  en_US
+} from 'md-editor-rt';
+
+console.log(iconfontClassUrl, iconfontUrl, allToolbar, allFooter, zh_CN, en_US);
+```
 
 ## 🗂 Examples
 

@@ -142,7 +142,7 @@ export default () => {
 | autoDetectCode | `boolean` | false | 是否启用自动识别粘贴代码类别，目前仅支持从`vscode`复制的内容 |
 | completions | `Array<CompletionSource>` | [] | `@codemirror/autocomplete`匹配关键词的方法列表 |
 | showToolbarName | `boolean` | false | 是否在工具栏下面显示对应的文字名称 |
-| inputBoxWitdh | 'string' | '50%' | 输入框默认的宽度 |
+| inputBoxWitdh | `string` | '50%' | 输入框默认的宽度 |
 
 > 如果你重新定义了标题，请务必通过`mdHeadingId`告诉编辑器你生成标题 ID 的算法。以便生成的内部目录能够正确导航。
 
@@ -752,6 +752,21 @@ import { NormalToolbar } from 'md-editor-rt';
 
   - `onClose`: `() => void`，必须，弹窗点击关闭事件。
   - `onAdjust`: `(val: boolean) => void`，弹窗全屏按钮点击事件。
+
+## 🪤 内部配置
+
+```js
+import {
+  iconfontClassUrl,
+  iconfontUrl,
+  allToolbar,
+  allFooter,
+  zh_CN,
+  en_US
+} from 'md-editor-rt';
+
+console.log(iconfontClassUrl, iconfontUrl, allToolbar, allFooter, zh_CN, en_US);
+```
 
 ## 🗂 部分示例
 
