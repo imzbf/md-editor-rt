@@ -744,14 +744,14 @@ For more examples, refer to [document](https://imzbf.github.io/md-editor-rt).
 ```js
 import {
   iconfontClassUrl,
-  iconfontUrl,
+  iconfontSvgUrl,
   allToolbar,
   allFooter,
   zh_CN,
   en_US
 } from 'md-editor-rt';
 
-console.log(iconfontClassUrl, iconfontUrl, allToolbar, allFooter, zh_CN, en_US);
+console.log(iconfontClassUrl, iconfontSvgUrl, allToolbar, allFooter, zh_CN, en_US);
 ```
 
 ## 🗂 Examples

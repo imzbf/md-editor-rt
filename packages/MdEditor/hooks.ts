@@ -21,7 +21,7 @@ import {
 } from './type';
 import {
   prefix,
-  iconfontUrl,
+  iconfontSvgUrl,
   prettierUrl,
   cropperUrl,
   allToolbar,
@@ -205,7 +205,7 @@ export const useExpansionPreview = ({ noIconfont }: MdPreviewStaticProps) => {
       if (configOption.iconfontType === 'svg') {
         // 图标
         const iconfontScript = document.createElement('script');
-        iconfontScript.src = configOption.editorExtensions?.iconfont || iconfontUrl;
+        iconfontScript.src = configOption.editorExtensions?.iconfont || iconfontSvgUrl;
         iconfontScript.id = `${prefix}-icon`;
         appendHandler(iconfontScript);
       } else {
