@@ -318,6 +318,7 @@ export default ({ theme, previewTheme, codeTheme, lang }: PreviewProp) => {
           //     }
           //   }
           // }}
+          // inputBoxWitdh="200px"
           toolbars={[
             'bold',
             'underline',

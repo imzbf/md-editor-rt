@@ -7,6 +7,6 @@ export { default as ModalToolbar } from './ModalToolbar';
 export { default as MdCatalog } from './MdCatalog';
 export { default as MdModal } from './MdEditor/components/Modal';
 
-export { default as config } from './config';
+export * from './config';
 
 export * from '~/type';

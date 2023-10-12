@@ -1,22 +1,39 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useRef } from 'react';
+import MdCatalog from '~~/MdCatalog';
 import { EditorContext } from '~/Editor';
 import { prefix } from '~/config';
-import MdCatalog from '~~/MdCatalog';
-import ContentPreview from './ContentPreview';
-import { useAutoScroll, useCodeMirror } from './hooks';
+import { useAutoScroll, useCodeMirror, useResize } from './hooks';
 import { ContentProps } from './props';
+import ContentPreview from './ContentPreview';
 
 const Content = (props: ContentProps) => {
   const { editorId } = useContext(EditorContext);
   const [html, setHtml] = useState<string>('');
 
+  const contentRef = useRef<HTMLDivElement>(null);
+  const resizeRef = useRef<HTMLDivElement>(null);
+
   const { inputWrapperRef, codeMirrorUt } = useCodeMirror(props);
+  const { inputWrapperStyle, resizeOperateStyle } = useResize(
+    props,
+    contentRef,
+    resizeRef
+  );
   // 自动滚动
   useAutoScroll(props, html, codeMirrorUt);
 
   return (
-    <div className={`${prefix}-content`}>
-      <div className={`${prefix}-input-wrapper`} ref={inputWrapperRef}></div>
+    <div className={`${prefix}-content`} ref={contentRef}>
+      <div
+        className={`${prefix}-input-wrapper`}
+        style={inputWrapperStyle}
+        ref={inputWrapperRef}
+      />
+      <div
+        className={`${prefix}-resize-operate`}
+        style={resizeOperateStyle}
+        ref={resizeRef}
+      />
       <ContentPreview
         modelValue={props.modelValue}
         setting={props.setting}
