@@ -80,11 +80,16 @@ const useResize = (
   useEffect(() => {
     if (!props.setting.htmlPreview && !props.setting.preview) {
       setInputWrapperStyle((prevState) => {
-        resizedWidth.current = prevState.width;
-
         return {
           ...prevState,
           width: '100%'
+        };
+      });
+
+      setResizeOperateStyle((prevState) => {
+        return {
+          ...prevState,
+          display: 'none'
         };
       });
     } else {
@@ -92,6 +97,13 @@ const useResize = (
         return {
           ...prevState,
           width: resizedWidth.current
+        };
+      });
+
+      setResizeOperateStyle((prevState) => {
+        return {
+          ...prevState,
+          display: 'initial'
         };
       });
     }
