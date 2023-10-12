@@ -90,7 +90,7 @@ const Toolbar = (props: ToolbarProps) => {
         overlay={
           <ul className={`${prefix}-menu`} onClick={onTitleClose}>
             <li
-              className={`${prefix}-menu-item`}
+              className={`${prefix}-menu-item ${prefix}-menu-item-title`}
               onClick={() => {
                 emitHandler('h1');
               }}
@@ -98,7 +98,7 @@ const Toolbar = (props: ToolbarProps) => {
               {ult.titleItem?.h1}
             </li>
             <li
-              className={`${prefix}-menu-item`}
+              className={`${prefix}-menu-item ${prefix}-menu-item-title`}
               onClick={() => {
                 emitHandler('h2');
               }}
@@ -106,7 +106,7 @@ const Toolbar = (props: ToolbarProps) => {
               {ult.titleItem?.h2}
             </li>
             <li
-              className={`${prefix}-menu-item`}
+              className={`${prefix}-menu-item ${prefix}-menu-item-title`}
               onClick={() => {
                 emitHandler('h3');
               }}
@@ -114,7 +114,7 @@ const Toolbar = (props: ToolbarProps) => {
               {ult.titleItem?.h3}
             </li>
             <li
-              className={`${prefix}-menu-item`}
+              className={`${prefix}-menu-item ${prefix}-menu-item-title`}
               onClick={() => {
                 emitHandler('h4');
               }}
@@ -122,7 +122,7 @@ const Toolbar = (props: ToolbarProps) => {
               {ult.titleItem?.h4}
             </li>
             <li
-              className={`${prefix}-menu-item`}
+              className={`${prefix}-menu-item ${prefix}-menu-item-title`}
               onClick={() => {
                 emitHandler('h5');
               }}
@@ -130,7 +130,7 @@ const Toolbar = (props: ToolbarProps) => {
               {ult.titleItem?.h5}
             </li>
             <li
-              className={`${prefix}-menu-item`}
+              className={`${prefix}-menu-item ${prefix}-menu-item-title`}
               onClick={() => {
                 emitHandler('h6');
               }}
@@ -170,7 +170,7 @@ const Toolbar = (props: ToolbarProps) => {
         overlay={
           <ul className={`${prefix}-menu`} onClick={onImageClose}>
             <li
-              className={`${prefix}-menu-item`}
+              className={`${prefix}-menu-item ${prefix}-menu-item-image`}
               onClick={() => {
                 setModalData((_modalData) => {
                   return {
@@ -184,7 +184,7 @@ const Toolbar = (props: ToolbarProps) => {
               {ult.imgTitleItem?.link}
             </li>
             <li
-              className={`${prefix}-menu-item`}
+              className={`${prefix}-menu-item ${prefix}-menu-item-image`}
               onClick={() => {
                 (uploadRef.current as HTMLInputElement).click();
               }}
@@ -192,7 +192,7 @@ const Toolbar = (props: ToolbarProps) => {
               {ult.imgTitleItem?.upload}
             </li>
             <li
-              className={`${prefix}-menu-item`}
+              className={`${prefix}-menu-item ${prefix}-menu-item-image`}
               onClick={() => {
                 setModalData((_modalData) => {
                   return {
@@ -268,7 +268,7 @@ const Toolbar = (props: ToolbarProps) => {
         overlay={
           <ul className={`${prefix}-menu`} onClick={onMermaidClose}>
             <li
-              className={`${prefix}-menu-item`}
+              className={`${prefix}-menu-item ${prefix}-menu-item-mermaid`}
               onClick={() => {
                 emitHandler('flow');
               }}
@@ -276,7 +276,7 @@ const Toolbar = (props: ToolbarProps) => {
               {ult.mermaid?.flow}
             </li>
             <li
-              className={`${prefix}-menu-item`}
+              className={`${prefix}-menu-item ${prefix}-menu-item-mermaid`}
               onClick={() => {
                 emitHandler('sequence');
               }}
@@ -284,7 +284,7 @@ const Toolbar = (props: ToolbarProps) => {
               {ult.mermaid?.sequence}
             </li>
             <li
-              className={`${prefix}-menu-item`}
+              className={`${prefix}-menu-item ${prefix}-menu-item-mermaid`}
               onClick={() => {
                 emitHandler('gantt');
               }}
@@ -292,7 +292,7 @@ const Toolbar = (props: ToolbarProps) => {
               {ult.mermaid?.gantt}
             </li>
             <li
-              className={`${prefix}-menu-item`}
+              className={`${prefix}-menu-item ${prefix}-menu-item-mermaid`}
               onClick={() => {
                 emitHandler('class');
               }}
@@ -300,7 +300,7 @@ const Toolbar = (props: ToolbarProps) => {
               {ult.mermaid?.class}
             </li>
             <li
-              className={`${prefix}-menu-item`}
+              className={`${prefix}-menu-item ${prefix}-menu-item-mermaid`}
               onClick={() => {
                 emitHandler('state');
               }}
@@ -308,7 +308,7 @@ const Toolbar = (props: ToolbarProps) => {
               {ult.mermaid?.state}
             </li>
             <li
-              className={`${prefix}-menu-item`}
+              className={`${prefix}-menu-item ${prefix}-menu-item-mermaid`}
               onClick={() => {
                 emitHandler('pie');
               }}
@@ -316,7 +316,7 @@ const Toolbar = (props: ToolbarProps) => {
               {ult.mermaid?.pie}
             </li>
             <li
-              className={`${prefix}-menu-item`}
+              className={`${prefix}-menu-item ${prefix}-menu-item-mermaid`}
               onClick={() => {
                 emitHandler('relationship');
               }}
@@ -324,7 +324,7 @@ const Toolbar = (props: ToolbarProps) => {
               {ult.mermaid?.relationship}
             </li>
             <li
-              className={`${prefix}-menu-item`}
+              className={`${prefix}-menu-item ${prefix}-menu-item-mermaid`}
               onClick={() => {
                 emitHandler('journey');
               }}
@@ -366,7 +366,7 @@ const Toolbar = (props: ToolbarProps) => {
         overlay={
           <ul className={`${prefix}-menu`} onClick={onKatexClose}>
             <li
-              className={`${prefix}-menu-item`}
+              className={`${prefix}-menu-item ${prefix}-menu-item-katex`}
               onClick={() => {
                 emitHandler('katexInline');
               }}
@@ -374,7 +374,7 @@ const Toolbar = (props: ToolbarProps) => {
               {ult.katex?.inline}
             </li>
             <li
-              className={`${prefix}-menu-item`}
+              className={`${prefix}-menu-item ${prefix}-menu-item-katex`}
               onClick={() => {
                 emitHandler('katexBlock');
               }}
