@@ -13,8 +13,8 @@ export const prefix = 'md-editor';
 export const defaultEditorId = 'md-editor-rt';
 
 // 字体链接
-export const iconfontUrl = 'https://at.alicdn.com/t/c/font_2605852_u82y61ve02.js';
-export const iconfontClassUrl = 'https://at.alicdn.com/t/c/font_2605852_qm4cjcggwma.css';
+export const iconfontUrl = 'https://at.alicdn.com/t/c/font_2605852_prouiefeic.js';
+export const iconfontClassUrl = 'https://at.alicdn.com/t/c/font_2605852_prouiefeic.css';
 
 export const cdnBase = 'https://cdnjs.cloudflare.com/ajax/libs';
 
@@ -322,7 +322,8 @@ export const defaultProps = {
   readOnly: false,
   autoDetectCode: false,
   noHighlight: false,
-  noImgZoomIn: false
+  noImgZoomIn: false,
+  inputBoxWitdh: '50%'
 };
 
 export const configOption: ConfigOption = {

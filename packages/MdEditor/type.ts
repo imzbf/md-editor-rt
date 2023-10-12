@@ -437,6 +437,12 @@ export interface EditorProps extends MdPreviewProps {
    * @param event
    */
   onDrop?: (event: DragEvent) => void;
+  /**
+   * 输入框的默认宽度
+   *
+   * @example '100px'/'50%'
+   */
+  inputBoxWitdh?: string;
 }
 
 export interface ContentType {

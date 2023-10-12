@@ -2,8 +2,7 @@ import React from 'react';
 import Icon from '~~/MdEditor/components/Icon';
 import { NormalToolbar } from '~~/index';
 
-export default (props: any) => {
-  console.log('pr', props);
+export default () => {
   return (
     <NormalToolbar
       trigger={<Icon name="strike-through" />}
