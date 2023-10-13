@@ -1,4 +1,6 @@
 import { CSSProperties, RefObject, useEffect, useRef, useState } from 'react';
+import { MinInputBoxWidth } from '~/config';
+
 import { ContentProps } from '../props';
 
 const useResize = (
@@ -26,27 +28,30 @@ const useResize = (
       // 新的宽度 = 鼠标的位置 - 图标的一半宽度 - 内容区域的横坐标
       let nextWidth = e.x - contentX;
 
-      if (nextWidth < 100) {
-        nextWidth = 100;
-      } else if (nextWidth > maxWidth - 100) {
-        nextWidth = maxWidth - 100;
+      if (nextWidth < MinInputBoxWidth) {
+        nextWidth = MinInputBoxWidth;
+      } else if (nextWidth > maxWidth - MinInputBoxWidth) {
+        nextWidth = maxWidth - MinInputBoxWidth;
       }
+
+      const ibw = `${nextWidth}px`;
 
       setInputWrapperStyle((prevState) => {
         return {
           ...prevState,
-          width: `${nextWidth}px`
+          width: ibw
         };
       });
 
       setResizeOperateStyle((prevState) => {
         return {
           ...prevState,
-          left: `${nextWidth}px`
+          left: ibw
         };
       });
 
-      resizedWidth.current = `${nextWidth}px`;
+      resizedWidth.current = ibw;
+      props.onInputBoxWitdhChange?.(ibw);
     };
 
     const resizeMousedown = () => {
@@ -75,7 +80,7 @@ const useResize = (
       // eslint-disable-next-line react-hooks/exhaustive-deps
       resizeRef.current?.removeEventListener('mouseup', resizeMouseup);
     };
-  }, [contentRef, resizeRef]);
+  }, [contentRef, props, resizeRef]);
 
   useEffect(() => {
     if (!props.setting.htmlPreview && !props.setting.preview) {
@@ -108,6 +113,24 @@ const useResize = (
       });
     }
   }, [props.setting.htmlPreview, props.setting.preview]);
+
+  useEffect(() => {
+    if (props.inputBoxWitdh) {
+      setInputWrapperStyle((prevState) => {
+        return {
+          ...prevState,
+          width: props.inputBoxWitdh
+        };
+      });
+
+      setResizeOperateStyle((prevState) => {
+        return {
+          ...prevState,
+          left: props.inputBoxWitdh
+        };
+      });
+    }
+  }, [props.inputBoxWitdh]);
 
   return { inputWrapperStyle, resizeOperateStyle };
 };

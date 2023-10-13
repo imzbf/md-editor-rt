@@ -191,6 +191,7 @@ const Editor = forwardRef((props: EditorProps, ref: ForwardedRef<unknown>) => {
           noImgZoomIn={noImgZoomIn}
           onDrop={props.onDrop}
           inputBoxWitdh={inputBoxWitdh}
+          onInputBoxWitdhChange={props.onInputBoxWitdhChange}
         />
         {footers?.length > 0 && (
           <Footer

@@ -47,5 +47,6 @@ export type ContentProps = Readonly<
      */
     onDrop?: (event: DragEvent) => void;
     inputBoxWitdh: string;
+    onInputBoxWitdhChange?: (width: string) => void;
   } & ContentPreviewProps
 >;

@@ -297,7 +297,7 @@ export interface StaticTextDefaultValue {
 
 ### 🧵 MdPreview Events
 
-| name | parameter | description |
+| name | type | description |
 | --- | --- | --- |
 | onHtmlChanged | `html: string` | Compile markdown successful event, you can use it to get the html code |
 | onGetCatalog | `list: Array<HeadList>` | Get catalog of article |
@@ -306,7 +306,7 @@ export interface StaticTextDefaultValue {
 
 Except for the same as `MdPreview`:
 
-| name | parameter | description |
+| name | type | description |
 | --- | --- | --- |
 | onChange | `value: string` | Content changed event(bind to `oninput` of `textarea`) |
 | onSave | `value: string, html: Promise<string>` | Saving content event, `ctrl+s` and clicking button will trigger it |
@@ -316,6 +316,7 @@ Except for the same as `MdPreview`:
 | onFocus | `event: FocusEvent<HTMLTextAreaElement, Element>` | Textarea has received focus |
 | onInput | `event: Event` | Element gets input |
 | onDrop | `event: DragEvent` | The event occurs when a selection is being dragged |
+| onInputBoxWitdhChange | `(width: string) => void` | Event occurs when width of input box has been changed |
 
 ## 🤱🏼 Expose
 
