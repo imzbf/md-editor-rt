@@ -306,7 +306,7 @@ This is the props of `MdPreview`, which is also part of `MdEditor`:
   import React from 'react';
   import type { CustomIcon } from 'md-editor-rt';
   import { MdEditor } from 'md-editor-rt';
-  // 假设你使用了三方图标库或者自定义了图标组件
+  // Assuming you have installed an icon library or customized icon components
   import { IconFont } from 'tdesign-icons-react';
   import 'md-editor-rt/lib/style.css';
 
@@ -695,12 +695,23 @@ Except for the same as `MdPreview`:
 
 ### 📥 showToolbarName
 
-- **类型**：`boolean`
-- **默认值**：`false`
+- **type**: `boolean`
+- **default**: `false`
 
   Show toolbar name or not
 
 ![](https://imzbf.github.io/md-editor-rt/imgs/showToolbarName.jpg)
+
+---
+
+### 📥 inputBoxWitdh
+
+- **type**: `string`
+- **default**: `50%`
+
+  Default width of input box
+
+![](https://imzbf.github.io/md-editor-rt/imgs/drag-width.jpg)
 
 ---
 
@@ -874,6 +885,14 @@ export default () => {
     );
   };
   ```
+
+---
+
+### 🔖 onInputBoxWitdhChange
+
+- **type**: `(width: string) => void`
+
+  Event occurs when width of input box has been changed
 
 ---
 
@@ -1369,7 +1388,7 @@ Shortcut keys are only available when the textarea has received focus!
 | CTRL + SHIFT + S | line-through | `~line-through~` |
 | CTRL + SHIFT + U | unordered list | `- unordered list` |
 | CTRL + SHIFT + C | code block |  |
-| CTRL + SHIFT + I | picture | `![picture](https://imzbf.cc)` |
+| CTRL + SHIFT + I | picture | `![picture](https://github.com/imzbf)` |
 | CTRL + SHIFT + Z | forward | Forward history in editor, not the function of system |
 | CTRL + SHIFT + F | Beautify |  |
 | CTRL + ALT + C | code row |  |
@@ -1791,6 +1810,21 @@ export default () => {
 ```
 
 ---
+
+## 🪤 Internal Configuration
+
+```js
+import {
+  iconfontClassUrl,
+  iconfontSvgUrl,
+  allToolbar,
+  allFooter,
+  zh_CN,
+  en_US
+} from 'md-editor-rt';
+
+console.log(iconfontClassUrl, iconfontSvgUrl, allToolbar, allFooter, zh_CN, en_US);
+```
 
 ## ✍️ Edit This Page
 

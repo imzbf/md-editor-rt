@@ -1,6 +1,6 @@
 {
   "name": "md-editor-rt",
-  "version": "4.7.0",
+  "version": "4.8.0",
   "keywords": [
     "react",
     "nextjs",
@@ -17,7 +17,7 @@
   "description": "Markdown editor for react, developed by jsx and typescript, dark theme、beautify content by prettier、render articles directly、paste or clip the picture and upload it...",
   "author": {
     "name": "zbf",
-    "url": "https://imzbf.cc"
+    "url": "https://github.com/imzbf"
   },
   "homepage": "https://imzbf.github.io/md-editor-rt/",
   "license": "MIT",
@@ -30,7 +30,7 @@
     "@vavt/rt-extension": "^1.0.2",
     "dayjs": "^1.11.3",
     "markdown-it-mark": "^3.0.1",
-    "md-editor-rt": "^4.7.0",
+    "md-editor-rt": "^4.8.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-redux": "^7.2.6",
