@@ -23,17 +23,24 @@ const Content = (props: ContentProps) => {
   useAutoScroll(props, html, codeMirrorUt);
 
   return (
-    <div className={`${prefix}-content`} ref={contentRef}>
+    <div
+      className={`${prefix}-content${
+        props.setting.htmlPreview || props.setting.preview ? ' has-preview' : ''
+      }`}
+      ref={contentRef}
+    >
       <div
         className={`${prefix}-input-wrapper`}
         style={inputWrapperStyle}
         ref={inputWrapperRef}
       />
-      <div
-        className={`${prefix}-resize-operate`}
-        style={resizeOperateStyle}
-        ref={resizeRef}
-      />
+      {(props.setting.htmlPreview || props.setting.preview) && (
+        <div
+          className={`${prefix}-resize-operate`}
+          style={resizeOperateStyle}
+          ref={resizeRef}
+        />
+      )}
       <ContentPreview
         modelValue={props.modelValue}
         setting={props.setting}
