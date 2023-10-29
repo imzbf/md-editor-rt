@@ -61,7 +61,8 @@ const ReadExtension = (props: ReadExtensionProp) => {
         style={{
           height: '100%',
           padding: '20px',
-          overflow: 'auto'
+          overflow: 'auto',
+          boxSizing: 'border-box'
         }}
       >
         <MdPreview
