@@ -1,6 +1,6 @@
 {
   "name": "md-editor-rt",
-  "version": "4.8.2",
+  "version": "4.8.3",
   "keywords": [
     "react",
     "nextjs",
@@ -27,10 +27,10 @@
   },
   "dependencies": {
     "@vavt/cm-extension": "^1.2.1",
-    "@vavt/rt-extension": "^1.0.3",
+    "@vavt/rt-extension": "^1.1.0",
     "dayjs": "^1.11.3",
     "markdown-it-mark": "^3.0.1",
-    "md-editor-rt": "^4.8.2",
+    "md-editor-rt": "^4.8.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-redux": "^7.2.6",

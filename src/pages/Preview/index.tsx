@@ -90,33 +90,10 @@ export default () => {
           editorId={editorId}
           autoDetectCode
           defToolbars={[
-            <Mark
-              key="mark-extension"
-              trigger={
-                <svg className="md-editor-icon" aria-hidden="true">
-                  <use xlinkHref="#icon-mark"></use>
-                </svg>
-              }
-            />,
-            <Emoji
-              key="emoji-extension"
-              trigger={
-                <svg className="md-editor-icon" aria-hidden="true">
-                  <use xlinkHref="#icon-emoji"></use>
-                </svg>
-              }
-            />,
+            <Mark key="mark-extension" />,
+            <Emoji key="emoji-extension" />,
             <ReadExtension mdText={md} key="read-extension" />,
-            <ExportPDF
-              key="ExportPDF"
-              modelValue={md}
-              height="700px"
-              trigger={
-                <svg className="md-editor-icon" aria-hidden="true">
-                  <use xlinkHref="#icon-export"></use>
-                </svg>
-              }
-            />
+            <ExportPDF key="ExportPDF" modelValue={md} height="700px" />
           ]}
           onSave={(v, h) => {
             console.log('v', v);

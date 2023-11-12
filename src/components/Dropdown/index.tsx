@@ -1,9 +1,10 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { cloneElement, CSSProperties, useRef, useState, useEffect } from 'react';
 import { createPortal } from 'react-dom';
+import { debounce } from '@vavt/util';
 import Menu from './Menu';
 import MenuItem from './MenuItem';
-import { debounce, getOffset, classnames } from '@/utils';
+import { getOffset, classnames } from '@/utils';
 import './index.less';
 
 interface IzDropdownProp {
@@ -62,7 +63,7 @@ const IzDropdown = (props: IzDropdownProp) => {
       setState((_state) => {
         return {
           ..._state,
-          visible
+          visible: visible as boolean
         };
       });
     });

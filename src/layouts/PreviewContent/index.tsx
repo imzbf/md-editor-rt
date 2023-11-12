@@ -2,7 +2,7 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { MdPreview } from 'md-editor-rt';
 import { StateType } from '@/store';
-import { debounce } from '@/utils';
+import { debounce } from '@vavt/util';
 
 interface IzPreviewContentProp {
   editorId: string;
@@ -10,7 +10,7 @@ interface IzPreviewContentProp {
   showCodeRowNumber: boolean;
 }
 
-const onHtmlChanged = debounce(() => {
+const onHtmlChanged = debounce<any, any>(() => {
   const { hash } = location;
 
   if (/^#/.test(hash)) {
