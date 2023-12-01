@@ -29,10 +29,16 @@ react 版本的 Markdown 编辑器，[md-editor-v3](https://imzbf.github.io/md-e
 yarn add md-editor-rt
 ```
 
-使用语言、预览主题扩展库：
+使用已存在的语言、主题扩展，例如：日语
 
 ```shell
-yarn add @vavt/md-editor-extension
+yarn add @vavt/cm-extension
+```
+
+使用更多的扩展工具栏组件，例如：导出内容为 PDF
+
+```shell
+yarn add @vavt/rt-extension
 ```
 
 更多使用及贡献方式参考：[md-editor-extension](https://github.com/imzbf/md-editor-extension)
@@ -106,7 +112,7 @@ export default () => {
 | noKatex | `boolean` | false | 不使用 katex 展示数学公式 |
 | codeTheme | `'atom' \| 'a11y' \| 'github' \| 'gradient' \| 'kimbie' \| 'paraiso' \| 'qtcreator' \| 'stackoverflow'` | 'atom' | 代码块 highlight 样式名称，扩展更多见下方 |
 | mdHeadingId | `(text: string, level: number, index: number) => string` | (text) => text | 标题`ID`计算方式 |
-| sanitize | `(html: string) => string` | (html) => html | 在每次生成 html 后，通过该方法移除危险内容，比如 xss 相关。 |
+| sanitize | `(html: string) => string` | (html) => html | 通过该方法移除危险内容，比如 xss 相关。3.x 以后已内置危险代码处理，非特殊需求请勿使用该属性 |
 | noIconfont | `boolean` | false | 不插入 iconfont 链接，你可以下载[SVG 版](https://at.alicdn.com/t/c/font_2605852_prouiefeic.js)或[Font Class 版](https://at.alicdn.com/t/c/font_2605852_prouiefeic.css)到本地自行引入 |
 | formatCopiedText | `(text: string) => string` | (text: string) => text | 格式化复制代码 |
 | codeStyleReverse | `boolean` | true | 代码块为暗色背景的预览主题，将代码风格设置为暗色风格 |
@@ -303,7 +309,7 @@ export interface StaticTextDefaultValue {
 
 ### 🧵 MdPreview 绑定事件
 
-| 名称          | 入参                    | 说明                                      |
+| 名称          | 类型                    | 说明                                      |
 | ------------- | ----------------------- | ----------------------------------------- |
 | onHtmlChanged | `html: string`          | html 变化回调事件，用于获取预览 html 代码 |
 | onGetCatalog  | `list: Array<HeadList>` | 动态获取`markdown`目录                    |
@@ -312,7 +318,7 @@ export interface StaticTextDefaultValue {
 
 除去和`MdPreivew`相同的以外：
 
-| 名称 | 入参 | 说明 |
+| 名称 | 类型 | 说明 |
 | --- | --- | --- |
 | onChange | `value: string` | 内容变化事件（当前与`textare`的`oninput`事件绑定，每输入一个单字即会触发） |
 | onSave | `value: string, html: Promise<string>` | 保存事件，快捷键与保存按钮均会触发 |
@@ -322,6 +328,7 @@ export interface StaticTextDefaultValue {
 | onFocus | `event: FocusEvent` | 输入框获得焦点时触发事件 |
 | onInput | `event: Event` | 输入框键入内容事件 |
 | onDrop | `event: DragEvent` | 拖放所选内容触发事件 |
+| onInputBoxWitdhChange | `(width: string) => void` | 调整输入框宽度事件 |
 
 ## 🤱🏼 实例暴露
 
@@ -731,6 +738,7 @@ import { NormalToolbar } from 'md-editor-rt';
 - **events**
 
   - `onClick`: `(e: MouseEvent, t: TocItem) => void`，非必须，导航点击事件。
+  - `onActive`: `(heading: HeadList | undefined) => void`，非必须，高亮的标题变化事件。
 
 ### 🛸 弹窗组件
 

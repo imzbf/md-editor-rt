@@ -1,6 +1,6 @@
 {
   "name": "md-editor-rt",
-  "version": "4.8.0-beta.1",
+  "version": "4.8.3",
   "license": "MIT",
   "keywords": [
     "react",
@@ -18,7 +18,7 @@
   "description": "Markdown editor for react, developed in jsx and typescript, dark theme、beautify content by prettier、render articles directly、paste or clip the picture and upload it...",
   "author": {
     "name": "zbf",
-    "url": "https://imzbf.top"
+    "url": "https://github.com/imzbf"
   },
   "homepage": "https://imzbf.github.io/md-editor-rt/",
   "repository": {

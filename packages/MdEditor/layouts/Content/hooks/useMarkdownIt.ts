@@ -47,7 +47,7 @@ const initLineNumber = (md: mdit) => {
         let line;
         const _htmlCode = backup(tokens, idx, options, env, self);
 
-        if (tokens[idx].map && tokens[idx].level === 0) {
+        if (tokens[idx].map && tokens[idx].level === 0 && !/^<!--/.test(_htmlCode)) {
           line = tokens[idx].map![0];
           return _htmlCode.replace(/^(<[^>]*)/, `$1 data-line="${line}"`);
         }
@@ -128,8 +128,17 @@ const useMarkdownIt = (props: ContentPreviewProps, previewOnly: boolean) => {
       md_.use(item.plugin, item.options);
     });
 
+    const userDefHighlight = md_.options.highlight;
+
     md_.set({
-      highlight: (str, language) => {
+      highlight: (str, language, attrs) => {
+        if (userDefHighlight) {
+          const result = userDefHighlight(str, language, attrs);
+          if (result) {
+            return result;
+          }
+        }
+
         let codeHtml;
 
         // 不高亮或者没有实例，返回默认

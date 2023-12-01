@@ -13,6 +13,9 @@ const resolvePath = (p: string) => path.resolve(__dirname, p);
   const server = await createServer({
     base: '/',
     publicDir: resolvePath('dev/public'),
+    server: {
+      port: 6101
+    },
     resolve: {
       alias: {
         '@': resolvePath('dev'),

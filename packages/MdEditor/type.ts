@@ -443,6 +443,10 @@ export interface EditorProps extends MdPreviewProps {
    * @example '100px'/'50%'
    */
   inputBoxWitdh?: string;
+  /**
+   * 输入框宽度变化事件
+   */
+  onInputBoxWitdhChange?: (width: string) => void;
 }
 
 export interface ContentType {

@@ -6,7 +6,6 @@ import React, {
   MouseEvent,
   useCallback
 } from 'react';
-import { throttle } from '@vavt/util';
 import bus from '~/utils/event-bus';
 import { HeadList, MdHeadingId, Themes } from '~/type';
 import { defaultProps, prefix } from '~/config';
@@ -52,6 +51,13 @@ export interface CatalogProps {
    * 默认：0
    */
   scrollElementOffsetTop?: number;
+  /**
+   * 高亮的标题变化事件
+   *
+   * @param heading
+   * @returns
+   */
+  onActive?: (heading: HeadList | undefined) => void;
 }
 
 const MdCatalog = (props: CatalogProps) => {
@@ -129,7 +135,7 @@ const MdCatalog = (props: CatalogProps) => {
 
   useEffect(() => {
     let cacheList: HeadList[] = [];
-    const findActiveHeading = throttle((list_: HeadList[]) => {
+    const findActiveHeading = (list_: HeadList[]) => {
       if (list_.length === 0) {
         setList([]);
         return false;
@@ -167,12 +173,7 @@ const MdCatalog = (props: CatalogProps) => {
       setActiveItem(activeHead);
       setList(list_);
       cacheList = list_;
-    });
-
-    bus.on(editorId, {
-      name: CATALOG_CHANGED,
-      callback: findActiveHeading
-    });
+    };
 
     const scrollElement_ = getScrollElement();
 
@@ -180,12 +181,21 @@ const MdCatalog = (props: CatalogProps) => {
     const scrollContainer =
       scrollElement_ === document.documentElement ? window : scrollElement_;
 
-    // 主动触发一次接收
-    bus.emit(editorId, PUSH_CATALOG);
-
     const scrollHandler = () => {
       findActiveHeading(cacheList);
     };
+
+    bus.on(editorId, {
+      name: CATALOG_CHANGED,
+      callback: (_list: Array<HeadList>) => {
+        scrollContainer?.removeEventListener('scroll', scrollHandler);
+        findActiveHeading(_list);
+        scrollContainer?.addEventListener('scroll', scrollHandler);
+      }
+    });
+
+    // 主动触发一次接收
+    bus.emit(editorId, PUSH_CATALOG);
 
     scrollContainer?.addEventListener('scroll', scrollHandler);
     return () => {
@@ -194,6 +204,12 @@ const MdCatalog = (props: CatalogProps) => {
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [offsetTop, mdHeadingId, getScrollElement]);
+
+  useEffect(() => {
+    if (props.onActive) {
+      props.onActive(activeItem);
+    }
+  }, [activeItem, props]);
 
   return (
     <div

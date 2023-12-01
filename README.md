@@ -32,10 +32,16 @@ Markdown editor for `react`, developed in `jsx` and `typescript`.
 yarn add md-editor-rt
 ```
 
-Install existing extension of language and theme of preview:
+Use existing extension of language and theme, such as Japanese
 
 ```shell
-yarn add @vavt/md-editor-extension
+yarn add @vavt/cm-extension
+```
+
+Use existing components of toolbar, such as exporting content as PDF
+
+```shell
+yarn add @vavt/v3-extension
 ```
 
 For more ways to use or contribute, please refer to: [md-editor-extension](https://github.com/imzbf/md-editor-extension)
@@ -109,7 +115,7 @@ Inputing prompt and mark, emoji extensions
 | noKatex | `boolean` | false | Use katex or not |
 | codeTheme | `'atom' \| 'a11y' \| 'github' \| 'gradient' \| 'kimbie' \| 'paraiso' \| 'qtcreator' \| 'stackoverflow'` | 'atom' | Highlight code style, can be customized also |
 | mdHeadingId | `(text: string, level: number, index: number) => string` | (text) => text | H1-H6 `ID` generator |
-| sanitize | `(html: string) => string` | (html) => html | Sanitize the html, prevent XSS |
+| sanitize | `(html: string) => string` | (html) => html | Sanitize the html, prevent XSS. After 3.x, dangerous code has been processed by default. Please do not use this attribute unless there are special requirements |
 | noIconfont | `boolean` | false | Not append iconfont script, download different versions [SVG](https://at.alicdn.com/t/c/font_2605852_prouiefeic.js)或[Font Class](https://at.alicdn.com/t/c/font_2605852_prouiefeic.css) and import it by yourself |
 | formatCopiedText | `(text: string) => string` | (text: string) => text | Format copied code |
 | codeStyleReverse | `boolean` | true | Code style will be reversed to dark while code block of the theme has a dark background |
@@ -297,7 +303,7 @@ export interface StaticTextDefaultValue {
 
 ### 🧵 MdPreview Events
 
-| name | parameter | description |
+| name | type | description |
 | --- | --- | --- |
 | onHtmlChanged | `html: string` | Compile markdown successful event, you can use it to get the html code |
 | onGetCatalog | `list: Array<HeadList>` | Get catalog of article |
@@ -306,16 +312,17 @@ export interface StaticTextDefaultValue {
 
 Except for the same as `MdPreview`:
 
-| name | parameter | description |
+| name | type | description |
 | --- | --- | --- |
-| onChange | `value: string` | Content changed event(bind to `oninput` of `textarea`) |
-| onSave | `value: string, html: Promise<string>` | Saving content event, `ctrl+s` and clicking button will trigger it |
-| onUploadImg | `files: Array<File>, callback: (urls: Array<string>) => void` | Uploading picture event, when picture is uploading the modal will not close, please provide right urls to the callback function |
+| onChange | `value: string` | Content changed(bind to `oninput` of `textarea`) |
+| onSave | `value: string, html: Promise<string>` | Saving content, `ctrl+s` and clicking button will trigger it |
+| onUploadImg | `files: Array<File>, callback: (urls: Array<string>) => void` | Uploading picture, when picture is uploading the modal will not close, please provide right urls to the callback function |
 | onError | `err: { name: 'Cropper' \| 'fullscreen' \| 'prettier' \| 'overlength'; message: string }` | Catch run-time error, `Cropper`, `fullscreen` and `prettier` are used when they are not loaded. And content exceeds the length limit error |
 | onBlur | `event: FocusEvent<HTMLTextAreaElement, Element>` | Textarea has lost focus |
 | onFocus | `event: FocusEvent<HTMLTextAreaElement, Element>` | Textarea has received focus |
 | onInput | `event: Event` | Element gets input |
-| onDrop | `event: DragEvent` | The event occurs when a selection is being dragged |
+| onDrop | `event: DragEvent` | Selection is being dragged |
+| onInputBoxWitdhChange | `(width: string) => void` | Width of input box has been changed |
 
 ## 🤱🏼 Expose
 
@@ -697,8 +704,8 @@ For more examples, refer to [document](https://imzbf.github.io/md-editor-rt).
 - **events**
 
   - `onClick`: `() => void`, necessary.
-  - `onClose`: `() => void`, necessary, close event.
-  - `onAdjust`: `(val: boolean) => void`, fullscreen button click event.
+  - `onClose`: `() => void`, necessary, closed event.
+  - `onAdjust`: `(val: boolean) => void`, fullscreen button was clicked.
 
 ### 🐻 MdCatalog
 
@@ -716,7 +723,8 @@ For more examples, refer to [document](https://imzbf.github.io/md-editor-rt).
 
 - **events**
 
-  - `onClick`: `(e: MouseEvent, t: TocItem) => void`, not necessary.
+  - `onClick`: `(e: MouseEvent, t: TocItem) => void`, not necessary, heading was clicked.
+  - `onActive`: `(heading: HeadList | undefined) => void`, not necessary, heading was highlighted.
 
 ### 🛸 MdModal
 
@@ -736,8 +744,8 @@ For more examples, refer to [document](https://imzbf.github.io/md-editor-rt).
 
 - **events**
 
-  - `onClose`: `() => void`, necessary, close event.
-  - `onAdjust`: `(val: boolean) => void`, fullscreen button click event.
+  - `onClose`: `() => void`, necessary, closed event.
+  - `onAdjust`: `(val: boolean) => void`, fullscreen button was clicked.
 
 ## 🪤 Internal Configuration
 

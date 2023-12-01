@@ -121,6 +121,7 @@ config({
 });
 
 const SAVE_KEY = 'XHMPGLJIZTDB';
+const INPUT_BOX_WITDH = 'tcxll8alg5jx52hw';
 
 interface PreviewProp {
   theme: Theme;
@@ -141,7 +142,8 @@ export default ({ theme, previewTheme, codeTheme, lang }: PreviewProp) => {
       text2: 'Hello world',
       visible: false,
       modalVisible: false,
-      isFullscreen: false
+      isFullscreen: false,
+      inputBoxWitdh: localStorage.getItem(INPUT_BOX_WITDH) || '200px'
     };
   });
 
@@ -318,7 +320,11 @@ export default ({ theme, previewTheme, codeTheme, lang }: PreviewProp) => {
           //     }
           //   }
           // }}
-          // inputBoxWitdh="200px"
+          inputBoxWitdh={md.inputBoxWitdh}
+          onInputBoxWitdhChange={(w) => {
+            md.inputBoxWitdh = w;
+            localStorage.setItem(INPUT_BOX_WITDH, w);
+          }}
           toolbars={[
             'bold',
             'underline',
