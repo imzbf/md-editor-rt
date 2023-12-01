@@ -83,6 +83,24 @@ const useResize = (
   }, [contentRef, props, resizeRef]);
 
   useEffect(() => {
+    if (props.inputBoxWitdh) {
+      setInputWrapperStyle((prevState) => {
+        return {
+          ...prevState,
+          width: props.inputBoxWitdh
+        };
+      });
+
+      setResizeOperateStyle((prevState) => {
+        return {
+          ...prevState,
+          left: props.inputBoxWitdh
+        };
+      });
+    }
+  }, [props.inputBoxWitdh]);
+
+  useEffect(() => {
     if (!props.setting.htmlPreview && !props.setting.preview) {
       setInputWrapperStyle((prevState) => {
         return {
@@ -113,24 +131,6 @@ const useResize = (
       });
     }
   }, [props.setting.htmlPreview, props.setting.preview]);
-
-  useEffect(() => {
-    if (props.inputBoxWitdh) {
-      setInputWrapperStyle((prevState) => {
-        return {
-          ...prevState,
-          width: props.inputBoxWitdh
-        };
-      });
-
-      setResizeOperateStyle((prevState) => {
-        return {
-          ...prevState,
-          left: props.inputBoxWitdh
-        };
-      });
-    }
-  }, [props.inputBoxWitdh]);
 
   return { inputWrapperStyle, resizeOperateStyle };
 };
