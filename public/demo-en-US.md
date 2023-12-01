@@ -152,7 +152,7 @@ config({
 
 If you want to insert content into the edit box, you need to use the `insert` method bound on the instance of editor, reference: [Insert content into the edit box](/md-editor-rt/ed-US/docs#%F0%9F%92%89%20insert).
 
-If you are not using `MdEditor.config` in the component where the editor is located, you are unable to obtain instance of editor at this time. You may need to use `EventBus`.
+If you are not using `config` in the component where the editor is located, you are unable to obtain instance of editor at this time. You may need to use `EventBus`.
 
 Add shortcut key `Ctrl+m`, to insert a marking module into the editing box(`==mark==`)
 
@@ -384,7 +384,7 @@ import { MdEditor, config } from 'md-editor-rt';
 import 'md-editor-rt/lib/style.css';
 import screenfull from 'screenfull';
 
-MdEditor.config({
+config({
   editorExtensions: {
     screenfull: {
       instance: screenfull
@@ -407,7 +407,7 @@ import React, { useState } from 'react';
 import { MdEditor, config } from 'md-editor-rt';
 import 'md-editor-rt/lib/style.css';
 
-MdEditor.config({
+config({
   editorExtensions: {
     screenfull: {
       js: 'https://localhost:8090/screenfull@5.2.0/index.js'
@@ -467,7 +467,7 @@ import React, { useState } from 'react';
 import { MdEditor, config } from 'md-editor-rt';
 import 'md-editor-rt/lib/style.css';
 
-MdEditor.config({
+config({
   editorConfig: {
     languageUserDefined: {
       'my-lang': {
@@ -733,7 +733,13 @@ export default () => {
 
 ## 🔒 XSS
 
-after`1.3.0`, please use `sanitize` to sanitize `html`. eg: `sanitize-html`
+!!! warning Pay Attention
+
+After 3.x, dangerous code has been processed by default. Here is usage for versions 2.x and below
+
+!!!
+
+Using `sanitize` to sanitize `html`. eg: `sanitize-html`
 
 ```shell
 yarn add sanitize-html
