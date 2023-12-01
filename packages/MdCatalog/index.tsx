@@ -51,6 +51,13 @@ export interface CatalogProps {
    * 默认：0
    */
   scrollElementOffsetTop?: number;
+  /**
+   * 高亮的标题变化事件
+   *
+   * @param heading
+   * @returns
+   */
+  onActive?: (heading: HeadList | undefined) => void;
 }
 
 const MdCatalog = (props: CatalogProps) => {
@@ -197,6 +204,12 @@ const MdCatalog = (props: CatalogProps) => {
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [offsetTop, mdHeadingId, getScrollElement]);
+
+  useEffect(() => {
+    if (props.onActive) {
+      props.onActive(activeItem);
+    }
+  }, [activeItem, props]);
 
   return (
     <div

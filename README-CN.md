@@ -738,6 +738,7 @@ import { NormalToolbar } from 'md-editor-rt';
 - **events**
 
   - `onClick`: `(e: MouseEvent, t: TocItem) => void`，非必须，导航点击事件。
+  - `onActive`: `(heading: HeadList | undefined) => void`，非必须，高亮的标题变化事件。
 
 ### 🛸 弹窗组件
 
