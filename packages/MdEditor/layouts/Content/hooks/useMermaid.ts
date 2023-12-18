@@ -13,7 +13,7 @@ import { ContentPreviewProps } from '../props';
 const useMermaid = (props: ContentPreviewProps) => {
   const { theme } = useContext(EditorContext);
 
-  const { editorExtensions } = configOption;
+  const { editorExtensions, mermaidConfig } = configOption;
   const mermaidConf = editorExtensions?.mermaid;
 
   const mermaidRef = useRef(mermaidConf?.instance);
@@ -28,15 +28,17 @@ const useMermaid = (props: ContentPreviewProps) => {
       })
   );
 
-  const setMermaidTheme = useCallback(() => {
+  const configMermaid = useCallback(() => {
     mermaidCache.clear();
     const mermaid = mermaidRef.current;
 
     if (!props.noMermaid && mermaid) {
-      mermaid.initialize({
-        startOnLoad: false,
-        theme: theme === 'dark' ? 'dark' : 'default'
-      });
+      mermaid.initialize(
+        mermaidConfig({
+          startOnLoad: false,
+          theme: theme === 'dark' ? 'dark' : 'default'
+        })
+      );
 
       // 严格模式下，如果reRender是boolean型，会执行两次，这是reRender将不会effect
       setReRender((_r) => _r + 1);
@@ -45,7 +47,7 @@ const useMermaid = (props: ContentPreviewProps) => {
   }, [theme]);
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  useEffect(setMermaidTheme, [setMermaidTheme]);
+  useEffect(configMermaid, [configMermaid]);
 
   useEffect(() => {
     if (props.noMermaid) {
@@ -63,7 +65,7 @@ const useMermaid = (props: ContentPreviewProps) => {
           jsSrc
         ).then((module) => {
           mermaidRef.current = module.default;
-          setMermaidTheme();
+          configMermaid();
         });
       } else {
         const mermaidScript = document.createElement('script');
@@ -72,7 +74,7 @@ const useMermaid = (props: ContentPreviewProps) => {
 
         mermaidScript.onload = () => {
           mermaidRef.current = window.mermaid;
-          setMermaidTheme();
+          configMermaid();
         };
 
         appendHandler(mermaidScript, 'mermaid');

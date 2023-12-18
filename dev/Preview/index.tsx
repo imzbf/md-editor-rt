@@ -55,6 +55,9 @@ config({
   //   console.log(plugins);
   //   return [];
   // },
+  mermaidConfig: (base) => {
+    return base;
+  },
   editorExtensions: {
     //     prettier: {
     //       prettierInstance: prettier,
