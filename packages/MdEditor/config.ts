@@ -323,7 +323,8 @@ export const defaultProps = {
   autoDetectCode: false,
   noHighlight: false,
   noImgZoomIn: false,
-  inputBoxWitdh: '50%'
+  inputBoxWitdh: '50%',
+  sanitizeMermaid: (h: string) => Promise.resolve(h)
 };
 
 export const configOption: ConfigOption = {

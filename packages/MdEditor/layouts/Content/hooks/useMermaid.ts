@@ -119,7 +119,10 @@ const useMermaid = (props: ContentPreviewProps) => {
           }
 
           // 9:10
-          mermaidHtml = typeof svg === 'string' ? svg : svg.svg;
+          mermaidHtml = await props.sanitizeMermaid(
+            typeof svg === 'string' ? svg : svg.svg
+          );
+
           mermaidCache.set(item.innerText, mermaidHtml);
         }
 

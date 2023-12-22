@@ -26,7 +26,8 @@ const MdPreview = (props: MdPreviewProps) => {
     noIconfont = defaultProps.noIconfont,
     noHighlight = defaultProps.noHighlight,
     noImgZoomIn = defaultProps.noImgZoomIn,
-    language = defaultProps.language
+    language = defaultProps.language,
+    sanitizeMermaid = defaultProps.sanitizeMermaid
   } = props;
 
   const [staticProps] = useState<MdPreviewStaticProps>(() => {
@@ -91,6 +92,7 @@ const MdPreview = (props: MdPreviewProps) => {
           noImgZoomIn={noImgZoomIn}
           previewOnly
           key="preview-only"
+          sanitizeMermaid={sanitizeMermaid}
         />
       </div>
     </EditorContext.Provider>

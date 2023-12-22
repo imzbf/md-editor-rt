@@ -274,6 +274,13 @@ export interface MdPreviewProps {
    * 自定义的图标
    */
   customIcon?: CustomIcon;
+  /**
+   * 转换生成的mermaid代码
+   *
+   * @param html
+   * @returns
+   */
+  sanitizeMermaid?: (html: string) => Promise<string>;
 }
 
 export interface EditorProps extends MdPreviewProps {

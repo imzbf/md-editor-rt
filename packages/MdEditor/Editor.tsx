@@ -69,7 +69,8 @@ const Editor = forwardRef((props: EditorProps, ref: ForwardedRef<unknown>) => {
     noHighlight = defaultProps.noHighlight,
     noImgZoomIn = defaultProps.noImgZoomIn,
     language = defaultProps.language,
-    inputBoxWitdh = defaultProps.inputBoxWitdh
+    inputBoxWitdh = defaultProps.inputBoxWitdh,
+    sanitizeMermaid = defaultProps.sanitizeMermaid
   } = props;
 
   const [staticProps] = useState<StaticProps>(() => {
@@ -192,6 +193,7 @@ const Editor = forwardRef((props: EditorProps, ref: ForwardedRef<unknown>) => {
           onDrop={props.onDrop}
           inputBoxWitdh={inputBoxWitdh}
           onInputBoxWitdhChange={props.onInputBoxWitdhChange}
+          sanitizeMermaid={sanitizeMermaid}
         />
         {footers?.length > 0 && (
           <Footer
