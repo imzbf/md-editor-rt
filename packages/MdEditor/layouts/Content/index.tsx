@@ -56,6 +56,7 @@ const Content = (props: ContentProps) => {
         formatCopiedText={props.formatCopiedText}
         noHighlight={props.noHighlight}
         noImgZoomIn={props.noImgZoomIn}
+        sanitizeMermaid={props.sanitizeMermaid}
         key="display-editor"
       />
       {props.catalogVisible && (

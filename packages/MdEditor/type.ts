@@ -274,6 +274,13 @@ export interface MdPreviewProps {
    * 自定义的图标
    */
   customIcon?: CustomIcon;
+  /**
+   * 转换生成的mermaid代码
+   *
+   * @param html
+   * @returns
+   */
+  sanitizeMermaid?: (html: string) => Promise<string>;
 }
 
 export interface EditorProps extends MdPreviewProps {
@@ -578,7 +585,12 @@ export interface ConfigOption {
   /**
    * 自定义markdown-it核心库扩展、属性等
    */
-  markdownItConfig: (md: markdownit) => void;
+  markdownItConfig: (
+    md: markdownit,
+    options: {
+      editorId: string;
+    }
+  ) => void;
   /**
    * 挑选编辑器已预设的markdownIt的扩展
    *
@@ -586,7 +598,10 @@ export interface ConfigOption {
    * @returns plugins
    */
   markdownItPlugins: (
-    plugins: Array<MarkdownItConfigPlugin>
+    plugins: Array<MarkdownItConfigPlugin>,
+    options: {
+      editorId: string;
+    }
   ) => Array<MarkdownItConfigPlugin>;
   /**
    * 如果使用内部的图标，可以切换展示的方式
@@ -594,6 +609,13 @@ export interface ConfigOption {
    * 以规避某些问题，例如Shadow Dom对Svg use的支持问题
    */
   iconfontType: 'svg' | 'class';
+  /**
+   * mermaid配置项
+   *
+   * @param base
+   * @returns
+   */
+  mermaidConfig: (base: any) => any;
 }
 
 /**

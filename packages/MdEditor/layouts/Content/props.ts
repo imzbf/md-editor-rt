@@ -14,6 +14,7 @@ export interface ContentPreviewProps {
   noHighlight?: boolean;
   previewOnly?: boolean;
   noImgZoomIn?: boolean;
+  sanitizeMermaid: (html: string) => Promise<string>;
 }
 
 export type ContentProps = Readonly<
