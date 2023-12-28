@@ -448,9 +448,9 @@ editorRef.current?.triggerSave();
 editorRef.current?.insert((selectedText) => {
   /**
    * @return targetValue    待插入内容
-   * @return select         插入后是否自动选中内容
-   * @return deviationStart 插入后选中内容鼠标开始位置
-   * @return deviationEnd   插入后选中内容鼠标结束位置
+   * @return select         插入后是否自动选中内容，默认：true
+   * @return deviationStart 插入后选中内容鼠标开始位置，默认：0
+   * @return deviationEnd   插入后选中内容鼠标结束位置，默认：0
    */
   return {
     targetValue: `${selectedText}`,

@@ -328,6 +328,24 @@ export default ({ theme, previewTheme, codeTheme, lang }: PreviewProp) => {
             md.inputBoxWitdh = w;
             localStorage.setItem(INPUT_BOX_WITDH, w);
           }}
+          onDrop={async (e) => {
+            e.stopPropagation();
+
+            const form = new FormData();
+            form.append('file', e.dataTransfer?.files[0] as any);
+
+            const res = await axios.post('/api/img/upload', form, {
+              headers: {
+                'Content-Type': 'multipart/form-data'
+              }
+            });
+
+            editorRef.current?.insert(() => {
+              return {
+                targetValue: `![](${res.data.url})`
+              };
+            });
+          }}
           toolbars={[
             'bold',
             'underline',
