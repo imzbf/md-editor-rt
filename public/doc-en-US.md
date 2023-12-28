@@ -1041,9 +1041,9 @@ Manually insert content into textarea.
 editorRef.current?.insert((selectedText) => {
   /**
    * @return targetValue    Content to be inserted
-   * @return select         Automatically select content
-   * @return deviationStart Start position of the selected content
-   * @return deviationEnd   End position of the selected content
+   * @return select         Automatically select content, default: true
+   * @return deviationStart Start position of the selected content, default: 0
+   * @return deviationEnd   End position of the selected content, default: 0
    */
   return {
     targetValue: `${selectedText}`,
@@ -1499,9 +1499,9 @@ const MyToolbar = ({ insert = () => {} }: MyToolbarProps) => {
         insert((selectedText) => {
           /**
            * @return targetValue    Content to be inserted
-           * @return select         Automatically select content
-           * @return deviationStart Start position of the selected content
-           * @return deviationEnd   End position of the selected content
+           * @return select         Automatically select content, default: true
+           * @return deviationStart Start position of the selected content, default: 0
+           * @return deviationEnd   End position of the selected content, default: 0
            */
           return {
             targetValue: `==${selectedText}==`,
@@ -1576,9 +1576,9 @@ const MyToolbar = ({ insert = () => {} }: MyToolbarProps) => {
               insert((selectedText) => {
                 /**
                  * @return targetValue    Content to be inserted
-                 * @return select         Automatically select content
-                 * @return deviationStart Start position of the selected content
-                 * @return deviationEnd   End position of the selected content
+                 * @return select         Automatically select content, default: true
+                 * @return deviationStart Start position of the selected content, default: 0
+                 * @return deviationEnd   End position of the selected content, default: 0
                  */
                 return {
                   targetValue: `==${selectedText}==`,
@@ -1695,9 +1695,9 @@ const MyToolbar = ({ insert = () => {} }: MyToolbarProps) => {
             insert((selectedText) => {
               /**
                * @return targetValue    Content to be inserted
-               * @return select         Automatically select content
-               * @return deviationStart Start position of the selected content
-               * @return deviationEnd   End position of the selected content
+               * @return select         Automatically select content, default: true
+               * @return deviationStart Start position of the selected content, default: 0
+               * @return deviationEnd   End position of the selected content, default: 0
                */
               return {
                 targetValue: `==${selectedText}==`,
