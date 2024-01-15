@@ -255,11 +255,12 @@ export default ({ theme, previewTheme, codeTheme, lang }: PreviewProp) => {
           //     deviationEnd: 0
           //   };
           // });
-          editorRef.current?.focus({
-            rangeAnchor: 1000,
-            rangeHead: 1001,
-            cursorPos: 1003
-          });
+          editorRef.current?.rerender();
+          // editorRef.current?.focus({
+          //   rangeAnchor: 1000,
+          //   rangeHead: 1001,
+          //   cursorPos: 1003
+          // });
         }}
       >
         1

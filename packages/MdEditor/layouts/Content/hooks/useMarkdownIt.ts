@@ -1,12 +1,18 @@
-import { useContext, useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
 import mdit from 'markdown-it';
 import ImageFiguresPlugin from 'markdown-it-image-figures';
 import TaskListPlugin from 'markdown-it-task-lists';
+import { uuid } from '@vavt/util';
 import bus from '~/utils/event-bus';
 import { generateCodeRowNumber } from '~/utils';
 import { HeadList, MarkdownItConfigPlugin, Themes } from '~/type';
 import { configOption } from '~/config';
-import { BUILD_FINISHED, CATALOG_CHANGED, PUSH_CATALOG } from '~/static/event-name';
+import {
+  BUILD_FINISHED,
+  CATALOG_CHANGED,
+  PUSH_CATALOG,
+  RERENDER
+} from '~/static/event-name';
 
 import useHighlight from './useHighlight';
 import useMermaid from './useMermaid';
@@ -173,6 +179,9 @@ const useMarkdownIt = (props: ContentPreviewProps, previewOnly: boolean) => {
     return md_;
   });
 
+  // 文章节点的key
+  const [key, setKey] = useState(`_article-key_${uuid()}`);
+
   const [html, setHtml] = useState(() => {
     const html_ = props.sanitize(md.render(props.modelValue));
 
@@ -191,6 +200,13 @@ const useMarkdownIt = (props: ContentPreviewProps, previewOnly: boolean) => {
   // 所以忽略多余的一次render
   const ignoreFirstRender = useRef(true);
 
+  const markHtml = useCallback(() => {
+    // 清理历史标题
+    headsRef.current = [];
+    const html_ = props.sanitize(md.render(props.modelValue));
+    setHtml(html_);
+  }, [md, props]);
+
   useEffect(() => {
     // 触发异步的保存事件（html总是会比text后更新）
     bus.emit(editorId, BUILD_FINISHED, html);
@@ -199,8 +215,10 @@ const useMarkdownIt = (props: ContentPreviewProps, previewOnly: boolean) => {
     onGetCatalog(headsRef.current);
     // 生成目录
     bus.emit(editorId, CATALOG_CHANGED, headsRef.current);
+
+    // 手动触发更新时，会更新key，key变化也同步执行上面的任务
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [html]);
+  }, [html, key]);
 
   useEffect(() => {
     if (ignoreFirstRender.current) {
@@ -210,18 +228,7 @@ const useMarkdownIt = (props: ContentPreviewProps, previewOnly: boolean) => {
 
     const timer = setTimeout(
       () => {
-        // 清理历史标题
-        headsRef.current = [];
-        const html_ = props.sanitize(md.render(props.modelValue));
-        setHtml(html_);
-
-        // // 触发异步的保存事件（html总是会比text后更新）
-        // bus.emit(editorId, BUILD_FINISHED, html_);
-        // onHtmlChanged(html_);
-        // // 传递标题
-        // onGetCatalog(headsRef.current);
-        // // 生成目录
-        // bus.emit(editorId, CATALOG_CHANGED, headsRef.current);
+        markHtml();
       },
       editorConfig?.renderDelay !== undefined
         ? editorConfig?.renderDelay
@@ -234,15 +241,15 @@ const useMarkdownIt = (props: ContentPreviewProps, previewOnly: boolean) => {
       clearTimeout(timer);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [props.modelValue, needReRender, theme]);
+  }, [needReRender, theme, markHtml]);
 
   useEffect(() => {
     replaceMermaid();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [html, reRender]);
 
-  // 添加目录主动触发接收监听
   useEffect(() => {
+    // 添加目录主动触发接收监听
     bus.on(editorId, {
       name: PUSH_CATALOG,
       callback() {
@@ -252,7 +259,23 @@ const useMarkdownIt = (props: ContentPreviewProps, previewOnly: boolean) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  return { html };
+  useEffect(() => {
+    const callback = () => {
+      markHtml();
+      // 强制更新节点
+      setKey(`_article-key_${uuid()}`);
+    };
+    bus.on(editorId, {
+      name: RERENDER,
+      callback
+    });
+    return () => {
+      bus.remove(editorId, RERENDER, callback);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [markHtml]);
+
+  return { html, key };
 };
 
 export default useMarkdownIt;
