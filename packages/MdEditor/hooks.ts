@@ -553,6 +553,9 @@ export const useExpose = (
         },
         getSelectedText() {
           return codeRef.current?.getSelectedText();
+        },
+        resetHistory() {
+          codeRef.current?.resetHistory();
         }
       };
 

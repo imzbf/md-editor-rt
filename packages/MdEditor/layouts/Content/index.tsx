@@ -22,7 +22,7 @@ const Content = forwardRef((props: ContentProps, ref: ForwardedRef<unknown>) => 
   const contentRef = useRef<HTMLDivElement>(null);
   const resizeRef = useRef<HTMLDivElement>(null);
 
-  const { inputWrapperRef, codeMirrorUt } = useCodeMirror(props);
+  const { inputWrapperRef, codeMirrorUt, resetHistory } = useCodeMirror(props);
   const { inputWrapperStyle, resizeOperateStyle } = useResize(
     props,
     contentRef,
@@ -40,10 +40,11 @@ const Content = forwardRef((props: ContentProps, ref: ForwardedRef<unknown>) => 
         },
         focus(options: FocusOption) {
           codeMirrorUt.current?.focus(options);
-        }
+        },
+        resetHistory
       };
     },
-    [codeMirrorUt]
+    [codeMirrorUt, resetHistory]
   );
 
   return (

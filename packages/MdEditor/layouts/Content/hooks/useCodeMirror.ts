@@ -1,10 +1,17 @@
-import { useContext, useEffect, useRef, useState } from 'react';
-import { EditorView, minimalSetup } from 'codemirror';
+import { useCallback, useContext, useEffect, useRef, useState } from 'react';
+import { EditorView } from 'codemirror';
 import { keymap } from '@codemirror/view';
 import { languages } from '@codemirror/language-data';
 import { markdown } from '@codemirror/lang-markdown';
 import { Compartment } from '@codemirror/state';
-import { indentWithTab, undo, redo } from '@codemirror/commands';
+import {
+  indentWithTab,
+  defaultKeymap,
+  history,
+  historyKeymap,
+  undo,
+  redo
+} from '@codemirror/commands';
 import { configOption } from '~/config';
 import bus from '~/utils/event-bus';
 import { directive2flag, ToolDirective } from '~/utils/content-help';
@@ -40,7 +47,8 @@ const useCodeMirror = (props: ContentProps) => {
       theme: new Compartment(),
       autocompletion: new Compartment(),
       update: new Compartment(),
-      domEvent: new Compartment()
+      domEvent: new Compartment(),
+      history: new Compartment()
     };
   });
 
@@ -54,8 +62,8 @@ const useCodeMirror = (props: ContentProps) => {
 
   const [defaultExtensions] = useState(() => {
     return [
-      keymap.of([...mdEditorCommands, indentWithTab]),
-      minimalSetup,
+      keymap.of([...defaultKeymap, ...historyKeymap, ...mdEditorCommands, indentWithTab]),
+      comp.history.of(history()),
       comp.language.of(markdown({ codeLanguages: languages })),
       // 横向换行
       EditorView.lineWrapping,
@@ -101,6 +109,16 @@ const useCodeMirror = (props: ContentProps) => {
       [...mdEditorCommands]
     );
   });
+
+  const resetHistory = useCallback(() => {
+    codeMirrorUt.current?.view.dispatch({
+      effects: comp.history.reconfigure([])
+    });
+
+    codeMirrorUt.current?.view.dispatch({
+      effects: comp.history.reconfigure(history())
+    });
+  }, [comp.history]);
 
   useEffect(() => {
     const view = new EditorView({
@@ -259,7 +277,8 @@ const useCodeMirror = (props: ContentProps) => {
 
   return {
     inputWrapperRef,
-    codeMirrorUt
+    codeMirrorUt,
+    resetHistory
   };
 };
 
