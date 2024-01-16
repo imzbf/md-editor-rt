@@ -19,7 +19,7 @@ import { ContentProps } from '../props';
 import createCommands from '../codemirror/commands';
 
 import usePasteUpload from './usePasteUpload';
-import useAttach from './useAttach';
+// import useAttach from './useAttach';
 
 /**
  * 文本编辑区组件
@@ -255,7 +255,7 @@ const useCodeMirror = (props: ContentProps) => {
   }, [props.maxLength]);
 
   // 附带的设置
-  useAttach(codeMirrorUt);
+  // useAttach(codeMirrorUt);
 
   return {
     inputWrapperRef,

@@ -255,7 +255,8 @@ export default ({ theme, previewTheme, codeTheme, lang }: PreviewProp) => {
           //     deviationEnd: 0
           //   };
           // });
-          editorRef.current?.rerender();
+          // editorRef.current?.rerender();
+          console.log(editorRef.current?.getSelectedText());
           // editorRef.current?.focus({
           //   rangeAnchor: 1000,
           //   rangeHead: 1001,

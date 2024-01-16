@@ -1,5 +1,6 @@
 import {
   ForwardedRef,
+  MutableRefObject,
   useCallback,
   useEffect,
   useImperativeHandle,
@@ -42,13 +43,13 @@ import {
   PREVIEW_CHANGED,
   HTML_PREVIEW_CHANGED,
   CATALOG_VISIBLE_CHANGED,
-  TEXTAREA_FOCUS,
   BUILD_FINISHED,
   ERROR_CATCHER,
   REPLACE,
   UPLOAD_IMAGE,
   RERENDER
 } from './static/event-name';
+import { ContentExposeParam } from './layouts/Content/type';
 
 /**
  * 键盘监听
@@ -428,7 +429,8 @@ export const useExpose = (
   staticProps: StaticProps,
   catalogVisible: boolean,
   setting: SettingType,
-  updateSetting: UpdateSetting
+  updateSetting: UpdateSetting,
+  codeRef: MutableRefObject<ContentExposeParam | undefined>
 ) => {
   const { editorId } = staticProps;
 
@@ -544,10 +546,13 @@ export const useExpose = (
           bus.emit(editorId, REPLACE, 'universal', { generate });
         },
         focus(options: FocusOption) {
-          bus.emit(editorId, TEXTAREA_FOCUS, options);
+          codeRef.current?.focus(options);
         },
         rerender() {
           bus.emit(editorId, RERENDER);
+        },
+        getSelectedText() {
+          return codeRef.current?.getSelectedText();
         }
       };
 
