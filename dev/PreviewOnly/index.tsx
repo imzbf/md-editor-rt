@@ -1,5 +1,5 @@
-import React from 'react';
-import { MdPreview } from '~~/index';
+import React, { useRef } from 'react';
+import { ExposePreviewParam, MdPreview } from '~~/index';
 import { Theme } from '../App';
 import mdText from '../data.md';
 
@@ -13,10 +13,21 @@ interface PreviewOnlyProp {
 }
 
 const PreviewOnly = (props: PreviewOnlyProp) => {
+  const previewRef = useRef<ExposePreviewParam>();
+
   return (
     <div className="doc">
+      <button
+        onClick={() => {
+          previewRef.current?.rerender();
+        }}
+      >
+        按钮
+      </button>
       <div className="container">
         <MdPreview
+          editorId="preview-id"
+          ref={previewRef}
           language={props.lang}
           theme={props.theme}
           previewTheme={props.previewTheme}

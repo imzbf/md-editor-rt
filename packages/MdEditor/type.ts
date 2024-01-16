@@ -793,6 +793,8 @@ export interface ExposeParam {
   resetHistory(): void;
 }
 
+export type ExposePreviewParam = Pick<ExposeParam, 'rerender'>;
+
 /**
  * 自定义图标的数据类型
  */
