@@ -1,19 +1,28 @@
-import React, { useState, useContext, useRef } from 'react';
+import React, {
+  useState,
+  useContext,
+  useRef,
+  useImperativeHandle,
+  forwardRef,
+  ForwardedRef
+} from 'react';
 import MdCatalog from '~~/MdCatalog';
 import { EditorContext } from '~/Editor';
 import { prefix } from '~/config';
 import { useAutoScroll, useCodeMirror, useResize } from './hooks';
 import { ContentProps } from './props';
 import ContentPreview from './ContentPreview';
+import { FocusOption } from '~/type';
+import { ContentExposeParam } from './type';
 
-const Content = (props: ContentProps) => {
+const Content = forwardRef((props: ContentProps, ref: ForwardedRef<unknown>) => {
   const { editorId } = useContext(EditorContext);
   const [html, setHtml] = useState<string>('');
 
   const contentRef = useRef<HTMLDivElement>(null);
   const resizeRef = useRef<HTMLDivElement>(null);
 
-  const { inputWrapperRef, codeMirrorUt } = useCodeMirror(props);
+  const { inputWrapperRef, codeMirrorUt, resetHistory } = useCodeMirror(props);
   const { inputWrapperStyle, resizeOperateStyle } = useResize(
     props,
     contentRef,
@@ -21,6 +30,22 @@ const Content = (props: ContentProps) => {
   );
   // 自动滚动
   useAutoScroll(props, html, codeMirrorUt);
+
+  useImperativeHandle(
+    ref,
+    (): ContentExposeParam => {
+      return {
+        getSelectedText() {
+          return codeMirrorUt.current?.getSelectedText();
+        },
+        focus(options: FocusOption) {
+          codeMirrorUt.current?.focus(options);
+        },
+        resetHistory
+      };
+    },
+    [codeMirrorUt, resetHistory]
+  );
 
   return (
     <div
@@ -70,6 +95,6 @@ const Content = (props: ContentProps) => {
       )}
     </div>
   );
-};
+});
 
 export default React.memo(Content);

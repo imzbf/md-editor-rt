@@ -11,7 +11,7 @@ const ContentPreview = (props: ContentPreviewProps) => {
   const { editorId, previewTheme, showCodeRowNumber } = useContext(EditorContext);
 
   // markdown => html
-  const { html } = useMarkdownIt(props, !!previewOnly);
+  const { html, key } = useMarkdownIt(props, !!previewOnly);
   // 复制代码
   useCopyCode(props, html);
   // 图片点击放大
@@ -21,6 +21,7 @@ const ContentPreview = (props: ContentPreviewProps) => {
     return (
       <article
         id={`${editorId}-preview`}
+        key={key}
         className={classnames([
           `${prefix}-preview`,
           `${previewTheme}-theme`,
@@ -29,7 +30,7 @@ const ContentPreview = (props: ContentPreviewProps) => {
         dangerouslySetInnerHTML={{ __html: html }}
       />
     );
-  }, [editorId, html, previewTheme, showCodeRowNumber]);
+  }, [editorId, html, key, previewTheme, showCodeRowNumber]);
 
   return (
     <>

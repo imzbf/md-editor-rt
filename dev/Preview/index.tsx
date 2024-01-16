@@ -255,11 +255,14 @@ export default ({ theme, previewTheme, codeTheme, lang }: PreviewProp) => {
           //     deviationEnd: 0
           //   };
           // });
-          editorRef.current?.focus({
-            rangeAnchor: 1000,
-            rangeHead: 1001,
-            cursorPos: 1003
-          });
+          // editorRef.current?.rerender();
+          // console.log(editorRef.current?.getSelectedText());
+          editorRef.current?.resetHistory();
+          // editorRef.current?.focus({
+          //   rangeAnchor: 1000,
+          //   rangeHead: 1001,
+          //   cursorPos: 1003
+          // });
         }}
       >
         1
@@ -327,6 +330,24 @@ export default ({ theme, previewTheme, codeTheme, lang }: PreviewProp) => {
           onInputBoxWitdhChange={(w) => {
             md.inputBoxWitdh = w;
             localStorage.setItem(INPUT_BOX_WITDH, w);
+          }}
+          onDrop={async (e) => {
+            e.stopPropagation();
+
+            const form = new FormData();
+            form.append('file', e.dataTransfer?.files[0] as any);
+
+            const res = await axios.post('/api/img/upload', form, {
+              headers: {
+                'Content-Type': 'multipart/form-data'
+              }
+            });
+
+            editorRef.current?.insert(() => {
+              return {
+                targetValue: `![](${res.data.url})`
+              };
+            });
           }}
           toolbars={[
             'bold',

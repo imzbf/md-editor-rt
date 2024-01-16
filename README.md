@@ -440,9 +440,9 @@ Manually insert content into textarea.
 editorRef.current?.insert((selectedText) => {
   /**
    * @return targetValue    Content to be inserted
-   * @return select         Automatically select content
-   * @return deviationStart Start position of the selected content
-   * @return deviationEnd   End position of the selected content
+   * @return select         Automatically select content, default: true
+   * @return deviationStart Start position of the selected content, default: 0
+   * @return deviationEnd   End position of the selected content, default: 0
    */
   return {
     targetValue: `${selectedText}`,
@@ -467,6 +467,26 @@ const option: FocusOption | undefined = 'start';
 // Cursor position when focusing on textarea, default: position when it last lost focus
 editorRef.current?.focus(option);
 ```
+
+### ✒️ rerender
+
+Re render the content.
+
+```js
+editorRef.current?.rerender();
+```
+
+### 🔍 getSelectedText
+
+Get the currently selected text.
+
+```js
+console.log(editorRef.current?.getSelectedText());
+```
+
+### 🗑 resetHistory
+
+Clear current history.
 
 ## 💴 Config Editor
 

@@ -4,7 +4,8 @@ import React, {
   useState,
   forwardRef,
   ForwardedRef,
-  useEffect
+  useEffect,
+  useRef
 } from 'react';
 import {
   useOnSave,
@@ -22,6 +23,7 @@ import { classnames } from '~/utils';
 import { prefix, staticTextDefault, defaultProps } from '~/config';
 import { ContentType, EditorProps, StaticProps, Themes } from '~/type';
 import bus from '~/utils/event-bus';
+import { ContentExposeParam } from './layouts/Content/type';
 
 export const EditorContext = createContext<ContentType>({
   editorId: '',
@@ -93,6 +95,8 @@ const Editor = forwardRef((props: EditorProps, ref: ForwardedRef<unknown>) => {
     };
   });
 
+  const codeRef = useRef<ContentExposeParam>();
+
   const onScrollAutoChange = useCallback(
     (v: boolean) => {
       setState((_state) => {
@@ -118,7 +122,7 @@ const Editor = forwardRef((props: EditorProps, ref: ForwardedRef<unknown>) => {
   // 部分配置重构
   const [highlight, usedLanguageText, setting, updateSetting] = useConfig(props);
 
-  useExpose(ref, staticProps, catalogVisible, setting, updateSetting);
+  useExpose(ref, staticProps, catalogVisible, setting, updateSetting, codeRef);
 
   useEffect(() => {
     return () => {
@@ -164,6 +168,7 @@ const Editor = forwardRef((props: EditorProps, ref: ForwardedRef<unknown>) => {
           showToolbarName={props.showToolbarName}
         />
         <Content
+          ref={codeRef}
           modelValue={modelValue}
           onChange={onChange}
           setting={setting}
