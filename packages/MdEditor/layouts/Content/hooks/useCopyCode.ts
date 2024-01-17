@@ -5,7 +5,7 @@ import { EditorContext } from '~/Editor';
 import { ContentPreviewProps } from '../props';
 import StrIcon from '~/components/Icon/Str';
 
-const useCopyCode = (props: ContentPreviewProps, html: string) => {
+const useCopyCode = (props: ContentPreviewProps, html: string, key: string) => {
   const { editorId, usedLanguageText, customIcon } = useContext(EditorContext);
   const { formatCopiedText = (t: string) => t } = props;
 
@@ -51,6 +51,7 @@ const useCopyCode = (props: ContentPreviewProps, html: string) => {
   }, [
     formatCopiedText,
     html,
+    key,
     props.setting.preview,
     usedLanguageText.copyCode?.failTips,
     usedLanguageText.copyCode?.successTips,

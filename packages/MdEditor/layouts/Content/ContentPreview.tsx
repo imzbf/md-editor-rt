@@ -13,7 +13,7 @@ const ContentPreview = (props: ContentPreviewProps) => {
   // markdown => html
   const { html, key } = useMarkdownIt(props, !!previewOnly);
   // 复制代码
-  useCopyCode(props, html);
+  useCopyCode(props, html, key);
   // 图片点击放大
   useZoom(props, html);
 
