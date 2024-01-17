@@ -951,6 +951,10 @@ export default () => {
 ```jsx
 import React, { useState, useEffect, useRef } from 'react';
 import { MdEditor, ExposeParam } from 'md-editor-rt';
+
+//
+// import type { ExposePreviewParam } from 'md-editor-rt';
+
 import 'md-editor-rt/lib/style.css';
 
 export default () => {
@@ -965,6 +969,21 @@ export default () => {
   return <MdEditor ref={editorRef} modelValue={text} onChange={setText} />;
 };
 ```
+
+| Name                 | MdEditor | MdPreview |
+| -------------------- | -------- | --------- |
+| on                   | √        | ×         |
+| togglePageFullscreen | √        | ×         |
+| toggleFullscreen     | √        | ×         |
+| togglePreview        | √        | ×         |
+| toggleHtmlPreview    | √        | ×         |
+| toggleCatalog        | √        | ×         |
+| triggerSave          | √        | ×         |
+| insert               | √        | ×         |
+| focus                | √        | ×         |
+| rerender             | √        | √         |
+| getSelectedText      | √        | ×         |
+| resetHistory         | √        | ×         |
 
 ### 👂🏼 on
 
@@ -1117,6 +1136,32 @@ type FocusOption =
       cursorPos: number;
     };
 ```
+
+---
+
+### ✒️ rerender
+
+手动重新渲染内容。
+
+```js
+editorRef.current?.rerender();
+```
+
+---
+
+### 🔍 getSelectedText
+
+获取当前选中的文字。
+
+```js
+console.log(editorRef.current?.getSelectedText());
+```
+
+---
+
+### 🗑 resetHistory
+
+清除当前的历史记录。
 
 ---
 
