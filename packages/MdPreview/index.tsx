@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, forwardRef, ForwardedRef } from 'react';
 import { useConfig, useExpansionPreview } from '~/hooks';
 import { classnames } from '~/utils';
 import { prefix, defaultProps } from '~/config';
@@ -7,8 +7,9 @@ import bus from '~/utils/event-bus';
 
 import { EditorContext } from '~/Editor';
 import ContentPreview from '~/layouts/Content/ContentPreview';
+import { useExpose } from './hooks/useExpose';
 
-const MdPreview = (props: MdPreviewProps) => {
+const MdPreview = forwardRef((props: MdPreviewProps, ref: ForwardedRef<unknown>) => {
   // Editor.defaultProps在某些编辑器中不能被正确识别已设置默认情况
   const {
     modelValue = defaultProps.modelValue,
@@ -44,6 +45,8 @@ const MdPreview = (props: MdPreviewProps) => {
   useExpansionPreview(staticProps);
   // 部分配置重构
   const [highlight, usedLanguageText, setting] = useConfig(props);
+
+  useExpose(staticProps, ref);
 
   useEffect(() => {
     return () => {
@@ -97,6 +100,6 @@ const MdPreview = (props: MdPreviewProps) => {
       </div>
     </EditorContext.Provider>
   );
-};
+});
 
 export default MdPreview;

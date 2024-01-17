@@ -19,7 +19,7 @@ const ContentPreview = (props: ContentPreviewProps) => {
 
   const content = useMemo(() => {
     return (
-      <article
+      <div
         id={`${editorId}-preview`}
         key={key}
         className={classnames([
