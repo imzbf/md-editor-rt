@@ -1,5 +1,5 @@
 import { useCallback, useContext, useEffect, useRef, useState } from 'react';
-import LRUCache from 'lru-cache';
+import { LRUCache } from 'lru-cache';
 import { uuid } from '@vavt/util';
 import { prefix, mermaidUrl, configOption } from '~/config';
 import { EditorContext } from '~/Editor';

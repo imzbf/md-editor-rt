@@ -55,7 +55,7 @@ const resolvePath = (p: string) => path.resolve(__dirname, p);
           react(),
           t === 'es' &&
             dts({
-              outputDir: resolvePath('lib/types'),
+              outDir: resolvePath('lib/types'),
               include: [resolvePath('packages')]
             })
         ],
