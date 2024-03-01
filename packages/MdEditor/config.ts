@@ -231,7 +231,7 @@ export const staticTextDefault: StaticTextDefault = {
       block: 'block'
     },
     footer: {
-      markdownTotal: 'Word Count',
+      markdownTotal: 'Character Count',
       scrollAuto: 'Scroll Auto'
     }
   }
