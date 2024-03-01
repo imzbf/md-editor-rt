@@ -302,7 +302,6 @@ export default ({ theme, previewTheme, codeTheme, lang }: PreviewProp) => {
           // onHtmlChanged={console.log}
           // onBlur={console.log}
           // onFocus={console.log}
-          editorId="md-editor-preview"
           // showToolbarName
           // onInput={console.log}
           // onError={console.log}

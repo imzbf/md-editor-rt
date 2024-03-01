@@ -1,7 +1,7 @@
 import React, { useState, useEffect, forwardRef, ForwardedRef } from 'react';
 import { useConfig, useExpansionPreview } from '~/hooks';
-import { classnames } from '~/utils';
-import { prefix, defaultProps } from '~/config';
+import { classnames, getNextId } from '~/utils';
+import { prefix, defaultProps, defaultEditorId } from '~/config';
 import { MdPreviewProps, MdPreviewStaticProps, Themes } from '~/type';
 import bus from '~/utils/event-bus';
 
@@ -15,7 +15,7 @@ const MdPreview = forwardRef((props: MdPreviewProps, ref: ForwardedRef<unknown>)
     modelValue = defaultProps.modelValue,
     theme = defaultProps.theme as Themes,
     className = defaultProps.className,
-    editorId = defaultProps.editorId,
+    editorId = getNextId(defaultEditorId + '_'),
     showCodeRowNumber = defaultProps.showCodeRowNumber,
     previewTheme = defaultProps.previewTheme,
     noMermaid = defaultProps.noMermaid,

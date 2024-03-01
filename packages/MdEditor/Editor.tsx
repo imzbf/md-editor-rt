@@ -19,8 +19,8 @@ import {
 import ToolBar from '~/layouts/Toolbar';
 import Content from '~/layouts/Content';
 import Footer from '~/layouts/Footer';
-import { classnames } from '~/utils';
-import { prefix, staticTextDefault, defaultProps } from '~/config';
+import { classnames, getNextId } from '~/utils';
+import { prefix, staticTextDefault, defaultProps, defaultEditorId } from '~/config';
 import { ContentType, EditorProps, StaticProps, Themes } from '~/type';
 import bus from '~/utils/event-bus';
 import { ContentExposeParam } from './layouts/Content/type';
@@ -49,7 +49,7 @@ const Editor = forwardRef((props: EditorProps, ref: ForwardedRef<unknown>) => {
     toolbars = defaultProps.toolbars,
     toolbarsExclude = defaultProps.toolbarsExclude,
     defToolbars = defaultProps.defToolbars,
-    editorId = defaultProps.editorId,
+    editorId = getNextId(defaultEditorId + '_'),
     tabWidth = defaultProps.tabWidth,
     showCodeRowNumber = defaultProps.showCodeRowNumber,
     previewTheme = defaultProps.previewTheme,

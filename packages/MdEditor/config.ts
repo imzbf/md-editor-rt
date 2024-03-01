@@ -231,7 +231,7 @@ export const staticTextDefault: StaticTextDefault = {
       block: 'block'
     },
     footer: {
-      markdownTotal: 'Word Count',
+      markdownTotal: 'Character Count',
       scrollAuto: 'Scroll Auto'
     }
   }
@@ -295,7 +295,6 @@ export const defaultProps = {
   noPrettier: false,
   onHtmlChanged: () => {},
   onGetCatalog: () => {},
-  editorId: defaultEditorId,
   tabWidth: 2,
   showCodeRowNumber: false,
   previewTheme: 'default',
