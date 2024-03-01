@@ -18,7 +18,8 @@ import {
   UpdateSetting,
   ExposeEvent,
   MdPreviewStaticProps,
-  FocusOption
+  FocusOption,
+  UploadImgCallBack
 } from './type';
 import {
   prefix,
@@ -255,7 +256,7 @@ export const useUploadImg = (props: EditorProps, staticProps: StaticProps) => {
 
   useEffect(() => {
     const uploadImageCallBack = (files: Array<File>, cb: () => void) => {
-      const insertHanlder = (urls: Array<string>) => {
+      const insertHanlder: UploadImgCallBack = (urls) => {
         bus.emit(editorId, REPLACE, 'image', {
           desc: '',
           urls
