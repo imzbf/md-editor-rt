@@ -26,7 +26,6 @@ const PreviewOnly = (props: PreviewOnlyProp) => {
       </button>
       <div className="container">
         <MdPreview
-          editorId="preview-id"
           ref={previewRef}
           language={props.lang}
           theme={props.theme}

@@ -295,7 +295,6 @@ export const defaultProps = {
   noPrettier: false,
   onHtmlChanged: () => {},
   onGetCatalog: () => {},
-  editorId: defaultEditorId,
   tabWidth: 2,
   showCodeRowNumber: false,
   previewTheme: 'default',
