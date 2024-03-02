@@ -4,11 +4,13 @@ import React, {
   useState,
   ReactElement,
   useEffect,
-  useMemo
+  useMemo,
+  useContext
 } from 'react';
 import { createPortal } from 'react-dom';
 import { prefix } from '~/config';
 import { keyMove } from '~/utils/dom';
+import { EditorContext } from '~/Editor';
 import Icon from '../Icon';
 
 export type ModalProps = Readonly<{
@@ -33,7 +35,11 @@ const getNextIndex = (() => {
   };
 })();
 
+const toClass = `${prefix}-modal-container`;
+
 const Modal = (props: ModalProps) => {
+  const { theme } = useContext(EditorContext);
+
   const { onClose = () => {}, onAdjust = () => {}, style = {} } = props;
   const [modalVisible, setMV] = useState(props.visible);
   const [modalClass, setModalClass] = useState([`${prefix}-modal`]);
@@ -41,7 +47,7 @@ const Modal = (props: ModalProps) => {
   const modalHeaderRef = useRef<HTMLDivElement>(null);
 
   // 创建的弹窗容器，存放在document.body末尾
-  const containerRef = useRef<HTMLDivElement>();
+  const containerRef = useRef<HTMLDivElement>(null);
 
   const [state, setState] = useState<{
     maskStyle: CSSProperties;
@@ -78,19 +84,6 @@ const Modal = (props: ModalProps) => {
       };
     }
   }, [props.height, props.isFullscreen, props.width]);
-
-  useEffect(() => {
-    containerRef.current =
-      document.querySelector<HTMLDivElement>(`.${prefix}-modal-container`) ?? undefined;
-
-    if (!containerRef.current) {
-      containerRef.current = document.createElement('div');
-      containerRef.current.setAttribute('class', `${prefix}-modal-container`);
-
-      // 不主动移除
-      document.body.appendChild(containerRef.current);
-    }
-  }, []);
 
   useEffect(() => {
     let keyMoveClear = () => {};
@@ -156,74 +149,77 @@ const Modal = (props: ModalProps) => {
   }, [props.visible]);
 
   return (
-    containerRef.current &&
-    createPortal(
-      <div
-        className={props.className}
-        style={{ ...style, display: modalVisible ? 'block' : 'none' }}
-      >
-        <div
-          className={`${prefix}-modal-mask`}
-          style={state.maskStyle}
-          onClick={onClose}
-        />
-        <div
-          className={modalClass.join(' ')}
-          style={{
-            ...state.modalStyle,
-            ...state.initPos,
-            ...innerSize
-          }}
-          ref={modalRef}
-        >
-          <div className={`${prefix}-modal-header`} ref={modalHeaderRef}>
-            {props.title || ''}
-          </div>
-          <div className={`${prefix}-modal-func`}>
-            {props.showAdjust && (
-              <div
-                className={`${prefix}-modal-adjust`}
-                onClick={(e) => {
-                  e.stopPropagation();
-
-                  // 全屏时，保存上次位置
-                  if (!props.isFullscreen) {
-                    setState((_state) => ({
-                      ..._state,
-                      historyPos: _state.initPos,
-                      initPos: {
-                        left: '0',
-                        top: '0'
-                      }
-                    }));
-                  } else {
-                    setState((_state) => ({
-                      ..._state,
-                      initPos: _state.historyPos
-                    }));
-                  }
-
-                  onAdjust instanceof Function && onAdjust(!props.isFullscreen);
-                }}
-              >
-                <Icon name={props.isFullscreen ? 'suoxiao' : 'fangda'} />
-              </div>
-            )}
+    <>
+      {createPortal(
+        <div ref={containerRef} className={toClass} data-theme={theme}>
+          <div
+            className={props.className}
+            style={{ ...style, display: modalVisible ? 'block' : 'none' }}
+          >
             <div
-              className={`${prefix}-modal-close`}
-              onClick={(e) => {
-                e.stopPropagation();
-                props.onClose && props.onClose();
+              className={`${prefix}-modal-mask`}
+              style={state.maskStyle}
+              onClick={onClose}
+            />
+            <div
+              className={modalClass.join(' ')}
+              style={{
+                ...state.modalStyle,
+                ...state.initPos,
+                ...innerSize
               }}
+              ref={modalRef}
             >
-              <Icon name="close" />
+              <div className={`${prefix}-modal-header`} ref={modalHeaderRef}>
+                {props.title || ''}
+              </div>
+              <div className={`${prefix}-modal-func`}>
+                {props.showAdjust && (
+                  <div
+                    className={`${prefix}-modal-adjust`}
+                    onClick={(e) => {
+                      e.stopPropagation();
+
+                      // 全屏时，保存上次位置
+                      if (!props.isFullscreen) {
+                        setState((_state) => ({
+                          ..._state,
+                          historyPos: _state.initPos,
+                          initPos: {
+                            left: '0',
+                            top: '0'
+                          }
+                        }));
+                      } else {
+                        setState((_state) => ({
+                          ..._state,
+                          initPos: _state.historyPos
+                        }));
+                      }
+
+                      onAdjust instanceof Function && onAdjust(!props.isFullscreen);
+                    }}
+                  >
+                    <Icon name={props.isFullscreen ? 'suoxiao' : 'fangda'} />
+                  </div>
+                )}
+                <div
+                  className={`${prefix}-modal-close`}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    props.onClose && props.onClose();
+                  }}
+                >
+                  <Icon name="close" />
+                </div>
+              </div>
+              <div className={`${prefix}-modal-body`}>{props.children}</div>
             </div>
           </div>
-          <div className={`${prefix}-modal-body`}>{props.children}</div>
-        </div>
-      </div>,
-      containerRef.current
-    )
+        </div>,
+        document.body
+      )}
+    </>
   );
 };
 
