@@ -214,6 +214,12 @@ export default ({ theme, previewTheme, codeTheme, lang }: PreviewProp) => {
     editorRef.current?.on('catalog', (status) => {
       console.log('catalog', status);
     });
+
+    editorRef.current?.domEventHandlers({
+      compositionstart: () => {
+        console.log('compositionstart');
+      }
+    });
   }, []);
 
   return (

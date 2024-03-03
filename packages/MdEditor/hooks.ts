@@ -48,7 +48,8 @@ import {
   ERROR_CATCHER,
   REPLACE,
   UPLOAD_IMAGE,
-  RERENDER
+  RERENDER,
+  EVENT_LISTENER
 } from './static/event-name';
 import { ContentExposeParam } from './layouts/Content/type';
 
@@ -557,6 +558,9 @@ export const useExpose = (
         },
         resetHistory() {
           codeRef.current?.resetHistory();
+        },
+        domEventHandlers(handlers) {
+          bus.emit(editorId, EVENT_LISTENER, handlers);
         }
       };
 

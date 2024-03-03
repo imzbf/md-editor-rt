@@ -1,4 +1,4 @@
-import { useCallback, useContext, useEffect, useRef, useState } from 'react';
+import { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
 import { EditorView } from 'codemirror';
 import { keymap } from '@codemirror/view';
 import { languages } from '@codemirror/language-data';
@@ -16,7 +16,14 @@ import { configOption } from '~/config';
 import bus from '~/utils/event-bus';
 import { directive2flag, ToolDirective } from '~/utils/content-help';
 import { EditorContext } from '~/Editor';
-import { CTRL_SHIFT_Z, CTRL_Z, ERROR_CATCHER, REPLACE } from '~/static/event-name';
+import {
+  CTRL_SHIFT_Z,
+  CTRL_Z,
+  ERROR_CATCHER,
+  REPLACE,
+  EVENT_LISTENER
+} from '~/static/event-name';
+import { DOMEventHandlers } from '~/type';
 
 import CodeMirrorUt from '../codemirror';
 import { oneDark } from '../codemirror/themeOneDark';
@@ -60,6 +67,56 @@ const useCodeMirror = (props: ContentProps) => {
   // 粘贴上传
   const pasteHandler = usePasteUpload(props);
 
+  const [domEventHandlersUserDefined, setDEHUD] = useState<DOMEventHandlers>({});
+
+  const domEventHandlers = useMemo<DOMEventHandlers>(() => {
+    const basicHandlers: DOMEventHandlers = {
+      paste: pasteHandler,
+      blur: props.onBlur,
+      focus: props.onFocus,
+      drop: props.onDrop,
+      input: (e) => {
+        if (props.onInput) {
+          props.onInput(e);
+        }
+
+        const { data } = e as any;
+        if (props.maxLength && props.modelValue.length + data.length > props.maxLength) {
+          bus.emit(editorId, ERROR_CATCHER, {
+            name: 'overlength',
+            message: 'The input text is too long',
+            data: data
+          });
+        }
+      }
+    };
+
+    const nextDomEventHandlers: DOMEventHandlers = {
+      ...basicHandlers
+    };
+
+    const defaultEventNames = Object.keys(basicHandlers);
+
+    for (const eventName in domEventHandlersUserDefined) {
+      const en = eventName as keyof HTMLElementEventMap;
+
+      if (defaultEventNames.includes(en)) {
+        nextDomEventHandlers[en] = (e, v) => {
+          domEventHandlersUserDefined[en]!(e as any, v);
+
+          // 如果用户自行监听的事件调用了preventDefault，则不再执行内部的方法
+          if (!e.defaultPrevented) {
+            basicHandlers[en]!(e as any, v);
+          }
+        };
+      } else {
+        nextDomEventHandlers[en] = domEventHandlersUserDefined[en] as any;
+      }
+    }
+
+    return nextDomEventHandlers;
+  }, [domEventHandlersUserDefined, editorId, pasteHandler, props]);
+
   const [defaultExtensions] = useState(() => {
     return [
       keymap.of([...defaultKeymap, ...historyKeymap, ...mdEditorCommands, indentWithTab]),
@@ -72,29 +129,7 @@ const useCodeMirror = (props: ContentProps) => {
           update.docChanged && props.onChange(update.state.doc.toString());
         })
       ),
-      comp.domEvent.of(
-        EditorView.domEventHandlers({
-          paste: pasteHandler,
-          blur: props.onBlur,
-          focus: props.onFocus,
-          drop: props.onDrop,
-          input: (e) => {
-            props.onInput && props.onInput(e);
-
-            const { data } = e as any;
-            if (
-              props.maxLength &&
-              props.modelValue.length + data.length > props.maxLength
-            ) {
-              bus.emit(editorId, ERROR_CATCHER, {
-                name: 'overlength',
-                message: 'The input text is too long',
-                data: data
-              });
-            }
-          }
-        })
-      )
+      comp.domEvent.of(EditorView.domEventHandlers(domEventHandlers))
     ];
   });
 
@@ -164,6 +199,14 @@ const useCodeMirror = (props: ContentProps) => {
       }
     });
 
+    // 原始事件
+    bus.on(editorId, {
+      name: EVENT_LISTENER,
+      callback(handlers: DOMEventHandlers) {
+        setDEHUD(handlers);
+      }
+    });
+
     return () => {
       // react18的严格模式会强制在开发环境让useEffect执行两次
       view.destroy();
@@ -193,34 +236,12 @@ const useCodeMirror = (props: ContentProps) => {
               update.docChanged && props.onChange(update.state.doc.toString());
             })
           ),
-          comp.domEvent.reconfigure(
-            EditorView.domEventHandlers({
-              paste: pasteHandler,
-              blur: props.onBlur,
-              focus: props.onFocus,
-              drop: props.onDrop,
-              input: (e) => {
-                props.onInput && props.onInput(e);
-                const { data } = e as any;
-                if (
-                  props.maxLength &&
-                  props.modelValue.length + data.length > props.maxLength
-                ) {
-                  bus.emit(editorId, ERROR_CATCHER, {
-                    name: 'overlength',
-                    message: 'The input text is too long',
-                    data: data
-                  });
-                }
-              }
-            })
-          ),
+          comp.domEvent.reconfigure(EditorView.domEventHandlers(domEventHandlers)),
           comp.autocompletion.reconfigure(createAutocompletion(props.completions))
         ]
       });
     }, 0);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [comp.domEvent, comp.update, pasteHandler, props]);
+  }, [comp.autocompletion, comp.domEvent, comp.update, domEventHandlers, props]);
 
   // =================end
 
