@@ -146,7 +146,7 @@ export default ({ theme, previewTheme, codeTheme, lang }: PreviewProp) => {
       visible: false,
       modalVisible: false,
       isFullscreen: false,
-      inputBoxWitdh: localStorage.getItem(INPUT_BOX_WITDH) || '200px'
+      inputBoxWitdh: localStorage.getItem(INPUT_BOX_WITDH) ?? undefined
     };
   });
 

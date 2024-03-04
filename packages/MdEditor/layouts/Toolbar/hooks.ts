@@ -17,7 +17,7 @@ import { HoverData } from './TableShape';
 export const useSreenfull = (props: ToolbarProps) => {
   const { editorId } = useContext(EditorContext);
   const screenfullConfig = configOption.editorExtensions?.screenfull;
-  let screenfull = screenfullConfig?.instance;
+  const screenfull = useRef(screenfullConfig?.instance);
   // 是否组件内部全屏标识
   const screenfullMe = useRef(false);
 
@@ -25,7 +25,7 @@ export const useSreenfull = (props: ToolbarProps) => {
   // 而是screenfull获取到实例后要正确的初始化该方法
   const fullscreenHandler = useCallback(
     (status?: boolean) => {
-      if (!screenfull) {
+      if (!screenfull.current) {
         bus.emit(editorId, ERROR_CATCHER, {
           name: 'fullscreen',
           message: 'fullscreen is undefined'
@@ -33,15 +33,16 @@ export const useSreenfull = (props: ToolbarProps) => {
         return;
       }
 
-      if (screenfull.isEnabled) {
+      if (screenfull.current.isEnabled) {
         screenfullMe.current = !screenfullMe.current;
 
-        const targetStatus = status === undefined ? !screenfull.isFullscreen : status;
+        const targetStatus =
+          status === undefined ? !screenfull.current.isFullscreen : status;
 
         if (targetStatus) {
-          screenfull.request();
+          screenfull.current.request();
         } else {
-          screenfull.exit();
+          screenfull.current.exit();
         }
       } else {
         console.error('browser does not support screenfull!');
@@ -62,16 +63,15 @@ export const useSreenfull = (props: ToolbarProps) => {
     let timer = -1;
 
     // 非预览模式且未提供screenfull时请求cdn
-    if (!screenfull) {
+    if (!screenfull.current) {
       screenScript = document.createElement('script');
       screenScript.src = screenfullConfig?.js || screenfullUrl;
       screenScript.onload = () => {
         // 复制实例
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-        screenfull = window.screenfull;
+        screenfull.current = window.screenfull;
         // 注册事件
-        if (screenfull && screenfull.isEnabled) {
-          screenfull.on('change', changedEvent);
+        if (screenfull.current && screenfull.current.isEnabled) {
+          screenfull.current.on('change', changedEvent);
         }
       };
       screenScript.id = `${prefix}-screenfull`;
@@ -82,18 +82,18 @@ export const useSreenfull = (props: ToolbarProps) => {
     }
 
     // 提供了对象直接监听事件，未提供通过screenfullLoad触发
-    if (screenfull && screenfull.isEnabled) {
-      screenfull.on('change', changedEvent);
+    if (screenfull.current && screenfull.current.isEnabled) {
+      screenfull.current.on('change', changedEvent);
     }
 
     return () => {
       // 严格模式下，需要取消一次嵌入标签
-      if (!screenfull) {
+      if (!screenfull.current) {
         cancelAnimationFrame(timer);
       }
 
-      if (screenfull && screenfull.isEnabled) {
-        screenfull.off('change', changedEvent);
+      if (screenfull.current && screenfull.current.isEnabled) {
+        screenfull.current.off('change', changedEvent);
       }
     };
 
