@@ -789,41 +789,52 @@ Except for the same as `MdPreview`:
 
 ### 📸 onUploadImg
 
-- **type**: `(files: Array<File>, callback: (urls: Array<string>) => void) => void`
+- **type**: `files: Array<File>, callback: (urls: string[] | { url: string; alt: string; title: string }[]) => void`
 
   Uploading picture event, when picture is uploading the modal will not close, please provide right urls to the callback function.
 
-```jsx
-import axios from 'axios';
-import { MdEditor } from 'md-editor-rt';
-import 'md-editor-rt/lib/style.css';
+  ```jsx
+  import React, { useState } from 'react';
+  import { MdEditor } from 'md-editor-rt';
+  import 'md-editor-rt/lib/style.css';
 
-const onUploadImg = async (files, callback) => {
-  const res = await Promise.all(
-    files.map((file) => {
-      return new Promise((rev, rej) => {
-        const form = new FormData();
-        form.append('file', file);
+  export default () => {
+    const [text, setText] = useState('# Hello Editor');
 
-        axios
-          .post('/api/img/upload', form, {
-            headers: {
-              'Content-Type': 'multipart/form-data'
-            }
-          })
-          .then((res) => rev(res))
-          .catch((error) => rej(error));
-      });
-    })
-  );
+    const onUploadImg = async (files, callback) => {
+      const res = await Promise.all(
+        files.map((file) => {
+          return new Promise((rev, rej) => {
+            const form = new FormData();
+            form.append('file', file);
 
-  callback(res.map((item) => item.data.url));
-};
+            axios
+              .post('/api/img/upload', form, {
+                headers: {
+                  'Content-Type': 'multipart/form-data'
+                }
+              })
+              .then((res) => rev(res))
+              .catch((error) => rej(error));
+          });
+        })
+      );
 
-export default () => {
-  return <MdEditor onUploadImg={onUploadImg} />;
-};
-```
+      // Approach 1
+      callback(res.map((item) => item.data.url));
+      // Approach 2
+      // callback(
+      //   res.map((item: any) => ({
+      //     url: item.data.url,
+      //     alt: 'alt',
+      //     title: 'title'
+      //   }))
+      // );
+    };
+
+    return <MdEditor modelValue={text} onChange={setText} onUploadImg={onUploadImg} />;
+  };
+  ```
 
 ---
 

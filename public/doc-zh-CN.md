@@ -822,41 +822,52 @@
 
 ### 📸 onUploadImg
 
-- **类型**：`(files: Array<File>, callback: (urls: Array<string>) => void) => void`
+- **类型**：`files: Array<File>, callback: (urls: string[] | { url: string; alt: string; title: string }[]) => void`
 
   上传图片事件，弹窗会等待上传结果，务必将上传后的 urls 作为 callback 入参回传。
 
-```jsx
-import { MdEditor } from 'md-editor-rt';
-import 'md-editor-rt/lib/style.css';
-import axios from 'axios';
+  ```jsx
+  import React, { useState } from 'react';
+  import { MdEditor } from 'md-editor-rt';
+  import 'md-editor-rt/lib/style.css';
 
-const onUploadImg = async (files, callback) => {
-  const res = await Promise.all(
-    files.map((file) => {
-      return new Promise((rev, rej) => {
-        const form = new FormData();
-        form.append('file', file);
+  export default () => {
+    const [text, setText] = useState('# Hello Editor');
 
-        axios
-          .post('/api/img/upload', form, {
-            headers: {
-              'Content-Type': 'multipart/form-data'
-            }
-          })
-          .then((res) => rev(res))
-          .catch((error) => rej(error));
-      });
-    })
-  );
+    const onUploadImg = async (files, callback) => {
+      const res = await Promise.all(
+        files.map((file) => {
+          return new Promise((rev, rej) => {
+            const form = new FormData();
+            form.append('file', file);
 
-  callback(res.map((item) => item.data.url));
-};
+            axios
+              .post('/api/img/upload', form, {
+                headers: {
+                  'Content-Type': 'multipart/form-data'
+                }
+              })
+              .then((res) => rev(res))
+              .catch((error) => rej(error));
+          });
+        })
+      );
 
-export default () => {
-  return <MdEditor onUploadImg={onUploadImg} />;
-};
-```
+      // 方式一
+      callback(res.map((item) => item.data.url));
+      // 方式二
+      // callback(
+      //   res.map((item: any) => ({
+      //     url: item.data.url,
+      //     alt: 'alt',
+      //     title: 'title'
+      //   }))
+      // );
+    };
+
+    return <MdEditor modelValue={text} onChange={setText} onUploadImg={onUploadImg} />;
+  };
+  ```
 
 ---
 
