@@ -88,7 +88,7 @@ const Toolbar = (props: ToolbarProps) => {
         visible={visible.title}
         onChange={onTitleChange}
         overlay={
-          <ul className={`${prefix}-menu`} onClick={onTitleClose}>
+          <ul key="bar-title-overlay" className={`${prefix}-menu`} onClick={onTitleClose}>
             <li
               className={`${prefix}-menu-item ${prefix}-menu-item-title`}
               onClick={() => {
@@ -141,7 +141,11 @@ const Toolbar = (props: ToolbarProps) => {
         }
         key="bar-title"
       >
-        <div className={`${prefix}-toolbar-item`} title={ult.toolbarTips?.title}>
+        <div
+          key="bar-title-trigger"
+          className={`${prefix}-toolbar-item`}
+          title={ult.toolbarTips?.title}
+        >
           <Icon name="title" />
 
           {props.showToolbarName && (
@@ -168,7 +172,7 @@ const Toolbar = (props: ToolbarProps) => {
         visible={visible.image}
         onChange={onImageChange}
         overlay={
-          <ul className={`${prefix}-menu`} onClick={onImageClose}>
+          <ul key="bar-image-overlay" className={`${prefix}-menu`} onClick={onImageClose}>
             <li
               className={`${prefix}-menu-item ${prefix}-menu-item-image`}
               onClick={() => {
@@ -209,7 +213,11 @@ const Toolbar = (props: ToolbarProps) => {
         }
         key="bar-image"
       >
-        <div className={`${prefix}-toolbar-item`} title={ult.toolbarTips?.image}>
+        <div
+          key="bar-image-trigger"
+          className={`${prefix}-toolbar-item`}
+          title={ult.toolbarTips?.image}
+        >
           <Icon name="image" />
 
           {props.showToolbarName && (
@@ -237,10 +245,18 @@ const Toolbar = (props: ToolbarProps) => {
         onChange={onTableChange}
         key="bar-table"
         overlay={
-          <TableShape tableShape={props.tableShape} onSelected={onTableSelected} />
+          <TableShape
+            key="bar-table-overlay"
+            tableShape={props.tableShape}
+            onSelected={onTableSelected}
+          />
         }
       >
-        <div className={`${prefix}-toolbar-item`} title={ult.toolbarTips?.table}>
+        <div
+          key="bar-table-trigger"
+          className={`${prefix}-toolbar-item`}
+          title={ult.toolbarTips?.table}
+        >
           <Icon name="table" />
 
           {props.showToolbarName && (
@@ -266,7 +282,11 @@ const Toolbar = (props: ToolbarProps) => {
         visible={visible.mermaid}
         onChange={onMermaidChange}
         overlay={
-          <ul className={`${prefix}-menu`} onClick={onMermaidClose}>
+          <ul
+            key="bar-mermaid-overlay"
+            className={`${prefix}-menu`}
+            onClick={onMermaidClose}
+          >
             <li
               className={`${prefix}-menu-item ${prefix}-menu-item-mermaid`}
               onClick={() => {
@@ -335,7 +355,11 @@ const Toolbar = (props: ToolbarProps) => {
         }
         key="bar-mermaid"
       >
-        <div className={`${prefix}-toolbar-item`} title={ult.toolbarTips?.mermaid}>
+        <div
+          key="bar-mermaid-trigger"
+          className={`${prefix}-toolbar-item`}
+          title={ult.toolbarTips?.mermaid}
+        >
           <Icon name="mermaid" />
 
           {props.showToolbarName && (
@@ -364,7 +388,7 @@ const Toolbar = (props: ToolbarProps) => {
         visible={visible.katex}
         onChange={onKatexChange}
         overlay={
-          <ul className={`${prefix}-menu`} onClick={onKatexClose}>
+          <ul key="bar-katex-overlay" className={`${prefix}-menu`} onClick={onKatexClose}>
             <li
               className={`${prefix}-menu-item ${prefix}-menu-item-katex`}
               onClick={() => {
@@ -385,7 +409,11 @@ const Toolbar = (props: ToolbarProps) => {
         }
         key="bar-katex"
       >
-        <div className={`${prefix}-toolbar-item`} title={ult.toolbarTips?.katex}>
+        <div
+          key="bar-katex-trigger"
+          className={`${prefix}-toolbar-item`}
+          title={ult.toolbarTips?.katex}
+        >
           <Icon name="formula" />
 
           {props.showToolbarName && (
