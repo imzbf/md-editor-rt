@@ -2030,10 +2030,10 @@
   dependencies:
     html2pdf.js "^0.10.1"
 
-"@vavt/util@^1.4.1":
-  version "1.4.1"
-  resolved "https://registry.npmjs.org/@vavt/util/-/util-1.4.1.tgz#41569e172a8821b5a3fb89074f0fae60961827d0"
-  integrity sha512-EhYyvt5w+GE6IO1JzDFZLmJOXQmWHnx3OBvA3YY/ZB1kWqHlhJTpL4x7TuANTzK7q1Y6G/okk4eFpLVWxvEBVA==
+"@vavt/util@^1.5.1":
+  version "1.5.1"
+  resolved "https://registry.npmjs.org/@vavt/util/-/util-1.5.1.tgz#e75b1e26571453037384585acedd2eba70f42780"
+  integrity sha512-/q/ilzRwZZJlnDAl6DGZ8pinOSAjR91dcck79bi1ujrqYlPaFVHnbmkDeGPuLub6A821rXvtPXVRXULrfMN03Q==
 
 "@vavt/vite-plugin-import-markdown@^1.0.0":
   version "1.0.0"
@@ -3565,15 +3565,15 @@ marked@*:
   resolved "https://registry.npmjs.org/marked/-/marked-12.0.0.tgz#051ea8c8c7f65148a63003df1499515a2c6de716"
   integrity sha512-Vkwtq9rLqXryZnWaQc86+FHLC6tr/fycMfYAhiOIXkrNmeGAyhSxjqu0Rs1i0bBqw5u0S7+lV9fdH2ZSVaoa0w==
 
-md-editor-rt@^4.12.3:
-  version "4.12.3"
-  resolved "https://registry.npmjs.org/md-editor-rt/-/md-editor-rt-4.12.3.tgz#3cac291b5205c2d84d8dbda06f5fec75eb8afb5f"
-  integrity sha512-ROexoEvtqi0OLQGmedNMV//6Cd7C+UERRJxpMu9PLUTxqJyKqjBOFf41lpRFgo6U2CbcZc16AJRfl1y8PVh7vQ==
+md-editor-rt@^4.12.4:
+  version "4.12.4"
+  resolved "https://registry.npmjs.org/md-editor-rt/-/md-editor-rt-4.12.4.tgz#885ddd439ae0b80795da4bc5b5fa147d9bc89118"
+  integrity sha512-6PRj5Hacy4YZ3BRP9GygqXiXrc/KE24468qvSE9zS6z7wVHinUj5++ulygUyfH49wJq7ZqTPZROQs62nSBf4KA==
   dependencies:
     "@codemirror/lang-markdown" "^6.2.4"
     "@codemirror/language-data" "^6.4.1"
     "@types/markdown-it" "^13.0.7"
-    "@vavt/util" "^1.4.1"
+    "@vavt/util" "^1.5.1"
     codemirror "^6.0.1"
     copy-to-clipboard "^3.3.3"
     lru-cache "^10.2.0"
