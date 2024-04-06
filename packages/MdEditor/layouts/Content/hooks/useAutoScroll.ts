@@ -60,7 +60,11 @@ const useAutoScroll = (
   ]);
 
   useEffect(() => {
-    if (props.scrollAuto) {
+    if (
+      props.scrollAuto &&
+      !props.setting.previewOnly &&
+      (props.setting.preview || props.setting.htmlPreview)
+    ) {
       scrollCb.init();
     } else {
       scrollCb.clear();
@@ -69,8 +73,13 @@ const useAutoScroll = (
     return () => {
       scrollCb.clear();
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [scrollCb, props.scrollAuto]);
+  }, [
+    scrollCb,
+    props.scrollAuto,
+    props.setting.preview,
+    props.setting.htmlPreview,
+    props.setting.previewOnly
+  ]);
 };
 
 export default useAutoScroll;

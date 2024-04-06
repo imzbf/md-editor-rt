@@ -906,6 +906,26 @@ const Toolbar = (props: ToolbarProps) => {
               </div>
             );
           }
+          case 'previewOnly': {
+            return (
+              <div
+                className={`${prefix}-toolbar-item`}
+                title={ult.toolbarTips?.previewOnly}
+                onClick={() => {
+                  props.updateSetting('previewOnly');
+                }}
+                key="bar-preview-only"
+              >
+                <Icon name="preview-only" />
+
+                {props.showToolbarName && (
+                  <div className={`${prefix}-toolbar-item-name`}>
+                    {ult.toolbarTips?.previewOnly}
+                  </div>
+                )}
+              </div>
+            );
+          }
           case 'htmlPreview': {
             return (
               <div
@@ -972,24 +992,19 @@ const Toolbar = (props: ToolbarProps) => {
       }
     },
     [
-      ImageDropdown,
-      KatexDropdown,
-      MermaidDropdown,
-      TableDropdown,
-      TitleDropdown,
-      editorId,
-      emitHandler,
-      fullscreenHandler,
-      modalData,
-      props.defToolbars,
-      props.noPrettier,
-      props.noUploadImg,
-      props.setting.fullscreen,
-      props.setting.pageFullscreen,
-      props.showToolbarName,
-      setModalData,
+      props,
       ult.toolbarTips,
+      emitHandler,
+      TitleDropdown,
+      setModalData,
+      modalData,
+      ImageDropdown,
+      TableDropdown,
+      editorId,
       updateSetting,
+      fullscreenHandler,
+      MermaidDropdown,
+      KatexDropdown,
       theme,
       language
     ]

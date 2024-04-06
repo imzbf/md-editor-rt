@@ -101,36 +101,36 @@ const useResize = (
   }, [props.inputBoxWitdh]);
 
   useEffect(() => {
-    if (!props.setting.htmlPreview && !props.setting.preview) {
-      setInputWrapperStyle((prevState) => {
-        return {
-          ...prevState,
-          width: '100%'
-        };
-      });
+    const po = props.setting.previewOnly;
 
-      setResizeOperateStyle((prevState) => {
-        return {
-          ...prevState,
-          display: 'none'
-        };
-      });
+    let width: string | number | undefined = '';
+    let display = '';
+
+    if (po) {
+      width = '0%';
+      display = 'none';
+    } else if (!props.setting.htmlPreview && !props.setting.preview) {
+      width = '100%';
+      display = 'none';
     } else {
-      setInputWrapperStyle((prevState) => {
-        return {
-          ...prevState,
-          width: resizedWidth.current
-        };
-      });
-
-      setResizeOperateStyle((prevState) => {
-        return {
-          ...prevState,
-          display: 'initial'
-        };
-      });
+      width = resizedWidth.current;
+      display = 'initial';
     }
-  }, [props.setting.htmlPreview, props.setting.preview]);
+
+    setInputWrapperStyle((prevState) => {
+      return {
+        ...prevState,
+        width
+      };
+    });
+
+    setResizeOperateStyle((prevState) => {
+      return {
+        ...prevState,
+        display
+      };
+    });
+  }, [props.setting.htmlPreview, props.setting.preview, props.setting.previewOnly]);
 
   return { inputWrapperStyle, resizeOperateStyle };
 };

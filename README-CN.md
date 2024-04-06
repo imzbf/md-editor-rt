@@ -186,6 +186,7 @@ export default () => {
   'pageFullscreen',
   'fullscreen',
   'preview',
+  'previewOnly',
   'htmlPreview',
   'catalog',
   'github'
@@ -229,6 +230,7 @@ export interface ToolbarTips {
   fullscreen?: string;
   catalog?: string;
   preview?: string;
+  previewOnly?: string;
   htmlPreview?: string;
   github?: string;
   '-'?: string;
@@ -377,6 +379,12 @@ export default () => {
   editorRef.current?.on('preview', (status) => console.log(status));
   ```
 
+- previewOnly
+
+  ```js
+  editorRef.current?.on('previewOnly', (status) => console.log(status));
+  ```
+
 - htmlPreview
 
   ```js
@@ -411,6 +419,14 @@ editorRef.current?.toggleFullscreen(true);
 
 ```js
 editorRef.current?.togglePreview(true);
+```
+
+### 📖 togglePreviewOnly
+
+切换仅预览状态。
+
+```js
+editorRef.current?.togglePreviewOnly(true);
 ```
 
 ### 📼 toggleHtmlPreview

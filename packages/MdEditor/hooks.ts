@@ -49,7 +49,8 @@ import {
   REPLACE,
   UPLOAD_IMAGE,
   RERENDER,
-  EVENT_LISTENER
+  EVENT_LISTENER,
+  PREVIEW_ONLY_CHANGED
 } from './static/event-name';
 import { ContentExposeParam } from './layouts/Content/type';
 
@@ -381,7 +382,8 @@ export const useConfig = (props: EditorProps) => {
     pageFullscreen,
     fullscreen: false,
     preview: preview,
-    htmlPreview: preview ? false : htmlPreview
+    htmlPreview: preview ? false : htmlPreview,
+    previewOnly: false
   });
 
   const updateSetting = useCallback((k: keyof typeof setting, v: boolean) => {
@@ -391,10 +393,19 @@ export const useConfig = (props: EditorProps) => {
         [k]: v === undefined ? !_setting[k] : v
       } as SettingType;
 
-      if (k === 'preview' && nextSetting.preview) {
+      if (k === 'preview') {
         nextSetting.htmlPreview = false;
-      } else if (k === 'htmlPreview' && nextSetting.htmlPreview) {
+        nextSetting.previewOnly = false;
+      } else if (k === 'htmlPreview') {
         nextSetting.preview = false;
+        nextSetting.previewOnly = false;
+      } else if (
+        k === 'previewOnly' &&
+        !nextSetting.preview &&
+        !nextSetting.htmlPreview
+      ) {
+        // 如果没有显示预览模块，则需要手动展示
+        nextSetting.preview = true;
       }
 
       return nextSetting;
@@ -452,6 +463,11 @@ export const useExpose = (
   }, [setting.preview]);
 
   useEffect(() => {
+    bus.emit(editorId, PREVIEW_ONLY_CHANGED, setting.previewOnly);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [setting.previewOnly]);
+
+  useEffect(() => {
     bus.emit(editorId, HTML_PREVIEW_CHANGED, setting.htmlPreview);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [setting.htmlPreview]);
@@ -499,6 +515,17 @@ export const useExpose = (
               break;
             }
 
+            case 'previewOnly': {
+              bus.on(editorId, {
+                name: PREVIEW_ONLY_CHANGED,
+                callback(status: boolean) {
+                  (callBack as ExposeEvent['previewOnly'])(status);
+                }
+              });
+
+              break;
+            }
+
             case 'htmlPreview': {
               bus.on(editorId, {
                 name: HTML_PREVIEW_CHANGED,
@@ -534,6 +561,9 @@ export const useExpose = (
         },
         togglePreview(status) {
           updateSetting('preview', status);
+        },
+        togglePreviewOnly(status) {
+          updateSetting('previewOnly', status);
         },
         toggleHtmlPreview(status) {
           updateSetting('htmlPreview', status);

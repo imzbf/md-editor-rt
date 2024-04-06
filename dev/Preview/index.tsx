@@ -199,6 +199,10 @@ export default ({ theme, previewTheme, codeTheme, lang }: PreviewProp) => {
       console.log('preview', status);
     });
 
+    editorRef.current?.on('previewOnly', (status) => {
+      console.log('previewOnly', status);
+    });
+
     editorRef.current?.on('htmlPreview', (status) => {
       console.log('htmlPreview', status);
     });
@@ -246,6 +250,7 @@ export default ({ theme, previewTheme, codeTheme, lang }: PreviewProp) => {
           // editorRef.current?.toggleFullscreen();
           // editorRef.current?.togglePageFullscreen();
           // editorRef.current?.toggleCatalog();
+          editorRef.current?.togglePreviewOnly();
           // editorRef.current?.toggleHtmlPreview();
           // editorRef.current?.togglePreview();
           // editorRef.current?.triggerSave();
@@ -259,7 +264,7 @@ export default ({ theme, previewTheme, codeTheme, lang }: PreviewProp) => {
           // });
           // editorRef.current?.rerender();
           // console.log(editorRef.current?.getSelectedText());
-          editorRef.current?.resetHistory();
+          // editorRef.current?.resetHistory();
           // editorRef.current?.focus({
           //   rangeAnchor: 1000,
           //   rangeHead: 1001,
@@ -384,6 +389,7 @@ export default ({ theme, previewTheme, codeTheme, lang }: PreviewProp) => {
             'pageFullscreen',
             'fullscreen',
             'preview',
+            'previewOnly',
             'htmlPreview',
             'catalog',
             'github'
