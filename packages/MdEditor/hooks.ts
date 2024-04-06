@@ -591,6 +591,9 @@ export const useExpose = (
         },
         domEventHandlers(handlers) {
           bus.emit(editorId, EVENT_LISTENER, handlers);
+        },
+        execCommand(direct) {
+          bus.emit(editorId, REPLACE, direct);
         }
       };
 

@@ -4,6 +4,7 @@ import { CompletionSource } from '@codemirror/autocomplete';
 import { Extension } from '@codemirror/state';
 import { KeyBinding, EditorView } from '@codemirror/view';
 import { IconName } from './components/Icon/Icon';
+import { ToolDirective } from './utils/content-help';
 
 declare global {
   interface Window {
@@ -812,6 +813,12 @@ export interface ExposeParam {
    * @param handlers
    */
   domEventHandlers(handlers: DOMEventHandlers): void;
+  /**
+   * 执行内部插入命令
+   *
+   * @param direct
+   */
+  execCommand(direct: ToolDirective): void;
 }
 
 export type ExposePreviewParam = Pick<ExposeParam, 'rerender'>;

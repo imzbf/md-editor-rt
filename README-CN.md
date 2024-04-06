@@ -517,11 +517,19 @@ console.log(editorRef.current?.getSelectedText());
 支持监听全部的dom事件。
 
 ```js
-editorRef.value?.domEventHandlers({
+editorRef.current?.domEventHandlers({
   compositionstart: () => {
     console.log('compositionstart');
   }
 });
+```
+
+### 🎛 execCommand
+
+通过触发器向编辑器插入内容。
+
+```js
+editorRef.current?.execCommand('bold');
 ```
 
 ## 💴 编辑器配置

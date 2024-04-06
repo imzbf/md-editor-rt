@@ -509,11 +509,19 @@ Clear current history.
 Supports listening to all DOM events.
 
 ```js
-editorRef.value?.domEventHandlers({
+editorRef.current?.domEventHandlers({
   compositionstart: () => {
     console.log('compositionstart');
   }
 });
+```
+
+### 🎛 execCommand
+
+Insert content into the editor via trigger.
+
+```js
+editorRef.current?.execCommand('bold');
 ```
 
 ## 💴 Config Editor

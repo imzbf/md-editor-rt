@@ -250,7 +250,7 @@ export default ({ theme, previewTheme, codeTheme, lang }: PreviewProp) => {
           // editorRef.current?.toggleFullscreen();
           // editorRef.current?.togglePageFullscreen();
           // editorRef.current?.toggleCatalog();
-          editorRef.current?.togglePreviewOnly();
+          // editorRef.current?.togglePreviewOnly();
           // editorRef.current?.toggleHtmlPreview();
           // editorRef.current?.togglePreview();
           // editorRef.current?.triggerSave();
@@ -270,6 +270,7 @@ export default ({ theme, previewTheme, codeTheme, lang }: PreviewProp) => {
           //   rangeHead: 1001,
           //   cursorPos: 1003
           // });
+          editorRef.current?.execCommand('katexBlock');
         }}
       >
         1
