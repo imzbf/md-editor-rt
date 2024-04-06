@@ -49,7 +49,6 @@ const Editor = forwardRef((props: EditorProps, ref: ForwardedRef<unknown>) => {
     toolbars = defaultProps.toolbars,
     toolbarsExclude = defaultProps.toolbarsExclude,
     defToolbars = defaultProps.defToolbars,
-    editorId = getNextId(defaultEditorId + '_'),
     tabWidth = defaultProps.tabWidth,
     showCodeRowNumber = defaultProps.showCodeRowNumber,
     previewTheme = defaultProps.previewTheme,
@@ -77,7 +76,7 @@ const Editor = forwardRef((props: EditorProps, ref: ForwardedRef<unknown>) => {
 
   const [staticProps] = useState<StaticProps>(() => {
     return {
-      editorId,
+      editorId: props.editorId || getNextId(defaultEditorId + '_'),
       noKatex,
       noMermaid,
       noPrettier,
@@ -127,10 +126,9 @@ const Editor = forwardRef((props: EditorProps, ref: ForwardedRef<unknown>) => {
   useEffect(() => {
     return () => {
       // 清空所有的事件监听
-      bus.clear(editorId);
+      bus.clear(staticProps.editorId);
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [staticProps.editorId]);
 
   return (
     <EditorContext.Provider
