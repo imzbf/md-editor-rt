@@ -1,6 +1,6 @@
 {
   "name": "md-editor-rt",
-  "version": "4.12.4",
+  "version": "4.13.0",
   "keywords": [
     "react",
     "nextjs",
@@ -31,7 +31,7 @@
     "dayjs": "^1.11.3",
     "markdown-it-link-attributes": "^4.0.1",
     "markdown-it-mark": "^4.0.0",
-    "md-editor-rt": "^4.12.4",
+    "md-editor-rt": "^4.13.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-redux": "^7.2.6",

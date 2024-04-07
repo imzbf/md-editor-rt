@@ -477,6 +477,7 @@
     'pageFullscreen',
     'fullscreen',
     'preview',
+    'previewOnly',
     'htmlPreview',
     'catalog',
     'github'
@@ -763,6 +764,15 @@
 
 ---
 
+### 🪒 transformImgUrl
+
+- **类型**：`(imgUrl: string) => string`
+- **默认值**：`t => t`
+
+  转换图片链接
+
+---
+
 ## 🧵 MdPreview 绑定事件
 
 ### 🚁 onHtmlChanged
@@ -987,6 +997,7 @@ export default () => {
 | togglePageFullscreen | √        | ×         |
 | toggleFullscreen     | √        | ×         |
 | togglePreview        | √        | ×         |
+| togglePreviewOnly    | √        | ×         |
 | toggleHtmlPreview    | √        | ×         |
 | toggleCatalog        | √        | ×         |
 | triggerSave          | √        | ×         |
@@ -1003,24 +1014,37 @@ export default () => {
 - pageFullscreen
 
   ```js
-  editorRef.value?.on('pageFullscreen', (status) => console.log(status));
+  editorRef.current?.on('pageFullscreen', (status) => console.log(status));
   ```
 
 - fullscreen
+
   ```js
-  editorRef.value?.on('fullscreen', (status) => console.log(status));
+  editorRef.current?.on('fullscreen', (status) => console.log(status));
   ```
+
 - preview
+
   ```js
-  editorRef.value?.on('preview', (status) => console.log(status));
+  editorRef.current?.on('preview', (status) => console.log(status));
   ```
+
+- previewOnly
+
+  ```js
+  editorRef.current?.on('previewOnly', (status) => console.log(status));
+  ```
+
 - htmlPreview
+
   ```js
-  editorRef.value?.on('htmlPreview', (status) => console.log(status));
+  editorRef.current?.on('htmlPreview', (status) => console.log(status));
   ```
+
 - catalog
+
   ```js
-  editorRef.value?.on('catalog', (status) => console.log(status));
+  editorRef.current?.on('catalog', (status) => console.log(status));
   ```
 
 ---
@@ -1030,7 +1054,7 @@ export default () => {
 切换页面内全屏。
 
 ```js
-editorRef.value?.togglePageFullscreen(true);
+editorRef.current?.togglePageFullscreen(true);
 ```
 
 > 不设置入参切换为相反状态
@@ -1042,7 +1066,7 @@ editorRef.value?.togglePageFullscreen(true);
 切换屏幕全屏。
 
 ```js
-editorRef.value?.toggleFullscreen(true);
+editorRef.current?.toggleFullscreen(true);
 ```
 
 > 不设置入参切换为相反状态
@@ -1054,7 +1078,19 @@ editorRef.value?.toggleFullscreen(true);
 切换是否显示预览。
 
 ```js
-editorRef.value?.togglePreview(true);
+editorRef.current?.togglePreview(true);
+```
+
+> 不设置入参切换为相反状态
+
+---
+
+### 📖 togglePreviewOnly
+
+切换仅预览状态。
+
+```js
+editorRef.current?.togglePreviewOnly(true);
 ```
 
 > 不设置入参切换为相反状态
@@ -1066,7 +1102,7 @@ editorRef.value?.togglePreview(true);
 切换是否显示 html 预览。
 
 ```js
-editorRef.value?.toggleHtmlPreview(true);
+editorRef.current?.toggleHtmlPreview(true);
 ```
 
 > 不设置入参切换为相反状态
@@ -1078,7 +1114,7 @@ editorRef.value?.toggleHtmlPreview(true);
 切换是否显示目录。
 
 ```js
-editorRef.value?.toggleCatalog(true);
+editorRef.current?.toggleCatalog(true);
 ```
 
 > 不设置入参切换为相反状态
@@ -1090,7 +1126,7 @@ editorRef.value?.toggleCatalog(true);
 触发保存。
 
 ```js
-editorRef.value?.triggerSave();
+editorRef.current?.triggerSave();
 ```
 
 ---
@@ -1103,7 +1139,7 @@ editorRef.value?.triggerSave();
 /**
  * @params selectedText 选中的内容
  */
-editorRef.value?.insert((selectedText) => {
+editorRef.current?.insert((selectedText) => {
   /**
    * @return targetValue    待插入内容
    * @return select         插入后是否自动选中内容，默认：true
@@ -1181,11 +1217,21 @@ console.log(editorRef.current?.getSelectedText());
 支持监听全部的dom事件。
 
 ```js
-editorRef.value?.domEventHandlers({
+editorRef.current?.domEventHandlers({
   compositionstart: () => {
     console.log('compositionstart');
   }
 });
+```
+
+---
+
+### 🎛 execCommand
+
+通过触发器向编辑器插入内容。
+
+```js
+editorRef.current?.execCommand('bold');
 ```
 
 ---
@@ -1321,6 +1367,7 @@ config({
           pageFullscreen: '浏览器全屏',
           fullscreen: '屏幕全屏',
           preview: '预览',
+          previewOnly: '仅预览',
           htmlPreview: 'html代码预览',
           catalog: '目录',
           github: '源码地址'

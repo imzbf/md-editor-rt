@@ -469,6 +469,7 @@ Except for the same as `MdPreview`:
     'pageFullscreen',
     'fullscreen',
     'preview',
+    'previewOnly',
     'htmlPreview',
     'catalog',
     'github'
@@ -730,6 +731,15 @@ Except for the same as `MdPreview`:
 
 ---
 
+### 📥 transformImgUrl
+
+- **type**: `(imgUrl: string) => string`
+- **default**: `t => t`
+
+  Transform image links
+
+---
+
 ## 🧵 MdPreview Events
 
 ### 🚁 onHtmlChanged
@@ -952,6 +962,7 @@ export default () => {
 | togglePageFullscreen | √        | ×         |
 | toggleFullscreen     | √        | ×         |
 | togglePreview        | √        | ×         |
+| togglePreviewOnly    | √        | ×         |
 | toggleHtmlPreview    | √        | ×         |
 | toggleCatalog        | √        | ×         |
 | triggerSave          | √        | ×         |
@@ -972,18 +983,31 @@ Get the internal state of the editor, including pageFullscreen, fullscreen, prev
   ```
 
 - fullscreen
+
   ```js
   editorRef.current?.on('fullscreen', (status) => console.log(status));
   ```
+
 - preview
+
   ```js
   editorRef.current?.on('preview', (status) => console.log(status));
   ```
+
+- previewOnly
+
+  ```js
+  editorRef.current?.on('previewOnly', (status) => console.log(status));
+  ```
+
 - htmlPreview
+
   ```js
   editorRef.current?.on('htmlPreview', (status) => console.log(status));
   ```
+
 - catalog
+
   ```js
   editorRef.current?.on('catalog', (status) => console.log(status));
   ```
@@ -1020,6 +1044,18 @@ Toggle status of preview.
 
 ```js
 editorRef.current?.togglePreview(true);
+```
+
+> Switched to the opposite status, without input parameter.
+
+---
+
+### 📖 togglePreviewOnly
+
+Toggle into Preview Only Mode.
+
+```js
+editorRef.current?.togglePreviewOnly(true);
 ```
 
 > Switched to the opposite status, without input parameter.
@@ -1144,11 +1180,21 @@ Clear current history.
 Supports listening to all DOM events.
 
 ```js
-editorRef.value?.domEventHandlers({
+editorRef.current?.domEventHandlers({
   compositionstart: () => {
     console.log('compositionstart');
   }
 });
+```
+
+---
+
+### 🎛 execCommand
+
+Insert content into the editor via trigger.
+
+```js
+editorRef.current?.execCommand('bold');
 ```
 
 ---
@@ -1283,6 +1329,7 @@ config({
           pageFullscreen: 'fullscreen in page',
           fullscreen: 'fullscreen',
           preview: 'preview',
+          previewOnly: 'previewOnly',
           htmlPreview: 'html preview',
           catalog: 'catalog',
           github: 'source code'

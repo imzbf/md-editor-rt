@@ -136,6 +136,7 @@ export default () => {
             'pageFullscreen',
             'fullscreen',
             'preview',
+            'previewOnly',
             'htmlPreview',
             'catalog',
             'github'
