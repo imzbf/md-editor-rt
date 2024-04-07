@@ -1,14 +1,18 @@
-import { useCallback, useContext } from 'react';
+import { RefObject, useCallback, useContext } from 'react';
 import { EditorContext } from '~/Editor';
 import bus from '~/utils/event-bus';
 import { ERROR_CATCHER, REPLACE, UPLOAD_IMAGE } from '~/static/event-name';
 
 import { ContentProps } from '../props';
+import CodeMirrorUt from '../codemirror';
 
 /**
  * 处理粘贴板
  */
-const usePasteUpload = (props: ContentProps) => {
+const usePasteUpload = (
+  props: ContentProps,
+  codeMirrorUt: RefObject<CodeMirrorUt | undefined>
+) => {
   const { editorId } = useContext(EditorContext);
 
   // 粘贴板上传
@@ -33,6 +37,45 @@ const usePasteUpload = (props: ContentProps) => {
         e.preventDefault();
         return;
       }
+      const targetValue = e.clipboardData.getData('text/plain');
+
+      const to = codeMirrorUt.current?.view.state.selection.main.to || 0;
+      const from = codeMirrorUt.current?.view.state.doc.lineAt(to).from || 0;
+      // 当前光标到当前行开头的字符串
+      const lineStart = codeMirrorUt.current?.view.state.doc.sliceString(from, to) || '';
+
+      // 图片语法在当前行开头
+      const templateStart = /!\[.*\]\(\s*$/.test(lineStart);
+      // 图片语法在粘贴的内容中
+      const templateIn = /!\[.*\]\((.*)\s?.*\)/.test(targetValue);
+
+      if (templateStart) {
+        bus.emit(editorId, REPLACE, 'universal', {
+          generate() {
+            return {
+              targetValue: props.transformImgUrl(targetValue)
+            };
+          }
+        });
+
+        e.preventDefault();
+        return;
+      } else if (templateIn) {
+        const matchArr = targetValue.match(/(?<=!\[.*\]\()\S+(?=\s?["']?.*["']?\))/);
+
+        bus.emit(editorId, REPLACE, 'universal', {
+          generate() {
+            return {
+              targetValue: matchArr
+                ? targetValue.replace(matchArr[0], props.transformImgUrl(matchArr[0]))
+                : targetValue
+            };
+          }
+        });
+
+        e.preventDefault();
+        return;
+      }
 
       // 识别vscode代码
       if (props.autoDetectCode && e.clipboardData.types.includes('vscode-editor-data')) {
@@ -47,7 +90,6 @@ const usePasteUpload = (props: ContentProps) => {
         return;
       }
 
-      const targetValue = e.clipboardData.getData('text/plain');
       if (
         props.maxLength &&
         targetValue.length + props.modelValue.length > props.maxLength

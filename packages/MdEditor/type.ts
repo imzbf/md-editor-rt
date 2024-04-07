@@ -457,6 +457,13 @@ export interface EditorProps extends MdPreviewProps {
    * 输入框宽度变化事件
    */
   onInputBoxWitdhChange?: (width: string) => void;
+  /**
+   * 替换粘贴的图片链接
+   *
+   * @param t 图片链接
+   * @returns
+   */
+  transformImgUrl?: (t: string) => string;
 }
 
 export interface ContentType {

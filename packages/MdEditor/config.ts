@@ -326,7 +326,8 @@ export const defaultProps = {
   noHighlight: false,
   noImgZoomIn: false,
   inputBoxWitdh: '50%',
-  sanitizeMermaid: (h: string) => Promise.resolve(h)
+  sanitizeMermaid: (h: string) => Promise.resolve(h),
+  transformImgUrl: (t: string) => t
 };
 
 export const configOption: ConfigOption = {

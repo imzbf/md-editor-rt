@@ -65,7 +65,7 @@ const useCodeMirror = (props: ContentProps) => {
   const noSet = useRef(true);
 
   // 粘贴上传
-  const pasteHandler = usePasteUpload(props);
+  const pasteHandler = usePasteUpload(props, codeMirrorUt);
 
   const [domEventHandlersUserDefined, setDEHUD] = useState<DOMEventHandlers>({});
 
