@@ -176,44 +176,78 @@ const useCodeMirror = (props: ContentProps) => {
       noSet.current = false;
     }, 0);
 
+    const ctrlZ = () => undo(view);
+    const ctrlShiftZ = () => redo(view);
+    const eventListener = (handlers: DOMEventHandlers) => {
+      setDEHUD(handlers);
+    };
+
     bus.on(editorId, {
       name: CTRL_Z,
-      callback() {
-        undo(view);
-      }
+      callback: ctrlZ
     });
 
     bus.on(editorId, {
       name: CTRL_SHIFT_Z,
-      callback() {
-        redo(view);
-      }
-    });
-
-    // 注册指令替换内容事件
-    bus.on(editorId, {
-      name: REPLACE,
-      callback(direct: ToolDirective, params = {}) {
-        const { text, options } = directive2flag(direct, codeMirrorUt.current!, params);
-        codeMirrorUt.current?.replaceSelectedText(text, options, editorId);
-      }
+      callback: ctrlShiftZ
     });
 
     // 原始事件
     bus.on(editorId, {
       name: EVENT_LISTENER,
-      callback(handlers: DOMEventHandlers) {
-        setDEHUD(handlers);
-      }
+      callback: eventListener
     });
 
     return () => {
       // react18的严格模式会强制在开发环境让useEffect执行两次
       view.destroy();
+      bus.remove(editorId, CTRL_Z, ctrlZ);
+      bus.remove(editorId, CTRL_SHIFT_Z, ctrlShiftZ);
+      bus.remove(editorId, EVENT_LISTENER, eventListener);
+
       noSet.current = true;
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  useEffect(() => {
+    const callback = (direct: ToolDirective, params = {} as any) => {
+      // 弹窗插入图片时，将链接使用transformImgUrl转换后再插入
+      if (direct === 'image' && params.transform) {
+        const tv = props.transformImgUrl(params.url);
+
+        if (tv instanceof Promise) {
+          tv.then((url) => {
+            const { text, options } = directive2flag(direct, codeMirrorUt.current!, {
+              ...params,
+              url
+            });
+            codeMirrorUt.current?.replaceSelectedText(text, options, editorId);
+          }).catch((err) => {
+            console.error(err);
+          });
+        } else {
+          const { text, options } = directive2flag(direct, codeMirrorUt.current!, {
+            ...params,
+            url: tv
+          });
+          codeMirrorUt.current?.replaceSelectedText(text, options, editorId);
+        }
+      } else {
+        const { text, options } = directive2flag(direct, codeMirrorUt.current!, params);
+        codeMirrorUt.current?.replaceSelectedText(text, options, editorId);
+      }
+    };
+    // 注册指令替换内容事件
+    bus.on(editorId, {
+      name: REPLACE,
+      callback
+    });
+
+    return () => {
+      bus.remove(editorId, REPLACE, callback);
+    };
+  }, [editorId, props]);
 
   // =================
 

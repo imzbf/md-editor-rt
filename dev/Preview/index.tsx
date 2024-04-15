@@ -317,7 +317,9 @@ export default ({ theme, previewTheme, codeTheme, lang }: PreviewProp) => {
           transformImgUrl={(t) => {
             console.log(t);
 
-            return 'https://imzbf.github.io/md-editor-rt/imgs/preview-light.png';
+            return Promise.resolve(
+              'https://imzbf.github.io/md-editor-rt/imgs/preview-light.png'
+            );
           }}
           // noImgZoomIn
           // customIcon={{

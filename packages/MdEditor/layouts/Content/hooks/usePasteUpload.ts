@@ -15,6 +15,33 @@ const usePasteUpload = (
 ) => {
   const { editorId } = useContext(EditorContext);
 
+  const imgInsert = useCallback(
+    (tv: string | Promise<string>) => {
+      if (tv instanceof Promise) {
+        tv.then((targetValue) => {
+          bus.emit(editorId, REPLACE, 'universal', {
+            generate() {
+              return {
+                targetValue
+              };
+            }
+          });
+        }).catch((err) => {
+          console.error(err);
+        });
+      } else {
+        bus.emit(editorId, REPLACE, 'universal', {
+          generate() {
+            return {
+              targetValue: tv
+            };
+          }
+        });
+      }
+    },
+    [editorId]
+  );
+
   // 粘贴板上传
   const pasteHandler = useCallback(
     (e: ClipboardEvent) => {
@@ -50,28 +77,16 @@ const usePasteUpload = (
       const templateIn = /!\[.*\]\((.*)\s?.*\)/.test(targetValue);
 
       if (templateStart) {
-        bus.emit(editorId, REPLACE, 'universal', {
-          generate() {
-            return {
-              targetValue: props.transformImgUrl(targetValue)
-            };
-          }
-        });
+        const tv = props.transformImgUrl(targetValue);
+        imgInsert(tv);
 
         e.preventDefault();
         return;
       } else if (templateIn) {
         const matchArr = targetValue.match(/(?<=!\[.*\]\()\S+(?=\s?["']?.*["']?\))/);
+        const tv = matchArr ? props.transformImgUrl(matchArr[0]) : targetValue;
 
-        bus.emit(editorId, REPLACE, 'universal', {
-          generate() {
-            return {
-              targetValue: matchArr
-                ? targetValue.replace(matchArr[0], props.transformImgUrl(matchArr[0]))
-                : targetValue
-            };
-          }
-        });
+        imgInsert(tv);
 
         e.preventDefault();
         return;
@@ -101,8 +116,7 @@ const usePasteUpload = (
         });
       }
     },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [props.autoDetectCode, props.maxLength, props.modelValue]
+    [codeMirrorUt, editorId, imgInsert, props]
   );
 
   return pasteHandler;

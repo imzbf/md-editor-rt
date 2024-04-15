@@ -463,7 +463,7 @@ export interface EditorProps extends MdPreviewProps {
    * @param t 图片链接
    * @returns
    */
-  transformImgUrl?: (t: string) => string;
+  transformImgUrl?: (t: string) => string | Promise<string>;
 }
 
 export interface ContentType {

@@ -143,7 +143,8 @@ export const useModals = (
       if (data) {
         emitHandler(modalData.type, {
           desc: data.desc,
-          url: data.url
+          url: data.url,
+          transform: modalData.type === 'image'
         });
       }
       onCancel();
