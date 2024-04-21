@@ -62,19 +62,27 @@ const DropDown = (props: ModalProps) => {
     const triggerHeight = triggerInfo.height;
     const triggerWidth = triggerInfo.width;
 
-    const relativecrollLeft = document.querySelector(relative as string)?.scrollLeft || 0;
+    const relativecrollLeft = document.querySelector(relative)?.scrollLeft || 0;
+    const relativeWidth = document.querySelector(relative)?.clientWidth || 0;
+
+    let left =
+      triggerLeft - overlayEle.offsetWidth / 2 + triggerWidth / 2 - relativecrollLeft;
+
+    // 下拉框的右侧超出了相对元素的右侧，则设定不能超过
+    if (left + overlayEle.offsetWidth > relativecrollLeft + relativeWidth) {
+      left = relativecrollLeft + relativeWidth - overlayEle.offsetWidth;
+    }
+
+    if (left < 0) {
+      left = 0;
+    }
 
     // 设置好正对位置
     setCtl((_ctl) => ({
       ..._ctl,
       overlayStyle: {
         top: triggerTop + triggerHeight + 'px',
-        left:
-          triggerLeft -
-          overlayEle.offsetWidth / 2 +
-          triggerWidth / 2 -
-          relativecrollLeft +
-          'px'
+        left: left + 'px'
       }
     }));
 
