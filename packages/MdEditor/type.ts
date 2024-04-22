@@ -1,5 +1,5 @@
 import { CSSProperties, ReactElement } from 'react';
-import markdownit from 'markdown-it/lib';
+import markdownit from 'markdown-it';
 import { CompletionSource } from '@codemirror/autocomplete';
 import { Extension } from '@codemirror/state';
 import { KeyBinding, EditorView } from '@codemirror/view';

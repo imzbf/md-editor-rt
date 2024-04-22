@@ -1,4 +1,4 @@
-import markdownit from 'markdown-it/lib';
+import markdownit from 'markdown-it';
 import { RefObject } from 'react';
 import { HeadList, MdHeadingId } from '~/type';
 

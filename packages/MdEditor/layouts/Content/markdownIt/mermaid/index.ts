@@ -1,6 +1,7 @@
+import { RefObject } from 'react';
+import markdownit from 'markdown-it';
 import { Themes } from '~/type';
 import { prefix } from '~/config';
-import { RefObject } from 'react';
 
 const MermaidPlugin = (md: markdownit, options: { themeRef: RefObject<Themes> }) => {
   const temp = md.renderer.rules.fence!.bind(md.renderer.rules);
