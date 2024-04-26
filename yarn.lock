@@ -2057,10 +2057,10 @@
   resolved "https://registry.npmjs.org/@vavt/cm-extension/-/cm-extension-1.3.0.tgz#3e9a562194b1e70b114f6c4bd1a6817ecacb1a98"
   integrity sha512-1W/VswkJPgN2q9wBDRYRL3RJYDAei+Z8ZTG4b5GUU3cavwQE0pppZtMdy2Spa4jmYJmva2HhsY+8WmzNPEetBg==
 
-"@vavt/rt-extension@^1.2.0":
-  version "1.2.0"
-  resolved "https://registry.npmjs.org/@vavt/rt-extension/-/rt-extension-1.2.0.tgz#dcff5007e154a90bd2bd302f52d7d6bcb1705062"
-  integrity sha512-4ubpW+3wG3TAIWKSxKq1ZWggTiabj5bRIqaNH6cVxkCSuEsOzwyCrzqQ15QZuL/AZwBT4GNL9vKlZj7aK5g4Yg==
+"@vavt/rt-extension@^1.2.1":
+  version "1.2.1"
+  resolved "https://registry.npmjs.org/@vavt/rt-extension/-/rt-extension-1.2.1.tgz#03108c1c28747119021c7f2ba27055c669d36908"
+  integrity sha512-FSoEISv0i2lA5gZ+D+Ehw5mGXlwEZQZHzdaJPzLE/egsWBML+w/WvQUc/0JkPsfLBhFTMPv717N5dF6wkPJrrg==
   dependencies:
     html2pdf.js "^0.10.1"
 
