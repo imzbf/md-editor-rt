@@ -160,7 +160,8 @@ const DropDown = (props: ModalProps) => {
 
   // 触发器
   const trigger = cloneElement(slotDefault, {
-    ref: triggerRef
+    ref: triggerRef,
+    key: 'cloned-dropdown-trigger'
   });
 
   // 列表内容
