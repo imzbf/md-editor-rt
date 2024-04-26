@@ -22,7 +22,11 @@ const DropdownToolbar = (props: DropdownToolbarProps) => {
       onChange={props.onChange}
       overlay={props.overlay}
     >
-      <div className={`${prefix}-toolbar-item`} title={props.title || ''}>
+      <div
+        className={`${prefix}-toolbar-item`}
+        title={props.title || ''}
+        key="dt-trigger"
+      >
         {props.trigger}
         {props.children}
       </div>
