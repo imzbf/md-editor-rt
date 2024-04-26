@@ -2057,10 +2057,10 @@
   resolved "https://registry.npmjs.org/@vavt/cm-extension/-/cm-extension-1.3.0.tgz#3e9a562194b1e70b114f6c4bd1a6817ecacb1a98"
   integrity sha512-1W/VswkJPgN2q9wBDRYRL3RJYDAei+Z8ZTG4b5GUU3cavwQE0pppZtMdy2Spa4jmYJmva2HhsY+8WmzNPEetBg==
 
-"@vavt/rt-extension@^1.1.1":
-  version "1.1.1"
-  resolved "https://registry.npmjs.org/@vavt/rt-extension/-/rt-extension-1.1.1.tgz#ec7254636a8e683109dc55357157677cb6c85999"
-  integrity sha512-hrTONF/oZcSEMp6H49kRvT1XKftQB0W1JotzTyfAp8WGYCGG3aisECqjwTAs3nhWxpoEsYJeK2a2K/+kyxlgsg==
+"@vavt/rt-extension@^1.2.0":
+  version "1.2.0"
+  resolved "https://registry.npmjs.org/@vavt/rt-extension/-/rt-extension-1.2.0.tgz#dcff5007e154a90bd2bd302f52d7d6bcb1705062"
+  integrity sha512-4ubpW+3wG3TAIWKSxKq1ZWggTiabj5bRIqaNH6cVxkCSuEsOzwyCrzqQ15QZuL/AZwBT4GNL9vKlZj7aK5g4Yg==
   dependencies:
     html2pdf.js "^0.10.1"
 
@@ -3599,10 +3599,10 @@ marked@*:
   resolved "https://registry.npmjs.org/marked/-/marked-12.0.0.tgz#051ea8c8c7f65148a63003df1499515a2c6de716"
   integrity sha512-Vkwtq9rLqXryZnWaQc86+FHLC6tr/fycMfYAhiOIXkrNmeGAyhSxjqu0Rs1i0bBqw5u0S7+lV9fdH2ZSVaoa0w==
 
-md-editor-rt@^4.13.3:
-  version "4.13.3"
-  resolved "https://registry.npmjs.org/md-editor-rt/-/md-editor-rt-4.13.3.tgz#b7aeb67e1f100071e3355b10762e23357dceea42"
-  integrity sha512-z8eidRVwgqY3SowOHe0PQzeOw86mZIzQ148DqacksA1Y+irSZiDMAo8rYLEmLy6DDAnvPGUJfVXYJRIDJIQVfQ==
+md-editor-rt@^4.13.4:
+  version "4.13.4"
+  resolved "https://registry.npmjs.org/md-editor-rt/-/md-editor-rt-4.13.4.tgz#5778a4e428ee1fe961fbd5c16aeccb7bac9fafae"
+  integrity sha512-wqan2G7Zr0FGCVtlt9K09AuTluY02PN5V97e2Pn/KwuCAh5S0ivcjK0UJ/MzXDFE4YdgcomkRGJS23k0fM5ayg==
   dependencies:
     "@codemirror/lang-markdown" "^6.2.5"
     "@codemirror/language-data" "^6.5.1"
