@@ -1572,6 +1572,7 @@ To help developers quickly insert content and use editor attributes, the editor 
 | --- | --- |
 | insert | Refer to the `DropdownToolbar` component example below |
 | theme | Refer to the extension components in the [ExportPDF](https://github.com/imzbf/md-editor-extension/blob/main/packages/rt/components/ExportPDF/ExportPDF.tsx#L71) |
+| previewtheme | Same as above |
 | language | Same as above |
 
 !!!
