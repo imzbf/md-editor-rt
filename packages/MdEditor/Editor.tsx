@@ -155,17 +155,19 @@ const Editor = forwardRef((props: EditorProps, ref: ForwardedRef<unknown>) => {
         ])}
         style={props.style}
       >
-        <ToolBar
-          noPrettier={staticProps.noPrettier}
-          toolbars={toolbars}
-          toolbarsExclude={toolbarsExclude}
-          setting={setting}
-          updateSetting={updateSetting}
-          tableShape={tableShape}
-          defToolbars={defToolbars}
-          noUploadImg={staticProps.noUploadImg}
-          showToolbarName={props.showToolbarName}
-        />
+        {toolbars.length > 0 && (
+          <ToolBar
+            noPrettier={staticProps.noPrettier}
+            toolbars={toolbars}
+            toolbarsExclude={toolbarsExclude}
+            setting={setting}
+            updateSetting={updateSetting}
+            tableShape={tableShape}
+            defToolbars={defToolbars}
+            noUploadImg={staticProps.noUploadImg}
+            showToolbarName={props.showToolbarName}
+          />
+        )}
         <Content
           ref={codeRef}
           modelValue={modelValue}
