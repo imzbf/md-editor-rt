@@ -138,7 +138,7 @@ Except for the same as `MdPreview`:
 | toolbarsExclude | `Array<ToolbarNames \| number>` | [] | Don't show contents of toolbar, all keys`toolbars` |
 | noPrettier | `boolean` | false | Use prettier to beautify content or not |
 | tabWidth | `number` | 2 | One tab eq some spaces |
-| tableShape | `[number, number]` | [6, 4] | Preset the size of the table, [columns, rows] |
+| tableShape | `[number, number] \| [number, number, number, number]` | [6, 4] | Preset the size of the table, [columns, rows, Maximum number of columns, Maximum number of rows] |
 | placeholder | `string` | '' |  |
 | defToolbars | `Array<DropdownToolbar \| NormalToolbar \| ModalToolbar>` | [] | Custom toolbar in `DropdownToolbar`, `NormalToolbar` or `ModalToolbar` |
 | footers | `Array<'markdownTotal' \| '=' \| 'scrollSwitch' \| number>` | ['markdownTotal', '=', 'scrollSwitch'] | Show contents of footer, they are divided by `'='`. Set it to `[]` to hidden footer |

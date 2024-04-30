@@ -9,7 +9,13 @@ import React, {
   useEffect
 } from 'react';
 import { linkTo, draggingScroll } from '@vavt/util';
-import { ToolbarNames, SettingType, UpdateSetting, InsertContentGenerator } from '~/type';
+import {
+  ToolbarNames,
+  SettingType,
+  UpdateSetting,
+  InsertContentGenerator,
+  TableShapeType
+} from '~/type';
 import { EditorContext } from '~/Editor';
 import { ToolDirective } from '~/utils/content-help';
 import { allToolbar, prefix } from '~/config';
@@ -37,7 +43,7 @@ export interface ToolbarProps {
   toolbarsExclude: Array<ToolbarNames>;
   setting: SettingType;
   updateSetting: UpdateSetting; // (k: keyof SettingType, shouldScreenFull?: boolean) => void;
-  tableShape: [number, number];
+  tableShape: TableShapeType;
   defToolbars?: Array<ReactElement>;
   noUploadImg: boolean;
   showToolbarName?: boolean;

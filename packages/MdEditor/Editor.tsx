@@ -21,7 +21,7 @@ import Content from '~/layouts/Content';
 import Footer from '~/layouts/Footer';
 import { classnames, getNextId } from '~/utils';
 import { prefix, staticTextDefault, defaultProps, defaultEditorId } from '~/config';
-import { ContentType, EditorProps, StaticProps, Themes } from '~/type';
+import { ContentType, EditorProps, StaticProps, TableShapeType, Themes } from '~/type';
 import bus from '~/utils/event-bus';
 import { ContentExposeParam } from './layouts/Content/type';
 
@@ -53,7 +53,7 @@ const Editor = forwardRef((props: EditorProps, ref: ForwardedRef<unknown>) => {
     showCodeRowNumber = defaultProps.showCodeRowNumber,
     previewTheme = defaultProps.previewTheme,
     noPrettier = defaultProps.noPrettier,
-    tableShape = defaultProps.tableShape as [number, number],
+    tableShape = defaultProps.tableShape as TableShapeType,
     noMermaid = defaultProps.noMermaid,
     noKatex = defaultProps.noKatex,
     placeholder = defaultProps.placeholder,

@@ -286,6 +286,8 @@ export interface MdPreviewProps {
   sanitizeMermaid?: (html: string) => Promise<string>;
 }
 
+export type TableShapeType = [number, number] | [number, number, number, number];
+
 export interface EditorProps extends MdPreviewProps {
   /**
    * input回调事件
@@ -348,7 +350,7 @@ export interface EditorProps extends MdPreviewProps {
    *
    * @default [6, 4]
    */
-  tableShape?: [number, number];
+  tableShape?: TableShapeType;
 
   /**
    * 空提示
