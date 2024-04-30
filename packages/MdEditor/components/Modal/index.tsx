@@ -8,9 +8,10 @@ import React, {
   useContext
 } from 'react';
 import { createPortal } from 'react-dom';
-import { prefix } from '~/config';
+import { configOption, prefix } from '~/config';
 import { keyMove } from '~/utils/dom';
 import { EditorContext } from '~/Editor';
+import { getZIndexIncrement } from '~/utils';
 import Icon from '../Icon';
 
 export type ModalProps = Readonly<{
@@ -26,14 +27,6 @@ export type ModalProps = Readonly<{
   className?: string;
   style?: CSSProperties;
 }>;
-
-const getNextIndex = (() => {
-  let startIndex = 20000;
-
-  return () => {
-    return ++startIndex;
-  };
-})();
 
 const toClass = `${prefix}-modal-container`;
 
@@ -128,10 +121,10 @@ const Modal = (props: ModalProps) => {
         return {
           ..._state,
           maskStyle: {
-            zIndex: getNextIndex()
+            zIndex: configOption.editorConfig.zIndex! + getZIndexIncrement()
           },
           modalStyle: {
-            zIndex: getNextIndex()
+            zIndex: configOption.editorConfig.zIndex! + getZIndexIncrement()
           },
           initPos: {
             left: halfClientWidth - halfWidth + 'px',

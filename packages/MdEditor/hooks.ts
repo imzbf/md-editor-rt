@@ -23,16 +23,11 @@ import {
 } from './type';
 import {
   prefix,
-  iconfontSvgUrl,
-  prettierUrl,
-  cropperUrl,
   allToolbar,
   codeCss,
-  highlightUrl,
   staticTextDefault,
   configOption,
-  defaultProps,
-  iconfontClassUrl
+  defaultProps
 } from './config';
 import { appendHandler } from './utils/dom';
 import {
@@ -153,36 +148,35 @@ export const useExpansion = (staticProps: StaticProps) => {
 
   // 判断是否需要插入prettier标签
   const noPrettierScript =
-    noPrettier || !!configOption.editorExtensions?.prettier?.prettierInstance;
+    noPrettier || !!configOption.editorExtensions.prettier!.prettierInstance;
 
   // 判断是否需要插入prettier markdown扩展标签
   const noParserMarkdownScript =
-    noPrettier || !!configOption.editorExtensions?.prettier?.parserMarkdownInstance;
+    noPrettier || !!configOption.editorExtensions.prettier!.parserMarkdownInstance;
 
   // 判断是否需要插入裁剪图片标签
   const noCropperScript =
-    noUploadImg || !!configOption.editorExtensions?.cropper?.instance;
+    noUploadImg || !!configOption.editorExtensions.cropper!.instance;
 
   useEffect(() => {
     // prettier
     const prettierScript = document.createElement('script');
     const prettierMDScript = document.createElement('script');
 
-    prettierScript.src = editorExtensions?.prettier?.standaloneJs || prettierUrl.main;
+    prettierScript.src = editorExtensions.prettier!.standaloneJs!;
     prettierScript.id = `${prefix}-prettier`;
 
-    prettierMDScript.src =
-      editorExtensions?.prettier?.parserMarkdownJs || prettierUrl.markdown;
+    prettierMDScript.src = editorExtensions.prettier!.parserMarkdownJs!;
     prettierMDScript.id = `${prefix}-prettierMD`;
 
     // 裁剪图片
     const cropperLink = document.createElement('link');
     cropperLink.rel = 'stylesheet';
-    cropperLink.href = editorExtensions?.cropper?.css || cropperUrl.css;
+    cropperLink.href = editorExtensions.cropper!.css!;
     cropperLink.id = `${prefix}-cropperCss`;
 
     const cropperScript = document.createElement('script');
-    cropperScript.src = editorExtensions?.cropper?.js || cropperUrl.js;
+    cropperScript.src = editorExtensions.cropper!.js!;
     cropperScript.id = `${prefix}-cropper`;
 
     // 非仅预览模式才添加扩展
@@ -210,14 +204,13 @@ export const useExpansionPreview = ({ noIconfont }: MdPreviewStaticProps) => {
       if (configOption.iconfontType === 'svg') {
         // 图标
         const iconfontScript = document.createElement('script');
-        iconfontScript.src = configOption.editorExtensions?.iconfont || iconfontSvgUrl;
+        iconfontScript.src = configOption.editorExtensions.iconfont!;
         iconfontScript.id = `${prefix}-icon`;
         appendHandler(iconfontScript);
       } else {
         const iconfontLink = document.createElement('link');
         iconfontLink.rel = 'stylesheet';
-        iconfontLink.href =
-          configOption.editorExtensions?.iconfontClass || iconfontClassUrl;
+        iconfontLink.href = configOption.editorExtensions.iconfontClass!;
         iconfontLink.id = `${prefix}-icon-class`;
 
         appendHandler(iconfontLink);
@@ -346,11 +339,11 @@ export const useConfig = (props: EditorProps) => {
   } = props;
 
   const highlight = useMemo(() => {
-    const highlightConfig = configOption?.editorExtensions?.highlight;
+    const highlightConfig = configOption.editorExtensions.highlight;
 
     const cssList = {
       ...codeCss,
-      ...highlightConfig?.css
+      ...highlightConfig!.css
     };
 
     const _theme =
@@ -359,7 +352,7 @@ export const useConfig = (props: EditorProps) => {
         : (theme as Themes);
 
     return {
-      js: highlightConfig?.js || highlightUrl,
+      js: highlightConfig!.js,
       css: cssList[codeTheme] ? cssList[codeTheme][_theme] : codeCss.atom[_theme]
     };
   }, [codeStyleReverse, codeStyleReverseList, previewTheme, theme, codeTheme]);
@@ -368,7 +361,7 @@ export const useConfig = (props: EditorProps) => {
   const usedLanguageText = useMemo(() => {
     const allText: any = {
       ...staticTextDefault,
-      ...configOption?.editorConfig?.languageUserDefined
+      ...configOption.editorConfig.languageUserDefined
     };
 
     if (allText[language]) {

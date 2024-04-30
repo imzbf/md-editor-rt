@@ -1,7 +1,7 @@
 import { useCallback, useContext, useEffect, useRef, useState } from 'react';
 import { LRUCache } from 'lru-cache';
 import { uuid } from '@vavt/util';
-import { prefix, mermaidUrl, configOption } from '~/config';
+import { prefix, configOption } from '~/config';
 import { EditorContext } from '~/Editor';
 import { appendHandler } from '~/utils/dom';
 import { ContentPreviewProps } from '../props';
@@ -14,9 +14,9 @@ const useMermaid = (props: ContentPreviewProps) => {
   const { theme } = useContext(EditorContext);
 
   const { editorExtensions, mermaidConfig } = configOption;
-  const mermaidConf = editorExtensions?.mermaid;
+  const mermaidConf = editorExtensions.mermaid;
 
-  const mermaidRef = useRef(mermaidConf?.instance);
+  const mermaidRef = useRef(mermaidConf!.instance);
   const [reRender, setReRender] = useState(-1);
 
   const [mermaidCache] = useState(
@@ -55,8 +55,8 @@ const useMermaid = (props: ContentPreviewProps) => {
     }
 
     // 没有提供实例，引入mermaid
-    if (!mermaidConf?.instance) {
-      const jsSrc = mermaidConf?.js || mermaidUrl;
+    if (!mermaidConf!.instance) {
+      const jsSrc = mermaidConf!.js as string;
 
       if (/\.mjs/.test(jsSrc)) {
         import(

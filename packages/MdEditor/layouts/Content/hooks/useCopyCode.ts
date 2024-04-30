@@ -20,7 +20,7 @@ const useCopyCode = (props: ContentPreviewProps, html: string, key: string) => {
           // 移除旧的按钮
           pre.querySelector('.copy-button')?.remove();
 
-          const copyBtnText = usedLanguageText.copyCode?.text || '复制代码';
+          const copyBtnText = usedLanguageText.copyCode!.text;
           const copyButton = document.createElement('span');
           copyButton.setAttribute('class', 'copy-button');
           copyButton.dataset.tips = copyBtnText;
@@ -35,8 +35,8 @@ const useCopyCode = (props: ContentPreviewProps, html: string, key: string) => {
 
             const success = copy(formatCopiedText(codeText));
 
-            const succssTip = usedLanguageText.copyCode?.successTips || '已复制！';
-            const failTip = usedLanguageText.copyCode?.failTips || '已复制！';
+            const succssTip = usedLanguageText.copyCode!.successTips;
+            const failTip = usedLanguageText.copyCode!.failTips;
 
             copyButton.dataset.tips = success ? succssTip : failTip;
 
@@ -49,13 +49,12 @@ const useCopyCode = (props: ContentPreviewProps, html: string, key: string) => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
+    customIcon,
     formatCopiedText,
     html,
     key,
     props.setting.preview,
-    usedLanguageText.copyCode?.failTips,
-    usedLanguageText.copyCode?.successTips,
-    usedLanguageText.copyCode?.text
+    usedLanguageText.copyCode
   ]);
 };
 

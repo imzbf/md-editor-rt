@@ -137,3 +137,14 @@ export const getNextId = (() => {
     return prefix + ++count;
   };
 })();
+
+/**
+ * 获取递增的zIndex
+ */
+export const getZIndexIncrement = (() => {
+  let startIndex = 0;
+
+  return () => {
+    return ++startIndex;
+  };
+})();

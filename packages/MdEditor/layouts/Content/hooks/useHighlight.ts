@@ -11,8 +11,8 @@ import { ContentPreviewProps } from '../props';
  */
 const useHighlight = (props: ContentPreviewProps) => {
   // 获取相应的扩展配置链接
-  const hljsConf = configOption.editorExtensions?.highlight;
-  const hljs = hljsConf?.instance;
+  const hljsConf = configOption.editorExtensions.highlight;
+  const hljs = hljsConf!.instance;
   const { highlight } = useContext(EditorContext);
 
   // hljs是否已经提供

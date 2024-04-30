@@ -1,3 +1,4 @@
+import { deepMerge } from '@vavt/util';
 import {
   CodeCss,
   Config,
@@ -331,8 +332,36 @@ export const defaultProps = {
 };
 
 export const configOption: ConfigOption = {
-  editorExtensions: {},
-  editorConfig: {},
+  editorExtensions: {
+    highlight: {
+      js: highlightUrl,
+      css: codeCss
+    },
+    prettier: {
+      standaloneJs: prettierUrl.main,
+      parserMarkdownJs: prettierUrl.markdown
+    },
+    cropper: {
+      ...cropperUrl
+    },
+    iconfont: iconfontSvgUrl,
+    iconfontClass: iconfontClassUrl,
+    screenfull: {
+      js: screenfullUrl
+    },
+    mermaid: {
+      js: mermaidUrl
+    },
+    katex: {
+      ...katexUrl
+    }
+  },
+  editorConfig: {
+    languageUserDefined: {},
+    mermaidTemplate: {},
+    renderDelay: 500,
+    zIndex: 20000
+  },
   codeMirrorExtensions: (_theme, innerExtensions) => innerExtensions,
   markdownItConfig: () => {},
   markdownItPlugins: (s) => s,
@@ -341,17 +370,7 @@ export const configOption: ConfigOption = {
 };
 
 export const config: Config = (option) => {
-  type OptionKey = keyof typeof option;
-
-  if (option) {
-    for (const key in option) {
-      const optionItem = option[key as OptionKey] as any;
-
-      if (optionItem) {
-        configOption[key as OptionKey] = optionItem;
-      }
-    }
-  }
+  return deepMerge(configOption, option);
 };
 
 /**

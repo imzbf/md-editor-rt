@@ -259,11 +259,7 @@ const useMarkdownIt = (props: ContentPreviewProps, previewOnly: boolean) => {
       () => {
         markHtml();
       },
-      editorConfig?.renderDelay !== undefined
-        ? editorConfig?.renderDelay
-        : previewOnly
-          ? 0
-          : 500
+      previewOnly ? 0 : editorConfig.renderDelay
     );
 
     return () => {

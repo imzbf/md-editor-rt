@@ -200,7 +200,7 @@ const Editor = forwardRef((props: EditorProps, ref: ForwardedRef<unknown>) => {
           sanitizeMermaid={sanitizeMermaid}
           transformImgUrl={transformImgUrl}
         />
-        {footers?.length > 0 && (
+        {footers.length > 0 && (
           <Footer
             modelValue={modelValue}
             footers={footers}

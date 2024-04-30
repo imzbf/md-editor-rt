@@ -1,6 +1,6 @@
 import { RefObject, useCallback, useContext, useEffect, useRef, useState } from 'react';
 import bus from '~/utils/event-bus';
-import { prefix, screenfullUrl, configOption } from '~/config';
+import { prefix, configOption } from '~/config';
 import { EditorContext } from '~/Editor';
 import { appendHandler } from '~/utils/dom';
 import { ToolDirective } from '~/utils/content-help';
@@ -16,8 +16,8 @@ import { HoverData } from './TableShape';
 
 export const useSreenfull = (props: ToolbarProps) => {
   const { editorId } = useContext(EditorContext);
-  const screenfullConfig = configOption.editorExtensions?.screenfull;
-  const screenfull = useRef(screenfullConfig?.instance);
+  const screenfullConfig = configOption.editorExtensions.screenfull;
+  const screenfull = useRef(screenfullConfig!.instance);
   // 是否组件内部全屏标识
   const screenfullMe = useRef(false);
 
@@ -65,7 +65,7 @@ export const useSreenfull = (props: ToolbarProps) => {
     // 非预览模式且未提供screenfull时请求cdn
     if (!screenfull.current) {
       screenScript = document.createElement('script');
-      screenScript.src = screenfullConfig?.js || screenfullUrl;
+      screenScript.src = screenfullConfig!.js as string;
       screenScript.onload = () => {
         // 复制实例
         screenfull.current = window.screenfull;

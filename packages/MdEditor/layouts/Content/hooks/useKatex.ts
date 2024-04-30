@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { prefix, katexUrl, configOption } from '~/config';
+import { prefix, configOption } from '~/config';
 import { appendHandler } from '~/utils/dom';
 import { ContentPreviewProps } from '../props';
 
@@ -11,8 +11,8 @@ import { ContentPreviewProps } from '../props';
  */
 const useKatex = (props: ContentPreviewProps) => {
   // 获取相应的扩展配置链接
-  const katexConf = configOption.editorExtensions?.katex;
-  const katexIns = katexConf?.instance;
+  const katexConf = configOption.editorExtensions.katex;
+  const katexIns = katexConf!.instance;
 
   // katex是否加载完成
   const katexRef = useRef(katexIns);
@@ -23,7 +23,7 @@ const useKatex = (props: ContentPreviewProps) => {
     if (!props.noKatex && !katexRef.current) {
       const katexScript = document.createElement('script');
 
-      katexScript.src = katexConf?.js || katexUrl.js;
+      katexScript.src = katexConf!.js as string;
       katexScript.onload = () => {
         katexRef.current = window.katex;
         setKatexInited(true);
@@ -32,7 +32,7 @@ const useKatex = (props: ContentPreviewProps) => {
 
       const katexLink = document.createElement('link');
       katexLink.rel = 'stylesheet';
-      katexLink.href = katexConf?.css || katexUrl.css;
+      katexLink.href = katexConf!.css as string;
       katexLink.id = `${prefix}-katexCss`;
 
       appendHandler(katexScript, 'katex');
