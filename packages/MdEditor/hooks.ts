@@ -29,7 +29,7 @@ import {
   configOption,
   defaultProps
 } from './config';
-import { appendHandler } from './utils/dom';
+import { appendHandler, createHTMLElement } from './utils/dom';
 import {
   CHANGE_CATALOG_VISIBLE,
   CHANGE_FULL_SCREEN,
@@ -144,52 +144,61 @@ export const useOnSave = (props: EditorProps, staticProps: StaticProps) => {
 export const useExpansion = (staticProps: StaticProps) => {
   const { noPrettier, noUploadImg } = staticProps;
 
-  const { editorExtensions } = configOption;
-
-  // 判断是否需要插入prettier标签
-  const noPrettierScript =
-    noPrettier || !!configOption.editorExtensions.prettier!.prettierInstance;
-
-  // 判断是否需要插入prettier markdown扩展标签
-  const noParserMarkdownScript =
-    noPrettier || !!configOption.editorExtensions.prettier!.parserMarkdownInstance;
-
-  // 判断是否需要插入裁剪图片标签
-  const noCropperScript =
-    noUploadImg || !!configOption.editorExtensions.cropper!.instance;
-
   useEffect(() => {
-    // prettier
-    const prettierScript = document.createElement('script');
-    const prettierMDScript = document.createElement('script');
+    const { editorExtensions, editorExtensionsAttrs } = configOption;
 
-    prettierScript.src = editorExtensions.prettier!.standaloneJs!;
-    prettierScript.id = `${prefix}-prettier`;
+    // 判断是否需要插入prettier标签
+    const noPrettierScript = noPrettier || !!editorExtensions.prettier!.prettierInstance;
 
-    prettierMDScript.src = editorExtensions.prettier!.parserMarkdownJs!;
-    prettierMDScript.id = `${prefix}-prettierMD`;
+    // 判断是否需要插入prettier markdown扩展标签
+    const noParserMarkdownScript =
+      noPrettier || !!editorExtensions.prettier!.parserMarkdownInstance;
 
-    // 裁剪图片
-    const cropperLink = document.createElement('link');
-    cropperLink.rel = 'stylesheet';
-    cropperLink.href = editorExtensions.cropper!.css!;
-    cropperLink.id = `${prefix}-cropperCss`;
+    // 判断是否需要插入裁剪图片标签
+    const noCropperScript = noUploadImg || !!editorExtensions.cropper!.instance;
 
-    const cropperScript = document.createElement('script');
-    cropperScript.src = editorExtensions.cropper!.js!;
-    cropperScript.id = `${prefix}-cropper`;
-
-    // 非仅预览模式才添加扩展
     if (!noCropperScript) {
+      // 裁剪图片
+      const { js = {}, css = {} } = editorExtensionsAttrs.cropper || {};
+      const cropperLink = createHTMLElement('link', {
+        ...css,
+        rel: 'stylesheet',
+        href: editorExtensions.cropper!.css,
+        id: `${prefix}-cropperCss`
+      });
+
+      const cropperScript = createHTMLElement('script', {
+        ...js,
+        src: editorExtensions.cropper!.js,
+        id: `${prefix}-cropper`
+      });
+
       appendHandler(cropperLink);
       appendHandler(cropperScript);
     }
 
+    // prettier
     if (!noPrettierScript) {
+      const { standaloneJs = {} } = editorExtensionsAttrs.prettier || {};
+
+      const prettierScript = createHTMLElement('script', {
+        ...standaloneJs,
+        src: editorExtensions.prettier!.standaloneJs,
+        id: `${prefix}-prettier`
+      });
+
       appendHandler(prettierScript);
     }
 
     if (!noParserMarkdownScript) {
+      const { parserMarkdownJs = {} } = editorExtensionsAttrs.prettier || {};
+
+      const prettierMDScript = createHTMLElement('script', {
+        ...parserMarkdownJs,
+        src: editorExtensions.prettier!.parserMarkdownJs,
+        id: `${prefix}-prettierMD`
+      });
+
       appendHandler(prettierMDScript);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -200,21 +209,28 @@ export const useExpansion = (staticProps: StaticProps) => {
 
 export const useExpansionPreview = ({ noIconfont }: MdPreviewStaticProps) => {
   useEffect(() => {
-    if (!noIconfont) {
-      if (configOption.iconfontType === 'svg') {
-        // 图标
-        const iconfontScript = document.createElement('script');
-        iconfontScript.src = configOption.editorExtensions.iconfont!;
-        iconfontScript.id = `${prefix}-icon`;
-        appendHandler(iconfontScript);
-      } else {
-        const iconfontLink = document.createElement('link');
-        iconfontLink.rel = 'stylesheet';
-        iconfontLink.href = configOption.editorExtensions.iconfontClass!;
-        iconfontLink.id = `${prefix}-icon-class`;
+    const { editorExtensions, editorExtensionsAttrs, iconfontType } = configOption;
+    if (noIconfont) {
+      return;
+    }
 
-        appendHandler(iconfontLink);
-      }
+    if (iconfontType === 'svg') {
+      // 图标
+      const iconfontScript = createHTMLElement('script', {
+        ...editorExtensionsAttrs.iconfont,
+        src: editorExtensions.iconfont,
+        id: `${prefix}-icon`
+      });
+      appendHandler(iconfontScript);
+    } else {
+      const iconfontLink = createHTMLElement('link', {
+        ...editorExtensionsAttrs.iconfontClass,
+        rel: 'stylesheet',
+        href: editorExtensions.iconfontClass,
+        id: `${prefix}-icon-class`
+      });
+
+      appendHandler(iconfontLink);
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -339,21 +355,44 @@ export const useConfig = (props: EditorProps) => {
   } = props;
 
   const highlight = useMemo(() => {
-    const highlightConfig = configOption.editorExtensions.highlight;
+    const hljsUrls = configOption.editorExtensions.highlight;
+    const hljsAttrs = configOption.editorExtensionsAttrs.highlight;
 
+    // 链接
+    const { js: jsUrl } = hljsUrls!;
     const cssList = {
       ...codeCss,
-      ...highlightConfig!.css
+      ...hljsUrls!.css
     };
+
+    // 属性
+    const { js: jsAttrs, css: cssAttrs = {} } = hljsAttrs || {};
 
     const _theme =
       codeStyleReverse && codeStyleReverseList.includes(previewTheme)
         ? 'dark'
         : (theme as Themes);
 
+    // 找到对应代码主题的链接和属性
+    const codeCssHref = cssList[codeTheme]
+      ? cssList[codeTheme][_theme]
+      : codeCss.atom[_theme];
+    const codeCssAttrs =
+      cssList[codeTheme] && cssAttrs[codeTheme]
+        ? cssAttrs[codeTheme][_theme]
+        : cssAttrs['atom']
+          ? cssAttrs['atom'][_theme]
+          : {};
+
     return {
-      js: highlightConfig!.js,
-      css: cssList[codeTheme] ? cssList[codeTheme][_theme] : codeCss.atom[_theme]
+      js: {
+        src: jsUrl,
+        ...jsAttrs
+      },
+      css: {
+        href: codeCssHref,
+        ...codeCssAttrs
+      }
     };
   }, [codeStyleReverse, codeStyleReverseList, previewTheme, theme, codeTheme]);
 

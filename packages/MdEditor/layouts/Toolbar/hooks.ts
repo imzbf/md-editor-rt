@@ -2,7 +2,7 @@ import { RefObject, useCallback, useContext, useEffect, useRef, useState } from 
 import bus from '~/utils/event-bus';
 import { prefix, configOption } from '~/config';
 import { EditorContext } from '~/Editor';
-import { appendHandler } from '~/utils/dom';
+import { appendHandler, createHTMLElement } from '~/utils/dom';
 import { ToolDirective } from '~/utils/content-help';
 import {
   CHANGE_FULL_SCREEN,
@@ -16,8 +16,7 @@ import { HoverData } from './TableShape';
 
 export const useSreenfull = (props: ToolbarProps) => {
   const { editorId } = useContext(EditorContext);
-  const screenfullConfig = configOption.editorExtensions.screenfull;
-  const screenfull = useRef(screenfullConfig!.instance);
+  const screenfull = useRef(configOption.editorExtensions.screenfull!.instance);
   // 是否组件内部全屏标识
   const screenfullMe = useRef(false);
 
@@ -64,17 +63,21 @@ export const useSreenfull = (props: ToolbarProps) => {
 
     // 非预览模式且未提供screenfull时请求cdn
     if (!screenfull.current) {
-      screenScript = document.createElement('script');
-      screenScript.src = screenfullConfig!.js as string;
-      screenScript.onload = () => {
-        // 复制实例
-        screenfull.current = window.screenfull;
-        // 注册事件
-        if (screenfull.current && screenfull.current.isEnabled) {
-          screenfull.current.on('change', changedEvent);
+      const { editorExtensions, editorExtensionsAttrs } = configOption;
+
+      screenScript = createHTMLElement('script', {
+        ...editorExtensionsAttrs.screenfull?.js,
+        src: editorExtensions.screenfull!.js,
+        id: `${prefix}-screenfull`,
+        onload() {
+          // 复制实例
+          screenfull.current = window.screenfull;
+          // 注册事件
+          if (screenfull.current && screenfull.current.isEnabled) {
+            screenfull.current.on('change', changedEvent);
+          }
         }
-      };
-      screenScript.id = `${prefix}-screenfull`;
+      });
 
       timer = requestAnimationFrame(() => {
         appendHandler(screenScript, 'screenfull');

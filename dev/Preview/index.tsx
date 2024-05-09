@@ -6,8 +6,10 @@ import {
   ModalToolbar,
   MdCatalog,
   config,
-  ExposeParam
+  ExposeParam,
+  editorExtensionsAttrs
 } from '~~/index';
+
 // import Editor from '../../lib/md-editor-rt.es';
 import mdText from '../data.md';
 import { Theme } from '../App';
@@ -86,6 +88,7 @@ console.log(
       //   instance: mermaid
       // }
     },
+    editorExtensionsAttrs,
     editorConfig: {
       zIndex: 2000
     }

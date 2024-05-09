@@ -3,7 +3,7 @@ import { LRUCache } from 'lru-cache';
 import { uuid } from '@vavt/util';
 import { prefix, configOption } from '~/config';
 import { EditorContext } from '~/Editor';
-import { appendHandler } from '~/utils/dom';
+import { appendHandler, createHTMLElement } from '~/utils/dom';
 import { ContentPreviewProps } from '../props';
 
 /**
@@ -13,10 +13,7 @@ import { ContentPreviewProps } from '../props';
 const useMermaid = (props: ContentPreviewProps) => {
   const { theme } = useContext(EditorContext);
 
-  const { editorExtensions, mermaidConfig } = configOption;
-  const mermaidConf = editorExtensions.mermaid;
-
-  const mermaidRef = useRef(mermaidConf!.instance);
+  const mermaidRef = useRef(configOption.editorExtensions.mermaid!.instance);
   const [reRender, setReRender] = useState(-1);
 
   const [mermaidCache] = useState(
@@ -34,7 +31,7 @@ const useMermaid = (props: ContentPreviewProps) => {
 
     if (!props.noMermaid && mermaid) {
       mermaid.initialize(
-        mermaidConfig({
+        configOption.mermaidConfig({
           startOnLoad: false,
           theme: theme === 'dark' ? 'dark' : 'default'
         })
@@ -50,35 +47,44 @@ const useMermaid = (props: ContentPreviewProps) => {
   useEffect(configMermaid, [configMermaid]);
 
   useEffect(() => {
-    if (props.noMermaid) {
+    const { editorExtensions, editorExtensionsAttrs } = configOption;
+
+    if (props.noMermaid || mermaidRef.current) {
       return;
     }
 
     // 没有提供实例，引入mermaid
-    if (!mermaidConf!.instance) {
-      const jsSrc = mermaidConf!.js as string;
+    const jsSrc = editorExtensions.mermaid!.js as string;
 
-      if (/\.mjs/.test(jsSrc)) {
-        import(
-          /* @vite-ignore */
-          /* webpackIgnore: true */
-          jsSrc
-        ).then((module) => {
-          mermaidRef.current = module.default;
-          configMermaid();
-        });
-      } else {
-        const mermaidScript = document.createElement('script');
-        mermaidScript.id = `${prefix}-mermaid`;
-        mermaidScript.src = jsSrc;
+    if (/\.mjs/.test(jsSrc)) {
+      const modulePreload = createHTMLElement('link', {
+        ...editorExtensionsAttrs.mermaid?.js,
+        rel: 'modulepreload',
+        href: jsSrc,
+        id: `${prefix}-mermaid-m`
+      });
+      appendHandler(modulePreload);
 
-        mermaidScript.onload = () => {
+      import(
+        /* @vite-ignore */
+        /* webpackIgnore: true */
+        jsSrc
+      ).then((module) => {
+        mermaidRef.current = module.default;
+        configMermaid();
+      });
+    } else {
+      const mermaidScript = createHTMLElement('script', {
+        ...editorExtensionsAttrs.mermaid?.js,
+        src: jsSrc,
+        id: `${prefix}-mermaid`,
+        onload() {
           mermaidRef.current = window.mermaid;
           configMermaid();
-        };
+        }
+      });
 
-        appendHandler(mermaidScript, 'mermaid');
-      }
+      appendHandler(mermaidScript, 'mermaid');
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps

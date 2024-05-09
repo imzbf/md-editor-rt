@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { prefix, configOption } from '~/config';
-import { appendHandler } from '~/utils/dom';
+import { appendHandler, createHTMLElement } from '~/utils/dom';
 import { ContentPreviewProps } from '../props';
 
 /**
@@ -10,34 +10,36 @@ import { ContentPreviewProps } from '../props';
  * @param marked -
  */
 const useKatex = (props: ContentPreviewProps) => {
-  // 获取相应的扩展配置链接
-  const katexConf = configOption.editorExtensions.katex;
-  const katexIns = katexConf!.instance;
-
   // katex是否加载完成
-  const katexRef = useRef(katexIns);
-  const [katexInited, setKatexInited] = useState(!!katexIns);
+  const katexRef = useRef(configOption.editorExtensions.katex!.instance);
+  const [katexInited, setKatexInited] = useState(!!katexRef.current);
 
   useEffect(() => {
+    if (props.noKatex || katexRef.current) {
+      return;
+    }
     // 标签引入katex
-    if (!props.noKatex && !katexRef.current) {
-      const katexScript = document.createElement('script');
 
-      katexScript.src = katexConf!.js as string;
-      katexScript.onload = () => {
+    // 获取相应的扩展配置链接
+    const { editorExtensions } = configOption;
+
+    const katexScript = createHTMLElement('script', {
+      src: editorExtensions.katex!.js,
+      id: `${prefix}-katex`,
+      onload() {
         katexRef.current = window.katex;
         setKatexInited(true);
-      };
-      katexScript.id = `${prefix}-katex`;
+      }
+    });
 
-      const katexLink = document.createElement('link');
-      katexLink.rel = 'stylesheet';
-      katexLink.href = katexConf!.css as string;
-      katexLink.id = `${prefix}-katexCss`;
+    const katexLink = createHTMLElement('link', {
+      rel: 'stylesheet',
+      href: editorExtensions.katex!.css,
+      id: `${prefix}-katexCss`
+    });
 
-      appendHandler(katexScript, 'katex');
-      appendHandler(katexLink);
-    }
+    appendHandler(katexScript, 'katex');
+    appendHandler(katexLink);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
