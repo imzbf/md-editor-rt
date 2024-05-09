@@ -175,31 +175,40 @@ const MdCatalog = (props: CatalogProps) => {
       cacheList = list_;
     };
 
-    const scrollElement_ = getScrollElement();
-
     // 滚动区域为document.documentElement需要把监听事件绑定在window上
-    const scrollContainer =
-      scrollElement_ === document.documentElement ? window : scrollElement_;
+    let scrollContainer: HTMLElement | Window = window;
+
+    const findScrollContainer = () => {
+      const scrollElement_ = getScrollElement();
+
+      scrollContainer =
+        scrollElement_ === document.documentElement ? window : scrollElement_;
+    };
 
     const scrollHandler = () => {
       findActiveHeading(cacheList);
     };
 
+    const callback = (_list: Array<HeadList>) => {
+      scrollContainer?.removeEventListener('scroll', scrollHandler);
+      findActiveHeading(_list);
+      findScrollContainer();
+      scrollContainer?.addEventListener('scroll', scrollHandler);
+    };
+
     bus.on(editorId, {
       name: CATALOG_CHANGED,
-      callback: (_list: Array<HeadList>) => {
-        scrollContainer?.removeEventListener('scroll', scrollHandler);
-        findActiveHeading(_list);
-        scrollContainer?.addEventListener('scroll', scrollHandler);
-      }
+      callback
     });
 
     // 主动触发一次接收
     bus.emit(editorId, PUSH_CATALOG);
 
+    findScrollContainer();
+
     scrollContainer?.addEventListener('scroll', scrollHandler);
     return () => {
-      bus.remove(editorId, CATALOG_CHANGED, findActiveHeading);
+      bus.remove(editorId, CATALOG_CHANGED, callback);
       scrollContainer?.removeEventListener('scroll', scrollHandler);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps

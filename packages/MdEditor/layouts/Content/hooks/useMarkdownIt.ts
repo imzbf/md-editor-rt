@@ -250,6 +250,14 @@ const useMarkdownIt = (props: ContentPreviewProps, previewOnly: boolean) => {
   }, [html, key]);
 
   useEffect(() => {
+    if (props.setting.preview) {
+      // 生成目录
+      bus.emit(editorId, CATALOG_CHANGED, headsRef.current);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [props.setting.preview]);
+
+  useEffect(() => {
     if (ignoreFirstRender.current) {
       ignoreFirstRender.current = false;
       return;
