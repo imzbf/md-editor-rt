@@ -2,7 +2,7 @@ import { RefObject, useCallback, useContext, useEffect, useRef, useState } from 
 import bus from '~/utils/event-bus';
 import { prefix, configOption } from '~/config';
 import { EditorContext } from '~/Editor';
-import { appendHandler, createHTMLElement } from '~/utils/dom';
+import { appendHandler } from '~/utils/dom';
 import { ToolDirective } from '~/utils/content-help';
 import {
   CHANGE_FULL_SCREEN,
@@ -52,8 +52,6 @@ export const useSreenfull = (props: ToolbarProps) => {
   );
 
   useEffect(() => {
-    let screenScript: HTMLScriptElement;
-
     const changedEvent = () => {
       props.updateSetting('fullscreen', screenfullMe.current);
     };
@@ -65,22 +63,24 @@ export const useSreenfull = (props: ToolbarProps) => {
     if (!screenfull.current) {
       const { editorExtensions, editorExtensionsAttrs } = configOption;
 
-      screenScript = createHTMLElement('script', {
-        ...editorExtensionsAttrs.screenfull?.js,
-        src: editorExtensions.screenfull!.js,
-        id: `${prefix}-screenfull`,
-        onload() {
-          // 复制实例
-          screenfull.current = window.screenfull;
-          // 注册事件
-          if (screenfull.current && screenfull.current.isEnabled) {
-            screenfull.current.on('change', changedEvent);
-          }
-        }
-      });
-
       timer = requestAnimationFrame(() => {
-        appendHandler(screenScript, 'screenfull');
+        appendHandler(
+          'script',
+          {
+            ...editorExtensionsAttrs.screenfull?.js,
+            src: editorExtensions.screenfull!.js,
+            id: `${prefix}-screenfull`,
+            onload() {
+              // 复制实例
+              screenfull.current = window.screenfull;
+              // 注册事件
+              if (screenfull.current && screenfull.current.isEnabled) {
+                screenfull.current.on('change', changedEvent);
+              }
+            }
+          },
+          'screenfull'
+        );
       });
     }
 

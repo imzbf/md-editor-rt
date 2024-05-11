@@ -1,7 +1,7 @@
 import { useContext, useEffect, useRef, useState } from 'react';
 import { prefix, configOption } from '~/config';
 import { EditorContext } from '~/Editor';
-import { appendHandler, createHTMLElement, updateHandler } from '~/utils/dom';
+import { appendHandler, updateHandler } from '~/utils/dom';
 import { ContentPreviewProps } from '../props';
 
 /**
@@ -17,13 +17,11 @@ const useHighlight = (props: ContentPreviewProps) => {
   const [hljsInited, setHljsInited] = useState(!!hljsRef.current);
 
   useEffect(() => {
-    updateHandler(
-      createHTMLElement('link', {
-        ...highlight.css,
-        rel: 'stylesheet',
-        id: `${prefix}-hlCss`
-      })
-    );
+    updateHandler('link', {
+      ...highlight.css,
+      rel: 'stylesheet',
+      id: `${prefix}-hlCss`
+    });
   }, [highlight.css]);
 
   useEffect(() => {
@@ -32,23 +30,23 @@ const useHighlight = (props: ContentPreviewProps) => {
       return;
     }
 
-    const highlightScript = createHTMLElement('script', {
-      ...highlight.js,
-      id: `${prefix}-hljs`,
-      onload() {
-        hljsRef.current = window.hljs;
-        setHljsInited(true);
-      }
-    });
-
-    const highlightLink = createHTMLElement('link', {
+    appendHandler('link', {
       ...highlight.css,
       rel: 'stylesheet',
       id: `${prefix}-hlCss`
     });
-
-    appendHandler(highlightLink);
-    appendHandler(highlightScript, 'hljs');
+    appendHandler(
+      'script',
+      {
+        ...highlight.js,
+        id: `${prefix}-hljs`,
+        onload() {
+          hljsRef.current = window.hljs;
+          setHljsInited(true);
+        }
+      },
+      'hljs'
+    );
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

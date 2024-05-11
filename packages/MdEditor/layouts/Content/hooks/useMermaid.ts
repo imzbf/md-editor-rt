@@ -3,7 +3,7 @@ import { LRUCache } from 'lru-cache';
 import { uuid } from '@vavt/util';
 import { prefix, configOption } from '~/config';
 import { EditorContext } from '~/Editor';
-import { appendHandler, createHTMLElement } from '~/utils/dom';
+import { appendHandler } from '~/utils/dom';
 import { ContentPreviewProps } from '../props';
 
 /**
@@ -57,13 +57,12 @@ const useMermaid = (props: ContentPreviewProps) => {
     const jsSrc = editorExtensions.mermaid!.js as string;
 
     if (/\.mjs/.test(jsSrc)) {
-      const modulePreload = createHTMLElement('link', {
+      appendHandler('link', {
         ...editorExtensionsAttrs.mermaid?.js,
         rel: 'modulepreload',
         href: jsSrc,
         id: `${prefix}-mermaid-m`
       });
-      appendHandler(modulePreload);
 
       import(
         /* @vite-ignore */
@@ -74,17 +73,19 @@ const useMermaid = (props: ContentPreviewProps) => {
         configMermaid();
       });
     } else {
-      const mermaidScript = createHTMLElement('script', {
-        ...editorExtensionsAttrs.mermaid?.js,
-        src: jsSrc,
-        id: `${prefix}-mermaid`,
-        onload() {
-          mermaidRef.current = window.mermaid;
-          configMermaid();
-        }
-      });
-
-      appendHandler(mermaidScript, 'mermaid');
+      appendHandler(
+        'script',
+        {
+          ...editorExtensionsAttrs.mermaid?.js,
+          src: jsSrc,
+          id: `${prefix}-mermaid`,
+          onload() {
+            mermaidRef.current = window.mermaid;
+            configMermaid();
+          }
+        },
+        'mermaid'
+      );
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps

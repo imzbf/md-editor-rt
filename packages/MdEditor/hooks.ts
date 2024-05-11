@@ -29,7 +29,7 @@ import {
   configOption,
   defaultProps
 } from './config';
-import { appendHandler, createHTMLElement } from './utils/dom';
+import { appendHandler } from './utils/dom';
 import {
   CHANGE_CATALOG_VISIBLE,
   CHANGE_FULL_SCREEN,
@@ -160,46 +160,39 @@ export const useExpansion = (staticProps: StaticProps) => {
     if (!noCropperScript) {
       // 裁剪图片
       const { js = {}, css = {} } = editorExtensionsAttrs.cropper || {};
-      const cropperLink = createHTMLElement('link', {
+
+      appendHandler('link', {
         ...css,
         rel: 'stylesheet',
         href: editorExtensions.cropper!.css,
         id: `${prefix}-cropperCss`
       });
-
-      const cropperScript = createHTMLElement('script', {
+      appendHandler('script', {
         ...js,
         src: editorExtensions.cropper!.js,
         id: `${prefix}-cropper`
       });
-
-      appendHandler(cropperLink);
-      appendHandler(cropperScript);
     }
 
     // prettier
     if (!noPrettierScript) {
       const { standaloneJs = {} } = editorExtensionsAttrs.prettier || {};
 
-      const prettierScript = createHTMLElement('script', {
+      appendHandler('script', {
         ...standaloneJs,
         src: editorExtensions.prettier!.standaloneJs,
         id: `${prefix}-prettier`
       });
-
-      appendHandler(prettierScript);
     }
 
     if (!noParserMarkdownScript) {
       const { parserMarkdownJs = {} } = editorExtensionsAttrs.prettier || {};
 
-      const prettierMDScript = createHTMLElement('script', {
+      appendHandler('script', {
         ...parserMarkdownJs,
         src: editorExtensions.prettier!.parserMarkdownJs,
         id: `${prefix}-prettierMD`
       });
-
-      appendHandler(prettierMDScript);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -216,21 +209,18 @@ export const useExpansionPreview = ({ noIconfont }: MdPreviewStaticProps) => {
 
     if (iconfontType === 'svg') {
       // 图标
-      const iconfontScript = createHTMLElement('script', {
+      appendHandler('script', {
         ...editorExtensionsAttrs.iconfont,
         src: editorExtensions.iconfont,
         id: `${prefix}-icon`
       });
-      appendHandler(iconfontScript);
     } else {
-      const iconfontLink = createHTMLElement('link', {
+      appendHandler('link', {
         ...editorExtensionsAttrs.iconfontClass,
         rel: 'stylesheet',
         href: editorExtensions.iconfontClass,
         id: `${prefix}-icon-class`
       });
-
-      appendHandler(iconfontLink);
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps

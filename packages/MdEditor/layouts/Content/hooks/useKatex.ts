@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { prefix, configOption } from '~/config';
-import { appendHandler, createHTMLElement } from '~/utils/dom';
+import { appendHandler } from '~/utils/dom';
 import { ContentPreviewProps } from '../props';
 
 /**
@@ -23,23 +23,23 @@ const useKatex = (props: ContentPreviewProps) => {
     // 获取相应的扩展配置链接
     const { editorExtensions } = configOption;
 
-    const katexScript = createHTMLElement('script', {
-      src: editorExtensions.katex!.js,
-      id: `${prefix}-katex`,
-      onload() {
-        katexRef.current = window.katex;
-        setKatexInited(true);
-      }
-    });
-
-    const katexLink = createHTMLElement('link', {
+    appendHandler(
+      'script',
+      {
+        src: editorExtensions.katex!.js,
+        id: `${prefix}-katex`,
+        onload() {
+          katexRef.current = window.katex;
+          setKatexInited(true);
+        }
+      },
+      'katex'
+    );
+    appendHandler('link', {
       rel: 'stylesheet',
       href: editorExtensions.katex!.css,
       id: `${prefix}-katexCss`
     });
-
-    appendHandler(katexScript, 'katex');
-    appendHandler(katexLink);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
