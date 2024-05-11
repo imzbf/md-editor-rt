@@ -551,10 +551,10 @@ Except for the same as `MdPreview`:
 
 ### 📅 tableShape
 
-- **type**: `[number, number]`
+- **type**: `[number, number] \| [number, number, number, number]`
 - **default**: `[6, 4]`
 
-  Preset the size of the table, [columns, rows].
+  Preset the size of the table, [columns, rows, Maximum number of columns, Maximum number of rows]
 
   ```jsx
   <MdEditor tableShape={[8, 4]}>
@@ -1426,6 +1426,21 @@ config({
 
 ---
 
+#### 🍥 zIndex
+
+```js
+import { config } from 'md-editor-rt';
+
+config({
+  editorConfig: {
+    // for modal component
+    zIndex: 2000
+  }
+});
+```
+
+---
+
 ### 🥠 editorExtensions
 
 Config some dependency libraries, like highlight..
@@ -1484,6 +1499,52 @@ export interface EditorExtensions {
 ```
 
 </details>
+
+---
+
+### 🥠 editorExtensionsAttrs
+
+Synchronously add attributes to the CDN link tags, consistent with the type of `editorExtensions`, with a value type of `HTMLElementTagNameMap['tagName']`.
+
+```js
+import { config } from 'md-editor-rt';
+
+config({
+  editorExtensionsAttrs: {
+    highlight: {
+      js: {
+        className: 'hglh-js'
+      },
+      css: {
+        atom: {
+          light: {
+            className: 'atom-light-css'
+          },
+          dark: {
+            className: 'atom-dark-css'
+          }
+        }
+      }
+    }
+  }
+});
+```
+
+Example of using built-in basic configuration:
+
+```js
+import { config, editorExtensionsAttrs } from 'md-editor-rt';
+
+config({
+  editorExtensionsAttrs
+});
+```
+
+!!! warning Warning
+
+Do not attempt to define the src \ onload \ id of the script and rel \ href \ id of the link in editorExtensionsAttrs, as they will be overwritten by default values
+
+!!!
 
 ---
 
