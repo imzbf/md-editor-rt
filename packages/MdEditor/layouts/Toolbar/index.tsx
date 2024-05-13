@@ -1014,7 +1014,8 @@ const Toolbar = (props: ToolbarProps) => {
       MermaidDropdown,
       KatexDropdown,
       theme,
-      language
+      language,
+      previewTheme
     ]
   );
 

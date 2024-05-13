@@ -73,7 +73,7 @@ const useResize = (
     };
 
     resizeRef.current?.addEventListener('mousedown', resizeMousedown);
-    document.addEventListener('mouseup', resizeMouseup);
+    resizeRef.current?.addEventListener('mouseup', resizeMouseup);
 
     return () => {
       resizeRef.current?.removeEventListener('mousedown', resizeMousedown);
