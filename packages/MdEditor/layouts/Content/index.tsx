@@ -82,6 +82,8 @@ const Content = forwardRef((props: ContentProps, ref: ForwardedRef<unknown>) => 
         noHighlight={props.noHighlight}
         noImgZoomIn={props.noImgZoomIn}
         sanitizeMermaid={props.sanitizeMermaid}
+        codeFoldable={props.codeFoldable}
+        autoFoldThreshold={props.autoFoldThreshold}
         key="display-editor"
       />
       {props.catalogVisible && (

@@ -284,6 +284,19 @@ export interface MdPreviewProps {
    * @returns
    */
   sanitizeMermaid?: (html: string) => Promise<string>;
+  /**
+   * 是否开启折叠代码功能
+   * 不开启会使用div标签替代details标签
+   *
+   * @default true
+   */
+  codeFoldable?: boolean;
+  /**
+   * 触发自动折叠代码的行数阈值
+   *
+   * @default 30
+   */
+  autoFoldThreshold?: number;
 }
 
 export type TableShapeType = [number, number] | [number, number, number, number];

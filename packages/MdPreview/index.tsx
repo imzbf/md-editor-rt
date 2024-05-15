@@ -28,7 +28,9 @@ const MdPreview = forwardRef((props: MdPreviewProps, ref: ForwardedRef<unknown>)
     noHighlight = defaultProps.noHighlight,
     noImgZoomIn = defaultProps.noImgZoomIn,
     language = defaultProps.language,
-    sanitizeMermaid = defaultProps.sanitizeMermaid
+    sanitizeMermaid = defaultProps.sanitizeMermaid,
+    codeFoldable = defaultProps.codeFoldable,
+    autoFoldThreshold = defaultProps.autoFoldThreshold
   } = props;
 
   const [staticProps] = useState<MdPreviewStaticProps>(() => {
@@ -96,6 +98,8 @@ const MdPreview = forwardRef((props: MdPreviewProps, ref: ForwardedRef<unknown>)
           previewOnly
           key="preview-only"
           sanitizeMermaid={sanitizeMermaid}
+          codeFoldable={codeFoldable}
+          autoFoldThreshold={autoFoldThreshold}
         />
       </div>
     </EditorContext.Provider>

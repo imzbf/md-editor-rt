@@ -7,7 +7,7 @@ import { uuid } from '@vavt/util';
 import bus from '~/utils/event-bus';
 import { generateCodeRowNumber } from '~/utils';
 import { HeadList, MarkdownItConfigPlugin, Themes } from '~/type';
-import { configOption } from '~/config';
+import { configOption, prefix } from '~/config';
 import {
   BUILD_FINISHED,
   CATALOG_CHANGED,
@@ -23,7 +23,7 @@ import MermaidPlugin from '../markdownIt/mermaid';
 import KatexPlugin from '../markdownIt/katex';
 import AdmonitionPlugin from '../markdownIt/admonition';
 import HeadingPlugin from '../markdownIt/heading';
-import CodeTabsPlugin from '../markdownIt/codetabs';
+import CodePlugin from '../markdownIt/code';
 import { EditorContext } from '~/Editor';
 import { ContentPreviewProps } from '../props';
 
@@ -69,7 +69,8 @@ const useMarkdownIt = (props: ContentPreviewProps, previewOnly: boolean) => {
   const { onHtmlChanged = () => {}, onGetCatalog = () => {} } = props;
   const { editorConfig, markdownItConfig, markdownItPlugins } = configOption;
   //
-  const { editorId, showCodeRowNumber, theme } = useContext(EditorContext);
+  const { editorId, showCodeRowNumber, theme, usedLanguageText } =
+    useContext(EditorContext);
 
   const headsRef = useRef<HeadList[]>([]);
 
@@ -77,6 +78,11 @@ const useMarkdownIt = (props: ContentPreviewProps, previewOnly: boolean) => {
   useEffect(() => {
     themeRef.current = theme;
   }, [theme]);
+
+  const usedLanguageTextRef = useRef(usedLanguageText);
+  useEffect(() => {
+    usedLanguageTextRef.current = usedLanguageText;
+  }, [usedLanguageText]);
 
   const { hljsRef, hljsInited } = useHighlight(props);
   const { katexRef, katexInited } = useKatex(props);
@@ -114,9 +120,15 @@ const useMarkdownIt = (props: ContentPreviewProps, previewOnly: boolean) => {
         options: { mdHeadingId: props.mdHeadingId, headsRef }
       },
       {
-        type: 'codeTabs',
-        plugin: CodeTabsPlugin,
-        options: { editorId }
+        type: 'code',
+        plugin: CodePlugin,
+        options: {
+          editorId,
+          usedLanguageTextRef,
+          // showCodeRowNumber,
+          codeFoldable: props.codeFoldable,
+          autoFoldThreshold: props.autoFoldThreshold
+        }
       },
       {
         type: 'xss',
@@ -200,7 +212,7 @@ const useMarkdownIt = (props: ContentPreviewProps, previewOnly: boolean) => {
 
         const codeSpan = showCodeRowNumber
           ? generateCodeRowNumber(codeHtml.replace(/^\n+|\n+$/g, ''))
-          : `<span class="code-block">${codeHtml.replace(/^\n+|\n+$/g, '')}</span>`;
+          : `<span class="${prefix}-code-block">${codeHtml.replace(/^\n+|\n+$/g, '')}</span>`;
 
         return `<pre><code class="language-${language}" language=${language}>${codeSpan}</code></pre>`;
       }

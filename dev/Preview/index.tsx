@@ -322,13 +322,15 @@ export default ({ theme, previewTheme, codeTheme, lang }: PreviewProp) => {
           // showToolbarName
           // onInput={console.log}
           // onError={console.log}
-          transformImgUrl={(t) => {
-            console.log(t);
+          // codeFoldable={false}
+          // autoFoldThreshold={2}
+          // transformImgUrl={(t) => {
+          //   console.log(t);
 
-            return Promise.resolve(
-              'https://imzbf.github.io/md-editor-rt/imgs/preview-light.png'
-            );
-          }}
+          //   return Promise.resolve(
+          //     'https://imzbf.github.io/md-editor-rt/imgs/preview-light.png'
+          //   );
+          // }}
           // noImgZoomIn
           // customIcon={{
           //   bold: {
