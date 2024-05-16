@@ -1,6 +1,6 @@
 {
   "name": "md-editor-rt",
-  "version": "4.14.1",
+  "version": "4.15.0",
   "keywords": [
     "react",
     "nextjs",
@@ -22,7 +22,7 @@
   "homepage": "https://imzbf.github.io/md-editor-rt/",
   "license": "MIT",
   "scripts": {
-    "dev": "vite",
+    "dev": "vite --host",
     "build": "vite build --mode=preview"
   },
   "dependencies": {
@@ -31,7 +31,7 @@
     "dayjs": "^1.11.3",
     "markdown-it-link-attributes": "^4.0.1",
     "markdown-it-mark": "^4.0.0",
-    "md-editor-rt": "^4.14.1",
+    "md-editor-rt": "^4.15.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-redux": "^7.2.6",

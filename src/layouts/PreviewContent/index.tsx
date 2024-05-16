@@ -45,6 +45,7 @@ const IzPreviewContent = (props: IzPreviewContentProp) => {
         showCodeRowNumber={props.showCodeRowNumber}
         codeTheme={state.codeTheme}
         onHtmlChanged={onHtmlChanged}
+        autoFoldThreshold={16}
       />
     </div>
   );

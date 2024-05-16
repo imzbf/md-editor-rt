@@ -4,6 +4,8 @@ import { MdCatalog } from 'md-editor-rt';
 import type { TocItem } from 'md-editor-rt/lib/types/MdCatalog';
 import { StateType } from '@/store';
 
+import './index.less';
+
 interface IzCatalogProp {
   editorId: string;
 }

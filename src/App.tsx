@@ -15,6 +15,8 @@ import Loading from '@/layouts/Loading';
 
 export type Theme = 'dark' | 'light';
 
+import './app.less';
+
 function App() {
   const { theme, lang } = useSelector<StateType, StateType>((state) => state);
 
@@ -29,7 +31,6 @@ function App() {
   }, [theme]);
 
   useEffect(() => {
-    console.log(lang, location.hash);
     nav(
       location.pathname.replace(/(\/md-editor-rt\/)[a-zA-Z-]+/, `/md-editor-rt/${lang}`) +
         location.hash

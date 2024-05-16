@@ -402,6 +402,24 @@
 
 ---
 
+### 🕹 codeFoldable
+
+- **类型**：`boolean`
+- **默认值**：`true`
+
+  是否开启折叠代码功能
+
+---
+
+### ⏲ autoFoldThreshold
+
+- **类型**：`number`
+- **默认值**：`30`
+
+  触发自动折叠代码的行数阈值
+
+---
+
 ## 🔩 MdEditor Props
 
 除去和`MdPreivew`相同的以外：
@@ -1499,9 +1517,6 @@ config({
 });
 ```
 
-<details>
-  <summary>[EditorExtensions]</summary>
-
 ```ts
 export interface EditorExtensions {
   highlight?: {
@@ -1543,8 +1558,6 @@ export interface EditorExtensions {
   };
 }
 ```
-
-</details>
 
 ---
 

@@ -6,6 +6,8 @@ import Navigation from '../Navigation';
 import { version } from '../../../package.json';
 import './index.less';
 
+import IzDrawer from '@/components/Drawer';
+
 export default () => {
   const state = useSelector<StateType>((state) => state) as StateType;
   const dispatch = useDispatch();
@@ -57,81 +59,175 @@ export default () => {
           md-editor-rt<sup>@{version}</sup>
         </h1>
         <p className="project-desc">{texts.desc}</p>
-        <Navigation />
-        <p className="header-actions">
-          <button
-            className="btn btn-header"
-            onClick={() =>
-              dispatch({
-                type: 'changeTheme',
-                value: 'light'
-              })
-            }
-          >
-            {texts.defaultTheme}
-          </button>
-          <button
-            className="btn btn-header"
-            onClick={() =>
-              dispatch({
-                type: 'changeTheme',
-                value: 'dark'
-              })
-            }
-          >
-            {texts.darkTheme}
-          </button>
-          <IzDropdown
+
+        <div className="pc">
+          <Navigation />
+          <p className="header-actions">
+            <button
+              className="btn btn-header"
+              onClick={() =>
+                dispatch({
+                  type: 'changeTheme',
+                  value: 'light'
+                })
+              }
+            >
+              {texts.defaultTheme}
+            </button>
+            <button
+              className="btn btn-header"
+              onClick={() =>
+                dispatch({
+                  type: 'changeTheme',
+                  value: 'dark'
+                })
+              }
+            >
+              {texts.darkTheme}
+            </button>
+            <IzDropdown
+              content={
+                <IzDropdown.IzDropdownMenu>
+                  <>
+                    {data.previewThemes.map((item) => {
+                      return (
+                        <IzDropdown.IzDropdownMenuItem
+                          onClick={() => {
+                            dispatch({
+                              type: 'changePreviewTheme',
+                              value: item
+                            });
+                          }}
+                          key={`preview-theme-${item}`}
+                        >
+                          {item}
+                        </IzDropdown.IzDropdownMenuItem>
+                      );
+                    })}
+                  </>
+                </IzDropdown.IzDropdownMenu>
+              }
+            >
+              <button className="btn btn-header">{texts.previewBtn}</button>
+            </IzDropdown>
+            <IzDropdown
+              content={
+                <IzDropdown.IzDropdownMenu>
+                  <>
+                    {data.codeThemes.map((item) => {
+                      return (
+                        <IzDropdown.IzDropdownMenuItem
+                          onClick={() => {
+                            dispatch({
+                              type: 'changeCodeTheme',
+                              value: item
+                            });
+                          }}
+                          key={`code-theme-${item}`}
+                        >
+                          {item}
+                        </IzDropdown.IzDropdownMenuItem>
+                      );
+                    })}
+                  </>
+                </IzDropdown.IzDropdownMenu>
+              }
+            >
+              <button className="btn btn-header">{texts.codeBtn}</button>
+            </IzDropdown>
+          </p>
+        </div>
+
+        <div className="mb">
+          <IzDrawer
             content={
-              <IzDropdown.IzDropdownMenu>
-                <>
-                  {data.previewThemes.map((item) => {
-                    return (
-                      <IzDropdown.IzDropdownMenuItem
-                        onClick={() => {
-                          dispatch({
-                            type: 'changePreviewTheme',
-                            value: item
-                          });
-                        }}
-                        key={`preview-theme-${item}`}
-                      >
-                        {item}
-                      </IzDropdown.IzDropdownMenuItem>
-                    );
-                  })}
-                </>
-              </IzDropdown.IzDropdownMenu>
+              <>
+                <Navigation />
+
+                <div className="header-hr" />
+
+                <p className="header-actions">
+                  <button
+                    className="btn btn-header"
+                    onClick={() =>
+                      dispatch({
+                        type: 'changeTheme',
+                        value: 'light'
+                      })
+                    }
+                  >
+                    {texts.defaultTheme}
+                  </button>
+                  <button
+                    className="btn btn-header"
+                    onClick={() =>
+                      dispatch({
+                        type: 'changeTheme',
+                        value: 'dark'
+                      })
+                    }
+                  >
+                    {texts.darkTheme}
+                  </button>
+                  <IzDropdown
+                    content={
+                      <IzDropdown.IzDropdownMenu>
+                        <>
+                          {data.previewThemes.map((item) => {
+                            return (
+                              <IzDropdown.IzDropdownMenuItem
+                                onClick={() => {
+                                  dispatch({
+                                    type: 'changePreviewTheme',
+                                    value: item
+                                  });
+                                }}
+                                key={`preview-theme-${item}`}
+                              >
+                                {item}
+                              </IzDropdown.IzDropdownMenuItem>
+                            );
+                          })}
+                        </>
+                      </IzDropdown.IzDropdownMenu>
+                    }
+                  >
+                    <button className="btn btn-header">{texts.previewBtn}</button>
+                  </IzDropdown>
+                  <IzDropdown
+                    content={
+                      <IzDropdown.IzDropdownMenu>
+                        <>
+                          {data.codeThemes.map((item) => {
+                            return (
+                              <IzDropdown.IzDropdownMenuItem
+                                onClick={() => {
+                                  dispatch({
+                                    type: 'changeCodeTheme',
+                                    value: item
+                                  });
+                                }}
+                                key={`code-theme-${item}`}
+                              >
+                                {item}
+                              </IzDropdown.IzDropdownMenuItem>
+                            );
+                          })}
+                        </>
+                      </IzDropdown.IzDropdownMenu>
+                    }
+                  >
+                    <button className="btn btn-header">{texts.codeBtn}</button>
+                  </IzDropdown>
+                </p>
+              </>
             }
           >
-            <button className="btn btn-header">{texts.previewBtn}</button>
-          </IzDropdown>
-          <IzDropdown
-            content={
-              <IzDropdown.IzDropdownMenu>
-                <>
-                  {data.codeThemes.map((item) => {
-                    return (
-                      <IzDropdown.IzDropdownMenuItem
-                        onClick={() => {
-                          dispatch({
-                            type: 'changeCodeTheme',
-                            value: item
-                          });
-                        }}
-                        key={`code-theme-${item}`}
-                      >
-                        {item}
-                      </IzDropdown.IzDropdownMenuItem>
-                    );
-                  })}
-                </>
-              </IzDropdown.IzDropdownMenu>
-            }
-          >
-            <button className="btn btn-header">{texts.codeBtn}</button>
-          </IzDropdown>
-        </p>
+            <svg className="icon m-menu-trigger" aria-hidden="true">
+              <use xlinkHref="#icon-drawer"></use>
+            </svg>
+          </IzDrawer>
+        </div>
       </section>
     </header>
   );
