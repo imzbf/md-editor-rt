@@ -2,7 +2,7 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { MdPreview } from 'md-editor-rt';
 import { StateType } from '@/store';
-import { debounce } from '@vavt/util';
+import { debounce, getRootOffset } from '@vavt/util';
 
 interface IzPreviewContentProp {
   editorId: string;
@@ -10,9 +10,9 @@ interface IzPreviewContentProp {
   showCodeRowNumber: boolean;
 }
 
-const onHtmlChanged = debounce<any, any>(() => {
-  const { hash } = location;
+const { hash } = location;
 
+const onHtmlChanged = debounce<any, any>(() => {
   if (/^#/.test(hash)) {
     const headingId = decodeURIComponent(hash.replace('#', ''));
 
@@ -20,7 +20,7 @@ const onHtmlChanged = debounce<any, any>(() => {
       const targetHeadDom = document.getElementById(headingId);
 
       if (targetHeadDom) {
-        const scrollLength = (targetHeadDom as HTMLHeadElement).offsetTop + 414 - 10;
+        const scrollLength = getRootOffset(targetHeadDom).offsetTop - 10;
 
         window.scrollTo({
           top: scrollLength,
