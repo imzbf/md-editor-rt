@@ -4,8 +4,15 @@
  * 该代码只是正对md-editor-v3系列功能做了适配
  */
 import { RefObject } from 'react';
-import markdownit, { ParserBlock, ParserInline, StateInline } from 'markdown-it';
+import markdownit, {
+  ParserBlock,
+  ParserInline,
+  Renderer,
+  StateInline,
+  Token
+} from 'markdown-it';
 import { prefix } from '~/config';
+import { mergeAttrs } from '~/utils/markdown-it';
 
 // Test if potential opening or closing delimieter
 // Assumes that there is a "$" at state.src[pos]
@@ -174,30 +181,81 @@ const math_block: ParserBlock.RuleBlock = (state, start, end, silent) => {
   return true;
 };
 
-const KatexPlugin = (md: markdownit, options: { katexRef: RefObject<any> }) => {
+// const KatexPlugin = (md: markdownit, options: { katexRef: RefObject<any> }) => {
+//   // set KaTeX as the renderer for markdown-it-simplemath
+//   const katexInline = (str: string) => {
+//     if (options.katexRef.current) {
+//       const html = options.katexRef.current.renderToString(str, {
+//         throwOnError: false
+//       });
+
+//       return `<span class="${prefix}-katex-inline" data-processed>${html}</span>`;
+//     } else {
+//       return `<span class="${prefix}-katex-inline">${str}</span>`;
+//     }
+//   };
+
+//   const katexBlock = (str: string, lineNum: number) => {
+//     if (options.katexRef.current) {
+//       const html = options.katexRef.current.renderToString(str, {
+//         throwOnError: false,
+//         displayMode: true
+//       });
+
+//       return `<p class="${prefix}-katex-block" data-line=${lineNum} data-processed>${html}</p>`;
+//     } else {
+//       return `<p class="${prefix}-katex-block" data-line=${lineNum}>${str}</p>`;
+//     }
+//   };
+
+//   md.inline.ruler.after('escape', 'math_inline', math_inline);
+//   md.block.ruler.after('blockquote', 'math_block', math_block, {
+//     alt: ['paragraph', 'reference', 'blockquote', 'list']
+//   });
+
+//   md.renderer.rules.math_inline = (tokens, idx) => {
+//     return katexInline(tokens[idx].content);
+//   };
+
+//   md.renderer.rules.math_block = (tokens, idx) => {
+//     return katexBlock(tokens[idx].content, tokens[idx].map![0]) + '\n';
+//   };
+// };
+
+const KatexPlugin = (md: markdownit, { katexRef }: { katexRef: RefObject<any> }) => {
   // set KaTeX as the renderer for markdown-it-simplemath
-  const katexInline = (str: string) => {
-    if (options.katexRef.current) {
-      const html = options.katexRef.current.renderToString(str, {
+  const katexInline: Renderer.RenderRule = (tokens, idx, options, env, slf) => {
+    const token = tokens[idx];
+    const tmpToken = {
+      attrs: mergeAttrs(token, [['class', `${prefix}-katex-inline`]])
+    };
+
+    if (katexRef.current) {
+      const html = katexRef.current.renderToString(token.content, {
         throwOnError: false
       });
 
-      return `<span class="${prefix}-katex-inline" data-processed>${html}</span>`;
+      return `<span ${slf.renderAttrs(tmpToken as Token)} data-processed>${html}</span>`;
     } else {
-      return `<span class="${prefix}-katex-inline">${str}</span>`;
+      return `<span ${slf.renderAttrs(tmpToken as Token)}>${token.content}</span>`;
     }
   };
 
-  const katexBlock = (str: string, lineNum: number) => {
-    if (options.katexRef.current) {
-      const html = options.katexRef.current.renderToString(str, {
+  const katexBlock: Renderer.RenderRule = (tokens, idx, options, env, slf) => {
+    const token = tokens[idx];
+    const tmpToken = {
+      attrs: mergeAttrs(token, [['class', `${prefix}-katex-block`]])
+    };
+
+    if (katexRef.current) {
+      const html = katexRef.current.renderToString(token.content, {
         throwOnError: false,
         displayMode: true
       });
 
-      return `<p class="${prefix}-katex-block" data-line=${lineNum} data-processed>${html}</p>`;
+      return `<p ${slf.renderAttrs(tmpToken as Token)} data-processed>${html}</p>`;
     } else {
-      return `<p class="${prefix}-katex-block" data-line=${lineNum}>${str}</p>`;
+      return `<p ${slf.renderAttrs(tmpToken as Token)}>${token.content}</p>`;
     }
   };
 
@@ -206,13 +264,8 @@ const KatexPlugin = (md: markdownit, options: { katexRef: RefObject<any> }) => {
     alt: ['paragraph', 'reference', 'blockquote', 'list']
   });
 
-  md.renderer.rules.math_inline = (tokens, idx) => {
-    return katexInline(tokens[idx].content);
-  };
-
-  md.renderer.rules.math_block = (tokens, idx) => {
-    return katexBlock(tokens[idx].content, tokens[idx].map![0]) + '\n';
-  };
+  md.renderer.rules.math_inline = katexInline;
+  md.renderer.rules.math_block = katexBlock;
 };
 
 export default KatexPlugin;
