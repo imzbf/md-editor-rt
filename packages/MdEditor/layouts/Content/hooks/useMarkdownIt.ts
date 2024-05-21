@@ -67,7 +67,8 @@ const useMarkdownIt = (props: ContentPreviewProps, previewOnly: boolean) => {
   const [md] = useState(() => {
     const md_ = mdit({
       html: true,
-      breaks: true
+      breaks: true,
+      linkify: true
     });
 
     markdownItConfig!(md_, {
