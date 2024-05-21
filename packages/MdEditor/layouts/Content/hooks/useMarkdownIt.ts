@@ -194,7 +194,9 @@ const useMarkdownIt = (props: ContentPreviewProps, previewOnly: boolean) => {
       }
     });
 
-    initLineNumber(md_);
+    if (!props.previewOnly) {
+      initLineNumber(md_);
+    }
 
     return md_;
   });
@@ -270,7 +272,7 @@ const useMarkdownIt = (props: ContentPreviewProps, previewOnly: boolean) => {
   useEffect(() => {
     replaceMermaid();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [html, reRender]);
+  }, [html, key, reRender]);
 
   useEffect(() => {
     // 添加目录主动触发接收监听
@@ -285,9 +287,9 @@ const useMarkdownIt = (props: ContentPreviewProps, previewOnly: boolean) => {
 
   useEffect(() => {
     const callback = () => {
-      markHtml();
       // 强制更新节点
       setKey(`_article-key_${uuid()}`);
+      markHtml();
     };
     bus.on(editorId, {
       name: RERENDER,
