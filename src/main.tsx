@@ -39,7 +39,7 @@ config({
         options: {
           permalink: true,
           permalinkSymbol: '#',
-          permalinkBefore: true,
+          permalinkBefore: false,
           permalinkSpace: false,
           slugify(s: string) {
             return s;
