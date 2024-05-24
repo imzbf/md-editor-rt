@@ -299,7 +299,7 @@ export default ({ theme, previewTheme, codeTheme, lang }: PreviewProp) => {
           // toolbarsExclude={['github']}
           // noPrettier
           // tabWidth={4}
-          showCodeRowNumber
+          // showCodeRowNumber
           // tableShape={[10, 10]}
           // noMermaid
           // placeholder="placeholder"

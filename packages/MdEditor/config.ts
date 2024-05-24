@@ -300,7 +300,7 @@ export const defaultProps = {
   onHtmlChanged: () => {},
   onGetCatalog: () => {},
   tabWidth: 2,
-  showCodeRowNumber: false,
+  showCodeRowNumber: true,
   previewTheme: 'default',
   mdHeadingId: (text: string) => text,
   style: {},
