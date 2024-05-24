@@ -1333,9 +1333,9 @@
     "@codemirror/language" "^6.0.0"
 
 "@codemirror/lint@^6.0.0":
-  version "6.7.1"
-  resolved "https://registry.npmjs.org/@codemirror/lint/-/lint-6.7.1.tgz#bed4b3a38785678efbe683efe0e61d8ccf478d58"
-  integrity sha512-rELba6QJD20/bNXWP/cKTGLrwVEcpa2ViwULCV03ONcY1Je85++7sczVRUlnE4TJMjatx3IJTz6HX4NXi+moXw==
+  version "6.8.0"
+  resolved "https://registry.npmjs.org/@codemirror/lint/-/lint-6.8.0.tgz#cf9067c7041c1f6c9f20bab411dac9323aab54f0"
+  integrity sha512-lsFofvaw0lnPRJlQylNsC4IRt/1lI4OD/yYslrSGVndOJfStc58v+8p9dgGiD90ktOfL7OhBWns1ZETYgz0EJA==
   dependencies:
     "@codemirror/state" "^6.0.0"
     "@codemirror/view" "^6.0.0"
@@ -2041,10 +2041,10 @@
   resolved "https://registry.npmjs.org/@ungap/structured-clone/-/structured-clone-1.2.0.tgz#756641adb587851b5ccb3e095daf27ae581c8406"
   integrity sha512-zuVdFrMJiuCDQUMCzQaD6KL28MjnqqN8XnAqiEq9PNm/hCPTSGfrXCOfwj1ow4LFb/tNymJPwsNbVePc1xFqrQ==
 
-"@vavt/cm-extension@^1.4.1":
-  version "1.4.1"
-  resolved "https://registry.npmjs.org/@vavt/cm-extension/-/cm-extension-1.4.1.tgz#51b8c8f6643b9bdf1d911e616fc2b3c4da1cda11"
-  integrity sha512-Yw6AYuBNHBXF/dJUb1SqA9j5F2YckvNNs2LhvAj7t29Hl7yfcyMIob49HBsQvopQxbvwhVrYS+PsFNvhaZb3Sw==
+"@vavt/cm-extension@^1.4.2":
+  version "1.4.2"
+  resolved "https://registry.npmjs.org/@vavt/cm-extension/-/cm-extension-1.4.2.tgz#755e98909275e3d6dedcce7d9a78a32315088c5c"
+  integrity sha512-2SU1Z8AAo+wiyhOQIY7GtVyBdSP/PGN+qg/460qCrz2uw9kBaWoaTkWNiPaW8KfeVrmhDkRUFgd1dm8vCIlMog==
 
 "@vavt/rt-extension@^1.2.1":
   version "1.2.1"
@@ -3593,10 +3593,10 @@ marked@*:
   resolved "https://registry.npmjs.org/marked/-/marked-12.0.0.tgz#051ea8c8c7f65148a63003df1499515a2c6de716"
   integrity sha512-Vkwtq9rLqXryZnWaQc86+FHLC6tr/fycMfYAhiOIXkrNmeGAyhSxjqu0Rs1i0bBqw5u0S7+lV9fdH2ZSVaoa0w==
 
-md-editor-rt@^4.15.2:
-  version "4.15.2"
-  resolved "https://registry.npmjs.org/md-editor-rt/-/md-editor-rt-4.15.2.tgz#858ba478251c835fe3d8f5922f2e9da1321d5be9"
-  integrity sha512-vG4d9YqrK2UWEKNysIsZm3M/H6LxGqaI6gbKE/1Te8A2Un9dIAbhoXgN7F7toNfmjsMaKFGu30qshUKm6JNrOQ==
+md-editor-rt@^4.15.3:
+  version "4.15.3"
+  resolved "https://registry.npmjs.org/md-editor-rt/-/md-editor-rt-4.15.3.tgz#22856f49f4e698e20ae69cfd0dc271162e0fc014"
+  integrity sha512-vvDmAx/wUvZOgInzJmmdw3N59P3jAwXYtWEkJmXHK6tqaXvLuEKWOySL3XApQETtOSh9GtC5w0DdWiJkXc15Xg==
   dependencies:
     "@codemirror/lang-markdown" "^6.2.5"
     "@codemirror/language-data" "^6.5.1"
