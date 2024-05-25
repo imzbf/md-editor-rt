@@ -3569,13 +3569,6 @@ markdown-it-task-lists@^2.1.1:
   resolved "https://registry.npmjs.org/markdown-it-task-lists/-/markdown-it-task-lists-2.1.1.tgz#f68f4d2ac2bad5a2c373ba93081a1a6848417088"
   integrity sha512-TxFAc76Jnhb2OUu+n3yz9RMu4CwGfaT788br6HhEDlvWfdeJcLUsxk1Hgw2yJio0OXsxv7pyIPmvECY7bMbluA==
 
-markdown-it-xss@^1.0.2:
-  version "1.0.2"
-  resolved "https://registry.npmjs.org/markdown-it-xss/-/markdown-it-xss-1.0.2.tgz#b4daacca642d5a70be0fc6c76ad36e3401422631"
-  integrity sha512-D52im1+e394EckqhK0AuyqxQ/WCuo09wJWInuCh6j1O2d6LqImJOu36lA6KZqImhWJeYIQnGeryaH3wXcro5MQ==
-  dependencies:
-    xss "^1.0.6"
-
 markdown-it@^14.0.0:
   version "14.1.0"
   resolved "https://registry.npmjs.org/markdown-it/-/markdown-it-14.1.0.tgz#3c3c5992883c633db4714ccb4d7b5935d98b7d45"
@@ -3593,10 +3586,10 @@ marked@*:
   resolved "https://registry.npmjs.org/marked/-/marked-12.0.0.tgz#051ea8c8c7f65148a63003df1499515a2c6de716"
   integrity sha512-Vkwtq9rLqXryZnWaQc86+FHLC6tr/fycMfYAhiOIXkrNmeGAyhSxjqu0Rs1i0bBqw5u0S7+lV9fdH2ZSVaoa0w==
 
-md-editor-rt@^4.15.4:
-  version "4.15.4"
-  resolved "https://registry.npmjs.org/md-editor-rt/-/md-editor-rt-4.15.4.tgz#d2b942869c2e2d8daa37990fe5b3fb498c7c2c7f"
-  integrity sha512-NrtohAvY6472RRjrJH+OgmxYLSpKKOQpFjPhSIH4hFF4cu5RZU6l7vJU4oGWbmyS51dbXIz9F9sOTRpQ3Ntrng==
+md-editor-rt@^4.15.5:
+  version "4.15.5"
+  resolved "https://registry.npmjs.org/md-editor-rt/-/md-editor-rt-4.15.5.tgz#86cc06609805f557f7cc3926d8e2223415ced936"
+  integrity sha512-ypC1BXi6wqfLc1KWplVtf4F2M3/fHieJcOwaKdMA9VRYPUpf/OZXbvssJVYQkMX7Lqp9qBF/0L7rKHHpUGBSvw==
   dependencies:
     "@codemirror/lang-markdown" "^6.2.5"
     "@codemirror/language-data" "^6.5.1"
@@ -3608,9 +3601,9 @@ md-editor-rt@^4.15.4:
     markdown-it "^14.0.0"
     markdown-it-image-figures "^2.1.1"
     markdown-it-task-lists "^2.1.1"
-    markdown-it-xss "^1.0.2"
     medium-zoom "^1.1.0"
     punycode "^2.3.1"
+    xss "^1.0.15"
 
 mdurl@^2.0.0:
   version "2.0.0"
@@ -4630,7 +4623,7 @@ wrappy@1:
   resolved "https://registry.npmjs.org/wrappy/-/wrappy-1.0.2.tgz#b5243d8f3ec1aa35f1364605bc0d1036e30ab69f"
   integrity sha512-l4Sp/DRseor9wL6EvV2+TuQn63dMkPjZ/sp9XkghTEbV9KlPS1xUsZ3u7/IQO4wxtcFB4bgpQPRcR3QCvezPcQ==
 
-xss@^1.0.6:
+xss@^1.0.15:
   version "1.0.15"
   resolved "https://registry.npmjs.org/xss/-/xss-1.0.15.tgz#96a0e13886f0661063028b410ed1b18670f4e59a"
   integrity sha512-FVdlVVC67WOIPvfOwhoMETV72f6GbW7aOabBC3WxN/oUdoEMDyLz4OgRv5/gck2ZeNqEQu+Tb0kloovXOfpYVg==
