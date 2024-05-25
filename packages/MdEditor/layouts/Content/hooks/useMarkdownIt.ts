@@ -2,7 +2,6 @@ import { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'r
 import mdit from 'markdown-it';
 import ImageFiguresPlugin from 'markdown-it-image-figures';
 import TaskListPlugin from 'markdown-it-task-lists';
-import XSSPlugin from 'markdown-it-xss';
 import { uuid } from '@vavt/util';
 import bus from '~/utils/event-bus';
 import { generateCodeRowNumber } from '~/utils';
@@ -24,6 +23,7 @@ import KatexPlugin from '../markdownIt/katex';
 import AdmonitionPlugin from '../markdownIt/admonition';
 import HeadingPlugin from '../markdownIt/heading';
 import CodePlugin from '../markdownIt/code';
+import XSSPlugin from '../markdownIt/xss';
 import { EditorContext } from '~/Editor';
 import { ContentPreviewProps } from '../props';
 
@@ -110,30 +110,7 @@ const useMarkdownIt = (props: ContentPreviewProps, previewOnly: boolean) => {
       {
         type: 'xss',
         plugin: XSSPlugin,
-        options: {
-          // https://github.com/leizongmin/js-xss/blob/master/README.zh.md
-          xss(xss: any) {
-            return {
-              whiteList: Object.assign({}, xss.getDefaultWhiteList(), {
-                // 支持任务列表
-                input: ['class', 'disabled', 'type', 'checked'],
-                // 主要支持youtobe、腾讯视频、哔哩哔哩等内嵌视频代码
-                iframe: [
-                  'class',
-                  'width',
-                  'height',
-                  'src',
-                  'title',
-                  'border',
-                  'frameborder',
-                  'framespacing',
-                  'allow',
-                  'allowfullscreen'
-                ]
-              })
-            };
-          }
-        }
+        options: {}
       }
     ];
 
