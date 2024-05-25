@@ -195,9 +195,9 @@ const useMarkdownIt = (props: ContentPreviewProps, previewOnly: boolean) => {
       }
     });
 
-    if (!props.previewOnly) {
-      initLineNumber(md_);
-    }
+    // if (!props.previewOnly) {
+    initLineNumber(md_);
+    // }
 
     return md_;
   });
