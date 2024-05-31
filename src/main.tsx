@@ -31,7 +31,11 @@ config({
       {
         type: 'linkAttr',
         plugin: LinkAttr,
-        options: {}
+        options: {
+          attrs: {
+            target: '_blank'
+          }
+        }
       },
       {
         type: 'anchor',
