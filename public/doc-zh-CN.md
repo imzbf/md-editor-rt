@@ -230,13 +230,17 @@
 - **类型**：`boolean`
 - **默认值**：`true`
 
-  不插入 iconfont 链接，你可以[下载](https://at.alicdn.com/t/c/font_2605852_u82y61ve02.js)到本地自行引入。
+  不插入 iconfont 链接，你可以下载[Symbol版本](${iconfontSvgUrl})或者[Font class版本](${iconfontClassUrl})到本地自行引入。
 
   ```jsx
-  import { MdEditor } from 'md-editor-rt';
+  import { MdEditor, config } from 'md-editor-rt';
   import 'md-editor-rt/lib/style.css';
 
   import '/assets/iconfont.js';
+
+  // 使用Font class版本
+  // import '/assets/iconfont.css';
+  // config({ iconfontType: 'class' })
 
   export default () => {
     return <MdEditor noIconfont />;
@@ -322,14 +326,14 @@
 
   !!! warning 类型提示
 
-  copy 对应的图标只能是字符串，其他的都可以是组件或者字符串
+  copy、collapse-tips 对应的图标只能是字符串，其他的都可以是组件或者字符串
 
   !!!
 
   ```tsx
   import React from 'react';
   import type { CustomIcon } from 'md-editor-rt';
-  import { MdEditor } from 'md-editor-rt';
+  import { MdEditor, StrIcon } from 'md-editor-rt';
   // 假设你使用了三方图标库或者自定义了图标组件
   import { IconFont } from 'tdesign-icons-react';
   import 'md-editor-rt/lib/style.css';
@@ -338,7 +342,10 @@
     bold: {
       component: 'A'
     },
+    // 演示使用默认图标复制内容
+    copy: StrIcon('copy', {}),
     // copy: '<i class="fa fa-car"></i>',
+    // 'collapse-tips': '<i class="fa fa-car"></i>',
     preview: {
       component: '<i class="fa fa-car"></i>'
     },
@@ -1687,6 +1694,7 @@ config({
 | CTRL + O | 有序列表 | `1. 有序列表` |
 | CTRL + L | 链接 | `[链接](https://github.com/imzbf)` |
 | CTRL + Z | 撤回 | 触发编辑器内内容撤回，与系统无关 |
+| CTRL + F | 查找替换 |  |
 | CTRL + SHIFT + S | 删除线 | `~删除线~` |
 | CTRL + SHIFT + U | 无序列表 | `- 无序列表` |
 | CTRL + SHIFT + C | 块级代码 | 多行代码块 |
