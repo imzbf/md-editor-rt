@@ -45,9 +45,9 @@ const useCopyCode = (props: ContentPreviewProps, html: string, key: string) => {
             };
         });
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     customIcon,
+    editorId,
     formatCopiedText,
     html,
     key,

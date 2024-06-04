@@ -316,7 +316,9 @@ export default ({ theme, previewTheme, codeTheme, lang }: PreviewProp) => {
           // maxLength={10}
           // noHighlight
           // autoDetectCode
-          // onHtmlChanged={console.log}
+          // onHtmlChanged={(html: string) => {
+          //   console.log(html);
+          // }}
           // onBlur={console.log}
           // onFocus={console.log}
           // showToolbarName

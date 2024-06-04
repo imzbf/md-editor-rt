@@ -4,7 +4,8 @@ import React, {
   useRef,
   useImperativeHandle,
   forwardRef,
-  ForwardedRef
+  ForwardedRef,
+  useCallback
 } from 'react';
 import MdCatalog from '~~/MdCatalog';
 import { EditorContext } from '~/Editor';
@@ -16,11 +17,20 @@ import { FocusOption } from '~/type';
 import { ContentExposeParam } from './type';
 
 const Content = forwardRef((props: ContentProps, ref: ForwardedRef<unknown>) => {
+  const { onHtmlChanged } = props;
   const { editorId } = useContext(EditorContext);
   const [html, setHtml] = useState<string>('');
 
   const contentRef = useRef<HTMLDivElement>(null);
   const resizeRef = useRef<HTMLDivElement>(null);
+
+  const onHtmlChangedCopy = useCallback(
+    (_html: string) => {
+      setHtml(_html);
+      onHtmlChanged?.(_html);
+    },
+    [onHtmlChanged]
+  );
 
   const { inputWrapperRef, codeMirrorUt, resetHistory } = useCodeMirror(props);
   const { inputWrapperStyle, resizeOperateStyle } = useResize(
@@ -69,10 +79,7 @@ const Content = forwardRef((props: ContentProps, ref: ForwardedRef<unknown>) => 
       <ContentPreview
         modelValue={props.modelValue}
         setting={props.setting}
-        onHtmlChanged={(html_) => {
-          setHtml(html_);
-          props.onHtmlChanged && props.onHtmlChanged(html_);
-        }}
+        onHtmlChanged={onHtmlChangedCopy}
         onGetCatalog={props.onGetCatalog}
         mdHeadingId={props.mdHeadingId}
         noMermaid={props.noMermaid}

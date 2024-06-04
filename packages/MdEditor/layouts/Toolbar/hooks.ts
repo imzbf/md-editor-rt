@@ -15,6 +15,7 @@ import { ToolbarProps } from './';
 import { HoverData } from './TableShape';
 
 export const useSreenfull = (props: ToolbarProps) => {
+  const { updateSetting } = props;
   const { editorId } = useContext(EditorContext);
   const screenfull = useRef(configOption.editorExtensions.screenfull!.instance);
   // 是否组件内部全屏标识
@@ -47,13 +48,12 @@ export const useSreenfull = (props: ToolbarProps) => {
         console.error('browser does not support screenfull!');
       }
     },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    []
+    [editorId]
   );
 
   useEffect(() => {
     const changedEvent = () => {
-      props.updateSetting('fullscreen', screenfullMe.current);
+      updateSetting('fullscreen', screenfullMe.current);
     };
 
     // 延后插入标签
@@ -99,9 +99,7 @@ export const useSreenfull = (props: ToolbarProps) => {
         screenfull.current.off('change', changedEvent);
       }
     };
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [updateSetting]);
 
   useEffect(() => {
     // 注册切换全屏监听
@@ -109,8 +107,11 @@ export const useSreenfull = (props: ToolbarProps) => {
       name: CHANGE_FULL_SCREEN,
       callback: fullscreenHandler
     });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+
+    return () => {
+      bus.remove(editorId, CHANGE_FULL_SCREEN, fullscreenHandler);
+    };
+  }, [editorId, fullscreenHandler]);
 
   return { fullscreenHandler };
 };
@@ -181,8 +182,7 @@ export const useModals = (
     };
 
     (uploadRef.current as HTMLInputElement).addEventListener('change', uploadHandler);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [editorId, uploadRef]);
 
   return {
     modalData,

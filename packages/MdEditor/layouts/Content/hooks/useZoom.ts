@@ -31,8 +31,7 @@ const useZoom = (props: ContentPreviewProps, html: string) => {
     };
 
     return zoomHander();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [html, props.setting]);
+  }, [editorId, html, props.noImgZoomIn, props.setting]);
 };
 
 export default useZoom;

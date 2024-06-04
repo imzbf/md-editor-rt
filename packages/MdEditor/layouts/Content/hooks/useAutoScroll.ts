@@ -27,7 +27,6 @@ const useAutoScroll = (
 
   // 更新完毕后判断是否需要重新绑定滚动事件
   useEffect(() => {
-    scrollCb.clear();
     const cmScroller = document.querySelector<HTMLDivElement>(
       `#${editorId} .cm-scroller`
     );
@@ -50,13 +49,14 @@ const useAutoScroll = (
         clear
       });
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     html,
     props.setting.fullscreen,
     props.setting.pageFullscreen,
     props.setting.preview,
-    props.setting.htmlPreview
+    props.setting.htmlPreview,
+    editorId,
+    codeMirrorUt
   ]);
 
   useEffect(() => {

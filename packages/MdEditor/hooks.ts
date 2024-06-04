@@ -56,7 +56,7 @@ import { ContentExposeParam } from './layouts/Content/type';
  * @param staticProps
  */
 export const useOnSave = (props: EditorProps, staticProps: StaticProps) => {
-  const { modelValue } = props;
+  const { modelValue, onSave } = props;
   const { editorId } = staticProps;
 
   const [state, setState] = useState({
@@ -85,12 +85,11 @@ export const useOnSave = (props: EditorProps, staticProps: StaticProps) => {
     return () => {
       bus.remove(editorId, BUILD_FINISHED, buildFinishedCb);
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [editorId]);
 
   useEffect(() => {
     const callback = () => {
-      if (props.onSave) {
+      if (onSave) {
         const htmlPromise = new Promise<string>((rev) => {
           if (state.buildFinished) {
             rev(state.html);
@@ -109,7 +108,7 @@ export const useOnSave = (props: EditorProps, staticProps: StaticProps) => {
           }
         });
 
-        props.onSave(props.modelValue, htmlPromise);
+        onSave(modelValue, htmlPromise);
       }
     };
 
@@ -122,8 +121,7 @@ export const useOnSave = (props: EditorProps, staticProps: StaticProps) => {
     return () => {
       bus.remove(editorId, ON_SAVE, callback);
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [modelValue, props, state.buildFinished, state.html]);
+  }, [editorId, modelValue, onSave, state.buildFinished, state.html]);
 
   useEffect(() => {
     // 编辑后添加未编译完成标识
@@ -194,8 +192,7 @@ export const useExpansion = (staticProps: StaticProps) => {
         id: `${prefix}-prettierMD`
       });
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [noPrettier, noUploadImg]);
 
   useExpansionPreview(staticProps);
 };
@@ -222,9 +219,7 @@ export const useExpansionPreview = ({ noIconfont }: MdPreviewStaticProps) => {
         id: `${prefix}-icon-class`
       });
     }
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [noIconfont]);
 };
 
 /**
@@ -243,8 +238,7 @@ export const useErrorCatcher = (editorId: string, onError: (err: InnerError) => 
     return () => {
       bus.remove(editorId, ERROR_CATCHER, onError);
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [onError]);
+  }, [editorId, onError]);
 };
 
 /**
@@ -254,6 +248,7 @@ export const useErrorCatcher = (editorId: string, onError: (err: InnerError) => 
  */
 export const useUploadImg = (props: EditorProps, staticProps: StaticProps) => {
   const { editorId } = staticProps;
+  const { onUploadImg } = props;
 
   useEffect(() => {
     const uploadImageCallBack = (files: Array<File>, cb: () => void) => {
@@ -266,9 +261,7 @@ export const useUploadImg = (props: EditorProps, staticProps: StaticProps) => {
         cb && cb();
       };
 
-      if (props.onUploadImg) {
-        props.onUploadImg(files, insertHanlder);
-      }
+      onUploadImg?.(files, insertHanlder);
     };
 
     // 监听上传图片
@@ -280,8 +273,7 @@ export const useUploadImg = (props: EditorProps, staticProps: StaticProps) => {
     return () => {
       bus.remove(editorId, UPLOAD_IMAGE, uploadImageCallBack);
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [props.onUploadImg]);
+  }, [editorId, onUploadImg]);
 };
 
 /**
@@ -298,18 +290,22 @@ export const useCatalog = (props: EditorProps, staticProps: StaticProps) => {
   const [catalogShow, setCatalogShow] = useState(false);
 
   useEffect(() => {
+    const callback = (v: boolean | undefined) => {
+      if (v === undefined) {
+        setCatalogShow((_catalogShow) => !_catalogShow);
+      } else {
+        setCatalogShow(v);
+      }
+    };
     bus.on(editorId, {
       name: CHANGE_CATALOG_VISIBLE,
-      callback: (v: boolean | undefined) => {
-        if (v === undefined) {
-          setCatalogShow((_catalogShow) => !_catalogShow);
-        } else {
-          setCatalogShow(v);
-        }
-      }
+      callback
     });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+
+    return () => {
+      bus.remove(editorId, CHANGE_CATALOG_VISIBLE, callback);
+    };
+  }, [editorId]);
 
   // 是否挂载目录组件
   const catalogVisible = useMemo(() => {
@@ -471,33 +467,27 @@ export const useExpose = (
 
   useEffect(() => {
     bus.emit(editorId, PAGE_FULL_SCREEN_CHANGED, setting.pageFullscreen);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [setting.pageFullscreen]);
+  }, [editorId, setting.pageFullscreen]);
 
   useEffect(() => {
     bus.emit(editorId, FULL_SCREEN_CHANGED, setting.fullscreen);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [setting.fullscreen]);
+  }, [editorId, setting.fullscreen]);
 
   useEffect(() => {
     bus.emit(editorId, PREVIEW_CHANGED, setting.preview);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [setting.preview]);
+  }, [editorId, setting.preview]);
 
   useEffect(() => {
     bus.emit(editorId, PREVIEW_ONLY_CHANGED, setting.previewOnly);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [setting.previewOnly]);
+  }, [editorId, setting.previewOnly]);
 
   useEffect(() => {
     bus.emit(editorId, HTML_PREVIEW_CHANGED, setting.htmlPreview);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [setting.htmlPreview]);
+  }, [editorId, setting.htmlPreview]);
 
   useEffect(() => {
     bus.emit(editorId, CATALOG_VISIBLE_CHANGED, catalogVisible);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [catalogVisible]);
+  }, [catalogVisible, editorId]);
 
   useImperativeHandle(
     editorRef,
@@ -621,7 +611,6 @@ export const useExpose = (
 
       return exposeParam;
     },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [updateSetting]
+    [codeRef, editorId, updateSetting]
   );
 };
