@@ -2,7 +2,6 @@ import { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'r
 import mdit from 'markdown-it';
 import ImageFiguresPlugin from 'markdown-it-image-figures';
 import TaskListPlugin from 'markdown-it-task-lists';
-import XSSPlugin from 'markdown-it-xss';
 import { uuid } from '@vavt/util';
 import bus from '~/utils/event-bus';
 import { generateCodeRowNumber } from '~/utils';
@@ -24,6 +23,7 @@ import KatexPlugin from '../markdownIt/katex';
 import AdmonitionPlugin from '../markdownIt/admonition';
 import HeadingPlugin from '../markdownIt/heading';
 import CodePlugin from '../markdownIt/code';
+import XSSPlugin from '../markdownIt/xss';
 import { EditorContext } from '~/Editor';
 import { ContentPreviewProps } from '../props';
 
@@ -42,10 +42,22 @@ const initLineNumber = (md: mdit) => {
 };
 
 const useMarkdownIt = (props: ContentPreviewProps, previewOnly: boolean) => {
-  const { onHtmlChanged = () => {}, onGetCatalog = () => {} } = props;
+  const {
+    modelValue,
+    sanitize,
+    mdHeadingId,
+    codeFoldable,
+    autoFoldThreshold,
+    noKatex,
+    noMermaid,
+    noHighlight,
+    setting,
+    onHtmlChanged,
+    onGetCatalog
+  } = props;
   const { editorConfig, markdownItConfig, markdownItPlugins } = configOption;
   //
-  const { editorId, showCodeRowNumber, theme, usedLanguageText } =
+  const { editorId, language, showCodeRowNumber, theme, usedLanguageText, customIcon } =
     useContext(EditorContext);
 
   const headsRef = useRef<HeadList[]>([]);
@@ -55,11 +67,6 @@ const useMarkdownIt = (props: ContentPreviewProps, previewOnly: boolean) => {
     themeRef.current = theme;
   }, [theme]);
 
-  const usedLanguageTextRef = useRef(usedLanguageText);
-  useEffect(() => {
-    usedLanguageTextRef.current = usedLanguageText;
-  }, [usedLanguageText]);
-
   const { hljsRef, hljsInited } = useHighlight(props);
   const { katexRef, katexInited } = useKatex(props);
   const { reRender, replaceMermaid } = useMermaid(props);
@@ -67,7 +74,8 @@ const useMarkdownIt = (props: ContentPreviewProps, previewOnly: boolean) => {
   const [md] = useState(() => {
     const md_ = mdit({
       html: true,
-      breaks: true
+      breaks: true,
+      linkify: true
     });
 
     markdownItConfig!(md_, {
@@ -93,50 +101,28 @@ const useMarkdownIt = (props: ContentPreviewProps, previewOnly: boolean) => {
       {
         type: 'heading',
         plugin: HeadingPlugin,
-        options: { mdHeadingId: props.mdHeadingId, headsRef }
+        options: { mdHeadingId, headsRef }
       },
       {
         type: 'code',
         plugin: CodePlugin,
         options: {
           editorId,
-          usedLanguageTextRef,
+          usedLanguageText,
           // showCodeRowNumber,
-          codeFoldable: props.codeFoldable,
-          autoFoldThreshold: props.autoFoldThreshold
+          codeFoldable,
+          autoFoldThreshold,
+          customIcon
         }
       },
       {
         type: 'xss',
         plugin: XSSPlugin,
-        options: {
-          // https://github.com/leizongmin/js-xss/blob/master/README.zh.md
-          xss(xss: any) {
-            return {
-              whiteList: Object.assign({}, xss.getDefaultWhiteList(), {
-                // 支持任务列表
-                input: ['class', 'disabled', 'type', 'checked'],
-                // 主要支持youtobe、腾讯视频、哔哩哔哩等内嵌视频代码
-                iframe: [
-                  'class',
-                  'width',
-                  'height',
-                  'src',
-                  'title',
-                  'border',
-                  'frameborder',
-                  'framespacing',
-                  'allow',
-                  'allowfullscreen'
-                ]
-              })
-            };
-          }
-        }
+        options: {}
       }
     ];
 
-    if (!props.noKatex) {
+    if (!noKatex) {
       plugins.push({
         type: 'katex',
         plugin: KatexPlugin,
@@ -144,7 +130,7 @@ const useMarkdownIt = (props: ContentPreviewProps, previewOnly: boolean) => {
       });
     }
 
-    if (!props.noMermaid) {
+    if (!noMermaid) {
       plugins.push({
         type: 'mermaid',
         plugin: MermaidPlugin,
@@ -172,7 +158,7 @@ const useMarkdownIt = (props: ContentPreviewProps, previewOnly: boolean) => {
         let codeHtml;
 
         // 不高亮或者没有实例，返回默认
-        if (!props.noHighlight && hljsRef.current) {
+        if (!noHighlight && hljsRef.current) {
           const hljsLang = hljsRef.current.getLanguage(language);
           if (hljsLang) {
             codeHtml = hljsRef.current.highlight(str, {
@@ -194,9 +180,9 @@ const useMarkdownIt = (props: ContentPreviewProps, previewOnly: boolean) => {
       }
     });
 
-    if (!props.previewOnly) {
-      initLineNumber(md_);
-    }
+    // if (!previewOnly) {
+    initLineNumber(md_);
+    // }
 
     return md_;
   });
@@ -205,17 +191,14 @@ const useMarkdownIt = (props: ContentPreviewProps, previewOnly: boolean) => {
   const [key, setKey] = useState(`_article-key_${uuid()}`);
 
   const [html, setHtml] = useState(() => {
-    const html_ = props.sanitize(md.render(props.modelValue));
-
-    return html_;
+    return sanitize(md.render(modelValue));
   });
 
   const needReRender = useMemo(() => {
-    return (props.noHighlight || hljsInited) && (props.noKatex || katexInited);
+    return (noHighlight || hljsInited) && (noKatex || katexInited);
 
-    // return (props.noKatex || katexRef.value) && (props.noHighlight || hljsRef.value);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [hljsInited, katexInited]);
+    // return (noKatex || katexRef.value) && (noHighlight || hljsRef.value);
+  }, [hljsInited, katexInited, noHighlight, noKatex]);
 
   // 开始已经render一次了，如果提供了实例，那么也正确生成了内容
   // 如果没有提过实例，那么相对来讲第一次useEffect执行一定会快于script的onload
@@ -225,30 +208,28 @@ const useMarkdownIt = (props: ContentPreviewProps, previewOnly: boolean) => {
   const markHtml = useCallback(() => {
     // 清理历史标题
     headsRef.current = [];
-    const html_ = props.sanitize(md.render(props.modelValue));
+    const html_ = sanitize(md.render(modelValue));
     setHtml(html_);
-  }, [md, props]);
+  }, [md, modelValue, sanitize]);
 
   useEffect(() => {
     // 触发异步的保存事件（html总是会比text后更新）
     bus.emit(editorId, BUILD_FINISHED, html);
-    onHtmlChanged(html);
+    onHtmlChanged?.(html);
     // 传递标题
-    onGetCatalog(headsRef.current);
+    onGetCatalog?.(headsRef.current);
     // 生成目录
     bus.emit(editorId, CATALOG_CHANGED, headsRef.current);
 
     // 手动触发更新时，会更新key，key变化也同步执行上面的任务
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [html, key]);
+  }, [editorId, html, key, onGetCatalog, onHtmlChanged]);
 
   useEffect(() => {
-    if (props.setting.preview) {
+    if (setting.preview) {
       // 生成目录
       bus.emit(editorId, CATALOG_CHANGED, headsRef.current);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [props.setting.preview]);
+  }, [editorId, setting.preview]);
 
   useEffect(() => {
     if (ignoreFirstRender.current) {
@@ -266,24 +247,26 @@ const useMarkdownIt = (props: ContentPreviewProps, previewOnly: boolean) => {
     return () => {
       clearTimeout(timer);
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [needReRender, theme, markHtml]);
+  }, [needReRender, theme, markHtml, language, previewOnly, editorConfig.renderDelay]);
 
   useEffect(() => {
     replaceMermaid();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [html, key, reRender]);
+  }, [html, key, reRender, replaceMermaid]);
 
   useEffect(() => {
+    const callback = () => {
+      bus.emit(editorId, CATALOG_CHANGED, headsRef.current);
+    };
     // 添加目录主动触发接收监听
     bus.on(editorId, {
       name: PUSH_CATALOG,
-      callback() {
-        bus.emit(editorId, CATALOG_CHANGED, headsRef.current);
-      }
+      callback
     });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+
+    return () => {
+      bus.remove(editorId, PUSH_CATALOG, callback);
+    };
+  }, [editorId]);
 
   useEffect(() => {
     const callback = () => {
@@ -298,8 +281,7 @@ const useMarkdownIt = (props: ContentPreviewProps, previewOnly: boolean) => {
     return () => {
       bus.remove(editorId, RERENDER, callback);
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [markHtml]);
+  }, [editorId, markHtml]);
 
   return { html, key };
 };

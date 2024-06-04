@@ -102,10 +102,10 @@ const LinkModal = (props: LinkModalProps) => {
         </div>
       </Modal>
     );
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     title,
     props,
+    editorId,
     usedLanguageText.linkModalTips?.descLabel,
     usedLanguageText.linkModalTips?.descLabelPlaceHolder,
     usedLanguageText.linkModalTips?.urlLabel,

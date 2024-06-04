@@ -48,6 +48,10 @@ For more ways to use or contribute, please refer to: [md-editor-extension](https
 
 ## 💡 Usage
 
+When using server-side rendering, make sure to set `editorId` to a constant value.
+
+Starting from `4.0.0`, internal components can be imported on-demand.
+
 ### ✍🏻 Display Editor
 
 ```jsx
@@ -60,10 +64,6 @@ export default () => {
   return <MdEditor modelValue={text} onChange={setText} />;
 };
 ```
-
-> `^4.0.0`, internal components can be imported on-demand.
-
-> If there are multiple editors on the page, please set different `editorId` for each editor!
 
 ### 📖 Preview Only
 
@@ -87,6 +87,8 @@ export default () => {
 };
 ```
 
+When using server-side rendering, `scrollElement` should be of string type, eg: `body`, `#id`, `.class`.
+
 ## 🗺 Preview
 
 | Default theme | Dark theme | Preview only |
@@ -106,17 +108,17 @@ Inputing prompt and mark, emoji extensions
 | modelValue | `string` | '' | Markdown content |
 | theme | `'light' \| 'dark'` | 'light' | Editor theme |
 | className | `string` | '' |  |
-| language | `string` | 'zh-CN' | Build-in language('zh-CN','en-US') |
-| editorId | `string` | 'md-editor-rt' | Editor id, it is used when there are more than two editors in the same page |
-| showCodeRowNumber | `boolean` | false | Show row number for code block or not |
-| previewTheme | `'default' \| 'github' \| 'vuepress' \| 'mk-cute' \| 'smart-blue' \| 'cyanosis'` | 'default' | Preview theme, can be customized |
 | style | `CSSProperties` | {} | Editor inline style |
+| language | `string` | 'zh-CN' | Build-in language('zh-CN','en-US') |
+| editorId | `string` | 'md-editor-rt\_[\d]' | Editor's id, default incrementing by number. When using server-side rendering, make sure to set this attribute to a constant value |
+| showCodeRowNumber | `boolean` | true | Show row number for code block or not |
+| previewTheme | `'default' \| 'github' \| 'vuepress' \| 'mk-cute' \| 'smart-blue' \| 'cyanosis'` | 'default' | Preview theme, can be customized |
 | noMermaid | `boolean` | false | Use mermaid or not |
 | noKatex | `boolean` | false | Use katex or not |
 | codeTheme | `'atom' \| 'a11y' \| 'github' \| 'gradient' \| 'kimbie' \| 'paraiso' \| 'qtcreator' \| 'stackoverflow'` | 'atom' | Highlight code style, can be customized also |
 | mdHeadingId | `(text: string, level: number, index: number) => string` | (text) => text | H1-H6 `ID` generator |
-| sanitize | `(html: string) => string` | (html) => html | Sanitize the html, prevent XSS. After 3.x, dangerous code has been processed by default. Please do not use this attribute unless there are special requirements |
-| noIconfont | `boolean` | false | Not append iconfont script, download different versions [SVG](https://at.alicdn.com/t/c/font_2605852_prouiefeic.js)或[Font Class](https://at.alicdn.com/t/c/font_2605852_prouiefeic.css) and import it by yourself |
+| sanitize | `(html: string) => string` | (html) => html | This attribute is used to alter the compiled HTML content |
+| noIconfont | `boolean` | false | Not append iconfont script, download different versions [SVG](https://at.alicdn.com/t/c/font_2605852_d06wmn2c1od.js)或[Font Class](https://at.alicdn.com/t/c/font_2605852_d06wmn2c1od.css) and import it by yourself |
 | formatCopiedText | `(text: string) => string` | (text: string) => text | Format copied code |
 | codeStyleReverse | `boolean` | true | Code style will be reversed to dark while code block of the theme has a dark background |
 | codeStyleReverseList | `Array<string>` | ['default', 'mk-cute'] | Themes to be reversed |

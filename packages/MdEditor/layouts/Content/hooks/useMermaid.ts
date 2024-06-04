@@ -12,6 +12,7 @@ import { ContentPreviewProps } from '../props';
  */
 const useMermaid = (props: ContentPreviewProps) => {
   const { theme } = useContext(EditorContext);
+  const { noMermaid, sanitizeMermaid } = props;
 
   const mermaidRef = useRef(configOption.editorExtensions.mermaid!.instance);
   const [reRender, setReRender] = useState(-1);
@@ -29,7 +30,7 @@ const useMermaid = (props: ContentPreviewProps) => {
     mermaidCache.clear();
     const mermaid = mermaidRef.current;
 
-    if (!props.noMermaid && mermaid) {
+    if (!noMermaid && mermaid) {
       mermaid.initialize(
         configOption.mermaidConfig({
           startOnLoad: false,
@@ -40,16 +41,14 @@ const useMermaid = (props: ContentPreviewProps) => {
       // 严格模式下，如果reRender是boolean型，会执行两次，这是reRender将不会effect
       setReRender((_r) => _r + 1);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [theme]);
+  }, [mermaidCache, noMermaid, theme]);
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(configMermaid, [configMermaid]);
 
   useEffect(() => {
     const { editorExtensions, editorExtensionsAttrs } = configOption;
 
-    if (props.noMermaid || mermaidRef.current) {
+    if (noMermaid || mermaidRef.current) {
       return;
     }
 
@@ -87,12 +86,10 @@ const useMermaid = (props: ContentPreviewProps) => {
         'mermaid'
       );
     }
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [configMermaid, noMermaid]);
 
   const replaceMermaid = useCallback(() => {
-    if (!props.noMermaid && mermaidRef.current) {
+    if (!noMermaid && mermaidRef.current) {
       const mermaidSourceEles = document.querySelectorAll<HTMLElement>(
         `div.${prefix}-mermaid`
       );
@@ -126,9 +123,7 @@ const useMermaid = (props: ContentPreviewProps) => {
           }
 
           // 9:10
-          mermaidHtml = await props.sanitizeMermaid(
-            typeof svg === 'string' ? svg : svg.svg
-          );
+          mermaidHtml = await sanitizeMermaid(typeof svg === 'string' ? svg : svg.svg);
 
           mermaidCache.set(item.innerText, mermaidHtml);
         }
@@ -149,8 +144,7 @@ const useMermaid = (props: ContentPreviewProps) => {
         }
       });
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [mermaidCache, noMermaid, sanitizeMermaid]);
 
   return { mermaidRef, reRender, replaceMermaid };
 };

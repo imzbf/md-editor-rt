@@ -40,8 +40,7 @@ const useKatex = (props: ContentPreviewProps) => {
       href: editorExtensions.katex!.css,
       id: `${prefix}-katexCss`
     });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [props.noKatex]);
 
   return { katexRef, katexInited };
 };

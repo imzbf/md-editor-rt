@@ -55,8 +55,7 @@ const MdPreview = forwardRef((props: MdPreviewProps, ref: ForwardedRef<unknown>)
       // 清空所有的事件监听
       bus.clear(editorId);
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [editorId]);
 
   return (
     <EditorContext.Provider

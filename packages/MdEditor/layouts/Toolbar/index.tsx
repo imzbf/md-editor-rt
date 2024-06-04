@@ -64,10 +64,12 @@ const Toolbar = (props: ToolbarProps) => {
   const uploadRef = useRef<HTMLInputElement>(null);
 
   // bar触发事件
-  const emitHandler = useCallback((direct: ToolDirective, params?: any) => {
-    bus.emit(editorId, REPLACE, direct, params);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  const emitHandler = useCallback(
+    (direct: ToolDirective, params?: any) => {
+      bus.emit(editorId, REPLACE, direct, params);
+    },
+    [editorId]
+  );
 
   // 全屏功能
   const { fullscreenHandler } = useSreenfull(props);

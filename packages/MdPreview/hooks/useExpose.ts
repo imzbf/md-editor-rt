@@ -17,7 +17,6 @@ export const useExpose = (props: MdPreviewStaticProps, ref: ForwardedRef<unknown
 
       return exposeParam;
     },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    []
+    [editorId]
   );
 };

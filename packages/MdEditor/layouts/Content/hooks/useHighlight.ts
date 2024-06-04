@@ -47,8 +47,7 @@ const useHighlight = (props: ContentPreviewProps) => {
       },
       'hljs'
     );
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [highlight.css, highlight.js, props.noHighlight]);
 
   return { hljsRef, hljsInited };
 };
