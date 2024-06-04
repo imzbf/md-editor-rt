@@ -6,6 +6,7 @@
  * 源码如果在页面中存在多个编辑器，但是内容又是相同的时候，第二个开始的内容有点混乱
  * 需要与编辑器的editorId绑定
  */
+import { RefObject } from 'react';
 import markdownit, { Renderer, Token } from 'markdown-it';
 import { CustomIcon, StaticTextDefaultValue } from '~/type';
 import { prefix } from '~/config';
@@ -14,10 +15,10 @@ import StrIcon from '~/components/Icon/Str';
 
 export interface CodeTabsPluginOps extends markdownit.Options {
   editorId: string;
-  usedLanguageText: StaticTextDefaultValue;
+  usedLanguageTextRef: RefObject<StaticTextDefaultValue>;
   codeFoldable: boolean;
   autoFoldThreshold: number;
-  customIcon: CustomIcon;
+  customIconRef: RefObject<CustomIcon>;
 }
 
 const codetabs = (md: markdownit, _opts: CodeTabsPluginOps) => {
@@ -64,9 +65,9 @@ const codetabs = (md: markdownit, _opts: CodeTabsPluginOps) => {
       return '';
     }
 
-    const codeCodeText = _opts.usedLanguageText.copyCode!.text;
-    const copyBtnHtml = _opts.customIcon.copy || codeCodeText;
-    const isIcon = !!_opts.customIcon.copy;
+    const codeCodeText = _opts.usedLanguageTextRef.current!.copyCode!.text;
+    const copyBtnHtml = _opts.customIconRef.current!.copy || codeCodeText;
+    const isIcon = !!_opts.customIconRef.current!.copy;
 
     const [GROUP] = getGroupAndTab(tokens[idx]);
     if (GROUP === null) {
@@ -91,7 +92,7 @@ const codetabs = (md: markdownit, _opts: CodeTabsPluginOps) => {
           <div class="${prefix}-code-action">
           <span class="${prefix}-code-lang">${tokens[idx].info.trim()}</span>
           <span class="${prefix}-copy-button" data-tips="${codeCodeText}"${isIcon ? ' data-is-icon=true' : ''}">${copyBtnHtml}</span>
-          <span class="${prefix}-collapse-tips">${StrIcon('collapse-tips', _opts.customIcon)}</span>
+          <span class="${prefix}-collapse-tips">${StrIcon('collapse-tips', _opts.customIconRef.current!)}</span>
         </div>
         </${tagHeader}>${codeRendered}</${tagContainer}>`;
     }
@@ -148,7 +149,7 @@ const codetabs = (md: markdownit, _opts: CodeTabsPluginOps) => {
         <div class="${prefix}-code-action">
           <span class="${prefix}-codetab-lang">${langs}</span>
           <span class="${prefix}-copy-button" data-tips="${codeCodeText}"${isIcon ? ' data-is-icon=true' : ''}">${copyBtnHtml}</span>
-          <span class="${prefix}-collapse-tips">${StrIcon('collapse-tips', _opts.customIcon)}</span>
+          <span class="${prefix}-collapse-tips">${StrIcon('collapse-tips', _opts.customIconRef.current!)}</span>
         </div>
       </${tagHeader}>${pres}</${tagContainer}>`;
   };

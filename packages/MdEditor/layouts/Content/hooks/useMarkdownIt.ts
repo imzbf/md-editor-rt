@@ -67,6 +67,16 @@ const useMarkdownIt = (props: ContentPreviewProps, previewOnly: boolean) => {
     themeRef.current = theme;
   }, [theme]);
 
+  const usedLanguageTextRef = useRef(usedLanguageText);
+  useEffect(() => {
+    usedLanguageTextRef.current = usedLanguageText;
+  }, [usedLanguageText]);
+
+  const customIconRef = useRef(customIcon);
+  useEffect(() => {
+    customIconRef.current = customIcon;
+  }, [customIcon]);
+
   const { hljsRef, hljsInited } = useHighlight(props);
   const { katexRef, katexInited } = useKatex(props);
   const { reRender, replaceMermaid } = useMermaid(props);
@@ -108,11 +118,11 @@ const useMarkdownIt = (props: ContentPreviewProps, previewOnly: boolean) => {
         plugin: CodePlugin,
         options: {
           editorId,
-          usedLanguageText,
+          usedLanguageTextRef,
           // showCodeRowNumber,
           codeFoldable,
           autoFoldThreshold,
-          customIcon
+          customIconRef
         }
       },
       {
