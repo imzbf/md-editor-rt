@@ -35,7 +35,8 @@ export type IconName =
   | 'formula'
   | 'close'
   | 'delete'
-  | 'upload';
+  | 'upload'
+  | 'collapse-tips';
 
 const Icon = (props: { name: IconName }) => {
   return configOption.iconfontType === 'svg' ? (

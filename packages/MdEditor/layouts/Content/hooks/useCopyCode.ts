@@ -34,13 +34,22 @@ const useCopyCode = (props: ContentPreviewProps, html: string, key: string) => {
               const codeText = (activeCode as HTMLElement).textContent!;
 
               const success = copy(formatCopiedText(codeText));
-
               const { text, successTips, failTips } = usedLanguageText.copyCode!;
 
-              copyButton.innerHTML = success ? successTips! : failTips!;
+              const msg = success ? successTips! : failTips!;
+
+              if (copyButton.dataset.isIcon) {
+                copyButton.dataset.tips = msg;
+              } else {
+                copyButton.innerHTML = msg;
+              }
 
               clearTimer = window.setTimeout(() => {
-                copyButton.innerHTML = text!;
+                if (copyButton.dataset.isIcon) {
+                  copyButton.dataset.tips = text;
+                } else {
+                  copyButton.innerHTML = text!;
+                }
               }, 1500);
             };
         });

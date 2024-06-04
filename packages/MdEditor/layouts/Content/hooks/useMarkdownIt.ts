@@ -57,7 +57,7 @@ const useMarkdownIt = (props: ContentPreviewProps, previewOnly: boolean) => {
   } = props;
   const { editorConfig, markdownItConfig, markdownItPlugins } = configOption;
   //
-  const { editorId, language, showCodeRowNumber, theme, usedLanguageText } =
+  const { editorId, language, showCodeRowNumber, theme, usedLanguageText, customIcon } =
     useContext(EditorContext);
 
   const headsRef = useRef<HeadList[]>([]);
@@ -66,11 +66,6 @@ const useMarkdownIt = (props: ContentPreviewProps, previewOnly: boolean) => {
   useEffect(() => {
     themeRef.current = theme;
   }, [theme]);
-
-  const usedLanguageTextRef = useRef(usedLanguageText);
-  useEffect(() => {
-    usedLanguageTextRef.current = usedLanguageText;
-  }, [usedLanguageText]);
 
   const { hljsRef, hljsInited } = useHighlight(props);
   const { katexRef, katexInited } = useKatex(props);
@@ -113,10 +108,11 @@ const useMarkdownIt = (props: ContentPreviewProps, previewOnly: boolean) => {
         plugin: CodePlugin,
         options: {
           editorId,
-          usedLanguageTextRef,
+          usedLanguageText,
           // showCodeRowNumber,
           codeFoldable,
-          autoFoldThreshold
+          autoFoldThreshold,
+          customIcon
         }
       },
       {
