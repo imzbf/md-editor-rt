@@ -27,7 +27,7 @@
   },
   "dependencies": {
     "@vavt/cm-extension": "^1.4.2",
-    "@vavt/rt-extension": "^1.2.1",
+    "@vavt/rt-extension": "^1.2.3",
     "dayjs": "^1.11.3",
     "markdown-it-anchor": "^9.0.1",
     "markdown-it-link-attributes": "^4.0.1",
