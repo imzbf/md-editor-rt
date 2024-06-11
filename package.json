@@ -40,7 +40,7 @@
   ],
   "scripts": {
     "dev": "tsx ./scripts/dev",
-    "build": "tsc && tsx ./scripts/build"
+    "build": "tsx ./scripts/build"
   },
   "dependencies": {
     "@codemirror/lang-markdown": "^6.2.5",
@@ -84,6 +84,7 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "screenfull": "^6.0.2",
+    "tsc-alias": "^1.8.10",
     "tsx": "^4.7.2",
     "typescript": "^5.4.5",
     "vite": "^5.2.10",

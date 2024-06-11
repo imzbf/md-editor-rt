@@ -2,8 +2,8 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import { build, LibraryFormats } from 'vite';
 import react from '@vitejs/plugin-react';
-import dts from 'vite-plugin-dts';
 import { removeDir } from './u';
+import { buildType } from './build.type';
 
 const __dirname = fileURLToPath(new URL('..', import.meta.url));
 const resolvePath = (p: string) => path.resolve(__dirname, p);
@@ -40,6 +40,8 @@ const resolvePath = (p: string) => path.resolve(__dirname, p);
 
   removeDir(resolvePath('lib'));
 
+  buildType();
+
   await Promise.all(
     formats.map((t) => {
       return build({
@@ -55,14 +57,7 @@ const resolvePath = (p: string) => path.resolve(__dirname, p);
             '~': resolvePath('packages/MdEditor')
           }
         },
-        plugins: [
-          react(),
-          t === 'es' &&
-            dts({
-              outDir: resolvePath('lib/types'),
-              include: [resolvePath('packages')]
-            })
-        ],
+        plugins: [react()],
         css: {
           modules: {
             localsConvention: 'camelCase' // 默认只支持驼峰，修改为同事支持横线和驼峰
