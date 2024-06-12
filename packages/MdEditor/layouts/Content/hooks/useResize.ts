@@ -84,6 +84,7 @@ const useResize = (
 
   useEffect(() => {
     if (props.inputBoxWitdh) {
+      resizedWidth.current = props.inputBoxWitdh;
       setInputWrapperStyle((prevState) => {
         return {
           ...prevState,

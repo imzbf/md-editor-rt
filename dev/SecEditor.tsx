@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { MdEditor } from '~~/index';
+import { MdEditor, StrIcon } from '~~/index';
 import data from './data.md';
 
 export default () => {
@@ -11,6 +11,9 @@ export default () => {
         modelValue={text}
         onChange={setText}
         scrollAuto={false}
+        customIcon={{
+          copy: StrIcon('copy', {}) // '<i class="fa fa-car"></i>',
+        }}
         // onDrop={(e) => {
         //   console.log('ee', e);
         // }}

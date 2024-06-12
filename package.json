@@ -1,6 +1,6 @@
 {
   "name": "md-editor-rt",
-  "version": "4.16.0-0",
+  "version": "4.16.7",
   "license": "MIT",
   "keywords": [
     "react",
@@ -40,7 +40,7 @@
   ],
   "scripts": {
     "dev": "tsx ./scripts/dev",
-    "build": "tsc && tsx ./scripts/build"
+    "build": "tsx ./scripts/build"
   },
   "dependencies": {
     "@codemirror/lang-markdown": "^6.2.5",
@@ -67,7 +67,7 @@
     "@types/react-dom": "^18.2.25",
     "@typescript-eslint/eslint-plugin": "^7.7.0",
     "@typescript-eslint/parser": "^7.7.0",
-    "@vavt/markdown-theme": "^4.1.0",
+    "@vavt/markdown-theme": "^4.1.1",
     "@vavt/vite-plugin-import-markdown": "^1.0.0",
     "@vitejs/plugin-react": "^4.2.1",
     "axios": "^1.6.7",
@@ -84,6 +84,7 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "screenfull": "^6.0.2",
+    "tsc-alias": "^1.8.10",
     "tsx": "^4.7.2",
     "typescript": "^5.4.5",
     "vite": "^5.2.10",

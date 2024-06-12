@@ -7,8 +7,7 @@ import {
   MdCatalog,
   config,
   ExposeParam,
-  editorExtensionsAttrs,
-  StrIcon
+  editorExtensionsAttrs
 } from '~~/index';
 
 // import Editor from '../../lib/md-editor-rt.es';
@@ -335,25 +334,27 @@ export default ({ theme, previewTheme, codeTheme, lang }: PreviewProp) => {
           //   );
           // }}
           // noImgZoomIn
-          customIcon={{
-            // bold: {
-            //   component: 'A',
-            //   props: {}
-            // },
-            copy: StrIcon('copy', {}) // '<i class="fa fa-car"></i>',
-            // preview: {
-            //   component: '<i class="fa fa-car"></i>',
-            //   props: {
-            //     name: 'copy'
-            //   }
-            // },
-            // github: {
-            //   component: Icon,
-            //   props: {
-            //     name: 'italic'
-            //   }
-            // }
-          }}
+          customIcon={
+            {
+              // bold: {
+              //   component: 'A',
+              //   props: {}
+              // },
+              // copy: StrIcon('copy', {}) // '<i class="fa fa-car"></i>',
+              // preview: {
+              //   component: '<i class="fa fa-car"></i>',
+              //   props: {
+              //     name: 'copy'
+              //   }
+              // },
+              // github: {
+              //   component: Icon,
+              //   props: {
+              //     name: 'italic'
+              //   }
+              // }
+            }
+          }
           inputBoxWitdh={md.inputBoxWitdh}
           onInputBoxWitdhChange={(w) => {
             md.inputBoxWitdh = w;
