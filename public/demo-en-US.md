@@ -844,6 +844,68 @@ export default () => {
 };
 ```
 
+### 🗂 Folding Document Content
+
+```js
+import { config } from 'md-editor-rt';
+import { foldGutter } from '@codemirror/language';
+import { lineNumbers } from '@codemirror/view';
+
+config({
+  codeMirrorExtensions(_theme, extensions) {
+    return [...extensions, lineNumbers(), foldGutter()];
+  }
+});
+```
+
+### 🏄🏻‍♂️ Open Links In New Window
+
+1. Install additional extensions
+
+```shell
+yarn add markdown-it-link-attributes
+```
+
+2. Add extensions to the compiler
+
+```js
+import { config } from 'md-editor-rt';
+import LinkAttr from 'markdown-it-link-attributes';
+// import Anchor from 'markdown-it-anchor';
+
+config({
+  markdownItPlugins(plugins) {
+    return [
+      ...plugins,
+      {
+        type: 'linkAttr',
+        plugin: LinkAttr,
+        options: {
+          matcher(href: string) {
+            // If markdown-it-anchor is used.
+            // Anchor links at the heading should be ignored.
+            return !href.startsWith('#');
+          },
+          attrs: {
+            target: '_blank'
+          }
+        }
+      },
+      // {
+      //   type: 'anchor',
+      //   plugin: Anchor,
+      //   options: {
+      //     permalink: Anchor.permalink.headerLink(),
+      //     slugify(s: string) {
+      //       return s;
+      //     }
+      //   }
+      // }
+    ];
+  }
+});
+```
+
 ## 🧻 Edit This Page
 
 [demo-en-US](https://github.com/imzbf/md-editor-rt/blob/dev-docs/public/demo-en-US.md)
