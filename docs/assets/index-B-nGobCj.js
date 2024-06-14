@@ -1,4 +1,4 @@
-import{u as l,r as t,j as n,e as c,f as p,l as u}from"./index-BTn893Cd.js";const r=`## 😁 Basic Usage
+import{u as m,r as t,e as l,j as n,f as c,h as p,i as u,l as h,v as f}from"./index-cLw9tZw2.js";const r=`## 😁 Basic Usage
 
 It has been developing iteratively, so update the latest version please. Publish logs: [releases](https://github.com/imzbf/md-editor-rt/releases)
 
@@ -677,8 +677,24 @@ Change background color in dark mode:
 
 ### 🙍🏻‍♂️ Import All Library
 
-\`\`\`jsx
-import { MdEditor, config } from 'md-editor-rt';
+1. Install Dependencies
+
+\`\`\`shell
+yarn add screenfull katex cropperjs mermaid highlight.js prettier
+\`\`\`
+
+2. Configure
+
+!!! warning
+
+We recommend configuring it at the project entry point, such as in \`main.js\` for projects created with Vite. Avoid calling \`config\` within components!
+
+!!!
+
+main.js
+
+\`\`\`js
+import { config } from 'md-editor-rt';
 import 'md-editor-rt/lib/style.css';
 
 import screenfull from 'screenfull';
@@ -701,7 +717,7 @@ import parserMarkdown from 'prettier/parser-markdown';
 import * as prettier from 'prettier';
 import parserMarkdown from 'prettier/plugins/markdown';
 
-// https://at.alicdn.com/t/c/font_2605852_u82y61ve02.js
+// \${iconfontSvgUrl}
 import './assets/iconfont.js';
 
 config({
@@ -727,6 +743,11 @@ config({
     }
   }
 });
+\`\`\`
+
+\`\`\`jsx
+import { MdEditor } from 'md-editor-rt';
+import 'md-editor-rt/lib/style.css';
 
 export default () => {
   return <MdEditor modelValue="" noIconfont />;
@@ -842,6 +863,68 @@ import sanitizeHtml from 'sanitize-html';
 export default () => {
   return <MdEditor sanitize={(html) => sanitizeHtml(html)} />;
 };
+\`\`\`
+
+### 🗂 Folding Document Content
+
+\`\`\`js
+import { config } from 'md-editor-rt';
+import { foldGutter } from '@codemirror/language';
+import { lineNumbers } from '@codemirror/view';
+
+config({
+  codeMirrorExtensions(_theme, extensions) {
+    return [...extensions, lineNumbers(), foldGutter()];
+  }
+});
+\`\`\`
+
+### 🏄🏻‍♂️ Open Links In New Window
+
+1. Install additional extensions
+
+\`\`\`shell
+yarn add markdown-it-link-attributes
+\`\`\`
+
+2. Add extensions to the compiler
+
+\`\`\`js
+import { config } from 'md-editor-rt';
+import LinkAttr from 'markdown-it-link-attributes';
+// import Anchor from 'markdown-it-anchor';
+
+config({
+  markdownItPlugins(plugins) {
+    return [
+      ...plugins,
+      {
+        type: 'linkAttr',
+        plugin: LinkAttr,
+        options: {
+          matcher(href: string) {
+            // If markdown-it-anchor is used.
+            // Anchor links at the heading should be ignored.
+            return !href.startsWith('#');
+          },
+          attrs: {
+            target: '_blank'
+          }
+        }
+      },
+      // {
+      //   type: 'anchor',
+      //   plugin: Anchor,
+      //   options: {
+      //     permalink: Anchor.permalink.headerLink(),
+      //     slugify(s: string) {
+      //       return s;
+      //     }
+      //   }
+      // }
+    ];
+  }
+});
 \`\`\`
 
 ## 🧻 Edit This Page
@@ -1532,8 +1615,24 @@ export default () => {
 
 这里给出一个完全不使用外部链接，全部自行引入的示例：
 
-\`\`\`jsx
-import { MdEditor, config } from 'md-editor-rt';
+1. 安装依赖
+
+\`\`\`shell
+yarn add screenfull katex cropperjs mermaid highlight.js prettier
+\`\`\`
+
+2. 配置到编辑器
+
+!!! warning
+
+我们建议你在项目入口配置，例如 vite 创建的项目中的 main.js。不要在组件中去调用 \`config\` ！
+
+!!!
+
+main.js
+
+\`\`\`js
+import { config } from 'md-editor-rt';
 import 'md-editor-rt/lib/style.css';
 
 import screenfull from 'screenfull';
@@ -1556,7 +1655,7 @@ import parserMarkdown from 'prettier/parser-markdown';
 import * as prettier from 'prettier';
 import parserMarkdown from 'prettier/plugins/markdown';
 
-// https://at.alicdn.com/t/c/font_2605852_u82y61ve02.js
+// \${iconfontSvgUrl}
 import './assets/iconfont.js';
 
 config({
@@ -1582,6 +1681,11 @@ config({
     }
   }
 });
+\`\`\`
+
+\`\`\`jsx
+import { MdEditor } from 'md-editor-rt';
+import 'md-editor-rt/lib/style.css';
 
 export default () => {
   return <MdEditor modelValue="" noIconfont />;
@@ -1701,7 +1805,69 @@ export default () => {
 
 更详细的实现可以参考本文档的源码！
 
+### 🗂 折叠文档内容
+
+\`\`\`js
+import { config } from 'md-editor-rt';
+import { foldGutter } from '@codemirror/language';
+import { lineNumbers } from '@codemirror/view';
+
+config({
+  codeMirrorExtensions(_theme, extensions) {
+    return [...extensions, lineNumbers(), foldGutter()];
+  }
+});
+\`\`\`
+
+### 🏄🏻‍♂️ 新窗口打开链接
+
+1. 安装额外的扩展
+
+\`\`\`shell
+yarn add markdown-it-link-attributes
+\`\`\`
+
+2. 将扩展添加到编译器中
+
+\`\`\`js
+import { config } from 'md-editor-rt';
+import LinkAttr from 'markdown-it-link-attributes';
+// import Anchor from 'markdown-it-anchor';
+
+config({
+  markdownItPlugins(plugins) {
+    return [
+      ...plugins,
+      {
+        type: 'linkAttr',
+        plugin: LinkAttr,
+        options: {
+          matcher(href: string) {
+            // 如果使用了markdown-it-anchor
+            // 应该忽略标题头部的锚点链接
+            return !href.startsWith('#');
+          },
+          attrs: {
+            target: '_blank'
+          }
+        }
+      },
+      // {
+      //   type: 'anchor',
+      //   plugin: Anchor,
+      //   options: {
+      //     permalink: Anchor.permalink.headerLink(),
+      //     slugify(s: string) {
+      //       return s;
+      //     }
+      //   }
+      // }
+    ];
+  }
+});
+\`\`\`
+
 ## 🧻 编辑此页面
 
 [demo-zh-CN](https://github.com/imzbf/md-editor-rt/blob/dev-docs/public/demo-zh-CN.md)
-`,i="demo-preview",f=()=>{const e=l(m=>m),[s,d]=t.useState(()=>e.lang==="zh-CN"?o:r),a=()=>{d(u(e.lang==="en-US"?r:o))};return t.useEffect(a,[e.lang]),n.jsx("div",{className:"container",children:n.jsxs("div",{className:"doc",children:[n.jsx(c,{editorId:i,modelValue:s}),n.jsx(p,{editorId:i})]})})};export{f as default};
+`,i="demo-preview",x=()=>{const e=m(a=>a),[s,d]=t.useState(()=>e.lang==="zh-CN"?o:r);return t.useEffect(()=>{d(l(e.lang==="en-US"?r:o,{iconfontSvgUrl:u,iconfontClassUrl:h,EDITOR_VERSION:f}))},[e.lang]),n.jsx("div",{className:"container",children:n.jsxs("div",{className:"doc",children:[n.jsx(c,{editorId:i,modelValue:s}),n.jsx(p,{editorId:i})]})})};export{x as default};

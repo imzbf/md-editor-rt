@@ -1,4 +1,4 @@
-import{u as p,r as t,d as o,j as n,e as g,f,h as r,i}from"./index-BTn893Cd.js";const s=`> Use it online: [Go](https://codesandbox.io/s/elated-khorana-65jmr)
+import{u as p,r as t,e as o,j as n,f as g,h as f,i as r,l as i}from"./index-cLw9tZw2.js";const s=`> Use it online: [Go](https://codesandbox.io/s/elated-khorana-65jmr)
 
 ## 🔖 MdPreview Props
 
@@ -224,19 +224,22 @@ This is the props of \`MdPreview\`, which is also part of \`MdEditor\`:
 ### 🤞🏼 noIconfont
 
 - **type**: \`boolean\`
-- **default**:\`true\`
+- **default**:\`false\`
 
   Not append iconfont script, download [Symbol version](\${iconfontSvgUrl}) or [Font class version](\${iconfontClassUrl}) and import it by yourself.
+
+  \`\`\`js
+  import '/assets/iconfont.js';
+
+  // Use Font class
+  // import { config } from 'md-editor-rt';
+  // import '/assets/iconfont.css';
+  // config({ iconfontType: 'class' })
+  \`\`\`
 
   \`\`\`jsx
   import { MdEditor } from 'md-editor-rt';
   import 'md-editor-rt/lib/style.css';
-
-  import '/assets/iconfont.js';
-
-  // User Font class version
-  // import '/assets/iconfont.css';
-  // config({ iconfontType: 'class' })
 
   export default () => {
     return <MdEditor noIconfont />;
@@ -1242,6 +1245,12 @@ editorRef.current?.execCommand('bold');
 
 Use \`config(option: ConfigOption)\` to reconfigure \`markdown-it\` and so on.
 
+!!! warning
+
+We recommend configuring it at the project entry point, such as in \`main.js\` for projects created with Vite. Avoid calling \`config\` within components!
+
+!!!
+
 ### 🦪 codeMirrorExtensions
 
 Customize new extensions based on theme and default extensions f codeMirror.
@@ -1848,6 +1857,9 @@ export default () => {
   - \`isFullscreen\`: \`boolean\`, necessary when \`showAdjust = true\`, status of fullscreen.
   - \`trigger\`: \`ReactNode\`, necessary, it is usually an icon, which is displayed on the toolbar.
   - \`children\`: \`ReactNode\`, necessary, content of Modal.
+  - \`className\`: \`string\`, \`^4.17.0\`, not necessary.
+  - \`style\`: \`CSSProperties\`, \`^4.17.0\`, not necessary.
+  - \`showMask\`: \`boolean\`, \`^4.17.0\`, not necessary, whether to display the mask layer, default \`false\`.
 
 - **events**
 
@@ -2004,6 +2016,7 @@ It is usually used in conjunction with \`DropdownToolbar\`.
   - \`children\`: \`ReactNode\`, necessary, content of Modal.
   - \`className\`: \`string\`, not necessary.
   - \`style\`: \`CSSProperties\`, not necessary.
+  - \`showMask\`: \`boolean\`, \`^4.17.0\`, not necessary, whether to display the mask layer, default \`false\`.
 
 - **events**
 
@@ -2097,7 +2110,7 @@ console.log(iconfontClassUrl, iconfontSvgUrl, allToolbar, allFooter, zh_CN, en_U
 \`\`\`
 
 \`\`\`
-`,l=`> 在线尝试示例：[传送门](https://codesandbox.io/s/elated-khorana-65jmr)。
+`,a=`> 在线尝试示例：[传送门](https://codesandbox.io/s/elated-khorana-65jmr)。
 
 ## 🔖 MdPreview Props
 
@@ -2327,19 +2340,22 @@ console.log(iconfontClassUrl, iconfontSvgUrl, allToolbar, allFooter, zh_CN, en_U
 ### 🤞🏼 noIconfont
 
 - **类型**：\`boolean\`
-- **默认值**：\`true\`
+- **默认值**：\`false\`
 
   不插入 iconfont 链接，你可以下载[Symbol版本](\${iconfontSvgUrl})或者[Font class版本](\${iconfontClassUrl})到本地自行引入。
 
-  \`\`\`jsx
-  import { MdEditor, config } from 'md-editor-rt';
-  import 'md-editor-rt/lib/style.css';
-
+  \`\`\`js
   import '/assets/iconfont.js';
 
   // 使用Font class版本
+  // import { config } from 'md-editor-rt';
   // import '/assets/iconfont.css';
   // config({ iconfontType: 'class' })
+  \`\`\`
+
+  \`\`\`jsx
+  import { MdEditor } from 'md-editor-rt';
+  import 'md-editor-rt/lib/style.css';
 
   export default () => {
     return <MdEditor noIconfont />;
@@ -3378,6 +3394,12 @@ editorRef.current?.execCommand('bold');
 
 使用\`config(option: ConfigOption)\`方法，可以对构建实例进行定制。
 
+!!! warning
+
+我们建议你在项目入口配置，例如 vite 创建的项目中的 main.js。不要在组件中去调用 \`config\` ！
+
+!!!
+
 ### 🦪 codeMirrorExtensions
 
 根据主题和内部默认的 codeMirror 扩展自定义新的扩展。
@@ -3991,6 +4013,9 @@ export default () => {
   - \`isFullscreen\`: \`boolean\`，显示全屏按钮时必须，弹窗全屏状态。
   - \`trigger\`: \`ReactNode\`，必须，通常是个图标，用来展示在工具栏上。
   - \`children\`: \`ReactNode\`，必须，弹窗中的内容。
+  - \`className\`: \`string\`，\`^4.17.0\`，非必须，类名。
+  - \`style\`: \`CSSProperties\`，\`^4.17.0\`，非必须，样式。
+  - \`showMask\`: \`boolean\`，\`^4.17.0\`，非必须，是否展示遮罩层，默认false。
 
 - **events**
 
@@ -4147,6 +4172,7 @@ export default () => {
   - \`children\`: \`ReactNode\`，非必须，弹窗显示的内容。
   - \`className\`: \`string\`，非必须，类名。
   - \`style\`: \`CSSProperties\`，非必须，样式。
+  - \`showMask\`: \`boolean\`，\`^4.17.0\`，非必须，是否展示遮罩层，默认false。
 
 - **events**
 
@@ -4236,4 +4262,4 @@ console.log(iconfontClassUrl, iconfontSvgUrl, allToolbar, allFooter, zh_CN, en_U
 ## ✍️ 编辑此页面
 
 [doc-zh-CN](https://github.com/imzbf/md-editor-rt/blob/dev-docs/public/doc-zh-CN.md)
-`,a="doc-preview",b=()=>{const e=p(u=>u),[d,c]=t.useState(()=>o(e.lang==="zh-CN"?l:s,{iconfontSvgUrl:r,iconfontClassUrl:i})),m=()=>{c(o(e.lang==="zh-CN"?l:s,{iconfontSvgUrl:r,iconfontClassUrl:i}))};return t.useEffect(m,[e.lang]),n.jsx("div",{className:"container",children:n.jsxs("div",{className:"doc",children:[n.jsx(g,{editorId:a,modelValue:d}),n.jsx(f,{editorId:a})]})})};export{b as default};
+`,l="doc-preview",b=()=>{const e=p(u=>u),[d,c]=t.useState(()=>o(e.lang==="zh-CN"?a:s,{iconfontSvgUrl:r,iconfontClassUrl:i})),m=()=>{c(o(e.lang==="zh-CN"?a:s,{iconfontSvgUrl:r,iconfontClassUrl:i}))};return t.useEffect(m,[e.lang]),n.jsx("div",{className:"container",children:n.jsxs("div",{className:"doc",children:[n.jsx(g,{editorId:l,modelValue:d}),n.jsx(f,{editorId:l})]})})};export{b as default};
