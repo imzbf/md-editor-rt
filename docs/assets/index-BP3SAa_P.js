@@ -1,4 +1,4 @@
-import{u as p,r as t,e as o,j as n,f as g,h as f,i as r,l as i}from"./index-cLw9tZw2.js";const s=`> Use it online: [Go](https://codesandbox.io/s/elated-khorana-65jmr)
+import{u as p,r as t,e as o,j as n,f as g,h as f,i as r,l as i}from"./index-BUl8Sd2A.js";const s=`> Use it online: [Go](https://codesandbox.io/s/elated-khorana-65jmr)
 
 ## 🔖 MdPreview Props
 
@@ -1857,9 +1857,9 @@ export default () => {
   - \`isFullscreen\`: \`boolean\`, necessary when \`showAdjust = true\`, status of fullscreen.
   - \`trigger\`: \`ReactNode\`, necessary, it is usually an icon, which is displayed on the toolbar.
   - \`children\`: \`ReactNode\`, necessary, content of Modal.
-  - \`className\`: \`string\`, \`^4.17.0\`, not necessary.
-  - \`style\`: \`CSSProperties\`, \`^4.17.0\`, not necessary.
-  - \`showMask\`: \`boolean\`, \`^4.17.0\`, not necessary, whether to display the mask layer, default \`false\`.
+  - \`className\`: \`string\`, \`^4.16.8\`, not necessary.
+  - \`style\`: \`CSSProperties\`, \`^4.16.8\`, not necessary.
+  - \`showMask\`: \`boolean\`, \`^4.16.8\`, not necessary, whether to display the mask layer, default \`false\`.
 
 - **events**
 
@@ -2016,7 +2016,7 @@ It is usually used in conjunction with \`DropdownToolbar\`.
   - \`children\`: \`ReactNode\`, necessary, content of Modal.
   - \`className\`: \`string\`, not necessary.
   - \`style\`: \`CSSProperties\`, not necessary.
-  - \`showMask\`: \`boolean\`, \`^4.17.0\`, not necessary, whether to display the mask layer, default \`false\`.
+  - \`showMask\`: \`boolean\`, \`^4.16.8\`, not necessary, whether to display the mask layer, default \`false\`.
 
 - **events**
 
@@ -4013,9 +4013,9 @@ export default () => {
   - \`isFullscreen\`: \`boolean\`，显示全屏按钮时必须，弹窗全屏状态。
   - \`trigger\`: \`ReactNode\`，必须，通常是个图标，用来展示在工具栏上。
   - \`children\`: \`ReactNode\`，必须，弹窗中的内容。
-  - \`className\`: \`string\`，\`^4.17.0\`，非必须，类名。
-  - \`style\`: \`CSSProperties\`，\`^4.17.0\`，非必须，样式。
-  - \`showMask\`: \`boolean\`，\`^4.17.0\`，非必须，是否展示遮罩层，默认false。
+  - \`className\`: \`string\`，\`^4.16.8\`，非必须，类名。
+  - \`style\`: \`CSSProperties\`，\`^4.16.8\`，非必须，样式。
+  - \`showMask\`: \`boolean\`，\`^4.16.8\`，非必须，是否展示遮罩层，默认false。
 
 - **events**
 
@@ -4172,7 +4172,7 @@ export default () => {
   - \`children\`: \`ReactNode\`，非必须，弹窗显示的内容。
   - \`className\`: \`string\`，非必须，类名。
   - \`style\`: \`CSSProperties\`，非必须，样式。
-  - \`showMask\`: \`boolean\`，\`^4.17.0\`，非必须，是否展示遮罩层，默认false。
+  - \`showMask\`: \`boolean\`，\`^4.16.8\`，非必须，是否展示遮罩层，默认false。
 
 - **events**
 
