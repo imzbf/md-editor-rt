@@ -1901,9 +1901,9 @@ export default () => {
   - `isFullscreen`: `boolean`，显示全屏按钮时必须，弹窗全屏状态。
   - `trigger`: `ReactNode`，必须，通常是个图标，用来展示在工具栏上。
   - `children`: `ReactNode`，必须，弹窗中的内容。
-  - `className`: `string`，`^4.17.0`，非必须，类名。
-  - `style`: `CSSProperties`，`^4.17.0`，非必须，样式。
-  - `showMask`: `boolean`，`^4.17.0`，非必须，是否展示遮罩层，默认false。
+  - `className`: `string`，`^4.16.8`，非必须，类名。
+  - `style`: `CSSProperties`，`^4.16.8`，非必须，样式。
+  - `showMask`: `boolean`，`^4.16.8`，非必须，是否展示遮罩层，默认false。
 
 - **events**
 
@@ -2060,7 +2060,7 @@ export default () => {
   - `children`: `ReactNode`，非必须，弹窗显示的内容。
   - `className`: `string`，非必须，类名。
   - `style`: `CSSProperties`，非必须，样式。
-  - `showMask`: `boolean`，`^4.17.0`，非必须，是否展示遮罩层，默认false。
+  - `showMask`: `boolean`，`^4.16.8`，非必须，是否展示遮罩层，默认false。
 
 - **events**
 
