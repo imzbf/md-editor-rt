@@ -1859,7 +1859,7 @@ export default () => {
   - `children`: `ReactNode`, necessary, content of Modal.
   - `className`: `string`, `^4.16.8`, not necessary.
   - `style`: `CSSProperties`, `^4.16.8`, not necessary.
-  - `showMask`: `boolean`, `^4.16.8`, not necessary, whether to display the mask layer, default `false`.
+  - `showMask`: `boolean`, `^4.16.8`, not necessary, whether to display the mask layer, default `true`.
 
 - **events**
 
@@ -2016,7 +2016,7 @@ It is usually used in conjunction with `DropdownToolbar`.
   - `children`: `ReactNode`, necessary, content of Modal.
   - `className`: `string`, not necessary.
   - `style`: `CSSProperties`, not necessary.
-  - `showMask`: `boolean`, `^4.16.8`, not necessary, whether to display the mask layer, default `false`.
+  - `showMask`: `boolean`, `^4.16.8`, not necessary, whether to display the mask layer, default `true`.
 
 - **events**
 
