@@ -724,7 +724,7 @@ If the icon is customized through the attribute `customIcon`, the customized ico
 Configure `mermaid`, [Details](https://mermaid.js.org/config/schema-docs/config.html)
 
 ```js
-import { config } from 'md-editor-v3';
+import { config } from 'md-editor-rt';
 
 config({
   mermaidConfig(base: any) {

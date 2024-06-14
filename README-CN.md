@@ -105,7 +105,7 @@ export default () => {
 | modelValue | `string` | '' | md 编辑内容 |
 | theme | `light \| dark` | 'light' | 主题切换 |
 | className | `string` | '' | 编辑器类名 |
-| style | `string \| CSSProperties` | {} | 编辑器内联样式 |
+| style | `CSSProperties` | {} | 编辑器内联样式 |
 | language | `string` | 'zh-CN' | 内置中英文('zh-CN','en-US')，可自行扩展其他语言，同时可覆盖内置的中英文 |
 | editorId | `string` | 'md-editor-rt\_[\d]' | 编辑器唯一标识，默认数字累加，当使用服务端渲染时，请务必设置该属性为固定值 |
 | showCodeRowNumber | `boolean` | true | 代码块是否显示行号 |
