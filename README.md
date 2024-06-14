@@ -819,7 +819,7 @@ For more examples, refer to [document](https://imzbf.github.io/md-editor-rt).
   - `children`: `ReactNode`, necessary, content of Modal.
   - `className`: `string`, not necessary.
   - `style`: `CSSProperties`, not necessary.
-  - `showMask`: `boolean`, not necessary, whether to display the mask layer, default `false`.
+  - `showMask`: `boolean`, not necessary, whether to display the mask layer, default `true`.
 
 - **events**
 
@@ -861,7 +861,7 @@ For more examples, refer to [document](https://imzbf.github.io/md-editor-rt).
   - `children`: `ReactNode`, necessary, content of Modal.
   - `className`: `string`, not necessary.
   - `style`: `CSSProperties`, not necessary.
-  - `showMask`: `boolean`, not necessary, whether to display the mask layer, default `false`.
+  - `showMask`: `boolean`, not necessary, whether to display the mask layer, default `true`.
 
 - **events**
 

@@ -835,7 +835,7 @@ import { NormalToolbar } from 'md-editor-rt';
   - `children`: `ReactNode`，必须，弹窗中的内容。
   - `className`: `string`，非必须，类名。
   - `style`: `CSSProperties`，非必须，样式。
-  - `showMask`: `boolean`， 非必须，是否展示遮罩层，默认false。
+  - `showMask`: `boolean`， 非必须，是否展示遮罩层，默认true。
 
 - **events**
 
@@ -877,7 +877,7 @@ import { NormalToolbar } from 'md-editor-rt';
   - `children`: `ReactNode`，非必须，弹窗显示的内容。
   - `className`: `string`，非必须，类名。
   - `style`: `CSSProperties`，非必须，样式。
-  - `showMask`: `boolean`，非必须，是否展示遮罩层，默认false。
+  - `showMask`: `boolean`，非必须，是否展示遮罩层，默认true。
 
 - **events**
 
