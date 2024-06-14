@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react';
+import { iconfontSvgUrl, iconfontClassUrl } from 'md-editor-rt';
+import { version as EDITOR_VERSION } from '../../../package.json';
 import mdEN from '../../../public/demo-en-US.md';
 import mdCN from '../../../public/demo-zh-CN.md';
 import { useSelector } from 'react-redux';
 import { StateType } from '@/store';
-import { replaceVersion } from '@/utils';
+import { replaceTemplate } from '@/utils';
 import IzCatalog from '@/layouts/Catalog';
 import IzPreviewContent from '@/layouts/PreviewContent';
 
@@ -16,11 +18,15 @@ export default () => {
     return state.lang === 'zh-CN' ? mdCN : mdEN;
   });
 
-  const queryMd = () => {
-    setMdText(replaceVersion(state.lang === 'en-US' ? mdEN : mdCN));
-  };
-
-  useEffect(queryMd, [state.lang]);
+  useEffect(() => {
+    setMdText(
+      replaceTemplate(state.lang === 'en-US' ? mdEN : mdCN, {
+        iconfontSvgUrl,
+        iconfontClassUrl,
+        EDITOR_VERSION
+      })
+    );
+  }, [state.lang]);
 
   return (
     <div className="container">

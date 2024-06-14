@@ -228,19 +228,22 @@
 ### 🤞🏼 noIconfont
 
 - **类型**：`boolean`
-- **默认值**：`true`
+- **默认值**：`false`
 
   不插入 iconfont 链接，你可以下载[Symbol版本](${iconfontSvgUrl})或者[Font class版本](${iconfontClassUrl})到本地自行引入。
 
-  ```jsx
-  import { MdEditor, config } from 'md-editor-rt';
-  import 'md-editor-rt/lib/style.css';
-
+  ```js
   import '/assets/iconfont.js';
 
   // 使用Font class版本
+  // import { config } from 'md-editor-rt';
   // import '/assets/iconfont.css';
   // config({ iconfontType: 'class' })
+  ```
+
+  ```jsx
+  import { MdEditor } from 'md-editor-rt';
+  import 'md-editor-rt/lib/style.css';
 
   export default () => {
     return <MdEditor noIconfont />;
@@ -1279,6 +1282,12 @@ editorRef.current?.execCommand('bold');
 
 使用`config(option: ConfigOption)`方法，可以对构建实例进行定制。
 
+!!! warning
+
+我们建议你在项目入口配置，例如 vite 创建的项目中的 main.js。不要在组件中去调用 `config` ！
+
+!!!
+
 ### 🦪 codeMirrorExtensions
 
 根据主题和内部默认的 codeMirror 扩展自定义新的扩展。
@@ -1892,6 +1901,9 @@ export default () => {
   - `isFullscreen`: `boolean`，显示全屏按钮时必须，弹窗全屏状态。
   - `trigger`: `ReactNode`，必须，通常是个图标，用来展示在工具栏上。
   - `children`: `ReactNode`，必须，弹窗中的内容。
+  - `className`: `string`，`^4.17.0`，非必须，类名。
+  - `style`: `CSSProperties`，`^4.17.0`，非必须，样式。
+  - `showMask`: `boolean`，`^4.17.0`，非必须，是否展示遮罩层，默认false。
 
 - **events**
 
@@ -2048,6 +2060,7 @@ export default () => {
   - `children`: `ReactNode`，非必须，弹窗显示的内容。
   - `className`: `string`，非必须，类名。
   - `style`: `CSSProperties`，非必须，样式。
+  - `showMask`: `boolean`，`^4.17.0`，非必须，是否展示遮罩层，默认false。
 
 - **events**
 

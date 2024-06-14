@@ -32,6 +32,9 @@ config({
         type: 'linkAttr',
         plugin: LinkAttr,
         options: {
+          matcher(href: string) {
+            return !href.startsWith('#');
+          },
           attrs: {
             target: '_blank'
           }
@@ -41,10 +44,11 @@ config({
         type: 'anchor',
         plugin: Anchor,
         options: {
-          permalink: true,
-          permalinkSymbol: '#',
-          permalinkBefore: false,
-          permalinkSpace: false,
+          // permalink: true,
+          permalink: Anchor.permalink.headerLink(),
+          // permalinkSymbol: '#',
+          // permalinkBefore: false,
+          // permalinkSpace: false,
           slugify(s: string) {
             return s;
           }

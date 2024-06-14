@@ -1,13 +1,15 @@
-import React, { useEffect, useMemo, useState, useRef } from 'react';
+import React, { useEffect, useMemo, useState, useRef, useCallback } from 'react';
 import { MdEditor, ExposeParam } from 'md-editor-rt';
 import { useSelector } from 'react-redux';
 import { Emoji, Mark, ExportPDF } from '@vavt/rt-extension';
+import { isMobile } from '@vavt/util';
 import '@vavt/rt-extension/lib/asset/style.css';
 
 import axios from '@/utils/request';
 import { StateType } from '@/store';
 import mdEN from '../../../public/preview-en-US.md';
 import mdCN from '../../../public/preview-zh-CN.md';
+import { toolbars } from './staticConfig';
 
 import ReadExtension from '@/components/ReadExtension';
 import TimeNow from '@/components/TimeNow';
@@ -35,6 +37,8 @@ export default () => {
   const [md, setMd] = useState(() => {
     return state.lang === 'zh-CN' ? mdCN : mdEN;
   });
+  const [ufToolbars, setToolbars] = useState(toolbars);
+  const [inputBoxWitdh, setInputBoxWitdh] = useState('50%');
 
   const editorRef = useRef<ExposeParam>();
 
@@ -54,6 +58,25 @@ export default () => {
         return 'Source code of mark, emoji, preview and time extension components in this page: ';
     }
   }, [state.lang]);
+
+  const changeLayout = useCallback(() => {
+    if (isMobile()) {
+      // 在移动端不现实分屏预览，要么编辑，要么仅预览
+      setToolbars(() => {
+        const t = toolbars.filter(
+          (item) => !(['preview', 'previewOnly'] as any).includes(item)
+        );
+
+        return ['previewOnly', ...t];
+      });
+      setInputBoxWitdh('100%');
+      editorRef.current?.togglePreview(false);
+    } else {
+      setToolbars(toolbars);
+      setInputBoxWitdh('50%');
+      editorRef.current?.togglePreview(true);
+    }
+  }, []);
 
   useEffect(() => {
     if (isDebug) {
@@ -75,6 +98,18 @@ export default () => {
 
       window.editorInstance = editorRef.current;
     }
+
+    editorRef.current?.on('previewOnly', (v) => {
+      if (isMobile()) {
+        if (!v) {
+          editorRef.current?.togglePreview(false);
+        }
+      }
+    });
+
+    changeLayout();
+
+    window.addEventListener('resize', changeLayout);
   }, [isDebug]);
 
   return (
@@ -84,6 +119,7 @@ export default () => {
           ref={editorRef}
           theme={state.theme}
           previewTheme={state.previewTheme}
+          inputBoxWitdh={inputBoxWitdh}
           codeTheme={state.codeTheme}
           modelValue={md}
           language={state.lang}
@@ -102,45 +138,7 @@ export default () => {
               console.log('h', html);
             });
           }}
-          toolbars={[
-            'bold',
-            'underline',
-            'italic',
-            'strikeThrough',
-            '-',
-            'title',
-            'sub',
-            'sup',
-            'quote',
-            'unorderedList',
-            'orderedList',
-            'task',
-            '-',
-            'codeRow',
-            'code',
-            'link',
-            'image',
-            'table',
-            'mermaid',
-            'katex',
-            0,
-            1,
-            2,
-            3,
-            '-',
-            'revoke',
-            'next',
-            'save',
-            '=',
-            'prettier',
-            'pageFullscreen',
-            'fullscreen',
-            'preview',
-            'previewOnly',
-            'htmlPreview',
-            'catalog',
-            'github'
-          ]}
+          toolbars={ufToolbars}
           onChange={(value: string) => setMd(value)}
           onUploadImg={async (files: Array<File>, callback: (urls: string[]) => void) => {
             const res = await Promise.all(
