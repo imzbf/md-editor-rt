@@ -224,19 +224,22 @@ This is the props of `MdPreview`, which is also part of `MdEditor`:
 ### 🤞🏼 noIconfont
 
 - **type**: `boolean`
-- **default**:`true`
+- **default**:`false`
 
   Not append iconfont script, download [Symbol version](${iconfontSvgUrl}) or [Font class version](${iconfontClassUrl}) and import it by yourself.
+
+  ```js
+  import '/assets/iconfont.js';
+
+  // Use Font class
+  // import { config } from 'md-editor-rt';
+  // import '/assets/iconfont.css';
+  // config({ iconfontType: 'class' })
+  ```
 
   ```jsx
   import { MdEditor } from 'md-editor-rt';
   import 'md-editor-rt/lib/style.css';
-
-  import '/assets/iconfont.js';
-
-  // User Font class version
-  // import '/assets/iconfont.css';
-  // config({ iconfontType: 'class' })
 
   export default () => {
     return <MdEditor noIconfont />;
@@ -1242,6 +1245,12 @@ editorRef.current?.execCommand('bold');
 
 Use `config(option: ConfigOption)` to reconfigure `markdown-it` and so on.
 
+!!! warning
+
+We recommend configuring it at the project entry point, such as in `main.js` for projects created with Vite. Avoid calling `config` within components!
+
+!!!
+
 ### 🦪 codeMirrorExtensions
 
 Customize new extensions based on theme and default extensions f codeMirror.
@@ -1848,6 +1857,9 @@ export default () => {
   - `isFullscreen`: `boolean`, necessary when `showAdjust = true`, status of fullscreen.
   - `trigger`: `ReactNode`, necessary, it is usually an icon, which is displayed on the toolbar.
   - `children`: `ReactNode`, necessary, content of Modal.
+  - `className`: `string`, `^4.17.0`, not necessary.
+  - `style`: `CSSProperties`, `^4.17.0`, not necessary.
+  - `showMask`: `boolean`, `^4.17.0`, not necessary, whether to display the mask layer, default `false`.
 
 - **events**
 
@@ -2004,6 +2016,7 @@ It is usually used in conjunction with `DropdownToolbar`.
   - `children`: `ReactNode`, necessary, content of Modal.
   - `className`: `string`, not necessary.
   - `style`: `CSSProperties`, not necessary.
+  - `showMask`: `boolean`, `^4.17.0`, not necessary, whether to display the mask layer, default `false`.
 
 - **events**
 

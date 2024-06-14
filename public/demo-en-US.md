@@ -677,8 +677,24 @@ Change background color in dark mode:
 
 ### 🙍🏻‍♂️ Import All Library
 
-```jsx
-import { MdEditor, config } from 'md-editor-rt';
+1. Install Dependencies
+
+```shell
+yarn add screenfull katex cropperjs mermaid highlight.js prettier
+```
+
+2. Configure
+
+!!! warning
+
+We recommend configuring it at the project entry point, such as in `main.js` for projects created with Vite. Avoid calling `config` within components!
+
+!!!
+
+main.js
+
+```js
+import { config } from 'md-editor-rt';
 import 'md-editor-rt/lib/style.css';
 
 import screenfull from 'screenfull';
@@ -701,7 +717,7 @@ import parserMarkdown from 'prettier/parser-markdown';
 import * as prettier from 'prettier';
 import parserMarkdown from 'prettier/plugins/markdown';
 
-// https://at.alicdn.com/t/c/font_2605852_u82y61ve02.js
+// ${iconfontSvgUrl}
 import './assets/iconfont.js';
 
 config({
@@ -727,6 +743,11 @@ config({
     }
   }
 });
+```
+
+```jsx
+import { MdEditor } from 'md-editor-rt';
+import 'md-editor-rt/lib/style.css';
 
 export default () => {
   return <MdEditor modelValue="" noIconfont />;

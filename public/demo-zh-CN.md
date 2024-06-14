@@ -683,8 +683,24 @@ export default () => {
 
 这里给出一个完全不使用外部链接，全部自行引入的示例：
 
-```jsx
-import { MdEditor, config } from 'md-editor-rt';
+1. 安装依赖
+
+```shell
+yarn add screenfull katex cropperjs mermaid highlight.js prettier
+```
+
+2. 配置到编辑器
+
+!!! warning
+
+我们建议你在项目入口配置，例如 vite 创建的项目中的 main.js。不要在组件中去调用 `config` ！
+
+!!!
+
+main.js
+
+```js
+import { config } from 'md-editor-rt';
 import 'md-editor-rt/lib/style.css';
 
 import screenfull from 'screenfull';
@@ -707,7 +723,7 @@ import parserMarkdown from 'prettier/parser-markdown';
 import * as prettier from 'prettier';
 import parserMarkdown from 'prettier/plugins/markdown';
 
-// https://at.alicdn.com/t/c/font_2605852_u82y61ve02.js
+// ${iconfontSvgUrl}
 import './assets/iconfont.js';
 
 config({
@@ -733,6 +749,11 @@ config({
     }
   }
 });
+```
+
+```jsx
+import { MdEditor } from 'md-editor-rt';
+import 'md-editor-rt/lib/style.css';
 
 export default () => {
   return <MdEditor modelValue="" noIconfont />;
