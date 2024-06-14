@@ -25,7 +25,9 @@ export type ModalProps = Readonly<{
   onAdjust?: (val: boolean) => void;
   children?: any;
   className?: string;
+  // style只能是对象，搞不了字符串
   style?: CSSProperties;
+  showMask?: boolean;
 }>;
 
 const toClass = `${prefix}-modal-container`;
@@ -33,7 +35,7 @@ const toClass = `${prefix}-modal-container`;
 const Modal = (props: ModalProps) => {
   const { theme } = useContext(EditorContext);
 
-  const { onClose = () => {}, onAdjust = () => {}, style = {} } = props;
+  const { onClose = () => {}, onAdjust = () => {}, style = {}, showMask = true } = props;
   const [modalVisible, setMV] = useState(props.visible);
   const [modalClass, setModalClass] = useState([`${prefix}-modal`]);
   const modalRef = useRef<HTMLDivElement>(null);
@@ -159,11 +161,13 @@ const Modal = (props: ModalProps) => {
               className={props.className}
               style={{ ...style, display: modalVisible ? 'block' : 'none' }}
             >
-              <div
-                className={`${prefix}-modal-mask`}
-                style={state.maskStyle}
-                onClick={onClose}
-              />
+              {showMask && (
+                <div
+                  className={`${prefix}-modal-mask`}
+                  style={state.maskStyle}
+                  onClick={onClose}
+                />
+              )}
               <div
                 className={modalClass.join(' ')}
                 style={{

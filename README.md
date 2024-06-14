@@ -813,6 +813,9 @@ For more examples, refer to [document](https://imzbf.github.io/md-editor-rt).
   - `isFullscreen`: `boolean`, necessary when `showAdjust = true`, status of fullscreen.
   - `trigger`: `ReactNode`, necessary, it is usually an icon, which is displayed on the toolbar.
   - `children`: `ReactNode`, necessary, content of Modal.
+  - `className`: `string`, not necessary.
+  - `style`: `CSSProperties`, not necessary.
+  - `showMask`: `boolean`, not necessary, whether to display the mask layer, default `false`.
 
 - **events**
 
@@ -827,7 +830,7 @@ For more examples, refer to [document](https://imzbf.github.io/md-editor-rt).
 - **props**
 
   - `editorId`: `string`, necessary, same as editor's `editorId`, used to register listening events.
-  - `class`: `string`, not necessary.
+  - `className`: `string`, not necessary.
   - `mdHeadingId`: `MdHeadingId`, not necessary, same as editor.
   - `scrollElement`: `string | HTMLElement`, not necessary, it is an element selector when its type is string. When `previewOnly` eq `true`, it is usually set to `document.documentElement`.
   - `theme`: `'light' | 'dark'`, not necessary, provide it when you want to change theme online, it is the same as Editor `theme`.
@@ -937,6 +940,7 @@ export default () => {
   --md-border-hover-color: if(@isDark, #636262, #b9b9b9);
   --md-border-active-color: if(@isDark, #777, #999);
   --md-modal-mask: #00000073;
+  --md-modal-shadow: if(@isDark, 0px 6px 24px 2px #00000066, 0px 6px 24px 2px #00000019);
   --md-scrollbar-bg-color: if(@isDark, #0f0f0f, #e2e2e2);
   --md-scrollbar-thumb-color: if(@isDark, #2d2d2d, #0000004d);
   --md-scrollbar-thumb-hover-color: if(@isDark, #3a3a3a, #00000059);

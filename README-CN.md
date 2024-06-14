@@ -829,6 +829,9 @@ import { NormalToolbar } from 'md-editor-rt';
   - `isFullscreen`: `boolean`，显示全屏按钮时必须，弹窗全屏状态。
   - `trigger`: `ReactNode`，必须，通常是个图标，用来展示在工具栏上。
   - `children`: `ReactNode`，必须，弹窗中的内容。
+  - `className`: `string`，非必须，类名。
+  - `style`: `CSSProperties`，非必须，样式。
+  - `showMask`: `boolean`， 非必须，是否展示遮罩层，默认false。
 
 - **events**
 
@@ -843,7 +846,7 @@ import { NormalToolbar } from 'md-editor-rt';
 - **props**
 
   - `editorId`: `string`，必须，对应编辑器的`editorId`，在内部注册目录变化监听事件。
-  - `class`: `string`，非必须，目录组件最外层类名。
+  - `className`: `string`，非必须，目录组件最外层类名。
   - `mdHeadingId`: `MdHeadingId`，非必须，特殊化编辑器标题的算法，与编辑器相同。
   - `scrollElement`: `string | HTMLElement`，非必须，为字符时应是一个元素选择器。仅预览模式中，整页滚动时，设置为`document.documentElement`。
   - `theme`: `'light' | 'dark'`，非必须，当需要切换主题时提供，同编辑器的`theme`。
@@ -957,6 +960,7 @@ export default () => {
   --md-border-hover-color: if(@isDark, #636262, #b9b9b9);
   --md-border-active-color: if(@isDark, #777, #999);
   --md-modal-mask: #00000073;
+  --md-modal-shadow: if(@isDark, 0px 6px 24px 2px #00000066, 0px 6px 24px 2px #0000000a);
   --md-scrollbar-bg-color: if(@isDark, #0f0f0f, #e2e2e2);
   --md-scrollbar-thumb-color: if(@isDark, #2d2d2d, #0000004d);
   --md-scrollbar-thumb-hover-color: if(@isDark, #3a3a3a, #00000059);
