@@ -115,7 +115,7 @@ export default () => {
 | codeTheme | `'atom' \| 'a11y' \| 'github' \| 'gradient' \| 'kimbie' \| 'paraiso' \| 'qtcreator' \| 'stackoverflow'` | 'atom' | 代码块 highlight 样式名称，扩展更多见下方 |
 | mdHeadingId | `(text: string, level: number, index: number) => string` | (text) => text | 标题`ID`计算方式 |
 | sanitize | `(html: string) => string` | (html) => html | 通过该属性修改编译后的html内容 |
-| noIconfont | `boolean` | false | 不插入 iconfont 链接，你可以下载[SVG 版](https://at.alicdn.com/t/c/font_2605852_d06wmn2c1od.js)或[Font Class 版](https://at.alicdn.com/t/c/font_2605852_d06wmn2c1od.css)到本地自行引入 |
+| noIconfont | `boolean` | false | 不插入 iconfont 链接，你可以在[这里](https://imzbf.github.io/md-editor-rt/zh-CN/docs#%F0%9F%A4%9E%F0%9F%8F%BC%20noIconfont)获取最新链接 |
 | formatCopiedText | `(text: string) => string` | (text: string) => text | 格式化复制代码 |
 | codeStyleReverse | `boolean` | true | 代码块为暗色背景的预览主题，将代码风格设置为暗色风格 |
 | codeStyleReverseList | `Array<string>` | ['default', 'mk-cute'] | 代码块为暗色背景的预览主题 |
@@ -541,6 +541,10 @@ editorRef.current?.execCommand('bold');
 
 使用`config(option: ConfigOption)`方法，可以对构建实例进行定制。
 
+> [!WARNING]
+>
+> 我们建议你在项目入口配置，例如 vite 创建的项目中的 main.js。不要在组件中去调用 `config` ！
+
 ### codeMirrorExtensions
 
 根据主题和内部默认的 codeMirror 扩展自定义新的扩展。
@@ -873,6 +877,7 @@ import { NormalToolbar } from 'md-editor-rt';
   - `children`: `ReactNode`，非必须，弹窗显示的内容。
   - `className`: `string`，非必须，类名。
   - `style`: `CSSProperties`，非必须，样式。
+  - `showMask`: `boolean`，非必须，是否展示遮罩层，默认false。
 
 - **events**
 
