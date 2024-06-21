@@ -1,4 +1,4 @@
-import{u as l,r as t,j as n,f as h,h as c}from"./index-Bvhg6cVr.js";const a=`## 🐶 Heading
+import{u as l,r as e,j as n,f as h,h as p}from"./index-LlROy_AP.js";const a=`## 🐶 Heading
 
 \`\`\`markdown
 ## Heading
@@ -142,6 +142,20 @@ import 'md-editor-rt/lib/style.css';
 
 \`\`\`\`markdown
 \`\`\`js ::close
+import MdEditor from 'md-editor-rt';
+import 'md-editor-rt/lib/style.css';
+\`\`\`
+\`\`\`\`
+
+### 👐 Forcefully open
+
+\`\`\`js ::open
+import MdEditor from 'md-editor-rt';
+import 'md-editor-rt/lib/style.css';
+\`\`\`
+
+\`\`\`\`markdown
+\`\`\`js ::open
 import MdEditor from 'md-editor-rt';
 import 'md-editor-rt/lib/style.css';
 \`\`\`
@@ -457,6 +471,20 @@ import 'md-editor-rt/lib/style.css';
 \`\`\`
 \`\`\`\`
 
+### 👐 强制展开
+
+\`\`\`js ::open
+import MdEditor from 'md-editor-rt';
+import 'md-editor-rt/lib/style.css';
+\`\`\`
+
+\`\`\`\`markdown
+\`\`\`js ::open
+import MdEditor from 'md-editor-rt';
+import 'md-editor-rt/lib/style.css';
+\`\`\`
+\`\`\`\`
+
 据其他编辑器的了解，目前没有其他编辑器使用类似的语法，如果需要拷贝你的内容到其他编辑器展示时，请谨慎使用该语法。
 
 ---
@@ -616,4 +644,4 @@ failure、danger、bug、example、quote、hint、caution、error、attention
 
 !!!
 \`\`\`
-`,i="grammar-preview",u=()=>{const e=l(s=>s),[o,d]=t.useState(()=>e.lang==="zh-CN"?r:a),m=()=>{d(e.lang==="en-US"?a:r)};return t.useEffect(m,[e.lang]),n.jsx("div",{className:"container",children:n.jsxs("div",{className:"doc",children:[n.jsx(h,{editorId:i,modelValue:o,showCodeRowNumber:!1}),n.jsx(c,{editorId:i})]})})};export{u as default};
+`,o="grammar-preview",u=()=>{const t=l(s=>s),[i,d]=e.useState(()=>t.lang==="zh-CN"?r:a),m=()=>{d(t.lang==="en-US"?a:r)};return e.useEffect(m,[t.lang]),n.jsx("div",{className:"container",children:n.jsxs("div",{className:"doc",children:[n.jsx(h,{editorId:o,modelValue:i,showCodeRowNumber:!1}),n.jsx(p,{editorId:o})]})})};export{u as default};
