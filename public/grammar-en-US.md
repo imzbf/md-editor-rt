@@ -147,6 +147,20 @@ import 'md-editor-rt/lib/style.css';
 ```
 ````
 
+### 👐 Forcefully open
+
+```js ::open
+import MdEditor from 'md-editor-rt';
+import 'md-editor-rt/lib/style.css';
+```
+
+````markdown
+```js ::open
+import MdEditor from 'md-editor-rt';
+import 'md-editor-rt/lib/style.css';
+```
+````
+
 According to the understanding of other editors, no other editors currently employ a similar syntax. Exercise caution when using this syntax if you intend to copy your content for display in other editors.
 
 ---

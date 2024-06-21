@@ -147,6 +147,20 @@ import 'md-editor-rt/lib/style.css';
 ```
 ````
 
+### 👐 强制展开
+
+```js ::open
+import MdEditor from 'md-editor-rt';
+import 'md-editor-rt/lib/style.css';
+```
+
+````markdown
+```js ::open
+import MdEditor from 'md-editor-rt';
+import 'md-editor-rt/lib/style.css';
+```
+````
+
 据其他编辑器的了解，目前没有其他编辑器使用类似的语法，如果需要拷贝你的内容到其他编辑器展示时，请谨慎使用该语法。
 
 ---
