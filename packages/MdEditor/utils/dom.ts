@@ -14,8 +14,7 @@ export const keyMove = (
     const width = parent.offsetWidth;
     const height = parent.offsetHeight;
     // 当前页长宽
-    const clientWidth = document.documentElement.clientWidth;
-    const clientHeight = document.documentElement.clientHeight;
+    const { clientWidth, clientHeight } = document.documentElement;
 
     const x = mdown.offsetX;
     const y = mdown.offsetY;
