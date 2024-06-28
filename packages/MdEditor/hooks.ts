@@ -5,6 +5,7 @@ import {
   useEffect,
   useImperativeHandle,
   useMemo,
+  useRef,
   useState
 } from 'react';
 import bus from './utils/event-bus';
@@ -404,27 +405,73 @@ export const useConfig = (props: EditorProps) => {
     previewOnly: false
   });
 
-  const updateSetting = useCallback((k: keyof typeof setting, v: boolean) => {
-    setSetting((_setting) => {
-      const nextSetting = {
-        ..._setting,
-        [k]: v === undefined ? !_setting[k] : v
-      } as SettingType;
+  const cacheSetting = useRef(setting);
 
-      if (k === 'preview') {
-        nextSetting.htmlPreview = false;
-        nextSetting.previewOnly = false;
-      } else if (k === 'htmlPreview') {
-        nextSetting.preview = false;
-        nextSetting.previewOnly = false;
-      } else if (
-        k === 'previewOnly' &&
-        !nextSetting.preview &&
-        !nextSetting.htmlPreview
-      ) {
-        // 如果没有显示预览模块，则需要手动展示
-        nextSetting.preview = true;
+  const updateSetting = useCallback((k: keyof typeof setting, v: boolean) => {
+    const realValue = v === undefined ? !setting[k] : v;
+
+    setSetting((_setting) => {
+      const nextSetting: SettingType = {
+        ..._setting
+      };
+
+      switch (k) {
+        case 'preview': {
+          nextSetting.htmlPreview = false;
+          nextSetting.previewOnly = false;
+
+          break;
+        }
+
+        case 'htmlPreview': {
+          nextSetting.preview = false;
+          nextSetting.previewOnly = false;
+
+          break;
+        }
+
+        case 'previewOnly': {
+          if (realValue) {
+            if (!nextSetting.preview && !nextSetting.htmlPreview) {
+              // 如果没有显示预览模块，则需要手动展示
+              nextSetting.preview = true;
+            }
+          } else {
+            if (!cacheSetting.current.preview) {
+              nextSetting.preview = false;
+            }
+
+            if (!cacheSetting.current.htmlPreview) {
+              nextSetting.htmlPreview = false;
+            }
+          }
+
+          break;
+        }
       }
+
+      cacheSetting.current[k] = realValue;
+      nextSetting[k] = realValue;
+
+      // const nextSetting = {
+      //   ..._setting,
+      //   [k]: v === undefined ? !_setting[k] : v
+      // } as SettingType;
+
+      // if (k === 'preview') {
+      //   nextSetting.htmlPreview = false;
+      //   nextSetting.previewOnly = false;
+      // } else if (k === 'htmlPreview') {
+      //   nextSetting.preview = false;
+      //   nextSetting.previewOnly = false;
+      // } else if (
+      //   k === 'previewOnly' &&
+      //   !nextSetting.preview &&
+      //   !nextSetting.htmlPreview
+      // ) {
+      //   // 如果没有显示预览模块，则需要手动展示
+      //   nextSetting.preview = true;
+      // }
 
       return nextSetting;
     });
