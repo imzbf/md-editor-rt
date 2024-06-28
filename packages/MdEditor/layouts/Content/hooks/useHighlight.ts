@@ -17,12 +17,17 @@ const useHighlight = (props: ContentPreviewProps) => {
   const [hljsInited, setHljsInited] = useState(!!hljsRef.current);
 
   useEffect(() => {
+    // 强制不高亮，则什么都不做
+    if (props.noHighlight) {
+      return;
+    }
+
     updateHandler('link', {
       ...highlight.css,
       rel: 'stylesheet',
       id: `${prefix}-hlCss`
     });
-  }, [highlight.css]);
+  }, [highlight.css, props.noHighlight]);
 
   useEffect(() => {
     // 强制不高亮，则什么都不做

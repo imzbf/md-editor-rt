@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import React, { CSSProperties, ReactElement } from 'react';
 import { prefix } from '~/config';
 import Modal from '~/components/Modal';
 
@@ -15,6 +15,9 @@ export interface ModalToolbarProps {
   isFullscreen?: boolean;
   onAdjust?: (v: boolean) => void;
   children?: any;
+  className?: string;
+  style?: CSSProperties;
+  showMask?: boolean;
 }
 
 const ModalToolbar = (props: ModalToolbarProps) => {
@@ -29,10 +32,13 @@ const ModalToolbar = (props: ModalToolbarProps) => {
         {props.trigger}
       </div>
       <Modal
+        className={props.className}
+        style={props.style}
         width={width}
         height={height}
         title={props.modalTitle}
         visible={props.visible}
+        showMask={props.showMask}
         onClose={props.onClose}
         showAdjust={props.showAdjust}
         isFullscreen={props.isFullscreen}
