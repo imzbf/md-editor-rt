@@ -35,6 +35,9 @@ import createCommands from '../codemirror/commands';
 import usePasteUpload from './usePasteUpload';
 // import useAttach from './useAttach';
 
+// 禁用掉>=6.28.0的实验性功能
+(EditorView as any).EDIT_CONTEXT = false;
+
 /**
  * 文本编辑区组件
  *
