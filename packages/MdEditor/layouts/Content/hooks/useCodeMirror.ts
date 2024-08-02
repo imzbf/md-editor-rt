@@ -21,7 +21,8 @@ import {
   CTRL_Z,
   ERROR_CATCHER,
   REPLACE,
-  EVENT_LISTENER
+  EVENT_LISTENER,
+  TASK_STATE_CHANGED
 } from '~/static/event-name';
 import { DOMEventHandlers } from '~/type';
 
@@ -185,6 +186,16 @@ const useCodeMirror = (props: ContentProps) => {
       setDEHUD(handlers);
     };
 
+    const taskStateChanged = (lineNumber: number, value: string) => {
+      const line = view.state.doc.line(lineNumber);
+      // 应用交易到编辑器视图
+      view.dispatch(
+        view.state.update({
+          changes: { from: line.from, to: line.to, insert: value }
+        })
+      );
+    };
+
     bus.on(editorId, {
       name: CTRL_Z,
       callback: ctrlZ
@@ -201,12 +212,19 @@ const useCodeMirror = (props: ContentProps) => {
       callback: eventListener
     });
 
+    // 点击任务修改事件
+    bus.on(editorId, {
+      name: TASK_STATE_CHANGED,
+      callback: taskStateChanged
+    });
+
     return () => {
       // react18的严格模式会强制在开发环境让useEffect执行两次
       view.destroy();
       bus.remove(editorId, CTRL_Z, ctrlZ);
       bus.remove(editorId, CTRL_SHIFT_Z, ctrlShiftZ);
       bus.remove(editorId, EVENT_LISTENER, eventListener);
+      bus.remove(editorId, TASK_STATE_CHANGED, taskStateChanged);
 
       noSet.current = true;
     };

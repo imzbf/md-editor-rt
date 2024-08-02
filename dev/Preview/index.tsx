@@ -39,97 +39,106 @@ import Normal from './Normal';
 
 // import { cdnBase } from '../../MdEditor/config';
 
-console.log(
-  config({
-    codeMirrorExtensions(theme, extensions) {
-      // console.log(theme, extensions, keyBindings);
+config({
+  codeMirrorExtensions(theme, extensions) {
+    // console.log(theme, extensions, keyBindings);
 
-      // return extensions;
-      return [...extensions, lineNumbers()];
-    },
-    // iconfontType: 'class',
-    // markdownItConfig: (mdit) => {
-    // mdit.use(ancher, {
-    //   permalink: true
-    // });
-    // mdit.use(TargetBlankExtension);
-    // },
-    // markdownItPlugins(plugins) {
-    //   console.log(plugins);
-    //   return [];
-    // },
-    mermaidConfig: (base) => {
-      return base;
-    },
-    editorExtensions: {
-      //     prettier: {
-      //       prettierInstance: prettier,
-      //       parserMarkdownInstance: parserMarkdown
-      //     },
-      // highlight: {
-      // instance: highlight
-      //     // css: {
-      //     //   'tokyo-night': {
-      //     //     light: `${cdnBase}/highlight.js/11.5.1/styles/tokyo-night-light.min.css`,
-      //     //     dark: `${cdnBase}/highlight.js/11.5.1/styles/tokyo-night-dark.min.css`
-      //     //   }
-      //     // }
-      // }
-      //     screenfull: {
-      //       instance: screenfull
-      //     },
-      //     katex: {
-      //       instance: katex
-      //     },
-      //     cropper: {
-      //       instance: Cropper
-      //     },
-      // mermaid: {
-      //   instance: mermaid
-      // }
-    },
-    editorExtensionsAttrs,
-    editorConfig: {
-      zIndex: 2000
-    }
-    //   editorConfig: {
-    //     mermaidTemplate: {
-    //       /**
-    //        * 流程图
-    //        */
-    //       flow: 'flow',
-    //       /**
-    //        * 时序图
-    //        */
-    //       sequence: 'sequence',
-    //       /**
-    //        * 甘特图
-    //        */
-    //       gantt: 'gantt',
-    //       /**
-    //        * 类图
-    //        */
-    //       class: 'class',
-    //       /**
-    //        * 状态图
-    //        */
-    //       state: 'state',
-    //       /**
-    //        * 饼图
-    //        */
-    //       pie: 'pie',
-    //       /**
-    //        * 关系图
-    //        */
-    //       relationship: 'relationship',
-    //       /**
-    //        * 旅程图
-    //        */
-    //       journey: 'journey'
-    //     }
-    //   }
-  })
-);
+    // return extensions;
+    return [...extensions, lineNumbers()];
+  },
+  // iconfontType: 'class',
+  // markdownItConfig: (mdit) => {
+  // mdit.use(ancher, {
+  //   permalink: true
+  // });
+  // mdit.use(TargetBlankExtension);
+  // },
+  markdownItPlugins(plugins) {
+    return plugins.map((item) => {
+      if (item.type === 'taskList') {
+        return {
+          ...item,
+          options: {
+            ...item.options,
+            enabled: true
+          }
+        };
+      }
+
+      return item;
+    });
+  },
+  mermaidConfig: (base) => {
+    return base;
+  },
+  editorExtensions: {
+    //     prettier: {
+    //       prettierInstance: prettier,
+    //       parserMarkdownInstance: parserMarkdown
+    //     },
+    // highlight: {
+    // instance: highlight
+    //     // css: {
+    //     //   'tokyo-night': {
+    //     //     light: `${cdnBase}/highlight.js/11.5.1/styles/tokyo-night-light.min.css`,
+    //     //     dark: `${cdnBase}/highlight.js/11.5.1/styles/tokyo-night-dark.min.css`
+    //     //   }
+    //     // }
+    // }
+    //     screenfull: {
+    //       instance: screenfull
+    //     },
+    //     katex: {
+    //       instance: katex
+    //     },
+    //     cropper: {
+    //       instance: Cropper
+    //     },
+    // mermaid: {
+    //   instance: mermaid
+    // }
+  },
+  editorExtensionsAttrs,
+  editorConfig: {
+    zIndex: 2000
+  }
+  //   editorConfig: {
+  //     mermaidTemplate: {
+  //       /**
+  //        * 流程图
+  //        */
+  //       flow: 'flow',
+  //       /**
+  //        * 时序图
+  //        */
+  //       sequence: 'sequence',
+  //       /**
+  //        * 甘特图
+  //        */
+  //       gantt: 'gantt',
+  //       /**
+  //        * 类图
+  //        */
+  //       class: 'class',
+  //       /**
+  //        * 状态图
+  //        */
+  //       state: 'state',
+  //       /**
+  //        * 饼图
+  //        */
+  //       pie: 'pie',
+  //       /**
+  //        * 关系图
+  //        */
+  //       relationship: 'relationship',
+  //       /**
+  //        * 旅程图
+  //        */
+  //       journey: 'journey'
+  //     }
+  //   }
+});
 
 const SAVE_KEY = 'XHMPGLJIZTDB';
 const INPUT_BOX_WITDH = 'tcxll8alg5jx52hw';

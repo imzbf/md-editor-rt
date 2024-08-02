@@ -13,6 +13,7 @@ const MdPreview = forwardRef((props: MdPreviewProps, ref: ForwardedRef<unknown>)
   // Editor.defaultProps在某些编辑器中不能被正确识别已设置默认情况
   const {
     modelValue = defaultProps.modelValue,
+    onChange = defaultProps.onChange,
     theme = defaultProps.theme as Themes,
     className = defaultProps.className,
     editorId = getNextId(defaultEditorId + '_'),
@@ -84,6 +85,7 @@ const MdPreview = forwardRef((props: MdPreviewProps, ref: ForwardedRef<unknown>)
       >
         <ContentPreview
           modelValue={modelValue}
+          onChange={onChange}
           setting={setting}
           mdHeadingId={mdHeadingId}
           onHtmlChanged={onHtmlChanged}

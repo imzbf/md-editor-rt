@@ -3,7 +3,7 @@ import { prefix } from '~/config';
 import { EditorContext } from '~/Editor';
 import { classnames } from '~/utils';
 
-import { useCopyCode, useMarkdownIt, useZoom } from './hooks';
+import { useCopyCode, useMarkdownIt, useZoom, useTaskState } from './hooks';
 import { ContentPreviewProps } from './props';
 
 const ContentPreview = (props: ContentPreviewProps) => {
@@ -16,6 +16,8 @@ const ContentPreview = (props: ContentPreviewProps) => {
   useCopyCode(props, html, key);
   // 图片点击放大
   useZoom(props, html);
+  // 任务状态
+  useTaskState(props, html);
 
   const content = useMemo(() => {
     return (

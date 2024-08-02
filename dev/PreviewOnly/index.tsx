@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import { ExposePreviewParam, MdPreview } from '~~/index';
 import { Theme } from '../App';
 import mdText from '../data.md';
@@ -14,6 +14,8 @@ interface PreviewOnlyProp {
 
 const PreviewOnly = (props: PreviewOnlyProp) => {
   const previewRef = useRef<ExposePreviewParam>();
+
+  const [value, setValue] = useState(mdText);
 
   return (
     <div className="doc">
@@ -31,7 +33,8 @@ const PreviewOnly = (props: PreviewOnlyProp) => {
           theme={props.theme}
           previewTheme={props.previewTheme}
           codeTheme={props.codeTheme}
-          modelValue={mdText}
+          modelValue={value}
+          onChange={setValue}
           showCodeRowNumber
         />
       </div>
