@@ -19,7 +19,9 @@ const useZoom = (props: ContentPreviewProps, html: string) => {
     }
 
     const zoomHander = () => {
-      const imgs = document.querySelectorAll(`#${editorId}-preview img:not(.not-zoom)`);
+      const imgs = document.querySelectorAll(
+        `#${editorId}-preview img:not(.not-zoom):not(.medium-zoom-image)`
+      );
 
       const zoom = mediumZoom(imgs, {
         background: '#00000073'

@@ -155,6 +155,10 @@ export type MdHeadingId = (text: string, level: number, index: number) => string
 export interface MdPreviewProps {
   modelValue: string;
   /**
+   * input回调事件
+   */
+  onChange?: ChangeEvent;
+  /**
    * 主题
    *
    * @default 'light'
@@ -302,10 +306,6 @@ export interface MdPreviewProps {
 export type TableShapeType = [number, number] | [number, number, number, number];
 
 export interface EditorProps extends MdPreviewProps {
-  /**
-   * input回调事件
-   */
-  onChange?: ChangeEvent;
   /**
    * 保存事件
    */

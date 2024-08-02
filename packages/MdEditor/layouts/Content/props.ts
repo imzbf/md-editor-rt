@@ -3,6 +3,7 @@ import { HeadList, MdHeadingId, SettingType, Themes } from '~/type';
 
 export interface ContentPreviewProps {
   modelValue: string;
+  onChange: (v: string) => void;
   setting: SettingType;
   onHtmlChanged?: (h: string) => void;
   onGetCatalog?: (list: HeadList[]) => void;
@@ -21,7 +22,6 @@ export interface ContentPreviewProps {
 
 export type ContentProps = Readonly<
   {
-    onChange: (v: string) => void;
     placeholder: string;
     scrollAuto: boolean;
     autoFocus?: boolean;

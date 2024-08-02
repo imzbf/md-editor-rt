@@ -1,6 +1,6 @@
 {
   "name": "md-editor-rt",
-  "version": "4.17.1-2",
+  "version": "4.17.4",
   "license": "MIT",
   "keywords": [
     "react",
@@ -90,13 +90,6 @@
     "vite": "^5.2.10",
     "vite-plugin-dts": "^3.8.3"
   },
-  "peerDependencies": {
-    "react": ">=16.9.0",
-    "react-dom": ">=16.9.0"
-  },
-  "resolutions": {
-    "@codemirror/view": "6.27.0"
-  },
   "prettier": {
     "singleQuote": true,
     "trailingComma": "none",
@@ -104,5 +97,14 @@
     "printWidth": 90,
     "proseWrap": "never",
     "endOfLine": "auto"
-  }
+  },
+  "peerDependencies": {
+    "react": ">=16.9.0",
+    "react-dom": ">=16.9.0"
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not dead"
+  ]
 }
