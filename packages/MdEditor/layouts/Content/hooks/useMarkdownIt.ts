@@ -1,7 +1,6 @@
 import { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
 import mdit from 'markdown-it';
 import ImageFiguresPlugin from 'markdown-it-image-figures';
-import TaskListPlugin from 'markdown-it-task-lists';
 import { uuid } from '@vavt/util';
 import bus from '~/utils/event-bus';
 import { generateCodeRowNumber } from '~/utils';
@@ -24,6 +23,7 @@ import AdmonitionPlugin from '../markdownIt/admonition';
 import HeadingPlugin from '../markdownIt/heading';
 import CodePlugin from '../markdownIt/code';
 import XSSPlugin from '../markdownIt/xss';
+import TaskListPlugin from '../markdownIt/task';
 import { EditorContext } from '~/Editor';
 import { ContentPreviewProps } from '../props';
 
