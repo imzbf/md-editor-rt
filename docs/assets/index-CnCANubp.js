@@ -1,4 +1,4 @@
-import{u as l,r as e,j as n,e as h,f as p}from"./index-BZo3pDw4.js";const a=`## 🐶 Heading
+import{u as l,r as e,j as n,e as h,f as p}from"./index-DQ8SIxnE.js";const a=`## 🐶 Heading
 
 \`\`\`markdown
 ## Heading
@@ -214,6 +214,8 @@ According to the understanding of other editors, no other editors currently empl
 - [ ] Saturday
 - [x] Sunday
 \`\`\`
+
+[Example](https://imzbf.github.io/md-editor-rt/en-US/demo#☑%EF%B8%8F%20Toggleable%20status%20task%20list) that supports toggling task status in the preview module.
 
 ---
 
@@ -538,6 +540,8 @@ import 'md-editor-rt/lib/style.css';
 - [ ] 周六
 - [x] 周天
 \`\`\`
+
+支持在预览模块切换任务状态的[示例](https://imzbf.github.io/md-editor-rt/zh-CN/demo#☑%EF%B8%8F%20可切换状态的任务列表)
 
 ---
 

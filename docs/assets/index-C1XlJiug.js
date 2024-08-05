@@ -1,4 +1,4 @@
-import{u as m,r as t,d as l,j as n,e as c,f as p,h as u,i as h,v as f}from"./index-BZo3pDw4.js";const r=`## 😁 Basic Usage
+import{u as m,r as t,d as l,j as n,e as c,f as p,h as u,i as h,v as f}from"./index-DQ8SIxnE.js";const r=`## 😁 Basic Usage
 
 It has been developing iteratively, so update the latest version please. Publish logs: [releases](https://github.com/imzbf/md-editor-rt/releases)
 
@@ -925,6 +925,34 @@ config({
     ];
   }
 });
+\`\`\`
+
+### ☑️ Toggleable status task list
+
+\`\`\`js
+import { config } from 'md-editor-rt';
+config({
+  markdownItPlugins(plugins, { editorId }) {
+    return plugins.map((item) => {
+      if (item.type === 'taskList') {
+        return {
+          ...item,
+          options: {
+            ...item.options,
+            enabled: true
+            // If you just want to enable this feature for a certain editor
+            // enabled: editorId === 'myId'
+          }
+        };
+      }
+      return item;
+    });
+  }
+});
+\`\`\`
+
+\`\`\`jsx
+<MdEditor editorId="myId" modelValue={text} onChange={setText} />
 \`\`\`
 
 ## 🧻 Edit This Page
@@ -1865,6 +1893,34 @@ config({
     ];
   }
 });
+\`\`\`
+
+### ☑️ 可切换状态的任务列表
+
+\`\`\`js
+import { config } from 'md-editor-rt';
+config({
+  markdownItPlugins(plugins, { editorId }) {
+    return plugins.map((item) => {
+      if (item.type === 'taskList') {
+        return {
+          ...item,
+          options: {
+            ...item.options,
+            enabled: true
+            // 如果只是想对某个编辑器开启这个功能
+            // enabled: editorId === 'myId'
+          }
+        };
+      }
+      return item;
+    });
+  }
+});
+\`\`\`
+
+\`\`\`jsx
+<MdEditor editorId="myId" modelValue={text} onChange={setText} />
 \`\`\`
 
 ## 🧻 编辑此页面
