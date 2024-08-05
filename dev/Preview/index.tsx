@@ -53,14 +53,14 @@ config({
   // });
   // mdit.use(TargetBlankExtension);
   // },
-  markdownItPlugins(plugins) {
+  markdownItPlugins(plugins, { editorId }) {
     return plugins.map((item) => {
       if (item.type === 'taskList') {
         return {
           ...item,
           options: {
             ...item.options,
-            enabled: true
+            enabled: editorId === 'md-prev'
           }
         };
       }
