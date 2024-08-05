@@ -7,7 +7,7 @@ import { debounce, getRootOffset } from '@vavt/util';
 interface IzPreviewContentProp {
   editorId: string;
   modelValue: string;
-  showCodeRowNumber: boolean;
+  showCodeRowNumber?: boolean;
 }
 
 const { hash } = location;
@@ -32,6 +32,7 @@ const onHtmlChanged = debounce<any, any>(() => {
 });
 
 const IzPreviewContent = (props: IzPreviewContentProp) => {
+  const { showCodeRowNumber = true } = props;
   const state = useSelector<StateType>((state) => state) as StateType;
 
   return (
@@ -42,17 +43,12 @@ const IzPreviewContent = (props: IzPreviewContentProp) => {
         theme={state.theme}
         modelValue={props.modelValue}
         previewTheme={state.previewTheme}
-        showCodeRowNumber={props.showCodeRowNumber}
+        showCodeRowNumber={showCodeRowNumber}
         codeTheme={state.codeTheme}
         onHtmlChanged={onHtmlChanged}
-        autoFoldThreshold={16}
       />
     </div>
   );
-};
-
-IzPreviewContent.defaultProps = {
-  showCodeRowNumber: true
 };
 
 export default IzPreviewContent;
