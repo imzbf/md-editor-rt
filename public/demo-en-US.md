@@ -927,6 +927,34 @@ config({
 });
 ```
 
+### ☑️ Toggleable status task list
+
+```js
+import { config } from 'md-editor-rt';
+config({
+  markdownItPlugins(plugins, { editorId }) {
+    return plugins.map((item) => {
+      if (item.type === 'taskList') {
+        return {
+          ...item,
+          options: {
+            ...item.options,
+            enabled: true
+            // If you just want to enable this feature for a certain editor
+            // enabled: editorId === 'myId'
+          }
+        };
+      }
+      return item;
+    });
+  }
+});
+```
+
+```jsx
+<MdEditor editorId="myId" modelValue={text} onChange={setText} />
+```
+
 ## 🧻 Edit This Page
 
 [demo-en-US](https://github.com/imzbf/md-editor-rt/blob/dev-docs/public/demo-en-US.md)
