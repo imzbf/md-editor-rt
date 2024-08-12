@@ -2,6 +2,7 @@ import { RefObject } from 'react';
 import markdownit from 'markdown-it';
 import { Themes } from '~/type';
 import { prefix } from '~/config';
+import { mermaidCache } from '~/utils/cache';
 
 const MermaidPlugin = (md: markdownit, options: { themeRef: RefObject<Themes> }) => {
   const temp = md.renderer.rules.fence!.bind(md.renderer.rules);
@@ -13,6 +14,14 @@ const MermaidPlugin = (md: markdownit, options: { themeRef: RefObject<Themes> })
       if (tokens[idx].map && tokens[idx].level === 0) {
         line = tokens[idx].map![0];
         tokens[idx].attrSet('data-line', String(line));
+      }
+
+      const mermaidHtml = mermaidCache.get(code) as string;
+
+      if (mermaidHtml) {
+        return `<p class="${prefix}-mermaid" ${
+          line !== undefined ? 'data-line=' + line : ''
+        } data-processed>${mermaidHtml}</p>`;
       }
 
       return `<div class="${prefix}-mermaid" ${
