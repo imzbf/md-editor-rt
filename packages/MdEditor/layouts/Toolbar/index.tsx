@@ -47,6 +47,7 @@ export interface ToolbarProps {
   defToolbars?: Array<ReactElement>;
   noUploadImg: boolean;
   showToolbarName?: boolean;
+  catalogVisible: boolean;
 }
 
 let splitNum = 0;
@@ -835,7 +836,10 @@ const Toolbar = (props: ToolbarProps) => {
             return (
               !props.setting.fullscreen && (
                 <div
-                  className={`${prefix}-toolbar-item`}
+                  className={classnames([
+                    `${prefix}-toolbar-item`,
+                    props.setting.pageFullscreen && `${prefix}-toolbar-active`
+                  ])}
                   title={ult.toolbarTips?.pageFullscreen}
                   onClick={() => {
                     updateSetting('pageFullscreen');
@@ -856,7 +860,10 @@ const Toolbar = (props: ToolbarProps) => {
           case 'fullscreen': {
             return (
               <div
-                className={`${prefix}-toolbar-item`}
+                className={classnames([
+                  `${prefix}-toolbar-item`,
+                  props.setting.fullscreen && `${prefix}-toolbar-active`
+                ])}
                 title={ult.toolbarTips?.fullscreen}
                 onClick={() => {
                   fullscreenHandler();
@@ -878,7 +885,10 @@ const Toolbar = (props: ToolbarProps) => {
           case 'catalog': {
             return (
               <div
-                className={`${prefix}-toolbar-item`}
+                className={classnames([
+                  `${prefix}-toolbar-item`,
+                  props.catalogVisible && `${prefix}-toolbar-active`
+                ])}
                 title={ult.toolbarTips?.catalog}
                 onClick={() => {
                   bus.emit(editorId, CHANGE_CATALOG_VISIBLE);
@@ -898,7 +908,10 @@ const Toolbar = (props: ToolbarProps) => {
           case 'preview': {
             return (
               <div
-                className={`${prefix}-toolbar-item`}
+                className={classnames([
+                  `${prefix}-toolbar-item`,
+                  props.setting.preview && `${prefix}-toolbar-active`
+                ])}
                 title={ult.toolbarTips?.preview}
                 onClick={() => {
                   updateSetting('preview');
@@ -918,7 +931,10 @@ const Toolbar = (props: ToolbarProps) => {
           case 'previewOnly': {
             return (
               <div
-                className={`${prefix}-toolbar-item`}
+                className={classnames([
+                  `${prefix}-toolbar-item`,
+                  props.setting.previewOnly && `${prefix}-toolbar-active`
+                ])}
                 title={ult.toolbarTips?.previewOnly}
                 onClick={() => {
                   props.updateSetting('previewOnly');
@@ -938,7 +954,10 @@ const Toolbar = (props: ToolbarProps) => {
           case 'htmlPreview': {
             return (
               <div
-                className={`${prefix}-toolbar-item`}
+                className={classnames([
+                  `${prefix}-toolbar-item`,
+                  props.setting.htmlPreview && `${prefix}-toolbar-active`
+                ])}
                 title={ult.toolbarTips?.htmlPreview}
                 onClick={() => {
                   updateSetting('htmlPreview');
