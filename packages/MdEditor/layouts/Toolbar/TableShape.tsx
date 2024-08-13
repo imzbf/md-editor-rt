@@ -1,4 +1,4 @@
-import React, { useCallback, useState, useEffect } from 'react';
+import React, { useCallback, useState, useEffect, useMemo } from 'react';
 import { prefix } from '~/config';
 import { TableShapeType } from '~/type';
 
@@ -18,8 +18,13 @@ const TableShape = (props: TableShapeProps) => {
     y: -1
   });
 
+  // 解决用户直接赋值的时导致的重复渲染，例如 tableShape={[1,2,3,4]}
+  const tableShapeStr = useMemo(() => {
+    return JSON.stringify(props.tableShape);
+  }, [props.tableShape]);
+
   const initShape = useCallback(() => {
-    const shape = [...props.tableShape];
+    const shape = [...JSON.parse(tableShapeStr)];
 
     if (!shape[2] || shape[2] < shape[0]) {
       shape[2] = shape[0];
@@ -30,12 +35,16 @@ const TableShape = (props: TableShapeProps) => {
     }
 
     return shape;
-  }, [props.tableShape]);
+  }, [tableShapeStr]);
 
   const [tableShape, setTableShape] = useState(initShape);
 
   useEffect(() => {
     setTableShape(initShape);
+    setHoverPosition({
+      x: -1,
+      y: -1
+    });
   }, [initShape]);
 
   return (
