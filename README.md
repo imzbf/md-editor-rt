@@ -736,6 +736,23 @@ config({
 });
 ```
 
+### 🔧 katexConfig
+
+Configure `katex`, [Details](https://katex.org/docs/options)
+
+```js
+import { config } from 'md-editor-rt';
+
+config({
+  katexConfig(base: any) {
+    return {
+      ...base,
+      strict: false
+    };
+  }
+});
+```
+
 ### 🪡 Shortcut Key
 
 _Pay attention: shortcut keys are only available when the textarea has received focus!_
