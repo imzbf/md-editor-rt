@@ -544,24 +544,22 @@ Except for the same as `MdPreview`:
     console.log('NormalToolbar clicked!');
   };
 
+  const toolbars = ['github', '=', 0];
+
+  const defToolbars = [
+    <NormalToolbar
+      title="mark"
+      onClick={handler}
+      trigger={
+        <svg className="md-editor-icon" aria-hidden="true">
+          <use xlinkHref="#icon-mark"></use>
+        </svg>
+      }
+    />
+  ];
+
   export default () => {
-    return (
-      <MdEditor
-        modelValue=""
-        toolbars={['github', '=', 0]}
-        defToolbars={[
-          <NormalToolbar
-            title="mark"
-            onClick={handler}
-            trigger={
-              <svg className="md-editor-icon" aria-hidden="true">
-                <use xlinkHref="#icon-mark"></use>
-              </svg>
-            }
-          />
-        ]}
-      />
-    );
+    return <MdEditor modelValue="" toolbars={toolbars} defToolbars={defToolbars} />;
   };
   ```
 
@@ -599,7 +597,9 @@ Except for the same as `MdPreview`:
   Preset the size of the table, [columns, rows, Maximum number of columns, Maximum number of rows]
 
   ```jsx
-  <MdEditor tableShape={[8, 4]}>
+  const tableShape = [8, 4];
+
+  () => <MdEditor tableShape={tableShape}>
   ```
 
   ![Preview](https://imzbf.github.io/md-editor-rt/imgs/20211216165424.png)
@@ -822,19 +822,15 @@ Except for the same as `MdPreview`:
   import { MdEditor } from 'md-editor-rt';
   import 'md-editor-rt/lib/style.css';
 
-  export default () => {
-    return (
-      <MdEditor
-        onSave={(v, h) => {
-          console.log(v);
+  const onSave = (v, h) => {
+    console.log(v);
 
-          h.then((html) => {
-            console.log(html);
-          });
-        }}
-      />
-    );
+    h.then((html) => {
+      console.log(html);
+    });
   };
+
+  export default () => <MdEditor onSave={onSave} />;
   ```
 
 ---
@@ -850,39 +846,39 @@ Except for the same as `MdPreview`:
   import { MdEditor } from 'md-editor-rt';
   import 'md-editor-rt/lib/style.css';
 
+  const onUploadImg = async (files, callback) => {
+    const res = await Promise.all(
+      files.map((file) => {
+        return new Promise((rev, rej) => {
+          const form = new FormData();
+          form.append('file', file);
+
+          axios
+            .post('/api/img/upload', form, {
+              headers: {
+                'Content-Type': 'multipart/form-data'
+              }
+            })
+            .then((res) => rev(res))
+            .catch((error) => rej(error));
+        });
+      })
+    );
+
+    // Approach 1
+    callback(res.map((item) => item.data.url));
+    // Approach 2
+    // callback(
+    //   res.map((item: any) => ({
+    //     url: item.data.url,
+    //     alt: 'alt',
+    //     title: 'title'
+    //   }))
+    // );
+  };
+
   export default () => {
     const [text, setText] = useState('# Hello Editor');
-
-    const onUploadImg = async (files, callback) => {
-      const res = await Promise.all(
-        files.map((file) => {
-          return new Promise((rev, rej) => {
-            const form = new FormData();
-            form.append('file', file);
-
-            axios
-              .post('/api/img/upload', form, {
-                headers: {
-                  'Content-Type': 'multipart/form-data'
-                }
-              })
-              .then((res) => rev(res))
-              .catch((error) => rej(error));
-          });
-        })
-      );
-
-      // Approach 1
-      callback(res.map((item) => item.data.url));
-      // Approach 2
-      // callback(
-      //   res.map((item: any) => ({
-      //     url: item.data.url,
-      //     alt: 'alt',
-      //     title: 'title'
-      //   }))
-      // );
-    };
 
     return <MdEditor modelValue={text} onChange={setText} onUploadImg={onUploadImg} />;
   };
@@ -949,18 +945,14 @@ Except for the same as `MdPreview`:
   import { MdEditor } from 'md-editor-rt';
   import 'md-editor-rt/lib/style.css';
 
+  const onDrop = (e) => {
+    e.preventDefault();
+    console.log(e.dataTransfer?.files[0]);
+  };
+
   export default () => {
     const [text, setText] = useState('');
-    return (
-      <MdEditor
-        modelValue={text}
-        onChange={setText}
-        onDrop={(e) => {
-          e.preventDefault();
-          console.log(e.dataTransfer?.files[0]);
-        }}
-      />
-    );
+    return <MdEditor modelValue={text} onChange={setText} onDrop={onDrop} />;
   };
   ```
 
@@ -1630,6 +1622,25 @@ config({
 
 ---
 
+### 🔧 katexConfig
+
+Configure `katex`, [Details](https://katex.org/docs/options)
+
+```js
+import { config } from 'md-editor-rt';
+
+config({
+  katexConfig(base: any) {
+    return {
+      ...base,
+      strict: false
+    };
+  }
+});
+```
+
+---
+
 ## 🪡 Shortcut Keys
 
 !!! warning Pay attention
@@ -1696,18 +1707,31 @@ To help developers quickly insert content and use editor attributes, the editor 
 usage:
 
 ```jsx
-import { useState } from 'react';
-import { MdEditor, NormalToolbar, InsertContentGenerator } from 'md-editor-rt';
+import { useCallback, useState } from 'react';
+import { MdEditor, NormalToolbar } from 'md-editor-rt';
 import 'md-editor-rt/lib/style.css';
-
-interface MyToolbarProps {
-  insert?: (generator: InsertContentGenerator) => void;
-}
 
 /**
  * `insert` will be automatically injected into the component by the editor
  */
-const MyToolbar = ({ insert = () => {} }: MyToolbarProps) => {
+const MyToolbar = ({ insert = () => {} }) => {
+  const onClick = useCallback(() => {
+    insert((selectedText) => {
+      /**
+       * @return targetValue    Content to be inserted
+       * @return select         Automatically select content, default: true
+       * @return deviationStart Start position of the selected content, default: 0
+       * @return deviationEnd   End position of the selected content, default: 0
+       */
+      return {
+        targetValue: `==${selectedText}==`,
+        select: true,
+        deviationStart: 0,
+        deviationEnd: 0
+      };
+    });
+  }, [insert]);
+
   return (
     <NormalToolbar
       title="mark"
@@ -1716,26 +1740,14 @@ const MyToolbar = ({ insert = () => {} }: MyToolbarProps) => {
           <use xlinkHref="#icon-mark"></use>
         </svg>
       }
-      onClick={() => {
-        insert((selectedText) => {
-          /**
-           * @return targetValue    Content to be inserted
-           * @return select         Automatically select content, default: true
-           * @return deviationStart Start position of the selected content, default: 0
-           * @return deviationEnd   End position of the selected content, default: 0
-           */
-          return {
-            targetValue: `==${selectedText}==`,
-            select: true,
-            deviationStart: 0,
-            deviationEnd: 0
-          };
-        });
-      }}
+      onClick={onClick}
       key="mark-toolbar"
     />
   );
 };
+
+const toolbars = ['bold', 0, '=', 'github'];
+const defToolbars = [<MyToolbar />];
 
 export default () => {
   const [value, setValue] = useState('');
@@ -1744,8 +1756,8 @@ export default () => {
     <MdEditor
       modelValue={value}
       editorId="md-prev"
-      toolbars={['bold', 0, '=', 'github']}
-      defToolbars={[<MyToolbar />]}
+      toolbars={toolbars}
+      defToolbars={defToolbars}
       onChange={setValue}
     />
   );
@@ -1772,19 +1784,32 @@ export default () => {
 usage:
 
 ```jsx
-import { useState } from 'react';
-import { MdEditor, DropdownToolbar, InsertContentGenerator } from 'md-editor-rt';
+import { useCallback, useState } from 'react';
+import { MdEditor, DropdownToolbar } from 'md-editor-rt';
 import 'md-editor-rt/lib/style.css';
-
-interface MyToolbarProps {
-  insert?: (generator: InsertContentGenerator) => void;
-}
 
 /**
  * `insert` will be automatically injected into the component by the editor
  */
-const MyToolbar = ({ insert = () => {} }: MyToolbarProps) => {
+const MyToolbar = ({ insert = () => {} }) => {
   const [visible, setVisible] = useState(false);
+
+  const onClick = useCallback(() => {
+    insert((selectedText) => {
+      /**
+       * @return targetValue    Content to be inserted
+       * @return select         Automatically select content, default: true
+       * @return deviationStart Start position of the selected content, default: 0
+       * @return deviationEnd   End position of the selected content, default: 0
+       */
+      return {
+        targetValue: `==${selectedText}==`,
+        select: true,
+        deviationStart: 0,
+        deviationEnd: 0
+      };
+    });
+  }, [insert]);
 
   return (
     <DropdownToolbar
@@ -1792,26 +1817,7 @@ const MyToolbar = ({ insert = () => {} }: MyToolbarProps) => {
       onChange={setVisible}
       overlay={
         <ul>
-          <li
-            onClick={() => {
-              insert((selectedText) => {
-                /**
-                 * @return targetValue    Content to be inserted
-                 * @return select         Automatically select content, default: true
-                 * @return deviationStart Start position of the selected content, default: 0
-                 * @return deviationEnd   End position of the selected content, default: 0
-                 */
-                return {
-                  targetValue: `==${selectedText}==`,
-                  select: true,
-                  deviationStart: 0,
-                  deviationEnd: 0
-                };
-              });
-            }}
-          >
-            option 1
-          </li>
+          <li onClick={onClick}>option 1</li>
           <li>option 2</li>
         </ul>
       }
@@ -1825,6 +1831,9 @@ const MyToolbar = ({ insert = () => {} }: MyToolbarProps) => {
   );
 };
 
+const toolbars = ['bold', 0, '=', 'github'];
+const defToolbars = [<MyToolbar key="key" />];
+
 export default () => {
   const [value, setValue] = useState('');
 
@@ -1832,8 +1841,8 @@ export default () => {
     <MdEditor
       modelValue={value}
       editorId="md-prev"
-      toolbars={['bold', 0, '=', 'github']}
-      defToolbars={[<MyToolbar />]}
+      toolbars={toolbars}
+      defToolbars={defToolbars}
       onChange={setValue}
     />
   );
@@ -1869,19 +1878,44 @@ export default () => {
 
 ```jsx
 import { useState } from 'react';
-import { MdEditor, ModalToolbar, InsertContentGenerator } from 'md-editor-rt';
+import { MdEditor, ModalToolbar } from 'md-editor-rt';
 import 'md-editor-rt/lib/style.css';
-
-interface MyToolbarProps {
-  insert?: (generator: InsertContentGenerator) => void;
-}
 
 /**
  * `insert` will be automatically injected into the component by the editor
  */
-const MyToolbar = ({ insert = () => {} }: MyToolbarProps) => {
+const MyToolbar = ({ insert = () => {} }) => {
   const [visible, setVisible] = useState(false);
   const [isFullscreen, setIsFullscreen] = useState(false);
+
+  const onClick = useCallback(() => {
+    setVisible(true);
+  }, []);
+
+  const onClose = useCallback(() => {
+    setVisible(false);
+  }, []);
+
+  const onAdjust = useCallback(() => {
+    setIsFullscreen((i) => !i);
+  }, []);
+
+  const insertHandler = useCallback(() => {
+    insert((selectedText) => {
+      /**
+       * @return targetValue    Content to be inserted
+       * @return select         Automatically select content, default: true
+       * @return deviationStart Start position of the selected content, default: 0
+       * @return deviationEnd   End position of the selected content, default: 0
+       */
+      return {
+        targetValue: `==${selectedText}==`,
+        select: true,
+        deviationStart: 0,
+        deviationEnd: 0
+      };
+    });
+  }, [insert]);
 
   return (
     <ModalToolbar
@@ -1892,15 +1926,9 @@ const MyToolbar = ({ insert = () => {} }: MyToolbarProps) => {
       modalTitle="modalTitle"
       width="870px"
       height="600px"
-      onClick={() => {
-        setVisible(true);
-      }}
-      onClose={() => {
-        setVisible(false);
-      }}
-      onAdjust={() => {
-        setIsFullscreen((i) => !i);
-      }}
+      onClick={onClick}
+      onClose={onClose}
+      onAdjust={onAdjust}
       trigger={
         <svg className="md-editor-icon" aria-hidden="true">
           <use xlinkHref="#icon-read"></use>
@@ -1914,40 +1942,23 @@ const MyToolbar = ({ insert = () => {} }: MyToolbarProps) => {
           overflow: 'auto'
         }}
       >
-        <button
-          onClick={() => {
-            insert((selectedText) => {
-              /**
-               * @return targetValue    Content to be inserted
-               * @return select         Automatically select content, default: true
-               * @return deviationStart Start position of the selected content, default: 0
-               * @return deviationEnd   End position of the selected content, default: 0
-               */
-              return {
-                targetValue: `==${selectedText}==`,
-                select: true,
-                deviationStart: 0,
-                deviationEnd: 0
-              };
-            });
-          }}
-        >
-          click me
-        </button>
+        <button onClick={insertHandler}>click me</button>
       </div>
     </ModalToolbar>
   );
 };
 
+const toolbars = ['bold', 0, '=', 'github'];
+const defToolbars = [<MyToolbar key="key" />];
+
 export default () => {
   const [value, setValue] = useState('');
-
   return (
     <MdEditor
       modelValue={value}
       editorId="md-prev"
-      toolbars={['bold', 0, '=', 'github']}
-      defToolbars={[<MyToolbar />]}
+      toolbars={toolbars}
+      defToolbars={defToolbars}
       onChange={setValue}
     />
   );
@@ -2035,19 +2046,21 @@ const MyToolbar = () => {
   const [visible, setVisible] = useState(false);
   const [mVisible, setMvisible] = useState(false);
 
+  const onClick = useCallback(() => {
+    setMvisible(true);
+  }, []);
+
+  const onClose = useCallback(() => {
+    setMvisible(false);
+  }, []);
+
   return (
     <DropdownToolbar
       visible={visible}
       onChange={setVisible}
       overlay={
         <ul>
-          <li
-            onClick={() => {
-              setMvisible(true);
-            }}
-          >
-            option 1
-          </li>
+          <li onClick={onClick}>option 1</li>
           <li>option 2</li>
         </ul>
       }
@@ -2056,20 +2069,16 @@ const MyToolbar = () => {
           <use xlinkHref="#icon-emoji"></use>
         </svg>
       }
-      key="modal-toolbar"
+      key="emoji-toolbar"
     >
-      <MdModal
-        title={'title'}
-        visible={mVisible}
-        onClose={() => {
-          setMvisible(false);
-        }}
-      >
+      <MdModal title={'title'} visible={mVisible} onClose={onClose}>
         Content, Content
       </MdModal>
     </DropdownToolbar>
   );
 };
+
+const defToolbars = [<MyToolbar key="key" />];
 
 export default () => {
   const [value, setValue] = useState('');
@@ -2079,7 +2088,7 @@ export default () => {
       modelValue={value}
       editorId="md-prev"
       toolbars={['bold', 0, '=', 'github']}
-      defToolbars={[<MyToolbar />]}
+      defToolbars={defToolbars}
       onChange={setValue}
     />
   );

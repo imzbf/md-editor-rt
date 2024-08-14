@@ -46,7 +46,7 @@ npm install md-editor-rt
 #### 🤓 基本使用
 
 ```jsx
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { MdEditor } from 'md-editor-rt';
 import 'md-editor-rt/lib/style.css';
 
@@ -59,7 +59,7 @@ export default () => {
 #### 📖 仅预览
 
 ```jsx
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { MdPreview, MdCatalog } from 'md-editor-rt';
 import 'md-editor-rt/lib/preview.css';
 
@@ -199,7 +199,7 @@ config({
 `App.tsx`
 
 ```tsx
-import React, { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { MdEditor, ExposeParam } from 'md-editor-rt';
 // 假设你使用了EventBus
 import bus from '@/utils/event-bus';
@@ -273,7 +273,7 @@ export default new EventBus();
 支持默认和暗夜模式两种
 
 ```jsx
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { MdEditor } from 'md-editor-rt';
 import 'md-editor-rt/lib/style.css';
 
@@ -289,7 +289,7 @@ export default () => {
 内置了`default`、`github`、`vuepress`、`mk-cute`、`smart-blue`、`cyanosis`6 种主题，在一些直接预览文档内容时使用。并且支持在线切换（修改`previewTheme`即可）和自行扩展。
 
 ```jsx
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { MdEditor } from 'md-editor-rt';
 import 'md-editor-rt/lib/style.css';
 
@@ -331,7 +331,7 @@ export default () => {
 - 使用
 
   ```jsx
-  import React, { useState } from 'react';
+  import { useState } from 'react';
   import { MdEditor } from 'md-editor-rt';
   import 'md-editor-rt/lib/style.css';
 
@@ -384,7 +384,7 @@ highlight、prettier、cropper、screenfull 均使用外链引入，在无外网
 #### ⚰️ 内置实例
 
 ```jsx
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { MdEditor, config } from 'md-editor-rt';
 import 'md-editor-rt/lib/style.css';
 // 引用screenfull
@@ -409,7 +409,7 @@ export default () => {
 对应的 js 文件可以去[unpkg.com](https://unpkg.com)，直接找到对应的文件下载即可。
 
 ```jsx
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { MdEditor, config } from 'md-editor-rt';
 import 'md-editor-rt/lib/style.css';
 
@@ -434,7 +434,7 @@ export default () => {
 > 注意：粘贴板上传时，如果是网页上的 gif 图，无法正确上传为 gif 格式！请保存本地后再手动上传。
 
 ```jsx
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { MdEditor } from 'md-editor-rt';
 import 'md-editor-rt/lib/style.css';
 
@@ -469,7 +469,7 @@ export default () => {
 ### 🏳️‍🌈 语言扩展与替换
 
 ```js
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { MdEditor, config } from 'md-editor-rt';
 import 'md-editor-rt/lib/style.css';
 
@@ -576,7 +576,7 @@ export default () => {
 - 获取
 
   ```jsx
-  import React, { useState } from 'react';
+  import { useState } from 'react';
   import { MdEditor } from 'md-editor-rt';
   import 'md-editor-rt/lib/style.css';
 
@@ -593,7 +593,7 @@ export default () => {
   使用内置`MdCatalog`组件
 
   ```jsx
-  import React, { useState } from 'react';
+  import { useState } from 'react';
   import { MdPreview, MdCatalog } from 'md-editor-rt';
   import 'md-editor-rt/lib/preview.css';
 
@@ -619,7 +619,7 @@ export default () => {
 从`v1.2.0`开始，支持调整工具栏内容顺序和分割符了 🤔。
 
 ```jsx
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { MdEditor } from 'md-editor-rt';
 import 'md-editor-rt/lib/style.css';
 
@@ -650,7 +650,7 @@ export default () => {
   --md-color: if(@isDark, #999, #222);
   --md-hover-color: if(@isDark, #bbb, #000);
   --md-bk-color: if(@isDark, #000, #fff);
-  --md-bk-color-outstand: if(@isDark, #111, #f6f6f6);
+  --md-bk-color-outstand: if(@isDark, #333, #f2f2f2);
   --md-bk-hover-color: if(@isDark, #1b1a1a, #f5f7fa);
   --md-border-color: if(@isDark, #2d2d2d, #e6e6e6);
   --md-border-hover-color: if(@isDark, #636262, #b9b9b9);
@@ -861,13 +861,14 @@ yarn add sanitize-html
 ```
 
 ```jsx
-import React from 'react';
 import { MdEditor } from 'md-editor-rt';
 import 'md-editor-rt/lib/style.css';
 import sanitizeHtml from 'sanitize-html';
 
+const sanitize = (html) => sanitizeHtml(html);
+
 export default () => {
-  return <MdEditor sanitize={(html) => sanitizeHtml(html)} />;
+  return <MdEditor sanitize={sanitize} />;
 };
 ```
 
