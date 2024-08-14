@@ -753,7 +753,7 @@ config({
 });
 ```
 
-### 🪡 Shortcut Key
+## 🪡 Shortcut Key
 
 _Pay attention: shortcut keys are only available when the textarea has received focus!_
 
