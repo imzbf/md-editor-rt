@@ -681,6 +681,13 @@ export interface ConfigOption {
    * @returns
    */
   mermaidConfig: (base: any) => any;
+  /**
+   * katex配置
+   *
+   * @param baseConfig
+   * @returns
+   */
+  katexConfig: (baseConfig: any) => any;
 }
 
 /**

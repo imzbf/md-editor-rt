@@ -1,9 +1,10 @@
 import { useCallback, useContext, useEffect, useRef, useState } from 'react';
-import { LRUCache } from 'lru-cache';
 import { uuid } from '@vavt/util';
 import { prefix, configOption } from '~/config';
 import { EditorContext } from '~/Editor';
 import { appendHandler } from '~/utils/dom';
+import { mermaidCache } from '~/utils/cache';
+
 import { ContentPreviewProps } from '../props';
 
 /**
@@ -16,15 +17,6 @@ const useMermaid = (props: ContentPreviewProps) => {
 
   const mermaidRef = useRef(configOption.editorExtensions.mermaid!.instance);
   const [reRender, setReRender] = useState(-1);
-
-  const [mermaidCache] = useState(
-    () =>
-      new LRUCache({
-        max: 1000,
-        // 缓存10分钟
-        ttl: 600000
-      })
-  );
 
   const configMermaid = useCallback(() => {
     mermaidCache.clear();
@@ -41,7 +33,7 @@ const useMermaid = (props: ContentPreviewProps) => {
       // 严格模式下，如果reRender是boolean型，会执行两次，这是reRender将不会effect
       setReRender((_r) => _r + 1);
     }
-  }, [mermaidCache, noMermaid, theme]);
+  }, [noMermaid, theme]);
 
   useEffect(configMermaid, [configMermaid]);
 
@@ -144,7 +136,7 @@ const useMermaid = (props: ContentPreviewProps) => {
         }
       });
     }
-  }, [mermaidCache, noMermaid, sanitizeMermaid]);
+  }, [noMermaid, sanitizeMermaid]);
 
   return { mermaidRef, reRender, replaceMermaid };
 };

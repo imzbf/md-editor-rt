@@ -151,9 +151,9 @@ const Editor = forwardRef((props: EditorProps, ref: ForwardedRef<unknown>) => {
         id={staticProps.editorId}
         className={classnames([
           prefix,
-          className,
+          !!className && className,
           theme === 'dark' && `${prefix}-dark`,
-          setting.fullscreen || setting.pageFullscreen ? `${prefix}-fullscreen` : ''
+          (setting.fullscreen || setting.pageFullscreen) && `${prefix}-fullscreen`
         ])}
         style={props.style}
       >
@@ -168,6 +168,7 @@ const Editor = forwardRef((props: EditorProps, ref: ForwardedRef<unknown>) => {
             defToolbars={defToolbars}
             noUploadImg={staticProps.noUploadImg}
             showToolbarName={props.showToolbarName}
+            catalogVisible={catalogVisible}
           />
         )}
         <Content

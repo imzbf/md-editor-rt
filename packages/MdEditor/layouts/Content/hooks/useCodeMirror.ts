@@ -1,6 +1,6 @@
 import { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
 import { EditorView } from 'codemirror';
-import { keymap } from '@codemirror/view';
+import { keymap, drawSelection } from '@codemirror/view';
 import { languages } from '@codemirror/language-data';
 import { markdown } from '@codemirror/lang-markdown';
 import { Compartment } from '@codemirror/state';
@@ -133,7 +133,9 @@ const useCodeMirror = (props: ContentProps) => {
           update.docChanged && props.onChange(update.state.doc.toString());
         })
       ),
-      comp.domEvent.of(EditorView.domEventHandlers(domEventHandlers))
+      comp.domEvent.of(EditorView.domEventHandlers(domEventHandlers)),
+      // 解决多行placeholder时，光标异常的情况
+      drawSelection()
     ];
   });
 

@@ -311,7 +311,7 @@ export default ({ theme, previewTheme, codeTheme, lang }: PreviewProp) => {
           // showCodeRowNumber
           // tableShape={[10, 10]}
           // noMermaid
-          // placeholder="placeholder"
+          placeholder="placeholderplaceholderplaceholderplaceholderplaceholderplaceholderplaceholderplaceholderplaceholder"
           // noKatex
           mdHeadingId={markedHeadingId}
           // sanitize={(h) => `<a href="#">aaa</a>${h}`}
