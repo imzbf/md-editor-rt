@@ -1,5 +1,5 @@
 import { useCallback, useContext, useEffect, useRef, useState } from 'react';
-import { uuid } from '@vavt/util';
+import { randomId } from '@vavt/util';
 import { prefix, configOption } from '~/config';
 import { EditorContext } from '~/Editor';
 import { appendHandler } from '~/utils/dom';
@@ -103,7 +103,7 @@ const useMermaid = (props: ContentPreviewProps) => {
         let mermaidHtml = mermaidCache.get(item.innerText) as string;
 
         if (!mermaidHtml) {
-          const idRand = uuid();
+          const idRand = randomId();
           // @9以下使用renderAsync，@10以上使用render
           const render = mermaidRef.current.renderAsync || mermaidRef.current.render;
 
