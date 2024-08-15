@@ -37,7 +37,8 @@ export const EditorContext = createContext<ContentType>({
   showCodeRowNumber: false,
   usedLanguageText: staticTextDefault['zh-CN'],
   previewTheme: 'default',
-  customIcon: {}
+  customIcon: {},
+  rootRef: null
 });
 
 const Editor = forwardRef((props: EditorProps, ref: ForwardedRef<unknown>) => {
@@ -96,7 +97,7 @@ const Editor = forwardRef((props: EditorProps, ref: ForwardedRef<unknown>) => {
       scrollAuto: props.scrollAuto === undefined ? true : props.scrollAuto
     };
   });
-
+  const rootRef = useRef<HTMLDivElement>(null);
   const codeRef = useRef<ContentExposeParam>();
 
   const onScrollAutoChange = useCallback(
@@ -144,7 +145,8 @@ const Editor = forwardRef((props: EditorProps, ref: ForwardedRef<unknown>) => {
         showCodeRowNumber,
         usedLanguageText,
         previewTheme,
-        customIcon: props.customIcon || {}
+        customIcon: props.customIcon || {},
+        rootRef
       }}
     >
       <div
@@ -156,6 +158,7 @@ const Editor = forwardRef((props: EditorProps, ref: ForwardedRef<unknown>) => {
           (setting.fullscreen || setting.pageFullscreen) && `${prefix}-fullscreen`
         ])}
         style={props.style}
+        ref={rootRef}
       >
         {toolbars.length > 0 && (
           <ToolBar

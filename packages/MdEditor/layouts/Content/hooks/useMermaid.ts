@@ -12,7 +12,7 @@ import { ContentPreviewProps } from '../props';
  *
  */
 const useMermaid = (props: ContentPreviewProps) => {
-  const { theme } = useContext(EditorContext);
+  const { theme, rootRef } = useContext(EditorContext);
   const { noMermaid, sanitizeMermaid } = props;
 
   const mermaidRef = useRef(configOption.editorExtensions.mermaid!.instance);
@@ -82,9 +82,8 @@ const useMermaid = (props: ContentPreviewProps) => {
 
   const replaceMermaid = useCallback(() => {
     if (!noMermaid && mermaidRef.current) {
-      const mermaidSourceEles = document.querySelectorAll<HTMLElement>(
-        `div.${prefix}-mermaid`
-      );
+      const mermaidSourceEles =
+        rootRef!.current?.querySelectorAll<HTMLElement>(`div.${prefix}-mermaid`) || [];
 
       const svgContainingElement = document.createElement('div');
       svgContainingElement.style.width = document.body.offsetWidth + 'px';
@@ -137,7 +136,7 @@ const useMermaid = (props: ContentPreviewProps) => {
         }
       });
     }
-  }, [noMermaid, sanitizeMermaid]);
+  }, [noMermaid, rootRef, sanitizeMermaid]);
 
   return { mermaidRef, reRender, replaceMermaid };
 };

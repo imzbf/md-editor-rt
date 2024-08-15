@@ -33,7 +33,7 @@ export type ModalProps = Readonly<{
 const toClass = `${prefix}-modal-container`;
 
 const Modal = (props: ModalProps) => {
-  const { theme } = useContext(EditorContext);
+  const { theme, rootRef } = useContext(EditorContext);
 
   const { onClose = () => {}, onAdjust = () => {}, style = {}, showMask = true } = props;
   const [modalVisible, setMV] = useState(props.visible);
@@ -41,7 +41,7 @@ const Modal = (props: ModalProps) => {
   const modalRef = useRef<HTMLDivElement>(null);
   const modalHeaderRef = useRef<HTMLDivElement>(null);
 
-  const bodyRef = useRef<HTMLElement>();
+  const bodyRef = useRef<Element | ShadowRoot>();
 
   // 创建的弹窗容器，存放在document.body末尾
   const containerRef = useRef<HTMLDivElement>(null);
@@ -83,11 +83,12 @@ const Modal = (props: ModalProps) => {
   }, [props.height, props.isFullscreen, props.width]);
 
   useEffect(() => {
-    bodyRef.current = document.body;
+    const rootNode = rootRef!.current?.getRootNode() as ShadowRoot;
+    bodyRef.current = rootNode instanceof Document ? document.body : rootNode;
     return () => {
       bodyRef.current = undefined;
     };
-  }, []);
+  }, [rootRef]);
 
   useEffect(() => {
     let keyMoveClear = () => {};

@@ -5,14 +5,14 @@ import { EditorContext } from '~/Editor';
 import { ContentPreviewProps } from '../props';
 
 const useCopyCode = (props: ContentPreviewProps, html: string, key: string) => {
-  const { editorId, usedLanguageText, customIcon } = useContext(EditorContext);
+  const { editorId, usedLanguageText, customIcon, rootRef } = useContext(EditorContext);
   const { formatCopiedText = (t: string) => t } = props;
 
   useEffect(() => {
     if (props.setting.preview) {
       // 重新设置复制按钮
-      document
-        .querySelectorAll(`#${editorId} .${prefix}-preview .${prefix}-code`)
+      rootRef!.current
+        ?.querySelectorAll(`#${editorId} .${prefix}-preview .${prefix}-code`)
         .forEach((codeBlock: Element) => {
           // 恢复进程ID
           let clearTimer = -1;
@@ -61,6 +61,7 @@ const useCopyCode = (props: ContentPreviewProps, html: string, key: string) => {
     html,
     key,
     props.setting.preview,
+    rootRef,
     usedLanguageText.copyCode
   ]);
 };
