@@ -1,7 +1,7 @@
 import { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
 import mdit from 'markdown-it';
 import ImageFiguresPlugin from 'markdown-it-image-figures';
-import { uuid } from '@vavt/util';
+import { randomId } from '@vavt/util';
 import bus from '~/utils/event-bus';
 import { generateCodeRowNumber } from '~/utils';
 import { HeadList, MarkdownItConfigPlugin, Themes } from '~/type';
@@ -201,7 +201,7 @@ const useMarkdownIt = (props: ContentPreviewProps, previewOnly: boolean) => {
   });
 
   // 文章节点的key
-  const [key, setKey] = useState(`_article-key_${uuid()}`);
+  const [key, setKey] = useState(`_article-key_${randomId()}`);
 
   const [html, setHtml] = useState(() => {
     return sanitize(md.render(modelValue));
@@ -284,7 +284,7 @@ const useMarkdownIt = (props: ContentPreviewProps, previewOnly: boolean) => {
   useEffect(() => {
     const callback = () => {
       // 强制更新节点
-      setKey(`_article-key_${uuid()}`);
+      setKey(`_article-key_${randomId()}`);
       markHtml();
     };
     bus.on(editorId, {
