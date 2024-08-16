@@ -16,10 +16,10 @@ const template = {
 };
 
 export const useTaskState = (props: ContentPreviewProps, html: string) => {
-  const { editorId } = useContext(EditorContext);
+  const { editorId, rootRef } = useContext(EditorContext);
 
   useEffect(() => {
-    const tasks = document.querySelectorAll(`#${editorId} .task-list-item.enabled`);
+    const tasks = rootRef!.current?.querySelectorAll('.task-list-item.enabled') || [];
 
     const listener = (e: Event) => {
       e.preventDefault();
@@ -55,5 +55,5 @@ export const useTaskState = (props: ContentPreviewProps, html: string) => {
         item.removeEventListener('click', listener);
       });
     };
-  }, [editorId, html, props]);
+  }, [editorId, html, props, rootRef]);
 };

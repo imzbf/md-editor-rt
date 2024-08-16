@@ -1,4 +1,4 @@
-import React, { useState, useEffect, forwardRef, ForwardedRef } from 'react';
+import React, { useState, useEffect, forwardRef, ForwardedRef, useRef } from 'react';
 import { useConfig, useExpansionPreview } from '~/hooks';
 import { classnames, getNextId } from '~/utils';
 import { prefix, defaultProps, defaultEditorId } from '~/config';
@@ -43,6 +43,7 @@ const MdPreview = forwardRef((props: MdPreviewProps, ref: ForwardedRef<unknown>)
       noHighlight
     };
   });
+  const rootRef = useRef<HTMLDivElement>(null);
 
   // 扩展库引用
   useExpansionPreview(staticProps);
@@ -69,7 +70,8 @@ const MdPreview = forwardRef((props: MdPreviewProps, ref: ForwardedRef<unknown>)
         showCodeRowNumber,
         usedLanguageText,
         previewTheme,
-        customIcon: props.customIcon || {}
+        customIcon: props.customIcon || {},
+        rootRef
       }}
     >
       <div
@@ -82,6 +84,7 @@ const MdPreview = forwardRef((props: MdPreviewProps, ref: ForwardedRef<unknown>)
           `${prefix}-previewOnly`
         ])}
         style={props.style}
+        ref={rootRef}
       >
         <ContentPreview
           modelValue={modelValue}

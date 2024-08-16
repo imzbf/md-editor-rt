@@ -1,4 +1,4 @@
-import { CSSProperties, ReactElement } from 'react';
+import { CSSProperties, ReactElement, RefObject } from 'react';
 import markdownit from 'markdown-it';
 import { CompletionSource } from '@codemirror/autocomplete';
 import { Extension } from '@codemirror/state';
@@ -494,6 +494,7 @@ export interface ContentType {
   language: string;
   previewTheme: PreviewThemes;
   customIcon: CustomIcon;
+  rootRef: RefObject<HTMLDivElement> | null;
 }
 
 export interface MermaidTemplate {

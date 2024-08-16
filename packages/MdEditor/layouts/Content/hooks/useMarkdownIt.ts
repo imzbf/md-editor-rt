@@ -239,10 +239,11 @@ const useMarkdownIt = (props: ContentPreviewProps, previewOnly: boolean) => {
 
   useEffect(() => {
     if (setting.preview) {
+      replaceMermaid();
       // 生成目录
       bus.emit(editorId, CATALOG_CHANGED, headsRef.current);
     }
-  }, [editorId, setting.preview]);
+  }, [editorId, replaceMermaid, setting.preview]);
 
   useEffect(() => {
     if (ignoreFirstRender.current) {

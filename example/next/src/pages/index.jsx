@@ -22,8 +22,8 @@ export default function Home() {
         <p className={styles.description}>
           Get started by editing <code className={styles.code}>pages/index.js</code>
         </p>
-
-        <MdEditor modelValue={text} onChange={setText} />
+        {/* in nuxt, editor-id must be set. */}
+        <MdEditor editorId="myId" modelValue={text} onChange={setText} />
       </main>
     </div>
   );

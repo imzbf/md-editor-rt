@@ -24,7 +24,7 @@ let cropper: any = null;
 
 const ClipModal = (props: ClipModalProps) => {
   const editorConext = useContext(EditorContext);
-  const { editorId, usedLanguageText } = editorConext;
+  const { editorId, usedLanguageText, rootRef } = editorConext;
 
   const Cropper = configOption.editorExtensions.cropper!.instance;
 
@@ -80,11 +80,11 @@ const ClipModal = (props: ClipModalProps) => {
     if (data.imgSrc) {
       cropper = new window.Cropper(uploadImgRef.current, {
         viewMode: 2,
-        preview: `.${prefix}-clip-preview-target`
+        preview: rootRef!.current?.querySelector(`.${prefix}-clip-preview-target`)
         // aspectRatio: 16 / 9,
       });
     }
-  }, [data.imgSrc]);
+  }, [data.imgSrc, rootRef]);
 
   useEffect(() => {
     (previewTargetRef.current as HTMLImageElement)?.setAttribute('style', '');

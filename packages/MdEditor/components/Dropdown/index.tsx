@@ -62,8 +62,9 @@ const DropDown = (props: ModalProps) => {
     const triggerHeight = triggerInfo.height;
     const triggerWidth = triggerInfo.width;
 
-    const relativecrollLeft = document.querySelector(relative)?.scrollLeft || 0;
-    const relativeWidth = document.querySelector(relative)?.clientWidth || 0;
+    const rootNode = triggerEle.getRootNode() as Document | ShadowRoot;
+    const relativecrollLeft = rootNode.querySelector(relative)?.scrollLeft || 0;
+    const relativeWidth = rootNode.querySelector(relative)?.clientWidth || 0;
 
     let left =
       triggerLeft - overlayEle.offsetWidth / 2 + triggerWidth / 2 - relativecrollLeft;

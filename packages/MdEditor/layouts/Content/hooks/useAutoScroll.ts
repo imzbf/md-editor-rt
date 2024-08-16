@@ -27,14 +27,17 @@ const useAutoScroll = (
 
   // 更新完毕后判断是否需要重新绑定滚动事件
   useEffect(() => {
-    const cmScroller = document.querySelector<HTMLDivElement>(
+    const rootNode = codeMirrorUt.current?.view.contentDOM.getRootNode() as
+      | Document
+      | ShadowRoot;
+    const cmScroller = rootNode.querySelector<HTMLDivElement>(
       `#${editorId} .cm-scroller`
     );
 
-    const previewEle = document.querySelector<HTMLElement>(
+    const previewEle = rootNode.querySelector<HTMLElement>(
       `[id="${editorId}-preview-wrapper"]`
     );
-    const htmlEle = document.querySelector<HTMLElement>(
+    const htmlEle = rootNode.querySelector<HTMLElement>(
       `[id="${editorId}-html-wrapper"]`
     );
 
