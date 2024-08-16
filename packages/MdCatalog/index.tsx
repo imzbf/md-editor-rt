@@ -4,12 +4,15 @@ import React, {
   useMemo,
   useState,
   MouseEvent,
-  useCallback
+  useCallback,
+  createContext,
+  useRef,
+  MutableRefObject
 } from 'react';
 import bus from '~/utils/event-bus';
 import { HeadList, MdHeadingId, Themes } from '~/type';
 import { defaultProps, prefix } from '~/config';
-import { getRelativeTop } from '~/utils';
+import { classnames, getRelativeTop } from '~/utils';
 import { CATALOG_CHANGED, PUSH_CATALOG } from '~/static/event-name';
 
 import CatalogLink from './CatalogLink';
@@ -21,6 +24,14 @@ export interface TocItem {
   active: boolean;
   children?: Array<TocItem>;
 }
+
+export const CatalogContext = createContext<{
+  scrollElementRef: MutableRefObject<HTMLElement | undefined> | undefined;
+  rootNodeRef: MutableRefObject<Document | ShadowRoot | undefined> | undefined;
+}>({
+  scrollElementRef: undefined,
+  rootNodeRef: undefined
+});
 
 export interface CatalogProps {
   /**
@@ -58,6 +69,12 @@ export interface CatalogProps {
    * @returns
    */
   onActive?: (heading: HeadList | undefined) => void;
+  /**
+   * 滚动容器是否在web component中，默认不在
+   *
+   * 在其中的话通过document查询不到
+   */
+  isScrollElementInShadow?: boolean;
 }
 
 const MdCatalog = (props: CatalogProps) => {
@@ -68,10 +85,19 @@ const MdCatalog = (props: CatalogProps) => {
     theme = 'light',
     offsetTop = 20
   } = props;
-
+  const defaultScrollElement = useMemo(() => {
+    return `#${editorId}-preview-wrapper`;
+  }, [editorId]);
   const [list, setList] = useState<Array<HeadList>>([]);
 
   const [activeItem, setActiveItem] = useState<HeadList>();
+
+  // 目录根部元素
+  const catalogRef = useRef<HTMLDivElement>(null);
+  // 获取到的滚动root节点
+  const scrollElementRef = useRef<HTMLElement>();
+  // 获取到的目录root节点，注意，不支持目录和编辑器不在同一个web c中使用
+  const rootNodeRef = useRef<Document | ShadowRoot>();
 
   // 重构的列表
   const catalogs = useMemo(() => {
@@ -125,13 +151,25 @@ const MdCatalog = (props: CatalogProps) => {
   });
 
   const getScrollElement = useCallback(() => {
-    const scrollElement_ =
-      scrollElement instanceof HTMLElement
-        ? scrollElement
-        : (document.querySelector(scrollElement) as HTMLElement);
+    if (scrollElement instanceof HTMLElement) {
+      return scrollElement;
+    }
 
-    return scrollElement_;
-  }, [scrollElement]);
+    let scrollRoot: ShadowRoot | Document = document;
+    if (scrollElement === defaultScrollElement || props.isScrollElementInShadow) {
+      scrollRoot = catalogRef.current?.getRootNode() as ShadowRoot | Document;
+    }
+
+    return scrollRoot.querySelector(scrollElement) as HTMLElement;
+  }, [defaultScrollElement, props.isScrollElementInShadow, scrollElement]);
+
+  useEffect(() => {
+    // 获取当前元素所在的根节点
+    rootNodeRef.current = catalogRef.current!.getRootNode() as Document | ShadowRoot;
+    // 滚动区域为document.documentElement需要把监听事件绑定在window上
+    const scrollElement = getScrollElement();
+    scrollElementRef.current = scrollElement;
+  }, [getScrollElement]);
 
   useEffect(() => {
     let cacheList: HeadList[] = [];
@@ -144,14 +182,13 @@ const MdCatalog = (props: CatalogProps) => {
       // 获取标记当前位置的目录
       const { activeHead } = list_.reduce(
         (activeData, link, index) => {
-          const linkEle = document.getElementById(
+          const linkEle = rootNodeRef.current?.getElementById(
             mdHeadingId(link.text, link.level, index + 1)
           );
 
           if (linkEle instanceof HTMLElement) {
-            const scrollElement = getScrollElement();
             // 获得当前标题相对滚动容器视窗的高度
-            const relativeTop = getRelativeTop(linkEle, scrollElement);
+            const relativeTop = getRelativeTop(linkEle, scrollElementRef.current!);
 
             // 当前标题滚动到超出容器的顶部且相比其他的标题最近
             if (relativeTop < offsetTop && relativeTop > activeData.minTop) {
@@ -176,24 +213,15 @@ const MdCatalog = (props: CatalogProps) => {
     };
 
     // 滚动区域为document.documentElement需要把监听事件绑定在window上
-    let scrollContainer: HTMLElement | Window = window;
-
-    const findScrollContainer = () => {
-      const scrollElement_ = getScrollElement();
-
-      scrollContainer =
-        scrollElement_ === document.documentElement ? window : scrollElement_;
-    };
 
     const scrollHandler = () => {
       findActiveHeading(cacheList);
     };
 
     const callback = (_list: Array<HeadList>) => {
-      scrollContainer?.removeEventListener('scroll', scrollHandler);
+      scrollElementRef.current?.removeEventListener('scroll', scrollHandler);
       findActiveHeading(_list);
-      findScrollContainer();
-      scrollContainer?.addEventListener('scroll', scrollHandler);
+      scrollElementRef.current?.addEventListener('scroll', scrollHandler);
     };
 
     bus.on(editorId, {
@@ -204,12 +232,10 @@ const MdCatalog = (props: CatalogProps) => {
     // 主动触发一次接收
     bus.emit(editorId, PUSH_CATALOG);
 
-    findScrollContainer();
-
-    scrollContainer?.addEventListener('scroll', scrollHandler);
+    scrollElementRef.current?.addEventListener('scroll', scrollHandler);
     return () => {
       bus.remove(editorId, CATALOG_CHANGED, callback);
-      scrollContainer?.removeEventListener('scroll', scrollHandler);
+      scrollElementRef.current?.removeEventListener('scroll', scrollHandler);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [offsetTop, mdHeadingId, getScrollElement]);
@@ -221,25 +247,33 @@ const MdCatalog = (props: CatalogProps) => {
   }, [activeItem, props]);
 
   return (
-    <div
-      className={`${prefix}-catalog${theme === 'dark' ? '-dark' : ''} ${
-        props.className || ''
-      } `}
-      style={props.style}
+    <CatalogContext.Provider
+      value={{
+        scrollElementRef,
+        rootNodeRef
+      }}
     >
-      {catalogs.map((item) => {
-        return (
-          <CatalogLink
-            mdHeadingId={mdHeadingId}
-            tocItem={item}
-            key={`${item.text}-${item.index}`}
-            scrollElement={scrollElement}
-            onClick={props.onClick}
-            scrollElementOffsetTop={props.scrollElementOffsetTop}
-          />
-        );
-      })}
-    </div>
+      <div
+        className={classnames([
+          `${prefix}-catalog${theme === 'dark' ? '-dark' : ''}`,
+          props.className || ''
+        ])}
+        style={props.style}
+        ref={catalogRef}
+      >
+        {catalogs.map((item) => {
+          return (
+            <CatalogLink
+              mdHeadingId={mdHeadingId}
+              tocItem={item}
+              key={`${item.text}-${item.index}`}
+              onClick={props.onClick}
+              scrollElementOffsetTop={props.scrollElementOffsetTop}
+            />
+          );
+        })}
+      </div>
+    </CatalogContext.Provider>
   );
 };
 

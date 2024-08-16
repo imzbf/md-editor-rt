@@ -857,6 +857,7 @@ For more examples, refer to [document](https://imzbf.github.io/md-editor-rt).
   - `theme`: `'light' | 'dark'`, not necessary, provide it when you want to change theme online, it is the same as Editor `theme`.
   - `offsetTop`: `number`, not necessary, highlight current item of catalogs when title is `offsetTop` pixels from the top, default 20.
   - `scrollElementOffsetTop`: `number`, not necessary, offsetTop of the scroll container，default 0.
+  - `isScrollElementInShadow`: `boolean`, whether the scroll container is in web component, default false.
 
 - **events**
 

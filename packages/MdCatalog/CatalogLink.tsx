@@ -1,13 +1,12 @@
-import React, { MouseEvent } from 'react';
+import React, { MouseEvent, useContext } from 'react';
 import { prefix } from '~/config';
 import { classnames } from '~/utils';
 import { MdHeadingId } from '~/type';
-import { TocItem } from './index';
+import { CatalogContext, TocItem } from './index';
 
 export interface CatalogLinkProps {
   tocItem: TocItem;
   mdHeadingId: MdHeadingId;
-  scrollElement: string | HTMLElement;
   onClick?: (e: MouseEvent, t: TocItem) => void;
   scrollElementOffsetTop?: number;
 }
@@ -15,10 +14,11 @@ export interface CatalogLinkProps {
 const CatalogLink = ({
   tocItem,
   mdHeadingId,
-  scrollElement,
   onClick,
   scrollElementOffsetTop = 0
 }: CatalogLinkProps) => {
+  const { scrollElementRef, rootNodeRef } = useContext(CatalogContext);
+
   return (
     <div
       className={classnames([
@@ -29,11 +29,8 @@ const CatalogLink = ({
         onClick && onClick(e, tocItem);
         e.stopPropagation();
         const id = mdHeadingId(tocItem.text, tocItem.level, tocItem.index);
-        const targetHeadEle = document.getElementById(id);
-        const scrollContainer =
-          scrollElement instanceof Element
-            ? scrollElement
-            : document.querySelector(scrollElement);
+        const targetHeadEle = rootNodeRef?.current!.getElementById(id);
+        const scrollContainer = scrollElementRef?.current;
 
         if (targetHeadEle && scrollContainer) {
           let par = targetHeadEle.offsetParent as HTMLElement;
@@ -63,7 +60,6 @@ const CatalogLink = ({
               mdHeadingId={mdHeadingId}
               key={`${item.text}-${item.index}`}
               tocItem={item}
-              scrollElement={scrollElement}
               onClick={onClick}
               scrollElementOffsetTop={scrollElementOffsetTop}
             />
