@@ -2,6 +2,8 @@ import React, { MouseEvent, useContext } from 'react';
 import { prefix } from '~/config';
 import { classnames } from '~/utils';
 import { MdHeadingId } from '~/type';
+import { getComputedStyleNum } from '~/utils/scroll-auto';
+
 import { CatalogContext, TocItem } from './index';
 
 export interface CatalogLinkProps {
@@ -45,8 +47,14 @@ const CatalogLink = ({
             }
           }
 
+          const pel = targetHeadEle.previousElementSibling;
+          let currMarginTop = 0;
+          if (!pel) {
+            currMarginTop = getComputedStyleNum(targetHeadEle, 'margin-top');
+          }
+
           scrollContainer?.scrollTo({
-            top: offsetTop - scrollElementOffsetTop,
+            top: offsetTop - scrollElementOffsetTop - currMarginTop,
             behavior: 'smooth'
           });
         }
