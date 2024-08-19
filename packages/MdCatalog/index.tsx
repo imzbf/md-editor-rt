@@ -96,6 +96,8 @@ const MdCatalog = (props: CatalogProps) => {
   const catalogRef = useRef<HTMLDivElement>(null);
   // 获取到的滚动root节点
   const scrollElementRef = useRef<HTMLElement>();
+  // 滚动容器，包括document
+  const scrollContainerRef = useRef<HTMLElement | Document>();
   // 获取到的目录root节点，注意，不支持目录和编辑器不在同一个web c中使用
   const rootNodeRef = useRef<Document | ShadowRoot>();
 
@@ -166,10 +168,7 @@ const MdCatalog = (props: CatalogProps) => {
   useEffect(() => {
     // 获取当前元素所在的根节点
     rootNodeRef.current = catalogRef.current!.getRootNode() as Document | ShadowRoot;
-    // 滚动区域为document.documentElement需要把监听事件绑定在window上
-    const scrollElement = getScrollElement();
-    scrollElementRef.current = scrollElement;
-  }, [getScrollElement]);
+  }, []);
 
   useEffect(() => {
     let cacheList: HeadList[] = [];
@@ -220,10 +219,14 @@ const MdCatalog = (props: CatalogProps) => {
 
     const callback = (_list: Array<HeadList>) => {
       // 切换预览状态后，需要重新获取滚动元素
-      scrollElementRef.current = getScrollElement();
-      scrollElementRef.current?.removeEventListener('scroll', scrollHandler);
+      const scrollElement = getScrollElement();
+      scrollElementRef.current = scrollElement;
+      scrollContainerRef.current =
+        scrollElement === document.documentElement ? document : scrollElement;
+
+      scrollContainerRef.current?.removeEventListener('scroll', scrollHandler);
       findActiveHeading(_list);
-      scrollElementRef.current?.addEventListener('scroll', scrollHandler);
+      scrollContainerRef.current?.addEventListener('scroll', scrollHandler);
     };
 
     bus.on(editorId, {
@@ -233,14 +236,11 @@ const MdCatalog = (props: CatalogProps) => {
 
     // 主动触发一次接收
     bus.emit(editorId, PUSH_CATALOG);
-
-    scrollElementRef.current?.addEventListener('scroll', scrollHandler);
     return () => {
       bus.remove(editorId, CATALOG_CHANGED, callback);
-      scrollElementRef.current?.removeEventListener('scroll', scrollHandler);
+      scrollContainerRef.current?.removeEventListener('scroll', scrollHandler);
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [offsetTop, mdHeadingId, getScrollElement]);
+  }, [offsetTop, mdHeadingId, getScrollElement, editorId]);
 
   useEffect(() => {
     if (props.onActive) {
