@@ -18,7 +18,7 @@ const useHighlight = (props: ContentPreviewProps) => {
 
   useEffect(() => {
     // 强制不高亮，则什么都不做
-    if (props.noHighlight) {
+    if (props.noHighlight || hljsRef.current) {
       return;
     }
 
