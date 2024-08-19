@@ -77,16 +77,6 @@ const ClipModal = (props: ClipModalProps) => {
   }, [props.visible, data.cropperInited, Cropper, editorId]);
 
   useEffect(() => {
-    if (data.imgSrc) {
-      cropper = new window.Cropper(uploadImgRef.current, {
-        viewMode: 2,
-        preview: rootRef!.current?.querySelector(`.${prefix}-clip-preview-target`)
-        // aspectRatio: 16 / 9,
-      });
-    }
-  }, [data.imgSrc, rootRef]);
-
-  useEffect(() => {
     (previewTargetRef.current as HTMLImageElement)?.setAttribute('style', '');
   }, [data.imgSelected]);
 
@@ -94,14 +84,15 @@ const ClipModal = (props: ClipModalProps) => {
     cropper?.destroy();
     (previewTargetRef.current as HTMLImageElement)?.setAttribute('style', '');
 
-    if (uploadImgRef.current) {
+    if (uploadImgRef.current && data.imgSrc) {
       cropper = new window.Cropper(uploadImgRef.current, {
         viewMode: 2,
-        preview: `.${prefix}-clip-preview-target`
-        // aspectRatio: 16 / 9,
+        preview: (rootRef!.current?.getRootNode() as Document | ShadowRoot).querySelector(
+          `.${prefix}-clip-preview-target`
+        )
       });
     }
-  }, [data.isFullscreen]);
+  }, [data.imgSrc, data.isFullscreen, rootRef]);
 
   // 弹出层宽度
   const modalSize = useMemo(() => {
