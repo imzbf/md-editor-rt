@@ -25,11 +25,7 @@ export default () => {
   return (
     <div className="container">
       <div className="doc">
-        <IzPreviewContent
-          editorId={editorId}
-          modelValue={mdText}
-          showCodeRowNumber={false}
-        />
+        <IzPreviewContent editorId={editorId} modelValue={mdText} />
         <IzCatalog editorId={editorId} />
       </div>
     </div>
