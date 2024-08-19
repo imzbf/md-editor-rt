@@ -234,30 +234,38 @@ const useCodeMirror = (props: ContentProps) => {
   }, []);
 
   useEffect(() => {
-    const callback = (direct: ToolDirective, params = {} as any) => {
+    const callback = async (direct: ToolDirective, params = {} as any) => {
       // 弹窗插入图片时，将链接使用transformImgUrl转换后再插入
       if (direct === 'image' && params.transform) {
         const tv = props.transformImgUrl(params.url);
 
         if (tv instanceof Promise) {
-          tv.then((url) => {
-            const { text, options } = directive2flag(direct, codeMirrorUt.current!, {
-              ...params,
-              url
-            });
+          tv.then(async (url) => {
+            const { text, options } = await directive2flag(
+              direct,
+              codeMirrorUt.current!,
+              {
+                ...params,
+                url
+              }
+            );
             codeMirrorUt.current?.replaceSelectedText(text, options, editorId);
           }).catch((err) => {
             console.error(err);
           });
         } else {
-          const { text, options } = directive2flag(direct, codeMirrorUt.current!, {
+          const { text, options } = await directive2flag(direct, codeMirrorUt.current!, {
             ...params,
             url: tv
           });
           codeMirrorUt.current?.replaceSelectedText(text, options, editorId);
         }
       } else {
-        const { text, options } = directive2flag(direct, codeMirrorUt.current!, params);
+        const { text, options } = await directive2flag(
+          direct,
+          codeMirrorUt.current!,
+          params
+        );
         codeMirrorUt.current?.replaceSelectedText(text, options, editorId);
       }
     };
