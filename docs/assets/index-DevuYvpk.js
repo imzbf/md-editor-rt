@@ -1,4 +1,4 @@
-import{u as l,r as e,j as n,I as h,e as p}from"./index-ChPFf_0M.js";const r=`## 🐶 Heading
+import{u as l,r as e,j as n,I as h,e as p}from"./index-zlyTggh2.js";const r=`## 🐶 Heading
 
 \`\`\`markdown
 ## Heading
@@ -662,4 +662,4 @@ failure、danger、bug、example、quote、hint、caution、error、attention
 
 !!!
 \`\`\`
-`,a="grammar-preview",c=()=>{const t=l(s=>s),[i,d]=e.useState(()=>t.lang==="zh-CN"?o:r),m=()=>{d(t.lang==="en-US"?r:o)};return e.useEffect(m,[t.lang]),n.jsx("div",{className:"container",children:n.jsxs("div",{className:"doc",children:[n.jsx(h,{editorId:a,modelValue:i,showCodeRowNumber:!1}),n.jsx(p,{editorId:a})]})})};export{c as default};
+`,a="grammar-preview",c=()=>{const t=l(s=>s),[i,d]=e.useState(()=>t.lang==="zh-CN"?o:r),m=()=>{d(t.lang==="en-US"?r:o)};return e.useEffect(m,[t.lang]),n.jsx("div",{className:"container",children:n.jsxs("div",{className:"doc",children:[n.jsx(h,{editorId:a,modelValue:i}),n.jsx(p,{editorId:a})]})})};export{c as default};
