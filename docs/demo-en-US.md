@@ -46,7 +46,7 @@ When using server-side rendering, make sure to set `editorId` to a constant valu
 #### 🤓 Jsx Template
 
 ```jsx
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { MdEditor } from 'md-editor-rt';
 import 'md-editor-rt/lib/style.css';
 
@@ -59,7 +59,7 @@ export default () => {
 #### 📖 Preview Only
 
 ```jsx
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { MdPreview, MdCatalog } from 'md-editor-rt';
 import 'md-editor-rt/lib/preview.css';
 
@@ -78,6 +78,16 @@ export default () => {
 ```
 
 When using server-side rendering, `scrollElement` should be of string type, eg: `body`, `#id`, `.class`.
+
+## 🎛 Used in Web Component
+
+Complete example reference [the sample project](https://github.com/imzbf/md-editor-rt/tree/main/example/webComponent) provided in the source code.
+
+Here are the precautions:
+
+1. The image zoom-in view feature is ineffective; implementation needs to be done manually!!!
+2. Do not use CDN to reference dependency libraries by default; refer to [[Import All Library]](https://imzbf.github.io/md-editor-rt/en-US/demo#%F0%9F%99%8D%F0%9F%8F%BB%E2%80%8D%E2%99%82%EF%B8%8F%20Import%20All%20Library)!!!
+3. Only font-class type icons can be used; the default symbol type is ineffective!!!
 
 ## 🥂 Api usage
 
@@ -200,7 +210,7 @@ Next, listening 'insertMarkBlock' in the component where the editor is located
 `App.tsx`
 
 ```tsx
-import React, { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { MdEditor, ExposeParam } from 'md-editor-rt';
 // If you used EventBus
 import bus from '@/utils/event-bus';
@@ -272,7 +282,7 @@ Themes are divided into editor theme(`theme`), article preview theme(`previewThe
 Support `light` and `dark` default.
 
 ```jsx
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { MdEditor } from 'md-editor-rt';
 import 'md-editor-rt/lib/style.css';
 
@@ -288,7 +298,7 @@ export default () => {
 There are 6 kinds of themes: `default`, `github`, `vuepress`, `mk-cute`, `smart-blue` and `cyanosis`. It is useful When you want to show your article directly. Modify `previewTheme`.
 
 ```jsx
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { MdEditor } from 'md-editor-rt';
 import 'md-editor-rt/lib/style.css';
 
@@ -330,7 +340,7 @@ There are 8 kinds of themes: `atom`, `a11y`, `github`, `gradient`, `kimbie`, `pa
 - Usage
 
   ```jsx
-  import React, { useState } from 'react';
+  import { useState } from 'react';
   import { MdEditor } from 'md-editor-rt';
   import 'md-editor-rt/lib/style.css';
 
@@ -383,7 +393,7 @@ Example for `screenfull`:
 #### ⚰️ Inject Directly
 
 ```jsx
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { MdEditor, config } from 'md-editor-rt';
 import 'md-editor-rt/lib/style.css';
 import screenfull from 'screenfull';
@@ -407,7 +417,7 @@ export default () => {
 Get files from [unpkg.com](https://unpkg.com).
 
 ```jsx
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { MdEditor, config } from 'md-editor-rt';
 import 'md-editor-rt/lib/style.css';
 
@@ -432,7 +442,7 @@ By default, you can select multiple pictures. You can paste and upload screensho
 > Tips: When pasting pictures, if they are GIF graphs, it does not work! Please upload it by file system.
 
 ```jsx
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { MdEditor } from 'md-editor-rt';
 import 'md-editor-rt/lib/style.css';
 
@@ -467,7 +477,7 @@ export default () => {
 ### 🏳️‍🌈 Extension Language
 
 ```js
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { MdEditor, config } from 'md-editor-rt';
 import 'md-editor-rt/lib/style.css';
 
@@ -574,7 +584,7 @@ You can install the existing language also: [md-editor-extension](https://github
 - Get
 
   ```jsx
-  import React, { useState } from 'react';
+  import { useState } from 'react';
   import { MdEditor } from 'md-editor-rt';
   import 'md-editor-rt/lib/style.css';
 
@@ -591,7 +601,7 @@ You can install the existing language also: [md-editor-extension](https://github
   Use `MdCatalog`
 
   ```jsx
-  import React, { useState } from 'react';
+  import { useState } from 'react';
   import { MdPreview, MdCatalog } from 'md-editor-rt';
   import 'md-editor-rt/lib/preview.css';
 
@@ -617,7 +627,7 @@ You can install the existing language also: [md-editor-extension](https://github
 > after v1.2.0, You can sort the toolbar as you like, split tools by `'-'`, the left and right toolbars are divided by `'='`!
 
 ```jsx
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { MdEditor } from 'md-editor-rt';
 import 'md-editor-rt/lib/style.css';
 
@@ -646,7 +656,7 @@ To get complete code, refer to [docs](https://github.com/imzbf/md-editor-rt/blob
   --md-color: if(@isDark, #999, #222);
   --md-hover-color: if(@isDark, #bbb, #000);
   --md-bk-color: if(@isDark, #000, #fff);
-  --md-bk-color-outstand: if(@isDark, #111, #f6f6f6);
+  --md-bk-color-outstand: if(@isDark, #333, #f2f2f2);
   --md-bk-hover-color: if(@isDark, #1b1a1a, #f5f7fa);
   --md-border-color: if(@isDark, #2d2d2d, #e6e6e6);
   --md-border-hover-color: if(@isDark, #636262, #b9b9b9);
@@ -855,13 +865,14 @@ yarn add sanitize-html
 ```
 
 ```jsx
-import React from 'react';
 import { MdEditor } from 'md-editor-rt';
 import 'md-editor-rt/lib/style.css';
 import sanitizeHtml from 'sanitize-html';
 
+const sanitize = (html) => sanitizeHtml(html);
+
 export default () => {
-  return <MdEditor sanitize={(html) => sanitizeHtml(html)} />;
+  return <MdEditor sanitize={sanitize} />;
 };
 ```
 

@@ -1,4 +1,4 @@
-import{u as l,r as e,j as n,e as h,f as p}from"./index-Bs4ssMVh.js";const a=`## 🐶 Heading
+import{u as l,r as e,j as n,I as h,e as p}from"./index-ChPFf_0M.js";const r=`## 🐶 Heading
 
 \`\`\`markdown
 ## Heading
@@ -239,10 +239,14 @@ Two modes.
 
 ### 🐽 Inline
 
-$x+y^{2x}$
+$x+y^{2x}$ \\(\\xrightarrow[under]{over}\\)
 
 \`\`\`markdown
 $x+y^{2x}$
+
+<!-- or -->
+
+\\(\\xrightarrow[under]{over}\\)
 \`\`\`
 
 ---
@@ -251,14 +255,16 @@ $x+y^{2x}$
 
 $$\\sqrt[3]{x}$$
 
+\\[\\xrightarrow[under]{over}\\]
+
 \`\`\`markdown
 $$
 \\sqrt[3]{x}
 $$
 
-or
+<!-- or -->
 
-$$\\sqrt[3]{x}$$
+\\[\\xrightarrow[under]{over}\\]
 \`\`\`
 
 For more usage: [https://katex.org/docs/supported.html](https://katex.org/docs/supported.html)
@@ -324,7 +330,7 @@ failure、danger、bug、example、quote、hint、caution、error、attention
 
 !!!
 \`\`\`
-`,r=`## 🐶 标题
+`,o=`## 🐶 标题
 
 \`\`\`markdown
 ## 标题
@@ -565,24 +571,32 @@ import 'md-editor-rt/lib/style.css';
 
 ### 🐽 行内
 
-$x+y^{2x}$
+$x+y^{2x}$ \\(\\xrightarrow[under]{over}\\)
 
 \`\`\`markdown
 $x+y^{2x}$
+
+<!-- or -->
+
+\\(\\xrightarrow[under]{over}\\)
 \`\`\`
+
+---
 
 ### 🐸 块级
 
 $$\\sqrt[3]{x}$$
+
+\\[\\xrightarrow[under]{over}\\]
 
 \`\`\`markdown
 $$
 \\sqrt[3]{x}
 $$
 
-或者
+<!-- or -->
 
-$$\\sqrt[3]{x}$$
+\\[\\xrightarrow[under]{over}\\]
 \`\`\`
 
 更多公式示例参考：[https://katex.org/docs/supported.html](https://katex.org/docs/supported.html)
@@ -648,4 +662,4 @@ failure、danger、bug、example、quote、hint、caution、error、attention
 
 !!!
 \`\`\`
-`,o="grammar-preview",u=()=>{const t=l(s=>s),[i,d]=e.useState(()=>t.lang==="zh-CN"?r:a),m=()=>{d(t.lang==="en-US"?a:r)};return e.useEffect(m,[t.lang]),n.jsx("div",{className:"container",children:n.jsxs("div",{className:"doc",children:[n.jsx(h,{editorId:o,modelValue:i,showCodeRowNumber:!1}),n.jsx(p,{editorId:o})]})})};export{u as default};
+`,a="grammar-preview",c=()=>{const t=l(s=>s),[i,d]=e.useState(()=>t.lang==="zh-CN"?o:r),m=()=>{d(t.lang==="en-US"?r:o)};return e.useEffect(m,[t.lang]),n.jsx("div",{className:"container",children:n.jsxs("div",{className:"doc",children:[n.jsx(h,{editorId:a,modelValue:i,showCodeRowNumber:!1}),n.jsx(p,{editorId:a})]})})};export{c as default};
