@@ -219,6 +219,8 @@ const MdCatalog = (props: CatalogProps) => {
     };
 
     const callback = (_list: Array<HeadList>) => {
+      // 切换预览状态后，需要重新获取滚动元素
+      scrollElementRef.current = getScrollElement();
       scrollElementRef.current?.removeEventListener('scroll', scrollHandler);
       findActiveHeading(_list);
       scrollElementRef.current?.addEventListener('scroll', scrollHandler);
