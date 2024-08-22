@@ -14,7 +14,8 @@ const resolvePath = (p: string) => path.resolve(__dirname, p);
     base: '/',
     publicDir: resolvePath('dev/public'),
     server: {
-      port: 6101
+      port: 6101,
+      host: '0.0.0.0'
     },
     resolve: {
       alias: {
