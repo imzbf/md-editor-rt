@@ -80,7 +80,7 @@ const useMermaid = (props: ContentPreviewProps) => {
     }
   }, [configMermaid, noMermaid]);
 
-  const replaceMermaid = useCallback(() => {
+  const replaceMermaid = useCallback(async () => {
     if (!noMermaid && mermaidRef.current) {
       const mermaidSourceEles =
         rootRef!.current?.querySelectorAll<HTMLElement>(`div.${prefix}-mermaid`) || [];
@@ -98,43 +98,51 @@ const useMermaid = (props: ContentPreviewProps) => {
         document.body.appendChild(svgContainingElement);
       }
 
-      mermaidSourceEles.forEach(async (item) => {
-        let mermaidHtml = mermaidCache.get(item.innerText) as string;
+      await Promise.allSettled(
+        Array.from(mermaidSourceEles).map((ele) => {
+          const handler = async (item: HTMLElement) => {
+            let mermaidHtml = mermaidCache.get(item.innerText) as string;
 
-        if (!mermaidHtml) {
-          const idRand = randomId();
-          // @9以下使用renderAsync，@10以上使用render
-          const render = mermaidRef.current.renderAsync || mermaidRef.current.render;
+            if (!mermaidHtml) {
+              const idRand = randomId();
+              // @9以下使用renderAsync，@10以上使用render
+              const render = mermaidRef.current.renderAsync || mermaidRef.current.render;
 
-          let svg: { svg: string } | string = '';
-          try {
-            svg = await render(idRand, item.innerText, svgContainingElement);
-          } catch (error) {
-            // console.error(error);
-          }
+              let svg: { svg: string } | string = '';
+              try {
+                svg = await render(idRand, item.innerText, svgContainingElement);
+              } catch (error) {
+                // console.error(error);
+              }
 
-          // 9:10
-          mermaidHtml = await sanitizeMermaid(typeof svg === 'string' ? svg : svg.svg);
-        }
+              // 9:10
+              mermaidHtml = await sanitizeMermaid(
+                typeof svg === 'string' ? svg : svg.svg
+              );
+            }
 
-        const p = document.createElement('p');
-        p.className = `${prefix}-mermaid`;
-        p.setAttribute('data-processed', '');
-        p.innerHTML = mermaidHtml;
-        p.children[0].removeAttribute('height');
+            const p = document.createElement('p');
+            p.className = `${prefix}-mermaid`;
+            p.setAttribute('data-processed', '');
+            p.innerHTML = mermaidHtml;
+            p.children[0].removeAttribute('height');
 
-        mermaidCache.set(item.innerText, mermaidHtml);
+            mermaidCache.set(item.innerText, mermaidHtml);
 
-        if (item.dataset.line !== undefined) {
-          p.dataset.line = item.dataset.line;
-        }
+            if (item.dataset.line !== undefined) {
+              p.dataset.line = item.dataset.line;
+            }
 
-        item.replaceWith(p);
+            item.replaceWith(p);
 
-        if (--count === 0) {
-          svgContainingElement.remove();
-        }
-      });
+            if (--count === 0) {
+              svgContainingElement.remove();
+            }
+          };
+
+          return handler(ele);
+        })
+      );
     }
   }, [noMermaid, rootRef, sanitizeMermaid]);
 

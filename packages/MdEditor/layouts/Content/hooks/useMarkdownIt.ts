@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-non-null-asserted-optional-chain */
 import { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
 import mdit from 'markdown-it';
 import ImageFiguresPlugin from 'markdown-it-image-figures';
@@ -12,6 +13,8 @@ import {
   PUSH_CATALOG,
   RERENDER
 } from '~/static/event-name';
+import { EditorContext } from '~/Editor';
+import { zoomMermaid } from '~/utils/dom';
 
 import useHighlight from './useHighlight';
 import useMermaid from './useMermaid';
@@ -24,7 +27,6 @@ import HeadingPlugin from '../markdownIt/heading';
 import CodePlugin from '../markdownIt/code';
 import XSSPlugin from '../markdownIt/xss';
 import TaskListPlugin from '../markdownIt/task';
-import { EditorContext } from '~/Editor';
 import { ContentPreviewProps } from '../props';
 
 const initLineNumber = (md: mdit) => {
@@ -57,8 +59,15 @@ const useMarkdownIt = (props: ContentPreviewProps, previewOnly: boolean) => {
   } = props;
   const { editorConfig, markdownItConfig, markdownItPlugins } = configOption;
   //
-  const { editorId, language, showCodeRowNumber, theme, usedLanguageText, customIcon } =
-    useContext(EditorContext);
+  const {
+    editorId,
+    language,
+    showCodeRowNumber,
+    theme,
+    usedLanguageText,
+    customIcon,
+    rootRef
+  } = useContext(EditorContext);
 
   const headsRef = useRef<HeadList[]>([]);
 
@@ -239,11 +248,15 @@ const useMarkdownIt = (props: ContentPreviewProps, previewOnly: boolean) => {
 
   useEffect(() => {
     if (setting.preview) {
-      replaceMermaid();
+      replaceMermaid().then(() => {
+        zoomMermaid(
+          rootRef?.current!.querySelectorAll(`#${editorId} .${prefix}-mermaid`)!
+        );
+      });
       // 生成目录
       bus.emit(editorId, CATALOG_CHANGED, headsRef.current);
     }
-  }, [editorId, replaceMermaid, setting.preview]);
+  }, [editorId, replaceMermaid, rootRef, setting.preview]);
 
   useEffect(() => {
     if (ignoreFirstRender.current) {
@@ -264,8 +277,10 @@ const useMarkdownIt = (props: ContentPreviewProps, previewOnly: boolean) => {
   }, [needReRender, theme, markHtml, language, previewOnly, editorConfig.renderDelay]);
 
   useEffect(() => {
-    replaceMermaid();
-  }, [html, key, reRender, replaceMermaid]);
+    replaceMermaid().then(() => {
+      zoomMermaid(rootRef?.current!.querySelectorAll(`#${editorId} .${prefix}-mermaid`)!);
+    });
+  }, [editorId, html, key, reRender, replaceMermaid, rootRef]);
 
   useEffect(() => {
     const callback = () => {
