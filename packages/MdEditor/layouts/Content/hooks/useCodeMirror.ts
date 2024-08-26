@@ -49,8 +49,9 @@ const useCodeMirror = (props: ContentProps) => {
   const { tabWidth, editorId, theme } = useContext(EditorContext);
 
   const inputWrapperRef = useRef<HTMLDivElement>(null);
-
   const codeMirrorUt = useRef<CodeMirrorUt>();
+  // 第一次延迟设置codemirror属性
+  const noSet = useRef(true);
 
   const [comp] = useState(() => {
     return {
@@ -65,8 +66,11 @@ const useCodeMirror = (props: ContentProps) => {
 
   const [mdEditorCommands] = useState(() => createCommands(editorId, props));
 
-  // 第一次延迟设置codemirror属性
-  const noSet = useRef(true);
+  // 搜集默认快捷键列表，通过方法返回，防止默认列表被篡改
+  const getDefaultKeymaps = useCallback(
+    () => [...defaultKeymap, ...historyKeymap, ...mdEditorCommands, indentWithTab],
+    [mdEditorCommands]
+  );
 
   // 粘贴上传
   const pasteHandler = usePasteUpload(props, codeMirrorUt);
@@ -123,7 +127,7 @@ const useCodeMirror = (props: ContentProps) => {
 
   const [defaultExtensions] = useState(() => {
     return [
-      keymap.of([...defaultKeymap, ...historyKeymap, ...mdEditorCommands, indentWithTab]),
+      keymap.of(getDefaultKeymaps()),
       comp.history.of(history()),
       comp.language.of(markdown({ codeLanguages: languages })),
       // 横向换行
@@ -147,7 +151,7 @@ const useCodeMirror = (props: ContentProps) => {
         comp.theme.of(theme === 'light' ? oneLight : oneDark),
         comp.autocompletion.of(createAutocompletion(props.completions))
       ],
-      [...mdEditorCommands]
+      getDefaultKeymaps()
     );
   });
 
