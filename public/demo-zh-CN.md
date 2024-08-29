@@ -41,7 +41,11 @@ yarn add md-editor-rt
 npm install md-editor-rt
 ```
 
+!!! warning
+
 当使用服务端渲染时，请务必设置`editorId`为固定值。
+
+!!!
 
 #### 🤓 基本使用
 
@@ -77,7 +81,11 @@ export default () => {
 };
 ```
 
-当使用服务端渲染时，`scrollElement`应该是字符类型，例：`body`、`#id`、`.class`。
+!!! warning
+
+当使用服务端渲染时，`scrollElement`应该是字符类型，例：`body`、`#id`、`.class`！
+
+!!!
 
 ## 🎛 Web Component中使用
 
