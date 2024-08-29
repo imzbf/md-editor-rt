@@ -41,7 +41,11 @@ yarn add md-editor-rt
 npm install md-editor-rt
 ```
 
+!!! warning
+
 When using server-side rendering, make sure to set `editorId` to a constant value.
+
+!!!
 
 #### 🤓 Jsx Template
 
@@ -77,7 +81,11 @@ export default () => {
 };
 ```
 
+!!! warning
+
 When using server-side rendering, `scrollElement` should be of string type, eg: `body`, `#id`, `.class`.
+
+!!!
 
 ## 🎛 Used in Web Component
 
