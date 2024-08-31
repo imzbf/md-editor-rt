@@ -51,7 +51,10 @@ const Content = forwardRef((props: ContentProps, ref: ForwardedRef<unknown>) => 
         focus(options: FocusOption) {
           codeMirrorUt.current?.focus(options);
         },
-        resetHistory
+        resetHistory,
+        getEditorView () {
+          return codeMirrorUt.current?.view
+        }
       };
     },
     [codeMirrorUt, resetHistory]

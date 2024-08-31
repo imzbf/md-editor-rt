@@ -1,4 +1,5 @@
 import { FocusOption } from '~/type';
+import { EditorView } from 'codemirror';
 
 export interface ContentExposeParam {
   /**
@@ -15,4 +16,5 @@ export interface ContentExposeParam {
    * 重置已经存在的历史记录
    */
   resetHistory(): void;
+  getEditorView: () => EditorView | undefined;
 }
