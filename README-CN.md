@@ -1,6 +1,6 @@
 # 🎄 md-editor-rt
 
-![](https://img.shields.io/github/package-json/v/imzbf/md-editor-rt) ![](https://img.shields.io/npm/dm/md-editor-rt) ![](https://img.shields.io/github/license/imzbf/md-editor-rt) ![](https://img.shields.io/badge/ssr-%3E1.0.0-brightgreen)
+![](https://img.shields.io/github/package-json/v/imzbf/md-editor-rt) ![](https://img.shields.io/npm/dm/md-editor-rt) ![](https://img.shields.io/github/license/imzbf/md-editor-rt) ![](https://img.shields.io/badge/ssr-%3E1.0.0-brightgreen) ![](https://img.shields.io/badge/webcomponent-%3E4.19.0-brightgreen)
 
 [English](https://github.com/imzbf/md-editor-rt) \| 中文
 
@@ -366,41 +366,19 @@ export default () => {
 
 监听编辑器内部状态，包括：屏幕全屏、浏览器全屏、预览文本、预览 html、目录等。
 
-- pageFullscreen
+```ts
+type Keys =
+  | 'pageFullscreen'
+  | 'fullscreen'
+  | 'preview'
+  | 'previewOnly'
+  | 'htmlPreview'
+  | 'catalog';
+```
 
-  ```js
-  editorRef.current?.on('pageFullscreen', (status) => console.log(status));
-  ```
-
-- fullscreen
-
-  ```js
-  editorRef.current?.on('fullscreen', (status) => console.log(status));
-  ```
-
-- preview
-
-  ```js
-  editorRef.current?.on('preview', (status) => console.log(status));
-  ```
-
-- previewOnly
-
-  ```js
-  editorRef.current?.on('previewOnly', (status) => console.log(status));
-  ```
-
-- htmlPreview
-
-  ```js
-  editorRef.current?.on('htmlPreview', (status) => console.log(status));
-  ```
-
-- catalog
-
-  ```js
-  editorRef.current?.on('catalog', (status) => console.log(status));
-  ```
+```js
+editorRef.current?.on('pageFullscreen', (status) => console.log(status));
+```
 
 ### 💻 togglePageFullscreen
 
@@ -452,11 +430,7 @@ editorRef.current?.toggleCatalog(true);
 
 ### 💾 triggerSave
 
-触发保存。
-
-```js
-editorRef.current?.triggerSave();
-```
+触发保存操作。
 
 ### 💉 insert
 
@@ -501,17 +475,9 @@ editorRef.current?.focus(option);
 
 手动重新渲染内容。
 
-```js
-editorRef.current?.rerender();
-```
-
 ### 🔍 getSelectedText
 
 获取当前选中的文字。
-
-```js
-console.log(editorRef.current?.getSelectedText());
-```
 
 ### 🗑 resetHistory
 
@@ -536,6 +502,10 @@ editorRef.current?.domEventHandlers({
 ```js
 editorRef.current?.execCommand('bold');
 ```
+
+### 🔖 getEditorView
+
+获取 codemirror 实例。
 
 ## 💴 编辑器配置
 

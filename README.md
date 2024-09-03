@@ -1,6 +1,6 @@
 # 🎄 md-editor-rt
 
-![](https://img.shields.io/github/package-json/v/imzbf/md-editor-rt) ![](https://img.shields.io/npm/dm/md-editor-rt) ![](https://img.shields.io/github/license/imzbf/md-editor-rt) ![](https://img.shields.io/badge/ssr-%3E1.0.0-brightgreen)
+![](https://img.shields.io/github/package-json/v/imzbf/md-editor-rt) ![](https://img.shields.io/npm/dm/md-editor-rt) ![](https://img.shields.io/github/license/imzbf/md-editor-rt) ![](https://img.shields.io/badge/ssr-%3E1.0.0-brightgreen) ![](https://img.shields.io/badge/webcomponent-%3E4.19.0-brightgreen)
 
 English \| [中文](https://github.com/imzbf/md-editor-rt/blob/develop/README-CN.md)
 
@@ -360,41 +360,19 @@ export default () => {
 
 Get the internal state of the editor, including pageFullscreen, fullscreen, preview, htmlPreview, catalog, etc.
 
-- pageFullscreen
+```ts
+type Keys =
+  | 'pageFullscreen'
+  | 'fullscreen'
+  | 'preview'
+  | 'previewOnly'
+  | 'htmlPreview'
+  | 'catalog';
+```
 
-  ```js
-  editorRef.current?.on('pageFullscreen', (status) => console.log(status));
-  ```
-
-- fullscreen
-
-  ```js
-  editorRef.current?.on('fullscreen', (status) => console.log(status));
-  ```
-
-- preview
-
-  ```js
-  editorRef.current?.on('preview', (status) => console.log(status));
-  ```
-
-- previewOnly
-
-  ```js
-  editorRef.current?.on('previewOnly', (status) => console.log(status));
-  ```
-
-- htmlPreview
-
-  ```js
-  editorRef.current?.on('htmlPreview', (status) => console.log(status));
-  ```
-
-- catalog
-
-  ```js
-  editorRef.current?.on('catalog', (status) => console.log(status));
-  ```
+```js
+editorRef.current?.on('pageFullscreen', (status) => console.log(status));
+```
 
 ### 💻 togglePageFullscreen
 
@@ -446,9 +424,7 @@ editorRef.current?.toggleCatalog(true);
 
 ### 💾 triggerSave
 
-```js
-editorRef.current?.triggerSave();
-```
+Save actions will be triggered.
 
 ### 💉 insert
 
@@ -493,17 +469,9 @@ editorRef.current?.focus(option);
 
 Re render the content.
 
-```js
-editorRef.current?.rerender();
-```
-
 ### 🔍 getSelectedText
 
 Get the currently selected text.
-
-```js
-console.log(editorRef.current?.getSelectedText());
-```
 
 ### 🗑 resetHistory
 
@@ -528,6 +496,10 @@ Insert content into the editor via trigger.
 ```js
 editorRef.current?.execCommand('bold');
 ```
+
+### 🔖 getEditorView
+
+Get codemirror instance.
 
 ## 💴 Config Editor
 
