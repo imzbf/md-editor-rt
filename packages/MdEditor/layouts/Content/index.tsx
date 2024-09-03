@@ -41,21 +41,20 @@ const Content = forwardRef((props: ContentProps, ref: ForwardedRef<unknown>) => 
   // 自动滚动
   useAutoScroll(props, html, codeMirrorUt);
 
-  useImperativeHandle(
-    ref,
-    (): ContentExposeParam => {
-      return {
-        getSelectedText() {
-          return codeMirrorUt.current?.getSelectedText();
-        },
-        focus(options: FocusOption) {
-          codeMirrorUt.current?.focus(options);
-        },
-        resetHistory
-      };
-    },
-    [codeMirrorUt, resetHistory]
-  );
+  useImperativeHandle(ref, (): ContentExposeParam => {
+    return {
+      getSelectedText() {
+        return codeMirrorUt.current?.getSelectedText();
+      },
+      focus(options: FocusOption) {
+        codeMirrorUt.current?.focus(options);
+      },
+      resetHistory,
+      getEditorView() {
+        return codeMirrorUt.current?.view;
+      }
+    };
+  }, [codeMirrorUt, resetHistory]);
 
   return (
     <div

@@ -896,6 +896,10 @@ export interface ExposeParam {
    * @param direct
    */
   execCommand(direct: ToolDirective): void;
+  /**
+   * 获取编辑器实例
+   */
+  getEditorView(): EditorView | undefined;
 }
 
 export type ExposePreviewParam = Pick<ExposeParam, 'rerender'>;

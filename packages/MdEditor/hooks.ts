@@ -516,128 +516,127 @@ export const useExpose = (
     bus.emit(editorId, CATALOG_VISIBLE_CHANGED, catalogVisible);
   }, [catalogVisible, editorId]);
 
-  useImperativeHandle(
-    editorRef,
-    () => {
-      const exposeParam: ExposeParam = {
-        on(eventName, callBack) {
-          switch (eventName) {
-            case 'pageFullscreen': {
-              bus.on(editorId, {
-                name: PAGE_FULL_SCREEN_CHANGED,
-                callback(status: boolean) {
-                  (callBack as ExposeEvent['pageFullscreen'])(status);
-                }
-              });
+  useImperativeHandle(editorRef, () => {
+    const exposeParam: ExposeParam = {
+      on(eventName, callBack) {
+        switch (eventName) {
+          case 'pageFullscreen': {
+            bus.on(editorId, {
+              name: PAGE_FULL_SCREEN_CHANGED,
+              callback(status: boolean) {
+                (callBack as ExposeEvent['pageFullscreen'])(status);
+              }
+            });
 
-              break;
-            }
-            case 'fullscreen': {
-              bus.on(editorId, {
-                name: FULL_SCREEN_CHANGED,
-                callback(status: boolean) {
-                  (callBack as ExposeEvent['fullscreen'])(status);
-                }
-              });
-
-              break;
-            }
-
-            case 'preview': {
-              bus.on(editorId, {
-                name: PREVIEW_CHANGED,
-                callback(status: boolean) {
-                  (callBack as ExposeEvent['preview'])(status);
-                }
-              });
-
-              break;
-            }
-
-            case 'previewOnly': {
-              bus.on(editorId, {
-                name: PREVIEW_ONLY_CHANGED,
-                callback(status: boolean) {
-                  (callBack as ExposeEvent['previewOnly'])(status);
-                }
-              });
-
-              break;
-            }
-
-            case 'htmlPreview': {
-              bus.on(editorId, {
-                name: HTML_PREVIEW_CHANGED,
-                callback(status: boolean) {
-                  (callBack as ExposeEvent['htmlPreview'])(status);
-                }
-              });
-
-              break;
-            }
-
-            case 'catalog': {
-              bus.on(editorId, {
-                name: CATALOG_VISIBLE_CHANGED,
-                callback(status: boolean) {
-                  (callBack as ExposeEvent['catalog'])(status);
-                }
-              });
-
-              break;
-            }
-
-            default: {
-              //
-            }
+            break;
           }
-        },
-        togglePageFullscreen(status) {
-          updateSetting('pageFullscreen', status);
-        },
-        toggleFullscreen(status) {
-          bus.emit(editorId, CHANGE_FULL_SCREEN, status);
-        },
-        togglePreview(status) {
-          updateSetting('preview', status);
-        },
-        togglePreviewOnly(status) {
-          updateSetting('previewOnly', status);
-        },
-        toggleHtmlPreview(status) {
-          updateSetting('htmlPreview', status);
-        },
-        toggleCatalog(status) {
-          bus.emit(editorId, CHANGE_CATALOG_VISIBLE, status);
-        },
-        triggerSave() {
-          bus.emit(editorId, ON_SAVE);
-        },
-        insert(generate) {
-          bus.emit(editorId, REPLACE, 'universal', { generate });
-        },
-        focus(options: FocusOption) {
-          codeRef.current?.focus(options);
-        },
-        rerender() {
-          bus.emit(editorId, RERENDER);
-        },
-        getSelectedText() {
-          return codeRef.current?.getSelectedText();
-        },
-        resetHistory() {
-          codeRef.current?.resetHistory();
-        },
-        domEventHandlers(handlers) {
-          bus.emit(editorId, EVENT_LISTENER, handlers);
-        },
-        execCommand(direct) {
-          bus.emit(editorId, REPLACE, direct);
-        }
-      };
+          case 'fullscreen': {
+            bus.on(editorId, {
+              name: FULL_SCREEN_CHANGED,
+              callback(status: boolean) {
+                (callBack as ExposeEvent['fullscreen'])(status);
+              }
+            });
 
-      return exposeParam;
-    },
-    [codeRef, editorId, updateSetting]
-  );
+            break;
+          }
+
+          case 'preview': {
+            bus.on(editorId, {
+              name: PREVIEW_CHANGED,
+              callback(status: boolean) {
+                (callBack as ExposeEvent['preview'])(status);
+              }
+            });
+
+            break;
+          }
+
+          case 'previewOnly': {
+            bus.on(editorId, {
+              name: PREVIEW_ONLY_CHANGED,
+              callback(status: boolean) {
+                (callBack as ExposeEvent['previewOnly'])(status);
+              }
+            });
+
+            break;
+          }
+
+          case 'htmlPreview': {
+            bus.on(editorId, {
+              name: HTML_PREVIEW_CHANGED,
+              callback(status: boolean) {
+                (callBack as ExposeEvent['htmlPreview'])(status);
+              }
+            });
+
+            break;
+          }
+
+          case 'catalog': {
+            bus.on(editorId, {
+              name: CATALOG_VISIBLE_CHANGED,
+              callback(status: boolean) {
+                (callBack as ExposeEvent['catalog'])(status);
+              }
+            });
+
+            break;
+          }
+
+          default: {
+            //
+          }
+        }
+      },
+      togglePageFullscreen(status) {
+        updateSetting('pageFullscreen', status);
+      },
+      toggleFullscreen(status) {
+        bus.emit(editorId, CHANGE_FULL_SCREEN, status);
+      },
+      togglePreview(status) {
+        updateSetting('preview', status);
+      },
+      togglePreviewOnly(status) {
+        updateSetting('previewOnly', status);
+      },
+      toggleHtmlPreview(status) {
+        updateSetting('htmlPreview', status);
+      },
+      toggleCatalog(status) {
+        bus.emit(editorId, CHANGE_CATALOG_VISIBLE, status);
+      },
+      triggerSave() {
+        bus.emit(editorId, ON_SAVE);
+      },
+      insert(generate) {
+        bus.emit(editorId, REPLACE, 'universal', { generate });
+      },
+      focus(options: FocusOption) {
+        codeRef.current?.focus(options);
+      },
+      rerender() {
+        bus.emit(editorId, RERENDER);
+      },
+      getSelectedText() {
+        return codeRef.current?.getSelectedText();
+      },
+      resetHistory() {
+        codeRef.current?.resetHistory();
+      },
+      domEventHandlers(handlers) {
+        bus.emit(editorId, EVENT_LISTENER, handlers);
+      },
+      execCommand(direct) {
+        bus.emit(editorId, REPLACE, direct);
+      },
+      getEditorView() {
+        return codeRef.current?.getEditorView();
+      }
+    };
+
+    return exposeParam;
+  }, [codeRef, editorId, updateSetting]);
 };
