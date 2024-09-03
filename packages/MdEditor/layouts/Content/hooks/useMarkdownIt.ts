@@ -2,6 +2,9 @@
 import { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
 import mdit from 'markdown-it';
 import ImageFiguresPlugin from 'markdown-it-image-figures';
+import SubPlugin from 'markdown-it-sub';
+import SupPlugin from 'markdown-it-sup';
+
 import { randomId } from '@vavt/util';
 import bus from '~/utils/event-bus';
 import { generateCodeRowNumber } from '~/utils';
@@ -137,6 +140,16 @@ const useMarkdownIt = (props: ContentPreviewProps, previewOnly: boolean) => {
       {
         type: 'xss',
         plugin: XSSPlugin,
+        options: {}
+      },
+      {
+        type: 'sub',
+        plugin: SubPlugin,
+        options: {}
+      },
+      {
+        type: 'sup',
+        plugin: SupPlugin,
         options: {}
       }
     ];
