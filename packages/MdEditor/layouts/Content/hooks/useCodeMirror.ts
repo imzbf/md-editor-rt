@@ -151,7 +151,8 @@ const useCodeMirror = (props: ContentProps) => {
         comp.theme.of(theme === 'light' ? oneLight : oneDark),
         comp.autocompletion.of(createAutocompletion(props.completions))
       ],
-      getDefaultKeymaps()
+      getDefaultKeymaps(),
+      { editorId }
     );
   });
 
