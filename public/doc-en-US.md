@@ -1233,6 +1233,12 @@ editorRef.current?.execCommand('bold');
 
 ---
 
+### 🔖 getEditorView
+
+Get codemirror instance.
+
+---
+
 ## 💴 Config Editor
 
 Use `config(option: ConfigOption)` to reconfigure `markdown-it` and so on.
@@ -1246,6 +1252,17 @@ We recommend configuring it at the project entry point, such as in `main.js` for
 ### 🦪 codeMirrorExtensions
 
 Customize new extensions based on theme and default extensions f codeMirror.
+
+```ts
+type CodeMirrorExtensions = (
+  theme: Themes,
+  extensions: Array<Extension>,
+  keyBindings: Array<KeyBinding>,
+  options: {
+    editorId: string;
+  }
+) => Array<Extension>;
+```
 
 Example: Editor does not render the line number of textarea by default, this extension needs to be manually added
 
