@@ -1,4 +1,4 @@
-import{u as p,r as t,e as o,j as n,f as g,h as f,i as r,l as i}from"./index-D1jckPPg.js";const s=`> Use it online: [Go](https://codesandbox.io/s/elated-khorana-65jmr)
+import{u as p,r as t,e as o,j as n,I as g,f,h as r,i}from"./index-Bzoztb8Z.js";const s=`> Use it online: [Go](https://codesandbox.io/s/elated-khorana-65jmr)
 
 ## 🔖 MdPreview Props
 
@@ -1233,6 +1233,12 @@ editorRef.current?.execCommand('bold');
 
 ---
 
+### 🔖 getEditorView
+
+Get codemirror instance.
+
+---
+
 ## 💴 Config Editor
 
 Use \`config(option: ConfigOption)\` to reconfigure \`markdown-it\` and so on.
@@ -1246,6 +1252,17 @@ We recommend configuring it at the project entry point, such as in \`main.js\` f
 ### 🦪 codeMirrorExtensions
 
 Customize new extensions based on theme and default extensions f codeMirror.
+
+\`\`\`ts
+type CodeMirrorExtensions = (
+  theme: Themes,
+  extensions: Array<Extension>,
+  keyBindings: Array<KeyBinding>,
+  options: {
+    editorId: string;
+  }
+) => Array<Extension>;
+\`\`\`
 
 Example: Editor does not render the line number of textarea by default, this extension needs to be manually added
 
@@ -3386,6 +3403,12 @@ editorRef.current?.execCommand('bold');
 
 ---
 
+### 🔖 getEditorView
+
+获取 codemirror 实例。
+
+---
+
 ## 💴 配置编辑器
 
 使用\`config(option: ConfigOption)\`方法，可以对构建实例进行定制。
@@ -3399,6 +3422,17 @@ editorRef.current?.execCommand('bold');
 ### 🦪 codeMirrorExtensions
 
 根据主题和内部默认的 codeMirror 扩展自定义新的扩展。
+
+\`\`\`ts
+type CodeMirrorExtensions = (
+  theme: Themes,
+  extensions: Array<Extension>,
+  keyBindings: Array<KeyBinding>,
+  options: {
+    editorId: string;
+  }
+) => Array<Extension>;
+\`\`\`
 
 使用示例：编辑器默认不显示输入框的行号，需要手动添加扩展
 

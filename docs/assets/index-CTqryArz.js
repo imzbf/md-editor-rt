@@ -1,4 +1,4 @@
-import{u as l,r as e,j as n,f as h,h as p}from"./index-D1jckPPg.js";const r=`## 🐶 Heading
+import{u as l,r as e,j as n,I as h,f as p}from"./index-Bzoztb8Z.js";const r=`## 🐶 Heading
 
 \`\`\`markdown
 ## Heading
@@ -68,20 +68,20 @@ _It is a dream deeply rooted in the American dream._
 
 ## 🙊 Superscript
 
-I have a dream that one day this nation will rise up.<sup>[1]</sup>
+I have a dream that one day this nation will rise up.^[1]^
 
 \`\`\`markdown
-I have a dream that one day this nation will rise up.<sup>[1]</sup>
+I have a dream that one day this nation will rise up.^[1]^
 \`\`\`
 
 ---
 
 ## 🐒 Subscript
 
-I have a dream that one day this nation will rise up.<sub>[2]</sub>
+I have a dream that one day this nation will rise up.~[2]~
 
 \`\`\`markdown
-I have a dream that one day this nation will rise up.<sub>[2]</sub>
+I have a dream that one day this nation will rise up.~[2]~
 \`\`\`
 
 ---
@@ -400,20 +400,20 @@ _It is a dream deeply rooted in the American dream._
 
 ## 🙊 上标
 
-I have a dream that one day this nation will rise up.<sup>[1]</sup>
+I have a dream that one day this nation will rise up.^[1]^
 
 \`\`\`markdown
-I have a dream that one day this nation will rise up.<sup>[1]</sup>
+I have a dream that one day this nation will rise up.^[1]^
 \`\`\`
 
 ---
 
 ## 🐒 下标
 
-I have a dream that one day this nation will rise up.<sub>[2]</sub>
+I have a dream that one day this nation will rise up.~[2]~
 
 \`\`\`markdown
-I have a dream that one day this nation will rise up.<sub>[2]</sub>
+I have a dream that one day this nation will rise up.~[2]~
 \`\`\`
 
 ---
@@ -662,4 +662,4 @@ failure、danger、bug、example、quote、hint、caution、error、attention
 
 !!!
 \`\`\`
-`,a="grammar-preview",c=()=>{const t=l(s=>s),[i,d]=e.useState(()=>t.lang==="zh-CN"?o:r),m=()=>{d(t.lang==="en-US"?r:o)};return e.useEffect(m,[t.lang]),n.jsx("div",{className:"container",children:n.jsxs("div",{className:"doc",children:[n.jsx(h,{editorId:a,modelValue:i}),n.jsx(p,{editorId:a})]})})};export{c as default};
+`,a="grammar-preview",u=()=>{const t=l(s=>s),[i,d]=e.useState(()=>t.lang==="zh-CN"?o:r),m=()=>{d(t.lang==="en-US"?r:o)};return e.useEffect(m,[t.lang]),n.jsx("div",{className:"container",children:n.jsxs("div",{className:"doc",children:[n.jsx(h,{editorId:a,modelValue:i}),n.jsx(p,{editorId:a})]})})};export{u as default};
