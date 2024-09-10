@@ -1041,8 +1041,8 @@ config({
       : extensions;
   }
 });
+```
 
 ## 🧻 Edit This Page
 
 [demo-en-US](https://github.com/imzbf/md-editor-rt/blob/dev-docs/public/demo-en-US.md)
-```
