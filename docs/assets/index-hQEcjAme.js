@@ -1,4 +1,4 @@
-import{u as m,r as t,e as l,j as n,I as c,f as p,h as u,i as h,v as f}from"./index-Bzoztb8Z.js";const r=`## 😁 Basic Usage
+import{u as m,r as t,e as l,j as n,I as c,f as p,h as u,i as h,v as f}from"./index-DggscAba.js";const r=`## 😁 Basic Usage
 
 It has been developing iteratively, so update the latest version please. Publish logs: [releases](https://github.com/imzbf/md-editor-rt/releases)
 
@@ -1041,11 +1041,11 @@ config({
       : extensions;
   }
 });
+\`\`\`
 
 ## 🧻 Edit This Page
 
 [demo-en-US](https://github.com/imzbf/md-editor-rt/blob/dev-docs/public/demo-en-US.md)
-\`\`\`
 `,o=`## 😁 基本使用示例
 
 目前一直在迭代开发，所以尽量安装最新版本。发布日志请前往：[releases](https://github.com/imzbf/md-editor-rt/releases)
