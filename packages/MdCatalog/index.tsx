@@ -257,7 +257,8 @@ const MdCatalog = (props: CatalogProps) => {
     >
       <div
         className={classnames([
-          `${prefix}-catalog${theme === 'dark' ? '-dark' : ''}`,
+          `${prefix}-catalog`,
+          theme === 'dark' && `${prefix}-catalog-dark`,
           props.className || ''
         ])}
         style={props.style}
