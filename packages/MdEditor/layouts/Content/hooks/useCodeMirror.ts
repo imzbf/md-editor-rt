@@ -68,7 +68,7 @@ const useCodeMirror = (props: ContentProps) => {
 
   // 搜集默认快捷键列表，通过方法返回，防止默认列表被篡改
   const getDefaultKeymaps = useCallback(
-    () => [...defaultKeymap, ...historyKeymap, ...mdEditorCommands, indentWithTab],
+    () => [...mdEditorCommands, ...defaultKeymap, ...historyKeymap, indentWithTab],
     [mdEditorCommands]
   );
 
