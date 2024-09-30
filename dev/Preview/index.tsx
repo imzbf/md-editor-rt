@@ -71,6 +71,7 @@ config({
   mermaidConfig: (base) => {
     return base;
   },
+  iconfontType: 'svg',
   editorExtensions: {
     //     prettier: {
     //       prettierInstance: prettier,
@@ -330,7 +331,7 @@ export default ({ theme, previewTheme, codeTheme, lang }: PreviewProp) => {
           // }}
           // onBlur={console.log}
           // onFocus={console.log}
-          // showToolbarName
+          showToolbarName
           // onInput={console.log}
           // onError={console.log}
           // codeFoldable={false}
