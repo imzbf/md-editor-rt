@@ -7,6 +7,7 @@ import ScrollAuto from './ScrollAuto';
 interface FooterProps {
   modelValue: string;
   footers: Array<Footers>;
+  noScrollAuto: boolean;
   scrollAuto: boolean;
   onScrollAutoChange: (v: boolean) => void;
   defFooters: Array<string | ReactElement>;
@@ -22,11 +23,13 @@ const Footer = (props: FooterProps) => {
           }
           case 'scrollSwitch': {
             return (
-              <ScrollAuto
-                scrollAuto={props.scrollAuto}
-                onScrollAutoChange={props.onScrollAutoChange}
-                key="scroll-auto"
-              />
+              !props.noScrollAuto && (
+                <ScrollAuto
+                  scrollAuto={props.scrollAuto}
+                  onScrollAutoChange={props.onScrollAutoChange}
+                  key="scroll-auto"
+                />
+              )
             );
           }
         }
@@ -34,7 +37,13 @@ const Footer = (props: FooterProps) => {
         return props.defFooters[name as number] || '';
       }
     },
-    [props.modelValue, props.scrollAuto, props.onScrollAutoChange, props.defFooters]
+    [
+      props.modelValue,
+      props.noScrollAuto,
+      props.scrollAuto,
+      props.onScrollAutoChange,
+      props.defFooters
+    ]
   );
 
   const [LeftFooter, RightFooter] = useMemo(() => {

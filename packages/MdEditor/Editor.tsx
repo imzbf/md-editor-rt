@@ -215,6 +215,9 @@ const Editor = forwardRef((props: EditorProps, ref: ForwardedRef<unknown>) => {
             modelValue={modelValue}
             footers={footers}
             defFooters={defFooters}
+            noScrollAuto={
+              (!setting.preview && !setting.htmlPreview) || setting.previewOnly
+            }
             scrollAuto={state.scrollAuto}
             onScrollAutoChange={onScrollAutoChange}
           />
