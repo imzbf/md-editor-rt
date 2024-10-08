@@ -7,7 +7,8 @@ import {
   MdCatalog,
   config,
   ExposeParam,
-  editorExtensionsAttrs
+  editorExtensionsAttrs,
+  NormalFooterToolbar
 } from '~~/index';
 
 // import Editor from '../../lib/md-editor-rt.es';
@@ -513,7 +514,9 @@ export default ({ theme, previewTheme, codeTheme, lang }: PreviewProp) => {
             return `${text} \nfrom @imzbf`;
           }}
           footers={['markdownTotal', '=', 0, 'scrollSwitch']}
-          defFooters={[<span key={'dev-footer-demo'}>^_^</span>]}
+          defFooters={[
+            <NormalFooterToolbar key="NormalFooterToolbar">^_^</NormalFooterToolbar>
+          ]}
         />
         <br />
         {/* <MdEditor

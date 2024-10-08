@@ -858,6 +858,18 @@ For more examples, refer to [document](https://imzbf.github.io/md-editor-rt).
   - `onClose`: `() => void`, necessary, closed event.
   - `onAdjust`: `(val: boolean) => void`, fullscreen button was clicked.
 
+### 🛸 NormalFooterToolbar
+
+`NormalFooterToolbar`
+
+- **props**
+
+  - `children`: `ReactNode`, necessary, contents.
+
+- **events**
+
+  - `onClick`: `(e: MouseEvent) => void`, not necessary, toolbar was clicked.
+
 ## 🪤 Internal Configuration
 
 ```js

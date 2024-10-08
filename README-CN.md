@@ -872,6 +872,18 @@ import { NormalToolbar } from 'md-editor-rt';
   - `onClose`: `() => void`，必须，弹窗点击关闭事件。
   - `onAdjust`: `(val: boolean) => void`，弹窗全屏按钮点击事件。
 
+### 🛸 普通页脚工具
+
+`NormalFooterToolbar`
+
+- **props**
+
+  - `children`: `ReactNode`，必须，内容。
+
+- **events**
+
+  - `onClick`: `(e: MouseEvent) => void`，非必须，点击事件。
+
 ## 🪤 内部配置
 
 ```js
