@@ -769,12 +769,12 @@ For more examples, refer to [document](https://imzbf.github.io/md-editor-rt).
 
 - **props**
 
-  - `title`: `string`, not necessary, title of toolbar.
-  - `trigger`: `ReactNode`, necessary, it is usually an icon, which is displayed on the toolbar.
+  - `title`: `string`, not required, title of toolbar.
+  - `trigger`: `ReactNode`, required, it is usually an icon, which is displayed on the toolbar.
 
 - **events**
 
-  - `onClick`: `(e: MouseEvent) => void`, necessary.
+  - `onClick`: `(e: MouseEvent) => void`, required.
 
 ### 🐼 DropdownToolbar
 
@@ -782,14 +782,14 @@ For more examples, refer to [document](https://imzbf.github.io/md-editor-rt).
 
 - **props**
 
-  - `title`: `string`, not necessary, title of toolbar.
-  - `visible`: `boolean`, necessary.
-  - `trigger`: `ReactNode`, necessary, it is usually an icon, which is displayed on the toolbar.
-  - `overlay`: `ReactNode`, necessary, content of dropdown box.
+  - `title`: `string`, not required, title of toolbar.
+  - `visible`: `boolean`, required.
+  - `trigger`: `ReactNode`, required, it is usually an icon, which is displayed on the toolbar.
+  - `overlay`: `ReactNode`, required, content of dropdown box.
 
 - **events**
 
-  - `onChange`: `(visible: boolean) => void`, necessary.
+  - `onChange`: `(visible: boolean) => void`, required.
 
 ### 🦉 ModalToolbar
 
@@ -797,23 +797,23 @@ For more examples, refer to [document](https://imzbf.github.io/md-editor-rt).
 
 - **props**
 
-  - `title`: `string`, not necessary, title of toolbar.
-  - `modalTitle`: `ReactNode`, not necessary, title of the Modal.
-  - `visible`: `boolean`, necessary, visibility of Modal.
-  - `width`: `string`, not necessary, width of Modal, default `auto`.
+  - `title`: `string`, not required, title of toolbar.
+  - `modalTitle`: `ReactNode`, not required, title of the Modal.
+  - `visible`: `boolean`, required, visibility of Modal.
+  - `width`: `string`, not required, width of Modal, default `auto`.
   - `height`: `string`, same as `width`.
-  - `showAdjust`: `boolean`, not necessary, visibility of fullscreen button.
-  - `isFullscreen`: `boolean`, necessary when `showAdjust = true`, status of fullscreen.
-  - `trigger`: `ReactNode`, necessary, it is usually an icon, which is displayed on the toolbar.
-  - `children`: `ReactNode`, necessary, content of Modal.
-  - `className`: `string`, not necessary.
-  - `style`: `CSSProperties`, not necessary.
-  - `showMask`: `boolean`, not necessary, whether to display the mask layer, default `true`.
+  - `showAdjust`: `boolean`, not required, visibility of fullscreen button.
+  - `isFullscreen`: `boolean`, required when `showAdjust = true`, status of fullscreen.
+  - `trigger`: `ReactNode`, required, it is usually an icon, which is displayed on the toolbar.
+  - `children`: `ReactNode`, required, content of Modal.
+  - `className`: `string`, not required.
+  - `style`: `CSSProperties`, not required.
+  - `showMask`: `boolean`, not required, whether to display the mask layer, default `true`.
 
 - **events**
 
-  - `onClick`: `() => void`, necessary.
-  - `onClose`: `() => void`, necessary, closed event.
+  - `onClick`: `() => void`, required.
+  - `onClose`: `() => void`, required, closed event.
   - `onAdjust`: `(val: boolean) => void`, fullscreen button was clicked.
 
 ### 🐻 MdCatalog
@@ -822,19 +822,19 @@ For more examples, refer to [document](https://imzbf.github.io/md-editor-rt).
 
 - **props**
 
-  - `editorId`: `string`, necessary, same as editor's `editorId`, used to register listening events.
-  - `className`: `string`, not necessary.
-  - `mdHeadingId`: `MdHeadingId`, not necessary, same as editor.
-  - `scrollElement`: `string | HTMLElement`, not necessary, it is an element selector when its type is string. When `previewOnly` eq `true`, it is usually set to `document.documentElement`.
-  - `theme`: `'light' | 'dark'`, not necessary, provide it when you want to change theme online, it is the same as Editor `theme`.
-  - `offsetTop`: `number`, not necessary, highlight current item of catalogs when title is `offsetTop` pixels from the top, default 20.
-  - `scrollElementOffsetTop`: `number`, not necessary, offsetTop of the scroll container，default 0.
+  - `editorId`: `string`, required, same as editor's `editorId`, used to register listening events.
+  - `className`: `string`, not required.
+  - `mdHeadingId`: `MdHeadingId`, not required, same as editor.
+  - `scrollElement`: `string | HTMLElement`, not required, it is an element selector when its type is string. When `previewOnly` eq `true`, it is usually set to `document.documentElement`.
+  - `theme`: `'light' | 'dark'`, not required, provide it when you want to change theme online, it is the same as Editor `theme`.
+  - `offsetTop`: `number`, not required, highlight current item of catalogs when title is `offsetTop` pixels from the top, default 20.
+  - `scrollElementOffsetTop`: `number`, not required, offsetTop of the scroll container，default 0.
   - `isScrollElementInShadow`: `boolean`, whether the scroll container is in web component, default false.
 
 - **events**
 
-  - `onClick`: `(e: MouseEvent, t: TocItem) => void`, not necessary, heading was clicked.
-  - `onActive`: `(heading: HeadList | undefined) => void`, not necessary, heading was highlighted.
+  - `onClick`: `(e: MouseEvent, t: TocItem) => void`, not required, heading was clicked.
+  - `onActive`: `(heading: HeadList | undefined) => void`, not required, heading was highlighted.
 
 ### 🛸 MdModal
 
@@ -842,20 +842,20 @@ For more examples, refer to [document](https://imzbf.github.io/md-editor-rt).
 
 - **props**
 
-  - `title`: `ReactNode`, not necessary, title of Modal.
-  - `visible`: `boolean`, necessary, visibility of Modal.
-  - `width`: `string`, not necessary, width of Modal, default `auto`.
+  - `title`: `ReactNode`, not required, title of Modal.
+  - `visible`: `boolean`, required, visibility of Modal.
+  - `width`: `string`, not required, width of Modal, default `auto`.
   - `height`: `string`, same as `width`.
-  - `showAdjust`: `boolean`, not necessary, visibility of fullscreen button.
-  - `isFullscreen`: `boolean`, necessary when `showAdjust = true`, status of fullscreen.
-  - `children`: `ReactNode`, necessary, content of Modal.
-  - `className`: `string`, not necessary.
-  - `style`: `CSSProperties`, not necessary.
-  - `showMask`: `boolean`, not necessary, whether to display the mask layer, default `true`.
+  - `showAdjust`: `boolean`, not required, visibility of fullscreen button.
+  - `isFullscreen`: `boolean`, required when `showAdjust = true`, status of fullscreen.
+  - `children`: `ReactNode`, required, content of Modal.
+  - `className`: `string`, not required.
+  - `style`: `CSSProperties`, not required.
+  - `showMask`: `boolean`, not required, whether to display the mask layer, default `true`.
 
 - **events**
 
-  - `onClose`: `() => void`, necessary, closed event.
+  - `onClose`: `() => void`, required, closed event.
   - `onAdjust`: `(val: boolean) => void`, fullscreen button was clicked.
 
 ### 🛸 NormalFooterToolbar
@@ -864,11 +864,11 @@ For more examples, refer to [document](https://imzbf.github.io/md-editor-rt).
 
 - **props**
 
-  - `children`: `ReactNode`, necessary, contents.
+  - `children`: `ReactNode`, required, contents.
 
 - **events**
 
-  - `onClick`: `(e: MouseEvent) => void`, not necessary, toolbar was clicked.
+  - `onClick`: `(e: MouseEvent) => void`, not required, toolbar was clicked.
 
 ## 🪤 Internal Configuration
 
