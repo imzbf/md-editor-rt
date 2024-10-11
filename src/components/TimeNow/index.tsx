@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import dayjs from 'dayjs';
 import { useSelector } from 'react-redux';
+import { NormalFooterToolbar } from 'md-editor-rt';
 import { StateType } from '@/store';
 
 const weekNames = {
@@ -32,7 +33,7 @@ const TimeNow = () => {
     };
   }, []);
 
-  return <span>{text}</span>;
+  return <NormalFooterToolbar>{text}</NormalFooterToolbar>;
 };
 
 export default TimeNow;
