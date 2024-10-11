@@ -1087,7 +1087,13 @@ const Toolbar = (props: ToolbarProps) => {
           </div>
         </div>
       )}
+      <label
+        htmlFor={`${wrapperId}_label`}
+        style={{ display: 'none' }}
+        aria-label={ult.imgTitleItem?.upload}
+      ></label>
       <input
+        id={`${wrapperId}_label`}
         ref={uploadRef}
         accept="image/*"
         type="file"

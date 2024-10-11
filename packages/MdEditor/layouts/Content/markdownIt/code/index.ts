@@ -133,8 +133,8 @@ const codetabs = (md: markdownit, _opts: CodeTabsPluginOps) => {
       checked = i - idx > 0 ? '' : 'checked';
 
       labels += `<li>
-          <input type="radio" name="${prefix}-codetab-label-${_opts.editorId}-${idx}" class="${className}" ${checked}>
-          <label onclick="this.getRootNode().querySelectorAll('.${className}').forEach(e => e.click())">${
+          <input type="radio" id="label-${prefix}-codetab-label-1-${_opts.editorId}-${idx}-${i - idx}" name="${prefix}-codetab-label-${_opts.editorId}-${idx}" class="${className}" ${checked}>
+          <label for="label-${prefix}-codetab-label-1-${_opts.editorId}-${idx}-${i - idx}" onclick="this.getRootNode().querySelectorAll('.${className}').forEach(e => e.click())">${
             tab || getLangName(token)
           }</label>
         </li>`;
