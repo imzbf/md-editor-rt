@@ -194,12 +194,14 @@ const ClipModal = (props: ClipModalProps) => {
           type="file"
           multiple={false}
           style={{ display: 'none' }}
+          aria-label={usedLanguageText.imgTitleItem?.upload}
         />
       </Modal>
     );
   }, [
     usedLanguageText.clipModalTips?.title,
     usedLanguageText.linkModalTips?.buttonOK,
+    usedLanguageText.imgTitleItem?.upload,
     props.visible,
     props.onCancel,
     props.onOk,
