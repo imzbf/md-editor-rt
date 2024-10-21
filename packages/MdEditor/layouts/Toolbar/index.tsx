@@ -98,12 +98,19 @@ const Toolbar = (props: ToolbarProps) => {
         visible={visible.title}
         onChange={onTitleChange}
         overlay={
-          <ul key="bar-title-overlay" className={`${prefix}-menu`} onClick={onTitleClose}>
+          <ul
+            key="bar-title-overlay"
+            className={`${prefix}-menu`}
+            onClick={onTitleClose}
+            role="menu"
+          >
             <li
               className={`${prefix}-menu-item ${prefix}-menu-item-title`}
               onClick={() => {
                 emitHandler('h1');
               }}
+              role="menuitem"
+              tabIndex={0}
             >
               {ult.titleItem?.h1}
             </li>
@@ -112,6 +119,8 @@ const Toolbar = (props: ToolbarProps) => {
               onClick={() => {
                 emitHandler('h2');
               }}
+              role="menuitem"
+              tabIndex={0}
             >
               {ult.titleItem?.h2}
             </li>
@@ -120,6 +129,8 @@ const Toolbar = (props: ToolbarProps) => {
               onClick={() => {
                 emitHandler('h3');
               }}
+              role="menuitem"
+              tabIndex={0}
             >
               {ult.titleItem?.h3}
             </li>
@@ -128,6 +139,8 @@ const Toolbar = (props: ToolbarProps) => {
               onClick={() => {
                 emitHandler('h4');
               }}
+              role="menuitem"
+              tabIndex={0}
             >
               {ult.titleItem?.h4}
             </li>
@@ -136,6 +149,8 @@ const Toolbar = (props: ToolbarProps) => {
               onClick={() => {
                 emitHandler('h5');
               }}
+              role="menuitem"
+              tabIndex={0}
             >
               {ult.titleItem?.h5}
             </li>
@@ -144,6 +159,8 @@ const Toolbar = (props: ToolbarProps) => {
               onClick={() => {
                 emitHandler('h6');
               }}
+              role="menuitem"
+              tabIndex={0}
             >
               {ult.titleItem?.h6}
             </li>
@@ -182,7 +199,12 @@ const Toolbar = (props: ToolbarProps) => {
         visible={visible.image}
         onChange={onImageChange}
         overlay={
-          <ul key="bar-image-overlay" className={`${prefix}-menu`} onClick={onImageClose}>
+          <ul
+            key="bar-image-overlay"
+            className={`${prefix}-menu`}
+            onClick={onImageClose}
+            role="menu"
+          >
             <li
               className={`${prefix}-menu-item ${prefix}-menu-item-image`}
               onClick={() => {
@@ -194,6 +216,8 @@ const Toolbar = (props: ToolbarProps) => {
                   };
                 });
               }}
+              role="menuitem"
+              tabIndex={0}
             >
               {ult.imgTitleItem?.link}
             </li>
@@ -202,6 +226,8 @@ const Toolbar = (props: ToolbarProps) => {
               onClick={() => {
                 (uploadRef.current as HTMLInputElement).click();
               }}
+              role="menuitem"
+              tabIndex={0}
             >
               {ult.imgTitleItem?.upload}
             </li>
@@ -216,6 +242,8 @@ const Toolbar = (props: ToolbarProps) => {
                   };
                 });
               }}
+              role="menuitem"
+              tabIndex={0}
             >
               {ult.imgTitleItem?.clip2upload}
             </li>
@@ -296,12 +324,15 @@ const Toolbar = (props: ToolbarProps) => {
             key="bar-mermaid-overlay"
             className={`${prefix}-menu`}
             onClick={onMermaidClose}
+            role="menu"
           >
             <li
               className={`${prefix}-menu-item ${prefix}-menu-item-mermaid`}
               onClick={() => {
                 emitHandler('flow');
               }}
+              role="menuitem"
+              tabIndex={0}
             >
               {ult.mermaid?.flow}
             </li>
@@ -310,6 +341,8 @@ const Toolbar = (props: ToolbarProps) => {
               onClick={() => {
                 emitHandler('sequence');
               }}
+              role="menuitem"
+              tabIndex={0}
             >
               {ult.mermaid?.sequence}
             </li>
@@ -318,6 +351,8 @@ const Toolbar = (props: ToolbarProps) => {
               onClick={() => {
                 emitHandler('gantt');
               }}
+              role="menuitem"
+              tabIndex={0}
             >
               {ult.mermaid?.gantt}
             </li>
@@ -326,6 +361,8 @@ const Toolbar = (props: ToolbarProps) => {
               onClick={() => {
                 emitHandler('class');
               }}
+              role="menuitem"
+              tabIndex={0}
             >
               {ult.mermaid?.class}
             </li>
@@ -334,6 +371,8 @@ const Toolbar = (props: ToolbarProps) => {
               onClick={() => {
                 emitHandler('state');
               }}
+              role="menuitem"
+              tabIndex={0}
             >
               {ult.mermaid?.state}
             </li>
@@ -342,6 +381,8 @@ const Toolbar = (props: ToolbarProps) => {
               onClick={() => {
                 emitHandler('pie');
               }}
+              role="menuitem"
+              tabIndex={0}
             >
               {ult.mermaid?.pie}
             </li>
@@ -350,6 +391,8 @@ const Toolbar = (props: ToolbarProps) => {
               onClick={() => {
                 emitHandler('relationship');
               }}
+              role="menuitem"
+              tabIndex={0}
             >
               {ult.mermaid?.relationship}
             </li>
@@ -358,6 +401,8 @@ const Toolbar = (props: ToolbarProps) => {
               onClick={() => {
                 emitHandler('journey');
               }}
+              role="menuitem"
+              tabIndex={0}
             >
               {ult.mermaid?.journey}
             </li>
@@ -398,12 +443,19 @@ const Toolbar = (props: ToolbarProps) => {
         visible={visible.katex}
         onChange={onKatexChange}
         overlay={
-          <ul key="bar-katex-overlay" className={`${prefix}-menu`} onClick={onKatexClose}>
+          <ul
+            key="bar-katex-overlay"
+            className={`${prefix}-menu`}
+            onClick={onKatexClose}
+            role="menu"
+          >
             <li
               className={`${prefix}-menu-item ${prefix}-menu-item-katex`}
               onClick={() => {
                 emitHandler('katexInline');
               }}
+              role="menuitem"
+              tabIndex={0}
             >
               {ult.katex?.inline}
             </li>
@@ -412,6 +464,8 @@ const Toolbar = (props: ToolbarProps) => {
               onClick={() => {
                 emitHandler('katexBlock');
               }}
+              role="menuitem"
+              tabIndex={0}
             >
               {ult.katex?.block}
             </li>

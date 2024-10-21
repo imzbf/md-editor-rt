@@ -158,6 +158,9 @@ const ClipModal = (props: ClipModalProps) => {
                 onClick={() => {
                   (uploadRef.current as HTMLInputElement).click();
                 }}
+                role="button"
+                tabIndex={0}
+                aria-label={usedLanguageText.imgTitleItem?.upload}
               >
                 <Icon name="upload" />
               </div>
@@ -194,7 +197,7 @@ const ClipModal = (props: ClipModalProps) => {
           type="file"
           multiple={false}
           style={{ display: 'none' }}
-          aria-label={usedLanguageText.imgTitleItem?.upload}
+          aria-hidden="true"
         />
       </Modal>
     );
