@@ -97,6 +97,7 @@ const resolvePath = (p: string) => path.resolve(__dirname, p);
                 : [
                     'react',
                     'react-dom',
+                    'react/jsx-runtime',
                     'medium-zoom',
                     'lru-cache',
                     'copy-to-clipboard',
@@ -113,7 +114,8 @@ const resolvePath = (p: string) => path.resolve(__dirname, p);
                 t === 'umd'
                   ? {
                       react: 'React',
-                      'react-dom': 'ReactDOM'
+                      'react-dom': 'ReactDOM',
+                      'react/jsx-runtime': 'jsxRuntime'
                     }
                   : {}
             }
