@@ -110,38 +110,36 @@ const useMermaid = (props: ContentPreviewProps) => {
 
             if (!mermaidHtml) {
               const idRand = randomId();
-              // @9以下使用renderAsync，@10以上使用render
-              const render = mermaidRef.current.renderAsync || mermaidRef.current.render;
-
-              let svg: { svg: string } | string = '';
+              let result: { svg: string } = { svg: '' };
               try {
-                svg = await render(idRand, item.innerText, svgContainingElement);
-              } catch (error) {
-                // console.error(error);
+                result = await mermaidRef.current.render(
+                  idRand,
+                  item.innerText,
+                  svgContainingElement
+                );
+
+                mermaidHtml = await sanitizeMermaid!(result.svg);
+
+                const p = document.createElement('p');
+                p.className = `${prefix}-mermaid`;
+                p.setAttribute('data-processed', '');
+                p.innerHTML = mermaidHtml;
+                p.children[0]?.removeAttribute('height');
+
+                mermaidCache.set(item.innerText, p.innerHTML);
+
+                if (item.dataset.line !== undefined) {
+                  p.dataset.line = item.dataset.line;
+                }
+
+                item.replaceWith(p);
+              } catch {
+                // console.error(error.message);
               }
 
-              // 9:10
-              mermaidHtml = await sanitizeMermaid(
-                typeof svg === 'string' ? svg : svg.svg
-              );
-            }
-
-            const p = document.createElement('p');
-            p.className = `${prefix}-mermaid`;
-            p.setAttribute('data-processed', '');
-            p.innerHTML = mermaidHtml;
-            p.children[0].removeAttribute('height');
-
-            mermaidCache.set(item.innerText, mermaidHtml);
-
-            if (item.dataset.line !== undefined) {
-              p.dataset.line = item.dataset.line;
-            }
-
-            item.replaceWith(p);
-
-            if (--count === 0) {
-              svgContainingElement.remove();
+              if (--count === 0) {
+                svgContainingElement.remove();
+              }
             }
           };
 
