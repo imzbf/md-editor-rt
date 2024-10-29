@@ -100,8 +100,8 @@ export const getSelectionText = (textarea: HTMLTextAreaElement): string => {
  * @param classList 待赛选class列表
  * @returns
  */
-export const classnames = (classList: Array<string | false>) => {
-  return classList.filter((item) => item !== false).join(' ');
+export const classnames = (classList: Array<string | false | undefined>) => {
+  return classList.filter((item) => item !== false && item !== undefined).join(' ');
 };
 
 /**
