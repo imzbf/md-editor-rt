@@ -50,7 +50,6 @@ const Editor = forwardRef((props: EditorProps, ref: ForwardedRef<unknown>) => {
     mdHeadingId = defaultProps.mdHeadingId,
     footers = defaultProps.footers,
     defFooters = defaultProps.defFooters,
-    noIconfont = defaultProps.noIconfont,
     noUploadImg = defaultProps.noUploadImg,
     noHighlight = defaultProps.noHighlight,
     noImgZoomIn = defaultProps.noImgZoomIn,
@@ -69,7 +68,6 @@ const Editor = forwardRef((props: EditorProps, ref: ForwardedRef<unknown>) => {
       noMermaid,
       noPrettier,
       noUploadImg,
-      noIconfont,
       noHighlight
     };
   });

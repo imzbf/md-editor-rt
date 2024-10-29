@@ -857,7 +857,7 @@ const Toolbar = (props: ToolbarProps) => {
                 }}
                 key="bar-save"
               >
-                <Icon name="baocun" />
+                <Icon name="save" />
 
                 {props.showToolbarName && (
                   <div className={`${prefix}-toolbar-item-name`}>
@@ -903,7 +903,7 @@ const Toolbar = (props: ToolbarProps) => {
                   }}
                   key="bar-pageFullscreen"
                 >
-                  <Icon name={props.setting.pageFullscreen ? 'suoxiao' : 'fangda'} />
+                  <Icon name={props.setting.pageFullscreen ? 'minimize' : 'maximize'} />
 
                   {props.showToolbarName && (
                     <div className={`${prefix}-toolbar-item-name`}>
@@ -1021,7 +1021,7 @@ const Toolbar = (props: ToolbarProps) => {
                 }}
                 key="bar-htmlPreview"
               >
-                <Icon name="coding" />
+                <Icon name="preview-html" />
 
                 {props.showToolbarName && (
                   <div className={`${prefix}-toolbar-item-name`}>

@@ -1,3 +1,4 @@
+/* eslint-disable react-refresh/only-export-components */
 import React, { useEffect, useRef, useState } from 'react';
 import axios from 'axios';
 import {
@@ -47,7 +48,6 @@ config({
     // return extensions;
     return [...extensions, lineNumbers()];
   },
-  // iconfontType: 'class',
   // markdownItConfig: (mdit) => {
   // mdit.use(ancher, {
   //   permalink: true
@@ -317,7 +317,6 @@ export default ({ theme, previewTheme, codeTheme, lang }: PreviewProp) => {
           mdHeadingId={markedHeadingId}
           // sanitize={(h) => `<a href="#">aaa</a>${h}`}
           // scrollAuto={false}
-          // noIconfont
           // codeStyleReverse={false}
           // codeStyleReverseList={['mk-cute']}
           // autoFocus

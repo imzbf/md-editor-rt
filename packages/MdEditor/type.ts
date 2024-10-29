@@ -240,12 +240,6 @@ export interface MdPreviewProps {
    */
   codeTheme?: string;
   /**
-   * 不插入iconfont链接
-   *
-   * @default false
-   */
-  noIconfont?: boolean;
-  /**
    * 复制代码格式化方法
    *
    * @default (text) => text
@@ -560,11 +554,6 @@ export interface ConfigOption {
       js?: string;
       css?: string;
     };
-    iconfont?: string;
-    /**
-     * class方式的图标
-     */
-    iconfontClass?: string;
     screenfull?: {
       instance?: any;
       js?: string;
@@ -598,11 +587,6 @@ export interface ConfigOption {
       js?: Partial<HTMLElementTagNameMap['script']>;
       css?: Partial<HTMLElementTagNameMap['link']>;
     };
-    iconfont?: Partial<HTMLElementTagNameMap['script']>;
-    /**
-     * class方式的图标
-     */
-    iconfontClass?: Partial<HTMLElementTagNameMap['link']>;
     screenfull?: {
       js?: Partial<HTMLElementTagNameMap['script']>;
     };
@@ -673,12 +657,6 @@ export interface ConfigOption {
     }
   ) => Array<MarkdownItConfigPlugin>;
   /**
-   * 如果使用内部的图标，可以切换展示的方式
-   *
-   * 以规避某些问题，例如Shadow Dom对Svg use的支持问题
-   */
-  iconfontType: 'svg' | 'class';
-  /**
    * mermaid配置项
    *
    * @param base
@@ -726,7 +704,6 @@ export interface MdPreviewStaticProps {
   editorId: string;
   noMermaid: boolean;
   noKatex: boolean;
-  noIconfont: boolean;
   noHighlight: boolean;
 }
 

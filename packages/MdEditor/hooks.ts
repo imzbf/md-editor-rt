@@ -18,7 +18,6 @@ import {
   ExposeParam,
   UpdateSetting,
   ExposeEvent,
-  MdPreviewStaticProps,
   FocusOption,
   UploadImgCallBack
 } from './type';
@@ -194,34 +193,9 @@ export const useExpansion = (staticProps: StaticProps) => {
       });
     }
   }, [noPrettier, noUploadImg]);
-
-  useExpansionPreview(staticProps);
 };
 
-export const useExpansionPreview = ({ noIconfont }: MdPreviewStaticProps) => {
-  useEffect(() => {
-    const { editorExtensions, editorExtensionsAttrs, iconfontType } = configOption;
-    if (noIconfont) {
-      return;
-    }
-
-    if (iconfontType === 'svg') {
-      // 图标
-      appendHandler('script', {
-        ...editorExtensionsAttrs.iconfont,
-        src: editorExtensions.iconfont,
-        id: `${prefix}-icon`
-      });
-    } else {
-      appendHandler('link', {
-        ...editorExtensionsAttrs.iconfontClass,
-        rel: 'stylesheet',
-        href: editorExtensions.iconfontClass,
-        id: `${prefix}-icon-class`
-      });
-    }
-  }, [noIconfont]);
-};
+export const useExpansionPreview = () => {};
 
 /**
  *  错误监听

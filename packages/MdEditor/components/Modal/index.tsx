@@ -208,7 +208,7 @@ const Modal = (props: ModalProps) => {
                         if (onAdjust instanceof Function) onAdjust(!props.isFullscreen);
                       }}
                     >
-                      <Icon name={props.isFullscreen ? 'suoxiao' : 'fangda'} />
+                      <Icon name={props.isFullscreen ? 'minimize' : 'maximize'} />
                     </div>
                   )}
                   <div

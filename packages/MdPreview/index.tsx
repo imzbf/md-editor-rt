@@ -1,5 +1,5 @@
 import { useState, useEffect, forwardRef, ForwardedRef, useRef } from 'react';
-import { useConfig, useExpansionPreview } from '~/hooks';
+import { useConfig } from '~/hooks';
 import { classnames, getNextId } from '~/utils';
 import { prefix, defaultProps, defaultEditorId } from '~/config';
 import { MdPreviewProps, MdPreviewStaticProps, Themes } from '~/type';
@@ -25,7 +25,6 @@ const MdPreview = forwardRef((props: MdPreviewProps, ref: ForwardedRef<unknown>)
     onGetCatalog = defaultProps.onGetCatalog,
     sanitize = defaultProps.sanitize,
     mdHeadingId = defaultProps.mdHeadingId,
-    noIconfont = defaultProps.noIconfont,
     noHighlight = defaultProps.noHighlight,
     noImgZoomIn = defaultProps.noImgZoomIn,
     language = defaultProps.language,
@@ -39,14 +38,11 @@ const MdPreview = forwardRef((props: MdPreviewProps, ref: ForwardedRef<unknown>)
       editorId,
       noKatex,
       noMermaid,
-      noIconfont,
       noHighlight
     };
   });
   const rootRef = useRef<HTMLDivElement>(null);
 
-  // 扩展库引用
-  useExpansionPreview(staticProps);
   // 部分配置重构
   const [highlight, usedLanguageText, setting] = useConfig(props);
 

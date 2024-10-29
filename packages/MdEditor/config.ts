@@ -14,8 +14,6 @@ export const prefix = 'md-editor';
 export const defaultEditorId = 'md-editor-rt';
 
 // 字体链接
-export const iconfontSvgUrl = 'https://at.alicdn.com/t/c/font_2605852_cmafimm6hot.js';
-export const iconfontClassUrl = 'https://at.alicdn.com/t/c/font_2605852_cmafimm6hot.css';
 export const cdnBase = 'https://unpkg.com';
 
 // 代码高亮cdn链接
@@ -469,7 +467,6 @@ export const defaultProps = {
   footers: allFooter,
   scrollAuto: true,
   defFooters: [],
-  noIconfont: false,
   formatCopiedText: (t: string) => t,
   noUploadImg: false,
   codeStyleReverse: true,
@@ -500,8 +497,6 @@ export const configOption: ConfigOption = {
     cropper: {
       ...cropperUrl
     },
-    iconfont: iconfontSvgUrl,
-    iconfontClass: iconfontClassUrl,
     screenfull: {
       js: screenfullUrl
     },
@@ -522,7 +517,6 @@ export const configOption: ConfigOption = {
   codeMirrorExtensions: (_theme, innerExtensions) => innerExtensions,
   markdownItConfig: () => {},
   markdownItPlugins: (s) => s,
-  iconfontType: 'svg',
   mermaidConfig: (c) => c,
   katexConfig: (c) => c
 };
