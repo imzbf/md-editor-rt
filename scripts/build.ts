@@ -8,6 +8,7 @@ import { buildType } from './build.type';
 const __dirname = fileURLToPath(new URL('..', import.meta.url));
 const resolvePath = (p: string) => path.resolve(__dirname, p);
 
+// eslint-disable-next-line @typescript-eslint/no-unused-expressions
 !(async () => {
   const moduleEntry = {
     index: resolvePath('packages'),
@@ -102,6 +103,7 @@ const resolvePath = (p: string) => path.resolve(__dirname, p);
                     'lru-cache',
                     'copy-to-clipboard',
                     'codemirror',
+                    'lucide-react',
                     '@vavt/util',
                     /@codemirror\/.*/,
                     /@lezer\/.*/,
