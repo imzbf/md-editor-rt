@@ -1,7 +1,7 @@
 import { useCallback, useContext, useEffect, useRef, useState } from 'react';
 import { randomId } from '@vavt/util';
 import { prefix, configOption } from '~/config';
-import { EditorContext } from '~/Editor';
+import { EditorContext } from '~/context';
 import { appendHandler } from '~/utils/dom';
 import { mermaidCache } from '~/utils/cache';
 

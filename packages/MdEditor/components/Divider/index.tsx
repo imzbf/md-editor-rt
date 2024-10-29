@@ -1,4 +1,5 @@
-import React from 'react';
 import { prefix } from '~/config';
 
-export default () => <div className={`${prefix}-divider`}></div>;
+const Divider = () => <div className={`${prefix}-divider`}></div>;
+
+export default Divider;

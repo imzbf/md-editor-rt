@@ -1,5 +1,6 @@
 import { debounce, createSmoothScroll } from '@vavt/util';
 import CodeMirrorUt from '~/layouts/Content/codemirror';
+
 import { prefix } from '../config';
 
 const DATA_LINE_SELECTOR = `.${prefix}-preview > [data-line]`;

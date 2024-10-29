@@ -1,4 +1,4 @@
-import React, {
+import {
   ReactElement,
   useCallback,
   useContext,
@@ -6,7 +6,8 @@ import React, {
   useRef,
   useState,
   cloneElement,
-  useEffect
+  useEffect,
+  memo
 } from 'react';
 import { linkTo, draggingScroll } from '@vavt/util';
 import {
@@ -16,12 +17,9 @@ import {
   InsertContentGenerator,
   TableShapeType
 } from '~/type';
-import { EditorContext } from '~/Editor';
+import { EditorContext } from '~/context';
 import { ToolDirective } from '~/utils/content-help';
 import { allToolbar, prefix } from '~/config';
-import bus from '~/utils/event-bus';
-import Divider from '~/components/Divider';
-import Dropdown from '~/components/Dropdown';
 import {
   CHANGE_CATALOG_VISIBLE,
   CTRL_SHIFT_Z,
@@ -29,11 +27,16 @@ import {
   ON_SAVE,
   REPLACE
 } from '~/static/event-name';
+import { classnames } from '~/utils';
+
+import bus from '~/utils/event-bus';
+import Divider from '~/components/Divider';
+import Dropdown from '~/components/Dropdown';
+import Icon from '~/components/Icon';
+
 import Modals from '../Modals';
 import TableShape from './TableShape';
 import { useSreenfull, useModals, useDropdownState } from './hooks';
-import { classnames } from '~/utils';
-import Icon from '~/components/Icon';
 
 export interface ToolbarProps {
   noPrettier: boolean;
@@ -1165,4 +1168,4 @@ const Toolbar = (props: ToolbarProps) => {
   );
 };
 
-export default React.memo(Toolbar);
+export default memo(Toolbar);

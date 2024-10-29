@@ -1,14 +1,15 @@
-import React, {
+import {
   useState,
   useContext,
   useRef,
   useImperativeHandle,
   forwardRef,
   ForwardedRef,
-  useCallback
+  useCallback,
+  memo
 } from 'react';
 import MdCatalog from '~~/MdCatalog';
-import { EditorContext } from '~/Editor';
+import { EditorContext } from '~/context';
 import { prefix } from '~/config';
 import { useAutoScroll, useCodeMirror, useResize } from './hooks';
 import { ContentProps } from './props';
@@ -108,4 +109,4 @@ const Content = forwardRef((props: ContentProps, ref: ForwardedRef<unknown>) => 
   );
 });
 
-export default React.memo(Content);
+export default memo(Content);

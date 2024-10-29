@@ -1,21 +1,21 @@
-import React, {
+import {
   CSSProperties,
   useEffect,
   useMemo,
   useState,
   MouseEvent,
   useCallback,
-  createContext,
   useRef,
-  MutableRefObject
+  memo
 } from 'react';
-import bus from '~/utils/event-bus';
 import { HeadList, MdHeadingId, Themes } from '~/type';
 import { defaultProps, prefix } from '~/config';
 import { classnames, getRelativeTop } from '~/utils';
 import { CATALOG_CHANGED, PUSH_CATALOG } from '~/static/event-name';
+import bus from '~/utils/event-bus';
 
 import CatalogLink from './CatalogLink';
+import { CatalogContext } from './context';
 
 export interface TocItem {
   text: string;
@@ -24,14 +24,6 @@ export interface TocItem {
   active: boolean;
   children?: Array<TocItem>;
 }
-
-export const CatalogContext = createContext<{
-  scrollElementRef: MutableRefObject<HTMLElement | undefined> | undefined;
-  rootNodeRef: MutableRefObject<Document | ShadowRoot | undefined> | undefined;
-}>({
-  scrollElementRef: undefined,
-  rootNodeRef: undefined
-});
 
 export interface CatalogProps {
   /**
@@ -280,4 +272,4 @@ const MdCatalog = (props: CatalogProps) => {
   );
 };
 
-export default React.memo(MdCatalog);
+export default memo(MdCatalog);

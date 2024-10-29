@@ -1,5 +1,5 @@
 import { useContext, useEffect } from 'react';
-import { EditorContext } from '~/Editor';
+import { EditorContext } from '~/context';
 import { ContentPreviewProps } from '../props';
 import bus from '~/utils/event-bus';
 import { TASK_STATE_CHANGED } from '~/static/event-name';

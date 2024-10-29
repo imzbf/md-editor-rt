@@ -1,12 +1,12 @@
-import React, { useState, useEffect, forwardRef, ForwardedRef, useRef } from 'react';
+import { useState, useEffect, forwardRef, ForwardedRef, useRef } from 'react';
 import { useConfig, useExpansionPreview } from '~/hooks';
 import { classnames, getNextId } from '~/utils';
 import { prefix, defaultProps, defaultEditorId } from '~/config';
 import { MdPreviewProps, MdPreviewStaticProps, Themes } from '~/type';
+import { EditorContext } from '~/context';
+import ContentPreview from '~/layouts/Content/ContentPreview';
 import bus from '~/utils/event-bus';
 
-import { EditorContext } from '~/Editor';
-import ContentPreview from '~/layouts/Content/ContentPreview';
 import { useExpose } from './hooks/useExpose';
 
 const MdPreview = forwardRef((props: MdPreviewProps, ref: ForwardedRef<unknown>) => {

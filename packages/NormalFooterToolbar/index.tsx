@@ -1,4 +1,4 @@
-import React, { MouseEvent, ReactNode } from 'react';
+import { MouseEvent, ReactNode } from 'react';
 import { prefix } from '~/config';
 
 export interface NormalFooterToolbarProps {

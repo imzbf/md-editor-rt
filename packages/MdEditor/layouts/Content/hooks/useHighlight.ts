@@ -1,6 +1,6 @@
 import { useContext, useEffect, useRef, useState } from 'react';
 import { prefix, configOption } from '~/config';
-import { EditorContext } from '~/Editor';
+import { EditorContext } from '~/context';
 import { appendHandler, updateHandler } from '~/utils/dom';
 import { ContentPreviewProps } from '../props';
 

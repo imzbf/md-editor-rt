@@ -1,19 +1,11 @@
-import React, {
-  useCallback,
-  useContext,
-  useEffect,
-  useMemo,
-  useRef,
-  useState
-} from 'react';
-import Modal from '~/components/Modal';
-import bus from '~/utils/event-bus';
-import { EditorContext } from '~/Editor';
+import { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
+import { EditorContext } from '~/context';
 import { configOption, prefix } from '~/config';
 import { base642File } from '~/utils';
-import Icon from '~/components/Icon';
 import { ERROR_CATCHER, UPLOAD_IMAGE } from '~/static/event-name';
-
+import Modal from '~/components/Modal';
+import bus from '~/utils/event-bus';
+import Icon from '~/components/Icon';
 interface ClipModalProps {
   visible: boolean;
   onCancel: () => void;

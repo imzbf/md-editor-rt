@@ -1,5 +1,4 @@
-import React, {
-  createContext,
+import {
   useCallback,
   useState,
   forwardRef,
@@ -16,30 +15,15 @@ import {
   useUploadImg,
   useExpose
 } from './hooks';
+import { classnames, getNextId } from '~/utils';
+import { prefix, defaultProps, defaultEditorId } from '~/config';
+import { EditorProps, StaticProps, TableShapeType, Themes } from '~/type';
+import { ContentExposeParam } from './layouts/Content/type';
+import { EditorContext } from './context';
 import ToolBar from '~/layouts/Toolbar';
 import Content from '~/layouts/Content';
 import Footer from '~/layouts/Footer';
-import { classnames, getNextId } from '~/utils';
-import { prefix, staticTextDefault, defaultProps, defaultEditorId } from '~/config';
-import { ContentType, EditorProps, StaticProps, TableShapeType, Themes } from '~/type';
 import bus from '~/utils/event-bus';
-import { ContentExposeParam } from './layouts/Content/type';
-
-export const EditorContext = createContext<ContentType>({
-  editorId: '',
-  tabWidth: 2,
-  theme: 'light',
-  language: 'zh-CN',
-  highlight: {
-    css: '',
-    js: ''
-  },
-  showCodeRowNumber: false,
-  usedLanguageText: staticTextDefault['zh-CN'],
-  previewTheme: 'default',
-  customIcon: {},
-  rootRef: null
-});
 
 const Editor = forwardRef((props: EditorProps, ref: ForwardedRef<unknown>) => {
   // Editor.defaultProps在某些编辑器中不能被正确识别已设置默认情况

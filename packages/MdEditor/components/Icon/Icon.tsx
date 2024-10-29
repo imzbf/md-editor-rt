@@ -1,4 +1,3 @@
-import React from 'react';
 import { prefix, configOption } from '~/config';
 
 export type IconName =

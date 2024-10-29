@@ -1,4 +1,3 @@
-import React from 'react';
 import { prefix } from '~/config';
 import { classnames } from '~/utils';
 
@@ -7,7 +6,7 @@ interface CheckBoxProps {
   onChange: (checked: boolean) => void;
 }
 
-export default (props: CheckBoxProps) => {
+const Checkbox = (props: CheckBoxProps) => {
   return (
     <div
       className={classnames([
@@ -20,3 +19,5 @@ export default (props: CheckBoxProps) => {
     ></div>
   );
 };
+
+export default Checkbox;

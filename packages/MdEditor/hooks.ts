@@ -259,7 +259,7 @@ export const useUploadImg = (props: EditorProps, staticProps: StaticProps) => {
           urls
         });
 
-        cb && cb();
+        cb?.();
       };
 
       onUploadImg?.(files, insertHanlder);

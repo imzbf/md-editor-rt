@@ -15,7 +15,7 @@ import {
 import { configOption } from '~/config';
 import bus from '~/utils/event-bus';
 import { directive2flag, ToolDirective } from '~/utils/content-help';
-import { EditorContext } from '~/Editor';
+import { EditorContext } from '~/context';
 import {
   CTRL_SHIFT_Z,
   CTRL_Z,
@@ -134,7 +134,7 @@ const useCodeMirror = (props: ContentProps) => {
       EditorView.lineWrapping,
       comp.update.of(
         EditorView.updateListener.of((update) => {
-          update.docChanged && props.onChange(update.state.doc.toString());
+          if (update.docChanged) props.onChange(update.state.doc.toString());
         })
       ),
       comp.domEvent.of(EditorView.domEventHandlers(domEventHandlers)),
@@ -180,9 +180,9 @@ const useCodeMirror = (props: ContentProps) => {
       nc.setTabSize(tabWidth);
       nc.setDisabled(props.disabled!);
       nc.setReadOnly(props.readOnly!);
-      props.placeholder && nc.setPlaceholder(props.placeholder);
-      typeof props.maxLength === 'number' && nc.setMaxLength(props.maxLength);
-      props.autoFocus && view.focus();
+      if (props.placeholder) nc.setPlaceholder(props.placeholder);
+      if (typeof props.maxLength === 'number') nc.setMaxLength(props.maxLength);
+      if (props.autoFocus) view.focus();
 
       noSet.current = false;
     }, 0);
@@ -303,7 +303,7 @@ const useCodeMirror = (props: ContentProps) => {
         effects: [
           comp.update.reconfigure(
             EditorView.updateListener.of((update) => {
-              update.docChanged && props.onChange(update.state.doc.toString());
+              if (update.docChanged) props.onChange(update.state.doc.toString());
             })
           ),
           comp.domEvent.reconfigure(EditorView.domEventHandlers(domEventHandlers)),

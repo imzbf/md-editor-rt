@@ -1,8 +1,8 @@
-import React, { useContext } from 'react';
+import { useContext } from 'react';
 import Icon, { IconName } from './Icon';
-import { EditorContext } from '~/Editor';
+import { EditorContext } from '~/context';
 
-export default (props: { name: IconName }) => {
+const IconIns = (props: { name: IconName }) => {
   const { customIcon } = useContext(EditorContext);
 
   const item = customIcon[props.name];
@@ -25,3 +25,5 @@ export default (props: { name: IconName }) => {
 
   return <Icon name={props.name} />;
 };
+
+export default IconIns;

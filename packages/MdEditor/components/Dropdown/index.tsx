@@ -1,5 +1,4 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-import React, {
+import {
   ReactElement,
   cloneElement,
   CSSProperties,
@@ -133,20 +132,22 @@ const DropDown = (props: ModalProps) => {
   );
 
   useEffect(() => {
-    triggerRef.current?.addEventListener('mouseenter', triggerHandler);
-    triggerRef.current?.addEventListener('mouseleave', leaveHidden);
+    const _trigger = triggerRef.current;
+    const _overlay = overlayRef.current;
+    _trigger?.addEventListener('mouseenter', triggerHandler);
+    _trigger?.addEventListener('mouseleave', leaveHidden);
 
-    overlayRef.current?.addEventListener('mouseenter', overlayHandler);
-    overlayRef.current?.addEventListener('mouseleave', leaveHidden);
+    _overlay?.addEventListener('mouseenter', overlayHandler);
+    _overlay?.addEventListener('mouseleave', leaveHidden);
 
     // 卸载组件时清除事件监听
     return () => {
-      triggerRef.current?.removeEventListener('mouseenter', triggerHandler);
-      triggerRef.current?.removeEventListener('mouseleave', leaveHidden);
+      _trigger?.removeEventListener('mouseenter', triggerHandler);
+      _trigger?.removeEventListener('mouseleave', leaveHidden);
 
       // 同时移除内容区域监听
-      overlayRef.current?.removeEventListener('mouseenter', overlayHandler);
-      overlayRef.current?.removeEventListener('mouseleave', leaveHidden);
+      _overlay?.removeEventListener('mouseenter', overlayHandler);
+      _overlay?.removeEventListener('mouseleave', leaveHidden);
     };
   }, [leaveHidden, triggerHandler]);
 

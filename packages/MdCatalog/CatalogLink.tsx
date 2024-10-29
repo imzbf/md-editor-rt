@@ -1,10 +1,11 @@
-import React, { MouseEvent, useContext } from 'react';
+import { MouseEvent, useContext } from 'react';
 import { prefix } from '~/config';
 import { classnames } from '~/utils';
 import { MdHeadingId } from '~/type';
 import { getComputedStyleNum } from '~/utils/scroll-auto';
 
-import { CatalogContext, TocItem } from './index';
+import { TocItem } from './index';
+import { CatalogContext } from './context';
 
 export interface CatalogLinkProps {
   tocItem: TocItem;
@@ -28,7 +29,7 @@ const CatalogLink = ({
         tocItem.active && `${prefix}-catalog-active`
       ])}
       onClick={(e) => {
-        onClick && onClick(e, tocItem);
+        onClick?.(e, tocItem);
         e.stopPropagation();
         const id = mdHeadingId(tocItem.text, tocItem.level, tocItem.index);
         const targetHeadEle = rootNodeRef?.current!.getElementById(id);

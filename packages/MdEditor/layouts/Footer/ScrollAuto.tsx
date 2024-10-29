@@ -1,14 +1,14 @@
-import React, { useContext, useMemo } from 'react';
+import { useContext, useMemo } from 'react';
 import { prefix } from '~/config';
 import Checkbox from '~/components/Checkbox';
-import { EditorContext } from '~/Editor';
+import { EditorContext } from '~/context';
 
 interface ScrollAutoProps {
   scrollAuto: boolean;
   onScrollAutoChange: (v: boolean) => void;
 }
 
-export default (props: ScrollAutoProps) => {
+const ScrollAuto = (props: ScrollAutoProps) => {
   const { usedLanguageText } = useContext(EditorContext);
 
   return useMemo(() => {
@@ -27,3 +27,5 @@ export default (props: ScrollAutoProps) => {
     );
   }, [usedLanguageText.footer?.scrollAuto, props]);
 };
+
+export default ScrollAuto;

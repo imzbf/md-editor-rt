@@ -1,4 +1,4 @@
-import React, { ReactElement, useCallback, useMemo } from 'react';
+import { memo, ReactElement, useCallback, useMemo } from 'react';
 import { allFooter, prefix } from '~/config';
 import { Footers } from '~/type';
 import MarkdownTotal from './MarkdownTotal';
@@ -72,4 +72,4 @@ const Footer = (props: FooterProps) => {
   );
 };
 
-export default React.memo(Footer);
+export default memo(Footer);
