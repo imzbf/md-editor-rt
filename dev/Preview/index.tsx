@@ -1,3 +1,4 @@
+/* eslint-disable react-refresh/only-export-components */
 import React, { useEffect, useRef, useState } from 'react';
 import axios from 'axios';
 import {
@@ -7,7 +8,8 @@ import {
   MdCatalog,
   config,
   ExposeParam,
-  editorExtensionsAttrs
+  editorExtensionsAttrs,
+  NormalFooterToolbar
 } from '~~/index';
 
 // import Editor from '../../lib/md-editor-rt.es';
@@ -46,7 +48,6 @@ config({
     // return extensions;
     return [...extensions, lineNumbers()];
   },
-  // iconfontType: 'class',
   // markdownItConfig: (mdit) => {
   // mdit.use(ancher, {
   //   permalink: true
@@ -71,7 +72,6 @@ config({
   mermaidConfig: (base) => {
     return base;
   },
-  iconfontType: 'svg',
   editorExtensions: {
     //     prettier: {
     //       prettierInstance: prettier,
@@ -295,14 +295,14 @@ export default ({ theme, previewTheme, codeTheme, lang }: PreviewProp) => {
       </button>
       <div className="container">
         <MdEditor
-          editorId="md-prev"
+          id="md-prev"
           completions={completions}
           ref={editorRef}
           theme={theme}
           language={lang}
           previewTheme={previewTheme}
           codeTheme={codeTheme}
-          modelValue={md.text}
+          value={md.text}
           // pageFullscreen
           // preview={false}
           // htmlPreview
@@ -317,7 +317,6 @@ export default ({ theme, previewTheme, codeTheme, lang }: PreviewProp) => {
           mdHeadingId={markedHeadingId}
           // sanitize={(h) => `<a href="#">aaa</a>${h}`}
           // scrollAuto={false}
-          // noIconfont
           // codeStyleReverse={false}
           // codeStyleReverseList={['mk-cute']}
           // autoFocus
@@ -514,7 +513,9 @@ export default ({ theme, previewTheme, codeTheme, lang }: PreviewProp) => {
             return `${text} \nfrom @imzbf`;
           }}
           footers={['markdownTotal', '=', 0, 'scrollSwitch']}
-          defFooters={[<span key={'dev-footer-demo'}>^_^</span>]}
+          defFooters={[
+            <NormalFooterToolbar key="NormalFooterToolbar">^_^</NormalFooterToolbar>
+          ]}
         />
         <br />
         {/* <MdEditor

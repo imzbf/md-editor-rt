@@ -8,6 +8,7 @@ import { buildType } from './build.type';
 const __dirname = fileURLToPath(new URL('..', import.meta.url));
 const resolvePath = (p: string) => path.resolve(__dirname, p);
 
+// eslint-disable-next-line @typescript-eslint/no-unused-expressions
 !(async () => {
   const moduleEntry = {
     index: resolvePath('packages'),
@@ -97,10 +98,12 @@ const resolvePath = (p: string) => path.resolve(__dirname, p);
                 : [
                     'react',
                     'react-dom',
+                    'react/jsx-runtime',
                     'medium-zoom',
                     'lru-cache',
                     'copy-to-clipboard',
                     'codemirror',
+                    'lucide-react',
                     '@vavt/util',
                     /@codemirror\/.*/,
                     /@lezer\/.*/,
@@ -113,7 +116,8 @@ const resolvePath = (p: string) => path.resolve(__dirname, p);
                 t === 'umd'
                   ? {
                       react: 'React',
-                      'react-dom': 'ReactDOM'
+                      'react-dom': 'ReactDOM',
+                      'react/jsx-runtime': 'jsxRuntime'
                     }
                   : {}
             }

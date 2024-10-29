@@ -1,8 +1,8 @@
-import bus from '~/utils/event-bus';
 import { configOption } from '~/config';
 import { InsertContentGenerator, UploadImgCallBackParam } from '~/type';
-import CodeMirrorUt from '~/layouts/Content/codemirror';
 import { ERROR_CATCHER } from '~/static/event-name';
+import CodeMirrorUt from '~/layouts/Content/codemirror';
+import bus from '~/utils/event-bus';
 
 export type ToolDirective =
   | 'bold'
@@ -221,7 +221,6 @@ export const directive2flag = async (
             } = typeof _url === 'object' ? _url : { url: _url };
 
             // ![alt](url 'title')
-            // eslint-disable-next-line quotes
             return pVal + `![${alt}](${url}${title ? " '" + title + "'" : ''})\n`;
           }, '');
         } else {

@@ -16,7 +16,7 @@ import {
   PUSH_CATALOG,
   RERENDER
 } from '~/static/event-name';
-import { EditorContext } from '~/Editor';
+import { EditorContext } from '~/context';
 import { zoomMermaid } from '~/utils/dom';
 
 import useHighlight from './useHighlight';

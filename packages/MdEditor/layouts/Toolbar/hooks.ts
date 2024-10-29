@@ -1,7 +1,6 @@
 import { RefObject, useCallback, useContext, useEffect, useRef, useState } from 'react';
-import bus from '~/utils/event-bus';
 import { prefix, configOption } from '~/config';
-import { EditorContext } from '~/Editor';
+import { EditorContext } from '~/context';
 import { appendHandler } from '~/utils/dom';
 import { ToolDirective } from '~/utils/content-help';
 import {
@@ -10,6 +9,7 @@ import {
   OPEN_MODALS,
   UPLOAD_IMAGE
 } from '~/static/event-name';
+import bus from '~/utils/event-bus';
 
 import { ToolbarProps } from './';
 import { HoverData } from './TableShape';

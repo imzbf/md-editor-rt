@@ -1,6 +1,6 @@
-import React, { useContext, useMemo } from 'react';
+import { useContext, useMemo } from 'react';
 import { prefix } from '~/config';
-import { EditorContext } from '~/Editor';
+import { EditorContext } from '~/context';
 import { classnames } from '~/utils';
 
 import { useCopyCode, useMarkdownIt, useZoom, useTaskState } from './hooks';

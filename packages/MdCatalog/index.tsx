@@ -1,37 +1,27 @@
-import React, {
+import {
   CSSProperties,
   useEffect,
   useMemo,
   useState,
   MouseEvent,
   useCallback,
-  createContext,
   useRef,
-  MutableRefObject
+  memo
 } from 'react';
-import bus from '~/utils/event-bus';
 import { HeadList, MdHeadingId, Themes } from '~/type';
 import { defaultProps, prefix } from '~/config';
 import { classnames, getRelativeTop } from '~/utils';
 import { CATALOG_CHANGED, PUSH_CATALOG } from '~/static/event-name';
+import bus from '~/utils/event-bus';
+import { getComputedStyleNum } from '~/utils/scroll-auto';
 
 import CatalogLink from './CatalogLink';
+import { CatalogContext } from './context';
 
-export interface TocItem {
-  text: string;
-  level: number;
+export interface TocItem extends HeadList {
   index: number;
-  active: boolean;
   children?: Array<TocItem>;
 }
-
-export const CatalogContext = createContext<{
-  scrollElementRef: MutableRefObject<HTMLElement | undefined> | undefined;
-  rootNodeRef: MutableRefObject<Document | ShadowRoot | undefined> | undefined;
-}>({
-  scrollElementRef: undefined,
-  rootNodeRef: undefined
-});
 
 export interface CatalogProps {
   /**
@@ -68,7 +58,7 @@ export interface CatalogProps {
    * @param heading
    * @returns
    */
-  onActive?: (heading: HeadList | undefined) => void;
+  onActive?: (heading: HeadList | undefined, activeElement: HTMLDivElement) => void;
   /**
    * 滚动容器是否在web component中，默认不在
    *
@@ -100,6 +90,11 @@ const MdCatalog = (props: CatalogProps) => {
   const scrollContainerRef = useRef<HTMLElement | Document>();
   // 获取到的目录root节点，注意，不支持目录和编辑器不在同一个web c中使用
   const rootNodeRef = useRef<Document | ShadowRoot>();
+
+  /**
+   * 指示器样式
+   */
+  const [indicatorStyles, setIStyles] = useState<CSSProperties>({});
 
   // 重构的列表
   const catalogs = useMemo(() => {
@@ -164,6 +159,16 @@ const MdCatalog = (props: CatalogProps) => {
 
     return scrollRoot.querySelector(scrollElement) as HTMLElement;
   }, [defaultScrollElement, props.isScrollElementInShadow, scrollElement]);
+
+  const onActive = useCallback(
+    (tocItem: TocItem, ele: HTMLDivElement) => {
+      setIStyles({
+        top: ele.offsetTop + getComputedStyleNum(ele, 'padding-top') + 'px'
+      });
+      props.onActive?.(tocItem, ele);
+    },
+    [props]
+  );
 
   useEffect(() => {
     // 获取当前元素所在的根节点
@@ -242,12 +247,6 @@ const MdCatalog = (props: CatalogProps) => {
     };
   }, [offsetTop, mdHeadingId, getScrollElement, editorId]);
 
-  useEffect(() => {
-    if (props.onActive) {
-      props.onActive(activeItem);
-    }
-  }, [activeItem, props]);
-
   return (
     <CatalogContext.Provider
       value={{
@@ -264,20 +263,28 @@ const MdCatalog = (props: CatalogProps) => {
         style={props.style}
         ref={catalogRef}
       >
-        {catalogs.map((item) => {
-          return (
-            <CatalogLink
-              mdHeadingId={mdHeadingId}
-              tocItem={item}
-              key={`${item.text}-${item.index}`}
-              onClick={props.onClick}
-              scrollElementOffsetTop={props.scrollElementOffsetTop}
-            />
-          );
-        })}
+        {catalogs.length > 0 && (
+          <>
+            <div className={`${prefix}-catalog-indicator`} style={indicatorStyles}></div>
+            <div className={`${prefix}-catalog-container`}>
+              {catalogs.map((item) => {
+                return (
+                  <CatalogLink
+                    mdHeadingId={mdHeadingId}
+                    tocItem={item}
+                    key={`link-${item.level}-${item.text}`}
+                    onActive={onActive}
+                    onClick={props.onClick}
+                    scrollElementOffsetTop={props.scrollElementOffsetTop}
+                  />
+                );
+              })}
+            </div>
+          </>
+        )}
       </div>
     </CatalogContext.Provider>
   );
 };
 
-export default React.memo(MdCatalog);
+export default memo(MdCatalog);

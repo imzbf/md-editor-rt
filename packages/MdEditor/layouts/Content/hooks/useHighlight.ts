@@ -1,6 +1,6 @@
 import { useContext, useEffect, useRef, useState } from 'react';
 import { prefix, configOption } from '~/config';
-import { EditorContext } from '~/Editor';
+import { EditorContext } from '~/context';
 import { appendHandler, updateHandler } from '~/utils/dom';
 import { ContentPreviewProps } from '../props';
 
@@ -18,7 +18,7 @@ const useHighlight = (props: ContentPreviewProps) => {
 
   useEffect(() => {
     // 强制不高亮，则什么都不做
-    if (props.noHighlight || hljsRef.current) {
+    if (props.noHighlight || configOption.editorExtensions.highlight!.instance) {
       return;
     }
 
@@ -52,7 +52,10 @@ const useHighlight = (props: ContentPreviewProps) => {
       },
       'hljs'
     );
-  }, [highlight.css, highlight.js, props.noHighlight]);
+
+    // 只执行一次
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return { hljsRef, hljsInited };
 };

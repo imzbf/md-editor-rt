@@ -1,4 +1,4 @@
-import React, {
+import {
   CSSProperties,
   useRef,
   useState,
@@ -10,7 +10,7 @@ import React, {
 import { createPortal } from 'react-dom';
 import { configOption, prefix } from '~/config';
 import { keyMove } from '~/utils/dom';
-import { EditorContext } from '~/Editor';
+import { EditorContext } from '~/context';
 import { getZIndexIncrement } from '~/utils';
 import Icon from '../Icon';
 
@@ -205,17 +205,17 @@ const Modal = (props: ModalProps) => {
                           }));
                         }
 
-                        onAdjust instanceof Function && onAdjust(!props.isFullscreen);
+                        if (onAdjust instanceof Function) onAdjust(!props.isFullscreen);
                       }}
                     >
-                      <Icon name={props.isFullscreen ? 'suoxiao' : 'fangda'} />
+                      <Icon name={props.isFullscreen ? 'minimize' : 'maximize'} />
                     </div>
                   )}
                   <div
                     className={`${prefix}-modal-close`}
                     onClick={(e) => {
                       e.stopPropagation();
-                      props.onClose && props.onClose();
+                      if (props.onClose) props.onClose();
                     }}
                   >
                     <Icon name="close" />

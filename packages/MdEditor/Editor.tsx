@@ -1,5 +1,4 @@
-import React, {
-  createContext,
+import {
   useCallback,
   useState,
   forwardRef,
@@ -14,37 +13,23 @@ import {
   useErrorCatcher,
   useExpansion,
   useUploadImg,
-  useExpose
+  useExpose,
+  useEditorId
 } from './hooks';
+import { classnames } from '~/utils';
+import { prefix, defaultProps } from '~/config';
+import { EditorProps, StaticProps, TableShapeType, Themes } from '~/type';
+import { ContentExposeParam } from './layouts/Content/type';
+import { EditorContext } from './context';
 import ToolBar from '~/layouts/Toolbar';
 import Content from '~/layouts/Content';
 import Footer from '~/layouts/Footer';
-import { classnames, getNextId } from '~/utils';
-import { prefix, staticTextDefault, defaultProps, defaultEditorId } from '~/config';
-import { ContentType, EditorProps, StaticProps, TableShapeType, Themes } from '~/type';
 import bus from '~/utils/event-bus';
-import { ContentExposeParam } from './layouts/Content/type';
-
-export const EditorContext = createContext<ContentType>({
-  editorId: '',
-  tabWidth: 2,
-  theme: 'light',
-  language: 'zh-CN',
-  highlight: {
-    css: '',
-    js: ''
-  },
-  showCodeRowNumber: false,
-  usedLanguageText: staticTextDefault['zh-CN'],
-  previewTheme: 'default',
-  customIcon: {},
-  rootRef: null
-});
 
 const Editor = forwardRef((props: EditorProps, ref: ForwardedRef<unknown>) => {
   // Editor.defaultProps在某些编辑器中不能被正确识别已设置默认情况
   const {
-    modelValue = defaultProps.modelValue,
+    value = props.modelValue || defaultProps.modelValue,
     theme = defaultProps.theme as Themes,
     className = defaultProps.className,
     toolbars = defaultProps.toolbars,
@@ -66,7 +51,6 @@ const Editor = forwardRef((props: EditorProps, ref: ForwardedRef<unknown>) => {
     mdHeadingId = defaultProps.mdHeadingId,
     footers = defaultProps.footers,
     defFooters = defaultProps.defFooters,
-    noIconfont = defaultProps.noIconfont,
     noUploadImg = defaultProps.noUploadImg,
     noHighlight = defaultProps.noHighlight,
     noImgZoomIn = defaultProps.noImgZoomIn,
@@ -78,14 +62,15 @@ const Editor = forwardRef((props: EditorProps, ref: ForwardedRef<unknown>) => {
     autoFoldThreshold = defaultProps.autoFoldThreshold
   } = props;
 
+  const editorId = useEditorId(props);
+
   const [staticProps] = useState<StaticProps>(() => {
     return {
-      editorId: props.editorId || getNextId(defaultEditorId + '_'),
+      editorId,
       noKatex,
       noMermaid,
       noPrettier,
       noUploadImg,
-      noIconfont,
       noHighlight
     };
   });
@@ -176,7 +161,7 @@ const Editor = forwardRef((props: EditorProps, ref: ForwardedRef<unknown>) => {
         )}
         <Content
           ref={codeRef}
-          modelValue={modelValue}
+          modelValue={value}
           onChange={onChange}
           setting={setting}
           mdHeadingId={mdHeadingId}
@@ -212,7 +197,7 @@ const Editor = forwardRef((props: EditorProps, ref: ForwardedRef<unknown>) => {
         />
         {footers.length > 0 && (
           <Footer
-            modelValue={modelValue}
+            modelValue={value}
             footers={footers}
             defFooters={defFooters}
             noScrollAuto={

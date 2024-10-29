@@ -1,8 +1,8 @@
-import React, { useContext, useMemo } from 'react';
+import { useContext, useMemo } from 'react';
 import { prefix } from '~/config';
-import { EditorContext } from '~/Editor';
+import { EditorContext } from '~/context';
 
-export default ({ modelValue }: { modelValue: string }) => {
+const MarkdownTotal = ({ modelValue }: { modelValue: string }) => {
   const { usedLanguageText } = useContext(EditorContext);
 
   return useMemo(() => {
@@ -16,3 +16,5 @@ export default ({ modelValue }: { modelValue: string }) => {
     );
   }, [usedLanguageText, modelValue]);
 };
+
+export default MarkdownTotal;

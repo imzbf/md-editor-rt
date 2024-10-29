@@ -1,5 +1,5 @@
 import { RefObject, useContext, useEffect, useState } from 'react';
-import { EditorContext } from '~/Editor';
+import { EditorContext } from '~/context';
 import scrollAuto, { scrollAutoWithScale } from '~/utils/scroll-auto';
 import { ContentProps } from '../props';
 

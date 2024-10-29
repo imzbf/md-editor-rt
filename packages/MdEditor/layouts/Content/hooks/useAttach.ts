@@ -1,5 +1,5 @@
 import { RefObject, useContext } from 'react';
-import { EditorContext } from '~/Editor';
+import { EditorContext } from '~/context';
 import { TEXTAREA_FOCUS } from '~/static/event-name';
 import eventBus from '~/utils/event-bus';
 import CodeMirrorUt from '../codemirror';

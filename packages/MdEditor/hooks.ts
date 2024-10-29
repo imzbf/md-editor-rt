@@ -3,6 +3,7 @@ import {
   MutableRefObject,
   useCallback,
   useEffect,
+  useId,
   useImperativeHandle,
   useMemo,
   useRef,
@@ -18,9 +19,9 @@ import {
   ExposeParam,
   UpdateSetting,
   ExposeEvent,
-  MdPreviewStaticProps,
   FocusOption,
-  UploadImgCallBack
+  UploadImgCallBack,
+  MdPreviewProps
 } from './type';
 import {
   prefix,
@@ -57,7 +58,7 @@ import { ContentExposeParam } from './layouts/Content/type';
  * @param staticProps
  */
 export const useOnSave = (props: EditorProps, staticProps: StaticProps) => {
-  const { modelValue, onSave } = props;
+  const { value, modelValue, onSave } = props;
   const { editorId } = staticProps;
 
   const [state, setState] = useState({
@@ -109,7 +110,7 @@ export const useOnSave = (props: EditorProps, staticProps: StaticProps) => {
           }
         });
 
-        onSave(modelValue, htmlPromise);
+        onSave(value || modelValue || '', htmlPromise);
       }
     };
 
@@ -122,7 +123,7 @@ export const useOnSave = (props: EditorProps, staticProps: StaticProps) => {
     return () => {
       bus.remove(editorId, ON_SAVE, callback);
     };
-  }, [editorId, modelValue, onSave, state.buildFinished, state.html]);
+  }, [editorId, modelValue, onSave, state.buildFinished, state.html, value]);
 
   useEffect(() => {
     // 编辑后添加未编译完成标识
@@ -132,7 +133,7 @@ export const useOnSave = (props: EditorProps, staticProps: StaticProps) => {
         buildFinished: false
       };
     });
-  }, [modelValue]);
+  }, [value, modelValue]);
 };
 
 /**
@@ -194,34 +195,9 @@ export const useExpansion = (staticProps: StaticProps) => {
       });
     }
   }, [noPrettier, noUploadImg]);
-
-  useExpansionPreview(staticProps);
 };
 
-export const useExpansionPreview = ({ noIconfont }: MdPreviewStaticProps) => {
-  useEffect(() => {
-    const { editorExtensions, editorExtensionsAttrs, iconfontType } = configOption;
-    if (noIconfont) {
-      return;
-    }
-
-    if (iconfontType === 'svg') {
-      // 图标
-      appendHandler('script', {
-        ...editorExtensionsAttrs.iconfont,
-        src: editorExtensions.iconfont,
-        id: `${prefix}-icon`
-      });
-    } else {
-      appendHandler('link', {
-        ...editorExtensionsAttrs.iconfontClass,
-        rel: 'stylesheet',
-        href: editorExtensions.iconfontClass,
-        id: `${prefix}-icon-class`
-      });
-    }
-  }, [noIconfont]);
-};
+export const useExpansionPreview = () => {};
 
 /**
  *  错误监听
@@ -259,7 +235,7 @@ export const useUploadImg = (props: EditorProps, staticProps: StaticProps) => {
           urls
         });
 
-        cb && cb();
+        cb?.();
       };
 
       onUploadImg?.(files, insertHanlder);
@@ -639,4 +615,9 @@ export const useExpose = (
 
     return exposeParam;
   }, [codeRef, editorId, updateSetting]);
+};
+
+export const useEditorId = (props: MdPreviewProps) => {
+  const defaultId = useId();
+  return props.id || props.editorId || prefix + '-' + defaultId.replaceAll(':', '');
 };

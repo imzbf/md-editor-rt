@@ -1,19 +1,11 @@
-import React, {
-  useCallback,
-  useContext,
-  useEffect,
-  useMemo,
-  useRef,
-  useState
-} from 'react';
-import Modal from '~/components/Modal';
-import bus from '~/utils/event-bus';
-import { EditorContext } from '~/Editor';
+import { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
+import { EditorContext } from '~/context';
 import { configOption, prefix } from '~/config';
 import { base642File } from '~/utils';
-import Icon from '~/components/Icon';
 import { ERROR_CATCHER, UPLOAD_IMAGE } from '~/static/event-name';
-
+import Modal from '~/components/Modal';
+import bus from '~/utils/event-bus';
+import Icon from '~/components/Icon';
 interface ClipModalProps {
   visible: boolean;
   onCancel: () => void;
@@ -158,6 +150,9 @@ const ClipModal = (props: ClipModalProps) => {
                 onClick={() => {
                   (uploadRef.current as HTMLInputElement).click();
                 }}
+                role="button"
+                tabIndex={0}
+                aria-label={usedLanguageText.imgTitleItem?.upload}
               >
                 <Icon name="upload" />
               </div>
@@ -194,12 +189,14 @@ const ClipModal = (props: ClipModalProps) => {
           type="file"
           multiple={false}
           style={{ display: 'none' }}
+          aria-hidden="true"
         />
       </Modal>
     );
   }, [
     usedLanguageText.clipModalTips?.title,
     usedLanguageText.linkModalTips?.buttonOK,
+    usedLanguageText.imgTitleItem?.upload,
     props.visible,
     props.onCancel,
     props.onOk,

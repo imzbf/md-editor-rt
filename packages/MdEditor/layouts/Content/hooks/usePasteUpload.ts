@@ -1,5 +1,5 @@
 import { RefObject, useCallback, useContext } from 'react';
-import { EditorContext } from '~/Editor';
+import { EditorContext } from '~/context';
 import bus from '~/utils/event-bus';
 import { ERROR_CATCHER, REPLACE, UPLOAD_IMAGE } from '~/static/event-name';
 
