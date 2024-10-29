@@ -3,6 +3,7 @@ import {
   MutableRefObject,
   useCallback,
   useEffect,
+  useId,
   useImperativeHandle,
   useMemo,
   useRef,
@@ -19,7 +20,8 @@ import {
   UpdateSetting,
   ExposeEvent,
   FocusOption,
-  UploadImgCallBack
+  UploadImgCallBack,
+  MdPreviewProps
 } from './type';
 import {
   prefix,
@@ -56,7 +58,7 @@ import { ContentExposeParam } from './layouts/Content/type';
  * @param staticProps
  */
 export const useOnSave = (props: EditorProps, staticProps: StaticProps) => {
-  const { modelValue, onSave } = props;
+  const { value, modelValue, onSave } = props;
   const { editorId } = staticProps;
 
   const [state, setState] = useState({
@@ -108,7 +110,7 @@ export const useOnSave = (props: EditorProps, staticProps: StaticProps) => {
           }
         });
 
-        onSave(modelValue, htmlPromise);
+        onSave(value || modelValue || '', htmlPromise);
       }
     };
 
@@ -121,7 +123,7 @@ export const useOnSave = (props: EditorProps, staticProps: StaticProps) => {
     return () => {
       bus.remove(editorId, ON_SAVE, callback);
     };
-  }, [editorId, modelValue, onSave, state.buildFinished, state.html]);
+  }, [editorId, modelValue, onSave, state.buildFinished, state.html, value]);
 
   useEffect(() => {
     // 编辑后添加未编译完成标识
@@ -131,7 +133,7 @@ export const useOnSave = (props: EditorProps, staticProps: StaticProps) => {
         buildFinished: false
       };
     });
-  }, [modelValue]);
+  }, [value, modelValue]);
 };
 
 /**
@@ -613,4 +615,9 @@ export const useExpose = (
 
     return exposeParam;
   }, [codeRef, editorId, updateSetting]);
+};
+
+export const useEditorId = (props: MdPreviewProps) => {
+  const defaultId = useId();
+  return props.id || props.editorId || prefix + '-' + defaultId.replaceAll(':', '');
 };

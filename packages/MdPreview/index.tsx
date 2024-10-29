@@ -1,7 +1,7 @@
 import { useState, useEffect, forwardRef, ForwardedRef, useRef } from 'react';
-import { useConfig } from '~/hooks';
-import { classnames, getNextId } from '~/utils';
-import { prefix, defaultProps, defaultEditorId } from '~/config';
+import { useConfig, useEditorId } from '~/hooks';
+import { classnames } from '~/utils';
+import { prefix, defaultProps } from '~/config';
 import { MdPreviewProps, MdPreviewStaticProps, Themes } from '~/type';
 import { EditorContext } from '~/context';
 import ContentPreview from '~/layouts/Content/ContentPreview';
@@ -12,11 +12,10 @@ import { useExpose } from './hooks/useExpose';
 const MdPreview = forwardRef((props: MdPreviewProps, ref: ForwardedRef<unknown>) => {
   // Editor.defaultProps在某些编辑器中不能被正确识别已设置默认情况
   const {
-    modelValue = defaultProps.modelValue,
+    value = props.modelValue || defaultProps.modelValue,
     onChange = defaultProps.onChange,
     theme = defaultProps.theme as Themes,
     className = defaultProps.className,
-    editorId = getNextId(defaultEditorId + '_'),
     showCodeRowNumber = defaultProps.showCodeRowNumber,
     previewTheme = defaultProps.previewTheme,
     noMermaid = defaultProps.noMermaid,
@@ -32,6 +31,8 @@ const MdPreview = forwardRef((props: MdPreviewProps, ref: ForwardedRef<unknown>)
     codeFoldable = defaultProps.codeFoldable,
     autoFoldThreshold = defaultProps.autoFoldThreshold
   } = props;
+
+  const editorId = useEditorId(props);
 
   const [staticProps] = useState<MdPreviewStaticProps>(() => {
     return {
@@ -83,7 +84,7 @@ const MdPreview = forwardRef((props: MdPreviewProps, ref: ForwardedRef<unknown>)
         ref={rootRef}
       >
         <ContentPreview
-          modelValue={modelValue}
+          modelValue={value}
           onChange={onChange}
           setting={setting}
           mdHeadingId={mdHeadingId}

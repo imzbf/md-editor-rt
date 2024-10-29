@@ -295,14 +295,14 @@ export default ({ theme, previewTheme, codeTheme, lang }: PreviewProp) => {
       </button>
       <div className="container">
         <MdEditor
-          editorId="md-prev"
+          id="md-prev"
           completions={completions}
           ref={editorRef}
           theme={theme}
           language={lang}
           previewTheme={previewTheme}
           codeTheme={codeTheme}
-          modelValue={md.text}
+          value={md.text}
           // pageFullscreen
           // preview={false}
           // htmlPreview

@@ -13,10 +13,11 @@ import {
   useErrorCatcher,
   useExpansion,
   useUploadImg,
-  useExpose
+  useExpose,
+  useEditorId
 } from './hooks';
-import { classnames, getNextId } from '~/utils';
-import { prefix, defaultProps, defaultEditorId } from '~/config';
+import { classnames } from '~/utils';
+import { prefix, defaultProps } from '~/config';
 import { EditorProps, StaticProps, TableShapeType, Themes } from '~/type';
 import { ContentExposeParam } from './layouts/Content/type';
 import { EditorContext } from './context';
@@ -28,7 +29,7 @@ import bus from '~/utils/event-bus';
 const Editor = forwardRef((props: EditorProps, ref: ForwardedRef<unknown>) => {
   // Editor.defaultProps在某些编辑器中不能被正确识别已设置默认情况
   const {
-    modelValue = defaultProps.modelValue,
+    value = props.modelValue || defaultProps.modelValue,
     theme = defaultProps.theme as Themes,
     className = defaultProps.className,
     toolbars = defaultProps.toolbars,
@@ -61,9 +62,11 @@ const Editor = forwardRef((props: EditorProps, ref: ForwardedRef<unknown>) => {
     autoFoldThreshold = defaultProps.autoFoldThreshold
   } = props;
 
+  const editorId = useEditorId(props);
+
   const [staticProps] = useState<StaticProps>(() => {
     return {
-      editorId: props.editorId || getNextId(defaultEditorId + '_'),
+      editorId,
       noKatex,
       noMermaid,
       noPrettier,
@@ -158,7 +161,7 @@ const Editor = forwardRef((props: EditorProps, ref: ForwardedRef<unknown>) => {
         )}
         <Content
           ref={codeRef}
-          modelValue={modelValue}
+          modelValue={value}
           onChange={onChange}
           setting={setting}
           mdHeadingId={mdHeadingId}
@@ -194,7 +197,7 @@ const Editor = forwardRef((props: EditorProps, ref: ForwardedRef<unknown>) => {
         />
         {footers.length > 0 && (
           <Footer
-            modelValue={modelValue}
+            modelValue={value}
             footers={footers}
             defFooters={defFooters}
             noScrollAuto={

@@ -33,7 +33,7 @@ const PreviewOnly = (props: PreviewOnlyProp) => {
           theme={props.theme}
           previewTheme={props.previewTheme}
           codeTheme={props.codeTheme}
-          modelValue={value}
+          value={value}
           onChange={setValue}
           showCodeRowNumber
         />

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { MdEditor, StrIcon } from '~~/index';
 import data from './data.md';
 
+// eslint-disable-next-line react-refresh/only-export-components
 export default () => {
   const [text, setText] = useState(data);
 

@@ -153,7 +153,11 @@ export type PreviewThemes = string;
 export type MdHeadingId = (text: string, level: number, index: number) => string;
 
 export interface MdPreviewProps {
-  modelValue: string;
+  value?: string;
+  /**
+   * @deprecated 5.0开始使用value代替
+   */
+  modelValue?: string;
   /**
    * input回调事件
    */
@@ -184,11 +188,17 @@ export interface MdPreviewProps {
    * 获取目录结构
    */
   onGetCatalog?: GetCatalogEvent;
-
+  /**
+   * 5.x版本开始 editorId 的替换
+   *
+   * @default 'md-editor-rt'
+   */
+  id?: string;
   /**
    * 编辑器唯一标识
    *
    * @default 'md-editor-rt'
+   * @deprecated 5.x版本开始使用 id 替换
    */
   editorId?: string;
   /**
