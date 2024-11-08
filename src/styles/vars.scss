@@ -1,0 +1,62 @@
+$prefix: 'docs';
+
+$color: #3f4a54;
+$color-dark: #999;
+
+$hover: #bebebe;
+$hover-dark: #fff;
+
+$color-reverse: #eee;
+$color-dark-reverse: #999;
+
+$border-color: #e6e6e6;
+$border-color-dark: #2d2d2d;
+
+$border-color-reverse: #bebebe;
+$border-color-dark-reverse: #e6e6e6;
+
+$bk-color: #fff;
+$bk-color-dark: #000;
+
+$code-bk-color: #282c34;
+$code-bk-color-dark: #1a1a1a;
+
+// 在默认背景下凸出背景
+$bbk-color: #ececec;
+$bbk-color-dark: #111;
+
+// 模仿antd的主色调
+$primary-color: #73d13d;
+
+@mixin css-vars($is-dark) {
+  --iz-color: #{if($is-dark, $color-dark, $color)};
+  --iz-color-reverse: #{if($is-dark, $color-dark-reverse, $color-reverse)};
+  --iz-hover-color: #{if($is-dark, $hover-dark, $hover)};
+  --iz-hover-color-reverse: #{if($is-dark, $hover, $hover-dark)};
+
+  --iz-bk-color: #{if($is-dark, $bk-color-dark, $bk-color)};
+  --iz-bk-color-outstand: #{if($is-dark, #333, #f2f2f2)};
+  --iz-bk-hover-color: #{if($is-dark, $bbk-color-dark, $bbk-color)};
+
+  --iz-border-color: #{if($is-dark, $border-color-dark, $border-color)};
+  --iz-border-color-reverse: #{if(
+      $is-dark,
+      $border-color-dark-reverse,
+      $border-color-reverse
+    )};
+
+  --iz-border-hover-color: #{if($is-dark, #636262, #b9b9b9)};
+  --iz-border-hover-color-reverse: #{if(
+      $is-dark,
+      $border-color-reverse,
+      $border-color-dark-reverse
+    )};
+
+  --iz-border-active-color: #{if($is-dark, #777, #999)};
+
+  --iz-modal-mask: #00000073;
+  --md-scrollbar-bg-color: #{if($is-dark, #0f0f0f, #e2e2e2)};
+  --md-scrollbar-thumb-color: #{if($is-dark, #2d2d2d, #0000004d)};
+  --md-scrollbar-thumb-hover-color: #{if($is-dark, #3a3a3a, #00000059)};
+  --md-scrollbar-thumb-active-color: #{if($is-dark, #3a3a3a, #00000061)};
+}
