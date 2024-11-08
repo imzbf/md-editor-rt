@@ -31,6 +31,7 @@ const Editor = forwardRef((props: EditorProps, ref: ForwardedRef<unknown>) => {
   const {
     value = props.modelValue || defaultProps.modelValue,
     theme = defaultProps.theme as Themes,
+    codeTheme = defaultProps.codeTheme,
     className = defaultProps.className,
     toolbars = defaultProps.toolbars,
     toolbarsExclude = defaultProps.toolbarsExclude,
@@ -157,6 +158,7 @@ const Editor = forwardRef((props: EditorProps, ref: ForwardedRef<unknown>) => {
             noUploadImg={staticProps.noUploadImg}
             showToolbarName={props.showToolbarName}
             catalogVisible={catalogVisible}
+            codeTheme={codeTheme}
           />
         )}
         <Content
