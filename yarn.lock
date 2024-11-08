@@ -1961,10 +1961,10 @@
   resolved "https://registry.npmjs.org/@vavt/message/-/message-2.0.0.tgz#9995e81ea1ac46dccb492e1b0622b4d5270abe54"
   integrity sha512-uf/TWMn7Bn6td2SzPSly+gWa+XS+mP8e5JCraTCQbtHn57mUnCFM+TFPQELm6D+q/FNmv1cZmMFnQEEpW1Bj3g==
 
-"@vavt/rt-extension@^1.3.0":
-  version "1.3.0"
-  resolved "https://registry.npmjs.org/@vavt/rt-extension/-/rt-extension-1.3.0.tgz#ccea70953281ab610930c93c51c56c6920daa69a"
-  integrity sha512-loklKBP7Lt2zpEk1R+wSlDHmWlM6GQ5mp1Z7anfgNWUTMI+vUWyF2olrbRJuWG0gNfCeHTOF2s1dgkOhpAcz/g==
+"@vavt/rt-extension@^1.3.3":
+  version "1.3.3"
+  resolved "https://registry.npmjs.org/@vavt/rt-extension/-/rt-extension-1.3.3.tgz#ff4ab2a26fbaf2630c89f1c8e436748b9a449519"
+  integrity sha512-lUr9hz7aoc7SzjcEuYdgy3VU6cvV6H8gdG4s/ePwvP3iu0/Jx28CMIgwlCoYM6Ki6Ufew6byKpGYRksWXk08EA==
 
 "@vavt/util@^2.1.0":
   version "2.1.0"
@@ -3474,10 +3474,10 @@ marked@*:
   resolved "https://registry.npmjs.org/marked/-/marked-13.0.2.tgz#d5d05bd2683a85cb9cc6afbe5240e3a8bffcb92a"
   integrity sha512-J6CPjP8pS5sgrRqxVRvkCIkZ6MFdRIjDkwUwgJ9nL2fbmM6qGQeB2C16hi8Cc9BOzj6xXzy0jyi0iPIfnMHYzA==
 
-md-editor-rt@^4.21.2:
-  version "4.21.2"
-  resolved "https://registry.yarnpkg.com/md-editor-rt/-/md-editor-rt-4.21.2.tgz#d54836b2665c8cad80b3efe4eb76e1ed35425e45"
-  integrity sha512-qfFP/zNTFiCLf74aXG3ihTe36aigT3+3DWBbYaIcGWtHRZ0UyQQ9rqGNBxpWP3Nyi6hTVvA88LFNBzneuSqipA==
+md-editor-rt@^4.21.3:
+  version "4.21.3"
+  resolved "https://registry.npmjs.org/md-editor-rt/-/md-editor-rt-4.21.3.tgz#c6a2cb72afc7b8303eef378557e56613f0fe1ffe"
+  integrity sha512-IsqttKrFvNs8Kjh0MIivTdKBCuilod9kmOfupdXhHcBpv2gFRABD6iMaXosU6vQqQdr5yd9gu9Yzo6vm9rYWIg==
   dependencies:
     "@codemirror/lang-markdown" "^6.2.5"
     "@codemirror/language-data" "^6.5.1"
