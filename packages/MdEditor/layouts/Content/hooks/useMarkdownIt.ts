@@ -226,6 +226,8 @@ const useMarkdownIt = (props: ContentPreviewProps, previewOnly: boolean) => {
   const [key, setKey] = useState(`_article-key_${randomId()}`);
 
   const [html, setHtml] = useState(() => {
+    // 严格模式下 useState 也会执行两次
+    headsRef.current = [];
     return sanitize(md.render(modelValue));
   });
 

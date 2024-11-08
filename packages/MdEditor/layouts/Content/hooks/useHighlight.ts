@@ -35,11 +35,6 @@ const useHighlight = (props: ContentPreviewProps) => {
       return;
     }
 
-    appendHandler('link', {
-      ...highlight.css,
-      rel: 'stylesheet',
-      id: `${prefix}-hlCss`
-    });
     appendHandler(
       'script',
       {

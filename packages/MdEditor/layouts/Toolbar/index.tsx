@@ -51,12 +51,13 @@ export interface ToolbarProps {
   noUploadImg: boolean;
   showToolbarName?: boolean;
   catalogVisible: boolean;
+  codeTheme: string;
 }
 
 let splitNum = 0;
 
 const Toolbar = (props: ToolbarProps) => {
-  const { toolbars, toolbarsExclude, updateSetting } = props;
+  const { toolbars, toolbarsExclude, updateSetting, codeTheme } = props;
   // 获取ID，语言设置
   const { editorId, usedLanguageText, theme, previewTheme, language } =
     useContext(EditorContext);
@@ -1061,9 +1062,10 @@ const Toolbar = (props: ToolbarProps) => {
 
         if (defItem) {
           const defItemCloned = cloneElement(defItem, {
-            theme,
-            previewTheme,
-            language,
+            theme: defItem.props.theme || theme,
+            codeTheme: defItem.props.codeTheme || codeTheme,
+            previewTheme: defItem.props.previewTheme || previewTheme,
+            language: defItem.props.language || language,
             insert(generate: InsertContentGenerator) {
               bus.emit(editorId, REPLACE, 'universal', { generate });
             }
