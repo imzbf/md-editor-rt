@@ -4,7 +4,7 @@
 
 This is the props of `MdPreview`, which is also part of `MdEditor`:
 
-### 📃 modelValue
+### 📃 value
 
 - **type**: `string`
 - **default**: `''`
@@ -12,8 +12,15 @@ This is the props of `MdPreview`, which is also part of `MdEditor`:
   Markdown content.
 
   ```jsx
-  <MdEditor modelValue="xxx" />
+  <MdEditor value="xxx" />
   ```
+
+### 📃 modelValue
+
+- **type**: `string`
+- **default**: `''`
+
+  Deprecated. Starting from version 5.x, Replace with `value`.
 
 ---
 
@@ -53,9 +60,20 @@ This is the props of `MdPreview`, which is also part of `MdEditor`:
 ### 🎲 editorId
 
 - **type**: `string`
-- **default**: `'md-editor-rt\_[\d]'`
+- **default**: `'md-editor-v-\d'`
 
-  Editor's id, default incrementing by number. When using server-side rendering, make sure to set this attribute to a constant value.
+  Deprecated. Starting from version 5.x, Replace with `id`.
+
+  Unique identifier of the editor, use the default prefix and `useId` for concatenation. ~~When using server-side rendering, make sure to set this attribute to a constant value.~~，Starting from version 5.0, there is no such limitation.
+
+---
+
+### 🎲 id
+
+- **type**: `string`
+- **default**: `'md-editor-v-\d'`
+
+  Unique identifier of the editor, use the default prefix and `useId` for concatenation.
 
 ---
 
@@ -147,16 +165,16 @@ This is the props of `MdPreview`, which is also part of `MdEditor`:
           atom: {
             light:
               'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/styles/atom-one-light.min.css',
-            dark: 'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/styles/atom-one-dark.min.css'
+            dark: 'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/styles/atom-one-dark.min.css',
           },
           xxx: {
             light:
               'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/styles/xxx-light.css',
-            dark: 'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/styles/xxx-dark.css'
-          }
-        }
-      }
-    }
+            dark: 'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/styles/xxx-dark.css',
+          },
+        },
+      },
+    },
   });
   ```
 
@@ -216,33 +234,6 @@ This is the props of `MdPreview`, which is also part of `MdEditor`:
 
   export default () => {
     return <MdEditor sanitize={sanitize} />;
-  };
-  ```
-
----
-
-### 🤞🏼 noIconfont
-
-- **type**: `boolean`
-- **default**:`false`
-
-  Not append iconfont script, download [Symbol version](${iconfontSvgUrl}) or [Font class version](${iconfontClassUrl}) and import it by yourself.
-
-  ```js
-  import '/assets/iconfont.js';
-
-  // Use Font class
-  // import { config } from 'md-editor-rt';
-  // import '/assets/iconfont.css';
-  // config({ iconfontType: 'class' })
-  ```
-
-  ```jsx
-  import { MdEditor } from 'md-editor-rt';
-  import 'md-editor-rt/lib/style.css';
-
-  export default () => {
-    return <MdEditor noIconfont />;
   };
   ```
 
@@ -339,21 +330,21 @@ This is the props of `MdPreview`, which is also part of `MdEditor`:
 
   const customIcon: CustomIcon = {
     bold: {
-      component: 'A'
+      component: 'A',
     },
     // Demonstrating the use of default icons
     copy: StrIcon('copy', {}),
     // copy: '<i class="fa fa-car"></i>',
     // 'collapse-tips': '<i class="fa fa-car"></i>',
     preview: {
-      component: '<i class="fa fa-car"></i>'
+      component: '<i class="fa fa-car"></i>',
     },
     github: {
       component: IconFont,
       props: {
-        name: 'sneer'
-      }
-    }
+        name: 'sneer',
+      },
+    },
   };
 
   export default () => {
@@ -383,21 +374,23 @@ This is the props of `MdPreview`, which is also part of `MdEditor`:
     | 'table'
     | 'revoke'
     | 'next'
-    | 'baocun'
+    | 'save'
     | 'prettier'
-    | 'suoxiao'
-    | 'fangda'
+    | 'minimize'
+    | 'maximize'
     | 'fullscreen-exit'
     | 'fullscreen'
+    | 'preview-only'
     | 'preview'
-    | 'coding'
+    | 'preview-html'
     | 'catalog'
     | 'github'
     | 'mermaid'
     | 'formula'
     | 'close'
     | 'delete'
-    | 'upload';
+    | 'upload'
+    | 'collapse-tips';
 
   type CustomIcon = {
     [key in IconName]?: {
@@ -514,7 +507,7 @@ Except for the same as `MdPreview`:
     'previewOnly',
     'htmlPreview',
     'catalog',
-    'github'
+    'github',
   ];
   ```
 
@@ -555,11 +548,13 @@ Except for the same as `MdPreview`:
           <use xlinkHref="#icon-mark"></use>
         </svg>
       }
-    />
+    />,
   ];
 
   export default () => {
-    return <MdEditor modelValue="" toolbars={toolbars} defToolbars={defToolbars} />;
+    return (
+      <MdEditor modelValue="" toolbars={toolbars} defToolbars={defToolbars} />
+    );
   };
   ```
 
@@ -737,11 +732,11 @@ Except for the same as `MdPreview`:
             options: [
               {
                 label: '@imzbf',
-                type: 'text'
-              }
-            ]
+                type: 'text',
+              },
+            ],
           };
-        }
+        },
       ];
     }, []);
 
@@ -762,7 +757,7 @@ Except for the same as `MdPreview`:
 
 ---
 
-### 📥 inputBoxWitdh
+### 📥 inputBoxWidth
 
 - **type**: `string`
 - **default**: `50%`
@@ -856,8 +851,8 @@ Except for the same as `MdPreview`:
           axios
             .post('/api/img/upload', form, {
               headers: {
-                'Content-Type': 'multipart/form-data'
-              }
+                'Content-Type': 'multipart/form-data',
+              },
             })
             .then((res) => rev(res))
             .catch((error) => rej(error));
@@ -880,7 +875,13 @@ Except for the same as `MdPreview`:
   export default () => {
     const [text, setText] = useState('# Hello Editor');
 
-    return <MdEditor modelValue={text} onChange={setText} onUploadImg={onUploadImg} />;
+    return (
+      <MdEditor
+        modelValue={text}
+        onChange={setText}
+        onUploadImg={onUploadImg}
+      />
+    );
   };
   ```
 
@@ -958,7 +959,7 @@ Except for the same as `MdPreview`:
 
 ---
 
-### 🔖 onInputBoxWitdhChange
+### 🔖 onInputBoxWidthChange
 
 - **type**: `(width: string) => void`
 
@@ -1147,7 +1148,7 @@ editorRef.current?.insert((selectedText) => {
     targetValue: `${selectedText}`,
     select: true,
     deviationStart: 0,
-    deviationEnd: 0
+    deviationEnd: 0,
   };
 });
 ```
@@ -1217,7 +1218,7 @@ Supports listening to all DOM events.
 editorRef.current?.domEventHandlers({
   compositionstart: () => {
     console.log('compositionstart');
-  }
+  },
 });
 ```
 
@@ -1273,7 +1274,7 @@ import { lineNumbers } from '@codemirror/view';
 config({
   codeMirrorExtensions(_theme, extensions) {
     return [...extensions, lineNumbers()];
-  }
+  },
 });
 ```
 
@@ -1301,9 +1302,9 @@ import ancher from 'markdown-it-anchor';
 config({
   markdownItConfig(mdit) {
     mdit.use(ancher, {
-      permalink: true
+      permalink: true,
     });
-  }
+  },
 });
 ```
 
@@ -1335,14 +1336,14 @@ config({
           ...p,
           options: {
             ...p.options,
-            classes: 'my-class'
-          }
+            classes: 'my-class',
+          },
         };
       }
 
       return p;
     });
-  }
+  },
 });
 ```
 
@@ -1389,7 +1390,7 @@ config({
           previewOnly: 'previewOnly',
           htmlPreview: 'html preview',
           catalog: 'catalog',
-          github: 'source code'
+          github: 'source code',
         },
         titleItem: {
           h1: 'Lv1 Heading',
@@ -1397,12 +1398,12 @@ config({
           h3: 'Lv3 Heading',
           h4: 'Lv4 Heading',
           h5: 'Lv5 Heading',
-          h6: 'Lv6 Heading'
+          h6: 'Lv6 Heading',
         },
         imgTitleItem: {
           link: 'Add Img Link',
           upload: 'Upload Img',
-          clip2upload: 'Clip Upload'
+          clip2upload: 'Clip Upload',
         },
         linkModalTips: {
           linkTitle: 'Add Link',
@@ -1411,16 +1412,16 @@ config({
           descLabelPlaceHolder: 'Enter a description...',
           urlLabel: 'Link:',
           urlLabelPlaceHolder: 'Enter a link...',
-          buttonOK: 'OK'
+          buttonOK: 'OK',
         },
         clipModalTips: {
           title: 'Crop Image',
-          buttonUpload: 'Upload'
+          buttonUpload: 'Upload',
         },
         copyCode: {
           text: 'Copy',
           successTips: 'Copied!',
-          failTips: 'Copy failed!'
+          failTips: 'Copy failed!',
         },
         mermaid: {
           flow: 'flow',
@@ -1430,19 +1431,19 @@ config({
           state: 'state',
           pie: 'pie',
           relationship: 'relationship',
-          journey: 'journey'
+          journey: 'journey',
         },
         katex: {
           inline: 'inline',
-          block: 'block'
+          block: 'block',
         },
         footer: {
           markdownTotal: 'Word Count',
-          scrollAuto: 'Scroll Auto'
-        }
-      }
-    }
-  }
+          scrollAuto: 'Scroll Auto',
+        },
+      },
+    },
+  },
 });
 ```
 
@@ -1462,9 +1463,9 @@ config({
       state: `state template`,
       pie: `pie template`,
       relationship: `relationship template`,
-      journey: `journey template`
-    }
-  }
+      journey: `journey template`,
+    },
+  },
 });
 ```
 
@@ -1476,8 +1477,8 @@ import { config } from 'md-editor-rt';
 config({
   editorConfig: {
     // delay rendering time(ms)
-    renderDelay: 0
-  }
+    renderDelay: 0,
+  },
 });
 ```
 
@@ -1491,8 +1492,8 @@ import { config } from 'md-editor-rt';
 config({
   editorConfig: {
     // for modal component
-    zIndex: 2000
-  }
+    zIndex: 2000,
+  },
 });
 ```
 
@@ -1506,7 +1507,7 @@ Config some dependency libraries, like highlight..
 import { config } from 'md-editor-rt';
 
 config({
-  editorExtensions: { iconfont: 'https://xxx.cc' }
+  editorExtensions: { highlight: { js: 'https://xxx.cc' } },
 });
 ```
 
@@ -1535,7 +1536,6 @@ export interface EditorExtensions {
     js?: string;
     css?: string;
   };
-  iconfont?: string;
   screenfull?: {
     instance?: any;
     js?: string;
@@ -1565,20 +1565,20 @@ config({
   editorExtensionsAttrs: {
     highlight: {
       js: {
-        className: 'hglh-js'
+        className: 'hglh-js',
       },
       css: {
         atom: {
           light: {
-            className: 'atom-light-css'
+            className: 'atom-light-css',
           },
           dark: {
-            className: 'atom-dark-css'
-          }
-        }
-      }
-    }
-  }
+            className: 'atom-dark-css',
+          },
+        },
+      },
+    },
+  },
 });
 ```
 
@@ -1588,7 +1588,7 @@ Example of using built-in basic configuration:
 import { config, editorExtensionsAttrs } from 'md-editor-rt';
 
 config({
-  editorExtensionsAttrs
+  editorExtensionsAttrs,
 });
 ```
 
@@ -1597,27 +1597,6 @@ config({
 Do not attempt to define the src \ onload \ id of the script and rel \ href \ id of the link in editorExtensionsAttrs, as they will be overwritten by default values
 
 !!!
-
----
-
-### 🫨 iconfontType
-
-Set the way to display icons:
-
-- `svg`: with symbol
-- `class`: with font-class
-
-If the icon is customized through the attribute `customIcon`, the customized icon will be used first.
-
-This can be usually used to avoid the issue of incompatible symbol.
-
-```js
-import { config } from 'md-editor-rt';
-
-config({
-  iconfontType: 'class'
-});
-```
 
 ---
 
@@ -1631,9 +1610,9 @@ config({
   mermaidConfig(base: any) {
     return {
       ...base,
-      logLevel: 'error'
+      logLevel: 'error',
     };
-  }
+  },
 });
 ```
 
@@ -1650,9 +1629,9 @@ config({
   katexConfig(base: any) {
     return {
       ...base,
-      strict: false
+      strict: false,
     };
-  }
+  },
 });
 ```
 
@@ -1666,32 +1645,32 @@ Shortcut keys are only available when the textarea has received focus!
 
 !!!
 
-| key | function | description |
-| --- | --- | --- |
-| TAB | insert space | Insert space, the length eq `tabWidth`, default: 2, support multiline |
-| SHIFT + TAB | delete space, setting is the same as Tab |  |
-| CTRL + C | copy | When selected, copy the selected content. When not selected, copy the content of the current line |
-| CTRL + X | shear | When selected, cut the selected content. When not selected, cut the current line |
-| CTRL + D | delete | When selected, delete the selected content. When not selected, delete the current line |
-| CTRL + S | save | Trigger `onSave` event |
-| CTRL + B | bold text | `**bold**` |
-| CTRL + U | underline | `<u>underline</u>` |
-| CTRL + I | italic | `*italic*` |
-| CTRL + 1-6 | h1-h6 | `# title` |
-| CTRL + ↑ | superscript | `<sup>superscript</sup>` |
-| CTRL + ↓ | subscript | `<sub>subscript</sub>` |
-| CTRL + O | ordered list | `1. ordered list` |
-| CTRL + L | link | `[link](https://github.com/imzbf/md-editor-rt)` |
-| CTRL + Z | withdraw | Withdraw history in editor, not the function of system |
-| CTRL + F | find and replace |  |
-| CTRL + SHIFT + S | line-through | `~line-through~` |
-| CTRL + SHIFT + U | unordered list | `- unordered list` |
-| CTRL + SHIFT + C | code block |  |
-| CTRL + SHIFT + I | picture | `![picture](https://github.com/imzbf)` |
-| CTRL + SHIFT + Z | forward | Forward history in editor, not the function of system |
-| CTRL + SHIFT + F | Beautify |  |
-| CTRL + ALT + C | code row |  |
-| CTRL + SHIFT + ALT + T | table | `\|table\|` |
+| key                    | function                                 | description                                                                                       |
+| ---------------------- | ---------------------------------------- | ------------------------------------------------------------------------------------------------- |
+| TAB                    | insert space                             | Insert space, the length eq `tabWidth`, default: 2, support multiline                             |
+| SHIFT + TAB            | delete space, setting is the same as Tab |                                                                                                   |
+| CTRL + C               | copy                                     | When selected, copy the selected content. When not selected, copy the content of the current line |
+| CTRL + X               | shear                                    | When selected, cut the selected content. When not selected, cut the current line                  |
+| CTRL + D               | delete                                   | When selected, delete the selected content. When not selected, delete the current line            |
+| CTRL + S               | save                                     | Trigger `onSave` event                                                                            |
+| CTRL + B               | bold text                                | `**bold**`                                                                                        |
+| CTRL + U               | underline                                | `<u>underline</u>`                                                                                |
+| CTRL + I               | italic                                   | `*italic*`                                                                                        |
+| CTRL + 1-6             | h1-h6                                    | `# title`                                                                                         |
+| CTRL + ↑               | superscript                              | `<sup>superscript</sup>`                                                                          |
+| CTRL + ↓               | subscript                                | `<sub>subscript</sub>`                                                                            |
+| CTRL + O               | ordered list                             | `1. ordered list`                                                                                 |
+| CTRL + L               | link                                     | `[link](https://github.com/imzbf/md-editor-rt)`                                                   |
+| CTRL + Z               | withdraw                                 | Withdraw history in editor, not the function of system                                            |
+| CTRL + F               | find and replace                         |                                                                                                   |
+| CTRL + SHIFT + S       | line-through                             | `~line-through~`                                                                                  |
+| CTRL + SHIFT + U       | unordered list                           | `- unordered list`                                                                                |
+| CTRL + SHIFT + C       | code block                               |                                                                                                   |
+| CTRL + SHIFT + I       | picture                                  | `![picture](https://github.com/imzbf)`                                                            |
+| CTRL + SHIFT + Z       | forward                                  | Forward history in editor, not the function of system                                             |
+| CTRL + SHIFT + F       | Beautify                                 |                                                                                                   |
+| CTRL + ALT + C         | code row                                 |                                                                                                   |
+| CTRL + SHIFT + ALT + T | table                                    | `\|table\|`                                                                                       |
 
 ## 🪤 Internal components
 
@@ -1701,12 +1680,12 @@ On-demand import, eg: `import { DropdownToolbar } from 'md-editor-rt'`.
 
 To help developers quickly insert content and use editor attributes, the editor component has added the following attribute values to the written extension component by default:
 
-| name | example |
-| --- | --- |
-| insert | Refer to the `DropdownToolbar` component example below |
-| theme | Refer to the extension components in the [ExportPDF](https://github.com/imzbf/md-editor-extension/blob/main/packages/rt/components/ExportPDF/ExportPDF.tsx#L71) |
-| previewtheme | Same as above |
-| language | Same as above |
+| name         | example                                                                                                                                                         |
+| ------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| insert       | Refer to the `DropdownToolbar` component example below                                                                                                          |
+| theme        | Refer to the extension components in the [ExportPDF](https://github.com/imzbf/md-editor-extension/blob/main/packages/rt/components/ExportPDF/ExportPDF.tsx#L71) |
+| previewtheme | Same as above                                                                                                                                                   |
+| language     | Same as above                                                                                                                                                   |
 
 !!!
 
@@ -1744,7 +1723,7 @@ const MyToolbar = ({ insert = () => {} }) => {
         targetValue: `==${selectedText}==`,
         select: true,
         deviationStart: 0,
-        deviationEnd: 0
+        deviationEnd: 0,
       };
     });
   }, [insert]);
@@ -1772,7 +1751,7 @@ export default () => {
   return (
     <MdEditor
       modelValue={value}
-      editorId="md-prev"
+      id="md-prev"
       toolbars={toolbars}
       defToolbars={defToolbars}
       onChange={setValue}
@@ -1823,7 +1802,7 @@ const MyToolbar = ({ insert = () => {} }) => {
         targetValue: `==${selectedText}==`,
         select: true,
         deviationStart: 0,
-        deviationEnd: 0
+        deviationEnd: 0,
       };
     });
   }, [insert]);
@@ -1857,7 +1836,7 @@ export default () => {
   return (
     <MdEditor
       modelValue={value}
-      editorId="md-prev"
+      id="md-prev"
       toolbars={toolbars}
       defToolbars={defToolbars}
       onChange={setValue}
@@ -1929,7 +1908,7 @@ const MyToolbar = ({ insert = () => {} }) => {
         targetValue: `==${selectedText}==`,
         select: true,
         deviationStart: 0,
-        deviationEnd: 0
+        deviationEnd: 0,
       };
     });
   }, [insert]);
@@ -1956,7 +1935,7 @@ const MyToolbar = ({ insert = () => {} }) => {
         style={{
           height: '100%',
           padding: '20px',
-          overflow: 'auto'
+          overflow: 'auto',
         }}
       >
         <button onClick={insertHandler}>click me</button>
@@ -1973,7 +1952,7 @@ export default () => {
   return (
     <MdEditor
       modelValue={value}
-      editorId="md-prev"
+      id="md-prev"
       toolbars={toolbars}
       defToolbars={defToolbars}
       onChange={setValue}
@@ -1990,7 +1969,7 @@ export default () => {
 
 - **props**
 
-  - `editorId`: `string`, necessary, editor's `editorId`, used to register listening events.
+  - `editorId`: `string`, necessary, editor's `id`, used to register listening events.
   - `className`: `string`, not necessary.
   - `mdHeadingId`: `mdHeadingId`, not necessary, same as editor.
   - `scrollElement`: `string | HTMLElement`, not necessary, it is an element selector when its type is string. When using `MdPreview`, it is usually set to `document.documentElement`.
@@ -2014,13 +1993,13 @@ const editorId = 'my-editor';
 export default () => {
   const [state] = useState({
     text: '# heading',
-    scrollElement: document.documentElement
+    scrollElement: document.documentElement,
   });
 
   return (
     <>
       {/* Ensure that the editorId is the same */}
-      <MdPreview editorId={editorId} modelValue={state.text} />
+      <MdPreview id={editorId} modelValue={state.text} />
       <MdCatalog editorId={editorId} scrollElement={state.scrollElement} />
     </>
   );
@@ -2103,7 +2082,7 @@ export default () => {
   return (
     <MdEditor
       modelValue={value}
-      editorId="md-prev"
+      id="md-prev"
       toolbars={['bold', 0, '=', 'github']}
       defToolbars={defToolbars}
       onChange={setValue}
@@ -2118,15 +2097,14 @@ export default () => {
 
 ```js
 import {
-  iconfontClassUrl,
-  iconfontSvgUrl,
   allToolbar,
   allFooter,
   zh_CN,
-  en_US
+  en_US,
+  editorExtensionsAttrs,
 } from 'md-editor-rt';
 
-console.log(iconfontClassUrl, iconfontSvgUrl, allToolbar, allFooter, zh_CN, en_US);
+console.log(allToolbar, allFooter, zh_CN, en_US, editorExtensionsAttrs);
 ```
 
 ## ✍️ Edit This Page

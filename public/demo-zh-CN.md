@@ -2,12 +2,30 @@
 
 目前一直在迭代开发，所以尽量安装最新版本。发布日志请前往：[releases](https://github.com/imzbf/md-editor-rt/releases)
 
+### 🤖 NPM 安装
+
+```shell [install:npm]
+npm install md-editor-rt
+```
+
+```shell [install:yarn]
+yarn add md-editor-rt
+```
+
+!!! warning
+
+~~当使用服务端渲染时，请务必设置`editorId`为固定值。~~
+
+5.0 开始，没有该限制了。
+
+!!!
+
 ### 🤓 CDN 链接
 
 通过直接链接生产版本来使用，下面是一个小例子：
 
 ```html
-<!doctype html>
+<!DOCTYPE html>
 <html lang="zh-CN">
   <head>
     <link
@@ -23,29 +41,13 @@
     <script>
       ReactDOM.createRoot(document.getElementById('root')).render(
         React.createElement(MdEditorRT.MdEditor, {
-          modelValue: 'Hello Editor!!'
+          modelValue: 'Hello Editor!!',
         })
       );
     </script>
   </body>
 </html>
 ```
-
-### 🤖 NPM 安装
-
-```shell [install:yarn]
-yarn add md-editor-rt
-```
-
-```shell [install:npm]
-npm install md-editor-rt
-```
-
-!!! warning
-
-当使用服务端渲染时，请务必设置`editorId`为固定值。
-
-!!!
 
 #### 🤓 基本使用
 
@@ -74,7 +76,7 @@ export default () => {
 
   return (
     <>
-      <MdPreview editorId={id} modelValue={text} />
+      <MdPreview id={id} modelValue={text} />
       <MdCatalog editorId={id} scrollElement={scrollElement} />
     </>
   );
@@ -83,19 +85,18 @@ export default () => {
 
 !!! warning
 
-当使用服务端渲染时，`scrollElement`应该是字符类型，例：`body`、`#id`、`.class`！
+当使用服务端渲染时，`scrollElement`应该是字符类型，例：`html`、`body`、`#id`、`.class`。
 
 !!!
 
-## 🎛 Web Component中使用
+## 🎛 Web Component 中使用
 
 完整的示例参考源码中提供的[示例项目](https://github.com/imzbf/md-editor-rt/tree/main/example/webComponent)
 
 下面是注意事项：
 
 1. 图片放大查看功能无效，需要自行实现！！！
-2. 不能默认的使用CDN引用依赖库，参考[[自行引入扩展库]](https://imzbf.github.io/md-editor-rt/zh-CN/demo#%F0%9F%99%8D%F0%9F%8F%BB%E2%80%8D%E2%99%82%EF%B8%8F%20%E8%87%AA%E8%A1%8C%E5%BC%95%E5%85%A5%E6%89%A9%E5%B1%95%E5%BA%93)！！！
-3. 只能使用font-class引用的图标，默认的symbol引用无效！！！
+2. 不能默认的使用 CDN 引用依赖库，参考[[自行引入扩展库]](https://imzbf.github.io/md-editor-rt/zh-CN/demo#%F0%9F%99%8D%F0%9F%8F%BB%E2%80%8D%E2%99%82%EF%B8%8F%20%E8%87%AA%E8%A1%8C%E5%BC%95%E5%85%A5%E6%89%A9%E5%B1%95%E5%BA%93)！！！
 
 ## 🥂 扩展功能
 
@@ -103,11 +104,11 @@ export default () => {
 
 ### 🥶 自定义快捷键
 
-内置的快捷键配置的源码：[commands.ts](https://github.com/imzbf/md-editor-rt/blob/develop/packages/MdEditor/layouts/Content/codemirror/commands.ts)，它们作为扩展项被添加到了`codemirror`。
+- 内置的快捷键配置的源码：[commands.ts](https://github.com/imzbf/md-editor-rt/blob/develop/packages/MdEditor/layouts/Content/codemirror/commands.ts)，它们作为扩展项被添加到了`codemirror`。
 
-想要替换、删除快捷键的基本原理是找到对应的扩展，然后遍历这个快捷键配置的数组，找到并处理它。
+- 想要替换、删除快捷键的基本原理是找到对应的扩展，然后遍历这个快捷键配置的数组，找到并处理它。
 
-事实上，`config`中`codeMirrorExtensions`的第二入参`extensions`是一个数组，它的第一项就是快捷键扩展，第三入参就是默认的快捷键配置。
+- 事实上，`config`中`codeMirrorExtensions`的第二入参`extensions`是一个数组，它的第一项就是快捷键扩展，第三入参就是默认的快捷键配置。
 
 #### 💅 修改快捷键
 
@@ -133,19 +134,19 @@ config({
       // 这里我们需要CtrlB默认触发执行的run方法，如果是新增快捷键等，就需要自行处理触发逻辑
       ...CtrlB,
       key: 'Ctrl-m',
-      mac: 'Cmd-m'
+      mac: 'Cmd-m',
     };
 
     // 4. 把修改后的快捷键放到待构建扩展的数组中
     const newMdEditorCommands = [
       CtrlM,
-      ...mdEditorCommands.filter((i) => i.key !== 'Ctrl-b')
+      ...mdEditorCommands.filter((i) => i.key !== 'Ctrl-b'),
     ];
 
     newExtensions.push(keymap.of(newMdEditorCommands));
 
     return newExtensions;
-  }
+  },
 });
 ```
 
@@ -165,7 +166,7 @@ config({
 
     // 2. 返回扩展列表即可
     return newExtensions;
-  }
+  },
 });
 ```
 
@@ -199,7 +200,7 @@ config({
       run: () => {
         bus.emit('insertMarkBlock');
         return true;
-      }
+      },
     };
 
     // 4. 把新的快捷键添加到数组中
@@ -208,7 +209,7 @@ config({
     newExtensions.push(keymap.of(newMdEditorCommands));
 
     return newExtensions;
-  }
+  },
 });
 ```
 
@@ -235,7 +236,7 @@ const App = () => {
           targetValue: `==${selectedText}==`,
           select: true,
           deviationStart: 2,
-          deviationEnd: -2
+          deviationEnd: -2,
         };
       });
     });
@@ -314,7 +315,13 @@ import 'md-editor-rt/lib/style.css';
 export default () => {
   const [text, setText] = useState('hello md-editor-rt！');
   const [previewTheme] = useState('github');
-  return <MdEditor modelValue={text} onChange={setText} previewTheme={previewTheme} />;
+  return (
+    <MdEditor
+      modelValue={text}
+      onChange={setText}
+      previewTheme={previewTheme}
+    />
+  );
 };
 ```
 
@@ -356,7 +363,9 @@ export default () => {
   export default () => {
     const [text, setText] = useState('hello md-editor-rt！');
     const [codeTheme] = useState('atom');
-    return <MdEditor modelValue={text} onChange={setText} codeTheme={codeTheme} />;
+    return (
+      <MdEditor modelValue={text} onChange={setText} codeTheme={codeTheme} />
+    );
   };
   ```
 
@@ -372,16 +381,18 @@ export default () => {
       highlight: {
         css: {
           xxxxx: {
-            light: 'https://unpkg.com/highlight.js@11.2.0/styles/xxxxx-light.css',
-            dark: 'https://unpkg.com/highlight.js@11.2.0/styles/xxxxx-dark.css'
+            light:
+              'https://unpkg.com/highlight.js@11.2.0/styles/xxxxx-light.css',
+            dark: 'https://unpkg.com/highlight.js@11.2.0/styles/xxxxx-dark.css',
           },
           yyyyy: {
-            light: 'https://unpkg.com/highlight.js@11.2.0/styles/xxxxx-light.css',
-            dark: 'https://unpkg.com/highlight.js@11.2.0/styles/xxxxx-dark.css'
-          }
-        }
-      }
-    }
+            light:
+              'https://unpkg.com/highlight.js@11.2.0/styles/xxxxx-light.css',
+            dark: 'https://unpkg.com/highlight.js@11.2.0/styles/xxxxx-dark.css',
+          },
+        },
+      },
+    },
   });
   ```
 
@@ -411,9 +422,9 @@ import screenfull from 'screenfull';
 config({
   editorExtensions: {
     screenfull: {
-      instance: screenfull
-    }
-  }
+      instance: screenfull,
+    },
+  },
 });
 
 export default () => {
@@ -434,9 +445,9 @@ import 'md-editor-rt/lib/style.css';
 config({
   editorExtensions: {
     screenfull: {
-      js: 'https://localhost:8090/screenfull@5.2.0/index.js'
-    }
-  }
+      js: 'https://localhost:8090/screenfull@5.2.0/index.js',
+    },
+  },
 });
 
 export default () => {
@@ -466,8 +477,8 @@ const onUploadImg = async (files, callback) => {
         axios
           .post('/api/img/upload', form, {
             headers: {
-              'Content-Type': 'multipart/form-data'
-            }
+              'Content-Type': 'multipart/form-data',
+            },
           })
           .then((res) => rev(res))
           .catch((error) => rej(error));
@@ -480,7 +491,9 @@ const onUploadImg = async (files, callback) => {
 
 export default () => {
   const [text, setText] = useState('hello md-editor-rt！');
-  return <MdEditor modelValue={text} onChange={setText} onUploadImg={onUploadImg} />;
+  return (
+    <MdEditor modelValue={text} onChange={setText} onUploadImg={onUploadImg} />
+  );
 };
 ```
 
@@ -523,7 +536,7 @@ config({
           preview: '预览',
           htmlPreview: 'html代码预览',
           catalog: '目录',
-          github: '源码地址'
+          github: '源码地址',
         },
         titleItem: {
           h1: '一级标题',
@@ -531,12 +544,12 @@ config({
           h3: '三级标题',
           h4: '四级标题',
           h5: '五级标题',
-          h6: '六级标题'
+          h6: '六级标题',
         },
         imgTitleItem: {
           link: '添加链接',
           upload: '上传图片',
-          clip2upload: '裁剪上传'
+          clip2upload: '裁剪上传',
         },
         linkModalTips: {
           linkTitle: '添加链接',
@@ -545,16 +558,16 @@ config({
           descLabelPlaceHolder: '请输入描述...',
           urlLabel: '链接地址：',
           urlLabelPlaceHolder: '请输入链接...',
-          buttonOK: '确定'
+          buttonOK: '确定',
         },
         clipModalTips: {
           title: '裁剪图片上传',
-          buttonUpload: '上传'
+          buttonUpload: '上传',
         },
         copyCode: {
           text: '复制代码',
           successTips: '已复制！',
-          failTips: '复制失败！'
+          failTips: '复制失败！',
         },
         mermaid: {
           flow: '流程图',
@@ -564,19 +577,19 @@ config({
           state: '状态图',
           pie: '饼图',
           relationship: '关系图',
-          journey: '旅程图'
+          journey: '旅程图',
         },
         katex: {
           inline: '行内公式',
-          block: '块级公式'
+          block: '块级公式',
         },
         footer: {
           markdownTotal: '字数',
-          scrollAuto: '同步滚动'
-        }
-      }
-    }
-  }
+          scrollAuto: '同步滚动',
+        },
+      },
+    },
+  },
 });
 
 export default () => {
@@ -602,7 +615,9 @@ export default () => {
     const [text, setText] = useState('hello md-editor-rt！');
     const [catalogList, setList] = useState([]);
 
-    return <MdEditor modelValue={text} onChange={setText} onGetCatalog={setList} />;
+    return (
+      <MdEditor modelValue={text} onChange={setText} onGetCatalog={setList} />
+    );
   };
   ```
 
@@ -620,12 +635,12 @@ export default () => {
   export default () => {
     const [state] = useState({
       text: '# 标题',
-      scrollElement: document.documentElement
+      scrollElement: document.documentElement,
     });
 
     return (
       <>
-        <MdPreview modelValue={state.text} editorId={editorId} />
+        <MdPreview id={editorId} modelValue={state.text} />
         <MdCatalog editorId={editorId} scrollElement={state.scrollElement} />
       </>
     );
@@ -643,7 +658,14 @@ import 'md-editor-rt/lib/style.css';
 
 export default () => {
   const [text, setText] = useState('hello md-editor-rt！');
-  const [toolbars] = useState(['italic', 'underline', '-', 'bold', '=', 'github']);
+  const [toolbars] = useState([
+    'italic',
+    'underline',
+    '-',
+    'bold',
+    '=',
+    'github',
+  ]);
 
   return <MdEditor modelValue={text} onChange={setText} toolbars={toolbars} />;
 };
@@ -754,24 +776,24 @@ config({
   editorExtensions: {
     prettier: {
       prettierInstance: prettier,
-      parserMarkdownInstance: parserMarkdown
+      parserMarkdownInstance: parserMarkdown,
     },
     highlight: {
-      instance: highlight
+      instance: highlight,
     },
     screenfull: {
-      instance: screenfull
+      instance: screenfull,
     },
     katex: {
-      instance: katex
+      instance: katex,
     },
     cropper: {
-      instance: Cropper
+      instance: Cropper,
     },
     mermaid: {
-      instance: mermaid
-    }
-  }
+      instance: mermaid,
+    },
+  },
 });
 ```
 
@@ -782,7 +804,7 @@ import { MdEditor } from 'md-editor-rt';
 import 'md-editor-rt/lib/style.css';
 
 export default () => {
-  return <MdEditor modelValue="" noIconfont />;
+  return <MdEditor modelValue="" />;
 };
 ```
 
@@ -790,7 +812,7 @@ export default () => {
 
 ### 🔒 编译时防范 XSS
 
-内置的XSS扩展已经在编译中处理了危险代码，在默认白名单的基础上，增加了部分标签和属性：
+5.0 版本将内置的 XSS 扩展导出了，不再默认添加， 导出的 XSS 扩展在默认白名单的基础上，增加了部分标签和属性：
 
 ```json::close
 {
@@ -813,13 +835,22 @@ export default () => {
 }
 ```
 
-#### 🔓 移除 xss 扩展
+#### 🔒 添加 xss 扩展
 
 ```js
+import { config, XSSPlugin } from 'md-editor-rt';
+
 config({
   markdownItPlugins(plugins) {
-    return plugins.filter((p) => p.type !== 'xss');
-  }
+    return [
+      ...plugins,
+      {
+        type: 'xss',
+        plugin: XSSPlugin,
+        options: {},
+      },
+    ];
+  },
 });
 ```
 
@@ -828,51 +859,49 @@ config({
 我们添加一个允许图片加载失败的事件
 
 ```js
-import { config } from 'md-editor-rt';
+import { config, XSSPlugin } from 'md-editor-rt';
 // import { getDefaultWhiteList } from 'xss';
 
 config({
   markdownItPlugins(plugins) {
-    return plugins.map((p) => {
-      if (p.type === 'xss') {
-        return {
-          ...p,
-          options: {
-            // 方式一：自行扩展全部
-            // xss() {
-            //   return {
-            //     whiteList: Object.assign({}, getDefaultWhiteList(), {
-            //       // 如果你需要使用任务列表，请保留这项配置
-            //       img: ['class'],
-            //       input: ['class', 'disabled', 'type', 'checked'],
-            //       // 如果你需要使用嵌入视频代码，请保留这项配置
-            //       iframe: [
-            //         'class',
-            //         'width',
-            //         'height',
-            //         'src',
-            //         'title',
-            //         'border',
-            //         'frameborder',
-            //         'framespacing',
-            //         'allow',
-            //         'allowfullscreen'
-            //       ],
-            //       img: ['onerror']
-            //     })
-            //   };
-            // },
-            // 方式二：在默认白名单的基础上新增。^4.15.5
-            extendedWhiteList: {
-              img: ['onerror']
-            }
-          }
-        };
-      }
-
-      return p;
-    });
-  }
+    return [
+      ...plugins,
+      {
+        type: 'xss',
+        plugin: XSSPlugin,
+        options: {
+          // 方式一：自行扩展全部
+          // xss() {
+          //   return {
+          //     whiteList: Object.assign({}, getDefaultWhiteList(), {
+          //       // 如果你需要使用任务列表，请保留这项配置
+          //       img: ['class'],
+          //       input: ['class', 'disabled', 'type', 'checked'],
+          //       // 如果你需要使用嵌入视频代码，请保留这项配置
+          //       iframe: [
+          //         'class',
+          //         'width',
+          //         'height',
+          //         'src',
+          //         'title',
+          //         'border',
+          //         'frameborder',
+          //         'framespacing',
+          //         'allow',
+          //         'allowfullscreen'
+          //       ],
+          //       img: ['onerror']
+          //     })
+          //   };
+          // },
+          // 方式二：在默认白名单的基础上新增。^4.15.6
+          extendedWhiteList: {
+            img: ['onerror'],
+          },
+        },
+      },
+    ];
+  },
 });
 ```
 
@@ -910,7 +939,7 @@ import { lineNumbers } from '@codemirror/view';
 config({
   codeMirrorExtensions(_theme, extensions) {
     return [...extensions, lineNumbers(), foldGutter()];
-  }
+  },
 });
 ```
 
@@ -943,9 +972,9 @@ config({
             return !href.startsWith('#');
           },
           attrs: {
-            target: '_blank'
-          }
-        }
+            target: '_blank',
+          },
+        },
       },
       // {
       //   type: 'anchor',
@@ -958,7 +987,7 @@ config({
       //   }
       // }
     ];
-  }
+  },
 });
 ```
 
@@ -974,20 +1003,20 @@ config({
           ...item,
           options: {
             ...item.options,
-            enabled: true
+            enabled: true,
             // 如果只是想对某个编辑器开启这个功能
             // enabled: editorId === 'myId'
-          }
+          },
         };
       }
       return item;
     });
-  }
+  },
 });
 ```
 
 ```jsx
-<MdEditor editorId="myId" modelValue={text} onChange={setText} />
+<MdEditor id="myId" modelValue={text} onChange={setText} />
 ```
 
 ### 🎳 协同办公
@@ -1017,7 +1046,7 @@ const usercolors = [
   { color: '#ee6352', light: '#ee635233' },
   { color: '#9ac2c9', light: '#9ac2c933' },
   { color: '#8acb88', light: '#8acb8833' },
-  { color: '#1be7ff', light: '#1be7ff33' }
+  { color: '#1be7ff', light: '#1be7ff33' },
 ];
 
 // select a random color for this user
@@ -1037,13 +1066,13 @@ const undoManager = new Y.UndoManager(ytext);
 provider.awareness.setLocalStateField('user', {
   name: 'Anonymous ' + Math.floor(Math.random() * 100),
   color: userColor.color,
-  colorLight: userColor.light
+  colorLight: userColor.light,
 });
 
 config({
   codeMirrorExtensions(_theme, extensions) {
     return [...extensions, yCollab(ytext, provider.awareness, { undoManager })];
-  }
+  },
 });
 ```
 
@@ -1055,7 +1084,7 @@ config({
     return editorId === 'myId'
       ? [...extensions, yCollab(ytext, provider.awareness, { undoManager })]
       : extensions;
-  }
+  },
 });
 ```
 

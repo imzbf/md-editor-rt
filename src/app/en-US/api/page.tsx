@@ -2,7 +2,7 @@ import { Metadata } from 'next';
 
 import { KEYWORDS_EN, DESCRIPTION_EN, SITE_NAME_EN } from '@/config';
 import IzPreviewContent from '@/layouts/PreviewContent';
-import mdText from '../../../../public/doc-en-US.md';
+import mdText from '../../../../public/api-en-US.md';
 
 export const metadata: Metadata = {
   title: `API - ${SITE_NAME_EN}`,

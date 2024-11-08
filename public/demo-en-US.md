@@ -2,12 +2,29 @@
 
 It has been developing iteratively, so update the latest version please. Publish logs: [releases](https://github.com/imzbf/md-editor-rt/releases)
 
+### 🤖 Npm Install
+
+```shell [install:npm]
+npm install md-editor-rt
+```
+
+```shell [install:yarn]
+yarn add md-editor-rt
+```
+
+!!! warning
+
+~~When using server-side rendering, make sure to set `editorId` to a constant value.~~
+Starting from version 5.0, there is no such limitation.
+
+!!!
+
 ### 🤓 CDN
 
 Use production version in html directly:
 
 ```html
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <link
@@ -23,29 +40,13 @@ Use production version in html directly:
     <script>
       ReactDOM.createRoot(document.getElementById('root')).render(
         React.createElement(MdEditorRT.MdEditor, {
-          modelValue: 'Hello Editor!!'
+          modelValue: 'Hello Editor!!',
         })
       );
     </script>
   </body>
 </html>
 ```
-
-### 🤖 Npm Install
-
-```shell [install:yarn]
-yarn add md-editor-rt
-```
-
-```shell [install:npm]
-npm install md-editor-rt
-```
-
-!!! warning
-
-When using server-side rendering, make sure to set `editorId` to a constant value.
-
-!!!
 
 #### 🤓 Jsx Template
 
@@ -74,7 +75,7 @@ export default () => {
 
   return (
     <>
-      <MdPreview editorId={id} modelValue={text} />
+      <MdPreview id={id} modelValue={text} />
       <MdCatalog editorId={id} scrollElement={scrollElement} />
     </>
   );
@@ -83,7 +84,7 @@ export default () => {
 
 !!! warning
 
-When using server-side rendering, `scrollElement` should be of string type, eg: `body`, `#id`, `.class`.
+When using server-side rendering, `scrollElement` should be of string type, eg: `html`, `body`, `#id`, `.class`.
 
 !!!
 
@@ -95,7 +96,6 @@ Here are the precautions:
 
 1. The image zoom-in view feature is ineffective; implementation needs to be done manually!!!
 2. Do not use CDN to reference dependency libraries by default; refer to [[Import All Library]](https://imzbf.github.io/md-editor-rt/en-US/demo#%F0%9F%99%8D%F0%9F%8F%BB%E2%80%8D%E2%99%82%EF%B8%8F%20Import%20All%20Library)!!!
-3. Only font-class type icons can be used; the default symbol type is ineffective!!!
 
 ## 🥂 Api usage
 
@@ -103,11 +103,11 @@ Usages of some APIs.
 
 ### 🥶 Customize Shortcut Key
 
-Source code for built-in shortcut key configuration: [commands.ts](https://github.com/imzbf/md-editor-rt/blob/develop/packages/MdEditor/layouts/Content/codemirror/commands.ts). They have been added as extensions to `codemirror`.
+- Source code for built-in shortcut key configuration: [commands.ts](https://github.com/imzbf/md-editor-rt/blob/develop/packages/MdEditor/layouts/Content/codemirror/commands.ts). They have been added as extensions to `codemirror`.
 
-The basic principle of replacing or deleting shortcut keys is to find the corresponding extension, and handle it.
+- The basic principle of replacing or deleting shortcut keys is to find the corresponding extension, and handle it.
 
-In fact, The Second input parameter `extensions` of `codeMirrorExtensions` is an array, The first item in the array is the shortcut key extension. The third input parameter is the default shortcut key configuration.
+- In fact, The Second input parameter `extensions` of `codeMirrorExtensions` is an array, The first item in the array is the shortcut key extension. The third input parameter is the default shortcut key configuration.
 
 #### 💅 Modify Shortcut Key
 
@@ -134,19 +134,19 @@ config({
       // We need the run method in CtrlB here
       ...CtrlB,
       key: 'Ctrl-m',
-      mac: 'Cmd-m'
+      mac: 'Cmd-m',
     };
 
     // 4. Add the modified shortcut key to the array
     const newMdEditorCommands = [
       CtrlM,
-      ...mdEditorCommands.filter((i) => i.key !== 'Ctrl-b')
+      ...mdEditorCommands.filter((i) => i.key !== 'Ctrl-b'),
     ];
 
     newExtensions.push(keymap.of(newMdEditorCommands));
 
     return newExtensions;
-  }
+  },
 });
 ```
 
@@ -166,7 +166,7 @@ config({
 
     // 2. Return extension list
     return newExtensions;
-  }
+  },
 });
 ```
 
@@ -200,7 +200,7 @@ config({
       run: () => {
         bus.emit('insertMarkBlock');
         return true;
-      }
+      },
     };
 
     // 4. Add a new shortcut key to the array
@@ -209,7 +209,7 @@ config({
     newExtensions.push(keymap.of(newMdEditorCommands));
 
     return newExtensions;
-  }
+  },
 });
 ```
 
@@ -234,7 +234,7 @@ const App = () => {
           targetValue: `==${selectedText}==`,
           select: true,
           deviationStart: 2,
-          deviationEnd: -2
+          deviationEnd: -2,
         };
       });
     });
@@ -313,7 +313,13 @@ import 'md-editor-rt/lib/style.css';
 export default () => {
   const [text, setText] = useState('hello md-editor-rt!');
   const [previewTheme] = useState('github');
-  return <MdEditor modelValue={text} onChange={setText} previewTheme={previewTheme} />;
+  return (
+    <MdEditor
+      modelValue={text}
+      onChange={setText}
+      previewTheme={previewTheme}
+    />
+  );
 };
 ```
 
@@ -355,7 +361,9 @@ There are 8 kinds of themes: `atom`, `a11y`, `github`, `gradient`, `kimbie`, `pa
   export default () => {
     const [text, setText] = useState('hello md-editor-rt!');
     const [codeTheme] = useState('atom');
-    return <MdEditor modelValue={text} onChange={setText} codeTheme={codeTheme} />;
+    return (
+      <MdEditor modelValue={text} onChange={setText} codeTheme={codeTheme} />
+    );
   };
   ```
 
@@ -371,16 +379,18 @@ There are 8 kinds of themes: `atom`, `a11y`, `github`, `gradient`, `kimbie`, `pa
       highlight: {
         css: {
           xxxxx: {
-            light: 'https://unpkg.com/highlight.js@11.2.0/styles/xxxxx-light.css',
-            dark: 'https://unpkg.com/highlight.js@11.2.0/styles/xxxxx-dark.css'
+            light:
+              'https://unpkg.com/highlight.js@11.2.0/styles/xxxxx-light.css',
+            dark: 'https://unpkg.com/highlight.js@11.2.0/styles/xxxxx-dark.css',
           },
           yyyyy: {
-            light: 'https://unpkg.com/highlight.js@11.2.0/styles/xxxxx-light.css',
-            dark: 'https://unpkg.com/highlight.js@11.2.0/styles/xxxxx-dark.css'
-          }
-        }
-      }
-    }
+            light:
+              'https://unpkg.com/highlight.js@11.2.0/styles/xxxxx-light.css',
+            dark: 'https://unpkg.com/highlight.js@11.2.0/styles/xxxxx-dark.css',
+          },
+        },
+      },
+    },
   });
   ```
 
@@ -409,9 +419,9 @@ import screenfull from 'screenfull';
 config({
   editorExtensions: {
     screenfull: {
-      instance: screenfull
-    }
-  }
+      instance: screenfull,
+    },
+  },
 });
 
 export default () => {
@@ -432,9 +442,9 @@ import 'md-editor-rt/lib/style.css';
 config({
   editorExtensions: {
     screenfull: {
-      js: 'https://localhost:8090/screenfull@5.2.0/index.js'
-    }
-  }
+      js: 'https://localhost:8090/screenfull@5.2.0/index.js',
+    },
+  },
 });
 
 export default () => {
@@ -464,8 +474,8 @@ const onUploadImg = async (files, callback) => {
         axios
           .post('/api/img/upload', form, {
             headers: {
-              'Content-Type': 'multipart/form-data'
-            }
+              'Content-Type': 'multipart/form-data',
+            },
           })
           .then((res) => rev(res))
           .catch((error) => rej(error));
@@ -478,7 +488,9 @@ const onUploadImg = async (files, callback) => {
 
 export default () => {
   const [text, setText] = useState('hello md-editor-rt!');
-  return <MdEditor modelValue={text} onChange={setText} onUploadImg={onUploadImg} />;
+  return (
+    <MdEditor modelValue={text} onChange={setText} onUploadImg={onUploadImg} />
+  );
 };
 ```
 
@@ -521,7 +533,7 @@ config({
           preview: 'preview',
           htmlPreview: 'html preview',
           catalog: 'catalog',
-          github: 'source code'
+          github: 'source code',
         },
         titleItem: {
           h1: 'Lv1 Heading',
@@ -529,12 +541,12 @@ config({
           h3: 'Lv3 Heading',
           h4: 'Lv4 Heading',
           h5: 'Lv5 Heading',
-          h6: 'Lv6 Heading'
+          h6: 'Lv6 Heading',
         },
         imgTitleItem: {
           link: 'Add Img Link',
           upload: 'Upload Img',
-          clip2upload: 'Clip Upload'
+          clip2upload: 'Clip Upload',
         },
         linkModalTips: {
           linkTitle: 'Add Link',
@@ -543,16 +555,16 @@ config({
           descLabelPlaceHolder: 'Enter a description...',
           urlLabel: 'Link:',
           urlLabelPlaceHolder: 'Enter a link...',
-          buttonOK: 'OK'
+          buttonOK: 'OK',
         },
         clipModalTips: {
           title: 'Crop Image',
-          buttonUpload: 'Upload'
+          buttonUpload: 'Upload',
         },
         copyCode: {
           text: 'Copy',
           successTips: 'Copied!',
-          failTips: 'Copy failed!'
+          failTips: 'Copy failed!',
         },
         mermaid: {
           flow: 'flow',
@@ -562,19 +574,19 @@ config({
           state: 'state',
           pie: 'pie',
           relationship: 'relationship',
-          journey: 'journey'
+          journey: 'journey',
         },
         katex: {
           inline: 'inline',
-          block: 'block'
+          block: 'block',
         },
         footer: {
           markdownTotal: 'Word Count',
-          scrollAuto: 'Scroll Auto'
-        }
-      }
-    }
-  }
+          scrollAuto: 'Scroll Auto',
+        },
+      },
+    },
+  },
 });
 
 export default () => {
@@ -600,7 +612,9 @@ You can install the existing language also: [md-editor-extension](https://github
     const [text, setText] = useState('hello md-editor-rt!');
     const [catalogList, setList] = useState([]);
 
-    return <MdEditor modelValue={text} onChange={setText} onGetCatalog={setList} />;
+    return (
+      <MdEditor modelValue={text} onChange={setText} onGetCatalog={setList} />
+    );
   };
   ```
 
@@ -618,12 +632,12 @@ You can install the existing language also: [md-editor-extension](https://github
   export default () => {
     const [state] = useState({
       text: '# heading',
-      scrollElement: document.documentElement
+      scrollElement: document.documentElement,
     });
 
     return (
       <>
-        <MdPreview modelValue={state.text} editorId={editorId} />
+        <MdPreview modelValue={state.text} id={editorId} />
         <MdCatalog editorId={editorId} scrollElement={state.scrollElement} />
       </>
     );
@@ -641,7 +655,14 @@ import 'md-editor-rt/lib/style.css';
 
 export default () => {
   const [text, setText] = useState('hello md-editor-rt!');
-  const [toolbars] = useState(['italic', 'underline', '-', 'bold', '=', 'github']);
+  const [toolbars] = useState([
+    'italic',
+    'underline',
+    '-',
+    'bold',
+    '=',
+    'github',
+  ]);
 
   return <MdEditor modelValue={text} onChange={setText} toolbars={toolbars} />;
 };
@@ -735,31 +756,28 @@ import parserMarkdown from 'prettier/parser-markdown';
 import * as prettier from 'prettier';
 import parserMarkdown from 'prettier/plugins/markdown';
 
-// ${iconfontSvgUrl}
-import './assets/iconfont.js';
-
 config({
   editorExtensions: {
     prettier: {
       prettierInstance: prettier,
-      parserMarkdownInstance: parserMarkdown
+      parserMarkdownInstance: parserMarkdown,
     },
     highlight: {
-      instance: highlight
+      instance: highlight,
     },
     screenfull: {
-      instance: screenfull
+      instance: screenfull,
     },
     katex: {
-      instance: katex
+      instance: katex,
     },
     cropper: {
-      instance: Cropper
+      instance: Cropper,
     },
     mermaid: {
-      instance: mermaid
-    }
-  }
+      instance: mermaid,
+    },
+  },
 });
 ```
 
@@ -768,7 +786,7 @@ import { MdEditor } from 'md-editor-rt';
 import 'md-editor-rt/lib/style.css';
 
 export default () => {
-  return <MdEditor modelValue="" noIconfont />;
+  return <MdEditor modelValue="" />;
 };
 ```
 
@@ -776,7 +794,7 @@ export default () => {
 
 ### 🔒 Compile-time Prevention of XSS
 
-The built-in XSS extension has already handled dangerous code during compilation, and on top of the default whitelist, it includes additional tags and attributes:
+Version 5.0 exports the built-in XSS plugin, which is no longer added by default. The exported XSS plugin includes additional tags and attributes on top of the default whitelist:
 
 ```json::close
 {
@@ -799,13 +817,22 @@ The built-in XSS extension has already handled dangerous code during compilation
 }
 ```
 
-#### 🔓 Remove XSS extension
+#### 🔒 Add XSS extension
 
 ```js
+import { config, XSSPlugin } from 'md-editor-rt';
+
 config({
   markdownItPlugins(plugins) {
-    return plugins.filter((p) => p.type !== 'xss');
-  }
+    return [
+      ...plugins,
+      {
+        type: 'xss',
+        plugin: XSSPlugin,
+        options: {},
+      },
+    ];
+  },
 });
 ```
 
@@ -814,51 +841,49 @@ config({
 Add a configuration that allows for events where image loading fails
 
 ```js
-import { config } from 'md-editor-rt';
+import { config, XSSPlugin } from 'md-editor-rt';
 // import { getDefaultWhiteList } from 'xss';
 
 config({
   markdownItPlugins(plugins) {
-    return plugins.map((p) => {
-      if (p.type === 'xss') {
-        return {
-          ...p,
-          options: {
-            // Option 1: Extend All by Yourself
-            // xss() {
-            //   return {
-            //     whiteList: Object.assign({}, getDefaultWhiteList(), {
-            //       // If you need to use task list, please keep this configuration
-            //       img: ['class'],
-            //       input: ['class', 'disabled', 'type', 'checked'],
-            //       // If you need to use embedded video code, please keep this configuration
-            //       iframe: [
-            //         'class',
-            //         'width',
-            //         'height',
-            //         'src',
-            //         'title',
-            //         'border',
-            //         'frameborder',
-            //         'framespacing',
-            //         'allow',
-            //         'allowfullscreen'
-            //       ],
-            //       img: ['onerror']
-            //     })
-            //   };
-            // }
-            // Option 2: Add on Top of the Default Whitelist. ^4.15.5
-            extendedWhiteList: {
-              img: ['onerror']
-            }
-          }
-        };
-      }
-
-      return p;
-    });
-  }
+    return [
+      ...plugins,
+      {
+        type: 'xss',
+        plugin: XSSPlugin,
+        options: {
+          // Option 1: Extend All by Yourself
+          // xss() {
+          //   return {
+          //     whiteList: Object.assign({}, getDefaultWhiteList(), {
+          //       // If you need to use task list, please keep this configuration
+          //       img: ['class'],
+          //       input: ['class', 'disabled', 'type', 'checked'],
+          //       // If you need to use embedded video code, please keep this configuration
+          //       iframe: [
+          //         'class',
+          //         'width',
+          //         'height',
+          //         'src',
+          //         'title',
+          //         'border',
+          //         'frameborder',
+          //         'framespacing',
+          //         'allow',
+          //         'allowfullscreen'
+          //       ],
+          //       img: ['onerror']
+          //     })
+          //   };
+          // }
+          // Option 2: Add on Top of the Default Whitelist. ^4.15.6
+          extendedWhiteList: {
+            img: ['onerror'],
+          },
+        },
+      },
+    ];
+  },
 });
 ```
 
@@ -894,7 +919,7 @@ import { lineNumbers } from '@codemirror/view';
 config({
   codeMirrorExtensions(_theme, extensions) {
     return [...extensions, lineNumbers(), foldGutter()];
-  }
+  },
 });
 ```
 
@@ -927,9 +952,9 @@ config({
             return !href.startsWith('#');
           },
           attrs: {
-            target: '_blank'
-          }
-        }
+            target: '_blank',
+          },
+        },
       },
       // {
       //   type: 'anchor',
@@ -942,7 +967,7 @@ config({
       //   }
       // }
     ];
-  }
+  },
 });
 ```
 
@@ -958,20 +983,20 @@ config({
           ...item,
           options: {
             ...item.options,
-            enabled: true
+            enabled: true,
             // If you just want to enable this feature for a certain editor
             // enabled: editorId === 'myId'
-          }
+          },
         };
       }
       return item;
     });
-  }
+  },
 });
 ```
 
 ```jsx
-<MdEditor editorId="myId" modelValue={text} onChange={setText} />
+<MdEditor id="myId" modelValue={text} onChange={setText} />
 ```
 
 ### 🎳 co-working
@@ -1001,7 +1026,7 @@ const usercolors = [
   { color: '#ee6352', light: '#ee635233' },
   { color: '#9ac2c9', light: '#9ac2c933' },
   { color: '#8acb88', light: '#8acb8833' },
-  { color: '#1be7ff', light: '#1be7ff33' }
+  { color: '#1be7ff', light: '#1be7ff33' },
 ];
 
 // select a random color for this user
@@ -1021,13 +1046,13 @@ const undoManager = new Y.UndoManager(ytext);
 provider.awareness.setLocalStateField('user', {
   name: 'Anonymous ' + Math.floor(Math.random() * 100),
   color: userColor.color,
-  colorLight: userColor.light
+  colorLight: userColor.light,
 });
 
 config({
   codeMirrorExtensions(_theme, extensions) {
     return [...extensions, yCollab(ytext, provider.awareness, { undoManager })];
-  }
+  },
 });
 ```
 
@@ -1039,7 +1064,7 @@ config({
     return editorId === 'myId'
       ? [...extensions, yCollab(ytext, provider.awareness, { undoManager })]
       : extensions;
-  }
+  },
 });
 ```
 

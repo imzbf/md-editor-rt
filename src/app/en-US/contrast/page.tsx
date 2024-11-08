@@ -2,7 +2,7 @@ import { Metadata } from 'next';
 
 import { KEYWORDS_EN, DESCRIPTION_EN, SITE_NAME_EN } from '@/config';
 import IzPreviewContent from '@/layouts/PreviewContent';
-import mdText from '../../../../public/contrast-en-US-3.md';
+import mdText from '../../../../public/contrast-en-US.md';
 
 export const metadata: Metadata = {
   title: `Version Contrast - ${SITE_NAME_EN}`,

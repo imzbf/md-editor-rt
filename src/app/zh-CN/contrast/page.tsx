@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 import { DESCRIPTION_CN, KEYWORDS_CN, SITE_NAME_CN } from '@/config';
 import IzPreviewContent from '@/layouts/PreviewContent';
-import mdText from '../../../../public/contrast-zh-CN-3.md';
+import mdText from '../../../../public/contrast-zh-CN.md';
 
 export const metadata: Metadata = {
   title: `版本对比 - ${SITE_NAME_CN}`,
