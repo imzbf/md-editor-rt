@@ -477,7 +477,7 @@ export const defaultProps = {
   autoDetectCode: false,
   noHighlight: false,
   noImgZoomIn: false,
-  inputBoxWitdh: '50%',
+  inputBoxWidth: '50%',
   sanitizeMermaid: (h: string) => Promise.resolve(h),
   transformImgUrl: (t: string) => t,
   codeFoldable: true,

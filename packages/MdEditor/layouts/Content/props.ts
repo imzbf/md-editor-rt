@@ -49,8 +49,8 @@ export type ContentProps = Readonly<
      * @returns
      */
     onDrop?: (event: DragEvent) => void;
-    inputBoxWitdh: string;
-    onInputBoxWitdhChange?: (width: string) => void;
+    inputBoxWidth: string;
+    onInputBoxWidthChange?: (width: string) => void;
     transformImgUrl: (text: string) => string | Promise<string>;
   } & ContentPreviewProps
 >;

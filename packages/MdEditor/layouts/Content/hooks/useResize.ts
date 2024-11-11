@@ -9,11 +9,11 @@ const useResize = (
   resizeRef: RefObject<HTMLDivElement>
 ) => {
   const [inputWrapperStyle, setInputWrapperStyle] = useState<CSSProperties>({
-    width: props.inputBoxWitdh
+    width: props.inputBoxWidth
   });
 
   const [resizeOperateStyle, setResizeOperateStyle] = useState<CSSProperties>({
-    left: props.inputBoxWitdh
+    left: props.inputBoxWidth
   });
 
   /**
@@ -25,7 +25,7 @@ const useResize = (
     props.setting.preview || props.setting.htmlPreview
   );
 
-  const resizedWidth = useRef<string | number | undefined>(props.inputBoxWitdh);
+  const resizedWidth = useRef<string | number | undefined>(props.inputBoxWidth);
 
   useEffect(() => {
     // 挂载后计算宽度的数值
@@ -60,7 +60,7 @@ const useResize = (
       });
 
       resizedWidth.current = ibw;
-      props.onInputBoxWitdhChange?.(ibw);
+      props.onInputBoxWidthChange?.(ibw);
     };
 
     const resizeMousedown = () => {
@@ -92,23 +92,23 @@ const useResize = (
   }, [contentRef, props, resizeRef]);
 
   useEffect(() => {
-    if (props.inputBoxWitdh) {
-      resizedWidth.current = props.inputBoxWitdh;
+    if (props.inputBoxWidth) {
+      resizedWidth.current = props.inputBoxWidth;
       setInputWrapperStyle((prevState) => {
         return {
           ...prevState,
-          width: props.inputBoxWitdh
+          width: props.inputBoxWidth
         };
       });
 
       setResizeOperateStyle((prevState) => {
         return {
           ...prevState,
-          left: props.inputBoxWitdh
+          left: props.inputBoxWidth
         };
       });
     }
-  }, [props.inputBoxWitdh]);
+  }, [props.inputBoxWidth]);
 
   useEffect(() => {
     const po = props.setting.previewOnly;

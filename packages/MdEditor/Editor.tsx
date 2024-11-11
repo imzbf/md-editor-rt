@@ -56,7 +56,7 @@ const Editor = forwardRef((props: EditorProps, ref: ForwardedRef<unknown>) => {
     noHighlight = defaultProps.noHighlight,
     noImgZoomIn = defaultProps.noImgZoomIn,
     language = defaultProps.language,
-    inputBoxWitdh = defaultProps.inputBoxWitdh,
+    inputBoxWidth = defaultProps.inputBoxWidth,
     sanitizeMermaid = defaultProps.sanitizeMermaid,
     transformImgUrl = defaultProps.transformImgUrl,
     codeFoldable = defaultProps.codeFoldable,
@@ -190,8 +190,8 @@ const Editor = forwardRef((props: EditorProps, ref: ForwardedRef<unknown>) => {
           theme={props.theme}
           noImgZoomIn={noImgZoomIn}
           onDrop={props.onDrop}
-          inputBoxWitdh={inputBoxWitdh}
-          onInputBoxWitdhChange={props.onInputBoxWitdhChange}
+          inputBoxWidth={inputBoxWidth}
+          onInputBoxWidthChange={props.onInputBoxWidthChange}
           sanitizeMermaid={sanitizeMermaid}
           transformImgUrl={transformImgUrl}
           codeFoldable={codeFoldable}
