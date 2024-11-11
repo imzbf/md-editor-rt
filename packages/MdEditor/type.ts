@@ -471,11 +471,11 @@ export interface EditorProps extends MdPreviewProps {
    *
    * @example '100px'/'50%'
    */
-  inputBoxWitdh?: string;
+  inputBoxWidth?: string;
   /**
    * 输入框宽度变化事件
    */
-  onInputBoxWitdhChange?: (width: string) => void;
+  onInputBoxWidthChange?: (width: string) => void;
   /**
    * 替换粘贴的图片链接
    *

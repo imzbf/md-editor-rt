@@ -1,7 +1,8 @@
 import { useContext, useEffect, useRef, useState } from 'react';
-import { prefix, configOption } from '~/config';
+import { configOption } from '~/config';
 import { EditorContext } from '~/context';
 import { appendHandler, updateHandler } from '~/utils/dom';
+import { CDN_IDS } from '~/static';
 import { ContentPreviewProps } from '../props';
 
 /**
@@ -25,7 +26,7 @@ const useHighlight = (props: ContentPreviewProps) => {
     updateHandler('link', {
       ...highlight.css,
       rel: 'stylesheet',
-      id: `${prefix}-hlCss`
+      id: CDN_IDS.hlcss
     });
   }, [highlight.css, props.noHighlight]);
 
@@ -39,7 +40,7 @@ const useHighlight = (props: ContentPreviewProps) => {
       'script',
       {
         ...highlight.js,
-        id: `${prefix}-hljs`,
+        id: CDN_IDS.hljs,
         onload() {
           hljsRef.current = window.hljs;
           setHljsInited(true);

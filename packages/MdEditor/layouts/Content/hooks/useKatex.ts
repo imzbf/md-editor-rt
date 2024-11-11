@@ -1,6 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
-import { prefix, configOption } from '~/config';
+import { configOption } from '~/config';
 import { appendHandler } from '~/utils/dom';
+import { CDN_IDS } from '~~/MdEditor/static';
+
 import { ContentPreviewProps } from '../props';
 
 /**
@@ -27,7 +29,7 @@ const useKatex = (props: ContentPreviewProps) => {
       'script',
       {
         src: editorExtensions.katex!.js,
-        id: `${prefix}-katex`,
+        id: CDN_IDS.katexjs,
         onload() {
           katexRef.current = window.katex;
           setKatexInited(true);
@@ -38,7 +40,7 @@ const useKatex = (props: ContentPreviewProps) => {
     appendHandler('link', {
       rel: 'stylesheet',
       href: editorExtensions.katex!.css,
-      id: `${prefix}-katexCss`
+      id: CDN_IDS.katexcss
     });
   }, [props.noKatex]);
 

@@ -50,6 +50,7 @@ import {
   PREVIEW_ONLY_CHANGED
 } from './static/event-name';
 import { ContentExposeParam } from './layouts/Content/type';
+import { CDN_IDS } from './static';
 
 /**
  * 键盘监听
@@ -165,12 +166,12 @@ export const useExpansion = (staticProps: StaticProps) => {
         ...css,
         rel: 'stylesheet',
         href: editorExtensions.cropper!.css,
-        id: `${prefix}-cropperCss`
+        id: CDN_IDS.croppercss
       });
       appendHandler('script', {
         ...js,
         src: editorExtensions.cropper!.js,
-        id: `${prefix}-cropper`
+        id: CDN_IDS.cropperjs
       });
     }
 
@@ -181,7 +182,7 @@ export const useExpansion = (staticProps: StaticProps) => {
       appendHandler('script', {
         ...standaloneJs,
         src: editorExtensions.prettier!.standaloneJs,
-        id: `${prefix}-prettier`
+        id: CDN_IDS.prettier
       });
     }
 
@@ -191,7 +192,7 @@ export const useExpansion = (staticProps: StaticProps) => {
       appendHandler('script', {
         ...parserMarkdownJs,
         src: editorExtensions.prettier!.parserMarkdownJs,
-        id: `${prefix}-prettierMD`
+        id: CDN_IDS.prettierMD
       });
     }
   }, [noPrettier, noUploadImg]);
