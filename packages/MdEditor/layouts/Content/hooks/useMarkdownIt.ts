@@ -28,7 +28,6 @@ import KatexPlugin from '../markdownIt/katex';
 import AdmonitionPlugin from '../markdownIt/admonition';
 import HeadingPlugin from '../markdownIt/heading';
 import CodePlugin from '../markdownIt/code';
-import XSSPlugin from '../markdownIt/xss';
 import TaskListPlugin from '../markdownIt/task';
 import { ContentPreviewProps } from '../props';
 
@@ -136,11 +135,6 @@ const useMarkdownIt = (props: ContentPreviewProps, previewOnly: boolean) => {
           autoFoldThreshold,
           customIconRef
         }
-      },
-      {
-        type: 'xss',
-        plugin: XSSPlugin,
-        options: {}
       },
       {
         type: 'sub',
