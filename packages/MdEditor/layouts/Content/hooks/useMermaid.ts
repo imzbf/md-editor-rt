@@ -4,6 +4,7 @@ import { prefix, configOption } from '~/config';
 import { EditorContext } from '~/context';
 import { appendHandler } from '~/utils/dom';
 import { mermaidCache } from '~/utils/cache';
+import { CDN_IDS } from '~~/MdEditor/static';
 
 import { ContentPreviewProps } from '../props';
 
@@ -52,7 +53,7 @@ const useMermaid = (props: ContentPreviewProps) => {
         ...editorExtensionsAttrs.mermaid?.js,
         rel: 'modulepreload',
         href: jsSrc,
-        id: `${prefix}-mermaid-m`
+        id: CDN_IDS.mermaidM
       });
 
       import(
@@ -69,7 +70,7 @@ const useMermaid = (props: ContentPreviewProps) => {
         {
           ...editorExtensionsAttrs.mermaid?.js,
           src: jsSrc,
-          id: `${prefix}-mermaid`,
+          id: CDN_IDS.mermaid,
           onload() {
             mermaidRef.current = window.mermaid;
             configMermaid();
