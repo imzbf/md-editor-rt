@@ -1,12 +1,16 @@
-import React, { useMemo } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import Link from 'next/link';
 
-import './index.scss';
 import { useLang } from '@/hooks/router';
 import { ROUTE_PREFIX } from '@/config';
 
+import './index.scss';
+import { usePathname, useRouter } from 'next/navigation';
+
 const Navigation = () => {
   const lang = useLang();
+  const router = useRouter();
+  const pathname = usePathname();
 
   const linkNames = useMemo(() => {
     return lang === 'zh-CN'
@@ -37,6 +41,15 @@ const Navigation = () => {
   const routePrefix = useMemo(() => {
     return `${ROUTE_PREFIX}/${lang}`;
   }, [lang]);
+
+  const changeLang = useCallback(() => {
+    router.replace(
+      pathname.replace(
+        /\/[a-zA-Z-]+/,
+        `${ROUTE_PREFIX}/${lang === 'zh-CN' ? 'en-US' : 'zh-CN'}`
+      )
+    );
+  }, [lang, pathname, router]);
 
   return (
     <ul className="nav-list">
@@ -96,13 +109,13 @@ const Navigation = () => {
           {linkNames.about}
         </Link>
       </li>
-      <li className="nav-item">
-        <Link href={`${ROUTE_PREFIX}/${lang === 'en-US' ? 'zh-CN' : 'en-US'}`}>
-          <svg className="icon" aria-hidden="true">
-            <use xlinkHref={linkNames.langIcon}></use>
-          </svg>
-          {linkNames.lang}
-        </Link>
+      <li className="nav-item" onClick={changeLang}>
+        {/* <Link href={`${ROUTE_PREFIX}/${lang === 'en-US' ? 'zh-CN' : 'en-US'}`}> */}
+        <svg className="icon" aria-hidden="true">
+          <use xlinkHref={linkNames.langIcon}></use>
+        </svg>
+        {linkNames.lang}
+        {/* </Link> */}
       </li>
     </ul>
   );

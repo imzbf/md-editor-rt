@@ -13,7 +13,7 @@ $border-color: #e6e6e6;
 $border-color-dark: #2d2d2d;
 
 $border-color-reverse: #bebebe;
-$border-color-dark-reverse: #e6e6e6;
+$border-color-dark-reverse: #7f7f7f;
 
 $bk-color: #fff;
 $bk-color-dark: #000;
@@ -49,7 +49,7 @@ $primary-color: #73d13d;
   --iz-border-hover-color-reverse: #{if(
       $is-dark,
       $border-color-reverse,
-      $border-color-dark-reverse
+      #dbdbdb // $border-color-dark-reverse
     )};
 
   --iz-border-active-color: #{if($is-dark, #777, #999)};

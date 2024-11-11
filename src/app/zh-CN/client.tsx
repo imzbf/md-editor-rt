@@ -71,7 +71,7 @@ const HomePage = ({ mdText, tips }: { mdText: string; tips: string }) => {
   });
 
   const [ufToolbars, setToolbars] = useState(toolbars);
-  const [inputBoxWitdh, setInputBoxWitdh] = useState('50%');
+  const [inputBoxWidth, setInputBoxWidth] = useState('50%');
 
   const editorRef = useRef<ExposeParam>();
 
@@ -88,11 +88,11 @@ const HomePage = ({ mdText, tips }: { mdText: string; tips: string }) => {
 
         return ['previewOnly', ...t];
       });
-      setInputBoxWitdh('100%');
+      setInputBoxWidth('100%');
       editorRef.current?.togglePreview(false);
     } else {
       setToolbars(toolbars);
-      setInputBoxWitdh('50%');
+      setInputBoxWidth('50%');
       editorRef.current?.togglePreview(true);
     }
   }, []);
@@ -196,7 +196,7 @@ const HomePage = ({ mdText, tips }: { mdText: string; tips: string }) => {
           ref={editorRef}
           theme={state.theme}
           previewTheme={state.previewTheme}
-          inputBoxWitdh={inputBoxWitdh}
+          inputBoxWidth={inputBoxWidth}
           codeTheme={state.codeTheme}
           value={md}
           language={lang}
