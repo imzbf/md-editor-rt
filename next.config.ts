@@ -9,7 +9,7 @@ const nextConfig: NextConfig = {
   sassOptions: {
     silenceDeprecations: ['legacy-js-api'],
   },
-  basePath: process.env.NODE_ENV === 'production' ? '/md-editor-rt' : '/',
+  basePath: process.env.NODE_ENV === 'production' ? '/md-editor-rt' : '',
   webpack(config) {
     config.module.rules.push({
       test: /\.md$/,

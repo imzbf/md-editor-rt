@@ -18,8 +18,10 @@ const IzCatalog = (props: IzCatalogProp) => {
   const state = useAppSelector((state) => state.setting);
   const scrollerRef = useRef<HTMLDivElement>(null);
 
+  const activeSync = useRef(true);
+
   const onActive = useCallback((toc: unknown, ele: HTMLDivElement) => {
-    if (!ele) {
+    if (!ele || !activeSync.current) {
       return;
     }
 
@@ -34,7 +36,15 @@ const IzCatalog = (props: IzCatalogProp) => {
   }, []);
 
   return (
-    <div className="catalog">
+    <div
+      className="catalog"
+      onMouseEnter={() => {
+        activeSync.current = false;
+      }}
+      onMouseLeave={() => {
+        activeSync.current = true;
+      }}
+    >
       <div ref={scrollerRef} className="affix">
         <MdCatalog
           scrollElementOffsetTop={10}
