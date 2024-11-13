@@ -1,0 +1,1463 @@
+<!DOCTYPE html><html lang="en-US"><head><meta charSet="utf-8" data-next-head=""/><title data-next-head="">Examples - MdEditorRT Documentation</title><meta name="keywords" content="MD Editor, md-editor-rt, Markdown Editor, React Markdown, React TSX, Markdown Component, Markdown preview, React Editor" data-next-head=""/><meta name="description" content="md-editor-rt is a Markdown editor component developed based on React and TSX, supporting real-time preview and rich Markdown features. Review the detailed development documentation and usage examples." data-next-head=""/><meta name="viewport" content="width=device-width, initial-scale=1" data-next-head=""/><link rel="preload" href="/md-editor-rt/_next/static/css/24529bbedc0b046d.css" as="style"/><link rel="stylesheet" href="/md-editor-rt/_next/static/css/24529bbedc0b046d.css" data-n-g=""/><noscript data-n-css=""></noscript><script defer="" nomodule="" src="/md-editor-rt/_next/static/chunks/polyfills-42372ed130431b0a.js"></script><script src="/md-editor-rt/_next/static/chunks/webpack-7628ef4e168316d1.js" defer=""></script><script src="/md-editor-rt/_next/static/chunks/framework-ee340abb9d4be981.js" defer=""></script><script src="/md-editor-rt/_next/static/chunks/main-e0c08bc071d6f2f5.js" defer=""></script><script src="/md-editor-rt/_next/static/chunks/pages/_app-cd3f423b5c83bf88.js" defer=""></script><script src="/md-editor-rt/_next/static/chunks/1581-b21fada013460d1a.js" defer=""></script><script src="/md-editor-rt/_next/static/chunks/pages/en-US/demo-788044448b4913e4.js" defer=""></script><script src="/md-editor-rt/_next/static/WcJGbhp6rehPbUQlXgcVg/_buildManifest.js" defer=""></script><script src="/md-editor-rt/_next/static/WcJGbhp6rehPbUQlXgcVg/_ssgManifest.js" defer=""></script></head><body><div id="__next"><header class="page-header"><section class="container"><h1 class="project-name">md-editor-rt<sup>@<!-- -->5.0.0</sup></h1><p class="project-desc">Markdown Editor for React, developed in jsx and typescript, support different themes、beautify content by prettier.</p><div class="pc"><ul class="nav-list"><li class="nav-item"><a href="/md-editor-rt/en-US"><svg class="icon" aria-hidden="true"><use xlink:href="#med-icon-homepage"></use></svg>Home</a></li><li class="nav-item"><a href="/md-editor-rt/en-US/api"><svg class="icon" aria-hidden="true"><use xlink:href="#med-icon-api"></use></svg>API</a></li><li class="nav-item"><a href="/md-editor-rt/en-US/demo"><svg class="icon" aria-hidden="true"><use xlink:href="#med-icon-example"></use></svg>Demo</a></li><li class="nav-item"><a target="_blank" href="https://github.com/imzbf/md-editor-rt"><svg class="icon" aria-hidden="true"><use xlink:href="#med-icon-github"></use></svg>Github</a></li><li class="nav-item"><a href="/md-editor-rt/en-US/syntax"><svg class="icon" aria-hidden="true"><use xlink:href="#med-icon-syntax"></use></svg>Syntax</a></li><li class="nav-item"><a href="/md-editor-rt/en-US/contrast"><svg class="icon" aria-hidden="true"><use xlink:href="#med-icon-question"></use></svg>Contrast</a></li><li class="nav-item"><a href="/md-editor-rt/en-US/about"><svg class="icon" aria-hidden="true"><use xlink:href="#med-icon-about"></use></svg>About</a></li><li class="nav-item"><svg class="icon" aria-hidden="true"><use xlink:href="#med-icon-cn"></use></svg>中文</li></ul><p class="header-actions"><button class="btn btn-header">Default Theme</button><button class="btn btn-header">Dark Theme</button><button class="btn btn-header">Preview Style</button><button class="btn btn-header">Code Style</button></p></div><div class="mb"><svg class="icon m-menu-trigger" aria-hidden="true"><use xlink:href="#med-icon-drawer"></use></svg></div></section></header><div class="container"><div class="doc"><div class="content"><div id="md-demo-en" class="md-editor   md-editor-previewOnly"><div id="md-demo-en-preview-wrapper" class="md-editor-preview-wrapper"><div id="md-demo-en-preview" class="md-editor-preview default-theme md-editor-scrn"><h2 id="😁 Basic Usage" tabindex="-1" data-line="0"><a class="header-anchor" href="#😁 Basic Usage">😁 Basic Usage</a></h2>
+<p data-line="2">It has been developing iteratively, so update the latest version please. Publish logs: <a href="https://github.com/imzbf/md-editor-rt/releases" target="_blank">releases</a></p>
+<h3 id="🤖 Npm Install" tabindex="-1" data-line="4"><a class="header-anchor" href="#🤖 Npm Install">🤖 Npm Install</a></h3>
+
+      <details  data-line="6" class="md-editor-code" open="">
+        <summary class="md-editor-code-head">
+          <div class="md-editor-code-flag">
+            <ul class="md-editor-codetab-label" role="tablist">
+        <li>
+          <input
+            type="radio"
+            id="label-md-editor-codetab-label-1-md-demo-en-9-0"
+            name="md-editor-codetab-label-md-demo-en-9"
+            class="md-editor-codetab-md-demo-en-9-0"
+            checked
+          >
+          <label
+            for="label-md-editor-codetab-label-1-md-demo-en-9-0"
+            onclick="this.getRootNode().querySelectorAll('.md-editor-codetab-md-demo-en-9-0').forEach(e => e.click())"
+          >
+            npm
+          </label>
+        </li>
+        <li>
+          <input
+            type="radio"
+            id="label-md-editor-codetab-label-1-md-demo-en-9-1"
+            name="md-editor-codetab-label-md-demo-en-9"
+            class="md-editor-codetab-md-demo-en-9-1"
+            
+          >
+          <label
+            for="label-md-editor-codetab-label-1-md-demo-en-9-1"
+            onclick="this.getRootNode().querySelectorAll('.md-editor-codetab-md-demo-en-9-1').forEach(e => e.click())"
+          >
+            yarn
+          </label>
+        </li></ul>
+          </div>
+          <div class="md-editor-code-action">
+            <span class="md-editor-codetab-lang">
+        <input
+          type="radio"
+          name="md-editor-codetab-lang-md-demo-en-9"
+          class="md-editor-codetab-md-demo-en-9-0"
+          checked
+          role="presentation">
+        <span class=md-editor-code-lang role="note">shell</span>
+        <input
+          type="radio"
+          name="md-editor-codetab-lang-md-demo-en-9"
+          class="md-editor-codetab-md-demo-en-9-1"
+          
+          role="presentation">
+        <span class=md-editor-code-lang role="note">shell</span></span>
+            <span class="md-editor-copy-button" data-tips="Copy">Copy</span>
+            <span class="md-editor-collapse-tips"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-chevron-left md-editor-icon"><circle cx="12" cy="12" r="10"/><path d="m14 16-4-4 4-4"/></svg></span>
+          </div>
+        </summary>
+        
+        <div role="tabpanel">
+          <input
+            type="radio"
+            name="md-editor-codetab-pre-md-demo-en-9"
+            class="md-editor-codetab-md-demo-en-9-0"
+            checked
+            role="presentation">
+          <pre><code class="language-shell" language=shell><span class="md-editor-code-block">npm install md-editor-rt</span><span rn-wrapper aria-hidden="true"><span></span></span></code></pre>
+
+        </div>
+        <div role="tabpanel">
+          <input
+            type="radio"
+            name="md-editor-codetab-pre-md-demo-en-9"
+            class="md-editor-codetab-md-demo-en-9-1"
+            
+            role="presentation">
+          <pre><code class="language-shell" language=shell><span class="md-editor-code-block">yarn add md-editor-rt</span><span rn-wrapper aria-hidden="true"><span></span></span></code></pre>
+
+        </div>
+      </details>
+    
+<div data-line="14" class="md-editor-admonition md-editor-admonition-warning">
+<p data-line="16"><s>When using server-side rendering, make sure to set <code>editorId</code> to a constant value.</s><br>
+Starting from version 5.0, there is no such limitation.</p>
+</div>
+<h3 id="🤓 CDN" tabindex="-1" data-line="21"><a class="header-anchor" href="#🤓 CDN">🤓 CDN</a></h3>
+<p data-line="23">Use production version in html directly:</p>
+
+        <details  data-line="25" class="md-editor-code" open="">
+          <summary class="md-editor-code-head">
+            <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
+            <div class="md-editor-code-action">
+              <span class="md-editor-code-lang">html</span>
+              <span class="md-editor-copy-button" data-tips="Copy">Copy</span>
+              <span class="md-editor-collapse-tips"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-chevron-left md-editor-icon"><circle cx="12" cy="12" r="10"/><path d="m14 16-4-4 4-4"/></svg></span>
+            </div>
+          </summary>
+          <pre><code class="language-html" language=html><span class="md-editor-code-block">&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+  &lt;head&gt;
+    &lt;link
+      href=&quot;https://unpkg.com/md-editor-rt@5.0.0/lib/style.css&quot;
+      rel=&quot;stylesheet&quot;
+    /&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;div id=&quot;root&quot;&gt;&lt;/div&gt;
+    &lt;script src=&quot;https://unpkg.com/react@18.2.0/umd/react.production.min.js&quot;&gt;&lt;/script&gt;
+    &lt;script src=&quot;https://unpkg.com/react-dom@18.2.0/umd/react-dom.production.min.js&quot;&gt;&lt;/script&gt;
+    &lt;script src=&quot;https://unpkg.com/md-editor-rt@5.0.0/lib/umd/index.js&quot;&gt;&lt;/script&gt;
+    &lt;script&gt;
+      ReactDOM.createRoot(document.getElementById('root')).render(
+        React.createElement(MdEditorRT.MdEditor, {
+          modelValue: 'Hello Editor!!',
+        })
+      );
+    &lt;/script&gt;
+  &lt;/body&gt;
+&lt;/html&gt;</span><span rn-wrapper aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+        </details>
+      <h4 id="🤓 Jsx Template" tabindex="-1" data-line="50"><a class="header-anchor" href="#🤓 Jsx Template">🤓 Jsx Template</a></h4>
+
+        <details  data-line="52" class="md-editor-code" open="">
+          <summary class="md-editor-code-head">
+            <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
+            <div class="md-editor-code-action">
+              <span class="md-editor-code-lang">jsx</span>
+              <span class="md-editor-copy-button" data-tips="Copy">Copy</span>
+              <span class="md-editor-collapse-tips"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-chevron-left md-editor-icon"><circle cx="12" cy="12" r="10"/><path d="m14 16-4-4 4-4"/></svg></span>
+            </div>
+          </summary>
+          <pre><code class="language-jsx" language=jsx><span class="md-editor-code-block">import { useState } from 'react';
+import { MdEditor } from 'md-editor-rt';
+import 'md-editor-rt/lib/style.css';
+
+export default () =&gt; {
+  const [text, setText] = useState('hello md-editor-rt!');
+  return &lt;MdEditor modelValue={text} onChange={setText} /&gt;;
+};</span><span rn-wrapper aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+        </details>
+      <h4 id="📖 Preview Only" tabindex="-1" data-line="63"><a class="header-anchor" href="#📖 Preview Only">📖 Preview Only</a></h4>
+
+        <details  data-line="65" class="md-editor-code" open="">
+          <summary class="md-editor-code-head">
+            <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
+            <div class="md-editor-code-action">
+              <span class="md-editor-code-lang">jsx</span>
+              <span class="md-editor-copy-button" data-tips="Copy">Copy</span>
+              <span class="md-editor-collapse-tips"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-chevron-left md-editor-icon"><circle cx="12" cy="12" r="10"/><path d="m14 16-4-4 4-4"/></svg></span>
+            </div>
+          </summary>
+          <pre><code class="language-jsx" language=jsx><span class="md-editor-code-block">import { useState } from 'react';
+import { MdPreview, MdCatalog } from 'md-editor-rt';
+import 'md-editor-rt/lib/preview.css';
+
+export default () =&gt; {
+  const [id] = useState('preview-only');
+  const [scrollElement] = useState(document.documentElement);
+  const [text] = useState('hello md-editor-rt！');
+
+  return (
+    &lt;&gt;
+      &lt;MdPreview id={id} modelValue={text} /&gt;
+      &lt;MdCatalog editorId={id} scrollElement={scrollElement} /&gt;
+    &lt;/&gt;
+  );
+};</span><span rn-wrapper aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+        </details>
+      <div data-line="84" class="md-editor-admonition md-editor-admonition-warning">
+<p data-line="86">When using server-side rendering, <code>scrollElement</code> should be of string type, eg: <code>html</code>, <code>body</code>, <code>#id</code>, <code>.class</code>.</p>
+</div>
+<h2 id="🎛 Used in Web Component" tabindex="-1" data-line="90"><a class="header-anchor" href="#🎛 Used in Web Component">🎛 Used in Web Component</a></h2>
+<p data-line="92">Complete example reference <a href="https://github.com/imzbf/md-editor-rt/tree/main/example/webComponent" target="_blank">the sample project</a> provided in the source code.</p>
+<p data-line="94">Here are the precautions:</p>
+<ol data-line="96">
+<li data-line="96">The image zoom-in view feature is ineffective; implementation needs to be done manually!!!</li>
+<li data-line="97">Do not use CDN to reference dependency libraries by default; refer to <a href="https://imzbf.github.io/md-editor-rt/en-US/demo#%F0%9F%99%8D%F0%9F%8F%BB%E2%80%8D%E2%99%82%EF%B8%8F%20Import%20All%20Library" target="_blank">[Import All Library]</a>!!!</li>
+</ol>
+<h2 id="🥂 Api usage" tabindex="-1" data-line="99"><a class="header-anchor" href="#🥂 Api usage">🥂 Api usage</a></h2>
+<p data-line="101">Usages of some APIs.</p>
+<h3 id="🥶 Customize Shortcut Key" tabindex="-1" data-line="103"><a class="header-anchor" href="#🥶 Customize Shortcut Key">🥶 Customize Shortcut Key</a></h3>
+<ul data-line="105">
+<li data-line="105">
+<p data-line="105">Source code for built-in shortcut key configuration: <a href="https://github.com/imzbf/md-editor-rt/blob/develop/packages/MdEditor/layouts/Content/codemirror/commands.ts" target="_blank">commands.ts</a>. They have been added as extensions to <code>codemirror</code>.</p>
+</li>
+<li data-line="107">
+<p data-line="107">The basic principle of replacing or deleting shortcut keys is to find the corresponding extension, and handle it.</p>
+</li>
+<li data-line="109">
+<p data-line="109">In fact, The Second input parameter <code>extensions</code> of <code>codeMirrorExtensions</code> is an array, The first item in the array is the shortcut key extension. The third input parameter is the default shortcut key configuration.</p>
+</li>
+</ul>
+<h4 id="💅 Modify Shortcut Key" tabindex="-1" data-line="111"><a class="header-anchor" href="#💅 Modify Shortcut Key">💅 Modify Shortcut Key</a></h4>
+<p data-line="113">Change <code>Ctrl-b</code> to <code>Ctrl-m</code></p>
+
+        <details  data-line="115" class="md-editor-code">
+          <summary class="md-editor-code-head">
+            <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
+            <div class="md-editor-code-action">
+              <span class="md-editor-code-lang">js</span>
+              <span class="md-editor-copy-button" data-tips="Copy">Copy</span>
+              <span class="md-editor-collapse-tips"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-chevron-left md-editor-icon"><circle cx="12" cy="12" r="10"/><path d="m14 16-4-4 4-4"/></svg></span>
+            </div>
+          </summary>
+          <pre><code class="language-js" language=js><span class="md-editor-code-block">import { config } from 'md-editor-rt';
+import { keymap } from '@codemirror/view';
+
+config({
+  // [keymap, minimalSetup, markdown, EditorView.lineWrapping, EditorView.updateListener, EditorView.domEventHandlers, oneDark??oneLight]
+  codeMirrorExtensions(theme, extensions, mdEditorCommands) {
+    const newExtensions = [...extensions];
+    // 1. Remove the default shortcut key extension first
+    newExtensions.shift();
+
+    // 2. Reference the source code for shortcut key configuration
+    // Find the location of the configuration item for CtrlB in mdEditorCommands
+    const CtrlB = mdEditorCommands[0];
+
+    // 3. Document for configuring shortcut keys of codemirror
+    // https://codemirror.net/docs/ref/#commands
+    const CtrlM = {
+      // We need the run method in CtrlB here
+      ...CtrlB,
+      key: 'Ctrl-m',
+      mac: 'Cmd-m',
+    };
+
+    // 4. Add the modified shortcut key to the array
+    const newMdEditorCommands = [
+      CtrlM,
+      ...mdEditorCommands.filter((i) =&gt; i.key !== 'Ctrl-b'),
+    ];
+
+    newExtensions.push(keymap.of(newMdEditorCommands));
+
+    return newExtensions;
+  },
+});</span><span rn-wrapper aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+        </details>
+      <h4 id="✂️ Delete Shortcut Key" tabindex="-1" data-line="152"><a class="header-anchor" href="#✂️ Delete Shortcut Key">✂️ Delete Shortcut Key</a></h4>
+<p data-line="154">Disable all shortcut keys</p>
+
+        <details  data-line="156" class="md-editor-code" open="">
+          <summary class="md-editor-code-head">
+            <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
+            <div class="md-editor-code-action">
+              <span class="md-editor-code-lang">js</span>
+              <span class="md-editor-copy-button" data-tips="Copy">Copy</span>
+              <span class="md-editor-collapse-tips"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-chevron-left md-editor-icon"><circle cx="12" cy="12" r="10"/><path d="m14 16-4-4 4-4"/></svg></span>
+            </div>
+          </summary>
+          <pre><code class="language-js" language=js><span class="md-editor-code-block">import { config } from 'md-editor-rt';
+
+config({
+  // [keymap, minimalSetup, markdown, EditorView.lineWrapping, EditorView.updateListener, EditorView.domEventHandlers, oneDark??oneLight]
+  codeMirrorExtensions(theme, extensions) {
+    const newExtensions = [...extensions];
+    // 1. Remove default shortcut key extensions
+    newExtensions.shift();
+
+    // 2. Return extension list
+    return newExtensions;
+  },
+});</span><span rn-wrapper aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+        </details>
+      <h4 id="💉 Add Shortcut Key" tabindex="-1" data-line="172"><a class="header-anchor" href="#💉 Add Shortcut Key">💉 Add Shortcut Key</a></h4>
+<p data-line="174">If you want to insert content into the edit box, you need to use the <code>insert</code> method bound on the instance of editor, reference: <a href="/md-editor-rt/ed-US/docs#%F0%9F%92%89%20insert" target="_blank">Insert content into the edit box</a>.</p>
+<p data-line="176">If you are not using <code>config</code> in the component where the editor is located, you are unable to obtain instance of editor at this time. You may need to use <code>EventBus</code>.</p>
+<p data-line="178">Add shortcut key <code>Ctrl+m</code>, to insert a marking module into the editing box(<code>==mark==</code>)</p>
+<p data-line="180"><code>index.ts</code></p>
+
+        <details  data-line="182" class="md-editor-code">
+          <summary class="md-editor-code-head">
+            <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
+            <div class="md-editor-code-action">
+              <span class="md-editor-code-lang">js</span>
+              <span class="md-editor-copy-button" data-tips="Copy">Copy</span>
+              <span class="md-editor-collapse-tips"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-chevron-left md-editor-icon"><circle cx="12" cy="12" r="10"/><path d="m14 16-4-4 4-4"/></svg></span>
+            </div>
+          </summary>
+          <pre><code class="language-js" language=js><span class="md-editor-code-block">import { config } from 'md-editor-rt';
+import { keymap, KeyBinding } from '@codemirror/view';
+// If you used EventBus
+import bus from '@/utils/event-bus';
+
+config({
+  // [keymap, minimalSetup, markdown, EditorView.lineWrapping, EditorView.updateListener, EditorView.domEventHandlers, oneDark??oneLight]
+  codeMirrorExtensions(theme, extensions, mdEditorCommands) {
+    const newExtensions = [...extensions];
+    // 1. Remove the default shortcut key extension first
+    newExtensions.shift();
+
+    // 2. Create a new shortcut key configuration, reference: https://codemirror.net/docs/ref/#commands
+    const CtrlM: KeyBinding = {
+      key: 'Ctrl-m',
+      mac: 'Cmd-m',
+      run: () =&gt; {
+        bus.emit('insertMarkBlock');
+        return true;
+      },
+    };
+
+    // 4. Add a new shortcut key to the array
+    const newMdEditorCommands = [...mdEditorCommands, CtrlM];
+
+    newExtensions.push(keymap.of(newMdEditorCommands));
+
+    return newExtensions;
+  },
+});</span><span rn-wrapper aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+        </details>
+      <p data-line="215">Next, listening 'insertMarkBlock' in the component where the editor is located</p>
+<p data-line="217"><code>App.tsx</code></p>
+
+        <details  data-line="219" class="md-editor-code" open="">
+          <summary class="md-editor-code-head">
+            <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
+            <div class="md-editor-code-action">
+              <span class="md-editor-code-lang">tsx</span>
+              <span class="md-editor-copy-button" data-tips="Copy">Copy</span>
+              <span class="md-editor-collapse-tips"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-chevron-left md-editor-icon"><circle cx="12" cy="12" r="10"/><path d="m14 16-4-4 4-4"/></svg></span>
+            </div>
+          </summary>
+          <pre><code class="language-tsx" language=tsx><span class="md-editor-code-block">import { useState, useRef, useEffect } from 'react';
+import { MdEditor, ExposeParam } from 'md-editor-rt';
+// If you used EventBus
+import bus from '@/utils/event-bus';
+
+const App = () =&gt; {
+  const [text] = useState('## md-editor-rt\n\n');
+  const mdEditorRef = useRef&lt;ExposeParam&gt;();
+
+  useEffect(() =&gt; {
+    bus.on('insertMarkBlock', () =&gt; {
+      mdEditorRef.current?.insert((selectedText) =&gt; {
+        return {
+          targetValue: `==${selectedText}==`,
+          select: true,
+          deviationStart: 2,
+          deviationEnd: -2,
+        };
+      });
+    });
+  }, []);
+
+  return &lt;MdEditor modelValue={text} ref={mdEditorRef} /&gt;;
+};</span><span rn-wrapper aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+        </details>
+      <p data-line="246">Attach: Simple version of <code>EventBus</code></p>
+
+        <details  data-line="248" class="md-editor-code">
+          <summary class="md-editor-code-head">
+            <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
+            <div class="md-editor-code-action">
+              <span class="md-editor-code-lang">ts</span>
+              <span class="md-editor-copy-button" data-tips="Copy">Copy</span>
+              <span class="md-editor-collapse-tips"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-chevron-left md-editor-icon"><circle cx="12" cy="12" r="10"/><path d="m14 16-4-4 4-4"/></svg></span>
+            </div>
+          </summary>
+          <pre><code class="language-ts" language=ts><span class="md-editor-code-block">/* eslint-disable @typescript-eslint/ban-types */
+class EventBus {
+  private events: Map&lt;string, Function[]&gt;;
+
+  constructor() {
+    this.events = new Map();
+  }
+
+  on(eventName: string, fn: Function) {
+    if (!eventName) {
+      console.error('Get a wrong eventName');
+      return false;
+    }
+
+    if (!(fn instanceof Function)) {
+      console.error('Get a wrong callback');
+      return false;
+    }
+
+    const fns = this.events.get(eventName) || [];
+    fns.push(fn);
+    this.events.set(eventName, fns);
+  }
+
+  emit(eventName: string, ...args: any[]) {
+    this.events.get(eventName)?.forEach((fn) =&gt; {
+      fn(args);
+    });
+  }
+}
+
+export default new EventBus();</span><span rn-wrapper aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+        </details>
+      <h3 id="🍦 Change Theme" tabindex="-1" data-line="283"><a class="header-anchor" href="#🍦 Change Theme">🍦 Change Theme</a></h3>
+<p data-line="285">Themes are divided into editor theme(<code>theme</code>), article preview theme(<code>previewTheme</code>) and code theme(<code>codeTheme</code>).</p>
+<h4 id="🍧 Editor Theme" tabindex="-1" data-line="287"><a class="header-anchor" href="#🍧 Editor Theme">🍧 Editor Theme</a></h4>
+<p data-line="289">Support <code>light</code> and <code>dark</code> default.</p>
+
+        <details  data-line="291" class="md-editor-code" open="">
+          <summary class="md-editor-code-head">
+            <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
+            <div class="md-editor-code-action">
+              <span class="md-editor-code-lang">jsx</span>
+              <span class="md-editor-copy-button" data-tips="Copy">Copy</span>
+              <span class="md-editor-collapse-tips"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-chevron-left md-editor-icon"><circle cx="12" cy="12" r="10"/><path d="m14 16-4-4 4-4"/></svg></span>
+            </div>
+          </summary>
+          <pre><code class="language-jsx" language=jsx><span class="md-editor-code-block">import { useState } from 'react';
+import { MdEditor } from 'md-editor-rt';
+import 'md-editor-rt/lib/style.css';
+
+export default () =&gt; {
+  const [text, setText] = useState('hello md-editor-rt!');
+  const [theme] = useState('dark');
+  return &lt;MdEditor modelValue={text} onChange={setText} theme={theme} /&gt;;
+};</span><span rn-wrapper aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+        </details>
+      <h4 id="🍡 Preview Theme" tabindex="-1" data-line="303"><a class="header-anchor" href="#🍡 Preview Theme">🍡 Preview Theme</a></h4>
+<p data-line="305">There are 6 kinds of themes: <code>default</code>, <code>github</code>, <code>vuepress</code>, <code>mk-cute</code>, <code>smart-blue</code> and <code>cyanosis</code>. It is useful When you want to show your article directly. Modify <code>previewTheme</code>.</p>
+
+        <details  data-line="307" class="md-editor-code" open="">
+          <summary class="md-editor-code-head">
+            <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
+            <div class="md-editor-code-action">
+              <span class="md-editor-code-lang">jsx</span>
+              <span class="md-editor-copy-button" data-tips="Copy">Copy</span>
+              <span class="md-editor-collapse-tips"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-chevron-left md-editor-icon"><circle cx="12" cy="12" r="10"/><path d="m14 16-4-4 4-4"/></svg></span>
+            </div>
+          </summary>
+          <pre><code class="language-jsx" language=jsx><span class="md-editor-code-block">import { useState } from 'react';
+import { MdEditor } from 'md-editor-rt';
+import 'md-editor-rt/lib/style.css';
+
+export default () =&gt; {
+  const [text, setText] = useState('hello md-editor-rt!');
+  const [previewTheme] = useState('github');
+  return (
+    &lt;MdEditor
+      modelValue={text}
+      onChange={setText}
+      previewTheme={previewTheme}
+    /&gt;
+  );
+};</span><span rn-wrapper aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+        </details>
+      <ul data-line="325">
+<li data-line="325">
+<p data-line="325">Custom</p>
+<ol data-line="327">
+<li data-line="327">Write <code>css</code> under the <code>xxx-theme</code> claa. <code>xxx</code> is the name of your theme, for more examples, refer to <a href="https://github.com/imzbf/markdown-theme" target="_blank">markdown-theme</a>.</li>
+</ol>
+<p data-line="329"><em>xxx.css</em></p>
+
+        <details  data-line="331" class="md-editor-code" open="">
+          <summary class="md-editor-code-head">
+            <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
+            <div class="md-editor-code-action">
+              <span class="md-editor-code-lang">css</span>
+              <span class="md-editor-copy-button" data-tips="Copy">Copy</span>
+              <span class="md-editor-collapse-tips"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-chevron-left md-editor-icon"><circle cx="12" cy="12" r="10"/><path d="m14 16-4-4 4-4"/></svg></span>
+            </div>
+          </summary>
+          <pre><code class="language-css" language=css><span class="md-editor-code-block">.xxx-theme code {
+  color: red;
+}</span><span rn-wrapper aria-hidden="true"><span></span><span></span><span></span></span></code></pre>
+
+        </details>
+      <ol start="2" data-line="337">
+<li data-line="337">Import</li>
+</ol>
+
+        <details  data-line="339" class="md-editor-code" open="">
+          <summary class="md-editor-code-head">
+            <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
+            <div class="md-editor-code-action">
+              <span class="md-editor-code-lang">js</span>
+              <span class="md-editor-copy-button" data-tips="Copy">Copy</span>
+              <span class="md-editor-collapse-tips"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-chevron-left md-editor-icon"><circle cx="12" cy="12" r="10"/><path d="m14 16-4-4 4-4"/></svg></span>
+            </div>
+          </summary>
+          <pre><code class="language-js" language=js><span class="md-editor-code-block">import 'xxx.css';</span><span rn-wrapper aria-hidden="true"><span></span></span></code></pre>
+
+        </details>
+      <ol start="3" data-line="343">
+<li data-line="343">Set <code>previewTheme</code></li>
+</ol>
+
+        <details  data-line="345" class="md-editor-code" open="">
+          <summary class="md-editor-code-head">
+            <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
+            <div class="md-editor-code-action">
+              <span class="md-editor-code-lang">jsx</span>
+              <span class="md-editor-copy-button" data-tips="Copy">Copy</span>
+              <span class="md-editor-collapse-tips"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-chevron-left md-editor-icon"><circle cx="12" cy="12" r="10"/><path d="m14 16-4-4 4-4"/></svg></span>
+            </div>
+          </summary>
+          <pre><code class="language-jsx" language=jsx><span class="md-editor-code-block">&lt;MdEditor previewTheme=&quot;xxx&quot; /&gt;</span><span rn-wrapper aria-hidden="true"><span></span></span></code></pre>
+
+        </details>
+      </li>
+</ul>
+<h4 id="🎄 Code Theme" tabindex="-1" data-line="349"><a class="header-anchor" href="#🎄 Code Theme">🎄 Code Theme</a></h4>
+<p data-line="351">There are 8 kinds of themes: <code>atom</code>, <code>a11y</code>, <code>github</code>, <code>gradient</code>, <code>kimbie</code>, <code>paraiso</code>,<code>qtcreator</code> and <code>stackoverflow</code>, they are all from <a href="https://highlightjs.org/" target="_blank">highlight.js</a>.</p>
+<ul data-line="353">
+<li data-line="353">
+<p data-line="353">Usage</p>
+
+        <details  data-line="355" class="md-editor-code" open="">
+          <summary class="md-editor-code-head">
+            <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
+            <div class="md-editor-code-action">
+              <span class="md-editor-code-lang">jsx</span>
+              <span class="md-editor-copy-button" data-tips="Copy">Copy</span>
+              <span class="md-editor-collapse-tips"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-chevron-left md-editor-icon"><circle cx="12" cy="12" r="10"/><path d="m14 16-4-4 4-4"/></svg></span>
+            </div>
+          </summary>
+          <pre><code class="language-jsx" language=jsx><span class="md-editor-code-block">import { useState } from 'react';
+import { MdEditor } from 'md-editor-rt';
+import 'md-editor-rt/lib/style.css';
+
+export default () =&gt; {
+  const [text, setText] = useState('hello md-editor-rt!');
+  const [codeTheme] = useState('atom');
+  return (
+    &lt;MdEditor modelValue={text} onChange={setText} codeTheme={codeTheme} /&gt;
+  );
+};</span><span rn-wrapper aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+        </details>
+      </li>
+<li data-line="369">
+<p data-line="369">Custom</p>
+<ol data-line="371">
+<li data-line="371">Find or Write your favorite theme, then config them:</li>
+</ol>
+
+        <details  data-line="373" class="md-editor-code" open="">
+          <summary class="md-editor-code-head">
+            <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
+            <div class="md-editor-code-action">
+              <span class="md-editor-code-lang">js</span>
+              <span class="md-editor-copy-button" data-tips="Copy">Copy</span>
+              <span class="md-editor-collapse-tips"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-chevron-left md-editor-icon"><circle cx="12" cy="12" r="10"/><path d="m14 16-4-4 4-4"/></svg></span>
+            </div>
+          </summary>
+          <pre><code class="language-js" language=js><span class="md-editor-code-block">import { config } from 'md-editor-rt';
+
+config({
+  editorExtensions: {
+    highlight: {
+      css: {
+        xxxxx: {
+          light:
+            'https://unpkg.com/highlight.js@11.2.0/styles/xxxxx-light.css',
+          dark: 'https://unpkg.com/highlight.js@11.2.0/styles/xxxxx-dark.css',
+        },
+        yyyyy: {
+          light:
+            'https://unpkg.com/highlight.js@11.2.0/styles/xxxxx-light.css',
+          dark: 'https://unpkg.com/highlight.js@11.2.0/styles/xxxxx-dark.css',
+        },
+      },
+    },
+  },
+});</span><span rn-wrapper aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+        </details>
+      <p data-line="396">If some keys in object <code>css</code> are same as Editor's, Editor's whill be replaced.</p>
+<ol start="2" data-line="398">
+<li data-line="398">Set <code>codeTheme</code></li>
+</ol>
+
+        <details  data-line="400" class="md-editor-code" open="">
+          <summary class="md-editor-code-head">
+            <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
+            <div class="md-editor-code-action">
+              <span class="md-editor-code-lang">jsx</span>
+              <span class="md-editor-copy-button" data-tips="Copy">Copy</span>
+              <span class="md-editor-collapse-tips"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-chevron-left md-editor-icon"><circle cx="12" cy="12" r="10"/><path d="m14 16-4-4 4-4"/></svg></span>
+            </div>
+          </summary>
+          <pre><code class="language-jsx" language=jsx><span class="md-editor-code-block">&lt;MdEditor codeTheme=&quot;xxxxx&quot; /&gt;</span><span rn-wrapper aria-hidden="true"><span></span></span></code></pre>
+
+        </details>
+      </li>
+</ul>
+<h3 id="🛠 Config Extensions" tabindex="-1" data-line="404"><a class="header-anchor" href="#🛠 Config Extensions">🛠 Config Extensions</a></h3>
+<p data-line="406">Extensions highlight, prettier, cropper, screenfull are import from <code>cdn</code>. When your project is running offline, replace urls of these extensions. Some Extensions support be injected in development environment.</p>
+<p data-line="408">Example for <code>screenfull</code>:</p>
+<h4 id="⚰️ Inject Directly" tabindex="-1" data-line="410"><a class="header-anchor" href="#⚰️ Inject Directly">⚰️ Inject Directly</a></h4>
+
+        <details  data-line="412" class="md-editor-code" open="">
+          <summary class="md-editor-code-head">
+            <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
+            <div class="md-editor-code-action">
+              <span class="md-editor-code-lang">jsx</span>
+              <span class="md-editor-copy-button" data-tips="Copy">Copy</span>
+              <span class="md-editor-collapse-tips"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-chevron-left md-editor-icon"><circle cx="12" cy="12" r="10"/><path d="m14 16-4-4 4-4"/></svg></span>
+            </div>
+          </summary>
+          <pre><code class="language-jsx" language=jsx><span class="md-editor-code-block">import { useState } from 'react';
+import { MdEditor, config } from 'md-editor-rt';
+import 'md-editor-rt/lib/style.css';
+import screenfull from 'screenfull';
+
+config({
+  editorExtensions: {
+    screenfull: {
+      instance: screenfull,
+    },
+  },
+});
+
+export default () =&gt; {
+  const [text, setText] = useState('hello md-editor-rt!');
+  return &lt;MdEditor modelValue={text} onChange={setText} /&gt;;
+};</span><span rn-wrapper aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+        </details>
+      <h4 id="📡 Intranet Link" tabindex="-1" data-line="432"><a class="header-anchor" href="#📡 Intranet Link">📡 Intranet Link</a></h4>
+<p data-line="434">Get files from <a href="https://unpkg.com" target="_blank">unpkg.com</a>.</p>
+
+        <details  data-line="436" class="md-editor-code" open="">
+          <summary class="md-editor-code-head">
+            <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
+            <div class="md-editor-code-action">
+              <span class="md-editor-code-lang">jsx</span>
+              <span class="md-editor-copy-button" data-tips="Copy">Copy</span>
+              <span class="md-editor-collapse-tips"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-chevron-left md-editor-icon"><circle cx="12" cy="12" r="10"/><path d="m14 16-4-4 4-4"/></svg></span>
+            </div>
+          </summary>
+          <pre><code class="language-jsx" language=jsx><span class="md-editor-code-block">import { useState } from 'react';
+import { MdEditor, config } from 'md-editor-rt';
+import 'md-editor-rt/lib/style.css';
+
+config({
+  editorExtensions: {
+    screenfull: {
+      js: 'https://localhost:8090/screenfull@5.2.0/index.js',
+    },
+  },
+});
+
+export default () =&gt; {
+  const [text, setText] = useState('hello md-editor-rt!');
+  return &lt;MdEditor modelValue={text} onChange={setText} /&gt;;
+};</span><span rn-wrapper aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+        </details>
+      <h3 id="📷 Upload Pictures" tabindex="-1" data-line="455"><a class="header-anchor" href="#📷 Upload Pictures">📷 Upload Pictures</a></h3>
+<p data-line="457">By default, you can select multiple pictures. You can paste and upload screenshots and copy web page pictures.</p>
+<blockquote data-line="459">
+<p data-line="459">Tips: When pasting pictures, if they are GIF graphs, it does not work! Please upload it by file system.</p>
+</blockquote>
+
+        <details  data-line="461" class="md-editor-code">
+          <summary class="md-editor-code-head">
+            <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
+            <div class="md-editor-code-action">
+              <span class="md-editor-code-lang">jsx</span>
+              <span class="md-editor-copy-button" data-tips="Copy">Copy</span>
+              <span class="md-editor-collapse-tips"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-chevron-left md-editor-icon"><circle cx="12" cy="12" r="10"/><path d="m14 16-4-4 4-4"/></svg></span>
+            </div>
+          </summary>
+          <pre><code class="language-jsx" language=jsx><span class="md-editor-code-block">import { useState } from 'react';
+import { MdEditor } from 'md-editor-rt';
+import 'md-editor-rt/lib/style.css';
+
+const onUploadImg = async (files, callback) =&gt; {
+  const res = await Promise.all(
+    files.map((file) =&gt; {
+      return new Promise((rev, rej) =&gt; {
+        const form = new FormData();
+        form.append('file', file);
+
+        axios
+          .post('/api/img/upload', form, {
+            headers: {
+              'Content-Type': 'multipart/form-data',
+            },
+          })
+          .then((res) =&gt; rev(res))
+          .catch((error) =&gt; rej(error));
+      });
+    })
+  );
+
+  callback(res.map((item) =&gt; item.data.url));
+};
+
+export default () =&gt; {
+  const [text, setText] = useState('hello md-editor-rt!');
+  return (
+    &lt;MdEditor modelValue={text} onChange={setText} onUploadImg={onUploadImg} /&gt;
+  );
+};</span><span rn-wrapper aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+        </details>
+      <h3 id="🏳️‍🌈 Extension Language" tabindex="-1" data-line="496"><a class="header-anchor" href="#🏳️‍🌈 Extension Language">🏳️‍🌈 Extension Language</a></h3>
+
+        <details  data-line="498" class="md-editor-code">
+          <summary class="md-editor-code-head">
+            <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
+            <div class="md-editor-code-action">
+              <span class="md-editor-code-lang">js</span>
+              <span class="md-editor-copy-button" data-tips="Copy">Copy</span>
+              <span class="md-editor-collapse-tips"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-chevron-left md-editor-icon"><circle cx="12" cy="12" r="10"/><path d="m14 16-4-4 4-4"/></svg></span>
+            </div>
+          </summary>
+          <pre><code class="language-js" language=js><span class="md-editor-code-block">import { useState } from 'react';
+import { MdEditor, config } from 'md-editor-rt';
+import 'md-editor-rt/lib/style.css';
+
+config({
+  editorConfig: {
+    languageUserDefined: {
+      'my-lang': {
+        toolbarTips: {
+          bold: 'bold',
+          underline: 'underline',
+          italic: 'italic',
+          strikeThrough: 'strikeThrough',
+          title: 'title',
+          sub: 'subscript',
+          sup: 'superscript',
+          quote: 'quote',
+          unorderedList: 'unordered list',
+          orderedList: 'ordered list',
+          task: 'task list',
+          codeRow: 'inline code',
+          code: 'block-level code',
+          link: 'link',
+          image: 'image',
+          table: 'table',
+          mermaid: 'mermaid',
+          katex: 'formula',
+          revoke: 'revoke',
+          next: 'undo revoke',
+          save: 'save',
+          prettier: 'prettier',
+          pageFullscreen: 'fullscreen in page',
+          fullscreen: 'fullscreen',
+          preview: 'preview',
+          htmlPreview: 'html preview',
+          catalog: 'catalog',
+          github: 'source code',
+        },
+        titleItem: {
+          h1: 'Lv1 Heading',
+          h2: 'Lv2 Heading',
+          h3: 'Lv3 Heading',
+          h4: 'Lv4 Heading',
+          h5: 'Lv5 Heading',
+          h6: 'Lv6 Heading',
+        },
+        imgTitleItem: {
+          link: 'Add Img Link',
+          upload: 'Upload Img',
+          clip2upload: 'Clip Upload',
+        },
+        linkModalTips: {
+          linkTitle: 'Add Link',
+          imageTitle: 'Add Image',
+          descLabel: 'Desc:',
+          descLabelPlaceHolder: 'Enter a description...',
+          urlLabel: 'Link:',
+          urlLabelPlaceHolder: 'Enter a link...',
+          buttonOK: 'OK',
+        },
+        clipModalTips: {
+          title: 'Crop Image',
+          buttonUpload: 'Upload',
+        },
+        copyCode: {
+          text: 'Copy',
+          successTips: 'Copied!',
+          failTips: 'Copy failed!',
+        },
+        mermaid: {
+          flow: 'flow',
+          sequence: 'sequence',
+          gantt: 'gantt',
+          class: 'class',
+          state: 'state',
+          pie: 'pie',
+          relationship: 'relationship',
+          journey: 'journey',
+        },
+        katex: {
+          inline: 'inline',
+          block: 'block',
+        },
+        footer: {
+          markdownTotal: 'Word Count',
+          scrollAuto: 'Scroll Auto',
+        },
+      },
+    },
+  },
+});
+
+export default () =&gt; {
+  const [text, setText] = useState('hello md-editor-rt!');
+  const [language] = useState('my-lang');
+
+  return &lt;MdEditor modelValue={text} onChange={setText} language={language} /&gt;;
+};</span><span rn-wrapper aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+        </details>
+      <p data-line="599">You can install the existing language also: <a href="https://github.com/imzbf/md-editor-extension" target="_blank">md-editor-extension</a>. Refer to extension library for the usage and the way to contribute~</p>
+<h3 id="📄 Get Catalogue" tabindex="-1" data-line="601"><a class="header-anchor" href="#📄 Get Catalogue">📄 Get Catalogue</a></h3>
+<ul data-line="603">
+<li data-line="603">
+<p data-line="603">Get</p>
+
+        <details  data-line="605" class="md-editor-code" open="">
+          <summary class="md-editor-code-head">
+            <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
+            <div class="md-editor-code-action">
+              <span class="md-editor-code-lang">jsx</span>
+              <span class="md-editor-copy-button" data-tips="Copy">Copy</span>
+              <span class="md-editor-collapse-tips"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-chevron-left md-editor-icon"><circle cx="12" cy="12" r="10"/><path d="m14 16-4-4 4-4"/></svg></span>
+            </div>
+          </summary>
+          <pre><code class="language-jsx" language=jsx><span class="md-editor-code-block">import { useState } from 'react';
+import { MdEditor } from 'md-editor-rt';
+import 'md-editor-rt/lib/style.css';
+
+export default () =&gt; {
+  const [text, setText] = useState('hello md-editor-rt!');
+  const [catalogList, setList] = useState([]);
+
+  return (
+    &lt;MdEditor modelValue={text} onChange={setText} onGetCatalog={setList} /&gt;
+  );
+};</span><span rn-wrapper aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+        </details>
+      </li>
+<li data-line="620">
+<p data-line="620">Display</p>
+<p data-line="622">Use <code>MdCatalog</code></p>
+
+        <details  data-line="624" class="md-editor-code" open="">
+          <summary class="md-editor-code-head">
+            <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
+            <div class="md-editor-code-action">
+              <span class="md-editor-code-lang">jsx</span>
+              <span class="md-editor-copy-button" data-tips="Copy">Copy</span>
+              <span class="md-editor-collapse-tips"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-chevron-left md-editor-icon"><circle cx="12" cy="12" r="10"/><path d="m14 16-4-4 4-4"/></svg></span>
+            </div>
+          </summary>
+          <pre><code class="language-jsx" language=jsx><span class="md-editor-code-block">import { useState } from 'react';
+import { MdPreview, MdCatalog } from 'md-editor-rt';
+import 'md-editor-rt/lib/preview.css';
+
+const editorId = 'my-editor';
+
+export default () =&gt; {
+  const [state] = useState({
+    text: '# heading',
+    scrollElement: document.documentElement,
+  });
+
+  return (
+    &lt;&gt;
+      &lt;MdPreview modelValue={state.text} id={editorId} /&gt;
+      &lt;MdCatalog editorId={editorId} scrollElement={state.scrollElement} /&gt;
+    &lt;/&gt;
+  );
+};</span><span rn-wrapper aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+        </details>
+      </li>
+</ul>
+<h3 id="🪚 Define Toolbar" tabindex="-1" data-line="646"><a class="header-anchor" href="#🪚 Define Toolbar">🪚 Define Toolbar</a></h3>
+<blockquote data-line="648">
+<p data-line="648">after v1.2.0, You can sort the toolbar as you like, split tools by <code>'-'</code>, the left and right toolbars are divided by <code>'='</code>!</p>
+</blockquote>
+
+        <details  data-line="650" class="md-editor-code" open="">
+          <summary class="md-editor-code-head">
+            <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
+            <div class="md-editor-code-action">
+              <span class="md-editor-code-lang">jsx</span>
+              <span class="md-editor-copy-button" data-tips="Copy">Copy</span>
+              <span class="md-editor-collapse-tips"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-chevron-left md-editor-icon"><circle cx="12" cy="12" r="10"/><path d="m14 16-4-4 4-4"/></svg></span>
+            </div>
+          </summary>
+          <pre><code class="language-jsx" language=jsx><span class="md-editor-code-block">import { useState } from 'react';
+import { MdEditor } from 'md-editor-rt';
+import 'md-editor-rt/lib/style.css';
+
+export default () =&gt; {
+  const [text, setText] = useState('hello md-editor-rt!');
+  const [toolbars] = useState([
+    'italic',
+    'underline',
+    '-',
+    'bold',
+    '=',
+    'github',
+  ]);
+
+  return &lt;MdEditor modelValue={text} onChange={setText} toolbars={toolbars} /&gt;;
+};</span><span rn-wrapper aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+        </details>
+      <h3 id="💪 Customize Toolbar" tabindex="-1" data-line="670"><a class="header-anchor" href="#💪 Customize Toolbar">💪 Customize Toolbar</a></h3>
+<p data-line="672">There are examples of <code>mark</code> and <code>emoji</code>.</p>
+<p data-line="674">To get complete code, refer to <a href="https://github.com/imzbf/md-editor-rt/blob/docs/src/pages/Preview/index.tsx" target="_blank">docs</a>.</p>
+<figure data-line="676"><img src="https://imzbf.github.io/md-editor-rt/imgs/mark_emoji.gif" alt="mark and Emoji extension" class="md-zoom"></figure>
+<blockquote data-line="678">
+<p data-line="678">Get more emojis, go to <a href="https://getemoji.com/" target="_blank">https://getemoji.com/</a>.</p>
+</blockquote>
+<h3 id="🧙‍♂️ Change Styles" tabindex="-1" data-line="680"><a class="header-anchor" href="#🧙‍♂️ Change Styles">🧙‍♂️ Change Styles</a></h3>
+
+        <details  data-line="682" class="md-editor-code" open="">
+          <summary class="md-editor-code-head">
+            <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
+            <div class="md-editor-code-action">
+              <span class="md-editor-code-lang">less</span>
+              <span class="md-editor-copy-button" data-tips="Copy">Copy</span>
+              <span class="md-editor-collapse-tips"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-chevron-left md-editor-icon"><circle cx="12" cy="12" r="10"/><path d="m14 16-4-4 4-4"/></svg></span>
+            </div>
+          </summary>
+          <pre><code class="language-less" language=less><span class="md-editor-code-block">.css-vars(@isDark) {
+  --md-color: if(@isDark, #999, #222);
+  --md-hover-color: if(@isDark, #bbb, #000);
+  --md-bk-color: if(@isDark, #000, #fff);
+  --md-bk-color-outstand: if(@isDark, #333, #f2f2f2);
+  --md-bk-hover-color: if(@isDark, #1b1a1a, #f5f7fa);
+  --md-border-color: if(@isDark, #2d2d2d, #e6e6e6);
+  --md-border-hover-color: if(@isDark, #636262, #b9b9b9);
+  --md-border-active-color: if(@isDark, #777, #999);
+  --md-modal-mask: #00000073;
+  --md-scrollbar-bg-color: if(@isDark, #0f0f0f, #e2e2e2);
+  --md-scrollbar-thumb-color: if(@isDark, #2d2d2d, #0000004d);
+  --md-scrollbar-thumb-hover-color: if(@isDark, #3a3a3a, #00000059);
+  --md-scrollbar-thumb-active-color: if(@isDark, #3a3a3a, #00000061);
+}
+
+.md-editor {
+  .css-vars(false);
+}
+
+.md-editor-dark {
+  .css-vars(true);
+}</span><span rn-wrapper aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+        </details>
+      <p data-line="708">Change background color in dark mode:</p>
+
+        <details  data-line="710" class="md-editor-code" open="">
+          <summary class="md-editor-code-head">
+            <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
+            <div class="md-editor-code-action">
+              <span class="md-editor-code-lang">css</span>
+              <span class="md-editor-copy-button" data-tips="Copy">Copy</span>
+              <span class="md-editor-collapse-tips"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-chevron-left md-editor-icon"><circle cx="12" cy="12" r="10"/><path d="m14 16-4-4 4-4"/></svg></span>
+            </div>
+          </summary>
+          <pre><code class="language-css" language=css><span class="md-editor-code-block">.md-editor-dark {
+  --md-bk-color: #333 !important;
+}</span><span rn-wrapper aria-hidden="true"><span></span><span></span><span></span></span></code></pre>
+
+        </details>
+      <h3 id="🙍🏻‍♂️ Import All Library" tabindex="-1" data-line="716"><a class="header-anchor" href="#🙍🏻‍♂️ Import All Library">🙍🏻‍♂️ Import All Library</a></h3>
+<ol data-line="718">
+<li data-line="718">Install Dependencies</li>
+</ol>
+
+        <details  data-line="720" class="md-editor-code" open="">
+          <summary class="md-editor-code-head">
+            <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
+            <div class="md-editor-code-action">
+              <span class="md-editor-code-lang">shell</span>
+              <span class="md-editor-copy-button" data-tips="Copy">Copy</span>
+              <span class="md-editor-collapse-tips"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-chevron-left md-editor-icon"><circle cx="12" cy="12" r="10"/><path d="m14 16-4-4 4-4"/></svg></span>
+            </div>
+          </summary>
+          <pre><code class="language-shell" language=shell><span class="md-editor-code-block">yarn add screenfull katex cropperjs mermaid highlight.js prettier</span><span rn-wrapper aria-hidden="true"><span></span></span></code></pre>
+
+        </details>
+      <ol start="2" data-line="724">
+<li data-line="724">Configure</li>
+</ol>
+<div data-line="726" class="md-editor-admonition md-editor-admonition-warning">
+<p data-line="728">We recommend configuring it at the project entry point, such as in <code>main.js</code> for projects created with Vite. Avoid calling <code>config</code> within components!</p>
+</div>
+<p data-line="732">main.js</p>
+
+        <details  data-line="734" class="md-editor-code">
+          <summary class="md-editor-code-head">
+            <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
+            <div class="md-editor-code-action">
+              <span class="md-editor-code-lang">js</span>
+              <span class="md-editor-copy-button" data-tips="Copy">Copy</span>
+              <span class="md-editor-collapse-tips"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-chevron-left md-editor-icon"><circle cx="12" cy="12" r="10"/><path d="m14 16-4-4 4-4"/></svg></span>
+            </div>
+          </summary>
+          <pre><code class="language-js" language=js><span class="md-editor-code-block">import { config } from 'md-editor-rt';
+import 'md-editor-rt/lib/style.css';
+
+import screenfull from 'screenfull';
+
+import katex from 'katex';
+import 'katex/dist/katex.min.css';
+
+import Cropper from 'cropperjs';
+import 'cropperjs/dist/cropper.css';
+
+import mermaid from 'mermaid';
+
+import highlight from 'highlight.js';
+import 'highlight.js/styles/atom-one-dark.css';
+
+// &lt;3.0
+import prettier from 'prettier';
+import parserMarkdown from 'prettier/parser-markdown';
+// &gt;=3.0
+import * as prettier from 'prettier';
+import parserMarkdown from 'prettier/plugins/markdown';
+
+config({
+  editorExtensions: {
+    prettier: {
+      prettierInstance: prettier,
+      parserMarkdownInstance: parserMarkdown,
+    },
+    highlight: {
+      instance: highlight,
+    },
+    screenfull: {
+      instance: screenfull,
+    },
+    katex: {
+      instance: katex,
+    },
+    cropper: {
+      instance: Cropper,
+    },
+    mermaid: {
+      instance: mermaid,
+    },
+  },
+});</span><span rn-wrapper aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+        </details>
+      
+        <details  data-line="783" class="md-editor-code" open="">
+          <summary class="md-editor-code-head">
+            <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
+            <div class="md-editor-code-action">
+              <span class="md-editor-code-lang">jsx</span>
+              <span class="md-editor-copy-button" data-tips="Copy">Copy</span>
+              <span class="md-editor-collapse-tips"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-chevron-left md-editor-icon"><circle cx="12" cy="12" r="10"/><path d="m14 16-4-4 4-4"/></svg></span>
+            </div>
+          </summary>
+          <pre><code class="language-jsx" language=jsx><span class="md-editor-code-block">import { MdEditor } from 'md-editor-rt';
+import 'md-editor-rt/lib/style.css';
+
+export default () =&gt; {
+  return &lt;MdEditor modelValue=&quot;&quot; /&gt;;
+};</span><span rn-wrapper aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+        </details>
+      <blockquote data-line="792">
+<p data-line="792">Tips: While import highlight styles by yourself, editor will not be able to change code styles.</p>
+</blockquote>
+<h3 id="🔒 Compile-time Prevention of XSS" tabindex="-1" data-line="794"><a class="header-anchor" href="#🔒 Compile-time Prevention of XSS">🔒 Compile-time Prevention of XSS</a></h3>
+<p data-line="796">Version 5.0 exports the built-in XSS plugin, which is no longer added by default. The exported XSS plugin includes additional tags and attributes on top of the default whitelist:</p>
+
+        <details  data-line="798" class="md-editor-code">
+          <summary class="md-editor-code-head">
+            <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
+            <div class="md-editor-code-action">
+              <span class="md-editor-code-lang">json</span>
+              <span class="md-editor-copy-button" data-tips="Copy">Copy</span>
+              <span class="md-editor-collapse-tips"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-chevron-left md-editor-icon"><circle cx="12" cy="12" r="10"/><path d="m14 16-4-4 4-4"/></svg></span>
+            </div>
+          </summary>
+          <pre><code class="language-json" language=json><span class="md-editor-code-block">{
+  &quot;img&quot;: [&quot;class&quot;],
+  // Task List
+  &quot;input&quot;: [&quot;class&quot;, &quot;disabled&quot;, &quot;type&quot;, &quot;checked&quot;],
+  // Embedded video codes such as YouTube, WeTV, and Bilibili
+  &quot;iframe&quot;: [
+    &quot;class&quot;,
+    &quot;width&quot;,
+    &quot;height&quot;,
+    &quot;src&quot;,
+    &quot;title&quot;,
+    &quot;border&quot;,
+    &quot;frameborder&quot;,
+    &quot;framespacing&quot;,
+    &quot;allow&quot;,
+    &quot;allowfullscreen&quot;
+  ]
+}</span><span rn-wrapper aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+        </details>
+      <h4 id="🔒 Add XSS extension" tabindex="-1" data-line="819"><a class="header-anchor" href="#🔒 Add XSS extension">🔒 Add XSS extension</a></h4>
+
+        <details  data-line="821" class="md-editor-code" open="">
+          <summary class="md-editor-code-head">
+            <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
+            <div class="md-editor-code-action">
+              <span class="md-editor-code-lang">js</span>
+              <span class="md-editor-copy-button" data-tips="Copy">Copy</span>
+              <span class="md-editor-collapse-tips"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-chevron-left md-editor-icon"><circle cx="12" cy="12" r="10"/><path d="m14 16-4-4 4-4"/></svg></span>
+            </div>
+          </summary>
+          <pre><code class="language-js" language=js><span class="md-editor-code-block">import { config, XSSPlugin } from 'md-editor-rt';
+
+config({
+  markdownItPlugins(plugins) {
+    return [
+      ...plugins,
+      {
+        type: 'xss',
+        plugin: XSSPlugin,
+        options: {},
+      },
+    ];
+  },
+});</span><span rn-wrapper aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+        </details>
+      <h4 id="🔏 Modify XSS configuration" tabindex="-1" data-line="838"><a class="header-anchor" href="#🔏 Modify XSS configuration">🔏 Modify XSS configuration</a></h4>
+<p data-line="840">Add a configuration that allows for events where image loading fails</p>
+
+        <details  data-line="842" class="md-editor-code">
+          <summary class="md-editor-code-head">
+            <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
+            <div class="md-editor-code-action">
+              <span class="md-editor-code-lang">js</span>
+              <span class="md-editor-copy-button" data-tips="Copy">Copy</span>
+              <span class="md-editor-collapse-tips"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-chevron-left md-editor-icon"><circle cx="12" cy="12" r="10"/><path d="m14 16-4-4 4-4"/></svg></span>
+            </div>
+          </summary>
+          <pre><code class="language-js" language=js><span class="md-editor-code-block">import { config, XSSPlugin } from 'md-editor-rt';
+// import { getDefaultWhiteList } from 'xss';
+
+config({
+  markdownItPlugins(plugins) {
+    return [
+      ...plugins,
+      {
+        type: 'xss',
+        plugin: XSSPlugin,
+        options: {
+          // Option 1: Extend All by Yourself
+          // xss() {
+          //   return {
+          //     whiteList: Object.assign({}, getDefaultWhiteList(), {
+          //       // If you need to use task list, please keep this configuration
+          //       img: ['class'],
+          //       input: ['class', 'disabled', 'type', 'checked'],
+          //       // If you need to use embedded video code, please keep this configuration
+          //       iframe: [
+          //         'class',
+          //         'width',
+          //         'height',
+          //         'src',
+          //         'title',
+          //         'border',
+          //         'frameborder',
+          //         'framespacing',
+          //         'allow',
+          //         'allowfullscreen'
+          //       ],
+          //       img: ['onerror']
+          //     })
+          //   };
+          // }
+          // Option 2: Add on Top of the Default Whitelist. ^4.15.6
+          extendedWhiteList: {
+            img: ['onerror'],
+          },
+        },
+      },
+    ];
+  },
+});</span><span rn-wrapper aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+        </details>
+      <p data-line="889">More configuration references: <a href="https://github.com/leizongmin/js-xss/tree/master" target="_blank">js-xss</a></p>
+<h3 id="🔒 Prevent XSS after compilation" tabindex="-1" data-line="891"><a class="header-anchor" href="#🔒 Prevent XSS after compilation">🔒 Prevent XSS after compilation</a></h3>
+<p data-line="893">Using <code>sanitize</code> to sanitize <code>html</code>. eg: <code>sanitize-html</code></p>
+
+        <details  data-line="895" class="md-editor-code" open="">
+          <summary class="md-editor-code-head">
+            <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
+            <div class="md-editor-code-action">
+              <span class="md-editor-code-lang">shell</span>
+              <span class="md-editor-copy-button" data-tips="Copy">Copy</span>
+              <span class="md-editor-collapse-tips"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-chevron-left md-editor-icon"><circle cx="12" cy="12" r="10"/><path d="m14 16-4-4 4-4"/></svg></span>
+            </div>
+          </summary>
+          <pre><code class="language-shell" language=shell><span class="md-editor-code-block">yarn add sanitize-html</span><span rn-wrapper aria-hidden="true"><span></span></span></code></pre>
+
+        </details>
+      
+        <details  data-line="899" class="md-editor-code" open="">
+          <summary class="md-editor-code-head">
+            <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
+            <div class="md-editor-code-action">
+              <span class="md-editor-code-lang">jsx</span>
+              <span class="md-editor-copy-button" data-tips="Copy">Copy</span>
+              <span class="md-editor-collapse-tips"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-chevron-left md-editor-icon"><circle cx="12" cy="12" r="10"/><path d="m14 16-4-4 4-4"/></svg></span>
+            </div>
+          </summary>
+          <pre><code class="language-jsx" language=jsx><span class="md-editor-code-block">import { MdEditor } from 'md-editor-rt';
+import 'md-editor-rt/lib/style.css';
+import sanitizeHtml from 'sanitize-html';
+
+const sanitize = (html) =&gt; sanitizeHtml(html);
+
+export default () =&gt; {
+  return &lt;MdEditor sanitize={sanitize} /&gt;;
+};</span><span rn-wrapper aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+        </details>
+      <h3 id="🗂 Folding Document Content" tabindex="-1" data-line="911"><a class="header-anchor" href="#🗂 Folding Document Content">🗂 Folding Document Content</a></h3>
+
+        <details  data-line="913" class="md-editor-code" open="">
+          <summary class="md-editor-code-head">
+            <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
+            <div class="md-editor-code-action">
+              <span class="md-editor-code-lang">js</span>
+              <span class="md-editor-copy-button" data-tips="Copy">Copy</span>
+              <span class="md-editor-collapse-tips"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-chevron-left md-editor-icon"><circle cx="12" cy="12" r="10"/><path d="m14 16-4-4 4-4"/></svg></span>
+            </div>
+          </summary>
+          <pre><code class="language-js" language=js><span class="md-editor-code-block">import { config } from 'md-editor-rt';
+import { foldGutter } from '@codemirror/language';
+import { lineNumbers } from '@codemirror/view';
+
+config({
+  codeMirrorExtensions(_theme, extensions) {
+    return [...extensions, lineNumbers(), foldGutter()];
+  },
+});</span><span rn-wrapper aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+        </details>
+      <h3 id="🏄🏻‍♂️ Open Links In New Window" tabindex="-1" data-line="925"><a class="header-anchor" href="#🏄🏻‍♂️ Open Links In New Window">🏄🏻‍♂️ Open Links In New Window</a></h3>
+<ol data-line="927">
+<li data-line="927">Install additional extensions</li>
+</ol>
+
+        <details  data-line="929" class="md-editor-code" open="">
+          <summary class="md-editor-code-head">
+            <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
+            <div class="md-editor-code-action">
+              <span class="md-editor-code-lang">shell</span>
+              <span class="md-editor-copy-button" data-tips="Copy">Copy</span>
+              <span class="md-editor-collapse-tips"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-chevron-left md-editor-icon"><circle cx="12" cy="12" r="10"/><path d="m14 16-4-4 4-4"/></svg></span>
+            </div>
+          </summary>
+          <pre><code class="language-shell" language=shell><span class="md-editor-code-block">yarn add markdown-it-link-attributes</span><span rn-wrapper aria-hidden="true"><span></span></span></code></pre>
+
+        </details>
+      <ol start="2" data-line="933">
+<li data-line="933">Add extensions to the compiler</li>
+</ol>
+
+        <details  data-line="935" class="md-editor-code">
+          <summary class="md-editor-code-head">
+            <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
+            <div class="md-editor-code-action">
+              <span class="md-editor-code-lang">js</span>
+              <span class="md-editor-copy-button" data-tips="Copy">Copy</span>
+              <span class="md-editor-collapse-tips"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-chevron-left md-editor-icon"><circle cx="12" cy="12" r="10"/><path d="m14 16-4-4 4-4"/></svg></span>
+            </div>
+          </summary>
+          <pre><code class="language-js" language=js><span class="md-editor-code-block">import { config } from 'md-editor-rt';
+import LinkAttr from 'markdown-it-link-attributes';
+// import Anchor from 'markdown-it-anchor';
+
+config({
+  markdownItPlugins(plugins) {
+    return [
+      ...plugins,
+      {
+        type: 'linkAttr',
+        plugin: LinkAttr,
+        options: {
+          matcher(href: string) {
+            // If markdown-it-anchor is used.
+            // Anchor links at the heading should be ignored.
+            return !href.startsWith('#');
+          },
+          attrs: {
+            target: '_blank',
+          },
+        },
+      },
+      // {
+      //   type: 'anchor',
+      //   plugin: Anchor,
+      //   options: {
+      //     permalink: Anchor.permalink.headerLink(),
+      //     slugify(s: string) {
+      //       return s;
+      //     }
+      //   }
+      // }
+    ];
+  },
+});</span><span rn-wrapper aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+        </details>
+      <h3 id="☑️ Toggleable status task list" tabindex="-1" data-line="973"><a class="header-anchor" href="#☑️ Toggleable status task list">☑️ Toggleable status task list</a></h3>
+
+        <details  data-line="975" class="md-editor-code" open="">
+          <summary class="md-editor-code-head">
+            <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
+            <div class="md-editor-code-action">
+              <span class="md-editor-code-lang">js</span>
+              <span class="md-editor-copy-button" data-tips="Copy">Copy</span>
+              <span class="md-editor-collapse-tips"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-chevron-left md-editor-icon"><circle cx="12" cy="12" r="10"/><path d="m14 16-4-4 4-4"/></svg></span>
+            </div>
+          </summary>
+          <pre><code class="language-js" language=js><span class="md-editor-code-block">import { config } from 'md-editor-rt';
+config({
+  markdownItPlugins(plugins, { editorId }) {
+    return plugins.map((item) =&gt; {
+      if (item.type === 'taskList') {
+        return {
+          ...item,
+          options: {
+            ...item.options,
+            enabled: true,
+            // If you just want to enable this feature for a certain editor
+            // enabled: editorId === 'myId'
+          },
+        };
+      }
+      return item;
+    });
+  },
+});</span><span rn-wrapper aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+        </details>
+      
+        <details  data-line="997" class="md-editor-code" open="">
+          <summary class="md-editor-code-head">
+            <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
+            <div class="md-editor-code-action">
+              <span class="md-editor-code-lang">jsx</span>
+              <span class="md-editor-copy-button" data-tips="Copy">Copy</span>
+              <span class="md-editor-collapse-tips"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-chevron-left md-editor-icon"><circle cx="12" cy="12" r="10"/><path d="m14 16-4-4 4-4"/></svg></span>
+            </div>
+          </summary>
+          <pre><code class="language-jsx" language=jsx><span class="md-editor-code-block">&lt;MdEditor id=&quot;myId&quot; modelValue={text} onChange={setText} /&gt;</span><span rn-wrapper aria-hidden="true"><span></span></span></code></pre>
+
+        </details>
+      <h3 id="🎳 co-working" tabindex="-1" data-line="1001"><a class="header-anchor" href="#🎳 co-working">🎳 co-working</a></h3>
+<p data-line="1003">Install <a href="https://github.com/yjs/yjs" target="_blank">yjs</a></p>
+
+        <details  data-line="1005" class="md-editor-code" open="">
+          <summary class="md-editor-code-head">
+            <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
+            <div class="md-editor-code-action">
+              <span class="md-editor-code-lang">shell</span>
+              <span class="md-editor-copy-button" data-tips="Copy">Copy</span>
+              <span class="md-editor-collapse-tips"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-chevron-left md-editor-icon"><circle cx="12" cy="12" r="10"/><path d="m14 16-4-4 4-4"/></svg></span>
+            </div>
+          </summary>
+          <pre><code class="language-shell" language=shell><span class="md-editor-code-block">npm i yjs y-codemirror.next y-websocket</span><span rn-wrapper aria-hidden="true"><span></span></span></code></pre>
+
+        </details>
+      <p data-line="1009">Add the <code>yjs</code> extension in main.js:</p>
+
+        <details  data-line="1011" class="md-editor-code">
+          <summary class="md-editor-code-head">
+            <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
+            <div class="md-editor-code-action">
+              <span class="md-editor-code-lang">js</span>
+              <span class="md-editor-copy-button" data-tips="Copy">Copy</span>
+              <span class="md-editor-collapse-tips"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-chevron-left md-editor-icon"><circle cx="12" cy="12" r="10"/><path d="m14 16-4-4 4-4"/></svg></span>
+            </div>
+          </summary>
+          <pre><code class="language-js" language=js><span class="md-editor-code-block">import { config } from 'md-editor-rt';
+import 'md-editor-rt/lib/style.css';
+
+import * as Y from 'yjs';
+import * as random from 'lib0/random';
+import { yCollab } from 'y-codemirror.next';
+import { WebsocketProvider } from 'y-websocket';
+
+const usercolors = [
+  { color: '#30bced', light: '#30bced33' },
+  { color: '#6eeb83', light: '#6eeb8333' },
+  { color: '#ffbc42', light: '#ffbc4233' },
+  { color: '#ecd444', light: '#ecd44433' },
+  { color: '#ee6352', light: '#ee635233' },
+  { color: '#9ac2c9', light: '#9ac2c933' },
+  { color: '#8acb88', light: '#8acb8833' },
+  { color: '#1be7ff', light: '#1be7ff33' },
+];
+
+// select a random color for this user
+const userColor = usercolors[random.uint32() % usercolors.length];
+
+const ydoc = new Y.Doc();
+const provider = new WebsocketProvider(
+  // Start a websocket server quickly: https://github.com/yjs/y-websocket?tab=readme-ov-file#start-a-y-websocket-server
+  'ws://127.0.0.1:1234',
+  'md-editor-v3-room',
+  ydoc
+);
+const ytext = ydoc.getText('module-name');
+
+const undoManager = new Y.UndoManager(ytext);
+
+provider.awareness.setLocalStateField('user', {
+  name: 'Anonymous ' + Math.floor(Math.random() * 100),
+  color: userColor.color,
+  colorLight: userColor.light,
+});
+
+config({
+  codeMirrorExtensions(_theme, extensions) {
+    return [...extensions, yCollab(ytext, provider.awareness, { undoManager })];
+  },
+});</span><span rn-wrapper aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+        </details>
+      <p data-line="1058">If you want to use it in only one editor, try distinguishing using <code>editorId</code> (<code>^4.20.0</code>):</p>
+
+        <details  data-line="1060" class="md-editor-code" open="">
+          <summary class="md-editor-code-head">
+            <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
+            <div class="md-editor-code-action">
+              <span class="md-editor-code-lang">js</span>
+              <span class="md-editor-copy-button" data-tips="Copy">Copy</span>
+              <span class="md-editor-collapse-tips"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-chevron-left md-editor-icon"><circle cx="12" cy="12" r="10"/><path d="m14 16-4-4 4-4"/></svg></span>
+            </div>
+          </summary>
+          <pre><code class="language-js" language=js><span class="md-editor-code-block">config({
+  codeMirrorExtensions(_theme, extensions, _keyBindings, { editorId }) {
+    return editorId === 'myId'
+      ? [...extensions, yCollab(ytext, provider.awareness, { undoManager })]
+      : extensions;
+  },
+});</span><span rn-wrapper aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+        </details>
+      <h2 id="🧻 Edit This Page" tabindex="-1" data-line="1070"><a class="header-anchor" href="#🧻 Edit This Page">🧻 Edit This Page</a></h2>
+<p data-line="1072"><a href="https://github.com/imzbf/md-editor-rt/blob/dev-docs/public/demo-en-US.md" target="_blank">demo-en-US</a></p>
+</div></div></div></div><div class="catalog"><div class="affix"><div class="md-editor-catalog "></div></div></div></div></div></div><script id="__NEXT_DATA__" type="application/json">{"props":{"pageProps":{}},"page":"/en-US/demo","query":{},"buildId":"WcJGbhp6rehPbUQlXgcVg","assetPrefix":"/md-editor-rt","nextExport":true,"autoExport":true,"isFallback":false,"scriptLoader":[{"src":"//at.alicdn.com/t/c/font_2818624_gbt6qvt9lob.js","strategy":"afterInteractive"}]}</script></body></html>

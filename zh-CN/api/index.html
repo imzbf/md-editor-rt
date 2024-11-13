@@ -1,0 +1,2980 @@
+<!DOCTYPE html><html lang="en-US"><head><meta charSet="utf-8" data-next-head=""/><title data-next-head="">API - MdEditorRT 使用文档</title><meta name="keywords" content="MD Editor, md-editor-rt, Markdown 编辑器, React Markdown, React TSX, Markdown 组件, Markdown preview, React 编辑器" data-next-head=""/><meta name="description" content="md-editor-rt 是一个基于 React 和 TSX 开发的 Markdown 编辑器组件，支持实时预览和丰富的 Markdown 功能。查阅详细的开发文档与使用示例。" data-next-head=""/><meta name="viewport" content="width=device-width, initial-scale=1" data-next-head=""/><link rel="preload" href="/md-editor-rt/_next/static/css/24529bbedc0b046d.css" as="style"/><link rel="stylesheet" href="/md-editor-rt/_next/static/css/24529bbedc0b046d.css" data-n-g=""/><noscript data-n-css=""></noscript><script defer="" nomodule="" src="/md-editor-rt/_next/static/chunks/polyfills-42372ed130431b0a.js"></script><script src="/md-editor-rt/_next/static/chunks/webpack-7628ef4e168316d1.js" defer=""></script><script src="/md-editor-rt/_next/static/chunks/framework-ee340abb9d4be981.js" defer=""></script><script src="/md-editor-rt/_next/static/chunks/main-e0c08bc071d6f2f5.js" defer=""></script><script src="/md-editor-rt/_next/static/chunks/pages/_app-cd3f423b5c83bf88.js" defer=""></script><script src="/md-editor-rt/_next/static/chunks/1581-b21fada013460d1a.js" defer=""></script><script src="/md-editor-rt/_next/static/chunks/pages/zh-CN/api-f7f555eb3bca0db7.js" defer=""></script><script src="/md-editor-rt/_next/static/WcJGbhp6rehPbUQlXgcVg/_buildManifest.js" defer=""></script><script src="/md-editor-rt/_next/static/WcJGbhp6rehPbUQlXgcVg/_ssgManifest.js" defer=""></script></head><body><div id="__next"><header class="page-header"><section class="container"><h1 class="project-name">md-editor-rt<sup>@<!-- -->5.0.0</sup></h1><p class="project-desc">Markdown编辑器React版本，使用jsx和typescript语法开发，支持切换主题、prettier美化文本等。</p><div class="pc"><ul class="nav-list"><li class="nav-item"><a href="/md-editor-rt/zh-CN"><svg class="icon" aria-hidden="true"><use xlink:href="#med-icon-homepage"></use></svg>首页</a></li><li class="nav-item"><a href="/md-editor-rt/zh-CN/api"><svg class="icon" aria-hidden="true"><use xlink:href="#med-icon-api"></use></svg>API</a></li><li class="nav-item"><a href="/md-editor-rt/zh-CN/demo"><svg class="icon" aria-hidden="true"><use xlink:href="#med-icon-example"></use></svg>示例</a></li><li class="nav-item"><a target="_blank" href="https://github.com/imzbf/md-editor-rt"><svg class="icon" aria-hidden="true"><use xlink:href="#med-icon-github"></use></svg>源码</a></li><li class="nav-item"><a href="/md-editor-rt/zh-CN/syntax"><svg class="icon" aria-hidden="true"><use xlink:href="#med-icon-syntax"></use></svg>语法</a></li><li class="nav-item"><a href="/md-editor-rt/zh-CN/contrast"><svg class="icon" aria-hidden="true"><use xlink:href="#med-icon-question"></use></svg>对比</a></li><li class="nav-item"><a href="/md-editor-rt/zh-CN/about"><svg class="icon" aria-hidden="true"><use xlink:href="#med-icon-about"></use></svg>关于</a></li><li class="nav-item"><svg class="icon" aria-hidden="true"><use xlink:href="#med-icon-en"></use></svg>English</li></ul><p class="header-actions"><button class="btn btn-header">默认模式</button><button class="btn btn-header">暗黑模式</button><button class="btn btn-header">预览主题</button><button class="btn btn-header">代码主题</button></p></div><div class="mb"><svg class="icon m-menu-trigger" aria-hidden="true"><use xlink:href="#med-icon-drawer"></use></svg></div></section></header><div class="container"><div class="doc"><div class="content"><div id="md-api-zh" class="md-editor   md-editor-previewOnly"><div id="md-api-zh-preview-wrapper" class="md-editor-preview-wrapper"><div id="md-api-zh-preview" class="md-editor-preview default-theme md-editor-scrn"><blockquote data-line="0">
+<p data-line="0">在线尝试示例：<a href="https://codesandbox.io/s/elated-khorana-65jmr" target="_blank">传送门</a>。</p>
+</blockquote>
+<h2 id="🔖 MdPreview Props" tabindex="-1" data-line="2"><a class="header-anchor" href="#🔖 MdPreview Props">🔖 MdPreview Props</a></h2>
+<p data-line="4">这是预览组件<code>MdPreview</code>的<code>Props</code>，它们同样也是<code>MdEditor</code>的：</p>
+<h3 id="📃 value" tabindex="-1" data-line="6"><a class="header-anchor" href="#📃 value">📃 value</a></h3>
+<ul data-line="8">
+<li data-line="8">
+<p data-line="8"><strong>类型</strong>：<code>string</code></p>
+</li>
+<li data-line="9">
+<p data-line="9"><strong>默认值</strong>：<code>''</code></p>
+<p data-line="11">编辑的内容。</p>
+
+        <details  data-line="13" class="md-editor-code" open="">
+          <summary class="md-editor-code-head">
+            <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
+            <div class="md-editor-code-action">
+              <span class="md-editor-code-lang">jsx</span>
+              <span class="md-editor-copy-button" data-tips="复制代码">复制代码</span>
+              <span class="md-editor-collapse-tips"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-chevron-left md-editor-icon"><circle cx="12" cy="12" r="10"/><path d="m14 16-4-4 4-4"/></svg></span>
+            </div>
+          </summary>
+          <pre><code class="language-jsx" language=jsx><span class="md-editor-code-block">&lt;MdEditor value=&quot;xxx&quot; /&gt;</span><span rn-wrapper aria-hidden="true"><span></span></span></code></pre>
+
+        </details>
+      </li>
+</ul>
+<hr data-line="17">
+<h3 id="📃 modelValue" tabindex="-1" data-line="19"><a class="header-anchor" href="#📃 modelValue">📃 modelValue</a></h3>
+<ul data-line="21">
+<li data-line="21">
+<p data-line="21"><strong>类型</strong>：<code>string</code></p>
+</li>
+<li data-line="22">
+<p data-line="22"><strong>默认值</strong>：<code>''</code></p>
+<p data-line="24">已过时。5.x 版本开始使用 value 替换。</p>
+</li>
+</ul>
+<hr data-line="26">
+<h3 id="🛍 theme" tabindex="-1" data-line="28"><a class="header-anchor" href="#🛍 theme">🛍 theme</a></h3>
+<ul data-line="30">
+<li data-line="30">
+<p data-line="30"><strong>类型</strong>：<code>'light' | 'dark'</code></p>
+</li>
+<li data-line="31">
+<p data-line="31"><strong>默认值</strong>：<code>'light'</code></p>
+<p data-line="33">编辑器主题。</p>
+
+        <details  data-line="35" class="md-editor-code" open="">
+          <summary class="md-editor-code-head">
+            <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
+            <div class="md-editor-code-action">
+              <span class="md-editor-code-lang">jsx</span>
+              <span class="md-editor-copy-button" data-tips="复制代码">复制代码</span>
+              <span class="md-editor-collapse-tips"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-chevron-left md-editor-icon"><circle cx="12" cy="12" r="10"/><path d="m14 16-4-4 4-4"/></svg></span>
+            </div>
+          </summary>
+          <pre><code class="language-jsx" language=jsx><span class="md-editor-code-block">&lt;MdEditor theme=&quot;dark&quot; /&gt;</span><span rn-wrapper aria-hidden="true"><span></span></span></code></pre>
+
+        </details>
+      </li>
+</ul>
+<hr data-line="39">
+<h3 id="🎀 className" tabindex="-1" data-line="41"><a class="header-anchor" href="#🎀 className">🎀 className</a></h3>
+<ul data-line="43">
+<li data-line="43">
+<p data-line="43"><strong>类型</strong>：<code>string</code></p>
+</li>
+<li data-line="44">
+<p data-line="44"><strong>默认值</strong>：<code>''</code></p>
+<p data-line="46">...</p>
+</li>
+</ul>
+<hr data-line="48">
+<h3 id="🔤 language" tabindex="-1" data-line="50"><a class="header-anchor" href="#🔤 language">🔤 language</a></h3>
+<ul data-line="52">
+<li data-line="52">
+<p data-line="52"><strong>类型</strong>：<code>string</code></p>
+</li>
+<li data-line="53">
+<p data-line="53"><strong>默认值</strong>：<code>'zh-CN'</code></p>
+<p data-line="55">内置中英文(<code>'zh-CN'</code>, <code>'en-US'</code>)，可自行扩展其他语言，同时可覆盖内置的中英文。</p>
+<p data-line="57">你也可以使用现成的扩展语言：<a href="https://github.com/imzbf/md-editor-extension" target="_blank">md-editor-extension</a>。使用及贡献方式见扩展库文档~</p>
+</li>
+</ul>
+<hr data-line="59">
+<h3 id="🎲 editorId" tabindex="-1" data-line="61"><a class="header-anchor" href="#🎲 editorId">🎲 editorId</a></h3>
+<ul data-line="63">
+<li data-line="63">
+<p data-line="63"><strong>类型</strong>：<code>string</code></p>
+</li>
+<li data-line="64">
+<p data-line="64"><strong>默认值</strong>：<code>'md-editor-r\d'</code></p>
+<p data-line="66">已过时。5.x 版本开始使用 id 替换。</p>
+<p data-line="68">编辑器唯一标识，使用默认前缀和<code>useId</code>拼接。<s>当使用服务端渲染时，请务必设置该属性为固定值，防止产生服务端与客户端渲染内容不一致错误提示。</s>，5.0 开始没有该限制。</p>
+</li>
+</ul>
+<hr data-line="70">
+<h3 id="🎲 id" tabindex="-1" data-line="72"><a class="header-anchor" href="#🎲 id">🎲 id</a></h3>
+<ul data-line="74">
+<li data-line="74">
+<p data-line="74"><strong>类型</strong>：<code>string</code></p>
+</li>
+<li data-line="75">
+<p data-line="75"><strong>默认值</strong>：<code>'md-editor-r\d'</code></p>
+<p data-line="77">编辑器唯一标识，使用默认前缀和<code>useId</code>拼接。</p>
+</li>
+</ul>
+<hr data-line="79">
+<h3 id="🔢 showCodeRowNumber" tabindex="-1" data-line="81"><a class="header-anchor" href="#🔢 showCodeRowNumber">🔢 showCodeRowNumber</a></h3>
+<ul data-line="83">
+<li data-line="83">
+<p data-line="83"><strong>类型</strong>：<code>boolean</code></p>
+</li>
+<li data-line="84">
+<p data-line="84"><strong>默认值</strong>：<code>true</code></p>
+<p data-line="86">代码块是否显示行号。</p>
+</li>
+</ul>
+<hr data-line="88">
+<h3 id="🔦 previewTheme" tabindex="-1" data-line="90"><a class="header-anchor" href="#🔦 previewTheme">🔦 previewTheme</a></h3>
+<ul data-line="92">
+<li data-line="92">
+<p data-line="92"><strong>类型</strong>：<code>'default' | 'github' | 'vuepress' | 'mk-cute' | 'smart-blue' | 'cyanosis'</code></p>
+</li>
+<li data-line="93">
+<p data-line="93"><strong>默认值</strong>：<code>'default'</code></p>
+<p data-line="95">预览内容主题，支持自定义。</p>
+<p data-line="97">主题自定义方式：</p>
+<ol data-line="99">
+<li data-line="99">编辑 css</li>
+</ol>
+
+        <details  data-line="101" class="md-editor-code" open="">
+          <summary class="md-editor-code-head">
+            <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
+            <div class="md-editor-code-action">
+              <span class="md-editor-code-lang">css</span>
+              <span class="md-editor-copy-button" data-tips="复制代码">复制代码</span>
+              <span class="md-editor-collapse-tips"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-chevron-left md-editor-icon"><circle cx="12" cy="12" r="10"/><path d="m14 16-4-4 4-4"/></svg></span>
+            </div>
+          </summary>
+          <pre><code class="language-css" language=css><span class="md-editor-code-block">.xxx-theme {
+  color: red;
+}</span><span rn-wrapper aria-hidden="true"><span></span><span></span><span></span></span></code></pre>
+
+        </details>
+      <ol start="2" data-line="107">
+<li data-line="107">设置<code>previewTheme</code></li>
+</ol>
+
+        <details  data-line="109" class="md-editor-code" open="">
+          <summary class="md-editor-code-head">
+            <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
+            <div class="md-editor-code-action">
+              <span class="md-editor-code-lang">jsx</span>
+              <span class="md-editor-copy-button" data-tips="复制代码">复制代码</span>
+              <span class="md-editor-collapse-tips"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-chevron-left md-editor-icon"><circle cx="12" cy="12" r="10"/><path d="m14 16-4-4 4-4"/></svg></span>
+            </div>
+          </summary>
+          <pre><code class="language-jsx" language=jsx><span class="md-editor-code-block">&lt;MdEditor previewTheme=&quot;xxx&quot; /&gt;</span><span rn-wrapper aria-hidden="true"><span></span></span></code></pre>
+
+        </details>
+      <p data-line="113">参考<a href="https://github.com/imzbf/markdown-theme" target="_blank">markdown-theme</a>项目。</p>
+</li>
+</ul>
+<hr data-line="115">
+<h3 id="🎅🏻 style" tabindex="-1" data-line="117"><a class="header-anchor" href="#🎅🏻 style">🎅🏻 style</a></h3>
+<ul data-line="119">
+<li data-line="119">
+<p data-line="119"><strong>类型</strong>：<code>CSSProperties</code></p>
+</li>
+<li data-line="120">
+<p data-line="120"><strong>默认值</strong>：<code>{}</code></p>
+<p data-line="122">编辑器内联样式。</p>
+</li>
+</ul>
+<hr data-line="124">
+<h3 id="☝️ noMermaid" tabindex="-1" data-line="126"><a class="header-anchor" href="#☝️ noMermaid">☝️ noMermaid</a></h3>
+<ul data-line="128">
+<li data-line="128">
+<p data-line="128"><strong>类型</strong>：<code>boolean</code></p>
+</li>
+<li data-line="129">
+<p data-line="129"><strong>默认值</strong>：<code>false</code></p>
+<p data-line="131">如果你不希望使用图表展示内容，可以设置关闭。</p>
+</li>
+</ul>
+
+        <details  data-line="133" class="md-editor-code" open="">
+          <summary class="md-editor-code-head">
+            <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
+            <div class="md-editor-code-action">
+              <span class="md-editor-code-lang">jsx</span>
+              <span class="md-editor-copy-button" data-tips="复制代码">复制代码</span>
+              <span class="md-editor-collapse-tips"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-chevron-left md-editor-icon"><circle cx="12" cy="12" r="10"/><path d="m14 16-4-4 4-4"/></svg></span>
+            </div>
+          </summary>
+          <pre><code class="language-jsx" language=jsx><span class="md-editor-code-block">&lt;MdEditor noMermaid /&gt;</span><span rn-wrapper aria-hidden="true"><span></span></span></code></pre>
+
+        </details>
+      <hr data-line="137">
+<h3 id="❌ noKatex" tabindex="-1" data-line="139"><a class="header-anchor" href="#❌ noKatex">❌ noKatex</a></h3>
+<ul data-line="141">
+<li data-line="141">
+<p data-line="141"><strong>类型</strong>：<code>boolean</code></p>
+</li>
+<li data-line="142">
+<p data-line="142"><strong>默认值</strong>：<code>false</code></p>
+<p data-line="144">如果你不希望使用数学公式展示内容，可以设置关闭。</p>
+</li>
+</ul>
+
+        <details  data-line="146" class="md-editor-code" open="">
+          <summary class="md-editor-code-head">
+            <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
+            <div class="md-editor-code-action">
+              <span class="md-editor-code-lang">jsx</span>
+              <span class="md-editor-copy-button" data-tips="复制代码">复制代码</span>
+              <span class="md-editor-collapse-tips"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-chevron-left md-editor-icon"><circle cx="12" cy="12" r="10"/><path d="m14 16-4-4 4-4"/></svg></span>
+            </div>
+          </summary>
+          <pre><code class="language-jsx" language=jsx><span class="md-editor-code-block">&lt;MdEditor noKatex /&gt;</span><span rn-wrapper aria-hidden="true"><span></span></span></code></pre>
+
+        </details>
+      <hr data-line="150">
+<h3 id="🦉 codeTheme" tabindex="-1" data-line="152"><a class="header-anchor" href="#🦉 codeTheme">🦉 codeTheme</a></h3>
+<ul data-line="154">
+<li data-line="154">
+<p data-line="154"><strong>类型</strong>：<code>'atom'|'a11y'|'github'|'gradient'|'kimbie'|'paraiso'|'qtcreator'|'stackoverflow'</code></p>
+</li>
+<li data-line="155">
+<p data-line="155"><strong>默认值</strong>：<code>'atom'</code></p>
+<p data-line="157">代码块高亮样式名称。</p>
+<p data-line="159">你可以添加自己的样式，把该属性设置为你想要的即可，方式如下：</p>
+<ol data-line="161">
+<li data-line="161">配置样式链接</li>
+</ol>
+
+        <details  data-line="163" class="md-editor-code" open="">
+          <summary class="md-editor-code-head">
+            <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
+            <div class="md-editor-code-action">
+              <span class="md-editor-code-lang">js</span>
+              <span class="md-editor-copy-button" data-tips="复制代码">复制代码</span>
+              <span class="md-editor-collapse-tips"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-chevron-left md-editor-icon"><circle cx="12" cy="12" r="10"/><path d="m14 16-4-4 4-4"/></svg></span>
+            </div>
+          </summary>
+          <pre><code class="language-js" language=js><span class="md-editor-code-block">import { config } from 'md-editor-rt';
+
+config({
+  editorExtensions: {
+    highlight: {
+      css: {
+        atom: {
+          light:
+            'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/styles/atom-one-light.min.css',
+          dark: 'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/styles/atom-one-dark.min.css',
+        },
+        xxx: {
+          light:
+            'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/styles/xxx-light.css',
+          dark: 'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/styles/xxx-dark.css',
+        },
+      },
+    },
+  },
+});</span><span rn-wrapper aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+        </details>
+      <ol start="2" data-line="186">
+<li data-line="186">设置<code>codeTheme</code></li>
+</ol>
+
+        <details  data-line="188" class="md-editor-code" open="">
+          <summary class="md-editor-code-head">
+            <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
+            <div class="md-editor-code-action">
+              <span class="md-editor-code-lang">jsx</span>
+              <span class="md-editor-copy-button" data-tips="复制代码">复制代码</span>
+              <span class="md-editor-collapse-tips"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-chevron-left md-editor-icon"><circle cx="12" cy="12" r="10"/><path d="m14 16-4-4 4-4"/></svg></span>
+            </div>
+          </summary>
+          <pre><code class="language-jsx" language=jsx><span class="md-editor-code-block">&lt;MdEditor codeTheme=&quot;xxx&quot; /&gt;</span><span rn-wrapper aria-hidden="true"><span></span></span></code></pre>
+
+        </details>
+      </li>
+</ul>
+<hr data-line="192">
+<h3 id="🎱 mdHeadingId" tabindex="-1" data-line="194"><a class="header-anchor" href="#🎱 mdHeadingId">🎱 mdHeadingId</a></h3>
+<ul data-line="196">
+<li data-line="196">
+<p data-line="196"><strong>类型</strong>：<code>(text: string, level: number, index: number) =&gt; string</code></p>
+</li>
+<li data-line="197">
+<p data-line="197"><strong>默认值</strong>：<code>(text) =&gt; text</code></p>
+<p data-line="199">构造标题<code>ID</code>的生成方式。</p>
+
+        <details  data-line="201" class="md-editor-code" open="">
+          <summary class="md-editor-code-head">
+            <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
+            <div class="md-editor-code-action">
+              <span class="md-editor-code-lang">jsx</span>
+              <span class="md-editor-copy-button" data-tips="复制代码">复制代码</span>
+              <span class="md-editor-collapse-tips"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-chevron-left md-editor-icon"><circle cx="12" cy="12" r="10"/><path d="m14 16-4-4 4-4"/></svg></span>
+            </div>
+          </summary>
+          <pre><code class="language-jsx" language=jsx><span class="md-editor-code-block">import { MdEditor } from 'md-editor-rt';
+import 'md-editor-rt/lib/style.css';
+
+const mdHeadingId = (_text, _level, index) =&gt; `heading-${index}`;
+
+export default () =&gt; {
+  return &lt;MdEditor mdHeadingId={mdHeadingId} /&gt;;
+};</span><span rn-wrapper aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+        </details>
+      </li>
+</ul>
+<hr data-line="212">
+<h3 id="🐣 sanitize" tabindex="-1" data-line="214"><a class="header-anchor" href="#🐣 sanitize">🐣 sanitize</a></h3>
+<ul data-line="216">
+<li data-line="216">
+<p data-line="216"><strong>类型</strong>：<code>(html: string) =&gt; string</code></p>
+</li>
+<li data-line="217">
+<p data-line="217"><strong>默认值</strong>：<code>(html) =&gt; html</code></p>
+<p data-line="219">通过该属性修改编译后的 html 内容</p>
+<div data-line="221" class="md-editor-admonition md-editor-admonition-warning">
+<p data-line="223">该属性为保留属性</p>
+<p data-line="225">基本的危险代码处理方案在 3.x 以后已内置，例如<code>&lt;script&gt;alert(123)&lt;/script&gt;</code>，4.11.3 之前建议使用该属性来清理更复杂的内容以防止 XSS。</p>
+<p data-line="227">在 4.11.3 以后实现了更完善的处理方案，<a href="https://imzbf.github.io/md-editor-rt/zh-CN/demo#%F0%9F%94%8F%20%E4%BF%AE%E6%94%B9%20xss%20%E9%85%8D%E7%BD%AE" target="_blank">参考</a></p>
+</div>
+<p data-line="231">使用<code>sanitize-html</code>演示</p>
+
+        <details  data-line="233" class="md-editor-code" open="">
+          <summary class="md-editor-code-head">
+            <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
+            <div class="md-editor-code-action">
+              <span class="md-editor-code-lang">jsx</span>
+              <span class="md-editor-copy-button" data-tips="复制代码">复制代码</span>
+              <span class="md-editor-collapse-tips"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-chevron-left md-editor-icon"><circle cx="12" cy="12" r="10"/><path d="m14 16-4-4 4-4"/></svg></span>
+            </div>
+          </summary>
+          <pre><code class="language-jsx" language=jsx><span class="md-editor-code-block">import sanitizeHtml from 'sanitize-html';
+import { MdEditor } from 'md-editor-rt';
+import 'md-editor-rt/lib/style.css';
+
+const sanitize = (html) =&gt; sanitizeHtml(html);
+
+export default () =&gt; {
+  return &lt;MdEditor sanitize={sanitize} /&gt;;
+};</span><span rn-wrapper aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+        </details>
+      </li>
+</ul>
+<hr data-line="245">
+<h3 id="💅 formatCopiedText" tabindex="-1" data-line="247"><a class="header-anchor" href="#💅 formatCopiedText">💅 formatCopiedText</a></h3>
+<ul data-line="249">
+<li data-line="249">
+<p data-line="249"><strong>类型</strong>：<code>(text: string) =&gt; string</code></p>
+</li>
+<li data-line="250">
+<p data-line="250"><strong>默认值</strong>：<code>(text) =&gt; text</code></p>
+<p data-line="252">格式化复制代码</p>
+
+        <details  data-line="254" class="md-editor-code" open="">
+          <summary class="md-editor-code-head">
+            <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
+            <div class="md-editor-code-action">
+              <span class="md-editor-code-lang">jsx</span>
+              <span class="md-editor-copy-button" data-tips="复制代码">复制代码</span>
+              <span class="md-editor-collapse-tips"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-chevron-left md-editor-icon"><circle cx="12" cy="12" r="10"/><path d="m14 16-4-4 4-4"/></svg></span>
+            </div>
+          </summary>
+          <pre><code class="language-jsx" language=jsx><span class="md-editor-code-block">import { MdEditor } from 'md-editor-rt';
+import 'md-editor-rt/lib/style.css';
+
+const formatCopiedText = (text: string) =&gt; {
+  return `${text}  - from md-editor-rt`;
+};
+
+export default () =&gt; {
+  return &lt;MdEditor formatCopiedText={formatCopiedText} /&gt;;
+};</span><span rn-wrapper aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+        </details>
+      </li>
+</ul>
+<hr data-line="267">
+<h3 id="🛁 codeStyleReverse" tabindex="-1" data-line="269"><a class="header-anchor" href="#🛁 codeStyleReverse">🛁 codeStyleReverse</a></h3>
+<ul data-line="271">
+<li data-line="271">
+<p data-line="271"><strong>类型</strong>：<code>boolean</code></p>
+</li>
+<li data-line="272">
+<p data-line="272"><strong>默认值</strong>：<code>true</code></p>
+<p data-line="274">某些预览主题的代码模块背景是暗色系，将这个属性设置为 true，会自动在该主题下的 light 模式下使用暗色系的代码风格。</p>
+</li>
+</ul>
+<hr data-line="276">
+<h3 id="🧼 codeStyleReverseList" tabindex="-1" data-line="278"><a class="header-anchor" href="#🧼 codeStyleReverseList">🧼 codeStyleReverseList</a></h3>
+<ul data-line="280">
+<li data-line="280">
+<p data-line="280"><strong>类型</strong>：<code>Array</code></p>
+</li>
+<li data-line="281">
+<p data-line="281"><strong>默认值</strong>：<code>['default', 'mk-cute']</code></p>
+<p data-line="283">需要自动调整的预览主题，已默认包含 default、mk-cute。</p>
+</li>
+</ul>
+<hr data-line="285">
+<h3 id="🕊 noHighlight" tabindex="-1" data-line="287"><a class="header-anchor" href="#🕊 noHighlight">🕊 noHighlight</a></h3>
+<ul data-line="289">
+<li data-line="289">
+<p data-line="289"><strong>类型</strong>：<code>boolean</code></p>
+</li>
+<li data-line="290">
+<p data-line="290"><strong>默认值</strong>：<code>false</code></p>
+<p data-line="292">不高亮代码，也不会加载相应的扩展库</p>
+</li>
+</ul>
+<hr data-line="294">
+<h3 id="🕊 noImgZoomIn" tabindex="-1" data-line="296"><a class="header-anchor" href="#🕊 noImgZoomIn">🕊 noImgZoomIn</a></h3>
+<ul data-line="298">
+<li data-line="298">
+<p data-line="298"><strong>类型</strong>：<code>boolean</code></p>
+</li>
+<li data-line="299">
+<p data-line="299"><strong>默认值</strong>：<code>false</code></p>
+<p data-line="301">是否关闭编辑器默认的放大功能。</p>
+
+        <details  data-line="303" class="md-editor-code" open="">
+          <summary class="md-editor-code-head">
+            <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
+            <div class="md-editor-code-action">
+              <span class="md-editor-code-lang">html</span>
+              <span class="md-editor-copy-button" data-tips="复制代码">复制代码</span>
+              <span class="md-editor-collapse-tips"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-chevron-left md-editor-icon"><circle cx="12" cy="12" r="10"/><path d="m14 16-4-4 4-4"/></svg></span>
+            </div>
+          </summary>
+          <pre><code class="language-html" language=html><span class="md-editor-code-block">&lt;MdEditor noImgZoomIn /&gt;</span><span rn-wrapper aria-hidden="true"><span></span></span></code></pre>
+
+        </details>
+      <p data-line="307">在<code>4.15.4</code>以后，也可以设置<code>.not-zoom</code>来禁用它</p>
+
+        <details  data-line="309" class="md-editor-code" open="">
+          <summary class="md-editor-code-head">
+            <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
+            <div class="md-editor-code-action">
+              <span class="md-editor-code-lang">markdown</span>
+              <span class="md-editor-copy-button" data-tips="复制代码">复制代码</span>
+              <span class="md-editor-collapse-tips"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-chevron-left md-editor-icon"><circle cx="12" cy="12" r="10"/><path d="m14 16-4-4 4-4"/></svg></span>
+            </div>
+          </summary>
+          <pre><code class="language-markdown" language=markdown><span class="md-editor-code-block">&lt;img class=&quot;not-zoom&quot;&gt;</span><span rn-wrapper aria-hidden="true"><span></span></span></code></pre>
+
+        </details>
+      </li>
+</ul>
+<hr data-line="313">
+<h3 id="😬 customIcon" tabindex="-1" data-line="315"><a class="header-anchor" href="#😬 customIcon">😬 customIcon</a></h3>
+<ul data-line="317">
+<li data-line="317">
+<p data-line="317"><strong>类型</strong>：<code>CustomIcon</code></p>
+</li>
+<li data-line="318">
+<p data-line="318"><strong>默认值</strong>：<code>{}</code></p>
+<p data-line="320">自定义的图标</p>
+<div data-line="322" class="md-editor-admonition md-editor-admonition-warning">
+<p data-line="322" class="md-editor-admonition-title">类型提示</p>
+<p data-line="324">copy、collapse-tips 对应的图标只能是字符串，其他的都可以是组件或者字符串</p>
+</div>
+
+        <details  data-line="328" class="md-editor-code" open="">
+          <summary class="md-editor-code-head">
+            <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
+            <div class="md-editor-code-action">
+              <span class="md-editor-code-lang">tsx</span>
+              <span class="md-editor-copy-button" data-tips="复制代码">复制代码</span>
+              <span class="md-editor-collapse-tips"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-chevron-left md-editor-icon"><circle cx="12" cy="12" r="10"/><path d="m14 16-4-4 4-4"/></svg></span>
+            </div>
+          </summary>
+          <pre><code class="language-tsx" language=tsx><span class="md-editor-code-block">import React from 'react';
+import type { CustomIcon } from 'md-editor-rt';
+import { MdEditor, StrIcon } from 'md-editor-rt';
+// 假设你使用了三方图标库或者自定义了图标组件
+import { IconFont } from 'tdesign-icons-react';
+import 'md-editor-rt/lib/style.css';
+
+const customIcon: CustomIcon = {
+  bold: {
+    component: 'A',
+  },
+  // 演示使用默认图标复制内容
+  copy: StrIcon('copy', {}),
+  // copy: '&lt;i class=&quot;fa fa-car&quot;&gt;&lt;/i&gt;',
+  // 'collapse-tips': '&lt;i class=&quot;fa fa-car&quot;&gt;&lt;/i&gt;',
+  preview: {
+    component: '&lt;i class=&quot;fa fa-car&quot;&gt;&lt;/i&gt;',
+  },
+  github: {
+    component: IconFont,
+    props: {
+      name: 'sneer',
+    },
+  },
+};
+
+export default () =&gt; {
+  return &lt;MdEditor modelValue=&quot;&quot; customIcon={customIcon} /&gt;;
+};</span><span rn-wrapper aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+        </details>
+      <p data-line="360">类型<code>CustomIcon</code></p>
+
+        <details  data-line="362" class="md-editor-code">
+          <summary class="md-editor-code-head">
+            <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
+            <div class="md-editor-code-action">
+              <span class="md-editor-code-lang">ts</span>
+              <span class="md-editor-copy-button" data-tips="复制代码">复制代码</span>
+              <span class="md-editor-collapse-tips"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-chevron-left md-editor-icon"><circle cx="12" cy="12" r="10"/><path d="m14 16-4-4 4-4"/></svg></span>
+            </div>
+          </summary>
+          <pre><code class="language-ts" language=ts><span class="md-editor-code-block">type IconName =
+  | 'bold'
+  | 'underline'
+  | 'italic'
+  | 'strike-through'
+  | 'title'
+  | 'sub'
+  | 'sup'
+  | 'quote'
+  | 'unordered-list'
+  | 'ordered-list'
+  | 'task'
+  | 'code-row'
+  | 'code'
+  | 'link'
+  | 'image'
+  | 'table'
+  | 'revoke'
+  | 'next'
+  | 'save'
+  | 'prettier'
+  | 'minimize'
+  | 'maximize'
+  | 'fullscreen-exit'
+  | 'fullscreen'
+  | 'preview-only'
+  | 'preview'
+  | 'preview-html'
+  | 'catalog'
+  | 'github'
+  | 'mermaid'
+  | 'formula'
+  | 'close'
+  | 'delete'
+  | 'upload'
+  | 'collapse-tips';
+
+type CustomIcon = {
+  [key in IconName]?: {
+    component: Component | JSX.Element | string;
+    props: {
+      [key: string | number | symbol]: any;
+    };
+  };
+} &amp; {
+  copy?: string;
+};</span><span rn-wrapper aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+        </details>
+      </li>
+</ul>
+<hr data-line="412">
+<h3 id="🕊 sanitizeMermaid" tabindex="-1" data-line="414"><a class="header-anchor" href="#🕊 sanitizeMermaid">🕊 sanitizeMermaid</a></h3>
+<ul data-line="416">
+<li data-line="416">
+<p data-line="416"><strong>类型</strong>：<code>(h: string) =&gt; Promise&lt;string&gt;</code></p>
+</li>
+<li data-line="417">
+<p data-line="417"><strong>默认值</strong>：<code>(h: string) =&gt; Promise.resolve(h)</code></p>
+<p data-line="419">转换生成的 mermaid 代码</p>
+</li>
+</ul>
+<hr data-line="421">
+<h3 id="🕹 codeFoldable" tabindex="-1" data-line="423"><a class="header-anchor" href="#🕹 codeFoldable">🕹 codeFoldable</a></h3>
+<ul data-line="425">
+<li data-line="425">
+<p data-line="425"><strong>类型</strong>：<code>boolean</code></p>
+</li>
+<li data-line="426">
+<p data-line="426"><strong>默认值</strong>：<code>true</code></p>
+<p data-line="428">是否开启折叠代码功能</p>
+</li>
+</ul>
+<hr data-line="430">
+<h3 id="⏲ autoFoldThreshold" tabindex="-1" data-line="432"><a class="header-anchor" href="#⏲ autoFoldThreshold">⏲ autoFoldThreshold</a></h3>
+<ul data-line="434">
+<li data-line="434">
+<p data-line="434"><strong>类型</strong>：<code>number</code></p>
+</li>
+<li data-line="435">
+<p data-line="435"><strong>默认值</strong>：<code>30</code></p>
+<p data-line="437">触发自动折叠代码的行数阈值</p>
+</li>
+</ul>
+<hr data-line="439">
+<h2 id="🔩 MdEditor Props" tabindex="-1" data-line="441"><a class="header-anchor" href="#🔩 MdEditor Props">🔩 MdEditor Props</a></h2>
+<p data-line="443">除去和<code>MdPreivew</code>相同的以外：</p>
+<h3 id="💻 pageFullscreen" tabindex="-1" data-line="445"><a class="header-anchor" href="#💻 pageFullscreen">💻 pageFullscreen</a></h3>
+<ul data-line="447">
+<li data-line="447">
+<p data-line="447"><strong>类型</strong>：<code>boolean</code></p>
+</li>
+<li data-line="448">
+<p data-line="448"><strong>默认值</strong>：<code>false</code></p>
+<p data-line="450">页面内全屏。</p>
+</li>
+</ul>
+<hr data-line="452">
+<h3 id="📱 preview" tabindex="-1" data-line="454"><a class="header-anchor" href="#📱 preview">📱 preview</a></h3>
+<ul data-line="456">
+<li data-line="456">
+<p data-line="456"><strong>类型</strong>：<code>boolean</code></p>
+</li>
+<li data-line="457">
+<p data-line="457"><strong>默认值</strong>：<code>true</code></p>
+<p data-line="459">是否显示预览。</p>
+</li>
+</ul>
+<hr data-line="461">
+<h3 id="📀 htmlPreview" tabindex="-1" data-line="463"><a class="header-anchor" href="#📀 htmlPreview">📀 htmlPreview</a></h3>
+<ul data-line="465">
+<li data-line="465">
+<p data-line="465"><strong>类型</strong>：<code>boolean</code></p>
+</li>
+<li data-line="466">
+<p data-line="466"><strong>默认值</strong>：<code>false</code></p>
+<p data-line="468">是否显示 html 预览。当设置为<code>true</code>时，需要将<code>preview</code>设置为<code>false</code></p>
+
+        <details  data-line="470" class="md-editor-code" open="">
+          <summary class="md-editor-code-head">
+            <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
+            <div class="md-editor-code-action">
+              <span class="md-editor-code-lang">jsx</span>
+              <span class="md-editor-copy-button" data-tips="复制代码">复制代码</span>
+              <span class="md-editor-collapse-tips"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-chevron-left md-editor-icon"><circle cx="12" cy="12" r="10"/><path d="m14 16-4-4 4-4"/></svg></span>
+            </div>
+          </summary>
+          <pre><code class="language-jsx" language=jsx><span class="md-editor-code-block">&lt;MdEditor htmlPreview preview={false} /&gt;</span><span rn-wrapper aria-hidden="true"><span></span></span></code></pre>
+
+        </details>
+      </li>
+</ul>
+<hr data-line="474">
+<h3 id="🧱 toolbars" tabindex="-1" data-line="476"><a class="header-anchor" href="#🧱 toolbars">🧱 toolbars</a></h3>
+<ul data-line="478">
+<li data-line="478">
+<p data-line="478"><strong>类型</strong>：<code>Array</code></p>
+</li>
+<li data-line="479">
+<p data-line="479"><strong>默认值</strong>：<code>[all]</code></p>
+<p data-line="481">选择性展示工具栏，可选内容见下方。</p>
+<p data-line="483">你可以随意排序工具栏，通过<code>'-'</code>分割两个工具，通过<code>'='</code>实现左右放置！</p>
+<p data-line="485"><em>[all]</em></p>
+
+        <details  data-line="487" class="md-editor-code">
+          <summary class="md-editor-code-head">
+            <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
+            <div class="md-editor-code-action">
+              <span class="md-editor-code-lang">js</span>
+              <span class="md-editor-copy-button" data-tips="复制代码">复制代码</span>
+              <span class="md-editor-collapse-tips"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-chevron-left md-editor-icon"><circle cx="12" cy="12" r="10"/><path d="m14 16-4-4 4-4"/></svg></span>
+            </div>
+          </summary>
+          <pre><code class="language-js" language=js><span class="md-editor-code-block">[
+  'bold',
+  'underline',
+  'italic',
+  '-',
+  'strikeThrough',
+  'sub',
+  'sup',
+  'quote',
+  'unorderedList',
+  'orderedList',
+  'task',
+  '-',
+  'codeRow',
+  'code',
+  'link',
+  'image',
+  'table',
+  'mermaid',
+  'katex',
+  '-',
+  'revoke',
+  'next',
+  'save',
+  '=',
+  'pageFullscreen',
+  'fullscreen',
+  'preview',
+  'previewOnly',
+  'htmlPreview',
+  'catalog',
+  'github',
+];
+
+// 对应功能名称
+[
+  '加粗',
+  '下划线',
+  '斜体',
+  '删除线',
+  '下标',
+  '上标',
+  '引用',
+  '无序列表',
+  '有序列表',
+  '任务',
+  '行内代码',
+  '块级代码',
+  '链接',
+  '图片',
+  '表格',
+  '图表',
+  '公式',
+  '后退一步',
+  '前进一步',
+  '保存',
+  '页面内全屏',
+  '屏幕全屏',
+  '内容预览',
+  'html代码预览',
+  '目录',
+  '源码地址',
+];</span><span rn-wrapper aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+        </details>
+      </li>
+</ul>
+<hr data-line="553">
+<h3 id="🧱 toolbarsExclude" tabindex="-1" data-line="555"><a class="header-anchor" href="#🧱 toolbarsExclude">🧱 toolbarsExclude</a></h3>
+<ul data-line="557">
+<li data-line="557">
+<p data-line="557"><strong>类型</strong>：<code>Array</code></p>
+</li>
+<li data-line="558">
+<p data-line="558"><strong>默认值</strong>：<code>[]</code></p>
+<p data-line="560">选择性不展示工具栏，内容同上。</p>
+</li>
+</ul>
+<hr data-line="562">
+<h3 id="💪 defToolbars" tabindex="-1" data-line="564"><a class="header-anchor" href="#💪 defToolbars">💪 defToolbars</a></h3>
+<ul data-line="566">
+<li data-line="566">
+<p data-line="566"><strong>类型</strong>：<code>Array&lt;ReactNode&gt;</code></p>
+</li>
+<li data-line="567">
+<p data-line="567"><strong>默认值</strong>：<code>[]</code></p>
+<p data-line="569">自定义工具栏插槽，通过使用内置的<code>NormalToolbar</code>普通点击触发事件组件，<code>DropdownToolbar</code>下拉点击触发事件组件，和<code>ModalToolbar</code>弹窗组件进行扩展。将<code>defToolbars</code>插槽中的组件下标穿插在<code>toolbars</code>实现展示（这并不规范）</p>
+
+        <details  data-line="571" class="md-editor-code" open="">
+          <summary class="md-editor-code-head">
+            <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
+            <div class="md-editor-code-action">
+              <span class="md-editor-code-lang">jsx</span>
+              <span class="md-editor-copy-button" data-tips="复制代码">复制代码</span>
+              <span class="md-editor-collapse-tips"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-chevron-left md-editor-icon"><circle cx="12" cy="12" r="10"/><path d="m14 16-4-4 4-4"/></svg></span>
+            </div>
+          </summary>
+          <pre><code class="language-jsx" language=jsx><span class="md-editor-code-block">import { MdEditor, NormalToolbar } from 'md-editor-rt';
+import 'md-editor-rt/lib/style.css';
+
+const handler = () =&gt; {
+  console.log('NormalToolbar clicked!');
+};
+
+const toolbars = ['github', '=', 0];
+
+const defToolbars = [
+  &lt;NormalToolbar
+    title=&quot;mark&quot;
+    onClick={handler}
+    key=&quot;nt&quot;
+    trigger={
+      &lt;svg className=&quot;md-editor-icon&quot; aria-hidden=&quot;true&quot;&gt;
+        &lt;use xlinkHref=&quot;#icon-mark&quot;&gt;&lt;/use&gt;
+      &lt;/svg&gt;
+    }
+  /&gt;,
+];
+
+export default () =&gt; (
+  &lt;MdEditor modelValue=&quot;&quot; toolbars={toolbars} defToolbars={defToolbars} /&gt;
+);</span><span rn-wrapper aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+        </details>
+      <figure data-line="599"><img src="https://imzbf.github.io/md-editor-rt/imgs/normal-toolbar.gif" alt="普通扩展工具栏" class="md-zoom"></figure>
+<figure data-line="601"><img src="https://imzbf.github.io/md-editor-rt/imgs/dropdown-toolbar.gif" alt="下拉扩展工具栏" class="md-zoom"></figure>
+<p data-line="603">扩展组件属性参考<strong>内置组件</strong>，使用示例参见<a href="https://github.com/imzbf/md-editor-rt/tree/docs/src/components" target="_blank">文档分支</a>，提供<strong>标记</strong>、<strong>表情</strong>和<strong>弹窗预览</strong>扩展组件。</p>
+</li>
+</ul>
+<hr data-line="605">
+<h3 id="🪒 noPrettier" tabindex="-1" data-line="607"><a class="header-anchor" href="#🪒 noPrettier">🪒 noPrettier</a></h3>
+<ul data-line="609">
+<li data-line="609">
+<p data-line="609"><strong>类型</strong>：<code>boolean</code></p>
+</li>
+<li data-line="610">
+<p data-line="610"><strong>默认值</strong>：<code>false</code></p>
+<p data-line="612">是否启用 prettier 优化 md 内容。</p>
+</li>
+</ul>
+<hr data-line="614">
+<h3 id="🤏 tabWidth" tabindex="-1" data-line="616"><a class="header-anchor" href="#🤏 tabWidth">🤏 tabWidth</a></h3>
+<ul data-line="618">
+<li data-line="618">
+<p data-line="618"><strong>类型</strong>：<code>number</code></p>
+</li>
+<li data-line="619">
+<p data-line="619"><strong>默认值</strong>：<code>2</code></p>
+<p data-line="621">编辑器一个 TAB 键等于空格数。</p>
+</li>
+</ul>
+<hr data-line="623">
+<h3 id="📅 tableShape" tabindex="-1" data-line="625"><a class="header-anchor" href="#📅 tableShape">📅 tableShape</a></h3>
+<ul data-line="627">
+<li data-line="627">
+<p data-line="627"><strong>类型</strong>：<code>[number, number] \| [number, number, number, number]</code></p>
+</li>
+<li data-line="628">
+<p data-line="628"><strong>默认值</strong>：<code>[6, 4]</code></p>
+<p data-line="630">标题栏添加表格时，预设待选表格大小，第一个代表最大列数，第二个代表最大行数，第三个代表扩展最大列数，第四个代表扩展最大行数。</p>
+
+        <details  data-line="632" class="md-editor-code" open="">
+          <summary class="md-editor-code-head">
+            <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
+            <div class="md-editor-code-action">
+              <span class="md-editor-code-lang">jsx</span>
+              <span class="md-editor-copy-button" data-tips="复制代码">复制代码</span>
+              <span class="md-editor-collapse-tips"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-chevron-left md-editor-icon"><circle cx="12" cy="12" r="10"/><path d="m14 16-4-4 4-4"/></svg></span>
+            </div>
+          </summary>
+          <pre><code class="language-jsx" language=jsx><span class="md-editor-code-block">const tableShape = [8, 4];
+
+() =&gt; &lt;MdEditor tableShape={tableShape}&gt;</span><span rn-wrapper aria-hidden="true"><span></span><span></span><span></span></span></code></pre>
+
+        </details>
+      <figure data-line="638"><img src="https://imzbf.github.io/md-editor-rt/imgs/20211216165424.png" alt="表格预设大小预览" class="md-zoom"></figure>
+</li>
+</ul>
+<hr data-line="640">
+<h3 id="🪧 placeholder" tabindex="-1" data-line="642"><a class="header-anchor" href="#🪧 placeholder">🪧 placeholder</a></h3>
+<ul data-line="644">
+<li data-line="644">
+<p data-line="644"><strong>类型</strong>：<code>string</code></p>
+</li>
+<li data-line="645">
+<p data-line="645"><strong>默认值</strong>：<code>''</code></p>
+<p data-line="647">啊这-_-！</p>
+</li>
+</ul>
+<hr data-line="649">
+<h3 id="🦶 footers" tabindex="-1" data-line="651"><a class="header-anchor" href="#🦶 footers">🦶 footers</a></h3>
+<ul data-line="653">
+<li data-line="653">
+<p data-line="653"><strong>类型</strong>：<code>Array&lt;'markdownTotal' | '=' | 'scrollSwitch' | number&gt;</code></p>
+</li>
+<li data-line="654">
+<p data-line="654"><strong>默认值</strong>：<code>['markdownTotal', '=', 'scrollSwitch']</code></p>
+<p data-line="656">页脚显示内容，<code>'='</code>左右分割，设置为<code>[]</code>不显示页脚。</p>
+</li>
+</ul>
+<hr data-line="658">
+<h3 id="🦿 defFooters" tabindex="-1" data-line="660"><a class="header-anchor" href="#🦿 defFooters">🦿 defFooters</a></h3>
+<ul data-line="662">
+<li data-line="662">
+<p data-line="662"><strong>类型</strong>：<code>Array&lt;ReactNode&gt;</code></p>
+</li>
+<li data-line="663">
+<p data-line="663"><strong>默认值</strong>：<code>[]</code></p>
+<p data-line="665">自定义扩展页脚。</p>
+<p data-line="667">示例代码见<a href="https://github.com/imzbf/md-editor-rt/blob/docs/src/pages/Preview/index.tsx" target="_blank">文档页源码</a>。</p>
+</li>
+</ul>
+<hr data-line="669">
+<h3 id="⛵️ scrollAuto" tabindex="-1" data-line="671"><a class="header-anchor" href="#⛵️ scrollAuto">⛵️ scrollAuto</a></h3>
+<ul data-line="673">
+<li data-line="673">
+<p data-line="673"><strong>类型</strong>：<code>boolean</code></p>
+</li>
+<li data-line="674">
+<p data-line="674"><strong>默认值</strong>：<code>true</code></p>
+<p data-line="676">默认左右同步滚动状态。</p>
+</li>
+</ul>
+<hr data-line="678">
+<h3 id="🥹 noUploadImg" tabindex="-1" data-line="680"><a class="header-anchor" href="#🥹 noUploadImg">🥹 noUploadImg</a></h3>
+<ul data-line="682">
+<li data-line="682">
+<p data-line="682"><strong>type</strong>: <code>boolean</code></p>
+</li>
+<li data-line="683">
+<p data-line="683"><strong>default</strong>: <code>false</code></p>
+<p data-line="685">工具栏不显示上传图片入口。</p>
+
+        <details  data-line="687" class="md-editor-code" open="">
+          <summary class="md-editor-code-head">
+            <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
+            <div class="md-editor-code-action">
+              <span class="md-editor-code-lang">jsx</span>
+              <span class="md-editor-copy-button" data-tips="复制代码">复制代码</span>
+              <span class="md-editor-collapse-tips"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-chevron-left md-editor-icon"><circle cx="12" cy="12" r="10"/><path d="m14 16-4-4 4-4"/></svg></span>
+            </div>
+          </summary>
+          <pre><code class="language-jsx" language=jsx><span class="md-editor-code-block">&lt;MdEditor noUploadImg /&gt;</span><span rn-wrapper aria-hidden="true"><span></span></span></code></pre>
+
+        </details>
+      </li>
+</ul>
+<hr data-line="691">
+<h3 id="🔬 autoFocus" tabindex="-1" data-line="693"><a class="header-anchor" href="#🔬 autoFocus">🔬 autoFocus</a></h3>
+<ul data-line="695">
+<li data-line="695">
+<p data-line="695"><strong>类型</strong>：<code>boolean</code></p>
+</li>
+<li data-line="696">
+<p data-line="696"><strong>默认值</strong>：<code>false</code></p>
+<p data-line="698">原生属性，文本区域自动获得焦点。</p>
+</li>
+</ul>
+<hr data-line="700">
+<h3 id="🔩 disabled" tabindex="-1" data-line="702"><a class="header-anchor" href="#🔩 disabled">🔩 disabled</a></h3>
+<ul data-line="704">
+<li data-line="704">
+<p data-line="704"><strong>类型</strong>：<code>boolean</code></p>
+</li>
+<li data-line="705">
+<p data-line="705"><strong>默认值</strong>：<code>false</code></p>
+<p data-line="707">原生属性，禁用文本区域。</p>
+</li>
+</ul>
+<hr data-line="709">
+<h3 id="🔒 readOnly" tabindex="-1" data-line="711"><a class="header-anchor" href="#🔒 readOnly">🔒 readOnly</a></h3>
+<ul data-line="713">
+<li data-line="713">
+<p data-line="713"><strong>类型</strong>：<code>boolean</code></p>
+</li>
+<li data-line="714">
+<p data-line="714"><strong>默认值</strong>：<code>false</code></p>
+<p data-line="716">原生属性，文本区域为只读。</p>
+</li>
+</ul>
+<hr data-line="718">
+<h3 id="📏 maxLength" tabindex="-1" data-line="720"><a class="header-anchor" href="#📏 maxLength">📏 maxLength</a></h3>
+<ul data-line="722">
+<li data-line="722">
+<p data-line="722"><strong>类型</strong>：<code>number</code></p>
+</li>
+<li data-line="723">
+<p data-line="723"><strong>默认值</strong>：``</p>
+<p data-line="725">原生属性，文本区域允许的最大字符数。</p>
+</li>
+</ul>
+<hr data-line="727">
+<h3 id="📥 autoDetectCode" tabindex="-1" data-line="729"><a class="header-anchor" href="#📥 autoDetectCode">📥 autoDetectCode</a></h3>
+<ul data-line="731">
+<li data-line="731">
+<p data-line="731"><strong>类型</strong>：<code>boolean</code></p>
+</li>
+<li data-line="732">
+<p data-line="732"><strong>默认值</strong>：<code>false</code></p>
+<p data-line="734">是否启用自动识别粘贴代码类别，目前仅支持从<code>vscode</code>复制的内容。</p>
+</li>
+</ul>
+<hr data-line="736">
+<h3 id="📝 completions" tabindex="-1" data-line="738"><a class="header-anchor" href="#📝 completions">📝 completions</a></h3>
+<ul data-line="740">
+<li data-line="740">
+<p data-line="740"><strong>类型</strong>：<code>Array&lt;CompletionSource&gt;</code></p>
+</li>
+<li data-line="741">
+<p data-line="741"><strong>默认值</strong>：<code>[]</code></p>
+<p data-line="743">添加额外的输入自动完成来源。</p>
+
+        <details  data-line="745" class="md-editor-code">
+          <summary class="md-editor-code-head">
+            <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
+            <div class="md-editor-code-action">
+              <span class="md-editor-code-lang">jsx</span>
+              <span class="md-editor-copy-button" data-tips="复制代码">复制代码</span>
+              <span class="md-editor-collapse-tips"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-chevron-left md-editor-icon"><circle cx="12" cy="12" r="10"/><path d="m14 16-4-4 4-4"/></svg></span>
+            </div>
+          </summary>
+          <pre><code class="language-jsx" language=jsx><span class="md-editor-code-block">import { useMemo, useState } from 'react';
+import { MdEditor } from 'md-editor-rt';
+import 'md-editor-rt/lib/style.css';
+
+export default () =&gt; {
+  const [t, s] = useState('');
+
+  const completions = useMemo(() =&gt; {
+    return [
+      (context) =&gt; {
+        const word = context.matchBefore(/@\w*/);
+
+        if (word === null || (word.from == word.to &amp;&amp; context.explicit)) {
+          return null;
+        }
+
+        return {
+          from: word.from,
+          options: [
+            {
+              label: '@imzbf',
+              type: 'text',
+            },
+          ],
+        };
+      },
+    ];
+  }, []);
+
+  return &lt;MdEditor modelValue={t} onChange={s} completions={completions} /&gt;;
+};</span><span rn-wrapper aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+        </details>
+      </li>
+</ul>
+<hr data-line="779">
+<h3 id="📥 showToolbarName" tabindex="-1" data-line="781"><a class="header-anchor" href="#📥 showToolbarName">📥 showToolbarName</a></h3>
+<ul data-line="783">
+<li data-line="783">
+<p data-line="783"><strong>类型</strong>：<code>boolean</code></p>
+</li>
+<li data-line="784">
+<p data-line="784"><strong>默认值</strong>：<code>false</code></p>
+<p data-line="786">是否在工具栏下面显示对应的文字名称</p>
+</li>
+</ul>
+<figure data-line="788"><img src="https://imzbf.github.io/md-editor-rt/imgs/showToolbarName.jpg" alt="" class="md-zoom"></figure>
+<hr data-line="790">
+<h3 id="📥 inputBoxWidth" tabindex="-1" data-line="792"><a class="header-anchor" href="#📥 inputBoxWidth">📥 inputBoxWidth</a></h3>
+<ul data-line="794">
+<li data-line="794">
+<p data-line="794"><strong>类型</strong>：<code>string</code></p>
+</li>
+<li data-line="795">
+<p data-line="795"><strong>默认值</strong>：<code>50%</code></p>
+<p data-line="797">输入框默认的宽度</p>
+</li>
+</ul>
+<figure data-line="799"><img src="https://imzbf.github.io/md-editor-rt/imgs/drag-width.jpg" alt="" class="md-zoom"></figure>
+<hr data-line="801">
+<h3 id="🪒 transformImgUrl" tabindex="-1" data-line="803"><a class="header-anchor" href="#🪒 transformImgUrl">🪒 transformImgUrl</a></h3>
+<ul data-line="805">
+<li data-line="805">
+<p data-line="805"><strong>类型</strong>：<code>(imgUrl: string) =&gt; string | Promise&lt;string&gt;</code></p>
+</li>
+<li data-line="806">
+<p data-line="806"><strong>默认值</strong>：<code>t =&gt; t</code></p>
+<p data-line="808">转换图片链接</p>
+</li>
+</ul>
+<hr data-line="810">
+<h2 id="🧵 MdPreview 绑定事件" tabindex="-1" data-line="812"><a class="header-anchor" href="#🧵 MdPreview 绑定事件">🧵 MdPreview 绑定事件</a></h2>
+<h3 id="🚁 onHtmlChanged" tabindex="-1" data-line="814"><a class="header-anchor" href="#🚁 onHtmlChanged">🚁 onHtmlChanged</a></h3>
+<ul data-line="816">
+<li data-line="816">
+<p data-line="816"><strong>类型</strong>：<code>(h: string) =&gt; void</code></p>
+<p data-line="818">html 变化回调事件，用于获取预览 html 代码。</p>
+</li>
+</ul>
+<hr data-line="820">
+<h3 id="🗒 onGetCatalog" tabindex="-1" data-line="822"><a class="header-anchor" href="#🗒 onGetCatalog">🗒 onGetCatalog</a></h3>
+<ul data-line="824">
+<li data-line="824">
+<p data-line="824"><strong>类型</strong>：<code>(list: HeadList[]) =&gt; void</code></p>
+<p data-line="826">动态获取<code>markdown</code>目录。</p>
+</li>
+</ul>
+<hr data-line="828">
+<h2 id="🪢 MdEditor 绑定事件" tabindex="-1" data-line="830"><a class="header-anchor" href="#🪢 MdEditor 绑定事件">🪢 MdEditor 绑定事件</a></h2>
+<p data-line="832">除去和<code>MdPreivew</code>相同的以外：</p>
+<h3 id="📞 onChange" tabindex="-1" data-line="834"><a class="header-anchor" href="#📞 onChange">📞 onChange</a></h3>
+<ul data-line="836">
+<li data-line="836">
+<p data-line="836"><strong>类型</strong>：<code>(v: string) =&gt; void</code></p>
+<p data-line="838">内容变化事件（当前与<code>textare</code>的<code>oninput</code>事件绑定，每输入一个单字即会触发）。</p>
+</li>
+</ul>
+<hr data-line="840">
+<h3 id="💾 onSave" tabindex="-1" data-line="842"><a class="header-anchor" href="#💾 onSave">💾 onSave</a></h3>
+<ul data-line="844">
+<li data-line="844">
+<p data-line="844"><strong>类型</strong>：<code>(v: string, h: Promise&lt;string&gt;) =&gt; void</code></p>
+<p data-line="846">保存事件，快捷键与保存按钮均会触发。</p>
+
+        <details  data-line="848" class="md-editor-code" open="">
+          <summary class="md-editor-code-head">
+            <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
+            <div class="md-editor-code-action">
+              <span class="md-editor-code-lang">jsx</span>
+              <span class="md-editor-copy-button" data-tips="复制代码">复制代码</span>
+              <span class="md-editor-collapse-tips"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-chevron-left md-editor-icon"><circle cx="12" cy="12" r="10"/><path d="m14 16-4-4 4-4"/></svg></span>
+            </div>
+          </summary>
+          <pre><code class="language-jsx" language=jsx><span class="md-editor-code-block">import { MdEditor } from 'md-editor-rt';
+import 'md-editor-rt/lib/style.css';
+
+const onSave = (v, h) =&gt; {
+  console.log(v);
+
+  h.then((html) =&gt; {
+    console.log(html);
+  });
+};
+
+export default () =&gt; &lt;MdEditor onSave={onSave} /&gt;;</span><span rn-wrapper aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+        </details>
+      </li>
+</ul>
+<hr data-line="863">
+<h3 id="📸 onUploadImg" tabindex="-1" data-line="865"><a class="header-anchor" href="#📸 onUploadImg">📸 onUploadImg</a></h3>
+<ul data-line="867">
+<li data-line="867">
+<p data-line="867"><strong>类型</strong>：<code>files: Array&lt;File&gt;, callback: (urls: string[] | { url: string; alt: string; title: string }[]) =&gt; void</code></p>
+<p data-line="869">上传图片事件，弹窗会等待上传结果，务必将上传后的 urls 作为 callback 入参回传。</p>
+
+        <details  data-line="871" class="md-editor-code">
+          <summary class="md-editor-code-head">
+            <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
+            <div class="md-editor-code-action">
+              <span class="md-editor-code-lang">jsx</span>
+              <span class="md-editor-copy-button" data-tips="复制代码">复制代码</span>
+              <span class="md-editor-collapse-tips"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-chevron-left md-editor-icon"><circle cx="12" cy="12" r="10"/><path d="m14 16-4-4 4-4"/></svg></span>
+            </div>
+          </summary>
+          <pre><code class="language-jsx" language=jsx><span class="md-editor-code-block">import { useState } from 'react';
+import axios from 'axios';
+import { MdEditor } from 'md-editor-rt';
+import 'md-editor-rt/lib/style.css';
+
+const onUploadImg = async (files, callback) =&gt; {
+  const res = await Promise.all(
+    files.map((file) =&gt; {
+      return new Promise((rev, rej) =&gt; {
+        const form = new FormData();
+        form.append('file', file);
+
+        axios
+          .post('/api/img/upload', form, {
+            headers: {
+              'Content-Type': 'multipart/form-data',
+            },
+          })
+          .then((res) =&gt; rev(res))
+          .catch((error) =&gt; rej(error));
+      });
+    })
+  );
+
+  // 方式一
+  callback(res.map((item) =&gt; item.data.url));
+  // 方式二
+  // callback(
+  //   res.map((item: any) =&gt; ({
+  //     url: item.data.url,
+  //     alt: 'alt',
+  //     title: 'title'
+  //   }))
+  // );
+};
+
+export default () =&gt; {
+  const [text, setText] = useState('# Hello Editor');
+  return (
+    &lt;MdEditor
+      modelValue={text}
+      onChange={setText}
+      onUploadImg={onUploadImg}
+    /&gt;
+  );
+};</span><span rn-wrapper aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+        </details>
+      </li>
+</ul>
+<hr data-line="920">
+<h3 id="💀 onError" tabindex="-1" data-line="922"><a class="header-anchor" href="#💀 onError">💀 onError</a></h3>
+<ul data-line="924">
+<li data-line="924">
+<p data-line="924"><strong>类型</strong>：<code>(err: { name: 'Cropper' \| 'fullscreen' \| 'prettier' \| 'overlength'; message: string }) =&gt; void</code></p>
+<p data-line="926">捕获执行错误事件，目前支持<code>Cropper</code>、<code>fullscreen</code>、<code>prettier</code>实例未加载完成操作，以及输入内容超出限制长度的错误。</p>
+
+        <details  data-line="928" class="md-editor-code" open="">
+          <summary class="md-editor-code-head">
+            <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
+            <div class="md-editor-code-action">
+              <span class="md-editor-code-lang">jsx</span>
+              <span class="md-editor-copy-button" data-tips="复制代码">复制代码</span>
+              <span class="md-editor-collapse-tips"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-chevron-left md-editor-icon"><circle cx="12" cy="12" r="10"/><path d="m14 16-4-4 4-4"/></svg></span>
+            </div>
+          </summary>
+          <pre><code class="language-jsx" language=jsx><span class="md-editor-code-block">const onError = (err) =&gt; {
+  alert(err.message);
+};
+
+export default () =&gt; &lt;MdEditor onError={onError} /&gt;;</span><span rn-wrapper aria-hidden="true"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+        </details>
+      </li>
+</ul>
+<hr data-line="936">
+<h3 id="🐾 onBlur" tabindex="-1" data-line="938"><a class="header-anchor" href="#🐾 onBlur">🐾 onBlur</a></h3>
+<ul data-line="940">
+<li data-line="940">
+<p data-line="940"><strong>类型</strong>：<code>(event: FocusEvent) =&gt; void</code></p>
+<p data-line="942">输入框失去焦点时触发事件。</p>
+
+        <details  data-line="944" class="md-editor-code" open="">
+          <summary class="md-editor-code-head">
+            <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
+            <div class="md-editor-code-action">
+              <span class="md-editor-code-lang">jsx</span>
+              <span class="md-editor-copy-button" data-tips="复制代码">复制代码</span>
+              <span class="md-editor-collapse-tips"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-chevron-left md-editor-icon"><circle cx="12" cy="12" r="10"/><path d="m14 16-4-4 4-4"/></svg></span>
+            </div>
+          </summary>
+          <pre><code class="language-jsx" language=jsx><span class="md-editor-code-block">const onBlur = (err) =&gt; {
+  console.log('onBlur', e);
+};
+
+export default () =&gt; &lt;MdEditor onBlur={onBlur} /&gt;;</span><span rn-wrapper aria-hidden="true"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+        </details>
+      </li>
+</ul>
+<hr data-line="952">
+<h3 id="🔖 onFocus" tabindex="-1" data-line="954"><a class="header-anchor" href="#🔖 onFocus">🔖 onFocus</a></h3>
+<ul data-line="956">
+<li data-line="956">
+<p data-line="956"><strong>类型</strong>：<code>(event: FocusEvent) =&gt; void</code></p>
+<p data-line="958">输入框获得焦点时触发事件。</p>
+</li>
+</ul>
+<hr data-line="960">
+<h3 id="🔖 onInput" tabindex="-1" data-line="962"><a class="header-anchor" href="#🔖 onInput">🔖 onInput</a></h3>
+<ul data-line="964">
+<li data-line="964">
+<p data-line="964"><strong>类型</strong>：<code>(event: Event) =&gt; void</code></p>
+<p data-line="966">输入框键入内容事件。</p>
+</li>
+</ul>
+<hr data-line="968">
+<h3 id="🔖 onDrop" tabindex="-1" data-line="970"><a class="header-anchor" href="#🔖 onDrop">🔖 onDrop</a></h3>
+<ul data-line="972">
+<li data-line="972">
+<p data-line="972"><strong>类型</strong>：<code>(event: DragEvent) =&gt; void</code></p>
+<p data-line="974">拖放内容事件。</p>
+
+        <details  data-line="976" class="md-editor-code" open="">
+          <summary class="md-editor-code-head">
+            <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
+            <div class="md-editor-code-action">
+              <span class="md-editor-code-lang">jsx</span>
+              <span class="md-editor-copy-button" data-tips="复制代码">复制代码</span>
+              <span class="md-editor-collapse-tips"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-chevron-left md-editor-icon"><circle cx="12" cy="12" r="10"/><path d="m14 16-4-4 4-4"/></svg></span>
+            </div>
+          </summary>
+          <pre><code class="language-jsx" language=jsx><span class="md-editor-code-block">import { useState } from 'react';
+import { MdEditor } from 'md-editor-rt';
+import 'md-editor-rt/lib/style.css';
+
+const onDrop = (e) =&gt; {
+  e.preventDefault();
+  console.log(e.dataTransfer?.files[0]);
+};
+
+export default () =&gt; {
+  const [text, setText] = useState('');
+  return &lt;MdEditor modelValue={text} onChange={setText} onDrop={onDrop} /&gt;;
+};</span><span rn-wrapper aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+        </details>
+      </li>
+</ul>
+<hr data-line="992">
+<h3 id="🔖 onInputBoxWidthChange" tabindex="-1" data-line="994"><a class="header-anchor" href="#🔖 onInputBoxWidthChange">🔖 onInputBoxWidthChange</a></h3>
+<ul data-line="996">
+<li data-line="996">
+<p data-line="996"><strong>类型</strong>：<code>(width: string) =&gt; void</code></p>
+<p data-line="998">调整输入框宽度事件</p>
+</li>
+</ul>
+<hr data-line="1000">
+<h2 id="🤱🏼 实例暴露" tabindex="-1" data-line="1002"><a class="header-anchor" href="#🤱🏼 实例暴露">🤱🏼 实例暴露</a></h2>
+<p data-line="1004">2.5.0 版本之后，编辑器暴露了若干方法在组件实例上，用来快捷监听编辑器内部状态或对调整内部状态。</p>
+
+        <details  data-line="1006" class="md-editor-code" open="">
+          <summary class="md-editor-code-head">
+            <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
+            <div class="md-editor-code-action">
+              <span class="md-editor-code-lang">jsx</span>
+              <span class="md-editor-copy-button" data-tips="复制代码">复制代码</span>
+              <span class="md-editor-collapse-tips"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-chevron-left md-editor-icon"><circle cx="12" cy="12" r="10"/><path d="m14 16-4-4 4-4"/></svg></span>
+            </div>
+          </summary>
+          <pre><code class="language-jsx" language=jsx><span class="md-editor-code-block">import { useState, useEffect, useRef } from 'react';
+import { MdEditor, ExposeParam } from 'md-editor-rt';
+import 'md-editor-rt/lib/style.css';
+
+export default () =&gt; {
+  const [text, setText] = useState('#Hello Editor');
+  const editorRef = useRef&lt;ExposeParam&gt;();
+
+  useEffect(() =&gt; {
+    editorRef.current?.on('catalog', console.log);
+  }, []);
+
+  return &lt;MdEditor ref={editorRef} modelValue={text} onChange={setText} /&gt;;
+};</span><span rn-wrapper aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+        </details>
+      <table data-line="1023">
+<thead data-line="1023">
+<tr data-line="1023">
+<th>Name</th>
+<th>MdEditor</th>
+<th>MdPreview</th>
+</tr>
+</thead>
+<tbody data-line="1025">
+<tr data-line="1025">
+<td>on</td>
+<td>√</td>
+<td>×</td>
+</tr>
+<tr data-line="1026">
+<td>togglePageFullscreen</td>
+<td>√</td>
+<td>×</td>
+</tr>
+<tr data-line="1027">
+<td>toggleFullscreen</td>
+<td>√</td>
+<td>×</td>
+</tr>
+<tr data-line="1028">
+<td>togglePreview</td>
+<td>√</td>
+<td>×</td>
+</tr>
+<tr data-line="1029">
+<td>togglePreviewOnly</td>
+<td>√</td>
+<td>×</td>
+</tr>
+<tr data-line="1030">
+<td>toggleHtmlPreview</td>
+<td>√</td>
+<td>×</td>
+</tr>
+<tr data-line="1031">
+<td>toggleCatalog</td>
+<td>√</td>
+<td>×</td>
+</tr>
+<tr data-line="1032">
+<td>triggerSave</td>
+<td>√</td>
+<td>×</td>
+</tr>
+<tr data-line="1033">
+<td>insert</td>
+<td>√</td>
+<td>×</td>
+</tr>
+<tr data-line="1034">
+<td>focus</td>
+<td>√</td>
+<td>×</td>
+</tr>
+<tr data-line="1035">
+<td>rerender</td>
+<td>√</td>
+<td>√</td>
+</tr>
+<tr data-line="1036">
+<td>getSelectedText</td>
+<td>√</td>
+<td>×</td>
+</tr>
+<tr data-line="1037">
+<td>resetHistory</td>
+<td>√</td>
+<td>×</td>
+</tr>
+</tbody>
+</table>
+<h3 id="👂🏼 on" tabindex="-1" data-line="1039"><a class="header-anchor" href="#👂🏼 on">👂🏼 on</a></h3>
+<p data-line="1041">监听编辑器内部状态，包括：屏幕全屏、浏览器全屏、预览文本、预览 html、目录等。</p>
+<ul data-line="1043">
+<li data-line="1043">
+<p data-line="1043">pageFullscreen</p>
+
+        <details  data-line="1045" class="md-editor-code" open="">
+          <summary class="md-editor-code-head">
+            <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
+            <div class="md-editor-code-action">
+              <span class="md-editor-code-lang">js</span>
+              <span class="md-editor-copy-button" data-tips="复制代码">复制代码</span>
+              <span class="md-editor-collapse-tips"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-chevron-left md-editor-icon"><circle cx="12" cy="12" r="10"/><path d="m14 16-4-4 4-4"/></svg></span>
+            </div>
+          </summary>
+          <pre><code class="language-js" language=js><span class="md-editor-code-block">editorRef.current?.on('pageFullscreen', (status) =&gt; console.log(status));</span><span rn-wrapper aria-hidden="true"><span></span></span></code></pre>
+
+        </details>
+      </li>
+<li data-line="1049">
+<p data-line="1049">fullscreen</p>
+
+        <details  data-line="1051" class="md-editor-code" open="">
+          <summary class="md-editor-code-head">
+            <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
+            <div class="md-editor-code-action">
+              <span class="md-editor-code-lang">js</span>
+              <span class="md-editor-copy-button" data-tips="复制代码">复制代码</span>
+              <span class="md-editor-collapse-tips"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-chevron-left md-editor-icon"><circle cx="12" cy="12" r="10"/><path d="m14 16-4-4 4-4"/></svg></span>
+            </div>
+          </summary>
+          <pre><code class="language-js" language=js><span class="md-editor-code-block">editorRef.current?.on('fullscreen', (status) =&gt; console.log(status));</span><span rn-wrapper aria-hidden="true"><span></span></span></code></pre>
+
+        </details>
+      </li>
+<li data-line="1055">
+<p data-line="1055">preview</p>
+
+        <details  data-line="1057" class="md-editor-code" open="">
+          <summary class="md-editor-code-head">
+            <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
+            <div class="md-editor-code-action">
+              <span class="md-editor-code-lang">js</span>
+              <span class="md-editor-copy-button" data-tips="复制代码">复制代码</span>
+              <span class="md-editor-collapse-tips"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-chevron-left md-editor-icon"><circle cx="12" cy="12" r="10"/><path d="m14 16-4-4 4-4"/></svg></span>
+            </div>
+          </summary>
+          <pre><code class="language-js" language=js><span class="md-editor-code-block">editorRef.current?.on('preview', (status) =&gt; console.log(status));</span><span rn-wrapper aria-hidden="true"><span></span></span></code></pre>
+
+        </details>
+      </li>
+<li data-line="1061">
+<p data-line="1061">previewOnly</p>
+
+        <details  data-line="1063" class="md-editor-code" open="">
+          <summary class="md-editor-code-head">
+            <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
+            <div class="md-editor-code-action">
+              <span class="md-editor-code-lang">js</span>
+              <span class="md-editor-copy-button" data-tips="复制代码">复制代码</span>
+              <span class="md-editor-collapse-tips"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-chevron-left md-editor-icon"><circle cx="12" cy="12" r="10"/><path d="m14 16-4-4 4-4"/></svg></span>
+            </div>
+          </summary>
+          <pre><code class="language-js" language=js><span class="md-editor-code-block">editorRef.current?.on('previewOnly', (status) =&gt; console.log(status));</span><span rn-wrapper aria-hidden="true"><span></span></span></code></pre>
+
+        </details>
+      </li>
+<li data-line="1067">
+<p data-line="1067">htmlPreview</p>
+
+        <details  data-line="1069" class="md-editor-code" open="">
+          <summary class="md-editor-code-head">
+            <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
+            <div class="md-editor-code-action">
+              <span class="md-editor-code-lang">js</span>
+              <span class="md-editor-copy-button" data-tips="复制代码">复制代码</span>
+              <span class="md-editor-collapse-tips"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-chevron-left md-editor-icon"><circle cx="12" cy="12" r="10"/><path d="m14 16-4-4 4-4"/></svg></span>
+            </div>
+          </summary>
+          <pre><code class="language-js" language=js><span class="md-editor-code-block">editorRef.current?.on('htmlPreview', (status) =&gt; console.log(status));</span><span rn-wrapper aria-hidden="true"><span></span></span></code></pre>
+
+        </details>
+      </li>
+<li data-line="1073">
+<p data-line="1073">catalog</p>
+
+        <details  data-line="1075" class="md-editor-code" open="">
+          <summary class="md-editor-code-head">
+            <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
+            <div class="md-editor-code-action">
+              <span class="md-editor-code-lang">js</span>
+              <span class="md-editor-copy-button" data-tips="复制代码">复制代码</span>
+              <span class="md-editor-collapse-tips"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-chevron-left md-editor-icon"><circle cx="12" cy="12" r="10"/><path d="m14 16-4-4 4-4"/></svg></span>
+            </div>
+          </summary>
+          <pre><code class="language-js" language=js><span class="md-editor-code-block">editorRef.current?.on('catalog', (status) =&gt; console.log(status));</span><span rn-wrapper aria-hidden="true"><span></span></span></code></pre>
+
+        </details>
+      </li>
+</ul>
+<hr data-line="1079">
+<h3 id="💻 togglePageFullscreen" tabindex="-1" data-line="1081"><a class="header-anchor" href="#💻 togglePageFullscreen">💻 togglePageFullscreen</a></h3>
+<p data-line="1083">切换页面内全屏。</p>
+
+        <details  data-line="1085" class="md-editor-code" open="">
+          <summary class="md-editor-code-head">
+            <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
+            <div class="md-editor-code-action">
+              <span class="md-editor-code-lang">js</span>
+              <span class="md-editor-copy-button" data-tips="复制代码">复制代码</span>
+              <span class="md-editor-collapse-tips"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-chevron-left md-editor-icon"><circle cx="12" cy="12" r="10"/><path d="m14 16-4-4 4-4"/></svg></span>
+            </div>
+          </summary>
+          <pre><code class="language-js" language=js><span class="md-editor-code-block">editorRef.current?.togglePageFullscreen(true);</span><span rn-wrapper aria-hidden="true"><span></span></span></code></pre>
+
+        </details>
+      <blockquote data-line="1089">
+<p data-line="1089">不设置入参切换为相反状态</p>
+</blockquote>
+<hr data-line="1091">
+<h3 id="🖥 toggleFullscreen" tabindex="-1" data-line="1093"><a class="header-anchor" href="#🖥 toggleFullscreen">🖥 toggleFullscreen</a></h3>
+<p data-line="1095">切换屏幕全屏。</p>
+
+        <details  data-line="1097" class="md-editor-code" open="">
+          <summary class="md-editor-code-head">
+            <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
+            <div class="md-editor-code-action">
+              <span class="md-editor-code-lang">js</span>
+              <span class="md-editor-copy-button" data-tips="复制代码">复制代码</span>
+              <span class="md-editor-collapse-tips"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-chevron-left md-editor-icon"><circle cx="12" cy="12" r="10"/><path d="m14 16-4-4 4-4"/></svg></span>
+            </div>
+          </summary>
+          <pre><code class="language-js" language=js><span class="md-editor-code-block">editorRef.current?.toggleFullscreen(true);</span><span rn-wrapper aria-hidden="true"><span></span></span></code></pre>
+
+        </details>
+      <blockquote data-line="1101">
+<p data-line="1101">不设置入参切换为相反状态</p>
+</blockquote>
+<hr data-line="1103">
+<h3 id="📖 togglePreview" tabindex="-1" data-line="1105"><a class="header-anchor" href="#📖 togglePreview">📖 togglePreview</a></h3>
+<p data-line="1107">切换是否显示预览。</p>
+
+        <details  data-line="1109" class="md-editor-code" open="">
+          <summary class="md-editor-code-head">
+            <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
+            <div class="md-editor-code-action">
+              <span class="md-editor-code-lang">js</span>
+              <span class="md-editor-copy-button" data-tips="复制代码">复制代码</span>
+              <span class="md-editor-collapse-tips"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-chevron-left md-editor-icon"><circle cx="12" cy="12" r="10"/><path d="m14 16-4-4 4-4"/></svg></span>
+            </div>
+          </summary>
+          <pre><code class="language-js" language=js><span class="md-editor-code-block">editorRef.current?.togglePreview(true);</span><span rn-wrapper aria-hidden="true"><span></span></span></code></pre>
+
+        </details>
+      <blockquote data-line="1113">
+<p data-line="1113">不设置入参切换为相反状态</p>
+</blockquote>
+<hr data-line="1115">
+<h3 id="📖 togglePreviewOnly" tabindex="-1" data-line="1117"><a class="header-anchor" href="#📖 togglePreviewOnly">📖 togglePreviewOnly</a></h3>
+<p data-line="1119">切换仅预览状态。</p>
+
+        <details  data-line="1121" class="md-editor-code" open="">
+          <summary class="md-editor-code-head">
+            <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
+            <div class="md-editor-code-action">
+              <span class="md-editor-code-lang">js</span>
+              <span class="md-editor-copy-button" data-tips="复制代码">复制代码</span>
+              <span class="md-editor-collapse-tips"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-chevron-left md-editor-icon"><circle cx="12" cy="12" r="10"/><path d="m14 16-4-4 4-4"/></svg></span>
+            </div>
+          </summary>
+          <pre><code class="language-js" language=js><span class="md-editor-code-block">editorRef.current?.togglePreviewOnly(true);</span><span rn-wrapper aria-hidden="true"><span></span></span></code></pre>
+
+        </details>
+      <blockquote data-line="1125">
+<p data-line="1125">不设置入参切换为相反状态</p>
+</blockquote>
+<hr data-line="1127">
+<h3 id="📼 toggleHtmlPreview" tabindex="-1" data-line="1129"><a class="header-anchor" href="#📼 toggleHtmlPreview">📼 toggleHtmlPreview</a></h3>
+<p data-line="1131">切换是否显示 html 预览。</p>
+
+        <details  data-line="1133" class="md-editor-code" open="">
+          <summary class="md-editor-code-head">
+            <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
+            <div class="md-editor-code-action">
+              <span class="md-editor-code-lang">js</span>
+              <span class="md-editor-copy-button" data-tips="复制代码">复制代码</span>
+              <span class="md-editor-collapse-tips"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-chevron-left md-editor-icon"><circle cx="12" cy="12" r="10"/><path d="m14 16-4-4 4-4"/></svg></span>
+            </div>
+          </summary>
+          <pre><code class="language-js" language=js><span class="md-editor-code-block">editorRef.current?.toggleHtmlPreview(true);</span><span rn-wrapper aria-hidden="true"><span></span></span></code></pre>
+
+        </details>
+      <blockquote data-line="1137">
+<p data-line="1137">不设置入参切换为相反状态</p>
+</blockquote>
+<hr data-line="1139">
+<h3 id="🧬 toggleCatalog" tabindex="-1" data-line="1141"><a class="header-anchor" href="#🧬 toggleCatalog">🧬 toggleCatalog</a></h3>
+<p data-line="1143">切换是否显示目录。</p>
+
+        <details  data-line="1145" class="md-editor-code" open="">
+          <summary class="md-editor-code-head">
+            <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
+            <div class="md-editor-code-action">
+              <span class="md-editor-code-lang">js</span>
+              <span class="md-editor-copy-button" data-tips="复制代码">复制代码</span>
+              <span class="md-editor-collapse-tips"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-chevron-left md-editor-icon"><circle cx="12" cy="12" r="10"/><path d="m14 16-4-4 4-4"/></svg></span>
+            </div>
+          </summary>
+          <pre><code class="language-js" language=js><span class="md-editor-code-block">editorRef.current?.toggleCatalog(true);</span><span rn-wrapper aria-hidden="true"><span></span></span></code></pre>
+
+        </details>
+      <blockquote data-line="1149">
+<p data-line="1149">不设置入参切换为相反状态</p>
+</blockquote>
+<hr data-line="1151">
+<h3 id="💾 triggerSave" tabindex="-1" data-line="1153"><a class="header-anchor" href="#💾 triggerSave">💾 triggerSave</a></h3>
+<p data-line="1155">触发保存。</p>
+
+        <details  data-line="1157" class="md-editor-code" open="">
+          <summary class="md-editor-code-head">
+            <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
+            <div class="md-editor-code-action">
+              <span class="md-editor-code-lang">js</span>
+              <span class="md-editor-copy-button" data-tips="复制代码">复制代码</span>
+              <span class="md-editor-collapse-tips"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-chevron-left md-editor-icon"><circle cx="12" cy="12" r="10"/><path d="m14 16-4-4 4-4"/></svg></span>
+            </div>
+          </summary>
+          <pre><code class="language-js" language=js><span class="md-editor-code-block">editorRef.current?.triggerSave();</span><span rn-wrapper aria-hidden="true"><span></span></span></code></pre>
+
+        </details>
+      <hr data-line="1161">
+<h3 id="💉 insert" tabindex="-1" data-line="1163"><a class="header-anchor" href="#💉 insert">💉 insert</a></h3>
+<p data-line="1165">手动向文本框插入内容。</p>
+
+        <details  data-line="1167" class="md-editor-code" open="">
+          <summary class="md-editor-code-head">
+            <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
+            <div class="md-editor-code-action">
+              <span class="md-editor-code-lang">js</span>
+              <span class="md-editor-copy-button" data-tips="复制代码">复制代码</span>
+              <span class="md-editor-collapse-tips"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-chevron-left md-editor-icon"><circle cx="12" cy="12" r="10"/><path d="m14 16-4-4 4-4"/></svg></span>
+            </div>
+          </summary>
+          <pre><code class="language-js" language=js><span class="md-editor-code-block">/**
+ * @params selectedText 选中的内容
+ */
+editorRef.current?.insert((selectedText) =&gt; {
+  /**
+   * @return targetValue    待插入内容
+   * @return select         插入后是否自动选中内容，默认：true
+   * @return deviationStart 插入后选中内容鼠标开始位置，默认：0
+   * @return deviationEnd   插入后选中内容鼠标结束位置，默认：0
+   */
+  return {
+    targetValue: `${selectedText}`,
+    select: true,
+    deviationStart: 0,
+    deviationEnd: 0,
+  };
+});</span><span rn-wrapper aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+        </details>
+      <hr data-line="1187">
+<h3 id="🎯 focus" tabindex="-1" data-line="1189"><a class="header-anchor" href="#🎯 focus">🎯 focus</a></h3>
+<p data-line="1191">手动聚焦输入框。</p>
+
+        <details  data-line="1193" class="md-editor-code" open="">
+          <summary class="md-editor-code-head">
+            <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
+            <div class="md-editor-code-action">
+              <span class="md-editor-code-lang">ts</span>
+              <span class="md-editor-copy-button" data-tips="复制代码">复制代码</span>
+              <span class="md-editor-collapse-tips"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-chevron-left md-editor-icon"><circle cx="12" cy="12" r="10"/><path d="m14 16-4-4 4-4"/></svg></span>
+            </div>
+          </summary>
+          <pre><code class="language-ts" language=ts><span class="md-editor-code-block">import type { FocusOption } from 'md-editor-rt';
+
+const option: FocusOption | undefined = 'start';
+
+// 聚焦时光标的位置，不提供默认上次失焦时的位置
+editorRef.current?.focus(option);</span><span rn-wrapper aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+        </details>
+      
+        <details  data-line="1202" class="md-editor-code" open="">
+          <summary class="md-editor-code-head">
+            <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
+            <div class="md-editor-code-action">
+              <span class="md-editor-code-lang">ts</span>
+              <span class="md-editor-copy-button" data-tips="复制代码">复制代码</span>
+              <span class="md-editor-collapse-tips"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-chevron-left md-editor-icon"><circle cx="12" cy="12" r="10"/><path d="m14 16-4-4 4-4"/></svg></span>
+            </div>
+          </summary>
+          <pre><code class="language-ts" language=ts><span class="md-editor-code-block">type FocusOption =
+  | 'start'
+  | 'end'
+  | {
+      // 选中的开始位置，默认光标位置
+      rangeAnchor?: number;
+      // 选中的结束位置，默认光标位置
+      rangeHead?: number;
+      // 光标的位置
+      cursorPos: number;
+    };</span><span rn-wrapper aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+        </details>
+      <hr data-line="1216">
+<h3 id="✒️ rerender" tabindex="-1" data-line="1218"><a class="header-anchor" href="#✒️ rerender">✒️ rerender</a></h3>
+<p data-line="1220">手动重新渲染内容。</p>
+
+        <details  data-line="1222" class="md-editor-code" open="">
+          <summary class="md-editor-code-head">
+            <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
+            <div class="md-editor-code-action">
+              <span class="md-editor-code-lang">js</span>
+              <span class="md-editor-copy-button" data-tips="复制代码">复制代码</span>
+              <span class="md-editor-collapse-tips"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-chevron-left md-editor-icon"><circle cx="12" cy="12" r="10"/><path d="m14 16-4-4 4-4"/></svg></span>
+            </div>
+          </summary>
+          <pre><code class="language-js" language=js><span class="md-editor-code-block">editorRef.current?.rerender();</span><span rn-wrapper aria-hidden="true"><span></span></span></code></pre>
+
+        </details>
+      <hr data-line="1226">
+<h3 id="🔍 getSelectedText" tabindex="-1" data-line="1228"><a class="header-anchor" href="#🔍 getSelectedText">🔍 getSelectedText</a></h3>
+<p data-line="1230">获取当前选中的文字。</p>
+
+        <details  data-line="1232" class="md-editor-code" open="">
+          <summary class="md-editor-code-head">
+            <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
+            <div class="md-editor-code-action">
+              <span class="md-editor-code-lang">js</span>
+              <span class="md-editor-copy-button" data-tips="复制代码">复制代码</span>
+              <span class="md-editor-collapse-tips"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-chevron-left md-editor-icon"><circle cx="12" cy="12" r="10"/><path d="m14 16-4-4 4-4"/></svg></span>
+            </div>
+          </summary>
+          <pre><code class="language-js" language=js><span class="md-editor-code-block">console.log(editorRef.current?.getSelectedText());</span><span rn-wrapper aria-hidden="true"><span></span></span></code></pre>
+
+        </details>
+      <hr data-line="1236">
+<h3 id="🗑 resetHistory" tabindex="-1" data-line="1238"><a class="header-anchor" href="#🗑 resetHistory">🗑 resetHistory</a></h3>
+<p data-line="1240">清除当前的历史记录。</p>
+<hr data-line="1242">
+<h3 id="🎛 domEventHandlers" tabindex="-1" data-line="1244"><a class="header-anchor" href="#🎛 domEventHandlers">🎛 domEventHandlers</a></h3>
+<p data-line="1246">支持监听全部的 dom 事件。</p>
+
+        <details  data-line="1248" class="md-editor-code" open="">
+          <summary class="md-editor-code-head">
+            <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
+            <div class="md-editor-code-action">
+              <span class="md-editor-code-lang">js</span>
+              <span class="md-editor-copy-button" data-tips="复制代码">复制代码</span>
+              <span class="md-editor-collapse-tips"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-chevron-left md-editor-icon"><circle cx="12" cy="12" r="10"/><path d="m14 16-4-4 4-4"/></svg></span>
+            </div>
+          </summary>
+          <pre><code class="language-js" language=js><span class="md-editor-code-block">editorRef.current?.domEventHandlers({
+  compositionstart: () =&gt; {
+    console.log('compositionstart');
+  },
+});</span><span rn-wrapper aria-hidden="true"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+        </details>
+      <hr data-line="1256">
+<h3 id="🎛 execCommand" tabindex="-1" data-line="1258"><a class="header-anchor" href="#🎛 execCommand">🎛 execCommand</a></h3>
+<p data-line="1260">通过触发器向编辑器插入内容。</p>
+
+        <details  data-line="1262" class="md-editor-code" open="">
+          <summary class="md-editor-code-head">
+            <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
+            <div class="md-editor-code-action">
+              <span class="md-editor-code-lang">js</span>
+              <span class="md-editor-copy-button" data-tips="复制代码">复制代码</span>
+              <span class="md-editor-collapse-tips"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-chevron-left md-editor-icon"><circle cx="12" cy="12" r="10"/><path d="m14 16-4-4 4-4"/></svg></span>
+            </div>
+          </summary>
+          <pre><code class="language-js" language=js><span class="md-editor-code-block">editorRef.current?.execCommand('bold');</span><span rn-wrapper aria-hidden="true"><span></span></span></code></pre>
+
+        </details>
+      <hr data-line="1266">
+<h3 id="🔖 getEditorView" tabindex="-1" data-line="1268"><a class="header-anchor" href="#🔖 getEditorView">🔖 getEditorView</a></h3>
+<p data-line="1270">获取 codemirror 实例。</p>
+<hr data-line="1272">
+<h2 id="💴 配置编辑器" tabindex="-1" data-line="1274"><a class="header-anchor" href="#💴 配置编辑器">💴 配置编辑器</a></h2>
+<p data-line="1276">使用<code>config(option: ConfigOption)</code>方法，可以对构建实例进行定制。</p>
+<div data-line="1278" class="md-editor-admonition md-editor-admonition-warning">
+<p data-line="1280">我们建议你在项目入口配置，例如 vite 创建的项目中的 main.js。不要在组件中去调用 <code>config</code> ！</p>
+</div>
+<h3 id="🦪 codeMirrorExtensions" tabindex="-1" data-line="1284"><a class="header-anchor" href="#🦪 codeMirrorExtensions">🦪 codeMirrorExtensions</a></h3>
+<p data-line="1286">根据主题和内部默认的 codeMirror 扩展自定义新的扩展。</p>
+
+        <details  data-line="1288" class="md-editor-code" open="">
+          <summary class="md-editor-code-head">
+            <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
+            <div class="md-editor-code-action">
+              <span class="md-editor-code-lang">ts</span>
+              <span class="md-editor-copy-button" data-tips="复制代码">复制代码</span>
+              <span class="md-editor-collapse-tips"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-chevron-left md-editor-icon"><circle cx="12" cy="12" r="10"/><path d="m14 16-4-4 4-4"/></svg></span>
+            </div>
+          </summary>
+          <pre><code class="language-ts" language=ts><span class="md-editor-code-block">type CodeMirrorExtensions = (
+  theme: Themes,
+  extensions: Array&lt;Extension&gt;,
+  keyBindings: Array&lt;KeyBinding&gt;,
+  options: {
+    editorId: string;
+  }
+) =&gt; Array&lt;Extension&gt;;</span><span rn-wrapper aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+        </details>
+      <p data-line="1299">使用示例：编辑器默认不显示输入框的行号，需要手动添加扩展</p>
+
+        <details  data-line="1301" class="md-editor-code" open="">
+          <summary class="md-editor-code-head">
+            <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
+            <div class="md-editor-code-action">
+              <span class="md-editor-code-lang">js</span>
+              <span class="md-editor-copy-button" data-tips="复制代码">复制代码</span>
+              <span class="md-editor-collapse-tips"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-chevron-left md-editor-icon"><circle cx="12" cy="12" r="10"/><path d="m14 16-4-4 4-4"/></svg></span>
+            </div>
+          </summary>
+          <pre><code class="language-js" language=js><span class="md-editor-code-block">import { config } from 'md-editor-rt';
+import { lineNumbers } from '@codemirror/view';
+
+config({
+  codeMirrorExtensions(_theme, extensions) {
+    return [...extensions, lineNumbers()];
+  },
+});</span><span rn-wrapper aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+        </details>
+      <hr data-line="1312">
+<h3 id="🍤 markdownItConfig" tabindex="-1" data-line="1314"><a class="header-anchor" href="#🍤 markdownItConfig">🍤 markdownItConfig</a></h3>
+<p data-line="1316">自定义 markdown-it 核心库扩展、属性等。</p>
+
+        <details  data-line="1318" class="md-editor-code" open="">
+          <summary class="md-editor-code-head">
+            <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
+            <div class="md-editor-code-action">
+              <span class="md-editor-code-lang">ts</span>
+              <span class="md-editor-copy-button" data-tips="复制代码">复制代码</span>
+              <span class="md-editor-collapse-tips"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-chevron-left md-editor-icon"><circle cx="12" cy="12" r="10"/><path d="m14 16-4-4 4-4"/></svg></span>
+            </div>
+          </summary>
+          <pre><code class="language-ts" language=ts><span class="md-editor-code-block">type MarkdownItConfig = (
+  md: markdownit,
+  options: {
+    editorId: string;
+  }
+) =&gt; void;</span><span rn-wrapper aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+        </details>
+      <p data-line="1327">使用示例：配置使用<code>markdown-it-anchor</code>并在标题右侧显示一个超链接符号</p>
+
+        <details  data-line="1329" class="md-editor-code" open="">
+          <summary class="md-editor-code-head">
+            <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
+            <div class="md-editor-code-action">
+              <span class="md-editor-code-lang">js</span>
+              <span class="md-editor-copy-button" data-tips="复制代码">复制代码</span>
+              <span class="md-editor-collapse-tips"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-chevron-left md-editor-icon"><circle cx="12" cy="12" r="10"/><path d="m14 16-4-4 4-4"/></svg></span>
+            </div>
+          </summary>
+          <pre><code class="language-js" language=js><span class="md-editor-code-block">import { config } from 'md-editor-rt';
+import ancher from 'markdown-it-anchor';
+
+config({
+  markdownItConfig(mdit) {
+    mdit.use(ancher, {
+      permalink: true,
+    });
+  },
+});</span><span rn-wrapper aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+        </details>
+      <hr data-line="1342">
+<h3 id="🍤 markdownItPlugins" tabindex="-1" data-line="1344"><a class="header-anchor" href="#🍤 markdownItPlugins">🍤 markdownItPlugins</a></h3>
+<p data-line="1346">挑选、新增 markdown-it 核心库已预设的扩展。</p>
+
+        <details  data-line="1348" class="md-editor-code" open="">
+          <summary class="md-editor-code-head">
+            <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
+            <div class="md-editor-code-action">
+              <span class="md-editor-code-lang">ts</span>
+              <span class="md-editor-copy-button" data-tips="复制代码">复制代码</span>
+              <span class="md-editor-collapse-tips"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-chevron-left md-editor-icon"><circle cx="12" cy="12" r="10"/><path d="m14 16-4-4 4-4"/></svg></span>
+            </div>
+          </summary>
+          <pre><code class="language-ts" language=ts><span class="md-editor-code-block">type MarkdownItPlugins = (
+  plugins: Array&lt;MarkdownItConfigPlugin&gt;,
+  options: {
+    editorId: string;
+  }
+) =&gt; Array&lt;MarkdownItConfigPlugin&gt;;</span><span rn-wrapper aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+        </details>
+      <p data-line="1357">使用示例：修改图片的类名</p>
+
+        <details  data-line="1359" class="md-editor-code" open="">
+          <summary class="md-editor-code-head">
+            <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
+            <div class="md-editor-code-action">
+              <span class="md-editor-code-lang">js</span>
+              <span class="md-editor-copy-button" data-tips="复制代码">复制代码</span>
+              <span class="md-editor-collapse-tips"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-chevron-left md-editor-icon"><circle cx="12" cy="12" r="10"/><path d="m14 16-4-4 4-4"/></svg></span>
+            </div>
+          </summary>
+          <pre><code class="language-js" language=js><span class="md-editor-code-block">import { config } from 'md-editor-rt';
+
+config({
+  markdownItPlugins(plugins) {
+    return plugins.map((p) =&gt; {
+      if (p.type === 'image') {
+        return {
+          ...p,
+          options: {
+            ...p.options,
+            classes: 'my-class',
+          },
+        };
+      }
+
+      return p;
+    });
+  },
+});</span><span rn-wrapper aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+        </details>
+      <hr data-line="1381">
+<h3 id="🍙 editorConfig" tabindex="-1" data-line="1383"><a class="header-anchor" href="#🍙 editorConfig">🍙 editorConfig</a></h3>
+<p data-line="1385">编辑器常规配置，语言、<code>mermaid</code>默认模板、渲染延迟：</p>
+<h4 id="🍚 languageUserDefined" tabindex="-1" data-line="1387"><a class="header-anchor" href="#🍚 languageUserDefined">🍚 languageUserDefined</a></h4>
+
+        <details  data-line="1389" class="md-editor-code">
+          <summary class="md-editor-code-head">
+            <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
+            <div class="md-editor-code-action">
+              <span class="md-editor-code-lang">js</span>
+              <span class="md-editor-copy-button" data-tips="复制代码">复制代码</span>
+              <span class="md-editor-collapse-tips"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-chevron-left md-editor-icon"><circle cx="12" cy="12" r="10"/><path d="m14 16-4-4 4-4"/></svg></span>
+            </div>
+          </summary>
+          <pre><code class="language-js" language=js><span class="md-editor-code-block">import { config } from 'md-editor-rt';
+
+config({
+  editorConfig: {
+    // 语言
+    languageUserDefined: {
+      'my-lang': {
+        toolbarTips: {
+          bold: '加粗',
+          underline: '下划线',
+          italic: '斜体',
+          strikeThrough: '删除线',
+          title: '标题',
+          sub: '下标',
+          sup: '上标',
+          quote: '引用',
+          unorderedList: '无序列表',
+          orderedList: '有序列表',
+          codeRow: '行内代码',
+          code: '块级代码',
+          link: '链接',
+          image: '图片',
+          table: '表格',
+          mermaid: 'mermaid图',
+          katex: '公式',
+          revoke: '后退',
+          next: '前进',
+          save: '保存',
+          prettier: '美化',
+          pageFullscreen: '浏览器全屏',
+          fullscreen: '屏幕全屏',
+          preview: '预览',
+          previewOnly: '仅预览',
+          htmlPreview: 'html代码预览',
+          catalog: '目录',
+          github: '源码地址',
+        },
+        titleItem: {
+          h1: '一级标题',
+          h2: '二级标题',
+          h3: '三级标题',
+          h4: '四级标题',
+          h5: '五级标题',
+          h6: '六级标题',
+        },
+        imgTitleItem: {
+          link: '添加链接',
+          upload: '上传图片',
+          clip2upload: '裁剪上传',
+        },
+        linkModalTips: {
+          linkTitle: '添加链接',
+          imageTitle: '添加图片',
+          descLabel: '链接描述：',
+          descLabelPlaceHolder: '请输入描述...',
+          urlLabel: '链接地址：',
+          urlLabelPlaceHolder: '请输入链接...',
+          buttonOK: '确定',
+        },
+        clipModalTips: {
+          title: '裁剪图片上传',
+          buttonUpload: '上传',
+        },
+        copyCode: {
+          text: '复制代码',
+          successTips: '已复制！',
+          failTips: '复制失败！',
+        },
+        mermaid: {
+          flow: '流程图',
+          sequence: '时序图',
+          gantt: '甘特图',
+          class: '类图',
+          state: '状态图',
+          pie: '饼图',
+          relationship: '关系图',
+          journey: '旅程图',
+        },
+        katex: {
+          inline: '行内公式',
+          block: '块级公式',
+        },
+        footer: {
+          markdownTotal: '字数',
+          scrollAuto: '同步滚动',
+        },
+      },
+    },
+  },
+});</span><span rn-wrapper aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+        </details>
+      <h4 id="🍘 mermaidTemplate" tabindex="-1" data-line="1482"><a class="header-anchor" href="#🍘 mermaidTemplate">🍘 mermaidTemplate</a></h4>
+
+        <details  data-line="1484" class="md-editor-code" open="">
+          <summary class="md-editor-code-head">
+            <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
+            <div class="md-editor-code-action">
+              <span class="md-editor-code-lang">js</span>
+              <span class="md-editor-copy-button" data-tips="复制代码">复制代码</span>
+              <span class="md-editor-collapse-tips"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-chevron-left md-editor-icon"><circle cx="12" cy="12" r="10"/><path d="m14 16-4-4 4-4"/></svg></span>
+            </div>
+          </summary>
+          <pre><code class="language-js" language=js><span class="md-editor-code-block">import { config } from 'md-editor-rt';
+
+config({
+  editorConfig: {
+    // mermaid模板
+    mermaidTemplate: {
+      // 流程图
+      flow: `flow tempalte`,
+      // 时序图
+      sequence: `sequence template`,
+      // 甘特图
+      gantt: `gantt template`,
+      // 类图
+      class: `class template`,
+      // 状态图
+      state: `state template`,
+      // 饼图
+      pie: `pie template`,
+      // 关系图
+      relationship: `relationship template`,
+      // 旅程图
+      journey: `journey template`,
+    },
+  },
+});</span><span rn-wrapper aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+        </details>
+      <h4 id="🍥 renderDelay" tabindex="-1" data-line="1512"><a class="header-anchor" href="#🍥 renderDelay">🍥 renderDelay</a></h4>
+
+        <details  data-line="1514" class="md-editor-code" open="">
+          <summary class="md-editor-code-head">
+            <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
+            <div class="md-editor-code-action">
+              <span class="md-editor-code-lang">js</span>
+              <span class="md-editor-copy-button" data-tips="复制代码">复制代码</span>
+              <span class="md-editor-collapse-tips"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-chevron-left md-editor-icon"><circle cx="12" cy="12" r="10"/><path d="m14 16-4-4 4-4"/></svg></span>
+            </div>
+          </summary>
+          <pre><code class="language-js" language=js><span class="md-editor-code-block">import { config } from 'md-editor-rt';
+
+config({
+  editorConfig: {
+    // 输入渲染延迟（ms）
+    renderDelay: 0,
+  },
+});</span><span rn-wrapper aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+        </details>
+      <hr data-line="1525">
+<h4 id="🍥 zIndex" tabindex="-1" data-line="1527"><a class="header-anchor" href="#🍥 zIndex">🍥 zIndex</a></h4>
+
+        <details  data-line="1529" class="md-editor-code" open="">
+          <summary class="md-editor-code-head">
+            <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
+            <div class="md-editor-code-action">
+              <span class="md-editor-code-lang">js</span>
+              <span class="md-editor-copy-button" data-tips="复制代码">复制代码</span>
+              <span class="md-editor-collapse-tips"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-chevron-left md-editor-icon"><circle cx="12" cy="12" r="10"/><path d="m14 16-4-4 4-4"/></svg></span>
+            </div>
+          </summary>
+          <pre><code class="language-js" language=js><span class="md-editor-code-block">import { config } from 'md-editor-rt';
+
+config({
+  editorConfig: {
+    // 内部弹窗的zIndex
+    zIndex: 2000,
+  },
+});</span><span rn-wrapper aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+        </details>
+      <hr data-line="1540">
+<h3 id="🥠 editorExtensions" tabindex="-1" data-line="1542"><a class="header-anchor" href="#🥠 editorExtensions">🥠 editorExtensions</a></h3>
+<p data-line="1544">类型如下，用于配置编辑器内部的扩展</p>
+
+        <details  data-line="1546" class="md-editor-code" open="">
+          <summary class="md-editor-code-head">
+            <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
+            <div class="md-editor-code-action">
+              <span class="md-editor-code-lang">js</span>
+              <span class="md-editor-copy-button" data-tips="复制代码">复制代码</span>
+              <span class="md-editor-collapse-tips"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-chevron-left md-editor-icon"><circle cx="12" cy="12" r="10"/><path d="m14 16-4-4 4-4"/></svg></span>
+            </div>
+          </summary>
+          <pre><code class="language-js" language=js><span class="md-editor-code-block">import { config } from 'md-editor-rt';
+
+config({
+  editorExtensions: { highlight: { js: 'https://xxx.cc' } },
+});</span><span rn-wrapper aria-hidden="true"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+        </details>
+      
+        <details  data-line="1554" class="md-editor-code">
+          <summary class="md-editor-code-head">
+            <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
+            <div class="md-editor-code-action">
+              <span class="md-editor-code-lang">ts</span>
+              <span class="md-editor-copy-button" data-tips="复制代码">复制代码</span>
+              <span class="md-editor-collapse-tips"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-chevron-left md-editor-icon"><circle cx="12" cy="12" r="10"/><path d="m14 16-4-4 4-4"/></svg></span>
+            </div>
+          </summary>
+          <pre><code class="language-ts" language=ts><span class="md-editor-code-block">export interface EditorExtensions {
+  highlight?: {
+    instance?: any;
+    js?: string;
+    css?: {
+      [key: string]: {
+        light: string;
+        dark: string;
+      };
+    };
+  };
+  prettier?: {
+    // &gt;= 2.2.0
+    prettierInstance?: any;
+    parserMarkdownInstance?: any;
+
+    standaloneJs?: string;
+    parserMarkdownJs?: string;
+  };
+  cropper?: {
+    instance?: any;
+    js?: string;
+    css?: string;
+  };
+  screenfull?: {
+    instance?: any;
+    js?: string;
+  };
+  mermaid?: {
+    instance?: any;
+    js?: string;
+  };
+  katex?: {
+    instance?: any;
+    js?: string;
+    css?: string;
+  };
+}</span><span rn-wrapper aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+        </details>
+      <hr data-line="1595">
+<h3 id="🥠 editorExtensionsAttrs" tabindex="-1" data-line="1597"><a class="header-anchor" href="#🥠 editorExtensionsAttrs">🥠 editorExtensionsAttrs</a></h3>
+<p data-line="1599">同步添加 CDN 链接标签的上属性，类型与<code>editorExtensions</code>一直，值类型是<code>HTMLElementTagNameMap&lt;script|link&gt;</code> 内部提供所有链接的<code>integrity</code>值，使用方式如下：</p>
+
+        <details  data-line="1601" class="md-editor-code" open="">
+          <summary class="md-editor-code-head">
+            <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
+            <div class="md-editor-code-action">
+              <span class="md-editor-code-lang">js</span>
+              <span class="md-editor-copy-button" data-tips="复制代码">复制代码</span>
+              <span class="md-editor-collapse-tips"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-chevron-left md-editor-icon"><circle cx="12" cy="12" r="10"/><path d="m14 16-4-4 4-4"/></svg></span>
+            </div>
+          </summary>
+          <pre><code class="language-js" language=js><span class="md-editor-code-block">import { config } from 'md-editor-rt';
+
+config({
+  editorExtensionsAttrs: {
+    highlight: {
+      js: {
+        className: 'hglh-js',
+      },
+      css: {
+        atom: {
+          light: {
+            className: 'atom-light-css',
+          },
+          dark: {
+            className: 'atom-dark-css',
+          },
+        },
+      },
+    },
+  },
+});</span><span rn-wrapper aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+        </details>
+      <p data-line="1625">使用内置的基础属性配置示例：</p>
+
+        <details  data-line="1627" class="md-editor-code" open="">
+          <summary class="md-editor-code-head">
+            <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
+            <div class="md-editor-code-action">
+              <span class="md-editor-code-lang">js</span>
+              <span class="md-editor-copy-button" data-tips="复制代码">复制代码</span>
+              <span class="md-editor-collapse-tips"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-chevron-left md-editor-icon"><circle cx="12" cy="12" r="10"/><path d="m14 16-4-4 4-4"/></svg></span>
+            </div>
+          </summary>
+          <pre><code class="language-js" language=js><span class="md-editor-code-block">import { config, editorExtensionsAttrs } from 'md-editor-rt';
+
+config({
+  editorExtensionsAttrs,
+});</span><span rn-wrapper aria-hidden="true"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+        </details>
+      <div data-line="1635" class="md-editor-admonition md-editor-admonition-warning">
+<p data-line="1635" class="md-editor-admonition-title">提醒</p>
+<p data-line="1637">不要尝试在 editorExtensionsAttrs 定义 script 的 src\onload\id，link 的 rel\href\id 它们会被默认值覆盖</p>
+</div>
+<hr data-line="1641">
+<h3 id="🎨 mermaidConfig" tabindex="-1" data-line="1643"><a class="header-anchor" href="#🎨 mermaidConfig">🎨 mermaidConfig</a></h3>
+<p data-line="1645">mermaid 配置项，<a href="https://mermaid.js.org/config/schema-docs/config.html" target="_blank">配置详情</a></p>
+
+        <details  data-line="1647" class="md-editor-code" open="">
+          <summary class="md-editor-code-head">
+            <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
+            <div class="md-editor-code-action">
+              <span class="md-editor-code-lang">js</span>
+              <span class="md-editor-copy-button" data-tips="复制代码">复制代码</span>
+              <span class="md-editor-collapse-tips"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-chevron-left md-editor-icon"><circle cx="12" cy="12" r="10"/><path d="m14 16-4-4 4-4"/></svg></span>
+            </div>
+          </summary>
+          <pre><code class="language-js" language=js><span class="md-editor-code-block">import { config } from 'md-editor-rt';
+config({
+  mermaidConfig(base: any) {
+    return {
+      ...base,
+      logLevel: 'error',
+    };
+  },
+});</span><span rn-wrapper aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+        </details>
+      <hr data-line="1659">
+<h3 id="🔧 katexConfig" tabindex="-1" data-line="1661"><a class="header-anchor" href="#🔧 katexConfig">🔧 katexConfig</a></h3>
+<p data-line="1663">katex 配置项，<a href="https://katex.org/docs/options" target="_blank">配置详情</a></p>
+
+        <details  data-line="1665" class="md-editor-code" open="">
+          <summary class="md-editor-code-head">
+            <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
+            <div class="md-editor-code-action">
+              <span class="md-editor-code-lang">js</span>
+              <span class="md-editor-copy-button" data-tips="复制代码">复制代码</span>
+              <span class="md-editor-collapse-tips"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-chevron-left md-editor-icon"><circle cx="12" cy="12" r="10"/><path d="m14 16-4-4 4-4"/></svg></span>
+            </div>
+          </summary>
+          <pre><code class="language-js" language=js><span class="md-editor-code-block">import { config } from 'md-editor-rt';
+
+config({
+  katexConfig(base: any) {
+    return {
+      ...base,
+      strict: false,
+    };
+  },
+});</span><span rn-wrapper aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+        </details>
+      <hr data-line="1678">
+<h2 id="🪡 快捷键" tabindex="-1" data-line="1680"><a class="header-anchor" href="#🪡 快捷键">🪡 快捷键</a></h2>
+<p data-line="1682">主要以<code>CTRL</code>搭配对应功能英文单词首字母，冲突项添加<code>SHIFT</code>，再冲突替换为<code>ALT</code>。</p>
+<div data-line="1684" class="md-editor-admonition md-editor-admonition-warning">
+<p data-line="1684" class="md-editor-admonition-title">注意事项</p>
+<p data-line="1686">快捷键仅在输入框获取到焦点时可用！</p>
+</div>
+<table data-line="1690">
+<thead data-line="1690">
+<tr data-line="1690">
+<th>键位</th>
+<th>功能</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody data-line="1692">
+<tr data-line="1692">
+<td>TAB</td>
+<td>空格</td>
+<td>通过<code>tabWidth</code>属性预设 TAB 键位新增空格长度，默认 2，支持多行</td>
+</tr>
+<tr data-line="1693">
+<td>SHIFT + TAB</td>
+<td>取消空格</td>
+<td>同上，一次取消两个空格，支持多行</td>
+</tr>
+<tr data-line="1694">
+<td>CTRL + C</td>
+<td>复制</td>
+<td>选中时复制选中内容，未选中时复制当前行内容</td>
+</tr>
+<tr data-line="1695">
+<td>CTRL + X</td>
+<td>剪切</td>
+<td>选中时剪切选中内容，未选中时剪切当前行</td>
+</tr>
+<tr data-line="1696">
+<td>CTRL + D</td>
+<td>删除</td>
+<td>选中时删除选中内容，未选中时删除当前行</td>
+</tr>
+<tr data-line="1697">
+<td>CTRL + S</td>
+<td>保存</td>
+<td>触发编辑器的<code>onSave</code>回调</td>
+</tr>
+<tr data-line="1698">
+<td>CTRL + B</td>
+<td>加粗</td>
+<td><code>**加粗**</code></td>
+</tr>
+<tr data-line="1699">
+<td>CTRL + U</td>
+<td>下划线</td>
+<td><code>&lt;u&gt;下划线&lt;/u&gt;</code></td>
+</tr>
+<tr data-line="1700">
+<td>CTRL + I</td>
+<td>斜体</td>
+<td><code>*斜体*</code></td>
+</tr>
+<tr data-line="1701">
+<td>CTRL + 1-6</td>
+<td>1-6 级标题</td>
+<td><code># 标题</code></td>
+</tr>
+<tr data-line="1702">
+<td>CTRL + ↑</td>
+<td>上角标</td>
+<td><code>&lt;sup&gt;上角标&lt;/sup&gt;</code></td>
+</tr>
+<tr data-line="1703">
+<td>CTRL + ↓</td>
+<td>下角标</td>
+<td><code>&lt;sub&gt;下角标&lt;/sub&gt;</code></td>
+</tr>
+<tr data-line="1704">
+<td>CTRL + O</td>
+<td>有序列表</td>
+<td><code>1. 有序列表</code></td>
+</tr>
+<tr data-line="1705">
+<td>CTRL + L</td>
+<td>链接</td>
+<td><code>[链接](https://github.com/imzbf)</code></td>
+</tr>
+<tr data-line="1706">
+<td>CTRL + Z</td>
+<td>撤回</td>
+<td>触发编辑器内内容撤回，与系统无关</td>
+</tr>
+<tr data-line="1707">
+<td>CTRL + F</td>
+<td>查找替换</td>
+<td></td>
+</tr>
+<tr data-line="1708">
+<td>CTRL + SHIFT + S</td>
+<td>删除线</td>
+<td><code>~删除线~</code></td>
+</tr>
+<tr data-line="1709">
+<td>CTRL + SHIFT + U</td>
+<td>无序列表</td>
+<td><code>- 无序列表</code></td>
+</tr>
+<tr data-line="1710">
+<td>CTRL + SHIFT + C</td>
+<td>块级代码</td>
+<td>多行代码块</td>
+</tr>
+<tr data-line="1711">
+<td>CTRL + SHIFT + I</td>
+<td>图片链接</td>
+<td><code>![图片](https://github.com/imzbf)</code></td>
+</tr>
+<tr data-line="1712">
+<td>CTRL + SHIFT + Z</td>
+<td>前进一步</td>
+<td>触发编辑器内内容前进，与系统无关</td>
+</tr>
+<tr data-line="1713">
+<td>CTRL + SHIFT + F</td>
+<td>美化内容</td>
+<td></td>
+</tr>
+<tr data-line="1714">
+<td>CTRL + ALT + C</td>
+<td>行内代码</td>
+<td>行内代码块</td>
+</tr>
+<tr data-line="1715">
+<td>CTRL + SHIFT + ALT + T</td>
+<td>表格</td>
+<td><code>|表格|</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="🪤 内置组件" tabindex="-1" data-line="1717"><a class="header-anchor" href="#🪤 内置组件">🪤 内置组件</a></h2>
+<p data-line="1719">按需引用编辑器的扩展组件，例如：<code>import { DropdownToolbar } from 'md-editor-rt'</code>。</p>
+<div data-line="1721" class="md-editor-admonition md-editor-admonition-info">
+<p data-line="1721" class="md-editor-admonition-title">内置属性提示</p>
+<p data-line="1723">为了帮助开发者快速插入和使用编辑器的属性，编辑器组件已经默认向编写的扩展组件添加了下面的属性的值：</p>
+<table data-line="1725">
+<thead data-line="1725">
+<tr data-line="1725">
+<th>名称</th>
+<th>使用示例</th>
+</tr>
+</thead>
+<tbody data-line="1727">
+<tr data-line="1727">
+<td>insert</td>
+<td>参考下方的<code>DropdownToolbar</code>组件示例</td>
+</tr>
+<tr data-line="1728">
+<td>theme</td>
+<td>参考扩展组件中的<a href="https://github.com/imzbf/md-editor-extension/blob/main/packages/rt/components/ExportPDF/ExportPDF.tsx#L71" target="_blank">ExportPDF</a></td>
+</tr>
+<tr data-line="1729">
+<td>previewtheme</td>
+<td>同上</td>
+</tr>
+<tr data-line="1730">
+<td>language</td>
+<td>同上</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="🐣 NormalToolbar" tabindex="-1" data-line="1734"><a class="header-anchor" href="#🐣 NormalToolbar">🐣 NormalToolbar</a></h3>
+<ul data-line="1736">
+<li data-line="1736">
+<p data-line="1736"><strong>props</strong></p>
+<ul data-line="1738">
+<li data-line="1738"><code>title</code>: <code>string</code>，非必须，作为工具栏上的 hover 提示。</li>
+<li data-line="1739"><code>trigger</code>: <code>ReactNode</code>，必须，通常是个图标，用来展示在工具栏上。</li>
+</ul>
+</li>
+<li data-line="1741">
+<p data-line="1741"><strong>events</strong></p>
+<ul data-line="1743">
+<li data-line="1743"><code>onClick</code>: <code>(e: MouseEvent) =&gt; void</code>，必须，点击事件。</li>
+</ul>
+</li>
+</ul>
+
+        <details  data-line="1745" class="md-editor-code">
+          <summary class="md-editor-code-head">
+            <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
+            <div class="md-editor-code-action">
+              <span class="md-editor-code-lang">jsx</span>
+              <span class="md-editor-copy-button" data-tips="复制代码">复制代码</span>
+              <span class="md-editor-collapse-tips"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-chevron-left md-editor-icon"><circle cx="12" cy="12" r="10"/><path d="m14 16-4-4 4-4"/></svg></span>
+            </div>
+          </summary>
+          <pre><code class="language-jsx" language=jsx><span class="md-editor-code-block">import { useState } from 'react';
+import { MdEditor, NormalToolbar, InsertContentGenerator } from 'md-editor-rt';
+import 'md-editor-rt/lib/style.css';
+
+interface MyToolbarProps {
+  insert?: (generator: InsertContentGenerator) =&gt; void;
+}
+
+/**
+ * `insert`方法会由编辑器自动向组件的组件注入。
+ */
+const MyToolbar = ({ insert = () =&gt; {} }: MyToolbarProps) =&gt; {
+  return (
+    &lt;NormalToolbar
+      title=&quot;mark&quot;
+      trigger={
+        &lt;svg className=&quot;md-editor-icon&quot; aria-hidden=&quot;true&quot;&gt;
+          &lt;use xlinkHref=&quot;#icon-mark&quot;&gt;&lt;/use&gt;
+        &lt;/svg&gt;
+      }
+      onClick={() =&gt; {
+        insert((selectedText) =&gt; {
+          /**
+           * @return targetValue    待插入内容
+           * @return select         插入后是否自动选中内容，默认：true
+           * @return deviationStart 插入后选中内容鼠标开始位置，默认：0
+           * @return deviationEnd   插入后选中内容鼠标结束位置，默认：0
+           */
+          return {
+            targetValue: `==${selectedText}==`,
+            select: true,
+            deviationStart: 0,
+            deviationEnd: 0,
+          };
+        });
+      }}
+      key=&quot;mark-toolbar&quot;
+    /&gt;
+  );
+};
+
+export default () =&gt; {
+  const [value, setValue] = useState('');
+
+  return (
+    &lt;MdEditor
+      modelValue={value}
+      id=&quot;md-prev&quot;
+      toolbars={['bold', 0, '=', 'github']}
+      defToolbars={[&lt;MyToolbar /&gt;]}
+      onChange={setValue}
+    /&gt;
+  );
+};</span><span rn-wrapper aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+        </details>
+      <p data-line="1802"><a href="https://github.com/imzbf/md-editor-rt/blob/docs/src/components/MarkExtension/index.tsx" target="_blank">标记组件的源码</a></p>
+<hr data-line="1804">
+<h3 id="🐼 DropdownToolbar" tabindex="-1" data-line="1806"><a class="header-anchor" href="#🐼 DropdownToolbar">🐼 DropdownToolbar</a></h3>
+<ul data-line="1808">
+<li data-line="1808">
+<p data-line="1808"><strong>props</strong></p>
+<ul data-line="1810">
+<li data-line="1810"><code>title</code>: <code>string</code>，非必须，作为工具栏上的 hover 提示。</li>
+<li data-line="1811"><code>visible</code>: <code>boolean</code>，必须，下拉状态。</li>
+<li data-line="1812"><code>trigger</code>: <code>ReactNode</code>，必须，通常是个图标，用来展示在工具栏上。</li>
+<li data-line="1813"><code>overlay</code>: <code>ReactNode</code>，必须，下拉框中的内容。</li>
+</ul>
+</li>
+<li data-line="1815">
+<p data-line="1815"><strong>events</strong></p>
+<ul data-line="1817">
+<li data-line="1817"><code>onChange</code>: <code>(visible: boolean) =&gt; void</code>，必须，状态变化事件。</li>
+</ul>
+</li>
+</ul>
+
+        <details  data-line="1819" class="md-editor-code">
+          <summary class="md-editor-code-head">
+            <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
+            <div class="md-editor-code-action">
+              <span class="md-editor-code-lang">jsx</span>
+              <span class="md-editor-copy-button" data-tips="复制代码">复制代码</span>
+              <span class="md-editor-collapse-tips"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-chevron-left md-editor-icon"><circle cx="12" cy="12" r="10"/><path d="m14 16-4-4 4-4"/></svg></span>
+            </div>
+          </summary>
+          <pre><code class="language-jsx" language=jsx><span class="md-editor-code-block">import { useCallback, useState } from 'react';
+import { MdEditor, DropdownToolbar } from 'md-editor-rt';
+import 'md-editor-rt/lib/style.css';
+
+/**
+ * `insert`方法会由编辑器自动向组件的组件注入。
+ */
+const MyToolbar = ({ insert = () =&gt; {} }) =&gt; {
+  const [visible, setVisible] = useState(false);
+
+  const onClick = useCallback(() =&gt; {
+    insert((selectedText) =&gt; {
+      /**
+       * @return targetValue    待插入内容
+       * @return select         插入后是否自动选中内容，默认：true
+       * @return deviationStart 插入后选中内容鼠标开始位置，默认：0
+       * @return deviationEnd   插入后选中内容鼠标结束位置，默认：0
+       */
+      return {
+        targetValue: `==${selectedText}==`,
+        select: true,
+        deviationStart: 0,
+        deviationEnd: 0,
+      };
+    });
+  }, [insert]);
+
+  return (
+    &lt;DropdownToolbar
+      visible={visible}
+      onChange={setVisible}
+      overlay={
+        &lt;ul&gt;
+          &lt;li onClick={onClick}&gt;option 1&lt;/li&gt;
+          &lt;li&gt;option 2&lt;/li&gt;
+        &lt;/ul&gt;
+      }
+      trigger={
+        &lt;svg className=&quot;md-editor-icon&quot; aria-hidden=&quot;true&quot;&gt;
+          &lt;use xlinkHref=&quot;#icon-emoji&quot;&gt;&lt;/use&gt;
+        &lt;/svg&gt;
+      }
+      key=&quot;emoji-toolbar&quot;
+    /&gt;
+  );
+};
+
+const toolbars = ['bold', 0, '=', 'github'];
+const defToolbars = [&lt;MyToolbar key=&quot;key&quot; /&gt;];
+
+export default () =&gt; {
+  const [value, setValue] = useState('');
+
+  return (
+    &lt;MdEditor
+      modelValue={value}
+      id=&quot;md-prev&quot;
+      toolbars={toolbars}
+      defToolbars={defToolbars}
+      onChange={setValue}
+    /&gt;
+  );
+};</span><span rn-wrapper aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+        </details>
+      <p data-line="1885"><a href="https://github.com/imzbf/md-editor-rt/blob/docs/src/components/EmojiExtension/index.tsx" target="_blank">Emoji 组件的源码</a></p>
+<hr data-line="1887">
+<h3 id="🦉 ModalToolbar" tabindex="-1" data-line="1889"><a class="header-anchor" href="#🦉 ModalToolbar">🦉 ModalToolbar</a></h3>
+<ul data-line="1891">
+<li data-line="1891">
+<p data-line="1891"><strong>props</strong></p>
+<ul data-line="1893">
+<li data-line="1893"><code>title</code>: <code>string</code>，非必须，作为工具栏上的 hover 提示。</li>
+<li data-line="1894"><code>modalTitle</code>: <code>ReactNode</code>，非必须，弹窗的标题。</li>
+<li data-line="1895"><code>visible</code>: <code>boolean</code>，必须，弹窗显示状态。</li>
+<li data-line="1896"><code>width</code>: <code>string</code>，非必须，弹窗宽度，默认<code>auto</code>。</li>
+<li data-line="1897"><code>height</code>：<code>string</code>，同<code>width</code>。</li>
+<li data-line="1898"><code>showAdjust</code>: <code>boolean</code>，非必须，是否显示弹窗全屏按钮。</li>
+<li data-line="1899"><code>isFullscreen</code>: <code>boolean</code>，显示全屏按钮时必须，弹窗全屏状态。</li>
+<li data-line="1900"><code>trigger</code>: <code>ReactNode</code>，必须，通常是个图标，用来展示在工具栏上。</li>
+<li data-line="1901"><code>children</code>: <code>ReactNode</code>，必须，弹窗中的内容。</li>
+<li data-line="1902"><code>className</code>: <code>string</code>，<code>^4.16.8</code>，非必须，类名。</li>
+<li data-line="1903"><code>style</code>: <code>CSSProperties</code>，<code>^4.16.8</code>，非必须，样式。</li>
+<li data-line="1904"><code>showMask</code>: <code>boolean</code>，<code>^4.16.8</code>，非必须，是否展示遮罩层，默认 true。</li>
+</ul>
+</li>
+<li data-line="1906">
+<p data-line="1906"><strong>events</strong></p>
+<ul data-line="1908">
+<li data-line="1908"><code>onClick</code>: <code>() =&gt; void</code>，必须，工具栏点击事件。</li>
+<li data-line="1909"><code>onClose</code>：<code>() =&gt; void</code>，必须，弹窗点击关闭事件。</li>
+<li data-line="1910"><code>onAdjust</code>：<code>(val: boolean) =&gt; void</code>，弹窗全屏按钮点击事件。</li>
+</ul>
+</li>
+</ul>
+
+        <details  data-line="1912" class="md-editor-code">
+          <summary class="md-editor-code-head">
+            <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
+            <div class="md-editor-code-action">
+              <span class="md-editor-code-lang">jsx</span>
+              <span class="md-editor-copy-button" data-tips="复制代码">复制代码</span>
+              <span class="md-editor-collapse-tips"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-chevron-left md-editor-icon"><circle cx="12" cy="12" r="10"/><path d="m14 16-4-4 4-4"/></svg></span>
+            </div>
+          </summary>
+          <pre><code class="language-jsx" language=jsx><span class="md-editor-code-block">import { useCallback, useState } from 'react';
+import { MdEditor, ModalToolbar } from 'md-editor-rt';
+import 'md-editor-rt/lib/style.css';
+
+/**
+ * `insert`方法会由编辑器自动向组件的组件注入。
+ */
+const MyToolbar = ({ insert = () =&gt; {} }) =&gt; {
+  const [visible, setVisible] = useState(false);
+  const [isFullscreen, setIsFullscreen] = useState(false);
+
+  const onClick = useCallback(() =&gt; {
+    setVisible(true);
+  }, []);
+
+  const onClose = useCallback(() =&gt; {
+    setVisible(false);
+  }, []);
+
+  const onAdjust = useCallback(() =&gt; {
+    setIsFullscreen((i) =&gt; !i);
+  }, []);
+
+  const insertHandler = useCallback(() =&gt; {
+    insert((selectedText) =&gt; {
+      /**
+       * @return targetValue    待插入内容
+       * @return select         插入后是否自动选中内容，默认：true
+       * @return deviationStart 插入后选中内容鼠标开始位置，默认：0
+       * @return deviationEnd   插入后选中内容鼠标结束位置，默认：0
+       */
+      return {
+        targetValue: `==${selectedText}==`,
+        select: true,
+        deviationStart: 0,
+        deviationEnd: 0,
+      };
+    });
+  }, [insert]);
+
+  return (
+    &lt;ModalToolbar
+      visible={visible}
+      isFullscreen={isFullscreen}
+      showAdjust
+      title=&quot;hover-title&quot;
+      modalTitle=&quot;modalTitle&quot;
+      width=&quot;870px&quot;
+      height=&quot;600px&quot;
+      onClick={onClick}
+      onClose={onClose}
+      onAdjust={onAdjust}
+      trigger={
+        &lt;svg className=&quot;md-editor-icon&quot; aria-hidden=&quot;true&quot;&gt;
+          &lt;use xlinkHref=&quot;#icon-read&quot;&gt;&lt;/use&gt;
+        &lt;/svg&gt;
+      }
+    &gt;
+      &lt;div
+        style={{
+          height: '100%',
+          padding: '20px',
+          overflow: 'auto',
+        }}
+      &gt;
+        &lt;button onClick={insertHandler}&gt;click me&lt;/button&gt;
+      &lt;/div&gt;
+    &lt;/ModalToolbar&gt;
+  );
+};
+
+const toolbars = ['bold', 0, '=', 'github'];
+const defToolbars = [&lt;MyToolbar key=&quot;key&quot; /&gt;];
+
+export default () =&gt; {
+  const [value, setValue] = useState('');
+  return (
+    &lt;MdEditor
+      modelValue={value}
+      id=&quot;md-prev&quot;
+      toolbars={toolbars}
+      defToolbars={defToolbars}
+      onChange={setValue}
+    /&gt;
+  );
+};</span><span rn-wrapper aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+        </details>
+      <p data-line="2001"><a href="https://github.com/imzbf/md-editor-rt/blob/docs/src/components/ReadExtension/index.tsx" target="_blank">阅读组件的源码</a></p>
+<hr data-line="2003">
+<h3 id="🐻 MdCatalog" tabindex="-1" data-line="2005"><a class="header-anchor" href="#🐻 MdCatalog">🐻 MdCatalog</a></h3>
+<ul data-line="2007">
+<li data-line="2007">
+<p data-line="2007"><strong>props</strong></p>
+<ul data-line="2009">
+<li data-line="2009"><code>editorId</code>: <code>string</code>，必须，对应编辑器的<code>id</code>，在内部注册目录变化监听事件。</li>
+<li data-line="2010"><code>className</code>: <code>string</code>，非必须，目录组件最外层类名。</li>
+<li data-line="2011"><code>mdHeadingId</code>: <code>mdHeadingId</code>，非必须，特殊化编辑器标题的算法，与编辑器相同。</li>
+<li data-line="2012"><code>scrollElement</code>: <code>string | HTMLElement</code>，非必须，为字符时应是一个元素选择器。仅预览模式中，整页滚动时，设置为<code>document.documentElement</code>。</li>
+<li data-line="2013"><code>theme</code>: <code>'light' | 'dark'</code>，非必须，当需要切换主题时提供，同编辑器的<code>theme</code>。</li>
+<li data-line="2014"><code>offsetTop</code>: <code>number</code>，非必须，标题距离顶部该像素时高亮当前目录项，默认 20 像素。</li>
+<li data-line="2015"><code>scrollElementOffsetTop</code>: <code>number</code>，非必须，滚动区域的固定顶部高度，默认 0。</li>
+</ul>
+</li>
+<li data-line="2017">
+<p data-line="2017"><strong>events</strong></p>
+<ul data-line="2019">
+<li data-line="2019"><code>onClick</code>: <code>(e: MouseEvent, t: TocItem) =&gt; void</code>，非必须，导航点击事件。</li>
+<li data-line="2020"><code>onActive</code>: <code>(heading: HeadList | undefined) =&gt; void</code>，非必须，高亮的标题变化事件。</li>
+</ul>
+</li>
+</ul>
+<blockquote data-line="2022">
+<p data-line="2022"><code>scrollElement</code>说明：仅预览下，该元素必须已定位的并且支持滚动。</p>
+</blockquote>
+
+        <details  data-line="2024" class="md-editor-code" open="">
+          <summary class="md-editor-code-head">
+            <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
+            <div class="md-editor-code-action">
+              <span class="md-editor-code-lang">jsx</span>
+              <span class="md-editor-copy-button" data-tips="复制代码">复制代码</span>
+              <span class="md-editor-collapse-tips"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-chevron-left md-editor-icon"><circle cx="12" cy="12" r="10"/><path d="m14 16-4-4 4-4"/></svg></span>
+            </div>
+          </summary>
+          <pre><code class="language-jsx" language=jsx><span class="md-editor-code-block">import { MdPreview, MdCatalog } from 'md-editor-rt';
+import 'md-editor-rt/lib/preview.css';
+
+const editorId = 'my-editor';
+
+export default () =&gt; {
+  const [state] = useState({
+    text: '# 标题',
+    scrollElement: document.documentElement,
+  });
+
+  return (
+    &lt;&gt;
+      {/* 保证editorId是相同的 */}
+      &lt;MdPreview id={editorId} modelValue={state.text} /&gt;
+      &lt;MdCatalog editorId={editorId} scrollElement={state.scrollElement} /&gt;
+    &lt;/&gt;
+  );
+};</span><span rn-wrapper aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+        </details>
+      <hr data-line="2046">
+<h3 id="🛸 MdModal" tabindex="-1" data-line="2048"><a class="header-anchor" href="#🛸 MdModal">🛸 MdModal</a></h3>
+<p data-line="2050">编辑器内部的弹窗组件，它通常配合下拉工具栏组件使用。</p>
+<ul data-line="2052">
+<li data-line="2052">
+<p data-line="2052"><strong>props</strong></p>
+<ul data-line="2054">
+<li data-line="2054"><code>title</code>: <code>ReactNode</code>，非必须，弹窗标题栏。</li>
+<li data-line="2055"><code>visible</code>: <code>boolean</code>，必须，弹窗显示状态。</li>
+<li data-line="2056"><code>width</code>: <code>string</code>，非必须，弹窗宽度，默认<code>auto</code>。</li>
+<li data-line="2057"><code>height</code>: <code>string</code>，同<code>width</code>。</li>
+<li data-line="2058"><code>showAdjust</code>: <code>boolean</code>，非必须，是否显示弹窗全屏按钮。</li>
+<li data-line="2059"><code>isFullscreen</code>: <code>boolean</code>，显示全屏按钮时必须，弹窗全屏状态。</li>
+<li data-line="2060"><code>children</code>: <code>ReactNode</code>，非必须，弹窗显示的内容。</li>
+<li data-line="2061"><code>className</code>: <code>string</code>，非必须，类名。</li>
+<li data-line="2062"><code>style</code>: <code>CSSProperties</code>，非必须，样式。</li>
+<li data-line="2063"><code>showMask</code>: <code>boolean</code>，<code>^4.16.8</code>，非必须，是否展示遮罩层，默认 true。</li>
+</ul>
+</li>
+<li data-line="2065">
+<p data-line="2065"><strong>events</strong></p>
+<ul data-line="2067">
+<li data-line="2067"><code>onClose</code>: <code>() =&gt; void</code>，必须，弹窗点击关闭事件。</li>
+<li data-line="2068"><code>onAdjust</code>: <code>(val: boolean) =&gt; void</code>，弹窗全屏按钮点击事件。</li>
+</ul>
+</li>
+</ul>
+
+        <details  data-line="2070" class="md-editor-code">
+          <summary class="md-editor-code-head">
+            <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
+            <div class="md-editor-code-action">
+              <span class="md-editor-code-lang">jsx</span>
+              <span class="md-editor-copy-button" data-tips="复制代码">复制代码</span>
+              <span class="md-editor-collapse-tips"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-chevron-left md-editor-icon"><circle cx="12" cy="12" r="10"/><path d="m14 16-4-4 4-4"/></svg></span>
+            </div>
+          </summary>
+          <pre><code class="language-jsx" language=jsx><span class="md-editor-code-block">import { useCallback, useState } from 'react';
+import { MdEditor, DropdownToolbar, MdModal } from 'md-editor-rt';
+import 'md-editor-rt/lib/style.css';
+
+/**
+ * `insert`方法会由编辑器自动向组件的组件注入。
+ */
+const MyToolbar = () =&gt; {
+  const [visible, setVisible] = useState(false);
+  const [mVisible, setMvisible] = useState(false);
+
+  const onClick = useCallback(() =&gt; {
+    setMvisible(true);
+  }, []);
+
+  const onClose = useCallback(() =&gt; {
+    setMvisible(false);
+  }, []);
+
+  return (
+    &lt;DropdownToolbar
+      visible={visible}
+      onChange={setVisible}
+      overlay={
+        &lt;ul&gt;
+          &lt;li onClick={onClick}&gt;option 1&lt;/li&gt;
+          &lt;li&gt;option 2&lt;/li&gt;
+        &lt;/ul&gt;
+      }
+      trigger={
+        &lt;svg className=&quot;md-editor-icon&quot; aria-hidden=&quot;true&quot;&gt;
+          &lt;use xlinkHref=&quot;#icon-emoji&quot;&gt;&lt;/use&gt;
+        &lt;/svg&gt;
+      }
+      key=&quot;emoji-toolbar&quot;
+    &gt;
+      &lt;MdModal title={'title'} visible={mVisible} onClose={onClose}&gt;
+        Content, Content
+      &lt;/MdModal&gt;
+    &lt;/DropdownToolbar&gt;
+  );
+};
+
+const toolbars = ['bold', 0, '=', 'github'];
+const defToolbars = [&lt;MyToolbar key=&quot;key&quot; /&gt;];
+
+export default () =&gt; {
+  const [value, setValue] = useState('');
+
+  return (
+    &lt;MdEditor
+      modelValue={value}
+      id=&quot;md-prev&quot;
+      toolbars={toolbars}
+      defToolbars={defToolbars}
+      onChange={setValue}
+    /&gt;
+  );
+};</span><span rn-wrapper aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+        </details>
+      <hr data-line="2132">
+<h2 id="🪤 内部配置" tabindex="-1" data-line="2134"><a class="header-anchor" href="#🪤 内部配置">🪤 内部配置</a></h2>
+
+        <details  data-line="2136" class="md-editor-code" open="">
+          <summary class="md-editor-code-head">
+            <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
+            <div class="md-editor-code-action">
+              <span class="md-editor-code-lang">js</span>
+              <span class="md-editor-copy-button" data-tips="复制代码">复制代码</span>
+              <span class="md-editor-collapse-tips"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-chevron-left md-editor-icon"><circle cx="12" cy="12" r="10"/><path d="m14 16-4-4 4-4"/></svg></span>
+            </div>
+          </summary>
+          <pre><code class="language-js" language=js><span class="md-editor-code-block">import {
+  allToolbar,
+  allFooter,
+  zh_CN,
+  en_US,
+  editorExtensionsAttrs,
+} from 'md-editor-rt';
+
+console.log(allToolbar, allFooter, zh_CN, en_US, editorExtensionsAttrs);</span><span rn-wrapper aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+        </details>
+      <h2 id="📦 内部工具" tabindex="-1" data-line="2148"><a class="header-anchor" href="#📦 内部工具">📦 内部工具</a></h2>
+<h3 id="🧹 clearSideEffects" tabindex="-1" data-line="2150"><a class="header-anchor" href="#🧹 clearSideEffects">🧹 clearSideEffects</a></h3>
+<p data-line="2152"><code>&gt;=5.0.0</code></p>
+<p data-line="2154">清空组件带来的副作用，例如：使用 CDN 嵌入的链接，为了保证多个组件能够正常使用，组件在卸载时不会主动移除</p>
+
+        <details  data-line="2156" class="md-editor-code" open="">
+          <summary class="md-editor-code-head">
+            <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
+            <div class="md-editor-code-action">
+              <span class="md-editor-code-lang">js</span>
+              <span class="md-editor-copy-button" data-tips="复制代码">复制代码</span>
+              <span class="md-editor-collapse-tips"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-chevron-left md-editor-icon"><circle cx="12" cy="12" r="10"/><path d="m14 16-4-4 4-4"/></svg></span>
+            </div>
+          </summary>
+          <pre><code class="language-js" language=js><span class="md-editor-code-block">import { clearSideEffects } from 'md-editor-rt';
+
+clearSideEffects();</span><span rn-wrapper aria-hidden="true"><span></span><span></span><span></span></span></code></pre>
+
+        </details>
+      <div data-line="2162" class="md-editor-admonition md-editor-admonition-warning">
+<p data-line="2164">这会删除掉页面中的 CDN 引用，如果当前页面还存在该组件实例，请不要这样做！</p>
+</div>
+<h3 id="XSSPlugin" tabindex="-1" data-line="2168"><a class="header-anchor" href="#XSSPlugin">XSSPlugin</a></h3>
+<p data-line="2170"><code>&gt;=5.0.0</code></p>
+<p data-line="2172">使用示例：<a href="https://imzbf.github.io/md-editor-rt/zh-CN/demo#%F0%9F%94%92%20%E6%B7%BB%E5%8A%A0%20xss%20%E6%89%A9%E5%B1%95" target="_blank">添加 xss 扩展</a></p>
+<h2 id="✍️ 编辑此页面" tabindex="-1" data-line="2174"><a class="header-anchor" href="#✍️ 编辑此页面">✍️ 编辑此页面</a></h2>
+<p data-line="2176"><a href="https://github.com/imzbf/md-editor-rt/blob/dev-docs/public/doc-zh-CN.md" target="_blank">doc-zh-CN</a></p>
+</div></div></div></div><div class="catalog"><div class="affix"><div class="md-editor-catalog "></div></div></div></div></div></div><script id="__NEXT_DATA__" type="application/json">{"props":{"pageProps":{}},"page":"/zh-CN/api","query":{},"buildId":"WcJGbhp6rehPbUQlXgcVg","assetPrefix":"/md-editor-rt","nextExport":true,"autoExport":true,"isFallback":false,"scriptLoader":[{"src":"//at.alicdn.com/t/c/font_2818624_gbt6qvt9lob.js","strategy":"afterInteractive"}]}</script></body></html>
