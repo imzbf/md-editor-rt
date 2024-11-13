@@ -2,9 +2,7 @@ import React, { useCallback, useMemo } from 'react';
 import Link from 'next/link';
 
 import { useLang } from '@/hooks/router';
-import { ROUTE_PREFIX } from '@/config';
 
-import './index.scss';
 import { usePathname, useRouter } from 'next/navigation';
 
 const Navigation = () => {
@@ -39,14 +37,14 @@ const Navigation = () => {
   }, [lang]);
 
   const routePrefix = useMemo(() => {
-    return `${ROUTE_PREFIX}/${lang}`;
+    return `/${lang}`;
   }, [lang]);
 
   const changeLang = useCallback(() => {
     router.replace(
       pathname.replace(
         /\/[a-zA-Z-]+/,
-        `${ROUTE_PREFIX}/${lang === 'zh-CN' ? 'en-US' : 'zh-CN'}`
+        `/${lang === 'zh-CN' ? 'en-US' : 'zh-CN'}`
       )
     );
   }, [lang, pathname, router]);

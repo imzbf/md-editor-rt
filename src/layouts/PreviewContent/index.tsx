@@ -5,8 +5,6 @@ import { useLang } from '@/hooks/router';
 import IzCatalog from '../Catalog';
 // import { debounce, getRootOffset } from '@vavt/util';
 
-import './index.scss';
-
 interface IzPreviewContentProp {
   editorId: string;
   value: string;

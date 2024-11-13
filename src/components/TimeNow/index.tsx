@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import dayjs from 'dayjs';
 import { NormalFooterToolbar } from 'md-editor-rt';
 import { useLang } from '@/hooks/router';

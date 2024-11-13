@@ -1,6 +1,5 @@
 import { cloneElement, useCallback, useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
-import './index.scss';
 
 interface IzDrawerProp {
   children: JSX.Element;

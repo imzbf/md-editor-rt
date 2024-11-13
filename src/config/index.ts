@@ -2,7 +2,8 @@ export const SITE_TITLE_PREFIX = 'MdEditorRT';
 
 export const STORAGED_STORE_KEY = 'storaged_store_key_rt';
 
-export const ROUTE_PREFIX = '';
+export const ROUTE_PREFIX =
+  process.env.NODE_ENV === 'production' ? '/md-editor-rt' : '';
 
 export const SITE_NAME_CN = 'MdEditorRT 使用文档';
 export const SITE_NAME_EN = 'MdEditorRT Documentation';

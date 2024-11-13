@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from 'react';
-import './index.scss';
+import { useEffect, useState } from 'react';
 
 const backTop = () => {
   document.documentElement.scroll({

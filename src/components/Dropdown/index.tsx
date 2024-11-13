@@ -1,5 +1,4 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import React, {
+import {
   cloneElement,
   CSSProperties,
   useRef,
@@ -11,7 +10,6 @@ import { debounce } from '@vavt/util';
 import Menu from './Menu';
 import MenuItem from './MenuItem';
 import { getOffset, classnames } from '@/utils';
-import './index.scss';
 
 interface IzDropdownProp {
   children: JSX.Element;

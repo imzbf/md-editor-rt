@@ -9,11 +9,7 @@ import { lineNumbers } from '@codemirror/view';
 import store from '@/store';
 import Header from './Header';
 
-import 'md-editor-rt/lib/style.css';
-import '@/styles/common.scss';
-
 import ZH_TW from '@vavt/cm-extension/dist/locale/zh-TW';
-import '@vavt/cm-extension/dist/previewTheme/arknights.css';
 import BackTop from '@/components/BackTop';
 
 interface AppLayout {

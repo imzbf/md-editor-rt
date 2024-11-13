@@ -11,7 +11,6 @@ import {
   changeTheme,
   setAll,
 } from '@/store';
-import './index.scss';
 import { useLang } from '@/hooks/router';
 import { STORAGED_STORE_KEY } from '@/config';
 

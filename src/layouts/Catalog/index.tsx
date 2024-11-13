@@ -4,8 +4,6 @@ import type { TocItem } from 'md-editor-rt/lib/types/MdCatalog';
 import { createSmoothScroll } from '@vavt/util';
 import { useAppSelector } from '@/hooks/store';
 
-import './index.scss';
-
 interface IzCatalogProp {
   editorId: string;
 }
