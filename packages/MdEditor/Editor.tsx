@@ -132,7 +132,8 @@ const Editor = forwardRef((props: EditorProps, ref: ForwardedRef<unknown>) => {
         usedLanguageText,
         previewTheme,
         customIcon: props.customIcon || {},
-        rootRef
+        rootRef,
+        disabled: props.disabled
       }}
     >
       <div

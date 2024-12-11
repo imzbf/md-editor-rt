@@ -364,8 +364,8 @@ export default ({ theme, previewTheme, codeTheme, lang }: PreviewProp) => {
               // }
             }
           }
-          inputBoxWitdh={md.inputBoxWitdh}
-          onInputBoxWitdhChange={(w) => {
+          inputBoxWidth={md.inputBoxWitdh}
+          onInputBoxWidthChange={(w) => {
             md.inputBoxWitdh = w;
             localStorage.setItem(INPUT_BOX_WITDH, w);
           }}

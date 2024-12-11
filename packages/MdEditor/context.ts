@@ -15,5 +15,6 @@ export const EditorContext = createContext<ContentType>({
   usedLanguageText: staticTextDefault['zh-CN'],
   previewTheme: 'default',
   customIcon: {},
-  rootRef: null
+  rootRef: null,
+  disabled: undefined
 });
