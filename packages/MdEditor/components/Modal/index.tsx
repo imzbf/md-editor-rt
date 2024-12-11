@@ -2,10 +2,10 @@ import {
   CSSProperties,
   useRef,
   useState,
-  ReactElement,
   useEffect,
   useMemo,
-  useContext
+  useContext,
+  ReactNode
 } from 'react';
 import { createPortal } from 'react-dom';
 import { configOption, prefix } from '~/config';
@@ -15,7 +15,7 @@ import { getZIndexIncrement } from '~/utils';
 import Icon from '../Icon';
 
 export type ModalProps = Readonly<{
-  title?: string | ReactElement;
+  title?: ReactNode;
   visible?: boolean;
   width?: string;
   height?: string;

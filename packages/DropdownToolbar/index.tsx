@@ -1,4 +1,4 @@
-import { ReactElement, ReactNode, useContext } from 'react';
+import { ReactNode, useContext } from 'react';
 import { prefix } from '~/config';
 import { EditorContext } from '~/context';
 import Dropdown from '~/components/Dropdown';
@@ -6,9 +6,9 @@ import Dropdown from '~/components/Dropdown';
 export interface DropdownToolbarProps {
   title?: string;
   visible: boolean;
-  trigger: string | ReactElement;
+  trigger?: ReactNode;
   onChange: (visible: boolean) => void;
-  overlay: string | ReactElement;
+  overlay: ReactNode;
   children?: ReactNode;
 }
 
@@ -23,8 +23,7 @@ const DropdownToolbar = (props: DropdownToolbarProps) => {
       overlay={props.overlay}
     >
       <div className={`${prefix}-toolbar-item`} title={props.title || ''}>
-        {props.trigger}
-        {props.children}
+        {props.children || props.trigger}
       </div>
     </Dropdown>
   );
