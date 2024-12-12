@@ -68,7 +68,8 @@ const MdPreview = forwardRef((props: MdPreviewProps, ref: ForwardedRef<unknown>)
         usedLanguageText,
         previewTheme,
         customIcon: props.customIcon || {},
-        rootRef
+        rootRef,
+        disabled: false
       }}
     >
       <div
