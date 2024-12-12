@@ -23,14 +23,7 @@ import {
   UploadImgCallBack,
   MdPreviewProps
 } from './type';
-import {
-  prefix,
-  allToolbar,
-  codeCss,
-  staticTextDefault,
-  configOption,
-  defaultProps
-} from './config';
+import { prefix, codeCss, staticTextDefault, configOption, defaultProps } from './config';
 import { appendHandler } from './utils/dom';
 import {
   CHANGE_CATALOG_VISIBLE,
@@ -261,8 +254,7 @@ export const useUploadImg = (props: EditorProps, staticProps: StaticProps) => {
  * @param staticProps
  * @returns
  */
-export const useCatalog = (props: EditorProps, staticProps: StaticProps) => {
-  const { toolbars = allToolbar, toolbarsExclude = [] } = props;
+export const useCatalog = (_props: EditorProps, staticProps: StaticProps) => {
   const { editorId } = staticProps;
 
   const [catalogShow, setCatalogShow] = useState(false);
@@ -285,14 +277,7 @@ export const useCatalog = (props: EditorProps, staticProps: StaticProps) => {
     };
   }, [editorId]);
 
-  // 是否挂载目录组件
-  const catalogVisible = useMemo(() => {
-    return (
-      !toolbarsExclude.includes('catalog') && toolbars.includes('catalog') && catalogShow
-    );
-  }, [catalogShow, toolbars, toolbarsExclude]);
-
-  return catalogVisible;
+  return catalogShow;
 };
 
 // 初始为空，渲染到页面后获取页面属性

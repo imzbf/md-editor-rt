@@ -1,4 +1,4 @@
-import { CSSProperties, ReactElement } from 'react';
+import { CSSProperties, ReactNode } from 'react';
 import { prefix } from '~/config';
 import Modal from '~/components/Modal';
 
@@ -8,7 +8,7 @@ export interface ModalToolbarProps {
   visible: boolean;
   width?: string;
   height?: string;
-  trigger: string | ReactElement;
+  trigger: ReactNode;
   onClick: () => void;
   onClose: () => void;
   showAdjust?: boolean;

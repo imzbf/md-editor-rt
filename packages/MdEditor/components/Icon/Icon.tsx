@@ -2,7 +2,6 @@ import { createElement, ForwardRefExoticComponent } from 'react';
 import {
   Bold,
   ChartArea,
-  CircleChevronDown,
   Code,
   Expand,
   Eye,
@@ -73,8 +72,7 @@ export type IconName =
   | 'formula'
   | 'close'
   | 'delete'
-  | 'upload'
-  | 'collapse-tips';
+  | 'upload';
 
 const iconMaps: {
   [key in IconName]: ForwardRefExoticComponent<
@@ -114,8 +112,7 @@ const iconMaps: {
   formula: SquareSigma,
   close: X,
   delete: Trash2,
-  upload: Upload,
-  'collapse-tips': CircleChevronDown
+  upload: Upload
 };
 
 const Icon = (props: { name: IconName }) => {

@@ -5,8 +5,8 @@ import {
   useEffect,
   useRef,
   useState,
-  JSXElementConstructor,
-  useCallback
+  useCallback,
+  ReactNode
 } from 'react';
 
 import { prefix } from '~/config';
@@ -19,17 +19,18 @@ interface CtlTypes {
 }
 
 interface ModalProps {
-  overlay: string | number | ReactElement;
+  overlay: ReactNode;
   visible: boolean;
-  children?: string | number | ReactElement;
+  children: ReactElement;
   onChange: (v: boolean) => void;
   relative?: string;
+  disabled?: boolean;
 }
 
 const HIDDEN_CLASS = `${prefix}-dropdown-hidden`;
 
 const DropDown = (props: ModalProps) => {
-  const { relative = 'html' } = props;
+  const { relative = 'html', onChange, disabled } = props;
   const [ctl, setCtl] = useState<CtlTypes>({
     overlayClass: HIDDEN_CLASS,
     overlayStyle: {}
@@ -44,6 +45,10 @@ const DropDown = (props: ModalProps) => {
   const overlayRef = useRef<HTMLDivElement>(null);
 
   const triggerHandler = useCallback(() => {
+    if (disabled) {
+      return false;
+    }
+
     status.current.triggerHover = true;
 
     const triggerEle = triggerRef.current as HTMLElement;
@@ -86,12 +91,47 @@ const DropDown = (props: ModalProps) => {
       }
     }));
 
-    props.onChange(true);
-  }, [props, relative]);
+    onChange(true);
+  }, [disabled, onChange, relative]);
 
-  const overlayHandler = () => {
+  const overlayHandler = useCallback(() => {
+    if (disabled) {
+      return false;
+    }
     status.current.overlayHover = true;
-  };
+  }, [disabled]);
+
+  const hiddenTimer = useRef(-1);
+  const leaveHidden = useCallback(
+    (e: MouseEvent) => {
+      if (disabled) {
+        return false;
+      }
+
+      if (triggerRef.current?.contains(e.target as Node)) {
+        status.current.triggerHover = false;
+      } else {
+        status.current.overlayHover = false;
+      }
+
+      clearTimeout(hiddenTimer.current);
+      hiddenTimer.current = window.setTimeout(() => {
+        if (!status.current.overlayHover && !status.current.triggerHover) {
+          onChange(false);
+        }
+      }, 10);
+    },
+    [disabled, onChange]
+  );
+
+  const slotDefault = props.children;
+  const slotOverlay = props.overlay;
+
+  // 触发器
+  const trigger = cloneElement(slotDefault, {
+    ref: triggerRef,
+    key: 'cloned-dropdown-trigger'
+  });
 
   // 显示状态变化后修改某些属性
   useEffect(() => {
@@ -112,25 +152,6 @@ const DropDown = (props: ModalProps) => {
     }
   }, [props.visible]);
 
-  const hiddenTimer = useRef(-1);
-  const leaveHidden = useCallback(
-    (e: MouseEvent) => {
-      if (triggerRef.current === e.target) {
-        status.current.triggerHover = false;
-      } else {
-        status.current.overlayHover = false;
-      }
-
-      clearTimeout(hiddenTimer.current);
-      hiddenTimer.current = window.setTimeout(() => {
-        if (!status.current.overlayHover && !status.current.triggerHover) {
-          props.onChange(false);
-        }
-      }, 10);
-    },
-    [props]
-  );
-
   useEffect(() => {
     const _trigger = triggerRef.current;
     const _overlay = overlayRef.current;
@@ -149,22 +170,7 @@ const DropDown = (props: ModalProps) => {
       _overlay?.removeEventListener('mouseenter', overlayHandler);
       _overlay?.removeEventListener('mouseleave', leaveHidden);
     };
-  }, [leaveHidden, triggerHandler]);
-
-  const slotDefault = props.children as ReactElement<
-    any,
-    string | JSXElementConstructor<any>
-  >;
-  const slotOverlay = props.overlay as ReactElement<
-    any,
-    string | JSXElementConstructor<any>
-  >;
-
-  // 触发器
-  const trigger = cloneElement(slotDefault, {
-    ref: triggerRef,
-    key: 'cloned-dropdown-trigger'
-  });
+  }, [leaveHidden, overlayHandler, triggerHandler]);
 
   // 列表内容
   const overlay = (

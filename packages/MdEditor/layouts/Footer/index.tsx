@@ -1,6 +1,15 @@
-import { memo, ReactElement, useCallback, useMemo } from 'react';
+import {
+  cloneElement,
+  memo,
+  ReactElement,
+  useCallback,
+  useContext,
+  useMemo
+} from 'react';
 import { allFooter, prefix } from '~/config';
 import { Footers } from '~/type';
+import { EditorContext } from '~/context';
+
 import MarkdownTotal from './MarkdownTotal';
 import ScrollAuto from './ScrollAuto';
 
@@ -14,6 +23,8 @@ interface FooterProps {
 }
 
 const Footer = (props: FooterProps) => {
+  const { theme, language, disabled } = useContext(EditorContext);
+
   const footerRender = useCallback(
     (name: Footers) => {
       if (allFooter.includes(name)) {
@@ -34,7 +45,19 @@ const Footer = (props: FooterProps) => {
           }
         }
       } else {
-        return props.defFooters[name as number] || '';
+        const defItem = props.defFooters[name as number];
+
+        if (typeof defItem !== 'string') {
+          const defItemCloned = cloneElement(defItem, {
+            theme: defItem.props.theme || theme,
+            language: defItem.props.language || language,
+            disabled: defItem.props.disabled || disabled
+          });
+
+          return defItemCloned;
+        }
+
+        return defItem || '';
       }
     },
     [
@@ -42,7 +65,10 @@ const Footer = (props: FooterProps) => {
       props.noScrollAuto,
       props.scrollAuto,
       props.onScrollAutoChange,
-      props.defFooters
+      props.defFooters,
+      theme,
+      language,
+      disabled
     ]
   );
 

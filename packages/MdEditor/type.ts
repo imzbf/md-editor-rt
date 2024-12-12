@@ -499,6 +499,7 @@ export interface ContentType {
   previewTheme: PreviewThemes;
   customIcon: CustomIcon;
   rootRef: RefObject<HTMLDivElement> | null;
+  disabled: boolean | undefined;
 }
 
 export interface MermaidTemplate {
@@ -906,4 +907,5 @@ export type CustomIcon = {
   };
 } & {
   copy?: string;
+  'collapse-tips'?: string;
 };
