@@ -6,6 +6,9 @@ import Dropdown from '~/components/Dropdown';
 export interface DropdownToolbarProps {
   title?: string;
   visible: boolean;
+  /**
+   * @deprecated 使用children代替
+   */
   trigger?: ReactNode;
   onChange: (visible: boolean) => void;
   overlay: ReactNode;

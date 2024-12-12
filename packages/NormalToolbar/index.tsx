@@ -4,6 +4,9 @@ import { prefix } from '~/config';
 export interface NormalToolbarProps {
   title?: string;
   children?: ReactNode;
+  /**
+   * @deprecated 使用children代替
+   */
   trigger?: ReactNode;
   onClick: (e: MouseEvent) => void;
 }
