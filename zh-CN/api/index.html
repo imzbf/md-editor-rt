@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en-US"><head><meta charSet="utf-8" data-next-head=""/><title data-next-head="">API - MdEditorRT 使用文档</title><meta name="keywords" content="MD Editor, md-editor-rt, Markdown 编辑器, React Markdown, React TSX, Markdown 组件, Markdown preview, React 编辑器" data-next-head=""/><meta name="description" content="md-editor-rt 是一个基于 React 和 TSX 开发的 Markdown 编辑器组件，支持实时预览和丰富的 Markdown 功能。查阅详细的开发文档与使用示例。" data-next-head=""/><meta name="viewport" content="width=device-width, initial-scale=1" data-next-head=""/><link rel="preload" href="/md-editor-rt/_next/static/css/24529bbedc0b046d.css" as="style"/><link rel="stylesheet" href="/md-editor-rt/_next/static/css/24529bbedc0b046d.css" data-n-g=""/><noscript data-n-css=""></noscript><script defer="" nomodule="" src="/md-editor-rt/_next/static/chunks/polyfills-42372ed130431b0a.js"></script><script src="/md-editor-rt/_next/static/chunks/webpack-7628ef4e168316d1.js" defer=""></script><script src="/md-editor-rt/_next/static/chunks/framework-ee340abb9d4be981.js" defer=""></script><script src="/md-editor-rt/_next/static/chunks/main-e0c08bc071d6f2f5.js" defer=""></script><script src="/md-editor-rt/_next/static/chunks/pages/_app-36622205a7071555.js" defer=""></script><script src="/md-editor-rt/_next/static/chunks/1581-5ff4752543b90d3b.js" defer=""></script><script src="/md-editor-rt/_next/static/chunks/pages/zh-CN/api-f7f555eb3bca0db7.js" defer=""></script><script src="/md-editor-rt/_next/static/u-Y7fWkWqaX8wLia6lfs2/_buildManifest.js" defer=""></script><script src="/md-editor-rt/_next/static/u-Y7fWkWqaX8wLia6lfs2/_ssgManifest.js" defer=""></script></head><body><div id="__next"><header class="page-header"><section class="container"><h1 class="project-name">md-editor-rt<sup>@<!-- -->5.0.2</sup></h1><p class="project-desc">Markdown编辑器React版本，使用jsx和typescript语法开发，支持切换主题、prettier美化文本等。</p><div class="pc"><ul class="nav-list"><li class="nav-item"><a href="/md-editor-rt/zh-CN"><svg class="icon" aria-hidden="true"><use xlink:href="#med-icon-homepage"></use></svg>首页</a></li><li class="nav-item"><a href="/md-editor-rt/zh-CN/api"><svg class="icon" aria-hidden="true"><use xlink:href="#med-icon-api"></use></svg>API</a></li><li class="nav-item"><a href="/md-editor-rt/zh-CN/demo"><svg class="icon" aria-hidden="true"><use xlink:href="#med-icon-example"></use></svg>示例</a></li><li class="nav-item"><a target="_blank" href="https://github.com/imzbf/md-editor-rt"><svg class="icon" aria-hidden="true"><use xlink:href="#med-icon-github"></use></svg>源码</a></li><li class="nav-item"><a href="/md-editor-rt/zh-CN/syntax"><svg class="icon" aria-hidden="true"><use xlink:href="#med-icon-syntax"></use></svg>语法</a></li><li class="nav-item"><a href="/md-editor-rt/zh-CN/contrast"><svg class="icon" aria-hidden="true"><use xlink:href="#med-icon-question"></use></svg>对比</a></li><li class="nav-item"><a href="/md-editor-rt/zh-CN/about"><svg class="icon" aria-hidden="true"><use xlink:href="#med-icon-about"></use></svg>关于</a></li><li class="nav-item"><svg class="icon" aria-hidden="true"><use xlink:href="#med-icon-en"></use></svg>English</li></ul><p class="header-actions"><button class="btn btn-header">默认模式</button><button class="btn btn-header">暗黑模式</button><button class="btn btn-header">预览主题</button><button class="btn btn-header">代码主题</button></p></div><div class="mb"><svg class="icon m-menu-trigger" aria-hidden="true"><use xlink:href="#med-icon-drawer"></use></svg></div></section></header><div class="container"><div class="doc"><div class="content"><div id="md-api-zh" class="md-editor   md-editor-previewOnly"><div id="md-api-zh-preview-wrapper" class="md-editor-preview-wrapper"><div id="md-api-zh-preview" class="md-editor-preview default-theme md-editor-scrn"><blockquote data-line="0">
+<!DOCTYPE html><html lang="en-US"><head><meta charSet="utf-8" data-next-head=""/><title data-next-head="">API - MdEditorRT 使用文档</title><meta name="keywords" content="MD Editor, md-editor-rt, Markdown 编辑器, React Markdown, React TSX, Markdown 组件, Markdown preview, React 编辑器" data-next-head=""/><meta name="description" content="md-editor-rt 是一个基于 React 和 TSX 开发的 Markdown 编辑器组件，支持实时预览和丰富的 Markdown 功能。查阅详细的开发文档与使用示例。" data-next-head=""/><meta name="viewport" content="width=device-width, initial-scale=1" data-next-head=""/><link rel="preload" href="/md-editor-rt/_next/static/css/d1324c7a8f840136.css" as="style"/><link rel="stylesheet" href="/md-editor-rt/_next/static/css/d1324c7a8f840136.css" data-n-g=""/><noscript data-n-css=""></noscript><script defer="" nomodule="" src="/md-editor-rt/_next/static/chunks/polyfills-42372ed130431b0a.js"></script><script src="/md-editor-rt/_next/static/chunks/webpack-7628ef4e168316d1.js" defer=""></script><script src="/md-editor-rt/_next/static/chunks/framework-ee340abb9d4be981.js" defer=""></script><script src="/md-editor-rt/_next/static/chunks/main-e0c08bc071d6f2f5.js" defer=""></script><script src="/md-editor-rt/_next/static/chunks/pages/_app-df9c5fb581c3345b.js" defer=""></script><script src="/md-editor-rt/_next/static/chunks/1581-433798b64063c9d1.js" defer=""></script><script src="/md-editor-rt/_next/static/chunks/pages/zh-CN/api-8730cadd87f883e8.js" defer=""></script><script src="/md-editor-rt/_next/static/C31FpgdISLc5F_Rb3vGfw/_buildManifest.js" defer=""></script><script src="/md-editor-rt/_next/static/C31FpgdISLc5F_Rb3vGfw/_ssgManifest.js" defer=""></script></head><body><div id="__next"><header class="page-header"><section class="container"><h1 class="project-name">md-editor-rt<sup>@<!-- -->5.1.0</sup></h1><p class="project-desc">Markdown编辑器React版本，使用jsx和typescript语法开发，支持切换主题、prettier美化文本等。</p><div class="pc"><ul class="nav-list"><li class="nav-item"><a href="/md-editor-rt/zh-CN"><svg class="icon" aria-hidden="true"><use xlink:href="#med-icon-homepage"></use></svg>首页</a></li><li class="nav-item"><a href="/md-editor-rt/zh-CN/api"><svg class="icon" aria-hidden="true"><use xlink:href="#med-icon-api"></use></svg>API</a></li><li class="nav-item"><a href="/md-editor-rt/zh-CN/demo"><svg class="icon" aria-hidden="true"><use xlink:href="#med-icon-example"></use></svg>示例</a></li><li class="nav-item"><a target="_blank" href="https://github.com/imzbf/md-editor-rt"><svg class="icon" aria-hidden="true"><use xlink:href="#med-icon-github"></use></svg>源码</a></li><li class="nav-item"><a href="/md-editor-rt/zh-CN/syntax"><svg class="icon" aria-hidden="true"><use xlink:href="#med-icon-syntax"></use></svg>语法</a></li><li class="nav-item"><a href="/md-editor-rt/zh-CN/contrast"><svg class="icon" aria-hidden="true"><use xlink:href="#med-icon-question"></use></svg>对比</a></li><li class="nav-item"><a href="/md-editor-rt/zh-CN/about"><svg class="icon" aria-hidden="true"><use xlink:href="#med-icon-about"></use></svg>关于</a></li><li class="nav-item"><a style="display:none" href="/md-editor-rt/md-editor-rt/en-US">English</a><svg class="icon" aria-hidden="true"><use xlink:href="#med-icon-en"></use></svg>English</li></ul><p class="header-actions"><button class="btn btn-header">默认模式</button><button class="btn btn-header">暗黑模式</button><button class="btn btn-header">预览主题</button><button class="btn btn-header">代码主题</button></p></div><div class="mb"><svg class="icon m-menu-trigger" aria-hidden="true"><use xlink:href="#med-icon-drawer"></use></svg></div></section></header><div class="container"><div class="doc"><div class="content"><div id="md-api-zh" class="md-editor   md-editor-previewOnly"><div id="md-api-zh-preview-wrapper" class="md-editor-preview-wrapper"><div id="md-api-zh-preview" class="md-editor-preview default-theme md-editor-scrn"><blockquote data-line="0">
 <p data-line="0">在线尝试示例：<a href="https://codesandbox.io/s/elated-khorana-65jmr" target="_blank">传送门</a>。</p>
 </blockquote>
 <h2 id="🔖 MdPreview Props" tabindex="-1" data-line="2"><a class="header-anchor" href="#🔖 MdPreview Props">🔖 MdPreview Props</a></h2>
@@ -559,8 +559,7 @@ export default () =&gt; {
   | 'formula'
   | 'close'
   | 'delete'
-  | 'upload'
-  | 'collapse-tips';
+  | 'upload';
 
 type CustomIcon = {
   [key in IconName]?: {
@@ -571,6 +570,7 @@ type CustomIcon = {
   };
 } &amp; {
   copy?: string;
+  'collapse-tips'?: string;
 };</span><span rn-wrapper aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
         </details>
@@ -2438,52 +2438,51 @@ config({
 <p data-line="1719">按需引用编辑器的扩展组件，例如：<code>import { DropdownToolbar } from 'md-editor-rt'</code>。</p>
 <div data-line="1721" class="md-editor-admonition md-editor-admonition-info">
 <p data-line="1721" class="md-editor-admonition-title">内置属性提示</p>
-<p data-line="1723">为了帮助开发者快速插入和使用编辑器的属性，编辑器组件已经默认向编写的扩展组件添加了下面的属性的值：</p>
+<p data-line="1723">为了帮助开发者快速插入和使用编辑器的属性，编辑器组件已经默认向头部工具栏和尾部工具栏中的扩展组件添加了下面的属性的值（如果你也提供了，那么会优先使用你提供的内容），更详细的参考示例：<a href="https://github.com/imzbf/md-editor-extension/blob/main/packages/rt/components/ExportPDF/ExportPDF.tsx#L71" target="_blank">ExportPDF</a></p>
 <table data-line="1725">
 <thead data-line="1725">
 <tr data-line="1725">
 <th>名称</th>
-<th>使用示例</th>
+<th>defToolbars</th>
+<th>defFooters</th>
 </tr>
 </thead>
 <tbody data-line="1727">
 <tr data-line="1727">
 <td>insert</td>
-<td>参考下方的<code>DropdownToolbar</code>组件示例</td>
+<td>√</td>
+<td>×</td>
 </tr>
 <tr data-line="1728">
 <td>theme</td>
-<td>参考扩展组件中的<a href="https://github.com/imzbf/md-editor-extension/blob/main/packages/rt/components/ExportPDF/ExportPDF.tsx#L71" target="_blank">ExportPDF</a></td>
+<td>√</td>
+<td>√</td>
 </tr>
 <tr data-line="1729">
 <td>previewtheme</td>
-<td>同上</td>
+<td>√</td>
+<td>×</td>
 </tr>
 <tr data-line="1730">
+<td>codeTheme</td>
+<td>√</td>
+<td>×</td>
+</tr>
+<tr data-line="1731">
 <td>language</td>
-<td>同上</td>
+<td>√</td>
+<td>√</td>
+</tr>
+<tr data-line="1732">
+<td>disabled</td>
+<td>√</td>
+<td>√</td>
 </tr>
 </tbody>
 </table>
-</div>
-<h3 id="🐣 NormalToolbar" tabindex="-1" data-line="1734"><a class="header-anchor" href="#🐣 NormalToolbar">🐣 NormalToolbar</a></h3>
-<ul data-line="1736">
-<li data-line="1736">
-<p data-line="1736"><strong>props</strong></p>
-<ul data-line="1738">
-<li data-line="1738"><code>title</code>: <code>string</code>，非必须，作为工具栏上的 hover 提示。</li>
-<li data-line="1739"><code>trigger</code>: <code>ReactNode</code>，必须，通常是个图标，用来展示在工具栏上。</li>
-</ul>
-</li>
-<li data-line="1741">
-<p data-line="1741"><strong>events</strong></p>
-<ul data-line="1743">
-<li data-line="1743"><code>onClick</code>: <code>(e: MouseEvent) =&gt; void</code>，必须，点击事件。</li>
-</ul>
-</li>
-</ul>
+<p data-line="1734">例子：</p>
 
-        <details  data-line="1745" class="md-editor-code">
+        <details  data-line="1736" class="md-editor-code" open="">
           <summary class="md-editor-code-head">
             <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
             <div class="md-editor-code-action">
@@ -2492,7 +2491,66 @@ config({
               <span class="md-editor-collapse-tips"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-chevron-left md-editor-icon"><circle cx="12" cy="12" r="10"/><path d="m14 16-4-4 4-4"/></svg></span>
             </div>
           </summary>
-          <pre><code class="language-jsx" language=jsx><span class="md-editor-code-block">import { useState } from 'react';
+          <pre><code class="language-jsx" language=jsx><span class="md-editor-code-block">const HeaderTool = (props) =&gt; {
+  console.log('==', props);
+  // == { insert: (...)=&gt; {...}, theme: 'light', ... }
+
+  return &lt;NormalToolbar&gt;触发&lt;/NormalToolbar&gt;;
+};
+
+const toolbars = [0];
+const defToolbars = [&lt;HeaderTool key=&quot;key&quot; /&gt;];
+
+const MyEditor1 = () =&gt; {
+  return &lt;MdEditor toolbars={toolbars} defToolbars={defToolbars} /&gt;;
+};
+
+// ===================================
+
+const FooterTool = (props) =&gt; {
+  console.log('==', props);
+  // == { theme: 'light', disabled: false, language: 'zh-CN' }
+
+  return &lt;NormalFooterToolbar&gt;触发&lt;/NormalFooterToolbar&gt;;
+};
+
+const footers = [0];
+const defFooters = [&lt;FooterTool key=&quot;key&quot; /&gt;];
+
+const MyEditor2 = () =&gt; {
+  return &lt;MdEditor footers={footers} defFooters={defFooters} /&gt;;
+};</span><span rn-wrapper aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+        </details>
+      </div>
+<h3 id="🐣 NormalToolbar" tabindex="-1" data-line="1770"><a class="header-anchor" href="#🐣 NormalToolbar">🐣 NormalToolbar</a></h3>
+<ul data-line="1772">
+<li data-line="1772">
+<p data-line="1772"><strong>props</strong></p>
+<ul data-line="1774">
+<li data-line="1774"><code>title</code>: <code>string</code>，非必须，作为工具栏上的 hover 提示。</li>
+<li data-line="1775"><code>children</code>: <code>ReactNode</code>，非必须，通常是个图标，用来展示在工具栏上。</li>
+<li data-line="1776"><s><code>trigger</code></s>: <code>ReactNode</code>，非必须，已废弃，同上。</li>
+</ul>
+</li>
+<li data-line="1778">
+<p data-line="1778"><strong>events</strong></p>
+<ul data-line="1780">
+<li data-line="1780"><code>onClick</code>: <code>(e: MouseEvent) =&gt; void</code>，必须，点击事件。</li>
+</ul>
+</li>
+</ul>
+
+        <details  data-line="1782" class="md-editor-code">
+          <summary class="md-editor-code-head">
+            <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
+            <div class="md-editor-code-action">
+              <span class="md-editor-code-lang">jsx</span>
+              <span class="md-editor-copy-button" data-tips="复制代码">复制代码</span>
+              <span class="md-editor-collapse-tips"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-chevron-left md-editor-icon"><circle cx="12" cy="12" r="10"/><path d="m14 16-4-4 4-4"/></svg></span>
+            </div>
+          </summary>
+          <pre><code class="language-jsx" language=jsx><span class="md-editor-code-block">import { useCallback, useState } from 'react';
 import { MdEditor, NormalToolbar, InsertContentGenerator } from 'md-editor-rt';
 import 'md-editor-rt/lib/style.css';
 
@@ -2504,32 +2562,29 @@ interface MyToolbarProps {
  * `insert`方法会由编辑器自动向组件的组件注入。
  */
 const MyToolbar = ({ insert = () =&gt; {} }: MyToolbarProps) =&gt; {
+  const onClick = useCallback(() =&gt; {
+    insert((selectedText) =&gt; {
+      /**
+       * targetValue    待插入内容
+       * select         插入后是否自动选中内容，默认：true
+       * deviationStart 插入后选中内容鼠标开始位置，默认：0
+       * deviationEnd   插入后选中内容鼠标结束位置，默认：0
+       */
+      return {
+        targetValue: `==${selectedText}==`,
+        select: true,
+        deviationStart: 0,
+        deviationEnd: 0,
+      };
+    });
+  }, [insert]);
+
   return (
-    &lt;NormalToolbar
-      title=&quot;mark&quot;
-      trigger={
-        &lt;svg className=&quot;md-editor-icon&quot; aria-hidden=&quot;true&quot;&gt;
-          &lt;use xlinkHref=&quot;#icon-mark&quot;&gt;&lt;/use&gt;
-        &lt;/svg&gt;
-      }
-      onClick={() =&gt; {
-        insert((selectedText) =&gt; {
-          /**
-           * @return targetValue    待插入内容
-           * @return select         插入后是否自动选中内容，默认：true
-           * @return deviationStart 插入后选中内容鼠标开始位置，默认：0
-           * @return deviationEnd   插入后选中内容鼠标结束位置，默认：0
-           */
-          return {
-            targetValue: `==${selectedText}==`,
-            select: true,
-            deviationStart: 0,
-            deviationEnd: 0,
-          };
-        });
-      }}
-      key=&quot;mark-toolbar&quot;
-    /&gt;
+    &lt;NormalToolbar title=&quot;mark&quot; onClick={onClick} key=&quot;mark-toolbar&quot;&gt;
+      &lt;svg className=&quot;md-editor-icon&quot; aria-hidden=&quot;true&quot;&gt;
+        &lt;use xlinkHref=&quot;#icon-mark&quot;&gt;&lt;/use&gt;
+      &lt;/svg&gt;
+    &lt;/NormalToolbar&gt;
   );
 };
 
@@ -2545,31 +2600,32 @@ export default () =&gt; {
       onChange={setValue}
     /&gt;
   );
-};</span><span rn-wrapper aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+};</span><span rn-wrapper aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
         </details>
-      <p data-line="1802"><a href="https://github.com/imzbf/md-editor-rt/blob/docs/src/components/MarkExtension/index.tsx" target="_blank">标记组件的源码</a></p>
-<hr data-line="1804">
-<h3 id="🐼 DropdownToolbar" tabindex="-1" data-line="1806"><a class="header-anchor" href="#🐼 DropdownToolbar">🐼 DropdownToolbar</a></h3>
-<ul data-line="1808">
-<li data-line="1808">
-<p data-line="1808"><strong>props</strong></p>
-<ul data-line="1810">
-<li data-line="1810"><code>title</code>: <code>string</code>，非必须，作为工具栏上的 hover 提示。</li>
-<li data-line="1811"><code>visible</code>: <code>boolean</code>，必须，下拉状态。</li>
-<li data-line="1812"><code>trigger</code>: <code>ReactNode</code>，必须，通常是个图标，用来展示在工具栏上。</li>
-<li data-line="1813"><code>overlay</code>: <code>ReactNode</code>，必须，下拉框中的内容。</li>
+      <p data-line="1836"><a href="https://github.com/imzbf/md-editor-extension/blob/develop/packages/rt/components/Mark/Mark.tsx" target="_blank">标记组件的源码</a></p>
+<hr data-line="1838">
+<h3 id="🐼 DropdownToolbar" tabindex="-1" data-line="1840"><a class="header-anchor" href="#🐼 DropdownToolbar">🐼 DropdownToolbar</a></h3>
+<ul data-line="1842">
+<li data-line="1842">
+<p data-line="1842"><strong>props</strong></p>
+<ul data-line="1844">
+<li data-line="1844"><code>title</code>: <code>string</code>，非必须，作为工具栏上的 hover 提示。</li>
+<li data-line="1845"><code>visible</code>: <code>boolean</code>，必须，下拉状态。</li>
+<li data-line="1846"><code>children</code>: <code>ReactNode</code>，非必须，通常是个图标，用来展示在工具栏上。</li>
+<li data-line="1847"><s><code>trigger</code></s>: <code>ReactNode</code>，非必须，已废弃，同上。</li>
+<li data-line="1848"><code>overlay</code>: <code>ReactNode</code>，必须，下拉框中的内容。</li>
 </ul>
 </li>
-<li data-line="1815">
-<p data-line="1815"><strong>events</strong></p>
-<ul data-line="1817">
-<li data-line="1817"><code>onChange</code>: <code>(visible: boolean) =&gt; void</code>，必须，状态变化事件。</li>
+<li data-line="1850">
+<p data-line="1850"><strong>events</strong></p>
+<ul data-line="1852">
+<li data-line="1852"><code>onChange</code>: <code>(visible: boolean) =&gt; void</code>，必须，状态变化事件。</li>
 </ul>
 </li>
 </ul>
 
-        <details  data-line="1819" class="md-editor-code">
+        <details  data-line="1854" class="md-editor-code">
           <summary class="md-editor-code-head">
             <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
             <div class="md-editor-code-action">
@@ -2591,10 +2647,10 @@ const MyToolbar = ({ insert = () =&gt; {} }) =&gt; {
   const onClick = useCallback(() =&gt; {
     insert((selectedText) =&gt; {
       /**
-       * @return targetValue    待插入内容
-       * @return select         插入后是否自动选中内容，默认：true
-       * @return deviationStart 插入后选中内容鼠标开始位置，默认：0
-       * @return deviationEnd   插入后选中内容鼠标结束位置，默认：0
+       * targetValue    待插入内容
+       * select         插入后是否自动选中内容，默认：true
+       * deviationStart 插入后选中内容鼠标开始位置，默认：0
+       * deviationEnd   插入后选中内容鼠标结束位置，默认：0
        */
       return {
         targetValue: `==${selectedText}==`,
@@ -2615,13 +2671,12 @@ const MyToolbar = ({ insert = () =&gt; {} }) =&gt; {
           &lt;li&gt;option 2&lt;/li&gt;
         &lt;/ul&gt;
       }
-      trigger={
-        &lt;svg className=&quot;md-editor-icon&quot; aria-hidden=&quot;true&quot;&gt;
-          &lt;use xlinkHref=&quot;#icon-emoji&quot;&gt;&lt;/use&gt;
-        &lt;/svg&gt;
-      }
       key=&quot;emoji-toolbar&quot;
-    /&gt;
+    &gt;
+      &lt;svg className=&quot;md-editor-icon&quot; aria-hidden=&quot;true&quot;&gt;
+        &lt;use xlinkHref=&quot;#icon-emoji&quot;&gt;&lt;/use&gt;
+      &lt;/svg&gt;
+    &lt;/DropdownToolbar&gt;
   );
 };
 
@@ -2640,41 +2695,41 @@ export default () =&gt; {
       onChange={setValue}
     /&gt;
   );
-};</span><span rn-wrapper aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+};</span><span rn-wrapper aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
         </details>
-      <p data-line="1885"><a href="https://github.com/imzbf/md-editor-rt/blob/docs/src/components/EmojiExtension/index.tsx" target="_blank">Emoji 组件的源码</a></p>
-<hr data-line="1887">
-<h3 id="🦉 ModalToolbar" tabindex="-1" data-line="1889"><a class="header-anchor" href="#🦉 ModalToolbar">🦉 ModalToolbar</a></h3>
-<ul data-line="1891">
-<li data-line="1891">
-<p data-line="1891"><strong>props</strong></p>
-<ul data-line="1893">
-<li data-line="1893"><code>title</code>: <code>string</code>，非必须，作为工具栏上的 hover 提示。</li>
-<li data-line="1894"><code>modalTitle</code>: <code>ReactNode</code>，非必须，弹窗的标题。</li>
-<li data-line="1895"><code>visible</code>: <code>boolean</code>，必须，弹窗显示状态。</li>
-<li data-line="1896"><code>width</code>: <code>string</code>，非必须，弹窗宽度，默认<code>auto</code>。</li>
-<li data-line="1897"><code>height</code>：<code>string</code>，同<code>width</code>。</li>
-<li data-line="1898"><code>showAdjust</code>: <code>boolean</code>，非必须，是否显示弹窗全屏按钮。</li>
-<li data-line="1899"><code>isFullscreen</code>: <code>boolean</code>，显示全屏按钮时必须，弹窗全屏状态。</li>
-<li data-line="1900"><code>trigger</code>: <code>ReactNode</code>，必须，通常是个图标，用来展示在工具栏上。</li>
-<li data-line="1901"><code>children</code>: <code>ReactNode</code>，必须，弹窗中的内容。</li>
-<li data-line="1902"><code>className</code>: <code>string</code>，<code>^4.16.8</code>，非必须，类名。</li>
-<li data-line="1903"><code>style</code>: <code>CSSProperties</code>，<code>^4.16.8</code>，非必须，样式。</li>
-<li data-line="1904"><code>showMask</code>: <code>boolean</code>，<code>^4.16.8</code>，非必须，是否展示遮罩层，默认 true。</li>
+      <p data-line="1919"><a href="https://github.com/imzbf/md-editor-extension/blob/develop/packages/rt/components/Emoji/Emoji.tsx" target="_blank">Emoji 组件的源码</a></p>
+<hr data-line="1921">
+<h3 id="🦉 ModalToolbar" tabindex="-1" data-line="1923"><a class="header-anchor" href="#🦉 ModalToolbar">🦉 ModalToolbar</a></h3>
+<ul data-line="1925">
+<li data-line="1925">
+<p data-line="1925"><strong>props</strong></p>
+<ul data-line="1927">
+<li data-line="1927"><code>title</code>: <code>string</code>，非必须，作为工具栏上的 hover 提示。</li>
+<li data-line="1928"><code>modalTitle</code>: <code>ReactNode</code>，非必须，弹窗的标题。</li>
+<li data-line="1929"><code>visible</code>: <code>boolean</code>，必须，弹窗显示状态。</li>
+<li data-line="1930"><code>width</code>: <code>string</code>，非必须，弹窗宽度，默认<code>auto</code>。</li>
+<li data-line="1931"><code>height</code>：<code>string</code>，同<code>width</code>。</li>
+<li data-line="1932"><code>showAdjust</code>: <code>boolean</code>，非必须，是否显示弹窗全屏按钮。</li>
+<li data-line="1933"><code>isFullscreen</code>: <code>boolean</code>，显示全屏按钮时必须，弹窗全屏状态。</li>
+<li data-line="1934"><code>trigger</code>: <code>ReactNode</code>，必须，通常是个图标，用来展示在工具栏上。</li>
+<li data-line="1935"><code>children</code>: <code>ReactNode</code>，必须，弹窗中的内容。</li>
+<li data-line="1936"><code>className</code>: <code>string</code>，<code>^4.16.8</code>，非必须，类名。</li>
+<li data-line="1937"><code>style</code>: <code>CSSProperties</code>，<code>^4.16.8</code>，非必须，样式。</li>
+<li data-line="1938"><code>showMask</code>: <code>boolean</code>，<code>^4.16.8</code>，非必须，是否展示遮罩层，默认 true。</li>
 </ul>
 </li>
-<li data-line="1906">
-<p data-line="1906"><strong>events</strong></p>
-<ul data-line="1908">
-<li data-line="1908"><code>onClick</code>: <code>() =&gt; void</code>，必须，工具栏点击事件。</li>
-<li data-line="1909"><code>onClose</code>：<code>() =&gt; void</code>，必须，弹窗点击关闭事件。</li>
-<li data-line="1910"><code>onAdjust</code>：<code>(val: boolean) =&gt; void</code>，弹窗全屏按钮点击事件。</li>
+<li data-line="1940">
+<p data-line="1940"><strong>events</strong></p>
+<ul data-line="1942">
+<li data-line="1942"><code>onClick</code>: <code>() =&gt; void</code>，必须，工具栏点击事件。</li>
+<li data-line="1943"><code>onClose</code>：<code>() =&gt; void</code>，必须，弹窗点击关闭事件。</li>
+<li data-line="1944"><code>onAdjust</code>：<code>(val: boolean) =&gt; void</code>，弹窗全屏按钮点击事件。</li>
 </ul>
 </li>
 </ul>
 
-        <details  data-line="1912" class="md-editor-code">
+        <details  data-line="1946" class="md-editor-code">
           <summary class="md-editor-code-head">
             <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
             <div class="md-editor-code-action">
@@ -2709,10 +2764,10 @@ const MyToolbar = ({ insert = () =&gt; {} }) =&gt; {
   const insertHandler = useCallback(() =&gt; {
     insert((selectedText) =&gt; {
       /**
-       * @return targetValue    待插入内容
-       * @return select         插入后是否自动选中内容，默认：true
-       * @return deviationStart 插入后选中内容鼠标开始位置，默认：0
-       * @return deviationEnd   插入后选中内容鼠标结束位置，默认：0
+       * targetValue    待插入内容
+       * select         插入后是否自动选中内容，默认：true
+       * deviationStart 插入后选中内容鼠标开始位置，默认：0
+       * deviationEnd   插入后选中内容鼠标结束位置，默认：0
        */
       return {
         targetValue: `==${selectedText}==`,
@@ -2771,35 +2826,35 @@ export default () =&gt; {
 };</span><span rn-wrapper aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
         </details>
-      <p data-line="2001"><a href="https://github.com/imzbf/md-editor-rt/blob/docs/src/components/ReadExtension/index.tsx" target="_blank">阅读组件的源码</a></p>
-<hr data-line="2003">
-<h3 id="🐻 MdCatalog" tabindex="-1" data-line="2005"><a class="header-anchor" href="#🐻 MdCatalog">🐻 MdCatalog</a></h3>
-<ul data-line="2007">
-<li data-line="2007">
-<p data-line="2007"><strong>props</strong></p>
-<ul data-line="2009">
-<li data-line="2009"><code>editorId</code>: <code>string</code>，必须，对应编辑器的<code>id</code>，在内部注册目录变化监听事件。</li>
-<li data-line="2010"><code>className</code>: <code>string</code>，非必须，目录组件最外层类名。</li>
-<li data-line="2011"><code>mdHeadingId</code>: <code>mdHeadingId</code>，非必须，特殊化编辑器标题的算法，与编辑器相同。</li>
-<li data-line="2012"><code>scrollElement</code>: <code>string | HTMLElement</code>，非必须，为字符时应是一个元素选择器。仅预览模式中，整页滚动时，设置为<code>document.documentElement</code>。</li>
-<li data-line="2013"><code>theme</code>: <code>'light' | 'dark'</code>，非必须，当需要切换主题时提供，同编辑器的<code>theme</code>。</li>
-<li data-line="2014"><code>offsetTop</code>: <code>number</code>，非必须，标题距离顶部该像素时高亮当前目录项，默认 20 像素。</li>
-<li data-line="2015"><code>scrollElementOffsetTop</code>: <code>number</code>，非必须，滚动区域的固定顶部高度，默认 0。</li>
+      <p data-line="2035"><a href="https://github.com/imzbf/md-editor-extension/blob/develop/packages/rt/components/ExportPDF/ExportPDF.tsx" target="_blank">ExportPDF 组件的源码</a></p>
+<hr data-line="2037">
+<h3 id="🐻 MdCatalog" tabindex="-1" data-line="2039"><a class="header-anchor" href="#🐻 MdCatalog">🐻 MdCatalog</a></h3>
+<ul data-line="2041">
+<li data-line="2041">
+<p data-line="2041"><strong>props</strong></p>
+<ul data-line="2043">
+<li data-line="2043"><code>editorId</code>: <code>string</code>，必须，对应编辑器的<code>id</code>，在内部注册目录变化监听事件。</li>
+<li data-line="2044"><code>className</code>: <code>string</code>，非必须，目录组件最外层类名。</li>
+<li data-line="2045"><code>mdHeadingId</code>: <code>mdHeadingId</code>，非必须，特殊化编辑器标题的算法，与编辑器相同。</li>
+<li data-line="2046"><code>scrollElement</code>: <code>string | HTMLElement</code>，非必须，为字符时应是一个元素选择器。仅预览模式中，整页滚动时，设置为<code>document.documentElement</code>。</li>
+<li data-line="2047"><code>theme</code>: <code>'light' | 'dark'</code>，非必须，当需要切换主题时提供，同编辑器的<code>theme</code>。</li>
+<li data-line="2048"><code>offsetTop</code>: <code>number</code>，非必须，标题距离顶部该像素时高亮当前目录项，默认 20 像素。</li>
+<li data-line="2049"><code>scrollElementOffsetTop</code>: <code>number</code>，非必须，滚动区域的固定顶部高度，默认 0。</li>
 </ul>
 </li>
-<li data-line="2017">
-<p data-line="2017"><strong>events</strong></p>
-<ul data-line="2019">
-<li data-line="2019"><code>onClick</code>: <code>(e: MouseEvent, t: TocItem) =&gt; void</code>，非必须，导航点击事件。</li>
-<li data-line="2020"><code>onActive</code>: <code>(heading: HeadList | undefined) =&gt; void</code>，非必须，高亮的标题变化事件。</li>
+<li data-line="2051">
+<p data-line="2051"><strong>events</strong></p>
+<ul data-line="2053">
+<li data-line="2053"><code>onClick</code>: <code>(e: MouseEvent, t: TocItem) =&gt; void</code>，非必须，导航点击事件。</li>
+<li data-line="2054"><code>onActive</code>: <code>(heading: HeadList | undefined) =&gt; void</code>，非必须，高亮的标题变化事件。</li>
 </ul>
 </li>
 </ul>
-<blockquote data-line="2022">
-<p data-line="2022"><code>scrollElement</code>说明：仅预览下，该元素必须已定位的并且支持滚动。</p>
+<blockquote data-line="2056">
+<p data-line="2056"><code>scrollElement</code>说明：仅预览下，该元素必须已定位的并且支持滚动。</p>
 </blockquote>
 
-        <details  data-line="2024" class="md-editor-code" open="">
+        <details  data-line="2058" class="md-editor-code" open="">
           <summary class="md-editor-code-head">
             <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
             <div class="md-editor-code-action">
@@ -2829,35 +2884,35 @@ export default () =&gt; {
 };</span><span rn-wrapper aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
         </details>
-      <hr data-line="2046">
-<h3 id="🛸 MdModal" tabindex="-1" data-line="2048"><a class="header-anchor" href="#🛸 MdModal">🛸 MdModal</a></h3>
-<p data-line="2050">编辑器内部的弹窗组件，它通常配合下拉工具栏组件使用。</p>
-<ul data-line="2052">
-<li data-line="2052">
-<p data-line="2052"><strong>props</strong></p>
-<ul data-line="2054">
-<li data-line="2054"><code>title</code>: <code>ReactNode</code>，非必须，弹窗标题栏。</li>
-<li data-line="2055"><code>visible</code>: <code>boolean</code>，必须，弹窗显示状态。</li>
-<li data-line="2056"><code>width</code>: <code>string</code>，非必须，弹窗宽度，默认<code>auto</code>。</li>
-<li data-line="2057"><code>height</code>: <code>string</code>，同<code>width</code>。</li>
-<li data-line="2058"><code>showAdjust</code>: <code>boolean</code>，非必须，是否显示弹窗全屏按钮。</li>
-<li data-line="2059"><code>isFullscreen</code>: <code>boolean</code>，显示全屏按钮时必须，弹窗全屏状态。</li>
-<li data-line="2060"><code>children</code>: <code>ReactNode</code>，非必须，弹窗显示的内容。</li>
-<li data-line="2061"><code>className</code>: <code>string</code>，非必须，类名。</li>
-<li data-line="2062"><code>style</code>: <code>CSSProperties</code>，非必须，样式。</li>
-<li data-line="2063"><code>showMask</code>: <code>boolean</code>，<code>^4.16.8</code>，非必须，是否展示遮罩层，默认 true。</li>
+      <hr data-line="2080">
+<h3 id="🛸 MdModal" tabindex="-1" data-line="2082"><a class="header-anchor" href="#🛸 MdModal">🛸 MdModal</a></h3>
+<p data-line="2084">编辑器内部的弹窗组件，它通常配合下拉工具栏组件使用。</p>
+<ul data-line="2086">
+<li data-line="2086">
+<p data-line="2086"><strong>props</strong></p>
+<ul data-line="2088">
+<li data-line="2088"><code>title</code>: <code>ReactNode</code>，非必须，弹窗标题栏。</li>
+<li data-line="2089"><code>visible</code>: <code>boolean</code>，必须，弹窗显示状态。</li>
+<li data-line="2090"><code>width</code>: <code>string</code>，非必须，弹窗宽度，默认<code>auto</code>。</li>
+<li data-line="2091"><code>height</code>: <code>string</code>，同<code>width</code>。</li>
+<li data-line="2092"><code>showAdjust</code>: <code>boolean</code>，非必须，是否显示弹窗全屏按钮。</li>
+<li data-line="2093"><code>isFullscreen</code>: <code>boolean</code>，显示全屏按钮时必须，弹窗全屏状态。</li>
+<li data-line="2094"><code>children</code>: <code>ReactNode</code>，非必须，弹窗显示的内容。</li>
+<li data-line="2095"><code>className</code>: <code>string</code>，非必须，类名。</li>
+<li data-line="2096"><code>style</code>: <code>CSSProperties</code>，非必须，样式。</li>
+<li data-line="2097"><code>showMask</code>: <code>boolean</code>，<code>^4.16.8</code>，非必须，是否展示遮罩层，默认 true。</li>
 </ul>
 </li>
-<li data-line="2065">
-<p data-line="2065"><strong>events</strong></p>
-<ul data-line="2067">
-<li data-line="2067"><code>onClose</code>: <code>() =&gt; void</code>，必须，弹窗点击关闭事件。</li>
-<li data-line="2068"><code>onAdjust</code>: <code>(val: boolean) =&gt; void</code>，弹窗全屏按钮点击事件。</li>
+<li data-line="2099">
+<p data-line="2099"><strong>events</strong></p>
+<ul data-line="2101">
+<li data-line="2101"><code>onClose</code>: <code>() =&gt; void</code>，必须，弹窗点击关闭事件。</li>
+<li data-line="2102"><code>onAdjust</code>: <code>(val: boolean) =&gt; void</code>，弹窗全屏按钮点击事件。</li>
 </ul>
 </li>
 </ul>
 
-        <details  data-line="2070" class="md-editor-code">
+        <details  data-line="2104" class="md-editor-code">
           <summary class="md-editor-code-head">
             <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
             <div class="md-editor-code-action">
@@ -2902,7 +2957,7 @@ const MyToolbar = () =&gt; {
       }
       key=&quot;emoji-toolbar&quot;
     &gt;
-      &lt;MdModal title={'title'} visible={mVisible} onClose={onClose}&gt;
+      &lt;MdModal title=&quot;title&quot; visible={mVisible} onClose={onClose}&gt;
         Content, Content
       &lt;/MdModal&gt;
     &lt;/DropdownToolbar&gt;
@@ -2927,10 +2982,51 @@ export default () =&gt; {
 };</span><span rn-wrapper aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
         </details>
-      <hr data-line="2132">
-<h2 id="🪤 内部配置" tabindex="-1" data-line="2134"><a class="header-anchor" href="#🪤 内部配置">🪤 内部配置</a></h2>
+      <hr data-line="2166">
+<h3 id="🛸 NormalFooterToolbar" tabindex="-1" data-line="2168"><a class="header-anchor" href="#🛸 NormalFooterToolbar">🛸 NormalFooterToolbar</a></h3>
+<p data-line="2170">通用的页脚工具组件</p>
+<ul data-line="2172">
+<li data-line="2172">
+<p data-line="2172"><strong>events</strong></p>
+<ul data-line="2174">
+<li data-line="2174"><code>onClick</code>: <code>(e: MouseEvent) =&gt; void</code>，非必须，点击事件。</li>
+</ul>
+</li>
+<li data-line="2176">
+<p data-line="2176"><strong>slots</strong></p>
+<ul data-line="2178">
+<li data-line="2178"><code>children</code>: <code>ReactNode</code>，必须，内容。</li>
+</ul>
+</li>
+</ul>
 
-        <details  data-line="2136" class="md-editor-code" open="">
+        <details  data-line="2180" class="md-editor-code" open="">
+          <summary class="md-editor-code-head">
+            <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
+            <div class="md-editor-code-action">
+              <span class="md-editor-code-lang">jsx</span>
+              <span class="md-editor-copy-button" data-tips="复制代码">复制代码</span>
+              <span class="md-editor-collapse-tips"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-chevron-left md-editor-icon"><circle cx="12" cy="12" r="10"/><path d="m14 16-4-4 4-4"/></svg></span>
+            </div>
+          </summary>
+          <pre><code class="language-jsx" language=jsx><span class="md-editor-code-block">import { MdEditor, NormalFooterToolbar } from 'md-editor-rt';
+
+const FooterTool = (props) =&gt; {
+  return &lt;NormalFooterToolbar&gt;触发&lt;/NormalFooterToolbar&gt;;
+};
+
+const footers = [0];
+const defFooters = [&lt;FooterTool key=&quot;key&quot; /&gt;];
+
+export default () =&gt; {
+  return &lt;MdEditor footers={footers} defFooters={defFooters} /&gt;;
+};</span><span rn-wrapper aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+        </details>
+      <hr data-line="2195">
+<h2 id="🪤 内部配置" tabindex="-1" data-line="2197"><a class="header-anchor" href="#🪤 内部配置">🪤 内部配置</a></h2>
+
+        <details  data-line="2199" class="md-editor-code" open="">
           <summary class="md-editor-code-head">
             <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
             <div class="md-editor-code-action">
@@ -2950,12 +3046,12 @@ export default () =&gt; {
 console.log(allToolbar, allFooter, zh_CN, en_US, editorExtensionsAttrs);</span><span rn-wrapper aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
         </details>
-      <h2 id="📦 内部工具" tabindex="-1" data-line="2148"><a class="header-anchor" href="#📦 内部工具">📦 内部工具</a></h2>
-<h3 id="🧹 clearSideEffects" tabindex="-1" data-line="2150"><a class="header-anchor" href="#🧹 clearSideEffects">🧹 clearSideEffects</a></h3>
-<p data-line="2152"><code>&gt;=5.0.0</code></p>
-<p data-line="2154">清空组件带来的副作用，例如：使用 CDN 嵌入的链接，为了保证多个组件能够正常使用，组件在卸载时不会主动移除</p>
+      <h2 id="📦 内部工具" tabindex="-1" data-line="2211"><a class="header-anchor" href="#📦 内部工具">📦 内部工具</a></h2>
+<h3 id="🧹 clearSideEffects" tabindex="-1" data-line="2213"><a class="header-anchor" href="#🧹 clearSideEffects">🧹 clearSideEffects</a></h3>
+<p data-line="2215"><code>&gt;=5.0.0</code></p>
+<p data-line="2217">清空组件带来的副作用，例如：使用 CDN 嵌入的链接，为了保证多个组件能够正常使用，组件在卸载时不会主动移除</p>
 
-        <details  data-line="2156" class="md-editor-code" open="">
+        <details  data-line="2219" class="md-editor-code" open="">
           <summary class="md-editor-code-head">
             <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
             <div class="md-editor-code-action">
@@ -2969,12 +3065,12 @@ console.log(allToolbar, allFooter, zh_CN, en_US, editorExtensionsAttrs);</span><
 clearSideEffects();</span><span rn-wrapper aria-hidden="true"><span></span><span></span><span></span></span></code></pre>
 
         </details>
-      <div data-line="2162" class="md-editor-admonition md-editor-admonition-warning">
-<p data-line="2164">这会删除掉页面中的 CDN 引用，如果当前页面还存在该组件实例，请不要这样做！</p>
+      <div data-line="2225" class="md-editor-admonition md-editor-admonition-warning">
+<p data-line="2227">这会删除掉页面中的 CDN 引用，如果当前页面还存在该组件实例，请不要这样做！</p>
 </div>
-<h3 id="XSSPlugin" tabindex="-1" data-line="2168"><a class="header-anchor" href="#XSSPlugin">XSSPlugin</a></h3>
-<p data-line="2170"><code>&gt;=5.0.0</code></p>
-<p data-line="2172">使用示例：<a href="https://imzbf.github.io/md-editor-rt/zh-CN/demo#%F0%9F%94%92%20%E6%B7%BB%E5%8A%A0%20xss%20%E6%89%A9%E5%B1%95" target="_blank">添加 xss 扩展</a></p>
-<h2 id="✍️ 编辑此页面" tabindex="-1" data-line="2174"><a class="header-anchor" href="#✍️ 编辑此页面">✍️ 编辑此页面</a></h2>
-<p data-line="2176"><a href="https://github.com/imzbf/md-editor-rt/blob/dev-docs/public/doc-zh-CN.md" target="_blank">doc-zh-CN</a></p>
-</div></div></div></div><div class="catalog"><div class="affix"><div class="md-editor-catalog "></div></div></div></div></div></div><script id="__NEXT_DATA__" type="application/json">{"props":{"pageProps":{}},"page":"/zh-CN/api","query":{},"buildId":"u-Y7fWkWqaX8wLia6lfs2","assetPrefix":"/md-editor-rt","nextExport":true,"autoExport":true,"isFallback":false,"scriptLoader":[{"src":"//at.alicdn.com/t/c/font_2818624_gbt6qvt9lob.js","strategy":"afterInteractive"},{"async":true,"src":"https://www.googletagmanager.com/gtag/js?id=G-3R6P1XE0H0","strategy":"afterInteractive"},{"id":"gg","children":"window.dataLayer = window.dataLayer || [];\n                function gtag() {\n                  dataLayer.push(arguments);\n                }\n                gtag('js', new Date());\n                gtag('config', 'G-3R6P1XE0H0');","strategy":"afterInteractive"},{"src":"https://hm.baidu.com/hm.js?1563bc52cb27ffbc7b5b46cdfc327ce0","strategy":"afterInteractive"}]}</script></body></html>
+<h3 id="XSSPlugin" tabindex="-1" data-line="2231"><a class="header-anchor" href="#XSSPlugin">XSSPlugin</a></h3>
+<p data-line="2233"><code>&gt;=5.0.0</code></p>
+<p data-line="2235">使用示例：<a href="https://imzbf.github.io/md-editor-rt/zh-CN/demo#%F0%9F%94%92%20%E6%B7%BB%E5%8A%A0%20xss%20%E6%89%A9%E5%B1%95" target="_blank">添加 xss 扩展</a></p>
+<h2 id="✍️ 编辑此页面" tabindex="-1" data-line="2237"><a class="header-anchor" href="#✍️ 编辑此页面">✍️ 编辑此页面</a></h2>
+<p data-line="2239"><a href="https://github.com/imzbf/md-editor-rt/blob/dev-docs/public/doc-zh-CN.md" target="_blank">doc-zh-CN</a></p>
+</div></div></div></div><div class="catalog"><div class="affix"><div class="md-editor-catalog "></div></div></div></div></div></div><script id="__NEXT_DATA__" type="application/json">{"props":{"pageProps":{}},"page":"/zh-CN/api","query":{},"buildId":"C31FpgdISLc5F_Rb3vGfw","assetPrefix":"/md-editor-rt","nextExport":true,"autoExport":true,"isFallback":false,"scriptLoader":[{"src":"//at.alicdn.com/t/c/font_2818624_gbt6qvt9lob.js","strategy":"afterInteractive"},{"async":true,"src":"https://www.googletagmanager.com/gtag/js?id=G-3R6P1XE0H0","strategy":"afterInteractive"},{"id":"gg","children":"window.dataLayer = window.dataLayer || [];\n                function gtag() {\n                  dataLayer.push(arguments);\n                }\n                gtag('js', new Date());\n                gtag('config', 'G-3R6P1XE0H0');","strategy":"afterInteractive"},{"src":"https://hm.baidu.com/hm.js?1563bc52cb27ffbc7b5b46cdfc327ce0","strategy":"afterInteractive"}]}</script></body></html>

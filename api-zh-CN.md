@@ -395,8 +395,7 @@
     | 'formula'
     | 'close'
     | 'delete'
-    | 'upload'
-    | 'collapse-tips';
+    | 'upload';
 
   type CustomIcon = {
     [key in IconName]?: {
@@ -407,6 +406,7 @@
     };
   } & {
     copy?: string;
+    'collapse-tips'?: string;
   };
   ```
 
@@ -1721,14 +1721,50 @@ config({
 
 !!! info 内置属性提示
 
-为了帮助开发者快速插入和使用编辑器的属性，编辑器组件已经默认向编写的扩展组件添加了下面的属性的值：
+为了帮助开发者快速插入和使用编辑器的属性，编辑器组件已经默认向头部工具栏和尾部工具栏中的扩展组件添加了下面的属性的值（如果你也提供了，那么会优先使用你提供的内容），更详细的参考示例：[ExportPDF](https://github.com/imzbf/md-editor-extension/blob/main/packages/rt/components/ExportPDF/ExportPDF.tsx#L71)
 
-| 名称         | 使用示例                                                                                                                               |
-| ------------ | -------------------------------------------------------------------------------------------------------------------------------------- |
-| insert       | 参考下方的`DropdownToolbar`组件示例                                                                                                    |
-| theme        | 参考扩展组件中的[ExportPDF](https://github.com/imzbf/md-editor-extension/blob/main/packages/rt/components/ExportPDF/ExportPDF.tsx#L71) |
-| previewtheme | 同上                                                                                                                                   |
-| language     | 同上                                                                                                                                   |
+| 名称         | defToolbars | defFooters |
+| ------------ | ----------- | ---------- |
+| insert       | √           | ×          |
+| theme        | √           | √          |
+| previewtheme | √           | ×          |
+| codeTheme    | √           | ×          |
+| language     | √           | √          |
+| disabled     | √           | √          |
+
+例子：
+
+```jsx
+const HeaderTool = (props) => {
+  console.log('==', props);
+  // == { insert: (...)=> {...}, theme: 'light', ... }
+
+  return <NormalToolbar>触发</NormalToolbar>;
+};
+
+const toolbars = [0];
+const defToolbars = [<HeaderTool key="key" />];
+
+const MyEditor1 = () => {
+  return <MdEditor toolbars={toolbars} defToolbars={defToolbars} />;
+};
+
+// ===================================
+
+const FooterTool = (props) => {
+  console.log('==', props);
+  // == { theme: 'light', disabled: false, language: 'zh-CN' }
+
+  return <NormalFooterToolbar>触发</NormalFooterToolbar>;
+};
+
+const footers = [0];
+const defFooters = [<FooterTool key="key" />];
+
+const MyEditor2 = () => {
+  return <MdEditor footers={footers} defFooters={defFooters} />;
+};
+```
 
 !!!
 
@@ -1737,14 +1773,15 @@ config({
 - **props**
 
   - `title`: `string`，非必须，作为工具栏上的 hover 提示。
-  - `trigger`: `ReactNode`，必须，通常是个图标，用来展示在工具栏上。
+  - `children`: `ReactNode`，非必须，通常是个图标，用来展示在工具栏上。
+  - ~~`trigger`~~: `ReactNode`，非必须，已废弃，同上。
 
 - **events**
 
   - `onClick`: `(e: MouseEvent) => void`，必须，点击事件。
 
 ```jsx
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import { MdEditor, NormalToolbar, InsertContentGenerator } from 'md-editor-rt';
 import 'md-editor-rt/lib/style.css';
 
@@ -1756,32 +1793,29 @@ interface MyToolbarProps {
  * `insert`方法会由编辑器自动向组件的组件注入。
  */
 const MyToolbar = ({ insert = () => {} }: MyToolbarProps) => {
+  const onClick = useCallback(() => {
+    insert((selectedText) => {
+      /**
+       * targetValue    待插入内容
+       * select         插入后是否自动选中内容，默认：true
+       * deviationStart 插入后选中内容鼠标开始位置，默认：0
+       * deviationEnd   插入后选中内容鼠标结束位置，默认：0
+       */
+      return {
+        targetValue: `==${selectedText}==`,
+        select: true,
+        deviationStart: 0,
+        deviationEnd: 0,
+      };
+    });
+  }, [insert]);
+
   return (
-    <NormalToolbar
-      title="mark"
-      trigger={
-        <svg className="md-editor-icon" aria-hidden="true">
-          <use xlinkHref="#icon-mark"></use>
-        </svg>
-      }
-      onClick={() => {
-        insert((selectedText) => {
-          /**
-           * @return targetValue    待插入内容
-           * @return select         插入后是否自动选中内容，默认：true
-           * @return deviationStart 插入后选中内容鼠标开始位置，默认：0
-           * @return deviationEnd   插入后选中内容鼠标结束位置，默认：0
-           */
-          return {
-            targetValue: `==${selectedText}==`,
-            select: true,
-            deviationStart: 0,
-            deviationEnd: 0,
-          };
-        });
-      }}
-      key="mark-toolbar"
-    />
+    <NormalToolbar title="mark" onClick={onClick} key="mark-toolbar">
+      <svg className="md-editor-icon" aria-hidden="true">
+        <use xlinkHref="#icon-mark"></use>
+      </svg>
+    </NormalToolbar>
   );
 };
 
@@ -1800,7 +1834,7 @@ export default () => {
 };
 ```
 
-[标记组件的源码](https://github.com/imzbf/md-editor-rt/blob/docs/src/components/MarkExtension/index.tsx)
+[标记组件的源码](https://github.com/imzbf/md-editor-extension/blob/develop/packages/rt/components/Mark/Mark.tsx)
 
 ---
 
@@ -1810,7 +1844,8 @@ export default () => {
 
   - `title`: `string`，非必须，作为工具栏上的 hover 提示。
   - `visible`: `boolean`，必须，下拉状态。
-  - `trigger`: `ReactNode`，必须，通常是个图标，用来展示在工具栏上。
+  - `children`: `ReactNode`，非必须，通常是个图标，用来展示在工具栏上。
+  - ~~`trigger`~~: `ReactNode`，非必须，已废弃，同上。
   - `overlay`: `ReactNode`，必须，下拉框中的内容。
 
 - **events**
@@ -1831,10 +1866,10 @@ const MyToolbar = ({ insert = () => {} }) => {
   const onClick = useCallback(() => {
     insert((selectedText) => {
       /**
-       * @return targetValue    待插入内容
-       * @return select         插入后是否自动选中内容，默认：true
-       * @return deviationStart 插入后选中内容鼠标开始位置，默认：0
-       * @return deviationEnd   插入后选中内容鼠标结束位置，默认：0
+       * targetValue    待插入内容
+       * select         插入后是否自动选中内容，默认：true
+       * deviationStart 插入后选中内容鼠标开始位置，默认：0
+       * deviationEnd   插入后选中内容鼠标结束位置，默认：0
        */
       return {
         targetValue: `==${selectedText}==`,
@@ -1855,13 +1890,12 @@ const MyToolbar = ({ insert = () => {} }) => {
           <li>option 2</li>
         </ul>
       }
-      trigger={
-        <svg className="md-editor-icon" aria-hidden="true">
-          <use xlinkHref="#icon-emoji"></use>
-        </svg>
-      }
       key="emoji-toolbar"
-    />
+    >
+      <svg className="md-editor-icon" aria-hidden="true">
+        <use xlinkHref="#icon-emoji"></use>
+      </svg>
+    </DropdownToolbar>
   );
 };
 
@@ -1883,7 +1917,7 @@ export default () => {
 };
 ```
 
-[Emoji 组件的源码](https://github.com/imzbf/md-editor-rt/blob/docs/src/components/EmojiExtension/index.tsx)
+[Emoji 组件的源码](https://github.com/imzbf/md-editor-extension/blob/develop/packages/rt/components/Emoji/Emoji.tsx)
 
 ---
 
@@ -1937,10 +1971,10 @@ const MyToolbar = ({ insert = () => {} }) => {
   const insertHandler = useCallback(() => {
     insert((selectedText) => {
       /**
-       * @return targetValue    待插入内容
-       * @return select         插入后是否自动选中内容，默认：true
-       * @return deviationStart 插入后选中内容鼠标开始位置，默认：0
-       * @return deviationEnd   插入后选中内容鼠标结束位置，默认：0
+       * targetValue    待插入内容
+       * select         插入后是否自动选中内容，默认：true
+       * deviationStart 插入后选中内容鼠标开始位置，默认：0
+       * deviationEnd   插入后选中内容鼠标结束位置，默认：0
        */
       return {
         targetValue: `==${selectedText}==`,
@@ -1999,7 +2033,7 @@ export default () => {
 };
 ```
 
-[阅读组件的源码](https://github.com/imzbf/md-editor-rt/blob/docs/src/components/ReadExtension/index.tsx)
+[ExportPDF 组件的源码](https://github.com/imzbf/md-editor-extension/blob/develop/packages/rt/components/ExportPDF/ExportPDF.tsx)
 
 ---
 
@@ -2105,7 +2139,7 @@ const MyToolbar = () => {
       }
       key="emoji-toolbar"
     >
-      <MdModal title={'title'} visible={mVisible} onClose={onClose}>
+      <MdModal title="title" visible={mVisible} onClose={onClose}>
         Content, Content
       </MdModal>
     </DropdownToolbar>
@@ -2127,6 +2161,35 @@ export default () => {
       onChange={setValue}
     />
   );
+};
+```
+
+---
+
+### 🛸 NormalFooterToolbar
+
+通用的页脚工具组件
+
+- **events**
+
+  - `onClick`: `(e: MouseEvent) => void`，非必须，点击事件。
+
+- **slots**
+
+  - `children`: `ReactNode`，必须，内容。
+
+```jsx
+import { MdEditor, NormalFooterToolbar } from 'md-editor-rt';
+
+const FooterTool = (props) => {
+  return <NormalFooterToolbar>触发</NormalFooterToolbar>;
+};
+
+const footers = [0];
+const defFooters = [<FooterTool key="key" />];
+
+export default () => {
+  return <MdEditor footers={footers} defFooters={defFooters} />;
 };
 ```
 
