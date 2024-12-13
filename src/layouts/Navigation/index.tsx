@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { useLang } from '@/hooks/router';
 
 import { usePathname, useRouter } from 'next/navigation';
+import { ROUTE_PREFIX } from '@/config';
 
 const Navigation = () => {
   const lang = useLang();
@@ -108,12 +109,16 @@ const Navigation = () => {
         </Link>
       </li>
       <li className="nav-item" onClick={changeLang}>
-        {/* <Link href={`${ROUTE_PREFIX}/${lang === 'en-US' ? 'zh-CN' : 'en-US'}`}> */}
+        <Link
+          href={`${ROUTE_PREFIX}/${lang === 'en-US' ? 'zh-CN' : 'en-US'}`}
+          style={{ display: 'none' }}
+        >
+          {linkNames.lang}
+        </Link>
         <svg className="icon" aria-hidden="true">
           <use xlinkHref={linkNames.langIcon}></use>
         </svg>
         {linkNames.lang}
-        {/* </Link> */}
       </li>
     </ul>
   );

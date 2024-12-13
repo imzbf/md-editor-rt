@@ -389,8 +389,7 @@ This is the props of `MdPreview`, which is also part of `MdEditor`:
     | 'formula'
     | 'close'
     | 'delete'
-    | 'upload'
-    | 'collapse-tips';
+    | 'upload';
 
   type CustomIcon = {
     [key in IconName]?: {
@@ -401,6 +400,7 @@ This is the props of `MdPreview`, which is also part of `MdEditor`:
     };
   } & {
     copy?: string;
+    'collapse-tips'?: string;
   };
   ```
 
@@ -1678,14 +1678,50 @@ On-demand import, eg: `import { DropdownToolbar } from 'md-editor-rt'`.
 
 !!! info Built-in attribute
 
-To help developers quickly insert content and use editor attributes, the editor component has added the following attribute values to the written extension component by default:
+To help developers quickly insert content and use editor attributes, the editor component has already added the following property values to the extension components in the header toolbar and footer toolbar by default(If you provide it as well, your content will be given priority), More detailed reference examples: [ExportPDF](https://github.com/imzbf/md-editor-extension/blob/main/packages/rt/components/ExportPDF/ExportPDF.tsx#L71)
 
-| name         | example                                                                                                                                                         |
-| ------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| insert       | Refer to the `DropdownToolbar` component example below                                                                                                          |
-| theme        | Refer to the extension components in the [ExportPDF](https://github.com/imzbf/md-editor-extension/blob/main/packages/rt/components/ExportPDF/ExportPDF.tsx#L71) |
-| previewtheme | Same as above                                                                                                                                                   |
-| language     | Same as above                                                                                                                                                   |
+| Name         | defToolbars | defFooters |
+| ------------ | ----------- | ---------- |
+| insert       | √           | ×          |
+| theme        | √           | √          |
+| previewtheme | √           | ×          |
+| codeTheme    | √           | ×          |
+| language     | √           | √          |
+| disabled     | √           | √          |
+
+Example:
+
+```jsx
+const HeaderTool = (props) => {
+  console.log('==', props);
+  // == { insert: (...)=> {...}, theme: 'light', ... }
+
+  return <NormalToolbar>Content</NormalToolbar>;
+};
+
+const toolbars = [0];
+const defToolbars = [<HeaderTool key="key" />];
+
+const MyEditor1 = () => {
+  return <MdEditor toolbars={toolbars} defToolbars={defToolbars} />;
+};
+
+// ===================================
+
+const FooterTool = (props) => {
+  console.log('==', props);
+  // == { theme: 'light', disabled: false, language: 'zh-CN' }
+
+  return <NormalFooterToolbar>Content</NormalFooterToolbar>;
+};
+
+const footers = [0];
+const defFooters = [<FooterTool key="key" />];
+
+const MyEditor2 = () => {
+  return <MdEditor footers={footers} defFooters={defFooters} />;
+};
+```
 
 !!!
 
@@ -1694,7 +1730,8 @@ To help developers quickly insert content and use editor attributes, the editor 
 - **props**
 
   - `title`: `string`, not required, title of toolbar.
-  - `trigger`: `ReactNode`, required, it is usually an icon, which is displayed on the toolbar.
+  - `children`: `ReactNode`, not required, it is usually an icon, which is displayed on the toolbar.
+  - ~~`trigger`~~: `ReactNode`, not required, deprecated, as above.
 
 - **events**
 
@@ -1714,10 +1751,10 @@ const MyToolbar = ({ insert = () => {} }) => {
   const onClick = useCallback(() => {
     insert((selectedText) => {
       /**
-       * @return targetValue    Content to be inserted
-       * @return select         Automatically select content, default: true
-       * @return deviationStart Start position of the selected content, default: 0
-       * @return deviationEnd   End position of the selected content, default: 0
+       * targetValue    Content to be inserted
+       * select         Automatically select content, default: true
+       * deviationStart Start position of the selected content, default: 0
+       * deviationEnd   End position of the selected content, default: 0
        */
       return {
         targetValue: `==${selectedText}==`,
@@ -1729,16 +1766,11 @@ const MyToolbar = ({ insert = () => {} }) => {
   }, [insert]);
 
   return (
-    <NormalToolbar
-      title="mark"
-      trigger={
-        <svg className="md-editor-icon" aria-hidden="true">
-          <use xlinkHref="#icon-mark"></use>
-        </svg>
-      }
-      onClick={onClick}
-      key="mark-toolbar"
-    />
+    <NormalToolbar title="mark" onClick={onClick} key="mark-toolbar">
+      <svg className="md-editor-icon" aria-hidden="true">
+        <use xlinkHref="#icon-mark"></use>
+      </svg>
+    </NormalToolbar>
   );
 };
 
@@ -1760,7 +1792,7 @@ export default () => {
 };
 ```
 
-[MarkExtension Source Code](https://github.com/imzbf/md-editor-rt/blob/docs/src/components/MarkExtension/index.tsx)
+[MarkExtension Source Code](https://github.com/imzbf/md-editor-extension/blob/develop/packages/rt/components/Mark/Mark.tsx)
 
 ---
 
@@ -1770,7 +1802,8 @@ export default () => {
 
   - `title`: `string`, not required, title of toolbar.
   - `visible`: `boolean`, required.
-  - `trigger`: `ReactNode`, required, it is usually an icon, which is displayed on the toolbar.
+  - `children`: `ReactNode`, not required, it is usually an icon, which is displayed on the toolbar.
+  - ~~`trigger`~~: `ReactNode`, not required, deprecated, as above.
   - `overlay`: `ReactNode`, required, content of dropdown box.
 
 - **events**
@@ -1793,10 +1826,10 @@ const MyToolbar = ({ insert = () => {} }) => {
   const onClick = useCallback(() => {
     insert((selectedText) => {
       /**
-       * @return targetValue    Content to be inserted
-       * @return select         Automatically select content, default: true
-       * @return deviationStart Start position of the selected content, default: 0
-       * @return deviationEnd   End position of the selected content, default: 0
+       * targetValue    Content to be inserted
+       * select         Automatically select content, default: true
+       * deviationStart Start position of the selected content, default: 0
+       * deviationEnd   End position of the selected content, default: 0
        */
       return {
         targetValue: `==${selectedText}==`,
@@ -1817,13 +1850,12 @@ const MyToolbar = ({ insert = () => {} }) => {
           <li>option 2</li>
         </ul>
       }
-      trigger={
-        <svg className="md-editor-icon" aria-hidden="true">
-          <use xlinkHref="#icon-emoji"></use>
-        </svg>
-      }
       key="emoji-toolbar"
-    />
+    >
+      <svg className="md-editor-icon" aria-hidden="true">
+        <use xlinkHref="#icon-emoji"></use>
+      </svg>
+    </DropdownToolbar>
   );
 };
 
@@ -1845,7 +1877,7 @@ export default () => {
 };
 ```
 
-[EmojiExtension Source Code](https://github.com/imzbf/md-editor-rt/blob/docs/src/components/EmojiExtension/index.tsx)
+[EmojiExtension Source Code](https://github.com/imzbf/md-editor-extension/blob/develop/packages/rt/components/Emoji/Emoji.tsx)
 
 ---
 
@@ -1899,10 +1931,10 @@ const MyToolbar = ({ insert = () => {} }) => {
   const insertHandler = useCallback(() => {
     insert((selectedText) => {
       /**
-       * @return targetValue    Content to be inserted
-       * @return select         Automatically select content, default: true
-       * @return deviationStart Start position of the selected content, default: 0
-       * @return deviationEnd   End position of the selected content, default: 0
+       * targetValue    Content to be inserted
+       * select         Automatically select content, default: true
+       * deviationStart Start position of the selected content, default: 0
+       * deviationEnd   End position of the selected content, default: 0
        */
       return {
         targetValue: `==${selectedText}==`,
@@ -1961,7 +1993,7 @@ export default () => {
 };
 ```
 
-[ReadExtension Source Code](https://github.com/imzbf/md-editor-rt/blob/docs/src/components/ReadExtension/index.tsx)
+[ExportPDF Source Code](https://github.com/imzbf/md-editor-extension/blob/develop/packages/rt/components/ExportPDF/ExportPDF.tsx)
 
 ---
 
@@ -2067,7 +2099,7 @@ const MyToolbar = () => {
       }
       key="emoji-toolbar"
     >
-      <MdModal title={'title'} visible={mVisible} onClose={onClose}>
+      <MdModal title="title" visible={mVisible} onClose={onClose}>
         Content, Content
       </MdModal>
     </DropdownToolbar>
@@ -2088,6 +2120,35 @@ export default () => {
       onChange={setValue}
     />
   );
+};
+```
+
+---
+
+### 🛸 NormalFooterToolbar
+
+Footer toolbar components
+
+- **events**
+
+  - `onClick`: `(e: MouseEvent) => void`, not required, toolbar was clicked.
+
+- **slots**
+
+  - `children`: `ReactNode`, required, content.
+
+```jsx
+import { MdEditor, NormalFooterToolbar } from 'md-editor-rt';
+
+const FooterTool = (props) => {
+  return <NormalFooterToolbar>Content</NormalFooterToolbar>;
+};
+
+const footers = [0];
+const defFooters = [<FooterTool key="key" />];
+
+export default () => {
+  return <MdEditor footers={footers} defFooters={defFooters} />;
 };
 ```
 

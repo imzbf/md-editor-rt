@@ -1,7 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import dayjs from 'dayjs';
 import { NormalFooterToolbar } from 'md-editor-rt';
-import { useLang } from '@/hooks/router';
 
 const weekNames = {
   'en-US': [
@@ -24,8 +23,11 @@ const weekNames = {
   ],
 };
 
-const TimeNow = () => {
-  const lang = useLang();
+interface TimeNowProps {
+  language?: keyof typeof weekNames;
+}
+
+const TimeNow = (props: TimeNowProps) => {
   const [time, setTime] = useState(() => {
     return dayjs().format('YYYY/MM/DD HH:mm:ss');
   });
@@ -35,8 +37,10 @@ const TimeNow = () => {
   const text = useMemo(() => {
     const weekday = dayjs().day();
 
-    return `${time} ${weekNames[lang][weekday > 0 ? weekday - 1 : 6]}`;
-  }, [lang, time]);
+    return `${time} ${
+      weekNames[props.language!][weekday > 0 ? weekday - 1 : 6]
+    }`;
+  }, [props.language, time]);
 
   useEffect(() => {
     setIsClient(true);
