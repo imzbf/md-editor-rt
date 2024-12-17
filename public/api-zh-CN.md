@@ -2123,26 +2123,26 @@ const MyToolbar = () => {
   }, []);
 
   return (
-    <DropdownToolbar
-      visible={visible}
-      onChange={setVisible}
-      overlay={
-        <ul>
-          <li onClick={onClick}>option 1</li>
-          <li>option 2</li>
-        </ul>
-      }
-      trigger={
+    <>
+      <DropdownToolbar
+        visible={visible}
+        onChange={setVisible}
+        overlay={
+          <ul>
+            <li onClick={onClick}>option 1</li>
+            <li>option 2</li>
+          </ul>
+        }
+        key="emoji-toolbar"
+      >
         <svg className="md-editor-icon" aria-hidden="true">
           <use xlinkHref="#icon-emoji"></use>
         </svg>
-      }
-      key="emoji-toolbar"
-    >
+      </DropdownToolbar>
       <MdModal title="title" visible={mVisible} onClose={onClose}>
         Content, Content
       </MdModal>
-    </DropdownToolbar>
+    </>
   );
 };
 
