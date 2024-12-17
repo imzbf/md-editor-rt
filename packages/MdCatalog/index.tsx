@@ -179,7 +179,9 @@ const MdCatalog = (props: CatalogProps) => {
     let cacheList: HeadList[] = [];
     const findActiveHeading = (list_: HeadList[]) => {
       if (list_.length === 0) {
+        setActiveItem(undefined);
         setList([]);
+        cacheList = list_;
         return false;
       }
 
