@@ -63,13 +63,15 @@ const useResize = (
       props.onInputBoxWidthChange?.(ibw);
     };
 
-    const resizeMousedown = () => {
-      setResizeOperateStyle((prevState) => {
-        return {
-          ...prevState
-        };
-      });
-      document.addEventListener('mousemove', resizeMousemove);
+    const resizeMousedown = (ev: MouseEvent) => {
+      if (ev.target === resizeRef.current) {
+        setResizeOperateStyle((prevState) => {
+          return {
+            ...prevState
+          };
+        });
+        document.addEventListener('mousemove', resizeMousemove);
+      }
     };
 
     const resizeMouseup = () => {
@@ -81,13 +83,12 @@ const useResize = (
       document.removeEventListener('mousemove', resizeMousemove);
     };
 
-    resizeRef.current?.addEventListener('mousedown', resizeMousedown);
-    resizeRef.current?.addEventListener('mouseup', resizeMouseup);
+    document.addEventListener('mousedown', resizeMousedown);
+    document.addEventListener('mouseup', resizeMouseup);
 
     return () => {
-      resizeRef.current?.removeEventListener('mousedown', resizeMousedown);
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-      resizeRef.current?.removeEventListener('mouseup', resizeMouseup);
+      document.removeEventListener('mousedown', resizeMousedown);
+      document.removeEventListener('mouseup', resizeMouseup);
     };
   }, [contentRef, props, resizeRef]);
 
