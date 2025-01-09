@@ -1,4 +1,4 @@
-import { MouseEvent, ReactNode } from 'react';
+import { MouseEvent, ReactNode, useMemo } from 'react';
 import { prefix } from '~/config';
 
 export interface NormalToolbarProps {
@@ -9,11 +9,23 @@ export interface NormalToolbarProps {
    */
   trigger?: ReactNode;
   onClick: (e: MouseEvent) => void;
+  disabled?: boolean;
 }
 
 const NormalToolbar = (props: NormalToolbarProps) => {
+  const className = useMemo(() => {
+    return `${prefix}-toolbar-item${props.disabled ? ' ' + prefix + '-disabled' : ''}`;
+  }, [props.disabled]);
+
   return (
-    <div className={`${prefix}-toolbar-item`} title={props.title} onClick={props.onClick}>
+    <div
+      className={className}
+      title={props.title}
+      onClick={(e) => {
+        if (props.disabled) return;
+        props.onClick(e);
+      }}
+    >
       {props.children || props.trigger}
     </div>
   );

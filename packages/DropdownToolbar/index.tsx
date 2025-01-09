@@ -1,4 +1,4 @@
-import { ReactNode, useContext } from 'react';
+import { ReactNode, useContext, useMemo } from 'react';
 import { prefix } from '~/config';
 import { EditorContext } from '~/context';
 import Dropdown from '~/components/Dropdown';
@@ -13,10 +13,14 @@ export interface DropdownToolbarProps {
   onChange: (visible: boolean) => void;
   overlay: ReactNode;
   children?: ReactNode;
+  disabled?: boolean;
 }
 
 const DropdownToolbar = (props: DropdownToolbarProps) => {
   const { editorId } = useContext(EditorContext);
+  const className = useMemo(() => {
+    return `${prefix}-toolbar-item${props.disabled ? ' ' + prefix + '-disabled' : ''}`;
+  }, [props.disabled]);
 
   return (
     <Dropdown
@@ -24,8 +28,9 @@ const DropdownToolbar = (props: DropdownToolbarProps) => {
       visible={props.visible}
       onChange={props.onChange}
       overlay={props.overlay}
+      disabled={props.disabled}
     >
-      <div className={`${prefix}-toolbar-item`} title={props.title || ''}>
+      <div className={className} title={props.title || ''}>
         {props.children || props.trigger}
       </div>
     </Dropdown>
