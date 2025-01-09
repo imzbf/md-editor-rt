@@ -988,10 +988,10 @@
   resolved "https://registry.npmjs.org/@vavt/message/-/message-2.0.1.tgz#c6cd6863ce9cafeef4b3b27951accac65f0af657"
   integrity sha512-8WSw/MMFKXjf+021IhyawxPqWr/nbH8fPjzQtbVNwwjkhkpbdaanjDB6RI1Q2pn+cVOhFoORgEZuGUNj12CBMw==
 
-"@vavt/rt-extension@^1.3.3":
-  version "1.3.3"
-  resolved "https://registry.npmjs.org/@vavt/rt-extension/-/rt-extension-1.3.3.tgz#ff4ab2a26fbaf2630c89f1c8e436748b9a449519"
-  integrity sha512-lUr9hz7aoc7SzjcEuYdgy3VU6cvV6H8gdG4s/ePwvP3iu0/Jx28CMIgwlCoYM6Ki6Ufew6byKpGYRksWXk08EA==
+"@vavt/rt-extension@^3.0.0":
+  version "3.0.0"
+  resolved "https://registry.npmjs.org/@vavt/rt-extension/-/rt-extension-3.0.0.tgz#fa99f939a8b18ab05edac450c15689eb1d7baf10"
+  integrity sha512-6KxYg7ES/qfYhXhwUmAX1vODJNIYJtGy3UaNflXiIrwHqpiHzOmy5fPrTwjxP4jqccbTBD6qA5bR1DrtJ7lJng==
 
 "@vavt/util@^2.1.0":
   version "2.1.0"
@@ -2465,10 +2465,10 @@ markdown-it@^14.0.0:
     punycode.js "^2.3.1"
     uc.micro "^2.1.0"
 
-md-editor-rt@^5.1.1:
-  version "5.1.1"
-  resolved "https://registry.npmjs.org/md-editor-rt/-/md-editor-rt-5.1.1.tgz#3d546a80e339690a1b82dcd817d746efe362a040"
-  integrity sha512-SyzFu4inPjfEcl/FV7BNVnetyesYHYaUEFnDzhsRtCIRRzKGS0wPEN6zdTZgjSMWFFtbvDVP727Tx4tFZY3Msw==
+md-editor-rt@^5.2.0:
+  version "5.2.0"
+  resolved "https://registry.npmjs.org/md-editor-rt/-/md-editor-rt-5.2.0.tgz#3f1e8c73ea780c8f12e81131a9a49aec43338ba3"
+  integrity sha512-qYR9Yp2j71RSIrqD7dlQQO5VVgLxs2BjFFUhvh5ez/QSQ7J53YWl2jcPhfWK/oQVJBnRJ6umAzmSzL5ovMOpqA==
   dependencies:
     "@codemirror/lang-markdown" "^6.3.0"
     "@codemirror/language-data" "^6.5.1"
