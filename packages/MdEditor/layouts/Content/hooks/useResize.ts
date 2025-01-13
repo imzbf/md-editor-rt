@@ -8,6 +8,7 @@ const useResize = (
   contentRef: RefObject<HTMLDivElement>,
   resizeRef: RefObject<HTMLDivElement>
 ) => {
+  const { onInputBoxWidthChange } = props;
   const [inputWrapperStyle, setInputWrapperStyle] = useState<CSSProperties>({
     width: props.inputBoxWidth
   });
@@ -60,7 +61,7 @@ const useResize = (
       });
 
       resizedWidth.current = ibw;
-      props.onInputBoxWidthChange?.(ibw);
+      onInputBoxWidthChange?.(ibw);
     };
 
     const resizeMousedown = (ev: MouseEvent) => {
@@ -89,8 +90,9 @@ const useResize = (
     return () => {
       document.removeEventListener('mousedown', resizeMousedown);
       document.removeEventListener('mouseup', resizeMouseup);
+      document.removeEventListener('mousemove', resizeMousemove);
     };
-  }, [contentRef, props, resizeRef]);
+  }, [contentRef, onInputBoxWidthChange, resizeRef]);
 
   useEffect(() => {
     if (props.inputBoxWidth) {
