@@ -40,8 +40,13 @@ const CatalogLink = ({
         tocItem.active && `${prefix}-catalog-active`
       ])}
       onClick={(e) => {
-        onClick?.(e, tocItem);
         e.stopPropagation();
+        onClick?.(e, tocItem);
+
+        if (e.defaultPrevented) {
+          return;
+        }
+
         const id = mdHeadingId(tocItem.text, tocItem.level, tocItem.index);
         const targetHeadEle = rootNodeRef?.current!.getElementById(id);
         const scrollContainer = scrollElementRef?.current;

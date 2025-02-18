@@ -6,16 +6,20 @@ import {
   forwardRef,
   ForwardedRef,
   useCallback,
-  memo
+  memo,
+  MouseEvent
 } from 'react';
-import MdCatalog from '~~/MdCatalog';
-import { EditorContext } from '~/context';
+import { createSmoothScroll } from '@vavt/util';
+import MdCatalog, { TocItem } from '~~/MdCatalog';
 import { prefix } from '~/config';
+import { FocusOption } from '~/type';
+import { EditorContext } from '~/context';
 import { useAutoScroll, useCodeMirror, useResize } from './hooks';
 import { ContentProps } from './props';
-import ContentPreview from './ContentPreview';
-import { FocusOption } from '~/type';
 import { ContentExposeParam } from './type';
+import ContentPreview from './ContentPreview';
+
+const smoothScroll = createSmoothScroll();
 
 const Content = forwardRef((props: ContentProps, ref: ForwardedRef<unknown>) => {
   const { onHtmlChanged } = props;
@@ -57,6 +61,26 @@ const Content = forwardRef((props: ContentProps, ref: ForwardedRef<unknown>) => 
     };
   }, [codeMirrorUt, resetHistory]);
 
+  const onCatalogClick = useCallback(
+    (e: MouseEvent, toc: TocItem) => {
+      // 如果没有预览区域，就将目录与编辑器同步滚动
+      if (!props.setting.preview && toc.line !== undefined) {
+        e.preventDefault();
+        const view = codeMirrorUt.current?.view;
+
+        if (view) {
+          const line = view.state.doc.line(toc.line + 1);
+
+          const top = view.lineBlockAt(line.from)?.top;
+
+          const scroller = view.scrollDOM;
+          smoothScroll(scroller, top); // 滚动到目标行
+        }
+      }
+    },
+    [codeMirrorUt, props.setting.preview]
+  );
+
   return (
     <div
       className={`${prefix}-content${showPreviewWrapper ? ' has-preview' : ''}`}
@@ -75,26 +99,24 @@ const Content = forwardRef((props: ContentProps, ref: ForwardedRef<unknown>) => 
           ref={resizeRef}
         />
       )}
-      {showPreviewWrapper && (
-        <ContentPreview
-          modelValue={props.modelValue}
-          onChange={props.onChange}
-          setting={props.setting}
-          onHtmlChanged={onHtmlChangedCopy}
-          onGetCatalog={props.onGetCatalog}
-          mdHeadingId={props.mdHeadingId}
-          noMermaid={props.noMermaid}
-          sanitize={props.sanitize}
-          noKatex={props.noKatex}
-          formatCopiedText={props.formatCopiedText}
-          noHighlight={props.noHighlight}
-          noImgZoomIn={props.noImgZoomIn}
-          sanitizeMermaid={props.sanitizeMermaid}
-          codeFoldable={props.codeFoldable}
-          autoFoldThreshold={props.autoFoldThreshold}
-          key="display-editor"
-        />
-      )}
+      <ContentPreview
+        modelValue={props.modelValue}
+        onChange={props.onChange}
+        setting={props.setting}
+        onHtmlChanged={onHtmlChangedCopy}
+        onGetCatalog={props.onGetCatalog}
+        mdHeadingId={props.mdHeadingId}
+        noMermaid={props.noMermaid}
+        sanitize={props.sanitize}
+        noKatex={props.noKatex}
+        formatCopiedText={props.formatCopiedText}
+        noHighlight={props.noHighlight}
+        noImgZoomIn={props.noImgZoomIn}
+        sanitizeMermaid={props.sanitizeMermaid}
+        codeFoldable={props.codeFoldable}
+        autoFoldThreshold={props.autoFoldThreshold}
+        key="display-editor"
+      />
       {props.catalogVisible && (
         <MdCatalog
           theme={props.theme}
@@ -103,6 +125,8 @@ const Content = forwardRef((props: ContentProps, ref: ForwardedRef<unknown>) => 
           mdHeadingId={props.mdHeadingId}
           key="internal-catalog"
           scrollElementOffsetTop={2}
+          syncWith={!props.setting.preview ? 'editor' : 'preview'}
+          onClick={onCatalogClick}
         />
       )}
     </div>
