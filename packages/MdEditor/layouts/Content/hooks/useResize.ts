@@ -8,6 +8,7 @@ const useResize = (
   contentRef: RefObject<HTMLDivElement>,
   resizeRef: RefObject<HTMLDivElement>
 ) => {
+  const { onInputBoxWidthChange } = props;
   const [inputWrapperStyle, setInputWrapperStyle] = useState<CSSProperties>({
     width: props.inputBoxWidth
   });
@@ -15,15 +16,6 @@ const useResize = (
   const [resizeOperateStyle, setResizeOperateStyle] = useState<CSSProperties>({
     left: props.inputBoxWidth
   });
-
-  /**
-   * 是否展示预览模块
-   *
-   * 解决问题：编辑区域和预览区域切换出现的时机不对，导致预览区域后，编辑区域的宽度才调整，出现闪缩。
-   */
-  const [showPreviewWrapper, setShowPreviewWrapper] = useState(
-    props.setting.preview || props.setting.htmlPreview
-  );
 
   const resizedWidth = useRef<string | number | undefined>(props.inputBoxWidth);
 
@@ -60,16 +52,18 @@ const useResize = (
       });
 
       resizedWidth.current = ibw;
-      props.onInputBoxWidthChange?.(ibw);
+      onInputBoxWidthChange?.(ibw);
     };
 
-    const resizeMousedown = () => {
-      setResizeOperateStyle((prevState) => {
-        return {
-          ...prevState
-        };
-      });
-      document.addEventListener('mousemove', resizeMousemove);
+    const resizeMousedown = (ev: MouseEvent) => {
+      if (ev.target === resizeRef.current) {
+        setResizeOperateStyle((prevState) => {
+          return {
+            ...prevState
+          };
+        });
+        document.addEventListener('mousemove', resizeMousemove);
+      }
     };
 
     const resizeMouseup = () => {
@@ -81,15 +75,15 @@ const useResize = (
       document.removeEventListener('mousemove', resizeMousemove);
     };
 
-    resizeRef.current?.addEventListener('mousedown', resizeMousedown);
-    resizeRef.current?.addEventListener('mouseup', resizeMouseup);
+    document.addEventListener('mousedown', resizeMousedown);
+    document.addEventListener('mouseup', resizeMouseup);
 
     return () => {
-      resizeRef.current?.removeEventListener('mousedown', resizeMousedown);
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-      resizeRef.current?.removeEventListener('mouseup', resizeMouseup);
+      document.removeEventListener('mousedown', resizeMousedown);
+      document.removeEventListener('mouseup', resizeMouseup);
+      document.removeEventListener('mousemove', resizeMousemove);
     };
-  }, [contentRef, props, resizeRef]);
+  }, [contentRef, onInputBoxWidthChange, resizeRef]);
 
   useEffect(() => {
     if (props.inputBoxWidth) {
@@ -115,23 +109,17 @@ const useResize = (
 
     let width: string | number | undefined = '';
     let display = '';
-    let showPw = false;
 
     if (po) {
       width = '0%';
       display = 'none';
-      showPw = true;
     } else if (!props.setting.htmlPreview && !props.setting.preview) {
       width = '100%';
       display = 'none';
-      showPw = false;
     } else {
       width = resizedWidth.current;
       display = 'initial';
-      showPw = true;
     }
-
-    setShowPreviewWrapper(showPw);
 
     setInputWrapperStyle((prevState) => {
       return {
@@ -148,7 +136,10 @@ const useResize = (
     });
   }, [props.setting.htmlPreview, props.setting.preview, props.setting.previewOnly]);
 
-  return { inputWrapperStyle, resizeOperateStyle, showPreviewWrapper };
+  return {
+    inputWrapperStyle,
+    resizeOperateStyle
+  };
 };
 
 export default useResize;

@@ -197,6 +197,7 @@ const Editor = forwardRef((props: EditorProps, ref: ForwardedRef<unknown>) => {
           transformImgUrl={transformImgUrl}
           codeFoldable={codeFoldable}
           autoFoldThreshold={autoFoldThreshold}
+          onRemount={props.onRemount}
         />
         {footers.length > 0 && (
           <Footer

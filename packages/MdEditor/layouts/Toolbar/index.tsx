@@ -1212,6 +1212,7 @@ const Toolbar = (props: ToolbarProps) => {
             previewTheme: defItem.props.previewTheme || previewTheme,
             language: defItem.props.language || language,
             disabled: defItem.props.disabled || disabled,
+            showToolbarName: defItem.props.showToolbarName || props.showToolbarName,
             insert(generate: InsertContentGenerator) {
               bus.emit(editorId, REPLACE, 'universal', { generate });
             }

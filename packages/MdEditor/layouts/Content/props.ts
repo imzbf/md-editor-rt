@@ -18,6 +18,7 @@ export interface ContentPreviewProps {
   sanitizeMermaid: (html: string) => Promise<string>;
   codeFoldable: boolean;
   autoFoldThreshold: number;
+  onRemount?: () => void;
 }
 
 export type ContentProps = Readonly<

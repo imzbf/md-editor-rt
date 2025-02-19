@@ -102,6 +102,7 @@ const MdPreview = forwardRef((props: MdPreviewProps, ref: ForwardedRef<unknown>)
           sanitizeMermaid={sanitizeMermaid}
           codeFoldable={codeFoldable}
           autoFoldThreshold={autoFoldThreshold}
+          onRemount={props.onRemount}
         />
       </div>
     </EditorContext.Provider>

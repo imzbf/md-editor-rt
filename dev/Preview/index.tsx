@@ -1,145 +1,23 @@
 /* eslint-disable react-refresh/only-export-components */
 import React, { useEffect, useRef, useState } from 'react';
 import axios from 'axios';
+import { CompletionSource } from '@codemirror/autocomplete';
+
 import {
   MdEditor,
   DropdownToolbar,
   ModalToolbar,
   MdCatalog,
-  config,
   ExposeParam,
-  editorExtensionsAttrs,
   NormalFooterToolbar
 } from '~~/index';
 
-// import Editor from '../../lib/md-editor-rt.es';
 import mdText from '../data.md';
 import { Theme } from '../App';
-// import TargetBlankExtension from './image/TargetBlankExtension.js';
-// import '../../lib/style.css';
 
 import './index.less';
-import '~/styles/style.less';
 import Icon from '~/components/Icon';
-// import { Extension } from '@codemirror/state';
-import { lineNumbers } from '@codemirror/view';
-import { CompletionSource } from '@codemirror/autocomplete';
 import Normal from './Normal';
-// import screenfull from 'screenfull';
-// import katex from 'katex';
-// import 'katex/dist/katex.min.css';
-
-// import Cropper from 'cropperjs';
-// import 'cropperjs/dist/cropper.css';
-// import mermaid from 'mermaid';
-
-// import highlight from 'highlight.js';
-// import 'highlight.js/styles/tokyo-night-dark.css';
-
-// import prettier from 'prettier';
-// import parserMarkdown from 'prettier/parser-markdown';
-
-// import { cdnBase } from '../../MdEditor/config';
-
-config({
-  codeMirrorExtensions(theme, extensions) {
-    // console.log(theme, extensions, keyBindings);
-
-    // return extensions;
-    return [...extensions, lineNumbers()];
-  },
-  // markdownItConfig: (mdit) => {
-  // mdit.use(ancher, {
-  //   permalink: true
-  // });
-  // mdit.use(TargetBlankExtension);
-  // },
-  markdownItPlugins(plugins, { editorId }) {
-    return plugins.map((item) => {
-      if (item.type === 'taskList') {
-        return {
-          ...item,
-          options: {
-            ...item.options,
-            enabled: editorId === 'md-prev'
-          }
-        };
-      }
-
-      return item;
-    });
-  },
-  mermaidConfig: (base) => {
-    return base;
-  },
-  editorExtensions: {
-    //     prettier: {
-    //       prettierInstance: prettier,
-    //       parserMarkdownInstance: parserMarkdown
-    //     },
-    // highlight: {
-    // instance: highlight
-    //     // css: {
-    //     //   'tokyo-night': {
-    //     //     light: `${cdnBase}/highlight.js/11.5.1/styles/tokyo-night-light.min.css`,
-    //     //     dark: `${cdnBase}/highlight.js/11.5.1/styles/tokyo-night-dark.min.css`
-    //     //   }
-    //     // }
-    // }
-    //     screenfull: {
-    //       instance: screenfull
-    //     },
-    //     katex: {
-    //       instance: katex
-    //     },
-    //     cropper: {
-    //       instance: Cropper
-    //     },
-    // mermaid: {
-    //   instance: mermaid
-    // }
-  },
-  editorExtensionsAttrs,
-  editorConfig: {
-    zIndex: 2000
-  }
-  //   editorConfig: {
-  //     mermaidTemplate: {
-  //       /**
-  //        * 流程图
-  //        */
-  //       flow: 'flow',
-  //       /**
-  //        * 时序图
-  //        */
-  //       sequence: 'sequence',
-  //       /**
-  //        * 甘特图
-  //        */
-  //       gantt: 'gantt',
-  //       /**
-  //        * 类图
-  //        */
-  //       class: 'class',
-  //       /**
-  //        * 状态图
-  //        */
-  //       state: 'state',
-  //       /**
-  //        * 饼图
-  //        */
-  //       pie: 'pie',
-  //       /**
-  //        * 关系图
-  //        */
-  //       relationship: 'relationship',
-  //       /**
-  //        * 旅程图
-  //        */
-  //       journey: 'journey'
-  //     }
-  //   }
-});
 
 const SAVE_KEY = 'XHMPGLJIZTDB';
 const INPUT_BOX_WITDH = 'tcxll8alg5jx52hw';
@@ -330,7 +208,7 @@ export default ({ theme, previewTheme, codeTheme, lang }: PreviewProp) => {
           // }}
           // onBlur={console.log}
           // onFocus={console.log}
-          showToolbarName
+          // showToolbarName
           // onInput={console.log}
           // onError={console.log}
           // codeFoldable={false}

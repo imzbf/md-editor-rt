@@ -22,7 +22,9 @@ import {
   ERROR_CATCHER,
   REPLACE,
   EVENT_LISTENER,
-  TASK_STATE_CHANGED
+  TASK_STATE_CHANGED,
+  SEND_EDITOR_VIEW,
+  GET_EDITOR_VIEW
 } from '~/static/event-name';
 import { DOMEventHandlers } from '~/type';
 
@@ -203,6 +205,10 @@ const useCodeMirror = (props: ContentProps) => {
       );
     };
 
+    const sendEditorView = () => {
+      bus.emit(editorId, GET_EDITOR_VIEW, view);
+    };
+
     bus.on(editorId, {
       name: CTRL_Z,
       callback: ctrlZ
@@ -225,6 +231,14 @@ const useCodeMirror = (props: ContentProps) => {
       callback: taskStateChanged
     });
 
+    bus.on(editorId, {
+      name: SEND_EDITOR_VIEW,
+      callback: sendEditorView
+    });
+
+    // 主动触发一次获取编辑器视图
+    bus.emit(editorId, GET_EDITOR_VIEW, view);
+
     return () => {
       // react18的严格模式会强制在开发环境让useEffect执行两次
       view.destroy();
@@ -232,6 +246,7 @@ const useCodeMirror = (props: ContentProps) => {
       bus.remove(editorId, CTRL_SHIFT_Z, ctrlShiftZ);
       bus.remove(editorId, EVENT_LISTENER, eventListener);
       bus.remove(editorId, TASK_STATE_CHANGED, taskStateChanged);
+      bus.remove(editorId, SEND_EDITOR_VIEW, sendEditorView);
 
       noSet.current = true;
     };

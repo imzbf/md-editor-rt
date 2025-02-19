@@ -136,6 +136,7 @@ export interface HeadList {
   text: string;
   level: 1 | 2 | 3 | 4 | 5 | 6;
   active?: boolean;
+  line: number;
 }
 
 export type Themes = 'light' | 'dark';
@@ -305,6 +306,12 @@ export interface MdPreviewProps {
    * @default 30
    */
   autoFoldThreshold?: number;
+  /**
+   * 内容重新挂载事件
+   *
+   * 相比起onHtmlChanged，onRemount会在重新挂载后触发
+   */
+  onRemount?: () => void;
 }
 
 export type TableShapeType = [number, number] | [number, number, number, number];

@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-non-null-asserted-optional-chain */
 import { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
 import mdit from 'markdown-it';
 import ImageFiguresPlugin from 'markdown-it-image-figures';
@@ -259,7 +258,7 @@ const useMarkdownIt = (props: ContentPreviewProps, previewOnly: boolean) => {
     if (setting.preview) {
       replaceMermaid().then(() => {
         zoomMermaid(
-          rootRef?.current!.querySelectorAll(`#${editorId} .${prefix}-mermaid`)!
+          rootRef?.current?.querySelectorAll(`#${editorId} .${prefix}-mermaid`)
         );
       });
       // 生成目录
@@ -287,7 +286,7 @@ const useMarkdownIt = (props: ContentPreviewProps, previewOnly: boolean) => {
 
   useEffect(() => {
     replaceMermaid().then(() => {
-      zoomMermaid(rootRef?.current!.querySelectorAll(`#${editorId} .${prefix}-mermaid`)!);
+      zoomMermaid(rootRef?.current?.querySelectorAll(`#${editorId} .${prefix}-mermaid`));
     });
   }, [editorId, html, key, reRender, replaceMermaid, rootRef]);
 

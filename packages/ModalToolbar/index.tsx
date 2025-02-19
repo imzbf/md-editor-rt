@@ -1,4 +1,4 @@
-import { CSSProperties, ReactNode } from 'react';
+import { CSSProperties, ReactNode, useMemo, MouseEvent } from 'react';
 import { prefix } from '~/config';
 import Modal from '~/components/Modal';
 
@@ -9,7 +9,7 @@ export interface ModalToolbarProps {
   width?: string;
   height?: string;
   trigger: ReactNode;
-  onClick: () => void;
+  onClick: (e: MouseEvent) => void;
   onClose: () => void;
   showAdjust?: boolean;
   isFullscreen?: boolean;
@@ -18,16 +18,24 @@ export interface ModalToolbarProps {
   className?: string;
   style?: CSSProperties;
   showMask?: boolean;
+  disabled?: boolean;
 }
 
 const ModalToolbar = (props: ModalToolbarProps) => {
   const { width = 'auto', height = 'auto' } = props;
+  const className = useMemo(() => {
+    return `${prefix}-toolbar-item${props.disabled ? ' ' + prefix + '-disabled' : ''}`;
+  }, [props.disabled]);
+
   return (
     <>
       <div
-        className={`${prefix}-toolbar-item`}
+        className={className}
         title={props.title}
-        onClick={props.onClick}
+        onClick={(e) => {
+          if (props.disabled) return;
+          props.onClick(e);
+        }}
       >
         {props.trigger}
       </div>
