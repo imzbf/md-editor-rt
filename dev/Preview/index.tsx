@@ -208,7 +208,7 @@ export default ({ theme, previewTheme, codeTheme, lang }: PreviewProp) => {
           // }}
           // onBlur={console.log}
           // onFocus={console.log}
-          showToolbarName
+          // showToolbarName
           // onInput={console.log}
           // onError={console.log}
           // codeFoldable={false}

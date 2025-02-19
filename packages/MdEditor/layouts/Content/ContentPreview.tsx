@@ -1,4 +1,4 @@
-import { useContext, useMemo } from 'react';
+import { useContext } from 'react';
 import { prefix } from '~/config';
 import { EditorContext } from '~/context';
 import { classnames } from '~/utils';
@@ -21,21 +21,6 @@ const ContentPreview = (props: ContentPreviewProps) => {
   // 标准的重新渲染事件，能够正确获取到html
   useRemount(props, html, key);
 
-  const content = useMemo(() => {
-    return (
-      <div
-        id={`${editorId}-preview`}
-        key={key}
-        className={classnames([
-          `${prefix}-preview`,
-          `${previewTheme}-theme`,
-          showCodeRowNumber && `${prefix}-scrn`
-        ])}
-        dangerouslySetInnerHTML={{ __html: html }}
-      />
-    );
-  }, [editorId, html, key, previewTheme, showCodeRowNumber]);
-
   return (
     <>
       {props.setting.preview && (
@@ -44,7 +29,16 @@ const ContentPreview = (props: ContentPreviewProps) => {
           className={`${prefix}-preview-wrapper`}
           key="content-preview-wrapper"
         >
-          {content}
+          <div
+            id={`${editorId}-preview`}
+            key={key}
+            className={classnames([
+              `${prefix}-preview`,
+              `${previewTheme}-theme`,
+              showCodeRowNumber && `${prefix}-scrn`
+            ])}
+            dangerouslySetInnerHTML={{ __html: html }}
+          />
         </div>
       )}
       {!previewOnly && props.setting.htmlPreview && (

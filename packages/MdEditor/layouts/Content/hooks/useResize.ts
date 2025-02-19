@@ -17,15 +17,6 @@ const useResize = (
     left: props.inputBoxWidth
   });
 
-  /**
-   * 是否展示预览模块
-   *
-   * 解决问题：编辑区域和预览区域切换出现的时机不对，导致预览区域后，编辑区域的宽度才调整，出现闪缩。
-   */
-  const [showPreviewWrapper, setShowPreviewWrapper] = useState(
-    props.setting.preview || props.setting.htmlPreview
-  );
-
   const resizedWidth = useRef<string | number | undefined>(props.inputBoxWidth);
 
   useEffect(() => {
@@ -118,23 +109,17 @@ const useResize = (
 
     let width: string | number | undefined = '';
     let display = '';
-    let showPw = false;
 
     if (po) {
       width = '0%';
       display = 'none';
-      showPw = true;
     } else if (!props.setting.htmlPreview && !props.setting.preview) {
       width = '100%';
       display = 'none';
-      showPw = false;
     } else {
       width = resizedWidth.current;
       display = 'initial';
-      showPw = true;
     }
-
-    setShowPreviewWrapper(showPw);
 
     setInputWrapperStyle((prevState) => {
       return {
@@ -151,7 +136,10 @@ const useResize = (
     });
   }, [props.setting.htmlPreview, props.setting.preview, props.setting.previewOnly]);
 
-  return { inputWrapperStyle, resizeOperateStyle, showPreviewWrapper };
+  return {
+    inputWrapperStyle,
+    resizeOperateStyle
+  };
 };
 
 export default useResize;

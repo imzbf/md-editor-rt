@@ -38,7 +38,7 @@ const Content = forwardRef((props: ContentProps, ref: ForwardedRef<unknown>) => 
   );
 
   const { inputWrapperRef, codeMirrorUt, resetHistory } = useCodeMirror(props);
-  const { inputWrapperStyle, resizeOperateStyle, showPreviewWrapper } = useResize(
+  const { inputWrapperStyle, resizeOperateStyle } = useResize(
     props,
     contentRef,
     resizeRef
@@ -82,10 +82,7 @@ const Content = forwardRef((props: ContentProps, ref: ForwardedRef<unknown>) => 
   );
 
   return (
-    <div
-      className={`${prefix}-content${showPreviewWrapper ? ' has-preview' : ''}`}
-      ref={contentRef}
-    >
+    <div className={`${prefix}-content`} ref={contentRef}>
       <div
         className={`${prefix}-input-wrapper`}
         style={inputWrapperStyle}
@@ -116,7 +113,6 @@ const Content = forwardRef((props: ContentProps, ref: ForwardedRef<unknown>) => 
         codeFoldable={props.codeFoldable}
         autoFoldThreshold={props.autoFoldThreshold}
         onRemount={props.onRemount}
-        key="display-editor"
       />
       {props.catalogVisible && (
         <MdCatalog
