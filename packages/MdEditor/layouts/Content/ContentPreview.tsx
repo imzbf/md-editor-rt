@@ -3,7 +3,7 @@ import { prefix } from '~/config';
 import { EditorContext } from '~/context';
 import { classnames } from '~/utils';
 
-import { useCopyCode, useMarkdownIt, useZoom, useTaskState } from './hooks';
+import { useCopyCode, useMarkdownIt, useZoom, useTaskState, useRemount } from './hooks';
 import { ContentPreviewProps } from './props';
 
 const ContentPreview = (props: ContentPreviewProps) => {
@@ -18,6 +18,8 @@ const ContentPreview = (props: ContentPreviewProps) => {
   useZoom(props, html);
   // 任务状态
   useTaskState(props, html);
+  // 标准的重新渲染事件，能够正确获取到html
+  useRemount(props, html, key);
 
   const content = useMemo(() => {
     return (

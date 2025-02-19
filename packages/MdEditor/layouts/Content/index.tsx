@@ -115,6 +115,7 @@ const Content = forwardRef((props: ContentProps, ref: ForwardedRef<unknown>) => 
         sanitizeMermaid={props.sanitizeMermaid}
         codeFoldable={props.codeFoldable}
         autoFoldThreshold={props.autoFoldThreshold}
+        onRemount={props.onRemount}
         key="display-editor"
       />
       {props.catalogVisible && (
