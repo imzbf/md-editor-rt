@@ -2465,10 +2465,10 @@ markdown-it@^14.0.0:
     punycode.js "^2.3.1"
     uc.micro "^2.1.0"
 
-md-editor-rt@^5.2.3:
-  version "5.2.3"
-  resolved "https://registry.yarnpkg.com/md-editor-rt/-/md-editor-rt-5.2.3.tgz#b2bc87157eac29ba579550aecb3f5caf2ab3242c"
-  integrity sha512-v/pHwduL0VpJFBfuAxn/n/KKmZL+Icia1ximYLNHWSfZByWpp3E5ubOhkHRis7pg5jUktHC9skpBaLHDaS4tLQ==
+md-editor-rt@^5.3.0:
+  version "5.3.0"
+  resolved "https://registry.yarnpkg.com/md-editor-rt/-/md-editor-rt-5.3.0.tgz#d5205391801206aec2cd927ee124294db193a249"
+  integrity sha512-9FSAQjnmA2U2U0l3/FPhv96KApAoY+ZIs/fwBPGnYmDRoVLFZjAf0fq4sPzsOy2/+nJSVSbUoE/o8mnezFlL3Q==
   dependencies:
     "@codemirror/lang-markdown" "^6.3.0"
     "@codemirror/language-data" "^6.5.1"

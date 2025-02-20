@@ -229,6 +229,7 @@ const HomePage = ({ mdText, tips }: { mdText: string; tips: string }) => {
             onUploadImg={onUploadImg}
             footers={footers}
             defFooters={defFooters}
+            catalogLayout="flat"
           />
           <br />
           <span className="tips-text">

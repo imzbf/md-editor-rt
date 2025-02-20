@@ -810,7 +810,24 @@
 
 ---
 
+### 🔖 catalogLayout
+
+- **类型**：`'fixed' | 'flat'`
+- **默认值**：`fixed`
+
+  \>=5.3.0 内置的目录显示的状态，'fixed': 悬浮在内容上方，'flat': 展示在右侧
+
+---
+
 ## 🧵 MdPreview 绑定事件
+
+### 📞 onChange
+
+- **类型**：`(v: string) => void`
+
+  内容变化事件（当前与`textare`的`oninput`事件绑定，每输入一个单字即会触发）。
+
+---
 
 ### 🚁 onHtmlChanged
 
@@ -828,17 +845,17 @@
 
 ---
 
+### 🔃 onRemount
+
+- **类型**：`() => void`
+
+  \>=5.3.0 内容重新挂载事件，在这个事件中能够正确获取到内容中的节点。
+
+---
+
 ## 🪢 MdEditor 绑定事件
 
 除去和`MdPreivew`相同的以外：
-
-### 📞 onChange
-
-- **类型**：`(v: string) => void`
-
-  内容变化事件（当前与`textare`的`oninput`事件绑定，每输入一个单字即会触发）。
-
----
 
 ### 💾 onSave
 
