@@ -60,7 +60,8 @@ const Editor = forwardRef((props: EditorProps, ref: ForwardedRef<unknown>) => {
     sanitizeMermaid = defaultProps.sanitizeMermaid,
     transformImgUrl = defaultProps.transformImgUrl,
     codeFoldable = defaultProps.codeFoldable,
-    autoFoldThreshold = defaultProps.autoFoldThreshold
+    autoFoldThreshold = defaultProps.autoFoldThreshold,
+    catalogLayout = defaultProps.catalogLayout as typeof props.catalogLayout
   } = props;
 
   const editorId = useEditorId(props);
@@ -198,6 +199,7 @@ const Editor = forwardRef((props: EditorProps, ref: ForwardedRef<unknown>) => {
           codeFoldable={codeFoldable}
           autoFoldThreshold={autoFoldThreshold}
           onRemount={props.onRemount}
+          catalogLayout={catalogLayout}
         />
         {footers.length > 0 && (
           <Footer

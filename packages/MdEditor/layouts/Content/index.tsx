@@ -82,42 +82,44 @@ const Content = forwardRef((props: ContentProps, ref: ForwardedRef<unknown>) => 
   );
 
   return (
-    <div className={`${prefix}-content`} ref={contentRef}>
-      <div
-        className={`${prefix}-input-wrapper`}
-        style={inputWrapperStyle}
-        ref={inputWrapperRef}
-      />
-      {/* 拖拽入口需要保持props.setting变化时就挂载 */}
-      {(props.setting.htmlPreview || props.setting.preview) && (
+    <div className={`${prefix}-content`}>
+      <div className={`${prefix}-content-wrapper`} ref={contentRef}>
         <div
-          className={`${prefix}-resize-operate`}
-          style={resizeOperateStyle}
-          ref={resizeRef}
+          className={`${prefix}-input-wrapper`}
+          style={inputWrapperStyle}
+          ref={inputWrapperRef}
         />
-      )}
-      <ContentPreview
-        modelValue={props.modelValue}
-        onChange={props.onChange}
-        setting={props.setting}
-        onHtmlChanged={onHtmlChangedCopy}
-        onGetCatalog={props.onGetCatalog}
-        mdHeadingId={props.mdHeadingId}
-        noMermaid={props.noMermaid}
-        sanitize={props.sanitize}
-        noKatex={props.noKatex}
-        formatCopiedText={props.formatCopiedText}
-        noHighlight={props.noHighlight}
-        noImgZoomIn={props.noImgZoomIn}
-        sanitizeMermaid={props.sanitizeMermaid}
-        codeFoldable={props.codeFoldable}
-        autoFoldThreshold={props.autoFoldThreshold}
-        onRemount={props.onRemount}
-      />
+        {/* 拖拽入口需要保持props.setting变化时就挂载 */}
+        {(props.setting.htmlPreview || props.setting.preview) && (
+          <div
+            className={`${prefix}-resize-operate`}
+            style={resizeOperateStyle}
+            ref={resizeRef}
+          />
+        )}
+        <ContentPreview
+          modelValue={props.modelValue}
+          onChange={props.onChange}
+          setting={props.setting}
+          onHtmlChanged={onHtmlChangedCopy}
+          onGetCatalog={props.onGetCatalog}
+          mdHeadingId={props.mdHeadingId}
+          noMermaid={props.noMermaid}
+          sanitize={props.sanitize}
+          noKatex={props.noKatex}
+          formatCopiedText={props.formatCopiedText}
+          noHighlight={props.noHighlight}
+          noImgZoomIn={props.noImgZoomIn}
+          sanitizeMermaid={props.sanitizeMermaid}
+          codeFoldable={props.codeFoldable}
+          autoFoldThreshold={props.autoFoldThreshold}
+          onRemount={props.onRemount}
+        />
+      </div>
       {props.catalogVisible && (
         <MdCatalog
           theme={props.theme}
-          className={`${prefix}-catalog-editor`}
+          className={`${prefix}-catalog-editor ${prefix}-catalog-${props.catalogLayout}`}
           editorId={editorId}
           mdHeadingId={props.mdHeadingId}
           key="internal-catalog"
