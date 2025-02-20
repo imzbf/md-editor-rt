@@ -53,5 +53,6 @@ export type ContentProps = Readonly<
     inputBoxWidth: string;
     onInputBoxWidthChange?: (width: string) => void;
     transformImgUrl: (text: string) => string | Promise<string>;
+    catalogLayout?: 'fixed' | 'flat';
   } & ContentPreviewProps
 >;

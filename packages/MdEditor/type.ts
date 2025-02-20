@@ -490,6 +490,17 @@ export interface EditorProps extends MdPreviewProps {
    * @returns
    */
   transformImgUrl?: (t: string) => string | Promise<string>;
+  /**
+   * 内置的目录显示的状态
+   *
+   * 'fixed': 悬浮在内容上方
+   * 'flat': 展示在右侧
+   *
+   *  \>=5.3.0
+   *
+   * @default 'fixed'
+   */
+  catalogLayout?: 'fixed' | 'flat';
 }
 
 export interface ContentType {

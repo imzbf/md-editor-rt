@@ -174,6 +174,7 @@ export default ({ theme, previewTheme, codeTheme, lang }: PreviewProp) => {
       <div className="container">
         <MdEditor
           id="md-prev"
+          catalogLayout="flat"
           completions={completions}
           ref={editorRef}
           theme={theme}

@@ -106,7 +106,7 @@ const MdCatalog = (props: CatalogProps) => {
   // 获取到的目录root节点，注意，不支持目录和编辑器不在同一个web c中使用
   const rootNodeRef = useRef<Document | ShadowRoot>();
   // 编辑器view
-  const editorViewRef = useRef<EditorView>();
+  const [editorView, setEditorView] = useState<EditorView>();
 
   /**
    * 指示器样式
@@ -218,11 +218,11 @@ const MdCatalog = (props: CatalogProps) => {
               relativeTop = getRelativeTop(linkEle, scrollElementRef.current!);
             }
           } else {
-            const view = editorViewRef.current;
-
-            if (view) {
-              const top = view.lineBlockAt(view.state.doc.line(link.line + 1).from).top;
-              const scrollTop = view.scrollDOM.scrollTop;
+            if (editorView) {
+              const top = editorView.lineBlockAt(
+                editorView.state.doc.line(link.line + 1).from
+              ).top;
+              const scrollTop = editorView.scrollDOM.scrollTop;
 
               relativeTop = top - scrollTop;
             }
@@ -259,7 +259,7 @@ const MdCatalog = (props: CatalogProps) => {
       scrollContainerRef.current?.removeEventListener('scroll', scrollHandler);
 
       if (syncWith === 'editor') {
-        scrollContainerRef.current = editorViewRef.current?.scrollDOM;
+        scrollContainerRef.current = editorView?.scrollDOM;
       } else {
         // 切换预览状态后，需要重新获取滚动元素
         const scrollElement = getScrollElement();
@@ -283,11 +283,11 @@ const MdCatalog = (props: CatalogProps) => {
       bus.remove(editorId, CATALOG_CHANGED, callback);
       scrollContainerRef.current?.removeEventListener('scroll', scrollHandler);
     };
-  }, [offsetTop, mdHeadingId, getScrollElement, editorId, syncWith]);
+  }, [offsetTop, mdHeadingId, getScrollElement, editorId, syncWith, editorView]);
 
   useEffect(() => {
     const getEditorView = (view: EditorView) => {
-      editorViewRef.current = view;
+      setEditorView(view);
     };
 
     bus.on(editorId, {
