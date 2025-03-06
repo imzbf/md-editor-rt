@@ -1,5 +1,5 @@
 import { useContext, useEffect } from 'react';
-import copy from 'copy-to-clipboard';
+import copy2clipboard from '@vavt/copy2clipboard';
 import { prefix } from '~/config';
 import { EditorContext } from '~/context';
 import { ContentPreviewProps } from '../props';
@@ -32,25 +32,29 @@ const useCopyCode = (props: ContentPreviewProps, html: string, key: string) => {
                 codeBlock.querySelector('pre code');
 
               const codeText = (activeCode as HTMLElement).textContent!;
-
-              const success = copy(formatCopiedText(codeText));
               const { text, successTips, failTips } = usedLanguageText.copyCode!;
 
-              const msg = success ? successTips! : failTips!;
+              let msg = successTips!;
 
-              if (copyButton.dataset.isIcon) {
-                copyButton.dataset.tips = msg;
-              } else {
-                copyButton.innerHTML = msg;
-              }
+              copy2clipboard(formatCopiedText(codeText))
+                .catch(() => {
+                  msg = failTips!;
+                })
+                .finally(() => {
+                  if (copyButton.dataset.isIcon) {
+                    copyButton.dataset.tips = msg;
+                  } else {
+                    copyButton.innerHTML = msg;
+                  }
 
-              clearTimer = window.setTimeout(() => {
-                if (copyButton.dataset.isIcon) {
-                  copyButton.dataset.tips = text;
-                } else {
-                  copyButton.innerHTML = text!;
-                }
-              }, 1500);
+                  clearTimer = window.setTimeout(() => {
+                    if (copyButton.dataset.isIcon) {
+                      copyButton.dataset.tips = text;
+                    } else {
+                      copyButton.innerHTML = text!;
+                    }
+                  }, 1500);
+                });
             };
         });
     }
