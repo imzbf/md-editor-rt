@@ -40,7 +40,9 @@
   ],
   "scripts": {
     "dev": "tsx ./scripts/dev",
-    "build": "tsx ./scripts/build"
+    "build": "tsx ./scripts/build",
+    "lint-staged": "lint-staged",
+    "prepare": "husky"
   },
   "dependencies": {
     "@codemirror/lang-markdown": "^6.3.0",
@@ -75,8 +77,10 @@
     "eslint-plugin-react-refresh": "^0.4.13",
     "globals": "^15.11.0",
     "highlight.js": "^11.10.0",
+    "husky": "^9.1.7",
     "katex": "^0.16.11",
     "less": "^4.2.0",
+    "lint-staged": "^15.4.3",
     "mermaid": "^11.3.0",
     "multiparty": "^4.2.3",
     "prettier": "^3.3.3",
@@ -93,9 +97,13 @@
     "react": ">=18.0.0",
     "react-dom": ">=18.0.0"
   },
-  "browserslist": [
-    "> 1%",
-    "last 2 versions",
-    "not dead"
-  ]
+  "lint-staged": {
+    "*.{ts,tsx}": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "*.{json,md}": [
+      "prettier --write"
+    ]
+  }
 }
