@@ -101,10 +101,9 @@ const resolvePath = (p: string) => path.resolve(__dirname, p);
                     'react/jsx-runtime',
                     'medium-zoom',
                     'lru-cache',
-                    'copy-to-clipboard',
                     'codemirror',
                     'lucide-react',
-                    '@vavt/util',
+                    /@vavt\/.*/,
                     /@codemirror\/.*/,
                     /@lezer\/.*/,
                     /markdown-it.*/
