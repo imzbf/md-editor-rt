@@ -103,6 +103,7 @@ const MdPreview = forwardRef((props: MdPreviewProps, ref: ForwardedRef<unknown>)
           codeFoldable={codeFoldable}
           autoFoldThreshold={autoFoldThreshold}
           onRemount={props.onRemount}
+          htmlUpdateOnDemand={props.htmlUpdateOnDemand}
         />
       </div>
     </EditorContext.Provider>

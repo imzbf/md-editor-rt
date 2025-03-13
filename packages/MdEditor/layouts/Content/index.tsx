@@ -114,6 +114,7 @@ const Content = forwardRef((props: ContentProps, ref: ForwardedRef<unknown>) => 
           codeFoldable={props.codeFoldable}
           autoFoldThreshold={props.autoFoldThreshold}
           onRemount={props.onRemount}
+          htmlUpdateOnDemand={props.htmlUpdateOnDemand}
         />
       </div>
       {props.catalogVisible && (

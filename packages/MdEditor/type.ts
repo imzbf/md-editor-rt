@@ -312,6 +312,10 @@ export interface MdPreviewProps {
    * 相比起onHtmlChanged，onRemount会在重新挂载后触发
    */
   onRemount?: () => void;
+  /**
+   * 是否同单层对比，选择性的更新变化的html，流式内容推荐（AI吐字之类的）
+   */
+  htmlUpdateOnDemand?: boolean;
 }
 
 export type TableShapeType = [number, number] | [number, number, number, number];
