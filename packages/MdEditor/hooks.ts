@@ -3,8 +3,10 @@ import {
   MutableRefObject,
   useCallback,
   useEffect,
+  useId,
   useImperativeHandle,
   useMemo,
+  useRef,
   useState
 } from 'react';
 import bus from './utils/event-bus';
@@ -17,18 +19,11 @@ import {
   ExposeParam,
   UpdateSetting,
   ExposeEvent,
-  MdPreviewStaticProps,
   FocusOption,
-  UploadImgCallBack
+  UploadImgCallBack,
+  MdPreviewProps
 } from './type';
-import {
-  prefix,
-  allToolbar,
-  codeCss,
-  staticTextDefault,
-  configOption,
-  defaultProps
-} from './config';
+import { prefix, codeCss, staticTextDefault, configOption, defaultProps } from './config';
 import { appendHandler } from './utils/dom';
 import {
   CHANGE_CATALOG_VISIBLE,
@@ -48,6 +43,7 @@ import {
   PREVIEW_ONLY_CHANGED
 } from './static/event-name';
 import { ContentExposeParam } from './layouts/Content/type';
+import { CDN_IDS } from './static';
 
 /**
  * 键盘监听
@@ -56,7 +52,7 @@ import { ContentExposeParam } from './layouts/Content/type';
  * @param staticProps
  */
 export const useOnSave = (props: EditorProps, staticProps: StaticProps) => {
-  const { modelValue } = props;
+  const { value, modelValue, onSave } = props;
   const { editorId } = staticProps;
 
   const [state, setState] = useState({
@@ -85,12 +81,11 @@ export const useOnSave = (props: EditorProps, staticProps: StaticProps) => {
     return () => {
       bus.remove(editorId, BUILD_FINISHED, buildFinishedCb);
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [editorId]);
 
   useEffect(() => {
     const callback = () => {
-      if (props.onSave) {
+      if (onSave) {
         const htmlPromise = new Promise<string>((rev) => {
           if (state.buildFinished) {
             rev(state.html);
@@ -109,7 +104,7 @@ export const useOnSave = (props: EditorProps, staticProps: StaticProps) => {
           }
         });
 
-        props.onSave(props.modelValue, htmlPromise);
+        onSave(value || modelValue || '', htmlPromise);
       }
     };
 
@@ -122,8 +117,7 @@ export const useOnSave = (props: EditorProps, staticProps: StaticProps) => {
     return () => {
       bus.remove(editorId, ON_SAVE, callback);
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [modelValue, props, state.buildFinished, state.html]);
+  }, [editorId, modelValue, onSave, state.buildFinished, state.html, value]);
 
   useEffect(() => {
     // 编辑后添加未编译完成标识
@@ -133,7 +127,7 @@ export const useOnSave = (props: EditorProps, staticProps: StaticProps) => {
         buildFinished: false
       };
     });
-  }, [modelValue]);
+  }, [value, modelValue]);
 };
 
 /**
@@ -165,12 +159,12 @@ export const useExpansion = (staticProps: StaticProps) => {
         ...css,
         rel: 'stylesheet',
         href: editorExtensions.cropper!.css,
-        id: `${prefix}-cropperCss`
+        id: CDN_IDS.croppercss
       });
       appendHandler('script', {
         ...js,
         src: editorExtensions.cropper!.js,
-        id: `${prefix}-cropper`
+        id: CDN_IDS.cropperjs
       });
     }
 
@@ -181,7 +175,7 @@ export const useExpansion = (staticProps: StaticProps) => {
       appendHandler('script', {
         ...standaloneJs,
         src: editorExtensions.prettier!.standaloneJs,
-        id: `${prefix}-prettier`
+        id: CDN_IDS.prettier
       });
     }
 
@@ -191,41 +185,13 @@ export const useExpansion = (staticProps: StaticProps) => {
       appendHandler('script', {
         ...parserMarkdownJs,
         src: editorExtensions.prettier!.parserMarkdownJs,
-        id: `${prefix}-prettierMD`
+        id: CDN_IDS.prettierMD
       });
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  useExpansionPreview(staticProps);
+  }, [noPrettier, noUploadImg]);
 };
 
-export const useExpansionPreview = ({ noIconfont }: MdPreviewStaticProps) => {
-  useEffect(() => {
-    const { editorExtensions, editorExtensionsAttrs, iconfontType } = configOption;
-    if (noIconfont) {
-      return;
-    }
-
-    if (iconfontType === 'svg') {
-      // 图标
-      appendHandler('script', {
-        ...editorExtensionsAttrs.iconfont,
-        src: editorExtensions.iconfont,
-        id: `${prefix}-icon`
-      });
-    } else {
-      appendHandler('link', {
-        ...editorExtensionsAttrs.iconfontClass,
-        rel: 'stylesheet',
-        href: editorExtensions.iconfontClass,
-        id: `${prefix}-icon-class`
-      });
-    }
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-};
+export const useExpansionPreview = () => {};
 
 /**
  *  错误监听
@@ -243,8 +209,7 @@ export const useErrorCatcher = (editorId: string, onError: (err: InnerError) => 
     return () => {
       bus.remove(editorId, ERROR_CATCHER, onError);
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [onError]);
+  }, [editorId, onError]);
 };
 
 /**
@@ -254,6 +219,7 @@ export const useErrorCatcher = (editorId: string, onError: (err: InnerError) => 
  */
 export const useUploadImg = (props: EditorProps, staticProps: StaticProps) => {
   const { editorId } = staticProps;
+  const { onUploadImg } = props;
 
   useEffect(() => {
     const uploadImageCallBack = (files: Array<File>, cb: () => void) => {
@@ -263,12 +229,10 @@ export const useUploadImg = (props: EditorProps, staticProps: StaticProps) => {
           urls
         });
 
-        cb && cb();
+        cb?.();
       };
 
-      if (props.onUploadImg) {
-        props.onUploadImg(files, insertHanlder);
-      }
+      onUploadImg?.(files, insertHanlder);
     };
 
     // 监听上传图片
@@ -280,8 +244,7 @@ export const useUploadImg = (props: EditorProps, staticProps: StaticProps) => {
     return () => {
       bus.remove(editorId, UPLOAD_IMAGE, uploadImageCallBack);
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [props.onUploadImg]);
+  }, [editorId, onUploadImg]);
 };
 
 /**
@@ -291,34 +254,30 @@ export const useUploadImg = (props: EditorProps, staticProps: StaticProps) => {
  * @param staticProps
  * @returns
  */
-export const useCatalog = (props: EditorProps, staticProps: StaticProps) => {
-  const { toolbars = allToolbar, toolbarsExclude = [] } = props;
+export const useCatalog = (_props: EditorProps, staticProps: StaticProps) => {
   const { editorId } = staticProps;
 
   const [catalogShow, setCatalogShow] = useState(false);
 
   useEffect(() => {
+    const callback = (v: boolean | undefined) => {
+      if (v === undefined) {
+        setCatalogShow((_catalogShow) => !_catalogShow);
+      } else {
+        setCatalogShow(v);
+      }
+    };
     bus.on(editorId, {
       name: CHANGE_CATALOG_VISIBLE,
-      callback: (v: boolean | undefined) => {
-        if (v === undefined) {
-          setCatalogShow((_catalogShow) => !_catalogShow);
-        } else {
-          setCatalogShow(v);
-        }
-      }
+      callback
     });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
-  // 是否挂载目录组件
-  const catalogVisible = useMemo(() => {
-    return (
-      !toolbarsExclude.includes('catalog') && toolbars.includes('catalog') && catalogShow
-    );
-  }, [catalogShow, toolbars, toolbarsExclude]);
+    return () => {
+      bus.remove(editorId, CHANGE_CATALOG_VISIBLE, callback);
+    };
+  }, [editorId]);
 
-  return catalogVisible;
+  return catalogShow;
 };
 
 // 初始为空，渲染到页面后获取页面属性
@@ -408,27 +367,53 @@ export const useConfig = (props: EditorProps) => {
     previewOnly: false
   });
 
-  const updateSetting = useCallback((k: keyof typeof setting, v: boolean) => {
-    setSetting((_setting) => {
-      const nextSetting = {
-        ..._setting,
-        [k]: v === undefined ? !_setting[k] : v
-      } as SettingType;
+  const cacheSetting = useRef(setting);
 
-      if (k === 'preview') {
-        nextSetting.htmlPreview = false;
-        nextSetting.previewOnly = false;
-      } else if (k === 'htmlPreview') {
-        nextSetting.preview = false;
-        nextSetting.previewOnly = false;
-      } else if (
-        k === 'previewOnly' &&
-        !nextSetting.preview &&
-        !nextSetting.htmlPreview
-      ) {
-        // 如果没有显示预览模块，则需要手动展示
-        nextSetting.preview = true;
+  const updateSetting = useCallback((k: keyof SettingType, v: boolean) => {
+    setSetting((_setting) => {
+      const realValue = v === undefined ? !_setting[k] : v;
+
+      const nextSetting: SettingType = {
+        ..._setting
+      };
+
+      switch (k) {
+        case 'preview': {
+          nextSetting.htmlPreview = false;
+          nextSetting.previewOnly = false;
+
+          break;
+        }
+
+        case 'htmlPreview': {
+          nextSetting.preview = false;
+          nextSetting.previewOnly = false;
+
+          break;
+        }
+
+        case 'previewOnly': {
+          if (realValue) {
+            if (!nextSetting.preview && !nextSetting.htmlPreview) {
+              // 如果没有显示预览模块，则需要手动展示
+              nextSetting.preview = true;
+            }
+          } else {
+            if (!cacheSetting.current.preview) {
+              nextSetting.preview = false;
+            }
+
+            if (!cacheSetting.current.htmlPreview) {
+              nextSetting.htmlPreview = false;
+            }
+          }
+
+          break;
+        }
       }
+
+      cacheSetting.current[k] = realValue;
+      nextSetting[k] = realValue;
 
       return nextSetting;
     });
@@ -471,157 +456,154 @@ export const useExpose = (
 
   useEffect(() => {
     bus.emit(editorId, PAGE_FULL_SCREEN_CHANGED, setting.pageFullscreen);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [setting.pageFullscreen]);
+  }, [editorId, setting.pageFullscreen]);
 
   useEffect(() => {
     bus.emit(editorId, FULL_SCREEN_CHANGED, setting.fullscreen);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [setting.fullscreen]);
+  }, [editorId, setting.fullscreen]);
 
   useEffect(() => {
     bus.emit(editorId, PREVIEW_CHANGED, setting.preview);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [setting.preview]);
+  }, [editorId, setting.preview]);
 
   useEffect(() => {
     bus.emit(editorId, PREVIEW_ONLY_CHANGED, setting.previewOnly);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [setting.previewOnly]);
+  }, [editorId, setting.previewOnly]);
 
   useEffect(() => {
     bus.emit(editorId, HTML_PREVIEW_CHANGED, setting.htmlPreview);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [setting.htmlPreview]);
+  }, [editorId, setting.htmlPreview]);
 
   useEffect(() => {
     bus.emit(editorId, CATALOG_VISIBLE_CHANGED, catalogVisible);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [catalogVisible]);
+  }, [catalogVisible, editorId]);
 
-  useImperativeHandle(
-    editorRef,
-    () => {
-      const exposeParam: ExposeParam = {
-        on(eventName, callBack) {
-          switch (eventName) {
-            case 'pageFullscreen': {
-              bus.on(editorId, {
-                name: PAGE_FULL_SCREEN_CHANGED,
-                callback(status: boolean) {
-                  (callBack as ExposeEvent['pageFullscreen'])(status);
-                }
-              });
+  useImperativeHandle(editorRef, () => {
+    const exposeParam: ExposeParam = {
+      on(eventName, callBack) {
+        switch (eventName) {
+          case 'pageFullscreen': {
+            bus.on(editorId, {
+              name: PAGE_FULL_SCREEN_CHANGED,
+              callback(status: boolean) {
+                (callBack as ExposeEvent['pageFullscreen'])(status);
+              }
+            });
 
-              break;
-            }
-            case 'fullscreen': {
-              bus.on(editorId, {
-                name: FULL_SCREEN_CHANGED,
-                callback(status: boolean) {
-                  (callBack as ExposeEvent['fullscreen'])(status);
-                }
-              });
-
-              break;
-            }
-
-            case 'preview': {
-              bus.on(editorId, {
-                name: PREVIEW_CHANGED,
-                callback(status: boolean) {
-                  (callBack as ExposeEvent['preview'])(status);
-                }
-              });
-
-              break;
-            }
-
-            case 'previewOnly': {
-              bus.on(editorId, {
-                name: PREVIEW_ONLY_CHANGED,
-                callback(status: boolean) {
-                  (callBack as ExposeEvent['previewOnly'])(status);
-                }
-              });
-
-              break;
-            }
-
-            case 'htmlPreview': {
-              bus.on(editorId, {
-                name: HTML_PREVIEW_CHANGED,
-                callback(status: boolean) {
-                  (callBack as ExposeEvent['htmlPreview'])(status);
-                }
-              });
-
-              break;
-            }
-
-            case 'catalog': {
-              bus.on(editorId, {
-                name: CATALOG_VISIBLE_CHANGED,
-                callback(status: boolean) {
-                  (callBack as ExposeEvent['catalog'])(status);
-                }
-              });
-
-              break;
-            }
-
-            default: {
-              //
-            }
+            break;
           }
-        },
-        togglePageFullscreen(status) {
-          updateSetting('pageFullscreen', status);
-        },
-        toggleFullscreen(status) {
-          bus.emit(editorId, CHANGE_FULL_SCREEN, status);
-        },
-        togglePreview(status) {
-          updateSetting('preview', status);
-        },
-        togglePreviewOnly(status) {
-          updateSetting('previewOnly', status);
-        },
-        toggleHtmlPreview(status) {
-          updateSetting('htmlPreview', status);
-        },
-        toggleCatalog(status) {
-          bus.emit(editorId, CHANGE_CATALOG_VISIBLE, status);
-        },
-        triggerSave() {
-          bus.emit(editorId, ON_SAVE);
-        },
-        insert(generate) {
-          bus.emit(editorId, REPLACE, 'universal', { generate });
-        },
-        focus(options: FocusOption) {
-          codeRef.current?.focus(options);
-        },
-        rerender() {
-          bus.emit(editorId, RERENDER);
-        },
-        getSelectedText() {
-          return codeRef.current?.getSelectedText();
-        },
-        resetHistory() {
-          codeRef.current?.resetHistory();
-        },
-        domEventHandlers(handlers) {
-          bus.emit(editorId, EVENT_LISTENER, handlers);
-        },
-        execCommand(direct) {
-          bus.emit(editorId, REPLACE, direct);
-        }
-      };
+          case 'fullscreen': {
+            bus.on(editorId, {
+              name: FULL_SCREEN_CHANGED,
+              callback(status: boolean) {
+                (callBack as ExposeEvent['fullscreen'])(status);
+              }
+            });
 
-      return exposeParam;
-    },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [updateSetting]
-  );
+            break;
+          }
+
+          case 'preview': {
+            bus.on(editorId, {
+              name: PREVIEW_CHANGED,
+              callback(status: boolean) {
+                (callBack as ExposeEvent['preview'])(status);
+              }
+            });
+
+            break;
+          }
+
+          case 'previewOnly': {
+            bus.on(editorId, {
+              name: PREVIEW_ONLY_CHANGED,
+              callback(status: boolean) {
+                (callBack as ExposeEvent['previewOnly'])(status);
+              }
+            });
+
+            break;
+          }
+
+          case 'htmlPreview': {
+            bus.on(editorId, {
+              name: HTML_PREVIEW_CHANGED,
+              callback(status: boolean) {
+                (callBack as ExposeEvent['htmlPreview'])(status);
+              }
+            });
+
+            break;
+          }
+
+          case 'catalog': {
+            bus.on(editorId, {
+              name: CATALOG_VISIBLE_CHANGED,
+              callback(status: boolean) {
+                (callBack as ExposeEvent['catalog'])(status);
+              }
+            });
+
+            break;
+          }
+
+          default: {
+            //
+          }
+        }
+      },
+      togglePageFullscreen(status) {
+        updateSetting('pageFullscreen', status);
+      },
+      toggleFullscreen(status) {
+        bus.emit(editorId, CHANGE_FULL_SCREEN, status);
+      },
+      togglePreview(status) {
+        updateSetting('preview', status);
+      },
+      togglePreviewOnly(status) {
+        updateSetting('previewOnly', status);
+      },
+      toggleHtmlPreview(status) {
+        updateSetting('htmlPreview', status);
+      },
+      toggleCatalog(status) {
+        bus.emit(editorId, CHANGE_CATALOG_VISIBLE, status);
+      },
+      triggerSave() {
+        bus.emit(editorId, ON_SAVE);
+      },
+      insert(generate) {
+        bus.emit(editorId, REPLACE, 'universal', { generate });
+      },
+      focus(options: FocusOption) {
+        codeRef.current?.focus(options);
+      },
+      rerender() {
+        bus.emit(editorId, RERENDER);
+      },
+      getSelectedText() {
+        return codeRef.current?.getSelectedText();
+      },
+      resetHistory() {
+        codeRef.current?.resetHistory();
+      },
+      domEventHandlers(handlers) {
+        bus.emit(editorId, EVENT_LISTENER, handlers);
+      },
+      execCommand(direct) {
+        bus.emit(editorId, REPLACE, direct);
+      },
+      getEditorView() {
+        return codeRef.current?.getEditorView();
+      }
+    };
+
+    return exposeParam;
+  }, [codeRef, editorId, updateSetting]);
+};
+
+export const useEditorId = (props: MdPreviewProps) => {
+  const defaultId = useId();
+  return props.id || props.editorId || prefix + '-' + defaultId.replaceAll(':', '');
 };

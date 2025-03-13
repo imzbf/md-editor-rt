@@ -1,5 +1,5 @@
 import { RefObject, useContext, useEffect, useState } from 'react';
-import { EditorContext } from '~/Editor';
+import { EditorContext } from '~/context';
 import scrollAuto, { scrollAutoWithScale } from '~/utils/scroll-auto';
 import { ContentProps } from '../props';
 
@@ -27,15 +27,17 @@ const useAutoScroll = (
 
   // 更新完毕后判断是否需要重新绑定滚动事件
   useEffect(() => {
-    scrollCb.clear();
-    const cmScroller = document.querySelector<HTMLDivElement>(
+    const rootNode = codeMirrorUt.current?.view.contentDOM.getRootNode() as
+      | Document
+      | ShadowRoot;
+    const cmScroller = rootNode.querySelector<HTMLDivElement>(
       `#${editorId} .cm-scroller`
     );
 
-    const previewEle = document.querySelector<HTMLElement>(
+    const previewEle = rootNode.querySelector<HTMLElement>(
       `[id="${editorId}-preview-wrapper"]`
     );
-    const htmlEle = document.querySelector<HTMLElement>(
+    const htmlEle = rootNode.querySelector<HTMLElement>(
       `[id="${editorId}-html-wrapper"]`
     );
 
@@ -50,13 +52,14 @@ const useAutoScroll = (
         clear
       });
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     html,
     props.setting.fullscreen,
     props.setting.pageFullscreen,
     props.setting.preview,
-    props.setting.htmlPreview
+    props.setting.htmlPreview,
+    editorId,
+    codeMirrorUt
   ]);
 
   useEffect(() => {

@@ -1,4 +1,3 @@
-import React from 'react';
 import LinkModal from './Link';
 import ClipModal from './Clip';
 

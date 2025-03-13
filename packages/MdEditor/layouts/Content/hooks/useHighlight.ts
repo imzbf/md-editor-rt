@@ -1,7 +1,8 @@
 import { useContext, useEffect, useRef, useState } from 'react';
-import { prefix, configOption } from '~/config';
-import { EditorContext } from '~/Editor';
+import { configOption } from '~/config';
+import { EditorContext } from '~/context';
 import { appendHandler, updateHandler } from '~/utils/dom';
+import { CDN_IDS } from '~/static';
 import { ContentPreviewProps } from '../props';
 
 /**
@@ -17,12 +18,17 @@ const useHighlight = (props: ContentPreviewProps) => {
   const [hljsInited, setHljsInited] = useState(!!hljsRef.current);
 
   useEffect(() => {
+    // 强制不高亮，则什么都不做
+    if (props.noHighlight || configOption.editorExtensions.highlight!.instance) {
+      return;
+    }
+
     updateHandler('link', {
       ...highlight.css,
       rel: 'stylesheet',
-      id: `${prefix}-hlCss`
+      id: CDN_IDS.hlcss
     });
-  }, [highlight.css]);
+  }, [highlight.css, props.noHighlight]);
 
   useEffect(() => {
     // 强制不高亮，则什么都不做
@@ -30,16 +36,11 @@ const useHighlight = (props: ContentPreviewProps) => {
       return;
     }
 
-    appendHandler('link', {
-      ...highlight.css,
-      rel: 'stylesheet',
-      id: `${prefix}-hlCss`
-    });
     appendHandler(
       'script',
       {
         ...highlight.js,
-        id: `${prefix}-hljs`,
+        id: CDN_IDS.hljs,
         onload() {
           hljsRef.current = window.hljs;
           setHljsInited(true);
@@ -47,6 +48,8 @@ const useHighlight = (props: ContentPreviewProps) => {
       },
       'hljs'
     );
+
+    // 只执行一次
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

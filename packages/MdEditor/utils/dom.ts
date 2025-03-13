@@ -14,8 +14,7 @@ export const keyMove = (
     const width = parent.offsetWidth;
     const height = parent.offsetHeight;
     // 当前页长宽
-    const clientWidth = document.documentElement.clientWidth;
-    const clientHeight = document.documentElement.clientHeight;
+    const { clientWidth, clientHeight } = document.documentElement;
 
     const x = mdown.offsetX;
     const y = mdown.offsetY;
@@ -69,14 +68,14 @@ export const appendHandler = <K extends keyof HTMLElementTagNameMap>(
     const attrsCopy = { ...attributes };
     attrsCopy.onload = null;
     const ele = createHTMLElement(tagName, attrsCopy);
-    attributes.onload && ele.addEventListener('load', attributes.onload);
+    if (attributes.onload) ele.addEventListener('load', attributes.onload);
     document.head.appendChild(ele);
   } else if (checkKey !== '') {
     if (Reflect.get(window, checkKey)) {
       // 实例已存在，直接触发load事件
       attributes.onload?.call(insertedEle, new Event('load'));
     } else {
-      attributes.onload && insertedEle.addEventListener('load', attributes.onload);
+      if (attributes.onload) insertedEle.addEventListener('load', attributes.onload);
     }
   }
 };
@@ -120,3 +119,155 @@ export const createHTMLElement = <K extends keyof HTMLElementTagNameMap>(
 
   return element;
 };
+
+/**
+ * 缩放、拖拽mermaid模块
+ */
+export const zoomMermaid = (() => {
+  const addEvent = (container: HTMLElement | null) => {
+    if (!container) {
+      return;
+    }
+    const content = container.firstChild as HTMLElement;
+
+    let scale = 1;
+    let posX = 0;
+    let posY = 0;
+    let isDragging = false;
+    let startX: number, startY: number;
+    let initialDistance: number;
+    let initialScale = 1;
+
+    const updateTransform = () => {
+      content.style.transform = `translate(${posX}px, ${posY}px) scale(${scale})`;
+    };
+
+    // 处理拖拽和单指移动
+    container.addEventListener(
+      'touchstart',
+      (event) => {
+        if (event.touches.length === 1) {
+          isDragging = true;
+          startX = event.touches[0].clientX - posX;
+          startY = event.touches[0].clientY - posY;
+        } else if (event.touches.length === 2) {
+          initialDistance = Math.hypot(
+            event.touches[0].clientX - event.touches[1].clientX,
+            event.touches[0].clientY - event.touches[1].clientY
+          );
+          initialScale = scale;
+        }
+      },
+      {
+        passive: false
+      }
+    );
+
+    container.addEventListener(
+      'touchmove',
+      (event) => {
+        event.preventDefault();
+
+        if (isDragging && event.touches.length === 1) {
+          posX = event.touches[0].clientX - startX;
+          posY = event.touches[0].clientY - startY;
+          updateTransform();
+        } else if (event.touches.length === 2) {
+          const newDistance = Math.hypot(
+            event.touches[0].clientX - event.touches[1].clientX,
+            event.touches[0].clientY - event.touches[1].clientY
+          );
+          const scaleChange = newDistance / initialDistance;
+          const previousScale = scale;
+          scale = initialScale * (1 + (scaleChange - 1)); // 调整缩放速度
+
+          // 计算双指中心点
+          const centerX = (event.touches[0].clientX + event.touches[1].clientX) / 2;
+          const centerY = (event.touches[0].clientY + event.touches[1].clientY) / 2;
+
+          // 获取内容区域的边界
+          const rect = content.getBoundingClientRect();
+          // 计算相对位置
+          const relativeX = (centerX - rect.left) / previousScale;
+          const relativeY = (centerY - rect.top) / previousScale;
+
+          // 调整 posX 和 posY 使得缩放发生在双指中心
+          posX -= relativeX * (scale - previousScale);
+          posY -= relativeY * (scale - previousScale);
+
+          updateTransform();
+        }
+      },
+      {
+        passive: false
+      }
+    );
+
+    container.addEventListener('touchend', () => {
+      isDragging = false;
+    });
+
+    // PC 端缩放功能
+    container.addEventListener(
+      'wheel',
+      (event) => {
+        event.preventDefault();
+        const scaleAmount = 0.02; // 缩放速度
+        const previousScale = scale;
+
+        if (event.deltaY < 0) {
+          // 放大
+          scale += scaleAmount;
+        } else {
+          // 缩小
+          scale = Math.max(0.1, scale - scaleAmount);
+        }
+
+        // 计算鼠标相对于内容的位置
+        const rect = content.getBoundingClientRect();
+        const mouseX = event.clientX - rect.left;
+        const mouseY = event.clientY - rect.top;
+
+        // 调整 posX 和 posY，以使缩放中心为鼠标位置
+        posX -= (mouseX / previousScale) * (scale - previousScale);
+        posY -= (mouseY / previousScale) * (scale - previousScale);
+
+        updateTransform();
+      },
+      {
+        passive: false
+      }
+    );
+
+    // PC 端拖拽功能
+    container.addEventListener('mousedown', (event) => {
+      isDragging = true;
+      startX = event.clientX - posX;
+      startY = event.clientY - posY;
+    });
+
+    container.addEventListener('mousemove', (event) => {
+      if (isDragging) {
+        posX = event.clientX - startX;
+        posY = event.clientY - startY;
+        updateTransform();
+      }
+    });
+
+    container.addEventListener('mouseup', () => {
+      isDragging = false;
+    });
+
+    container.addEventListener('mouseleave', () => {
+      isDragging = false;
+    });
+  };
+
+  const handler = (containers?: NodeListOf<HTMLElement>) => {
+    containers?.forEach((mm) => {
+      addEvent(mm);
+    });
+  };
+
+  return handler;
+})();

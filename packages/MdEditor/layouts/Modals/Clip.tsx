@@ -1,19 +1,11 @@
-import React, {
-  useCallback,
-  useContext,
-  useEffect,
-  useMemo,
-  useRef,
-  useState
-} from 'react';
-import Modal from '~/components/Modal';
-import bus from '~/utils/event-bus';
-import { EditorContext } from '~/Editor';
+import { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
+import { EditorContext } from '~/context';
 import { configOption, prefix } from '~/config';
 import { base642File } from '~/utils';
-import Icon from '~/components/Icon';
 import { ERROR_CATCHER, UPLOAD_IMAGE } from '~/static/event-name';
-
+import Modal from '~/components/Modal';
+import bus from '~/utils/event-bus';
+import Icon from '~/components/Icon';
 interface ClipModalProps {
   visible: boolean;
   onCancel: () => void;
@@ -24,7 +16,7 @@ let cropper: any = null;
 
 const ClipModal = (props: ClipModalProps) => {
   const editorConext = useContext(EditorContext);
-  const { editorId, usedLanguageText } = editorConext;
+  const { editorId, usedLanguageText, rootRef } = editorConext;
 
   const Cropper = configOption.editorExtensions.cropper!.instance;
 
@@ -74,18 +66,7 @@ const ClipModal = (props: ClipModalProps) => {
         }
       };
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [props.visible, data.cropperInited]);
-
-  useEffect(() => {
-    if (data.imgSrc) {
-      cropper = new window.Cropper(uploadImgRef.current, {
-        viewMode: 2,
-        preview: `.${prefix}-clip-preview-target`
-        // aspectRatio: 16 / 9,
-      });
-    }
-  }, [data.imgSrc]);
+  }, [props.visible, data.cropperInited, Cropper, editorId]);
 
   useEffect(() => {
     (previewTargetRef.current as HTMLImageElement)?.setAttribute('style', '');
@@ -95,14 +76,15 @@ const ClipModal = (props: ClipModalProps) => {
     cropper?.destroy();
     (previewTargetRef.current as HTMLImageElement)?.setAttribute('style', '');
 
-    if (uploadImgRef.current) {
+    if (uploadImgRef.current && data.imgSrc) {
       cropper = new window.Cropper(uploadImgRef.current, {
         viewMode: 2,
-        preview: `.${prefix}-clip-preview-target`
-        // aspectRatio: 16 / 9,
+        preview: (rootRef!.current?.getRootNode() as Document | ShadowRoot).querySelector(
+          `.${prefix}-clip-preview-target`
+        )
       });
     }
-  }, [data.isFullscreen]);
+  }, [data.imgSrc, data.isFullscreen, rootRef]);
 
   // 弹出层宽度
   const modalSize = useMemo(() => {
@@ -168,6 +150,9 @@ const ClipModal = (props: ClipModalProps) => {
                 onClick={() => {
                   (uploadRef.current as HTMLInputElement).click();
                 }}
+                role="button"
+                tabIndex={0}
+                aria-label={usedLanguageText.imgTitleItem?.upload}
               >
                 <Icon name="upload" />
               </div>
@@ -204,13 +189,14 @@ const ClipModal = (props: ClipModalProps) => {
           type="file"
           multiple={false}
           style={{ display: 'none' }}
+          aria-hidden="true"
         />
       </Modal>
     );
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     usedLanguageText.clipModalTips?.title,
     usedLanguageText.linkModalTips?.buttonOK,
+    usedLanguageText.imgTitleItem?.upload,
     props.visible,
     props.onCancel,
     props.onOk,
@@ -218,7 +204,8 @@ const ClipModal = (props: ClipModalProps) => {
     data.imgSelected,
     data.imgSrc,
     onAdjust,
-    modalSize
+    modalSize,
+    editorId
   ]);
 };
 

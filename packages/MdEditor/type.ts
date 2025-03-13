@@ -1,5 +1,5 @@
-import { CSSProperties, ReactElement } from 'react';
 import markdownit from 'markdown-it';
+import { CSSProperties, ReactElement, RefObject } from 'react';
 import { CompletionSource } from '@codemirror/autocomplete';
 import { Extension } from '@codemirror/state';
 import { KeyBinding, EditorView } from '@codemirror/view';
@@ -136,6 +136,7 @@ export interface HeadList {
   text: string;
   level: 1 | 2 | 3 | 4 | 5 | 6;
   active?: boolean;
+  line: number;
 }
 
 export type Themes = 'light' | 'dark';
@@ -153,7 +154,15 @@ export type PreviewThemes = string;
 export type MdHeadingId = (text: string, level: number, index: number) => string;
 
 export interface MdPreviewProps {
-  modelValue: string;
+  value?: string;
+  /**
+   * @deprecated 5.0开始使用value代替
+   */
+  modelValue?: string;
+  /**
+   * input回调事件
+   */
+  onChange?: ChangeEvent;
   /**
    * 主题
    *
@@ -180,11 +189,17 @@ export interface MdPreviewProps {
    * 获取目录结构
    */
   onGetCatalog?: GetCatalogEvent;
-
+  /**
+   * 5.x版本开始 editorId 的替换
+   *
+   * @default 'md-editor-rt'
+   */
+  id?: string;
   /**
    * 编辑器唯一标识
    *
    * @default 'md-editor-rt'
+   * @deprecated 5.x版本开始使用 id 替换
    */
   editorId?: string;
   /**
@@ -235,12 +250,6 @@ export interface MdPreviewProps {
    * @default 'atom'
    */
   codeTheme?: string;
-  /**
-   * 不插入iconfont链接
-   *
-   * @default false
-   */
-  noIconfont?: boolean;
   /**
    * 复制代码格式化方法
    *
@@ -297,15 +306,17 @@ export interface MdPreviewProps {
    * @default 30
    */
   autoFoldThreshold?: number;
+  /**
+   * 内容重新挂载事件
+   *
+   * 相比起onHtmlChanged，onRemount会在重新挂载后触发
+   */
+  onRemount?: () => void;
 }
 
 export type TableShapeType = [number, number] | [number, number, number, number];
 
 export interface EditorProps extends MdPreviewProps {
-  /**
-   * input回调事件
-   */
-  onChange?: ChangeEvent;
   /**
    * 保存事件
    */
@@ -467,11 +478,11 @@ export interface EditorProps extends MdPreviewProps {
    *
    * @example '100px'/'50%'
    */
-  inputBoxWitdh?: string;
+  inputBoxWidth?: string;
   /**
    * 输入框宽度变化事件
    */
-  onInputBoxWitdhChange?: (width: string) => void;
+  onInputBoxWidthChange?: (width: string) => void;
   /**
    * 替换粘贴的图片链接
    *
@@ -479,6 +490,17 @@ export interface EditorProps extends MdPreviewProps {
    * @returns
    */
   transformImgUrl?: (t: string) => string | Promise<string>;
+  /**
+   * 内置的目录显示的状态
+   *
+   * 'fixed': 悬浮在内容上方
+   * 'flat': 展示在右侧
+   *
+   *  \>=5.3.0
+   *
+   * @default 'fixed'
+   */
+  catalogLayout?: 'fixed' | 'flat';
 }
 
 export interface ContentType {
@@ -494,6 +516,8 @@ export interface ContentType {
   language: string;
   previewTheme: PreviewThemes;
   customIcon: CustomIcon;
+  rootRef: RefObject<HTMLDivElement> | null;
+  disabled: boolean | undefined;
 }
 
 export interface MermaidTemplate {
@@ -559,11 +583,6 @@ export interface ConfigOption {
       js?: string;
       css?: string;
     };
-    iconfont?: string;
-    /**
-     * class方式的图标
-     */
-    iconfontClass?: string;
     screenfull?: {
       instance?: any;
       js?: string;
@@ -597,11 +616,6 @@ export interface ConfigOption {
       js?: Partial<HTMLElementTagNameMap['script']>;
       css?: Partial<HTMLElementTagNameMap['link']>;
     };
-    iconfont?: Partial<HTMLElementTagNameMap['script']>;
-    /**
-     * class方式的图标
-     */
-    iconfontClass?: Partial<HTMLElementTagNameMap['link']>;
     screenfull?: {
       js?: Partial<HTMLElementTagNameMap['script']>;
     };
@@ -645,7 +659,10 @@ export interface ConfigOption {
   codeMirrorExtensions: (
     theme: Themes,
     extensions: Array<Extension>,
-    keyBindings: Array<KeyBinding>
+    keyBindings: Array<KeyBinding>,
+    options: {
+      editorId: string;
+    }
   ) => Array<Extension>;
   /**
    * 自定义markdown-it核心库扩展、属性等
@@ -669,18 +686,19 @@ export interface ConfigOption {
     }
   ) => Array<MarkdownItConfigPlugin>;
   /**
-   * 如果使用内部的图标，可以切换展示的方式
-   *
-   * 以规避某些问题，例如Shadow Dom对Svg use的支持问题
-   */
-  iconfontType: 'svg' | 'class';
-  /**
    * mermaid配置项
    *
    * @param base
    * @returns
    */
   mermaidConfig: (base: any) => any;
+  /**
+   * katex配置
+   *
+   * @param baseConfig
+   * @returns
+   */
+  katexConfig: (baseConfig: any) => any;
 }
 
 /**
@@ -715,7 +733,6 @@ export interface MdPreviewStaticProps {
   editorId: string;
   noMermaid: boolean;
   noKatex: boolean;
-  noIconfont: boolean;
   noHighlight: boolean;
 }
 
@@ -888,6 +905,10 @@ export interface ExposeParam {
    * @param direct
    */
   execCommand(direct: ToolDirective): void;
+  /**
+   * 获取编辑器实例
+   */
+  getEditorView(): EditorView | undefined;
 }
 
 export type ExposePreviewParam = Pick<ExposeParam, 'rerender'>;
@@ -904,4 +925,5 @@ export type CustomIcon = {
   };
 } & {
   copy?: string;
+  'collapse-tips'?: string;
 };

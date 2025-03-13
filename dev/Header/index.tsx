@@ -66,36 +66,26 @@ export default (props: HeaderProp) => (
         </button>
       </p>
       <p className="header-actions">
-        <button
-          className="btn btn-header"
-          onClick={() => props.onCodeThemeChange('a11y')}
-        >
-          a11y
-        </button>
-        <button
-          className="btn btn-header"
-          onClick={() => props.onCodeThemeChange('atom')}
-        >
-          atom-one
-        </button>
-        <button
-          className="btn btn-header"
-          onClick={() => props.onCodeThemeChange('github')}
-        >
-          github
-        </button>
-        <button
-          className="btn btn-header"
-          onClick={() => props.onCodeThemeChange('gradient')}
-        >
-          gradient
-        </button>
-        <button
-          className="btn btn-header"
-          onClick={() => props.onCodeThemeChange('tokyo-night')}
-        >
-          tokyo-night
-        </button>
+        {[
+          'a11y',
+          'atom',
+          'github',
+          'gradient',
+          'kimbie',
+          'paraiso',
+          'qtcreator',
+          'stackoverflow'
+        ].map((item) => {
+          return (
+            <button
+              className="btn btn-header"
+              onClick={() => props.onCodeThemeChange(item)}
+              key={item}
+            >
+              {item}
+            </button>
+          );
+        })}
       </p>
     </section>
   </header>

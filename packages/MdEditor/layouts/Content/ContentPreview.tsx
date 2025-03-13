@@ -1,9 +1,9 @@
-import React, { useContext, useMemo } from 'react';
+import { useContext } from 'react';
 import { prefix } from '~/config';
-import { EditorContext } from '~/Editor';
+import { EditorContext } from '~/context';
 import { classnames } from '~/utils';
 
-import { useCopyCode, useMarkdownIt, useZoom } from './hooks';
+import { useCopyCode, useMarkdownIt, useZoom, useTaskState, useRemount } from './hooks';
 import { ContentPreviewProps } from './props';
 
 const ContentPreview = (props: ContentPreviewProps) => {
@@ -16,21 +16,10 @@ const ContentPreview = (props: ContentPreviewProps) => {
   useCopyCode(props, html, key);
   // 图片点击放大
   useZoom(props, html);
-
-  const content = useMemo(() => {
-    return (
-      <div
-        id={`${editorId}-preview`}
-        key={key}
-        className={classnames([
-          `${prefix}-preview`,
-          `${previewTheme}-theme`,
-          showCodeRowNumber && `${prefix}-scrn`
-        ])}
-        dangerouslySetInnerHTML={{ __html: html }}
-      />
-    );
-  }, [editorId, html, key, previewTheme, showCodeRowNumber]);
+  // 任务状态
+  useTaskState(props, html);
+  // 标准的重新渲染事件，能够正确获取到html
+  useRemount(props, html, key);
 
   return (
     <>
@@ -40,7 +29,16 @@ const ContentPreview = (props: ContentPreviewProps) => {
           className={`${prefix}-preview-wrapper`}
           key="content-preview-wrapper"
         >
-          {content}
+          <div
+            id={`${editorId}-preview`}
+            key={key}
+            className={classnames([
+              `${prefix}-preview`,
+              `${previewTheme}-theme`,
+              showCodeRowNumber && `${prefix}-scrn`
+            ])}
+            dangerouslySetInnerHTML={{ __html: html }}
+          />
         </div>
       )}
       {!previewOnly && props.setting.htmlPreview && (

@@ -3,6 +3,7 @@ import { HeadList, MdHeadingId, SettingType, Themes } from '~/type';
 
 export interface ContentPreviewProps {
   modelValue: string;
+  onChange: (v: string) => void;
   setting: SettingType;
   onHtmlChanged?: (h: string) => void;
   onGetCatalog?: (list: HeadList[]) => void;
@@ -17,11 +18,11 @@ export interface ContentPreviewProps {
   sanitizeMermaid: (html: string) => Promise<string>;
   codeFoldable: boolean;
   autoFoldThreshold: number;
+  onRemount?: () => void;
 }
 
 export type ContentProps = Readonly<
   {
-    onChange: (v: string) => void;
     placeholder: string;
     scrollAuto: boolean;
     autoFocus?: boolean;
@@ -49,8 +50,9 @@ export type ContentProps = Readonly<
      * @returns
      */
     onDrop?: (event: DragEvent) => void;
-    inputBoxWitdh: string;
-    onInputBoxWitdhChange?: (width: string) => void;
+    inputBoxWidth: string;
+    onInputBoxWidthChange?: (width: string) => void;
     transformImgUrl: (text: string) => string | Promise<string>;
+    catalogLayout?: 'fixed' | 'flat';
   } & ContentPreviewProps
 >;

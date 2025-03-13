@@ -1,18 +1,18 @@
 import { useContext, useEffect } from 'react';
-import copy from 'copy-to-clipboard';
+import copy2clipboard from '@vavt/copy2clipboard';
 import { prefix } from '~/config';
-import { EditorContext } from '~/Editor';
+import { EditorContext } from '~/context';
 import { ContentPreviewProps } from '../props';
 
 const useCopyCode = (props: ContentPreviewProps, html: string, key: string) => {
-  const { editorId, usedLanguageText, customIcon } = useContext(EditorContext);
+  const { editorId, usedLanguageText, customIcon, rootRef } = useContext(EditorContext);
   const { formatCopiedText = (t: string) => t } = props;
 
   useEffect(() => {
     if (props.setting.preview) {
       // 重新设置复制按钮
-      document
-        .querySelectorAll(`#${editorId} .${prefix}-preview .${prefix}-code`)
+      rootRef!.current
+        ?.querySelectorAll(`#${editorId} .${prefix}-preview .${prefix}-code`)
         .forEach((codeBlock: Element) => {
           // 恢复进程ID
           let clearTimer = -1;
@@ -32,26 +32,40 @@ const useCopyCode = (props: ContentPreviewProps, html: string, key: string) => {
                 codeBlock.querySelector('pre code');
 
               const codeText = (activeCode as HTMLElement).textContent!;
-
-              const success = copy(formatCopiedText(codeText));
-
               const { text, successTips, failTips } = usedLanguageText.copyCode!;
 
-              copyButton.innerHTML = success ? successTips! : failTips!;
+              let msg = successTips!;
 
-              clearTimer = window.setTimeout(() => {
-                copyButton.innerHTML = text!;
-              }, 1500);
+              copy2clipboard(formatCopiedText(codeText))
+                .catch(() => {
+                  msg = failTips!;
+                })
+                .finally(() => {
+                  if (copyButton.dataset.isIcon) {
+                    copyButton.dataset.tips = msg;
+                  } else {
+                    copyButton.innerHTML = msg;
+                  }
+
+                  clearTimer = window.setTimeout(() => {
+                    if (copyButton.dataset.isIcon) {
+                      copyButton.dataset.tips = text;
+                    } else {
+                      copyButton.innerHTML = text!;
+                    }
+                  }, 1500);
+                });
             };
         });
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     customIcon,
+    editorId,
     formatCopiedText,
     html,
     key,
     props.setting.preview,
+    rootRef,
     usedLanguageText.copyCode
   ]);
 };

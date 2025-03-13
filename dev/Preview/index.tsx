@@ -1,135 +1,23 @@
+/* eslint-disable react-refresh/only-export-components */
 import React, { useEffect, useRef, useState } from 'react';
 import axios from 'axios';
+import { CompletionSource } from '@codemirror/autocomplete';
+
 import {
   MdEditor,
   DropdownToolbar,
   ModalToolbar,
   MdCatalog,
-  config,
   ExposeParam,
-  editorExtensionsAttrs
+  NormalFooterToolbar
 } from '~~/index';
 
-// import Editor from '../../lib/md-editor-rt.es';
 import mdText from '../data.md';
 import { Theme } from '../App';
-// import TargetBlankExtension from './image/TargetBlankExtension.js';
-// import '../../lib/style.css';
 
 import './index.less';
-import '~/styles/style.less';
 import Icon from '~/components/Icon';
-// import { Extension } from '@codemirror/state';
-import { lineNumbers } from '@codemirror/view';
-import { CompletionSource } from '@codemirror/autocomplete';
 import Normal from './Normal';
-// import screenfull from 'screenfull';
-// import katex from 'katex';
-// import 'katex/dist/katex.min.css';
-
-// import Cropper from 'cropperjs';
-// import 'cropperjs/dist/cropper.css';
-// import mermaid from 'mermaid';
-
-// import highlight from 'highlight.js';
-// import 'highlight.js/styles/tokyo-night-dark.css';
-
-// import prettier from 'prettier';
-// import parserMarkdown from 'prettier/parser-markdown';
-
-// import { cdnBase } from '../../MdEditor/config';
-
-console.log(
-  config({
-    codeMirrorExtensions(theme, extensions) {
-      // console.log(theme, extensions, keyBindings);
-
-      // return extensions;
-      return [...extensions, lineNumbers()];
-    },
-    // iconfontType: 'class',
-    // markdownItConfig: (mdit) => {
-    // mdit.use(ancher, {
-    //   permalink: true
-    // });
-    // mdit.use(TargetBlankExtension);
-    // },
-    // markdownItPlugins(plugins) {
-    //   console.log(plugins);
-    //   return [];
-    // },
-    mermaidConfig: (base) => {
-      return base;
-    },
-    editorExtensions: {
-      //     prettier: {
-      //       prettierInstance: prettier,
-      //       parserMarkdownInstance: parserMarkdown
-      //     },
-      // highlight: {
-      // instance: highlight
-      //     // css: {
-      //     //   'tokyo-night': {
-      //     //     light: `${cdnBase}/highlight.js/11.5.1/styles/tokyo-night-light.min.css`,
-      //     //     dark: `${cdnBase}/highlight.js/11.5.1/styles/tokyo-night-dark.min.css`
-      //     //   }
-      //     // }
-      // }
-      //     screenfull: {
-      //       instance: screenfull
-      //     },
-      //     katex: {
-      //       instance: katex
-      //     },
-      //     cropper: {
-      //       instance: Cropper
-      //     },
-      // mermaid: {
-      //   instance: mermaid
-      // }
-    },
-    editorExtensionsAttrs,
-    editorConfig: {
-      zIndex: 2000
-    }
-    //   editorConfig: {
-    //     mermaidTemplate: {
-    //       /**
-    //        * 流程图
-    //        */
-    //       flow: 'flow',
-    //       /**
-    //        * 时序图
-    //        */
-    //       sequence: 'sequence',
-    //       /**
-    //        * 甘特图
-    //        */
-    //       gantt: 'gantt',
-    //       /**
-    //        * 类图
-    //        */
-    //       class: 'class',
-    //       /**
-    //        * 状态图
-    //        */
-    //       state: 'state',
-    //       /**
-    //        * 饼图
-    //        */
-    //       pie: 'pie',
-    //       /**
-    //        * 关系图
-    //        */
-    //       relationship: 'relationship',
-    //       /**
-    //        * 旅程图
-    //        */
-    //       journey: 'journey'
-    //     }
-    //   }
-  })
-);
 
 const SAVE_KEY = 'XHMPGLJIZTDB';
 const INPUT_BOX_WITDH = 'tcxll8alg5jx52hw';
@@ -285,29 +173,29 @@ export default ({ theme, previewTheme, codeTheme, lang }: PreviewProp) => {
       </button>
       <div className="container">
         <MdEditor
-          editorId="md-prev"
+          id="md-prev"
+          catalogLayout="flat"
           completions={completions}
           ref={editorRef}
           theme={theme}
           language={lang}
           previewTheme={previewTheme}
           codeTheme={codeTheme}
-          modelValue={md.text}
+          value={md.text}
           // pageFullscreen
           // preview={false}
           // htmlPreview
           // toolbarsExclude={['github']}
           // noPrettier
           // tabWidth={4}
-          showCodeRowNumber
+          // showCodeRowNumber
           // tableShape={[10, 10]}
           // noMermaid
-          // placeholder="placeholder"
+          placeholder="placeholderplaceholderplaceholderplaceholderplaceholderplaceholderplaceholderplaceholderplaceholder"
           // noKatex
           mdHeadingId={markedHeadingId}
           // sanitize={(h) => `<a href="#">aaa</a>${h}`}
           // scrollAuto={false}
-          // noIconfont
           // codeStyleReverse={false}
           // codeStyleReverseList={['mk-cute']}
           // autoFocus
@@ -316,7 +204,9 @@ export default ({ theme, previewTheme, codeTheme, lang }: PreviewProp) => {
           // maxLength={10}
           // noHighlight
           // autoDetectCode
-          // onHtmlChanged={console.log}
+          // onHtmlChanged={(html: string) => {
+          //   console.log(html);
+          // }}
           // onBlur={console.log}
           // onFocus={console.log}
           // showToolbarName
@@ -332,27 +222,29 @@ export default ({ theme, previewTheme, codeTheme, lang }: PreviewProp) => {
           //   );
           // }}
           // noImgZoomIn
-          // customIcon={{
-          //   bold: {
-          //     component: 'A',
-          //     props: {}
-          //   },
-          //   copy: '<i class="fa fa-car"></i>',
-          //   preview: {
-          //     component: '<i class="fa fa-car"></i>',
-          //     props: {
-          //       name: 'copy'
-          //     }
-          //   },
-          //   github: {
-          //     component: Icon,
-          //     props: {
-          //       name: 'italic'
-          //     }
-          //   }
-          // }}
-          inputBoxWitdh={md.inputBoxWitdh}
-          onInputBoxWitdhChange={(w) => {
+          customIcon={
+            {
+              // bold: {
+              //   component: 'A',
+              //   props: {}
+              // },
+              // copy: StrIcon('copy', {}) // '<i class="fa fa-car"></i>',
+              // preview: {
+              //   component: '<i class="fa fa-car"></i>',
+              //   props: {
+              //     name: 'copy'
+              //   }
+              // },
+              // github: {
+              //   component: Icon,
+              //   props: {
+              //     name: 'italic'
+              //   }
+              // }
+            }
+          }
+          inputBoxWidth={md.inputBoxWitdh}
+          onInputBoxWidthChange={(w) => {
             md.inputBoxWitdh = w;
             localStorage.setItem(INPUT_BOX_WITDH, w);
           }}
@@ -500,7 +392,9 @@ export default ({ theme, previewTheme, codeTheme, lang }: PreviewProp) => {
             return `${text} \nfrom @imzbf`;
           }}
           footers={['markdownTotal', '=', 0, 'scrollSwitch']}
-          defFooters={[<span key={'dev-footer-demo'}>^_^</span>]}
+          defFooters={[
+            <NormalFooterToolbar key="NormalFooterToolbar">^_^</NormalFooterToolbar>
+          ]}
         />
         <br />
         {/* <MdEditor

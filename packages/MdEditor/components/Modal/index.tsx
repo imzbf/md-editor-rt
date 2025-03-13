@@ -1,21 +1,21 @@
-import React, {
+import {
   CSSProperties,
   useRef,
   useState,
-  ReactElement,
   useEffect,
   useMemo,
-  useContext
+  useContext,
+  ReactNode
 } from 'react';
 import { createPortal } from 'react-dom';
 import { configOption, prefix } from '~/config';
 import { keyMove } from '~/utils/dom';
-import { EditorContext } from '~/Editor';
+import { EditorContext } from '~/context';
 import { getZIndexIncrement } from '~/utils';
 import Icon from '../Icon';
 
 export type ModalProps = Readonly<{
-  title?: string | ReactElement;
+  title?: ReactNode;
   visible?: boolean;
   width?: string;
   height?: string;
@@ -25,21 +25,23 @@ export type ModalProps = Readonly<{
   onAdjust?: (val: boolean) => void;
   children?: any;
   className?: string;
+  // style只能是对象，搞不了字符串
   style?: CSSProperties;
+  showMask?: boolean;
 }>;
 
 const toClass = `${prefix}-modal-container`;
 
 const Modal = (props: ModalProps) => {
-  const { theme } = useContext(EditorContext);
+  const { theme, rootRef } = useContext(EditorContext);
 
-  const { onClose = () => {}, onAdjust = () => {}, style = {} } = props;
+  const { onClose = () => {}, onAdjust = () => {}, style = {}, showMask = true } = props;
   const [modalVisible, setMV] = useState(props.visible);
   const [modalClass, setModalClass] = useState([`${prefix}-modal`]);
   const modalRef = useRef<HTMLDivElement>(null);
   const modalHeaderRef = useRef<HTMLDivElement>(null);
 
-  const bodyRef = useRef<HTMLElement>();
+  const bodyRef = useRef<Element | ShadowRoot>();
 
   // 创建的弹窗容器，存放在document.body末尾
   const containerRef = useRef<HTMLDivElement>(null);
@@ -81,11 +83,12 @@ const Modal = (props: ModalProps) => {
   }, [props.height, props.isFullscreen, props.width]);
 
   useEffect(() => {
-    bodyRef.current = document.body;
+    const rootNode = rootRef!.current?.getRootNode() as ShadowRoot;
+    bodyRef.current = rootNode instanceof Document ? document.body : rootNode;
     return () => {
       bodyRef.current = undefined;
     };
-  }, []);
+  }, [rootRef]);
 
   useEffect(() => {
     let keyMoveClear = () => {};
@@ -159,11 +162,13 @@ const Modal = (props: ModalProps) => {
               className={props.className}
               style={{ ...style, display: modalVisible ? 'block' : 'none' }}
             >
-              <div
-                className={`${prefix}-modal-mask`}
-                style={state.maskStyle}
-                onClick={onClose}
-              />
+              {showMask && (
+                <div
+                  className={`${prefix}-modal-mask`}
+                  style={state.maskStyle}
+                  onClick={onClose}
+                />
+              )}
               <div
                 className={modalClass.join(' ')}
                 style={{
@@ -200,17 +205,17 @@ const Modal = (props: ModalProps) => {
                           }));
                         }
 
-                        onAdjust instanceof Function && onAdjust(!props.isFullscreen);
+                        if (onAdjust instanceof Function) onAdjust(!props.isFullscreen);
                       }}
                     >
-                      <Icon name={props.isFullscreen ? 'suoxiao' : 'fangda'} />
+                      <Icon name={props.isFullscreen ? 'minimize' : 'maximize'} />
                     </div>
                   )}
                   <div
                     className={`${prefix}-modal-close`}
                     onClick={(e) => {
                       e.stopPropagation();
-                      props.onClose && props.onClose();
+                      if (props.onClose) props.onClose();
                     }}
                   >
                     <Icon name="close" />

@@ -1,19 +1,26 @@
-import React, { ReactElement, ReactNode, useContext } from 'react';
+import { ReactNode, useContext, useMemo } from 'react';
 import { prefix } from '~/config';
+import { EditorContext } from '~/context';
 import Dropdown from '~/components/Dropdown';
-import { EditorContext } from '~/Editor';
 
 export interface DropdownToolbarProps {
   title?: string;
   visible: boolean;
-  trigger: string | ReactElement;
+  /**
+   * @deprecated 使用children代替
+   */
+  trigger?: ReactNode;
   onChange: (visible: boolean) => void;
-  overlay: string | ReactElement;
+  overlay: ReactNode;
   children?: ReactNode;
+  disabled?: boolean;
 }
 
 const DropdownToolbar = (props: DropdownToolbarProps) => {
   const { editorId } = useContext(EditorContext);
+  const className = useMemo(() => {
+    return `${prefix}-toolbar-item${props.disabled ? ' ' + prefix + '-disabled' : ''}`;
+  }, [props.disabled]);
 
   return (
     <Dropdown
@@ -21,10 +28,10 @@ const DropdownToolbar = (props: DropdownToolbarProps) => {
       visible={props.visible}
       onChange={props.onChange}
       overlay={props.overlay}
+      disabled={props.disabled}
     >
-      <div className={`${prefix}-toolbar-item`} title={props.title || ''}>
-        {props.trigger}
-        {props.children}
+      <div className={className} title={props.title || ''}>
+        {props.children || props.trigger}
       </div>
     </Dropdown>
   );

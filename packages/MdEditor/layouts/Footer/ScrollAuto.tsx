@@ -1,19 +1,26 @@
-import React, { useContext, useMemo } from 'react';
+import { useContext, useMemo } from 'react';
 import { prefix } from '~/config';
+import { EditorContext } from '~/context';
+import { classnames } from '~/utils';
+
 import Checkbox from '~/components/Checkbox';
-import { EditorContext } from '~/Editor';
 
 interface ScrollAutoProps {
   scrollAuto: boolean;
   onScrollAutoChange: (v: boolean) => void;
 }
 
-export default (props: ScrollAutoProps) => {
-  const { usedLanguageText } = useContext(EditorContext);
+const ScrollAuto = (props: ScrollAutoProps) => {
+  const { usedLanguageText, disabled } = useContext(EditorContext);
 
   return useMemo(() => {
     return (
-      <div className={`${prefix}-footer-item`}>
+      <div
+        className={classnames([
+          `${prefix}-footer-item`,
+          disabled && `${prefix}-disabled`
+        ])}
+      >
         <label
           className={`${prefix}-footer-label`}
           onClick={() => {
@@ -22,8 +29,14 @@ export default (props: ScrollAutoProps) => {
         >
           {usedLanguageText.footer?.scrollAuto}
         </label>
-        <Checkbox checked={props.scrollAuto} onChange={props.onScrollAutoChange} />
+        <Checkbox
+          disabled={disabled}
+          checked={props.scrollAuto}
+          onChange={props.onScrollAutoChange}
+        />
       </div>
     );
-  }, [usedLanguageText.footer?.scrollAuto, props]);
+  }, [usedLanguageText.footer?.scrollAuto, disabled, props]);
 };
+
+export default ScrollAuto;

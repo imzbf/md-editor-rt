@@ -33,12 +33,12 @@ export const base642File = (base64: string, fileName = 'image.png') => {
  * @param code 代码html内容
  * @returns string
  */
-export const generateCodeRowNumber = (code: string) => {
+export const generateCodeRowNumber = (code: string, sourceCode: string) => {
   if (!code) {
     return code;
   }
 
-  const list = code.split('\n');
+  const list = sourceCode.split('\n');
   // 行号html代码拼接列表
   const rowNumberList = ['<span rn-wrapper aria-hidden="true">'];
   list.forEach(() => {
@@ -100,8 +100,8 @@ export const getSelectionText = (textarea: HTMLTextAreaElement): string => {
  * @param classList 待赛选class列表
  * @returns
  */
-export const classnames = (classList: Array<string | false>) => {
-  return classList.filter((item) => item !== false).join(' ');
+export const classnames = (classList: Array<string | false | undefined>) => {
+  return classList.filter((item) => item !== false && item !== undefined).join(' ');
 };
 
 /**
@@ -128,17 +128,6 @@ export const getRelativeTop = (element: HTMLElement, container: HTMLElement): nu
 
   return eleRect.top - conRect.top;
 };
-
-/**
- * 获取递增的ID
- */
-export const getNextId = (() => {
-  let count = 0;
-
-  return (prefix: string) => {
-    return prefix + ++count;
-  };
-})();
 
 /**
  * 获取递增的zIndex

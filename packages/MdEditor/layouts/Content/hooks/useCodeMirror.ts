@@ -1,6 +1,6 @@
 import { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
 import { EditorView } from 'codemirror';
-import { keymap } from '@codemirror/view';
+import { keymap, drawSelection } from '@codemirror/view';
 import { languages } from '@codemirror/language-data';
 import { markdown } from '@codemirror/lang-markdown';
 import { Compartment } from '@codemirror/state';
@@ -15,13 +15,16 @@ import {
 import { configOption } from '~/config';
 import bus from '~/utils/event-bus';
 import { directive2flag, ToolDirective } from '~/utils/content-help';
-import { EditorContext } from '~/Editor';
+import { EditorContext } from '~/context';
 import {
   CTRL_SHIFT_Z,
   CTRL_Z,
   ERROR_CATCHER,
   REPLACE,
-  EVENT_LISTENER
+  EVENT_LISTENER,
+  TASK_STATE_CHANGED,
+  SEND_EDITOR_VIEW,
+  GET_EDITOR_VIEW
 } from '~/static/event-name';
 import { DOMEventHandlers } from '~/type';
 
@@ -35,6 +38,9 @@ import createCommands from '../codemirror/commands';
 import usePasteUpload from './usePasteUpload';
 // import useAttach from './useAttach';
 
+// 禁用掉>=6.28.0的实验性功能
+(EditorView as any).EDIT_CONTEXT = false;
+
 /**
  * 文本编辑区组件
  *
@@ -45,8 +51,9 @@ const useCodeMirror = (props: ContentProps) => {
   const { tabWidth, editorId, theme } = useContext(EditorContext);
 
   const inputWrapperRef = useRef<HTMLDivElement>(null);
-
   const codeMirrorUt = useRef<CodeMirrorUt>();
+  // 第一次延迟设置codemirror属性
+  const noSet = useRef(true);
 
   const [comp] = useState(() => {
     return {
@@ -61,8 +68,11 @@ const useCodeMirror = (props: ContentProps) => {
 
   const [mdEditorCommands] = useState(() => createCommands(editorId, props));
 
-  // 第一次延迟设置codemirror属性
-  const noSet = useRef(true);
+  // 搜集默认快捷键列表，通过方法返回，防止默认列表被篡改
+  const getDefaultKeymaps = useCallback(
+    () => [...mdEditorCommands, ...defaultKeymap, ...historyKeymap, indentWithTab],
+    [mdEditorCommands]
+  );
 
   // 粘贴上传
   const pasteHandler = usePasteUpload(props, codeMirrorUt);
@@ -119,17 +129,19 @@ const useCodeMirror = (props: ContentProps) => {
 
   const [defaultExtensions] = useState(() => {
     return [
-      keymap.of([...defaultKeymap, ...historyKeymap, ...mdEditorCommands, indentWithTab]),
+      keymap.of(getDefaultKeymaps()),
       comp.history.of(history()),
       comp.language.of(markdown({ codeLanguages: languages })),
       // 横向换行
       EditorView.lineWrapping,
       comp.update.of(
         EditorView.updateListener.of((update) => {
-          update.docChanged && props.onChange(update.state.doc.toString());
+          if (update.docChanged) props.onChange(update.state.doc.toString());
         })
       ),
-      comp.domEvent.of(EditorView.domEventHandlers(domEventHandlers))
+      comp.domEvent.of(EditorView.domEventHandlers(domEventHandlers)),
+      // 解决多行placeholder时，光标异常的情况
+      drawSelection()
     ];
   });
 
@@ -141,7 +153,8 @@ const useCodeMirror = (props: ContentProps) => {
         comp.theme.of(theme === 'light' ? oneLight : oneDark),
         comp.autocompletion.of(createAutocompletion(props.completions))
       ],
-      [...mdEditorCommands]
+      getDefaultKeymaps(),
+      { editorId }
     );
   });
 
@@ -169,9 +182,9 @@ const useCodeMirror = (props: ContentProps) => {
       nc.setTabSize(tabWidth);
       nc.setDisabled(props.disabled!);
       nc.setReadOnly(props.readOnly!);
-      props.placeholder && nc.setPlaceholder(props.placeholder);
-      typeof props.maxLength === 'number' && nc.setMaxLength(props.maxLength);
-      props.autoFocus && view.focus();
+      if (props.placeholder) nc.setPlaceholder(props.placeholder);
+      if (typeof props.maxLength === 'number') nc.setMaxLength(props.maxLength);
+      if (props.autoFocus) view.focus();
 
       noSet.current = false;
     }, 0);
@@ -180,6 +193,20 @@ const useCodeMirror = (props: ContentProps) => {
     const ctrlShiftZ = () => redo(view);
     const eventListener = (handlers: DOMEventHandlers) => {
       setDEHUD(handlers);
+    };
+
+    const taskStateChanged = (lineNumber: number, value: string) => {
+      const line = view.state.doc.line(lineNumber);
+      // 应用交易到编辑器视图
+      view.dispatch(
+        view.state.update({
+          changes: { from: line.from, to: line.to, insert: value }
+        })
+      );
+    };
+
+    const sendEditorView = () => {
+      bus.emit(editorId, GET_EDITOR_VIEW, view);
     };
 
     bus.on(editorId, {
@@ -198,12 +225,28 @@ const useCodeMirror = (props: ContentProps) => {
       callback: eventListener
     });
 
+    // 点击任务修改事件
+    bus.on(editorId, {
+      name: TASK_STATE_CHANGED,
+      callback: taskStateChanged
+    });
+
+    bus.on(editorId, {
+      name: SEND_EDITOR_VIEW,
+      callback: sendEditorView
+    });
+
+    // 主动触发一次获取编辑器视图
+    bus.emit(editorId, GET_EDITOR_VIEW, view);
+
     return () => {
       // react18的严格模式会强制在开发环境让useEffect执行两次
       view.destroy();
       bus.remove(editorId, CTRL_Z, ctrlZ);
       bus.remove(editorId, CTRL_SHIFT_Z, ctrlShiftZ);
       bus.remove(editorId, EVENT_LISTENER, eventListener);
+      bus.remove(editorId, TASK_STATE_CHANGED, taskStateChanged);
+      bus.remove(editorId, SEND_EDITOR_VIEW, sendEditorView);
 
       noSet.current = true;
     };
@@ -211,30 +254,38 @@ const useCodeMirror = (props: ContentProps) => {
   }, []);
 
   useEffect(() => {
-    const callback = (direct: ToolDirective, params = {} as any) => {
+    const callback = async (direct: ToolDirective, params = {} as any) => {
       // 弹窗插入图片时，将链接使用transformImgUrl转换后再插入
       if (direct === 'image' && params.transform) {
         const tv = props.transformImgUrl(params.url);
 
         if (tv instanceof Promise) {
-          tv.then((url) => {
-            const { text, options } = directive2flag(direct, codeMirrorUt.current!, {
-              ...params,
-              url
-            });
+          tv.then(async (url) => {
+            const { text, options } = await directive2flag(
+              direct,
+              codeMirrorUt.current!,
+              {
+                ...params,
+                url
+              }
+            );
             codeMirrorUt.current?.replaceSelectedText(text, options, editorId);
           }).catch((err) => {
             console.error(err);
           });
         } else {
-          const { text, options } = directive2flag(direct, codeMirrorUt.current!, {
+          const { text, options } = await directive2flag(direct, codeMirrorUt.current!, {
             ...params,
             url: tv
           });
           codeMirrorUt.current?.replaceSelectedText(text, options, editorId);
         }
       } else {
-        const { text, options } = directive2flag(direct, codeMirrorUt.current!, params);
+        const { text, options } = await directive2flag(
+          direct,
+          codeMirrorUt.current!,
+          params
+        );
         codeMirrorUt.current?.replaceSelectedText(text, options, editorId);
       }
     };
@@ -267,7 +318,7 @@ const useCodeMirror = (props: ContentProps) => {
         effects: [
           comp.update.reconfigure(
             EditorView.updateListener.of((update) => {
-              update.docChanged && props.onChange(update.state.doc.toString());
+              if (update.docChanged) props.onChange(update.state.doc.toString());
             })
           ),
           comp.domEvent.reconfigure(EditorView.domEventHandlers(domEventHandlers)),

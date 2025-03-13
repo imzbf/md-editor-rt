@@ -1,7 +1,7 @@
-import React, { useContext, useEffect, useMemo, useState } from 'react';
-import Modal from '~/components/Modal';
+import { useContext, useEffect, useMemo, useState } from 'react';
 import { prefix } from '~/config';
-import { EditorContext } from '~/Editor';
+import { EditorContext } from '~/context';
+import Modal from '~/components/Modal';
 
 interface LinkModalProps {
   type: 'link' | 'image' | 'help';
@@ -102,10 +102,10 @@ const LinkModal = (props: LinkModalProps) => {
         </div>
       </Modal>
     );
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     title,
     props,
+    editorId,
     usedLanguageText.linkModalTips?.descLabel,
     usedLanguageText.linkModalTips?.descLabelPlaceHolder,
     usedLanguageText.linkModalTips?.urlLabel,

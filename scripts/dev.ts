@@ -9,12 +9,14 @@ import nodeService from './plugins/nodeService';
 const __dirname = fileURLToPath(new URL('..', import.meta.url));
 const resolvePath = (p: string) => path.resolve(__dirname, p);
 
+// eslint-disable-next-line @typescript-eslint/no-unused-expressions
 !(async () => {
   const server = await createServer({
     base: '/',
     publicDir: resolvePath('dev/public'),
     server: {
-      port: 6101
+      port: 6101,
+      host: '0.0.0.0'
     },
     resolve: {
       alias: {

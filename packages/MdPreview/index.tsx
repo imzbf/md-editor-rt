@@ -1,21 +1,21 @@
-import React, { useState, useEffect, forwardRef, ForwardedRef } from 'react';
-import { useConfig, useExpansionPreview } from '~/hooks';
-import { classnames, getNextId } from '~/utils';
-import { prefix, defaultProps, defaultEditorId } from '~/config';
+import { useState, useEffect, forwardRef, ForwardedRef, useRef } from 'react';
+import { useConfig, useEditorId } from '~/hooks';
+import { classnames } from '~/utils';
+import { prefix, defaultProps } from '~/config';
 import { MdPreviewProps, MdPreviewStaticProps, Themes } from '~/type';
+import { EditorContext } from '~/context';
+import ContentPreview from '~/layouts/Content/ContentPreview';
 import bus from '~/utils/event-bus';
 
-import { EditorContext } from '~/Editor';
-import ContentPreview from '~/layouts/Content/ContentPreview';
 import { useExpose } from './hooks/useExpose';
 
 const MdPreview = forwardRef((props: MdPreviewProps, ref: ForwardedRef<unknown>) => {
   // Editor.defaultProps在某些编辑器中不能被正确识别已设置默认情况
   const {
-    modelValue = defaultProps.modelValue,
+    value = props.modelValue || defaultProps.modelValue,
+    onChange = defaultProps.onChange,
     theme = defaultProps.theme as Themes,
     className = defaultProps.className,
-    editorId = getNextId(defaultEditorId + '_'),
     showCodeRowNumber = defaultProps.showCodeRowNumber,
     previewTheme = defaultProps.previewTheme,
     noMermaid = defaultProps.noMermaid,
@@ -24,7 +24,6 @@ const MdPreview = forwardRef((props: MdPreviewProps, ref: ForwardedRef<unknown>)
     onGetCatalog = defaultProps.onGetCatalog,
     sanitize = defaultProps.sanitize,
     mdHeadingId = defaultProps.mdHeadingId,
-    noIconfont = defaultProps.noIconfont,
     noHighlight = defaultProps.noHighlight,
     noImgZoomIn = defaultProps.noImgZoomIn,
     language = defaultProps.language,
@@ -33,18 +32,18 @@ const MdPreview = forwardRef((props: MdPreviewProps, ref: ForwardedRef<unknown>)
     autoFoldThreshold = defaultProps.autoFoldThreshold
   } = props;
 
+  const editorId = useEditorId(props);
+
   const [staticProps] = useState<MdPreviewStaticProps>(() => {
     return {
       editorId,
       noKatex,
       noMermaid,
-      noIconfont,
       noHighlight
     };
   });
+  const rootRef = useRef<HTMLDivElement>(null);
 
-  // 扩展库引用
-  useExpansionPreview(staticProps);
   // 部分配置重构
   const [highlight, usedLanguageText, setting] = useConfig(props);
 
@@ -55,8 +54,7 @@ const MdPreview = forwardRef((props: MdPreviewProps, ref: ForwardedRef<unknown>)
       // 清空所有的事件监听
       bus.clear(editorId);
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [editorId]);
 
   return (
     <EditorContext.Provider
@@ -69,7 +67,9 @@ const MdPreview = forwardRef((props: MdPreviewProps, ref: ForwardedRef<unknown>)
         showCodeRowNumber,
         usedLanguageText,
         previewTheme,
-        customIcon: props.customIcon || {}
+        customIcon: props.customIcon || {},
+        rootRef,
+        disabled: false
       }}
     >
       <div
@@ -82,9 +82,11 @@ const MdPreview = forwardRef((props: MdPreviewProps, ref: ForwardedRef<unknown>)
           `${prefix}-previewOnly`
         ])}
         style={props.style}
+        ref={rootRef}
       >
         <ContentPreview
-          modelValue={modelValue}
+          modelValue={value}
+          onChange={onChange}
           setting={setting}
           mdHeadingId={mdHeadingId}
           onHtmlChanged={onHtmlChanged}
@@ -100,6 +102,7 @@ const MdPreview = forwardRef((props: MdPreviewProps, ref: ForwardedRef<unknown>)
           sanitizeMermaid={sanitizeMermaid}
           codeFoldable={codeFoldable}
           autoFoldThreshold={autoFoldThreshold}
+          onRemount={props.onRemount}
         />
       </div>
     </EditorContext.Provider>

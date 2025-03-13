@@ -1,13 +1,16 @@
-import React, { MouseEvent } from 'react';
+import { MouseEvent, useContext, useEffect, useRef } from 'react';
 import { prefix } from '~/config';
 import { classnames } from '~/utils';
 import { MdHeadingId } from '~/type';
+import { getComputedStyleNum } from '~/utils/scroll-auto';
+
 import { TocItem } from './index';
+import { CatalogContext } from './context';
 
 export interface CatalogLinkProps {
   tocItem: TocItem;
   mdHeadingId: MdHeadingId;
-  scrollElement: string | HTMLElement;
+  onActive: (tocItem: TocItem, ele: HTMLDivElement) => void;
   onClick?: (e: MouseEvent, t: TocItem) => void;
   scrollElementOffsetTop?: number;
 }
@@ -15,25 +18,38 @@ export interface CatalogLinkProps {
 const CatalogLink = ({
   tocItem,
   mdHeadingId,
-  scrollElement,
+  onActive,
   onClick,
   scrollElementOffsetTop = 0
 }: CatalogLinkProps) => {
+  const { scrollElementRef, rootNodeRef } = useContext(CatalogContext);
+
+  const currRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (tocItem.active) {
+      onActive(tocItem, currRef.current!);
+    }
+  }, [onActive, tocItem, tocItem.active]);
+
   return (
     <div
+      ref={currRef}
       className={classnames([
         `${prefix}-catalog-link`,
         tocItem.active && `${prefix}-catalog-active`
       ])}
       onClick={(e) => {
-        onClick && onClick(e, tocItem);
         e.stopPropagation();
+        onClick?.(e, tocItem);
+
+        if (e.defaultPrevented) {
+          return;
+        }
+
         const id = mdHeadingId(tocItem.text, tocItem.level, tocItem.index);
-        const targetHeadEle = document.getElementById(id);
-        const scrollContainer =
-          scrollElement instanceof Element
-            ? scrollElement
-            : document.querySelector(scrollElement);
+        const targetHeadEle = rootNodeRef?.current!.getElementById(id);
+        const scrollContainer = scrollElementRef?.current;
 
         if (targetHeadEle && scrollContainer) {
           let par = targetHeadEle.offsetParent as HTMLElement;
@@ -48,27 +64,34 @@ const CatalogLink = ({
             }
           }
 
+          const pel = targetHeadEle.previousElementSibling;
+          let currMarginTop = 0;
+          if (!pel) {
+            currMarginTop = getComputedStyleNum(targetHeadEle, 'margin-top');
+          }
+
           scrollContainer?.scrollTo({
-            top: offsetTop - scrollElementOffsetTop,
+            top: offsetTop - scrollElementOffsetTop - currMarginTop,
             behavior: 'smooth'
           });
         }
       }}
     >
       <span title={tocItem.text}>{tocItem.text}</span>
-      <div className={`${prefix}-catalog-wrapper`}>
-        {tocItem.children &&
-          tocItem.children.map((item) => (
+      {tocItem.children && tocItem.children.length > 0 && (
+        <div className={`${prefix}-catalog-wrapper`}>
+          {tocItem.children.map((item) => (
             <CatalogLink
               mdHeadingId={mdHeadingId}
-              key={`${item.text}-${item.index}`}
+              key={`${tocItem.text}-link-${item.level}-${item.text}`}
               tocItem={item}
-              scrollElement={scrollElement}
+              onActive={onActive}
               onClick={onClick}
               scrollElementOffsetTop={scrollElementOffsetTop}
             />
           ))}
-      </div>
+        </div>
+      )}
     </div>
   );
 };

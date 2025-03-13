@@ -63,19 +63,22 @@
     z-index: 10000;
   }
 
-  &-icon {
-    width: 24px;
-    height: 24px;
-    fill: currentColor;
+  svg&-icon {
+    width: 16px;
+    height: 16px;
+    padding: 4px;
+    fill: none;
     overflow: hidden;
     display: block;
   }
 
-  & &-iconfont {
-    font-size: 24px;
-    width: 24px;
-    height: 24px;
-    display: block;
+  // 特殊处理这三个图标大小
+  .lucide-list,
+  .lucide-list-ordered,
+  .lucide-list-todo {
+    width: 18px;
+    height: 18px;
+    padding: 3px;
   }
 
   &-preview-wrapper {
@@ -83,7 +86,6 @@
     flex: 1;
     box-sizing: border-box;
     overflow: auto;
-    padding: 10px 20px;
   }
 
   &-preview {
@@ -91,12 +93,19 @@
     word-break: break-all;
     // 需要设置为bfc，父级才能正确获取到滚动高度
     overflow: hidden;
+    padding: 10px 20px;
   }
 }
 
 .@{prefix}-modal-container {
   .css-vars(false);
   .basic-style();
+
+  .lucide-x {
+    width: 20px;
+    height: 20px;
+    padding: 2px;
+  }
 }
 
 .@{prefix}-previewOnly {

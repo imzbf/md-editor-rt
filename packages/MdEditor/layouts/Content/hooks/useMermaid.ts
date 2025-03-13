@@ -1,9 +1,11 @@
 import { useCallback, useContext, useEffect, useRef, useState } from 'react';
-import { LRUCache } from 'lru-cache';
-import { uuid } from '@vavt/util';
+import { randomId } from '@vavt/util';
 import { prefix, configOption } from '~/config';
-import { EditorContext } from '~/Editor';
+import { EditorContext } from '~/context';
 import { appendHandler } from '~/utils/dom';
+import { mermaidCache } from '~/utils/cache';
+import { CDN_IDS } from '~~/MdEditor/static';
+
 import { ContentPreviewProps } from '../props';
 
 /**
@@ -11,25 +13,17 @@ import { ContentPreviewProps } from '../props';
  *
  */
 const useMermaid = (props: ContentPreviewProps) => {
-  const { theme } = useContext(EditorContext);
+  const { theme, rootRef } = useContext(EditorContext);
+  const { noMermaid, sanitizeMermaid } = props;
 
   const mermaidRef = useRef(configOption.editorExtensions.mermaid!.instance);
   const [reRender, setReRender] = useState(-1);
-
-  const [mermaidCache] = useState(
-    () =>
-      new LRUCache({
-        max: 1000,
-        // 缓存10分钟
-        ttl: 600000
-      })
-  );
 
   const configMermaid = useCallback(() => {
     mermaidCache.clear();
     const mermaid = mermaidRef.current;
 
-    if (!props.noMermaid && mermaid) {
+    if (!noMermaid && mermaid) {
       mermaid.initialize(
         configOption.mermaidConfig({
           startOnLoad: false,
@@ -40,16 +34,14 @@ const useMermaid = (props: ContentPreviewProps) => {
       // 严格模式下，如果reRender是boolean型，会执行两次，这是reRender将不会effect
       setReRender((_r) => _r + 1);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [theme]);
+  }, [noMermaid, theme]);
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(configMermaid, [configMermaid]);
 
   useEffect(() => {
     const { editorExtensions, editorExtensionsAttrs } = configOption;
 
-    if (props.noMermaid || mermaidRef.current) {
+    if (noMermaid || mermaidRef.current) {
       return;
     }
 
@@ -61,7 +53,7 @@ const useMermaid = (props: ContentPreviewProps) => {
         ...editorExtensionsAttrs.mermaid?.js,
         rel: 'modulepreload',
         href: jsSrc,
-        id: `${prefix}-mermaid-m`
+        id: CDN_IDS.mermaidM
       });
 
       import(
@@ -78,7 +70,7 @@ const useMermaid = (props: ContentPreviewProps) => {
         {
           ...editorExtensionsAttrs.mermaid?.js,
           src: jsSrc,
-          id: `${prefix}-mermaid`,
+          id: CDN_IDS.mermaid,
           onload() {
             mermaidRef.current = window.mermaid;
             configMermaid();
@@ -87,19 +79,21 @@ const useMermaid = (props: ContentPreviewProps) => {
         'mermaid'
       );
     }
+  }, [configMermaid, noMermaid]);
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  const replaceMermaid = useCallback(() => {
-    if (!props.noMermaid && mermaidRef.current) {
-      const mermaidSourceEles = document.querySelectorAll<HTMLElement>(
-        `div.${prefix}-mermaid`
-      );
+  const replaceMermaid = useCallback(async () => {
+    if (!noMermaid && mermaidRef.current) {
+      const mermaidSourceEles =
+        rootRef!.current?.querySelectorAll<HTMLElement>(`div.${prefix}-mermaid`) || [];
 
       const svgContainingElement = document.createElement('div');
-      svgContainingElement.style.width = document.body.offsetWidth + 'px';
-      svgContainingElement.style.height = document.body.offsetHeight + 'px';
+      const sceWidth =
+        document.body.offsetWidth > 1366 ? document.body.offsetWidth : 1366;
+      const sceHeight =
+        document.body.offsetHeight > 768 ? document.body.offsetHeight : 768;
+
+      svgContainingElement.style.width = sceWidth + 'px';
+      svgContainingElement.style.height = sceHeight + 'px';
       svgContainingElement.style.position = 'fixed';
       svgContainingElement.style.zIndex = '-10000';
       svgContainingElement.style.top = '-10000';
@@ -110,47 +104,51 @@ const useMermaid = (props: ContentPreviewProps) => {
         document.body.appendChild(svgContainingElement);
       }
 
-      mermaidSourceEles.forEach(async (item) => {
-        let mermaidHtml = mermaidCache.get(item.innerText) as string;
+      await Promise.allSettled(
+        Array.from(mermaidSourceEles).map((ele) => {
+          const handler = async (item: HTMLElement) => {
+            let mermaidHtml = mermaidCache.get(item.innerText) as string;
 
-        if (!mermaidHtml) {
-          const idRand = uuid();
-          // @9以下使用renderAsync，@10以上使用render
-          const render = mermaidRef.current.renderAsync || mermaidRef.current.render;
+            if (!mermaidHtml) {
+              const idRand = randomId();
+              let result: { svg: string } = { svg: '' };
+              try {
+                result = await mermaidRef.current.render(
+                  idRand,
+                  item.innerText,
+                  svgContainingElement
+                );
 
-          let svg: { svg: string } | string = '';
-          try {
-            svg = await render(idRand, item.innerText, svgContainingElement);
-          } catch (error) {
-            // console.error(error);
-          }
+                mermaidHtml = await sanitizeMermaid!(result.svg);
 
-          // 9:10
-          mermaidHtml = await props.sanitizeMermaid(
-            typeof svg === 'string' ? svg : svg.svg
-          );
+                const p = document.createElement('p');
+                p.className = `${prefix}-mermaid`;
+                p.setAttribute('data-processed', '');
+                p.innerHTML = mermaidHtml;
+                p.children[0]?.removeAttribute('height');
 
-          mermaidCache.set(item.innerText, mermaidHtml);
-        }
+                mermaidCache.set(item.innerText, p.innerHTML);
 
-        const p = document.createElement('p');
-        p.className = `${prefix}-mermaid`;
-        p.setAttribute('data-processed', '');
-        p.innerHTML = mermaidHtml;
+                if (item.dataset.line !== undefined) {
+                  p.dataset.line = item.dataset.line;
+                }
 
-        if (item.dataset.line !== undefined) {
-          p.dataset.line = item.dataset.line;
-        }
+                item.replaceWith(p);
+              } catch {
+                // console.error(error.message);
+              }
 
-        item.replaceWith(p);
+              if (--count === 0) {
+                svgContainingElement.remove();
+              }
+            }
+          };
 
-        if (--count === 0) {
-          svgContainingElement.remove();
-        }
-      });
+          return handler(ele);
+        })
+      );
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [noMermaid, rootRef, sanitizeMermaid]);
 
   return { mermaidRef, reRender, replaceMermaid };
 };

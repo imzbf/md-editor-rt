@@ -13,18 +13,21 @@ const HeadingPlugin = (md: markdownit, options: HeadingPluginOps) => {
 
     const text =
       tokens[idx + 1].children?.reduce((p, c) => {
-        return p + (c.content || '');
+        return (
+          p +
+          (['text', 'code_inline', 'math_inline'].includes(c.type) ? c.content || '' : '')
+        );
       }, '') || '';
 
     const level = token.markup.length as 1 | 2 | 3 | 4 | 5 | 6;
 
     options.headsRef.current!.push({
       text,
-      level
+      level,
+      line: token.map![0]
     });
 
     if (token.map && token.level === 0) {
-      token.attrSet('data-line', String(token.map![0]));
       token.attrSet(
         'id',
         options.mdHeadingId(text, level, options.headsRef.current!.length)

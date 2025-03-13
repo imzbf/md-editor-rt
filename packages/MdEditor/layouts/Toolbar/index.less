@@ -78,10 +78,13 @@
       box-sizing: content-box;
 
       &-item {
-        display: inline-block;
-        padding: 0 4px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin: 0 2px;
+        padding: 0 2px;
         transition: all 0.3s;
-        border-radius: 0;
+        border-radius: 3px;
         cursor: pointer;
         list-style: none;
         user-select: none;
@@ -94,9 +97,12 @@
         }
 
         &:hover {
-          border-radius: 3px;
           background-color: var(--md-bk-color-outstand);
         }
+      }
+
+      &-active {
+        background-color: var(--md-bk-color-outstand);
       }
 
       &-left,

@@ -1,6 +1,6 @@
 import { useContext, useEffect } from 'react';
 import mediumZoom from 'medium-zoom';
-import { EditorContext } from '~/Editor';
+import { EditorContext } from '~/context';
 
 import { ContentPreviewProps } from '../props';
 
@@ -19,7 +19,9 @@ const useZoom = (props: ContentPreviewProps, html: string) => {
     }
 
     const zoomHander = () => {
-      const imgs = document.querySelectorAll(`#${editorId}-preview img`);
+      const imgs = document.querySelectorAll(
+        `#${editorId}-preview img:not(.not-zoom):not(.medium-zoom-image)`
+      );
 
       const zoom = mediumZoom(imgs, {
         background: '#00000073'
@@ -31,8 +33,7 @@ const useZoom = (props: ContentPreviewProps, html: string) => {
     };
 
     return zoomHander();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [html, props.setting]);
+  }, [editorId, html, props.noImgZoomIn, props.setting]);
 };
 
 export default useZoom;

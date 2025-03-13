@@ -1,4 +1,4 @@
-import { CSSProperties, RefObject, useEffect, useRef, useState } from 'react';
+import { CSSProperties, RefObject, useEffect, useMemo, useRef, useState } from 'react';
 import { MinInputBoxWidth } from '~/config';
 
 import { ContentProps } from '../props';
@@ -8,15 +8,21 @@ const useResize = (
   contentRef: RefObject<HTMLDivElement>,
   resizeRef: RefObject<HTMLDivElement>
 ) => {
+  const { inputBoxWidth, onInputBoxWidthChange } = props;
+  // 向后兼容，防止以前使用px的用户的编辑器布局混乱
+  const compatibledInputBoxWidth = useMemo(() => {
+    return /px$/.test(`${inputBoxWidth}`) ? '50%' : inputBoxWidth;
+  }, [inputBoxWidth]);
+
   const [inputWrapperStyle, setInputWrapperStyle] = useState<CSSProperties>({
-    width: props.inputBoxWitdh
+    width: compatibledInputBoxWidth
   });
 
   const [resizeOperateStyle, setResizeOperateStyle] = useState<CSSProperties>({
-    left: props.inputBoxWitdh
+    left: compatibledInputBoxWidth
   });
 
-  const resizedWidth = useRef<string | number | undefined>(props.inputBoxWitdh);
+  const resizedWidth = useRef<string | number | undefined>(compatibledInputBoxWidth);
 
   useEffect(() => {
     // 挂载后计算宽度的数值
@@ -28,13 +34,13 @@ const useResize = (
       // 新的宽度 = 鼠标的位置 - 图标的一半宽度 - 内容区域的横坐标
       let nextWidth = e.x - contentX;
 
-      if (nextWidth < MinInputBoxWidth) {
-        nextWidth = MinInputBoxWidth;
-      } else if (nextWidth > maxWidth - MinInputBoxWidth) {
-        nextWidth = maxWidth - MinInputBoxWidth;
+      if (nextWidth / maxWidth < MinInputBoxWidth) {
+        nextWidth = maxWidth * MinInputBoxWidth;
+      } else if (nextWidth > maxWidth - maxWidth * MinInputBoxWidth) {
+        nextWidth = maxWidth - maxWidth * MinInputBoxWidth;
       }
 
-      const ibw = `${nextWidth}px`;
+      const ibw = `${(nextWidth / maxWidth) * 100}%`;
 
       setInputWrapperStyle((prevState) => {
         return {
@@ -51,16 +57,18 @@ const useResize = (
       });
 
       resizedWidth.current = ibw;
-      props.onInputBoxWitdhChange?.(ibw);
+      onInputBoxWidthChange?.(ibw);
     };
 
-    const resizeMousedown = () => {
-      setResizeOperateStyle((prevState) => {
-        return {
-          ...prevState
-        };
-      });
-      document.addEventListener('mousemove', resizeMousemove);
+    const resizeMousedown = (ev: MouseEvent) => {
+      if (ev.target === resizeRef.current) {
+        setResizeOperateStyle((prevState) => {
+          return {
+            ...prevState
+          };
+        });
+        document.addEventListener('mousemove', resizeMousemove);
+      }
     };
 
     const resizeMouseup = () => {
@@ -72,33 +80,32 @@ const useResize = (
       document.removeEventListener('mousemove', resizeMousemove);
     };
 
-    resizeRef.current?.addEventListener('mousedown', resizeMousedown);
-    resizeRef.current?.addEventListener('mouseup', resizeMouseup);
+    document.addEventListener('mousedown', resizeMousedown);
+    document.addEventListener('mouseup', resizeMouseup);
 
     return () => {
-      resizeRef.current?.removeEventListener('mousedown', resizeMousedown);
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-      resizeRef.current?.removeEventListener('mouseup', resizeMouseup);
+      document.removeEventListener('mousedown', resizeMousedown);
+      document.removeEventListener('mouseup', resizeMouseup);
+      document.removeEventListener('mousemove', resizeMousemove);
     };
-  }, [contentRef, props, resizeRef]);
+  }, [contentRef, onInputBoxWidthChange, resizeRef]);
 
   useEffect(() => {
-    if (props.inputBoxWitdh) {
-      setInputWrapperStyle((prevState) => {
-        return {
-          ...prevState,
-          width: props.inputBoxWitdh
-        };
-      });
+    resizedWidth.current = compatibledInputBoxWidth;
+    setInputWrapperStyle((prevState) => {
+      return {
+        ...prevState,
+        width: compatibledInputBoxWidth
+      };
+    });
 
-      setResizeOperateStyle((prevState) => {
-        return {
-          ...prevState,
-          left: props.inputBoxWitdh
-        };
-      });
-    }
-  }, [props.inputBoxWitdh]);
+    setResizeOperateStyle((prevState) => {
+      return {
+        ...prevState,
+        left: compatibledInputBoxWidth
+      };
+    });
+  }, [compatibledInputBoxWidth]);
 
   useEffect(() => {
     const po = props.setting.previewOnly;
@@ -132,7 +139,10 @@ const useResize = (
     });
   }, [props.setting.htmlPreview, props.setting.preview, props.setting.previewOnly]);
 
-  return { inputWrapperStyle, resizeOperateStyle };
+  return {
+    inputWrapperStyle,
+    resizeOperateStyle
+  };
 };
 
 export default useResize;
