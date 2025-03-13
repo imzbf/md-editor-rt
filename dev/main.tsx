@@ -94,9 +94,10 @@ config({
     //     cropper: {
     //       instance: Cropper
     //     },
-    // mermaid: {
-    //   instance: mermaid
-    // }
+    mermaid: {
+      //   instance: mermaid
+      enableZoom: true
+    }
   },
   editorExtensionsAttrs,
   editorConfig: {
