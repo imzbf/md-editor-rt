@@ -4,7 +4,9 @@ import { prefix, configOption } from '~/config';
 import { EditorContext } from '~/context';
 import { appendHandler } from '~/utils/dom';
 import { mermaidCache } from '~/utils/cache';
-import { CDN_IDS } from '~~/MdEditor/static';
+import { CDN_IDS } from '~/static';
+import { ERROR_CATCHER } from '~/static/event-name';
+import eventBus from '~/utils/event-bus';
 
 import { ContentPreviewProps } from '../props';
 
@@ -13,7 +15,7 @@ import { ContentPreviewProps } from '../props';
  *
  */
 const useMermaid = (props: ContentPreviewProps) => {
-  const { theme, rootRef } = useContext(EditorContext);
+  const { editorId, theme, rootRef } = useContext(EditorContext);
   const { noMermaid, sanitizeMermaid } = props;
 
   const mermaidRef = useRef(configOption.editorExtensions.mermaid!.instance);
@@ -135,8 +137,12 @@ const useMermaid = (props: ContentPreviewProps) => {
                 }
 
                 item.replaceWith(p);
-              } catch {
-                // console.error(error.message);
+              } catch (error: any) {
+                eventBus.emit(editorId, ERROR_CATCHER, {
+                  name: 'mermaid',
+                  message: error.message,
+                  error
+                });
               }
 
               if (--count === 0) {
