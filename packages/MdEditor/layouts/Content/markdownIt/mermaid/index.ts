@@ -26,7 +26,7 @@ const MermaidPlugin = (md: markdownit, options: { themeRef: RefObject<Themes> })
 
       return `<div class="${prefix}-mermaid" ${
         line !== undefined ? 'data-line=' + line : ''
-      } data-mermaid-theme=${options.themeRef.current}>${code}</div>`;
+      } data-mermaid-theme=${options.themeRef.current} data-code="${code}">${code}</div>`;
     }
 
     return temp!(tokens, idx, ops, env, slf);
