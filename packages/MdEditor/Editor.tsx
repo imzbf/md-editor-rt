@@ -200,7 +200,6 @@ const Editor = forwardRef((props: EditorProps, ref: ForwardedRef<unknown>) => {
           autoFoldThreshold={autoFoldThreshold}
           onRemount={props.onRemount}
           catalogLayout={catalogLayout}
-          htmlUpdateOnDemand={props.htmlUpdateOnDemand}
         />
         {footers.length > 0 && (
           <Footer

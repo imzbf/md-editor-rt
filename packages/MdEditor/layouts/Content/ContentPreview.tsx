@@ -1,7 +1,6 @@
 import { useContext } from 'react';
 import { prefix } from '~/config';
 import { EditorContext } from '~/context';
-import { classnames } from '~/utils';
 
 import { useCopyCode, useMarkdownIt, useZoom, useTaskState, useRemount } from './hooks';
 import { ContentPreviewProps } from './props';
@@ -9,7 +8,7 @@ import UpdateOnDemand from './UpdateOnDemand';
 
 const ContentPreview = (props: ContentPreviewProps) => {
   const { previewOnly = false } = props;
-  const { editorId, previewTheme, showCodeRowNumber } = useContext(EditorContext);
+  const { editorId } = useContext(EditorContext);
 
   // markdown => html
   const { html, key } = useMarkdownIt(props, !!previewOnly);
@@ -30,20 +29,7 @@ const ContentPreview = (props: ContentPreviewProps) => {
           className={`${prefix}-preview-wrapper`}
           key="content-preview-wrapper"
         >
-          {props.htmlUpdateOnDemand ? (
-            <UpdateOnDemand key={key} html={html} />
-          ) : (
-            <div
-              id={`${editorId}-preview`}
-              key={key}
-              className={classnames([
-                `${prefix}-preview`,
-                `${previewTheme}-theme`,
-                showCodeRowNumber && `${prefix}-scrn`
-              ])}
-              dangerouslySetInnerHTML={{ __html: html }}
-            />
-          )}
+          <UpdateOnDemand key={key} html={html} />
         </div>
       )}
       {!previewOnly && props.setting.htmlPreview && (

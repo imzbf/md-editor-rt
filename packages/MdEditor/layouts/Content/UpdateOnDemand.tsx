@@ -32,11 +32,15 @@ const compareHtml = (newHtml: string, currentHtml: string) => {
 const UpdateOnDemand = ({ html }: Props) => {
   const { editorId, previewTheme, showCodeRowNumber } = useContext(EditorContext);
 
+  // 永远缓存一份第一次的html，保证ssr正确
+  const firstHtml = useRef<{ __html: string }>({ __html: html });
+
   const htmlContainerRef = useRef<HTMLDivElement>(null);
+  const cacheHtml = useRef<string>('');
 
   useEffect(() => {
     if (!htmlContainerRef.current) return;
-    const updates = compareHtml(html, htmlContainerRef.current.innerHTML);
+    const updates = compareHtml(html, cacheHtml.current);
 
     updates.forEach(({ index, newNode }) => {
       const targetNode = htmlContainerRef.current?.children[index];
@@ -46,14 +50,9 @@ const UpdateOnDemand = ({ html }: Props) => {
         htmlContainerRef.current?.insertAdjacentHTML('beforeend', newNode);
       }
     });
-  }, [html]);
 
-  useEffect(() => {
-    if (htmlContainerRef.current) {
-      htmlContainerRef.current.innerHTML = html;
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    cacheHtml.current = html;
+  }, [html]);
 
   return (
     <div
@@ -63,6 +62,7 @@ const UpdateOnDemand = ({ html }: Props) => {
         `${previewTheme}-theme`,
         showCodeRowNumber && `${prefix}-scrn`
       ])}
+      dangerouslySetInnerHTML={firstHtml.current}
       ref={htmlContainerRef}
     />
   );
