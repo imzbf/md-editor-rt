@@ -1,8 +1,8 @@
 import path from 'path';
+import { rmSync } from 'fs';
 import { fileURLToPath } from 'url';
 import { build, LibraryFormats } from 'vite';
 import react from '@vitejs/plugin-react';
-import { removeDir } from './u';
 import { buildType } from './build.type';
 
 const __dirname = fileURLToPath(new URL('..', import.meta.url));
@@ -39,7 +39,7 @@ const resolvePath = (p: string) => path.resolve(__dirname, p);
     cjs: 'cjs'
   };
 
-  removeDir(resolvePath('lib'));
+  rmSync(resolvePath('lib'), { recursive: true, force: true });
 
   buildType();
 
