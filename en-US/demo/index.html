@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en-US"><head><meta charSet="utf-8" data-next-head=""/><title data-next-head="">Examples - MdEditorRT Documentation</title><meta name="keywords" content="MD Editor, md-editor-rt, Markdown Editor, React Markdown, React TSX, Markdown Component, Markdown preview, React Editor" data-next-head=""/><meta name="description" content="md-editor-rt is a Markdown editor component developed based on React and TSX, supporting real-time preview and rich Markdown features. Review the detailed development documentation and usage examples." data-next-head=""/><meta name="viewport" content="width=device-width, initial-scale=1" data-next-head=""/><link rel="preload" href="/md-editor-rt/_next/static/css/7d7b49ccfd02fdd9.css" as="style"/><link rel="stylesheet" href="/md-editor-rt/_next/static/css/7d7b49ccfd02fdd9.css" data-n-g=""/><noscript data-n-css=""></noscript><script defer="" nomodule="" src="/md-editor-rt/_next/static/chunks/polyfills-42372ed130431b0a.js"></script><script src="/md-editor-rt/_next/static/chunks/webpack-eeae57db5dc69362.js" defer=""></script><script src="/md-editor-rt/_next/static/chunks/framework-5f43af1a76a0211a.js" defer=""></script><script src="/md-editor-rt/_next/static/chunks/main-fab320bdc97e346b.js" defer=""></script><script src="/md-editor-rt/_next/static/chunks/pages/_app-cd982e2f4f4213e7.js" defer=""></script><script src="/md-editor-rt/_next/static/chunks/208-79f5a8eac723c49c.js" defer=""></script><script src="/md-editor-rt/_next/static/chunks/pages/en-US/demo-52d1a4ddc8117b8a.js" defer=""></script><script src="/md-editor-rt/_next/static/ohXqYnSrwiV0cfCASkTLp/_buildManifest.js" defer=""></script><script src="/md-editor-rt/_next/static/ohXqYnSrwiV0cfCASkTLp/_ssgManifest.js" defer=""></script></head><body><div id="__next"><header class="page-header"><section class="container"><h1 class="project-name">md-editor-rt<sup>@<!-- -->5.4.5</sup></h1><p class="project-desc">Markdown Editor for React, developed in jsx and typescript, support different themes、beautify content by prettier.</p><div class="pc"><ul class="nav-list"><li class="nav-item"><a href="/md-editor-rt/en-US"><svg class="icon" aria-hidden="true"><use xlink:href="#med-icon-homepage"></use></svg>Home</a></li><li class="nav-item"><a href="/md-editor-rt/en-US/api"><svg class="icon" aria-hidden="true"><use xlink:href="#med-icon-api"></use></svg>API</a></li><li class="nav-item"><a href="/md-editor-rt/en-US/demo"><svg class="icon" aria-hidden="true"><use xlink:href="#med-icon-example"></use></svg>Demo</a></li><li class="nav-item"><a target="_blank" href="https://github.com/imzbf/md-editor-rt"><svg class="icon" aria-hidden="true"><use xlink:href="#med-icon-github"></use></svg>Github</a></li><li class="nav-item"><a href="/md-editor-rt/en-US/syntax"><svg class="icon" aria-hidden="true"><use xlink:href="#med-icon-syntax"></use></svg>Syntax</a></li><li class="nav-item"><a href="/md-editor-rt/en-US/contrast"><svg class="icon" aria-hidden="true"><use xlink:href="#med-icon-question"></use></svg>Contrast</a></li><li class="nav-item"><a href="/md-editor-rt/en-US/about"><svg class="icon" aria-hidden="true"><use xlink:href="#med-icon-about"></use></svg>About</a></li><li class="nav-item"><a style="display:none" href="/md-editor-rt/md-editor-rt/zh-CN">中文</a><svg class="icon" aria-hidden="true"><use xlink:href="#med-icon-cn"></use></svg>中文</li></ul><p class="header-actions"><button class="btn btn-header">Default Theme</button><button class="btn btn-header">Dark Theme</button><button class="btn btn-header">Preview Style</button><button class="btn btn-header">Code Style</button></p></div><div class="mb"><svg class="icon m-menu-trigger" aria-hidden="true"><use xlink:href="#med-icon-drawer"></use></svg></div></section></header><div class="container"><div class="doc"><div class="content"><div id="md-demo-en" class="md-editor   md-editor-previewOnly"><div id="md-demo-en-preview-wrapper" class="md-editor-preview-wrapper"><div id="md-demo-en-preview" class="md-editor-preview default-theme md-editor-scrn"><h2 id="😁 Basic Usage" tabindex="-1" data-line="0"><a class="header-anchor" href="#😁 Basic Usage">😁 Basic Usage</a></h2>
+<!DOCTYPE html><html lang="en-US"><head><meta charSet="utf-8" data-next-head=""/><title data-next-head="">Examples - MdEditorRT Documentation</title><meta name="keywords" content="MD Editor, md-editor-rt, Markdown Editor, React Markdown, React TSX, Markdown Component, Markdown preview, React Editor" data-next-head=""/><meta name="description" content="md-editor-rt is a Markdown editor component developed based on React and TSX, supporting real-time preview and rich Markdown features. Review the detailed development documentation and usage examples." data-next-head=""/><meta name="viewport" content="width=device-width, initial-scale=1" data-next-head=""/><link rel="preload" href="/md-editor-rt/_next/static/css/7d7b49ccfd02fdd9.css" as="style"/><link rel="stylesheet" href="/md-editor-rt/_next/static/css/7d7b49ccfd02fdd9.css" data-n-g=""/><noscript data-n-css=""></noscript><script defer="" nomodule="" src="/md-editor-rt/_next/static/chunks/polyfills-42372ed130431b0a.js"></script><script src="/md-editor-rt/_next/static/chunks/webpack-eeae57db5dc69362.js" defer=""></script><script src="/md-editor-rt/_next/static/chunks/framework-5f43af1a76a0211a.js" defer=""></script><script src="/md-editor-rt/_next/static/chunks/main-fab320bdc97e346b.js" defer=""></script><script src="/md-editor-rt/_next/static/chunks/pages/_app-cd982e2f4f4213e7.js" defer=""></script><script src="/md-editor-rt/_next/static/chunks/208-79f5a8eac723c49c.js" defer=""></script><script src="/md-editor-rt/_next/static/chunks/pages/en-US/demo-7f5c66589b6261af.js" defer=""></script><script src="/md-editor-rt/_next/static/bh7QB2PXCVrMu4XXuXtn7/_buildManifest.js" defer=""></script><script src="/md-editor-rt/_next/static/bh7QB2PXCVrMu4XXuXtn7/_ssgManifest.js" defer=""></script></head><body><div id="__next"><header class="page-header"><section class="container"><h1 class="project-name">md-editor-rt<sup>@<!-- -->5.4.5</sup></h1><p class="project-desc">Markdown Editor for React, developed in jsx and typescript, support different themes、beautify content by prettier.</p><div class="pc"><ul class="nav-list"><li class="nav-item"><a href="/md-editor-rt/en-US"><svg class="icon" aria-hidden="true"><use xlink:href="#med-icon-homepage"></use></svg>Home</a></li><li class="nav-item"><a href="/md-editor-rt/en-US/api"><svg class="icon" aria-hidden="true"><use xlink:href="#med-icon-api"></use></svg>API</a></li><li class="nav-item"><a href="/md-editor-rt/en-US/demo"><svg class="icon" aria-hidden="true"><use xlink:href="#med-icon-example"></use></svg>Demo</a></li><li class="nav-item"><a target="_blank" href="https://github.com/imzbf/md-editor-rt"><svg class="icon" aria-hidden="true"><use xlink:href="#med-icon-github"></use></svg>Github</a></li><li class="nav-item"><a href="/md-editor-rt/en-US/syntax"><svg class="icon" aria-hidden="true"><use xlink:href="#med-icon-syntax"></use></svg>Syntax</a></li><li class="nav-item"><a href="/md-editor-rt/en-US/contrast"><svg class="icon" aria-hidden="true"><use xlink:href="#med-icon-question"></use></svg>Contrast</a></li><li class="nav-item"><a href="/md-editor-rt/en-US/about"><svg class="icon" aria-hidden="true"><use xlink:href="#med-icon-about"></use></svg>About</a></li><li class="nav-item"><a style="display:none" href="/md-editor-rt/md-editor-rt/zh-CN">中文</a><svg class="icon" aria-hidden="true"><use xlink:href="#med-icon-cn"></use></svg>中文</li></ul><p class="header-actions"><button class="btn btn-header">Default Theme</button><button class="btn btn-header">Dark Theme</button><button class="btn btn-header">Preview Style</button><button class="btn btn-header">Code Style</button></p></div><div class="mb"><svg class="icon m-menu-trigger" aria-hidden="true"><use xlink:href="#med-icon-drawer"></use></svg></div></section></header><div class="container"><div class="doc"><div class="content"><div id="md-demo-en" class="md-editor   md-editor-previewOnly"><div id="md-demo-en-preview-wrapper" class="md-editor-preview-wrapper"><div id="md-demo-en-preview" class="md-editor-preview default-theme md-editor-scrn"><h2 id="😁 Basic Usage" tabindex="-1" data-line="0"><a class="header-anchor" href="#😁 Basic Usage">😁 Basic Usage</a></h2>
 <p data-line="2">It has been developing iteratively, so update the latest version please. Publish logs: <a href="https://github.com/imzbf/md-editor-rt/releases" target="_blank">releases</a></p>
 <h3 id="🤖 Npm Install" tabindex="-1" data-line="4"><a class="header-anchor" href="#🤖 Npm Install">🤖 Npm Install</a></h3>
 
@@ -1016,18 +1016,21 @@ export default () =&gt; {
               <span class="md-editor-collapse-tips"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-chevron-left md-editor-icon"><circle cx="12" cy="12" r="10"/><path d="m14 16-4-4 4-4"/></svg></span>
             </div>
           </summary>
-          <pre><code class="language-shell" language=shell><span class="md-editor-code-block">yarn add screenfull katex cropperjs mermaid highlight.js prettier</span><span rn-wrapper aria-hidden="true"><span></span></span></code></pre>
+          <pre><code class="language-shell" language=shell><span class="md-editor-code-block">yarn add screenfull katex cropperjs@1 mermaid highlight.js prettier</span><span rn-wrapper aria-hidden="true"><span></span></span></code></pre>
 
         </details>
-      <ol start="2" data-line="724">
-<li data-line="724">Configure</li>
-</ol>
-<div data-line="726" class="md-editor-admonition md-editor-admonition-warning">
-<p data-line="728">We recommend configuring it at the project entry point, such as in <code>main.js</code> for projects created with Vite. Avoid calling <code>config</code> within components!</p>
+      <div data-line="724" class="md-editor-admonition md-editor-admonition-info">
+<p data-line="725">Currently <code>cropperjs@2</code> is being optimised, and there are no plans to switch to version 2.0.</p>
 </div>
-<p data-line="732">main.js</p>
+<ol start="2" data-line="728">
+<li data-line="728">Configure</li>
+</ol>
+<div data-line="730" class="md-editor-admonition md-editor-admonition-warning">
+<p data-line="732">We recommend configuring it at the project entry point, such as in <code>main.js</code> for projects created with Vite. Avoid calling <code>config</code> within components!</p>
+</div>
+<p data-line="736">main.js</p>
 
-        <details  data-line="734" class="md-editor-code">
+        <details  data-line="738" class="md-editor-code">
           <summary class="md-editor-code-head">
             <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
             <div class="md-editor-code-action">
@@ -1086,7 +1089,7 @@ config({
 
         </details>
       
-        <details  data-line="783" class="md-editor-code" open="">
+        <details  data-line="787" class="md-editor-code" open="">
           <summary class="md-editor-code-head">
             <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
             <div class="md-editor-code-action">
@@ -1104,13 +1107,13 @@ export default () =&gt; {
 };</span><span rn-wrapper aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
         </details>
-      <blockquote data-line="792">
-<p data-line="792">Tips: While import highlight styles by yourself, editor will not be able to change code styles.</p>
+      <blockquote data-line="796">
+<p data-line="796">Tips: While import highlight styles by yourself, editor will not be able to change code styles.</p>
 </blockquote>
-<h3 id="🔒 Compile-time Prevention of XSS" tabindex="-1" data-line="794"><a class="header-anchor" href="#🔒 Compile-time Prevention of XSS">🔒 Compile-time Prevention of XSS</a></h3>
-<p data-line="796">Version 5.0 exports the built-in XSS plugin, which is no longer added by default. The exported XSS plugin includes additional tags and attributes on top of the default whitelist:</p>
+<h3 id="🔒 Compile-time Prevention of XSS" tabindex="-1" data-line="798"><a class="header-anchor" href="#🔒 Compile-time Prevention of XSS">🔒 Compile-time Prevention of XSS</a></h3>
+<p data-line="800">Version 5.0 exports the built-in XSS plugin, which is no longer added by default. The exported XSS plugin includes additional tags and attributes on top of the default whitelist:</p>
 
-        <details  data-line="798" class="md-editor-code">
+        <details  data-line="802" class="md-editor-code">
           <summary class="md-editor-code-head">
             <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
             <div class="md-editor-code-action">
@@ -1140,9 +1143,9 @@ export default () =&gt; {
 }</span><span rn-wrapper aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
         </details>
-      <h4 id="🔒 Add XSS extension" tabindex="-1" data-line="819"><a class="header-anchor" href="#🔒 Add XSS extension">🔒 Add XSS extension</a></h4>
+      <h4 id="🔒 Add XSS extension" tabindex="-1" data-line="823"><a class="header-anchor" href="#🔒 Add XSS extension">🔒 Add XSS extension</a></h4>
 
-        <details  data-line="821" class="md-editor-code" open="">
+        <details  data-line="825" class="md-editor-code" open="">
           <summary class="md-editor-code-head">
             <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
             <div class="md-editor-code-action">
@@ -1168,10 +1171,10 @@ config({
 });</span><span rn-wrapper aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
         </details>
-      <h4 id="🔏 Modify XSS configuration" tabindex="-1" data-line="838"><a class="header-anchor" href="#🔏 Modify XSS configuration">🔏 Modify XSS configuration</a></h4>
-<p data-line="840">Add a configuration that allows for events where image loading fails</p>
+      <h4 id="🔏 Modify XSS configuration" tabindex="-1" data-line="842"><a class="header-anchor" href="#🔏 Modify XSS configuration">🔏 Modify XSS configuration</a></h4>
+<p data-line="844">Add a configuration that allows for events where image loading fails</p>
 
-        <details  data-line="842" class="md-editor-code">
+        <details  data-line="846" class="md-editor-code">
           <summary class="md-editor-code-head">
             <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
             <div class="md-editor-code-action">
@@ -1227,11 +1230,11 @@ config({
 });</span><span rn-wrapper aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
         </details>
-      <p data-line="889">More configuration references: <a href="https://github.com/leizongmin/js-xss/tree/master" target="_blank">js-xss</a></p>
-<h3 id="🔒 Prevent XSS after compilation" tabindex="-1" data-line="891"><a class="header-anchor" href="#🔒 Prevent XSS after compilation">🔒 Prevent XSS after compilation</a></h3>
-<p data-line="893">Using <code>sanitize</code> to sanitize <code>html</code>. eg: <code>sanitize-html</code></p>
+      <p data-line="893">More configuration references: <a href="https://github.com/leizongmin/js-xss/tree/master" target="_blank">js-xss</a></p>
+<h3 id="🔒 Prevent XSS after compilation" tabindex="-1" data-line="895"><a class="header-anchor" href="#🔒 Prevent XSS after compilation">🔒 Prevent XSS after compilation</a></h3>
+<p data-line="897">Using <code>sanitize</code> to sanitize <code>html</code>. eg: <code>sanitize-html</code></p>
 
-        <details  data-line="895" class="md-editor-code" open="">
+        <details  data-line="899" class="md-editor-code" open="">
           <summary class="md-editor-code-head">
             <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
             <div class="md-editor-code-action">
@@ -1245,7 +1248,7 @@ config({
 
         </details>
       
-        <details  data-line="899" class="md-editor-code" open="">
+        <details  data-line="903" class="md-editor-code" open="">
           <summary class="md-editor-code-head">
             <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
             <div class="md-editor-code-action">
@@ -1266,9 +1269,9 @@ export default () =&gt; {
 };</span><span rn-wrapper aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
         </details>
-      <h3 id="🗂 Folding Document Content" tabindex="-1" data-line="911"><a class="header-anchor" href="#🗂 Folding Document Content">🗂 Folding Document Content</a></h3>
+      <h3 id="🗂 Folding Document Content" tabindex="-1" data-line="915"><a class="header-anchor" href="#🗂 Folding Document Content">🗂 Folding Document Content</a></h3>
 
-        <details  data-line="913" class="md-editor-code" open="">
+        <details  data-line="917" class="md-editor-code" open="">
           <summary class="md-editor-code-head">
             <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
             <div class="md-editor-code-action">
@@ -1289,12 +1292,12 @@ config({
 });</span><span rn-wrapper aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
         </details>
-      <h3 id="🏄🏻‍♂️ Open Links In New Window" tabindex="-1" data-line="925"><a class="header-anchor" href="#🏄🏻‍♂️ Open Links In New Window">🏄🏻‍♂️ Open Links In New Window</a></h3>
-<ol data-line="927">
-<li data-line="927">Install additional extensions</li>
+      <h3 id="🏄🏻‍♂️ Open Links In New Window" tabindex="-1" data-line="929"><a class="header-anchor" href="#🏄🏻‍♂️ Open Links In New Window">🏄🏻‍♂️ Open Links In New Window</a></h3>
+<ol data-line="931">
+<li data-line="931">Install additional extensions</li>
 </ol>
 
-        <details  data-line="929" class="md-editor-code" open="">
+        <details  data-line="933" class="md-editor-code" open="">
           <summary class="md-editor-code-head">
             <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
             <div class="md-editor-code-action">
@@ -1307,11 +1310,11 @@ config({
           <pre><code class="language-shell" language=shell><span class="md-editor-code-block">yarn add markdown-it-link-attributes</span><span rn-wrapper aria-hidden="true"><span></span></span></code></pre>
 
         </details>
-      <ol start="2" data-line="933">
-<li data-line="933">Add extensions to the compiler</li>
+      <ol start="2" data-line="937">
+<li data-line="937">Add extensions to the compiler</li>
 </ol>
 
-        <details  data-line="935" class="md-editor-code">
+        <details  data-line="939" class="md-editor-code">
           <summary class="md-editor-code-head">
             <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
             <div class="md-editor-code-action">
@@ -1358,9 +1361,9 @@ config({
 });</span><span rn-wrapper aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
         </details>
-      <h3 id="☑️ Toggleable status task list" tabindex="-1" data-line="973"><a class="header-anchor" href="#☑️ Toggleable status task list">☑️ Toggleable status task list</a></h3>
+      <h3 id="☑️ Toggleable status task list" tabindex="-1" data-line="977"><a class="header-anchor" href="#☑️ Toggleable status task list">☑️ Toggleable status task list</a></h3>
 
-        <details  data-line="975" class="md-editor-code" open="">
+        <details  data-line="979" class="md-editor-code" open="">
           <summary class="md-editor-code-head">
             <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
             <div class="md-editor-code-action">
@@ -1392,7 +1395,7 @@ config({
 
         </details>
       
-        <details  data-line="997" class="md-editor-code" open="">
+        <details  data-line="1001" class="md-editor-code" open="">
           <summary class="md-editor-code-head">
             <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
             <div class="md-editor-code-action">
@@ -1405,10 +1408,10 @@ config({
           <pre><code class="language-jsx" language=jsx><span class="md-editor-code-block">&lt;MdEditor id=&quot;myId&quot; modelValue={text} onChange={setText} /&gt;</span><span rn-wrapper aria-hidden="true"><span></span></span></code></pre>
 
         </details>
-      <h3 id="🎳 co-working" tabindex="-1" data-line="1001"><a class="header-anchor" href="#🎳 co-working">🎳 co-working</a></h3>
-<p data-line="1003">Install <a href="https://github.com/yjs/yjs" target="_blank">yjs</a></p>
+      <h3 id="🎳 co-working" tabindex="-1" data-line="1005"><a class="header-anchor" href="#🎳 co-working">🎳 co-working</a></h3>
+<p data-line="1007">Install <a href="https://github.com/yjs/yjs" target="_blank">yjs</a></p>
 
-        <details  data-line="1005" class="md-editor-code" open="">
+        <details  data-line="1009" class="md-editor-code" open="">
           <summary class="md-editor-code-head">
             <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
             <div class="md-editor-code-action">
@@ -1421,9 +1424,9 @@ config({
           <pre><code class="language-shell" language=shell><span class="md-editor-code-block">npm i yjs y-codemirror.next y-websocket</span><span rn-wrapper aria-hidden="true"><span></span></span></code></pre>
 
         </details>
-      <p data-line="1009">Add the <code>yjs</code> extension in main.js:</p>
+      <p data-line="1013">Add the <code>yjs</code> extension in main.js:</p>
 
-        <details  data-line="1011" class="md-editor-code">
+        <details  data-line="1015" class="md-editor-code">
           <summary class="md-editor-code-head">
             <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
             <div class="md-editor-code-action">
@@ -1479,9 +1482,9 @@ config({
 });</span><span rn-wrapper aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
         </details>
-      <p data-line="1058">If you want to use it in only one editor, try distinguishing using <code>editorId</code> (<code>^4.20.0</code>):</p>
+      <p data-line="1062">If you want to use it in only one editor, try distinguishing using <code>editorId</code> (<code>^4.20.0</code>):</p>
 
-        <details  data-line="1060" class="md-editor-code" open="">
+        <details  data-line="1064" class="md-editor-code" open="">
           <summary class="md-editor-code-head">
             <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
             <div class="md-editor-code-action">
@@ -1500,9 +1503,9 @@ config({
 });</span><span rn-wrapper aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
         </details>
-      <h3 id="📝 Extend code block tool" tabindex="-1" data-line="1070"><a class="header-anchor" href="#📝 Extend code block tool">📝 Extend code block tool</a></h3>
+      <h3 id="📝 Extend code block tool" tabindex="-1" data-line="1074"><a class="header-anchor" href="#📝 Extend code block tool">📝 Extend code block tool</a></h3>
 
-        <details  data-line="1072" class="md-editor-code" open="">
+        <details  data-line="1076" class="md-editor-code" open="">
           <summary class="md-editor-code-head">
             <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
             <div class="md-editor-code-action">
@@ -1536,10 +1539,10 @@ config({
 });</span><span rn-wrapper aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
         </details>
-      <p data-line="1097">It will be displayed after the 'Copy Code' button. By working together with the <code>onRemount</code> event, you can correctly retrieve these elements using <code>querySelectorAll</code> and bind event listeners to them.</p>
-<p data-line="1099">Here is an example of how to print code:</p>
+      <p data-line="1101">It will be displayed after the 'Copy Code' button. By working together with the <code>onRemount</code> event, you can correctly retrieve these elements using <code>querySelectorAll</code> and bind event listeners to them.</p>
+<p data-line="1103">Here is an example of how to print code:</p>
 
-        <details  data-line="1101" class="md-editor-code" open="">
+        <details  data-line="1105" class="md-editor-code" open="">
           <summary class="md-editor-code-head">
             <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
             <div class="md-editor-code-action">
@@ -1571,6 +1574,6 @@ config({
 }, []);</span><span rn-wrapper aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
         </details>
-      <h2 id="🧻 Edit This Page" tabindex="-1" data-line="1124"><a class="header-anchor" href="#🧻 Edit This Page">🧻 Edit This Page</a></h2>
-<p data-line="1126"><a href="https://github.com/imzbf/md-editor-rt/blob/dev-docs/public/demo-en-US.md" target="_blank">demo-en-US</a></p>
-</div></div></div></div><div class="catalog"><div class="affix"><div class="md-editor-catalog "></div></div></div></div></div></div><script id="__NEXT_DATA__" type="application/json">{"props":{"pageProps":{}},"page":"/en-US/demo","query":{},"buildId":"ohXqYnSrwiV0cfCASkTLp","assetPrefix":"/md-editor-rt","nextExport":true,"autoExport":true,"isFallback":false,"scriptLoader":[{"src":"//at.alicdn.com/t/c/font_2818624_gbt6qvt9lob.js","strategy":"afterInteractive"},{"async":true,"src":"https://www.googletagmanager.com/gtag/js?id=G-3R6P1XE0H0","strategy":"afterInteractive"},{"id":"gg","children":"window.dataLayer = window.dataLayer || [];\n                function gtag() {\n                  dataLayer.push(arguments);\n                }\n                gtag('js', new Date());\n                gtag('config', 'G-3R6P1XE0H0');","strategy":"afterInteractive"},{"src":"https://hm.baidu.com/hm.js?1563bc52cb27ffbc7b5b46cdfc327ce0","strategy":"afterInteractive"}]}</script></body></html>
+      <h2 id="🧻 Edit This Page" tabindex="-1" data-line="1128"><a class="header-anchor" href="#🧻 Edit This Page">🧻 Edit This Page</a></h2>
+<p data-line="1130"><a href="https://github.com/imzbf/md-editor-rt/blob/dev-docs/public/demo-en-US.md" target="_blank">demo-en-US</a></p>
+</div></div></div></div><div class="catalog"><div class="affix"><div class="md-editor-catalog "></div></div></div></div></div></div><script id="__NEXT_DATA__" type="application/json">{"props":{"pageProps":{}},"page":"/en-US/demo","query":{},"buildId":"bh7QB2PXCVrMu4XXuXtn7","assetPrefix":"/md-editor-rt","nextExport":true,"autoExport":true,"isFallback":false,"scriptLoader":[{"src":"//at.alicdn.com/t/c/font_2818624_gbt6qvt9lob.js","strategy":"afterInteractive"},{"async":true,"src":"https://www.googletagmanager.com/gtag/js?id=G-3R6P1XE0H0","strategy":"afterInteractive"},{"id":"gg","children":"window.dataLayer = window.dataLayer || [];\n                function gtag() {\n                  dataLayer.push(arguments);\n                }\n                gtag('js', new Date());\n                gtag('config', 'G-3R6P1XE0H0');","strategy":"afterInteractive"},{"src":"https://hm.baidu.com/hm.js?1563bc52cb27ffbc7b5b46cdfc327ce0","strategy":"afterInteractive"}]}</script></body></html>

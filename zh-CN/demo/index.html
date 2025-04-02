@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en-US"><head><meta charSet="utf-8" data-next-head=""/><title data-next-head="">示例 - MdEditorRT 使用文档</title><meta name="keywords" content="MD Editor, md-editor-rt, Markdown 编辑器, React Markdown, React TSX, Markdown 组件, Markdown preview, React 编辑器" data-next-head=""/><meta name="description" content="md-editor-rt 是一个基于 React 和 TSX 开发的 Markdown 编辑器组件，支持实时预览和丰富的 Markdown 功能。查阅详细的开发文档与使用示例。" data-next-head=""/><meta name="viewport" content="width=device-width, initial-scale=1" data-next-head=""/><link rel="preload" href="/md-editor-rt/_next/static/css/7d7b49ccfd02fdd9.css" as="style"/><link rel="stylesheet" href="/md-editor-rt/_next/static/css/7d7b49ccfd02fdd9.css" data-n-g=""/><noscript data-n-css=""></noscript><script defer="" nomodule="" src="/md-editor-rt/_next/static/chunks/polyfills-42372ed130431b0a.js"></script><script src="/md-editor-rt/_next/static/chunks/webpack-eeae57db5dc69362.js" defer=""></script><script src="/md-editor-rt/_next/static/chunks/framework-5f43af1a76a0211a.js" defer=""></script><script src="/md-editor-rt/_next/static/chunks/main-fab320bdc97e346b.js" defer=""></script><script src="/md-editor-rt/_next/static/chunks/pages/_app-cd982e2f4f4213e7.js" defer=""></script><script src="/md-editor-rt/_next/static/chunks/208-79f5a8eac723c49c.js" defer=""></script><script src="/md-editor-rt/_next/static/chunks/pages/zh-CN/demo-74a8d200fc146c9a.js" defer=""></script><script src="/md-editor-rt/_next/static/ohXqYnSrwiV0cfCASkTLp/_buildManifest.js" defer=""></script><script src="/md-editor-rt/_next/static/ohXqYnSrwiV0cfCASkTLp/_ssgManifest.js" defer=""></script></head><body><div id="__next"><header class="page-header"><section class="container"><h1 class="project-name">md-editor-rt<sup>@<!-- -->5.4.5</sup></h1><p class="project-desc">Markdown编辑器React版本，使用jsx和typescript语法开发，支持切换主题、prettier美化文本等。</p><div class="pc"><ul class="nav-list"><li class="nav-item"><a href="/md-editor-rt/zh-CN"><svg class="icon" aria-hidden="true"><use xlink:href="#med-icon-homepage"></use></svg>首页</a></li><li class="nav-item"><a href="/md-editor-rt/zh-CN/api"><svg class="icon" aria-hidden="true"><use xlink:href="#med-icon-api"></use></svg>API</a></li><li class="nav-item"><a href="/md-editor-rt/zh-CN/demo"><svg class="icon" aria-hidden="true"><use xlink:href="#med-icon-example"></use></svg>示例</a></li><li class="nav-item"><a target="_blank" href="https://github.com/imzbf/md-editor-rt"><svg class="icon" aria-hidden="true"><use xlink:href="#med-icon-github"></use></svg>源码</a></li><li class="nav-item"><a href="/md-editor-rt/zh-CN/syntax"><svg class="icon" aria-hidden="true"><use xlink:href="#med-icon-syntax"></use></svg>语法</a></li><li class="nav-item"><a href="/md-editor-rt/zh-CN/contrast"><svg class="icon" aria-hidden="true"><use xlink:href="#med-icon-question"></use></svg>对比</a></li><li class="nav-item"><a href="/md-editor-rt/zh-CN/about"><svg class="icon" aria-hidden="true"><use xlink:href="#med-icon-about"></use></svg>关于</a></li><li class="nav-item"><a style="display:none" href="/md-editor-rt/md-editor-rt/en-US">English</a><svg class="icon" aria-hidden="true"><use xlink:href="#med-icon-en"></use></svg>English</li></ul><p class="header-actions"><button class="btn btn-header">默认模式</button><button class="btn btn-header">暗黑模式</button><button class="btn btn-header">预览主题</button><button class="btn btn-header">代码主题</button></p></div><div class="mb"><svg class="icon m-menu-trigger" aria-hidden="true"><use xlink:href="#med-icon-drawer"></use></svg></div></section></header><div class="container"><div class="doc"><div class="content"><div id="md-demo-zh" class="md-editor   md-editor-previewOnly"><div id="md-demo-zh-preview-wrapper" class="md-editor-preview-wrapper"><div id="md-demo-zh-preview" class="md-editor-preview default-theme md-editor-scrn"><h2 id="😁 基本使用示例" tabindex="-1" data-line="0"><a class="header-anchor" href="#😁 基本使用示例">😁 基本使用示例</a></h2>
+<!DOCTYPE html><html lang="en-US"><head><meta charSet="utf-8" data-next-head=""/><title data-next-head="">示例 - MdEditorRT 使用文档</title><meta name="keywords" content="MD Editor, md-editor-rt, Markdown 编辑器, React Markdown, React TSX, Markdown 组件, Markdown preview, React 编辑器" data-next-head=""/><meta name="description" content="md-editor-rt 是一个基于 React 和 TSX 开发的 Markdown 编辑器组件，支持实时预览和丰富的 Markdown 功能。查阅详细的开发文档与使用示例。" data-next-head=""/><meta name="viewport" content="width=device-width, initial-scale=1" data-next-head=""/><link rel="preload" href="/md-editor-rt/_next/static/css/7d7b49ccfd02fdd9.css" as="style"/><link rel="stylesheet" href="/md-editor-rt/_next/static/css/7d7b49ccfd02fdd9.css" data-n-g=""/><noscript data-n-css=""></noscript><script defer="" nomodule="" src="/md-editor-rt/_next/static/chunks/polyfills-42372ed130431b0a.js"></script><script src="/md-editor-rt/_next/static/chunks/webpack-eeae57db5dc69362.js" defer=""></script><script src="/md-editor-rt/_next/static/chunks/framework-5f43af1a76a0211a.js" defer=""></script><script src="/md-editor-rt/_next/static/chunks/main-fab320bdc97e346b.js" defer=""></script><script src="/md-editor-rt/_next/static/chunks/pages/_app-cd982e2f4f4213e7.js" defer=""></script><script src="/md-editor-rt/_next/static/chunks/208-79f5a8eac723c49c.js" defer=""></script><script src="/md-editor-rt/_next/static/chunks/pages/zh-CN/demo-3723a90eec9b4778.js" defer=""></script><script src="/md-editor-rt/_next/static/bh7QB2PXCVrMu4XXuXtn7/_buildManifest.js" defer=""></script><script src="/md-editor-rt/_next/static/bh7QB2PXCVrMu4XXuXtn7/_ssgManifest.js" defer=""></script></head><body><div id="__next"><header class="page-header"><section class="container"><h1 class="project-name">md-editor-rt<sup>@<!-- -->5.4.5</sup></h1><p class="project-desc">Markdown编辑器React版本，使用jsx和typescript语法开发，支持切换主题、prettier美化文本等。</p><div class="pc"><ul class="nav-list"><li class="nav-item"><a href="/md-editor-rt/zh-CN"><svg class="icon" aria-hidden="true"><use xlink:href="#med-icon-homepage"></use></svg>首页</a></li><li class="nav-item"><a href="/md-editor-rt/zh-CN/api"><svg class="icon" aria-hidden="true"><use xlink:href="#med-icon-api"></use></svg>API</a></li><li class="nav-item"><a href="/md-editor-rt/zh-CN/demo"><svg class="icon" aria-hidden="true"><use xlink:href="#med-icon-example"></use></svg>示例</a></li><li class="nav-item"><a target="_blank" href="https://github.com/imzbf/md-editor-rt"><svg class="icon" aria-hidden="true"><use xlink:href="#med-icon-github"></use></svg>源码</a></li><li class="nav-item"><a href="/md-editor-rt/zh-CN/syntax"><svg class="icon" aria-hidden="true"><use xlink:href="#med-icon-syntax"></use></svg>语法</a></li><li class="nav-item"><a href="/md-editor-rt/zh-CN/contrast"><svg class="icon" aria-hidden="true"><use xlink:href="#med-icon-question"></use></svg>对比</a></li><li class="nav-item"><a href="/md-editor-rt/zh-CN/about"><svg class="icon" aria-hidden="true"><use xlink:href="#med-icon-about"></use></svg>关于</a></li><li class="nav-item"><a style="display:none" href="/md-editor-rt/md-editor-rt/en-US">English</a><svg class="icon" aria-hidden="true"><use xlink:href="#med-icon-en"></use></svg>English</li></ul><p class="header-actions"><button class="btn btn-header">默认模式</button><button class="btn btn-header">暗黑模式</button><button class="btn btn-header">预览主题</button><button class="btn btn-header">代码主题</button></p></div><div class="mb"><svg class="icon m-menu-trigger" aria-hidden="true"><use xlink:href="#med-icon-drawer"></use></svg></div></section></header><div class="container"><div class="doc"><div class="content"><div id="md-demo-zh" class="md-editor   md-editor-previewOnly"><div id="md-demo-zh-preview-wrapper" class="md-editor-preview-wrapper"><div id="md-demo-zh-preview" class="md-editor-preview default-theme md-editor-scrn"><h2 id="😁 基本使用示例" tabindex="-1" data-line="0"><a class="header-anchor" href="#😁 基本使用示例">😁 基本使用示例</a></h2>
 <p data-line="2">目前一直在迭代开发，所以尽量安装最新版本。发布日志请前往：<a href="https://github.com/imzbf/md-editor-rt/releases" target="_blank">releases</a></p>
 <h3 id="🤖 NPM 安装" tabindex="-1" data-line="4"><a class="header-anchor" href="#🤖 NPM 安装">🤖 NPM 安装</a></h3>
 
@@ -1018,18 +1018,21 @@ export default () =&gt; {
               <span class="md-editor-collapse-tips"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-chevron-left md-editor-icon"><circle cx="12" cy="12" r="10"/><path d="m14 16-4-4 4-4"/></svg></span>
             </div>
           </summary>
-          <pre><code class="language-shell" language=shell><span class="md-editor-code-block">yarn add screenfull katex cropperjs mermaid highlight.js prettier</span><span rn-wrapper aria-hidden="true"><span></span></span></code></pre>
+          <pre><code class="language-shell" language=shell><span class="md-editor-code-block">yarn add screenfull katex cropperjs@1 mermaid highlight.js prettier</span><span rn-wrapper aria-hidden="true"><span></span></span></code></pre>
 
         </details>
-      <ol start="2" data-line="731">
-<li data-line="731">配置到编辑器</li>
-</ol>
-<div data-line="733" class="md-editor-admonition md-editor-admonition-warning">
-<p data-line="735">我们建议你在项目入口配置，例如 vite 创建的项目中的 main.js。不要在组件中去调用 <code>config</code> ！</p>
+      <div data-line="731" class="md-editor-admonition md-editor-admonition-info">
+<p data-line="732">目前<code>cropperjs@2</code>正在优化中，暂未计划切换到 2.0 版本。</p>
 </div>
-<p data-line="739">main.js</p>
+<ol start="2" data-line="735">
+<li data-line="735">配置到编辑器</li>
+</ol>
+<div data-line="737" class="md-editor-admonition md-editor-admonition-warning">
+<p data-line="739">我们建议你在项目入口配置，例如 vite 创建的项目中的 main.js。不要在组件中去调用 <code>config</code> ！</p>
+</div>
+<p data-line="743">main.js</p>
 
-        <details  data-line="741" class="md-editor-code">
+        <details  data-line="745" class="md-editor-code">
           <summary class="md-editor-code-head">
             <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
             <div class="md-editor-code-action">
@@ -1096,9 +1099,9 @@ config({
 });</span><span rn-wrapper aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
         </details>
-      <p data-line="799">App.jsx</p>
+      <p data-line="803">App.jsx</p>
 
-        <details  data-line="801" class="md-editor-code" open="">
+        <details  data-line="805" class="md-editor-code" open="">
           <summary class="md-editor-code-head">
             <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
             <div class="md-editor-code-action">
@@ -1116,13 +1119,13 @@ export default () =&gt; {
 };</span><span rn-wrapper aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
         </details>
-      <blockquote data-line="810">
-<p data-line="810">注意：highlight 的样式自行引入后，将不支持切换代码样式。</p>
+      <blockquote data-line="814">
+<p data-line="814">注意：highlight 的样式自行引入后，将不支持切换代码样式。</p>
 </blockquote>
-<h3 id="🔒 编译时防范 XSS" tabindex="-1" data-line="812"><a class="header-anchor" href="#🔒 编译时防范 XSS">🔒 编译时防范 XSS</a></h3>
-<p data-line="814">5.0 版本将内置的 XSS 扩展导出了，不再默认添加， 导出的 XSS 扩展在默认白名单的基础上，增加了部分标签和属性：</p>
+<h3 id="🔒 编译时防范 XSS" tabindex="-1" data-line="816"><a class="header-anchor" href="#🔒 编译时防范 XSS">🔒 编译时防范 XSS</a></h3>
+<p data-line="818">5.0 版本将内置的 XSS 扩展导出了，不再默认添加， 导出的 XSS 扩展在默认白名单的基础上，增加了部分标签和属性：</p>
 
-        <details  data-line="816" class="md-editor-code">
+        <details  data-line="820" class="md-editor-code">
           <summary class="md-editor-code-head">
             <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
             <div class="md-editor-code-action">
@@ -1152,9 +1155,9 @@ export default () =&gt; {
 }</span><span rn-wrapper aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
         </details>
-      <h4 id="🔒 添加 xss 扩展" tabindex="-1" data-line="837"><a class="header-anchor" href="#🔒 添加 xss 扩展">🔒 添加 xss 扩展</a></h4>
+      <h4 id="🔒 添加 xss 扩展" tabindex="-1" data-line="841"><a class="header-anchor" href="#🔒 添加 xss 扩展">🔒 添加 xss 扩展</a></h4>
 
-        <details  data-line="839" class="md-editor-code" open="">
+        <details  data-line="843" class="md-editor-code" open="">
           <summary class="md-editor-code-head">
             <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
             <div class="md-editor-code-action">
@@ -1180,10 +1183,10 @@ config({
 });</span><span rn-wrapper aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
         </details>
-      <h4 id="🔏 修改 xss 配置" tabindex="-1" data-line="856"><a class="header-anchor" href="#🔏 修改 xss 配置">🔏 修改 xss 配置</a></h4>
-<p data-line="858">我们添加一个允许图片加载失败的事件</p>
+      <h4 id="🔏 修改 xss 配置" tabindex="-1" data-line="860"><a class="header-anchor" href="#🔏 修改 xss 配置">🔏 修改 xss 配置</a></h4>
+<p data-line="862">我们添加一个允许图片加载失败的事件</p>
 
-        <details  data-line="860" class="md-editor-code">
+        <details  data-line="864" class="md-editor-code">
           <summary class="md-editor-code-head">
             <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
             <div class="md-editor-code-action">
@@ -1239,11 +1242,11 @@ config({
 });</span><span rn-wrapper aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
         </details>
-      <p data-line="907">更新详细配置参考 <a href="https://github.com/leizongmin/js-xss/blob/master/README.zh.md" target="_blank">js-xss</a></p>
-<h3 id="🔒 编译后防范 XSS" tabindex="-1" data-line="909"><a class="header-anchor" href="#🔒 编译后防范 XSS">🔒 编译后防范 XSS</a></h3>
-<p data-line="911">通过<code>sanitize</code>属性，自行处理不安全的 html 内容。例如：使用<code>sanitize-html</code>处理</p>
+      <p data-line="911">更新详细配置参考 <a href="https://github.com/leizongmin/js-xss/blob/master/README.zh.md" target="_blank">js-xss</a></p>
+<h3 id="🔒 编译后防范 XSS" tabindex="-1" data-line="913"><a class="header-anchor" href="#🔒 编译后防范 XSS">🔒 编译后防范 XSS</a></h3>
+<p data-line="915">通过<code>sanitize</code>属性，自行处理不安全的 html 内容。例如：使用<code>sanitize-html</code>处理</p>
 
-        <details  data-line="913" class="md-editor-code" open="">
+        <details  data-line="917" class="md-editor-code" open="">
           <summary class="md-editor-code-head">
             <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
             <div class="md-editor-code-action">
@@ -1257,7 +1260,7 @@ config({
 
         </details>
       
-        <details  data-line="917" class="md-editor-code" open="">
+        <details  data-line="921" class="md-editor-code" open="">
           <summary class="md-editor-code-head">
             <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
             <div class="md-editor-code-action">
@@ -1278,10 +1281,10 @@ export default () =&gt; {
 };</span><span rn-wrapper aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
         </details>
-      <p data-line="929">更详细的实现可以参考本文档的源码！</p>
-<h3 id="🗂 折叠文档内容" tabindex="-1" data-line="931"><a class="header-anchor" href="#🗂 折叠文档内容">🗂 折叠文档内容</a></h3>
+      <p data-line="933">更详细的实现可以参考本文档的源码！</p>
+<h3 id="🗂 折叠文档内容" tabindex="-1" data-line="935"><a class="header-anchor" href="#🗂 折叠文档内容">🗂 折叠文档内容</a></h3>
 
-        <details  data-line="933" class="md-editor-code" open="">
+        <details  data-line="937" class="md-editor-code" open="">
           <summary class="md-editor-code-head">
             <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
             <div class="md-editor-code-action">
@@ -1302,12 +1305,12 @@ config({
 });</span><span rn-wrapper aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
         </details>
-      <h3 id="🏄🏻‍♂️ 新窗口打开链接" tabindex="-1" data-line="945"><a class="header-anchor" href="#🏄🏻‍♂️ 新窗口打开链接">🏄🏻‍♂️ 新窗口打开链接</a></h3>
-<ol data-line="947">
-<li data-line="947">安装额外的扩展</li>
+      <h3 id="🏄🏻‍♂️ 新窗口打开链接" tabindex="-1" data-line="949"><a class="header-anchor" href="#🏄🏻‍♂️ 新窗口打开链接">🏄🏻‍♂️ 新窗口打开链接</a></h3>
+<ol data-line="951">
+<li data-line="951">安装额外的扩展</li>
 </ol>
 
-        <details  data-line="949" class="md-editor-code" open="">
+        <details  data-line="953" class="md-editor-code" open="">
           <summary class="md-editor-code-head">
             <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
             <div class="md-editor-code-action">
@@ -1320,11 +1323,11 @@ config({
           <pre><code class="language-shell" language=shell><span class="md-editor-code-block">yarn add markdown-it-link-attributes</span><span rn-wrapper aria-hidden="true"><span></span></span></code></pre>
 
         </details>
-      <ol start="2" data-line="953">
-<li data-line="953">将扩展添加到编译器中</li>
+      <ol start="2" data-line="957">
+<li data-line="957">将扩展添加到编译器中</li>
 </ol>
 
-        <details  data-line="955" class="md-editor-code">
+        <details  data-line="959" class="md-editor-code">
           <summary class="md-editor-code-head">
             <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
             <div class="md-editor-code-action">
@@ -1371,9 +1374,9 @@ config({
 });</span><span rn-wrapper aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
         </details>
-      <h3 id="☑️ 可切换状态的任务列表" tabindex="-1" data-line="993"><a class="header-anchor" href="#☑️ 可切换状态的任务列表">☑️ 可切换状态的任务列表</a></h3>
+      <h3 id="☑️ 可切换状态的任务列表" tabindex="-1" data-line="997"><a class="header-anchor" href="#☑️ 可切换状态的任务列表">☑️ 可切换状态的任务列表</a></h3>
 
-        <details  data-line="995" class="md-editor-code" open="">
+        <details  data-line="999" class="md-editor-code" open="">
           <summary class="md-editor-code-head">
             <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
             <div class="md-editor-code-action">
@@ -1405,7 +1408,7 @@ config({
 
         </details>
       
-        <details  data-line="1017" class="md-editor-code" open="">
+        <details  data-line="1021" class="md-editor-code" open="">
           <summary class="md-editor-code-head">
             <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
             <div class="md-editor-code-action">
@@ -1418,10 +1421,10 @@ config({
           <pre><code class="language-jsx" language=jsx><span class="md-editor-code-block">&lt;MdEditor id=&quot;myId&quot; modelValue={text} onChange={setText} /&gt;</span><span rn-wrapper aria-hidden="true"><span></span></span></code></pre>
 
         </details>
-      <h3 id="🎳 协同办公" tabindex="-1" data-line="1021"><a class="header-anchor" href="#🎳 协同办公">🎳 协同办公</a></h3>
-<p data-line="1023">安装<a href="https://github.com/yjs/yjs" target="_blank">yjs</a>及相关库</p>
+      <h3 id="🎳 协同办公" tabindex="-1" data-line="1025"><a class="header-anchor" href="#🎳 协同办公">🎳 协同办公</a></h3>
+<p data-line="1027">安装<a href="https://github.com/yjs/yjs" target="_blank">yjs</a>及相关库</p>
 
-        <details  data-line="1025" class="md-editor-code" open="">
+        <details  data-line="1029" class="md-editor-code" open="">
           <summary class="md-editor-code-head">
             <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
             <div class="md-editor-code-action">
@@ -1434,9 +1437,9 @@ config({
           <pre><code class="language-shell" language=shell><span class="md-editor-code-block">npm i yjs y-codemirror.next y-websocket</span><span rn-wrapper aria-hidden="true"><span></span></span></code></pre>
 
         </details>
-      <p data-line="1029">在 main.js 中添加 yjs 扩展：</p>
+      <p data-line="1033">在 main.js 中添加 yjs 扩展：</p>
 
-        <details  data-line="1031" class="md-editor-code">
+        <details  data-line="1035" class="md-editor-code">
           <summary class="md-editor-code-head">
             <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
             <div class="md-editor-code-action">
@@ -1492,9 +1495,9 @@ config({
 });</span><span rn-wrapper aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
         </details>
-      <p data-line="1078">如果只想在某一个编辑器中使用，尝试通过<code>editorId</code>进行区别(<code>^4.20.0</code>)：</p>
+      <p data-line="1082">如果只想在某一个编辑器中使用，尝试通过<code>editorId</code>进行区别(<code>^4.20.0</code>)：</p>
 
-        <details  data-line="1080" class="md-editor-code" open="">
+        <details  data-line="1084" class="md-editor-code" open="">
           <summary class="md-editor-code-head">
             <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
             <div class="md-editor-code-action">
@@ -1513,9 +1516,9 @@ config({
 });</span><span rn-wrapper aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
         </details>
-      <h3 id="📝 扩展代码块工具" tabindex="-1" data-line="1090"><a class="header-anchor" href="#📝 扩展代码块工具">📝 扩展代码块工具</a></h3>
+      <h3 id="📝 扩展代码块工具" tabindex="-1" data-line="1094"><a class="header-anchor" href="#📝 扩展代码块工具">📝 扩展代码块工具</a></h3>
 
-        <details  data-line="1092" class="md-editor-code" open="">
+        <details  data-line="1096" class="md-editor-code" open="">
           <summary class="md-editor-code-head">
             <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
             <div class="md-editor-code-action">
@@ -1548,10 +1551,10 @@ config({
 });</span><span rn-wrapper aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
         </details>
-      <p data-line="1116">它会被显示在复制代码按钮后面，配合<code>onRemount</code>事件，你能够正确的通过<code>querySelectorAll</code>获取到它们并绑定监听事件。</p>
-<p data-line="1118">下面是一个打印代码的示例：</p>
+      <p data-line="1120">它会被显示在复制代码按钮后面，配合<code>onRemount</code>事件，你能够正确的通过<code>querySelectorAll</code>获取到它们并绑定监听事件。</p>
+<p data-line="1122">下面是一个打印代码的示例：</p>
 
-        <details  data-line="1120" class="md-editor-code" open="">
+        <details  data-line="1124" class="md-editor-code" open="">
           <summary class="md-editor-code-head">
             <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
             <div class="md-editor-code-action">
@@ -1583,6 +1586,6 @@ config({
 }, []);</span><span rn-wrapper aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
         </details>
-      <h2 id="🧻 编辑此页面" tabindex="-1" data-line="1143"><a class="header-anchor" href="#🧻 编辑此页面">🧻 编辑此页面</a></h2>
-<p data-line="1145"><a href="https://github.com/imzbf/md-editor-rt/blob/dev-docs/public/demo-zh-CN.md" target="_blank">demo-zh-CN</a></p>
-</div></div></div></div><div class="catalog"><div class="affix"><div class="md-editor-catalog "></div></div></div></div></div></div><script id="__NEXT_DATA__" type="application/json">{"props":{"pageProps":{}},"page":"/zh-CN/demo","query":{},"buildId":"ohXqYnSrwiV0cfCASkTLp","assetPrefix":"/md-editor-rt","nextExport":true,"autoExport":true,"isFallback":false,"scriptLoader":[{"src":"//at.alicdn.com/t/c/font_2818624_gbt6qvt9lob.js","strategy":"afterInteractive"},{"async":true,"src":"https://www.googletagmanager.com/gtag/js?id=G-3R6P1XE0H0","strategy":"afterInteractive"},{"id":"gg","children":"window.dataLayer = window.dataLayer || [];\n                function gtag() {\n                  dataLayer.push(arguments);\n                }\n                gtag('js', new Date());\n                gtag('config', 'G-3R6P1XE0H0');","strategy":"afterInteractive"},{"src":"https://hm.baidu.com/hm.js?1563bc52cb27ffbc7b5b46cdfc327ce0","strategy":"afterInteractive"}]}</script></body></html>
+      <h2 id="🧻 编辑此页面" tabindex="-1" data-line="1147"><a class="header-anchor" href="#🧻 编辑此页面">🧻 编辑此页面</a></h2>
+<p data-line="1149"><a href="https://github.com/imzbf/md-editor-rt/blob/dev-docs/public/demo-zh-CN.md" target="_blank">demo-zh-CN</a></p>
+</div></div></div></div><div class="catalog"><div class="affix"><div class="md-editor-catalog "></div></div></div></div></div></div><script id="__NEXT_DATA__" type="application/json">{"props":{"pageProps":{}},"page":"/zh-CN/demo","query":{},"buildId":"bh7QB2PXCVrMu4XXuXtn7","assetPrefix":"/md-editor-rt","nextExport":true,"autoExport":true,"isFallback":false,"scriptLoader":[{"src":"//at.alicdn.com/t/c/font_2818624_gbt6qvt9lob.js","strategy":"afterInteractive"},{"async":true,"src":"https://www.googletagmanager.com/gtag/js?id=G-3R6P1XE0H0","strategy":"afterInteractive"},{"id":"gg","children":"window.dataLayer = window.dataLayer || [];\n                function gtag() {\n                  dataLayer.push(arguments);\n                }\n                gtag('js', new Date());\n                gtag('config', 'G-3R6P1XE0H0');","strategy":"afterInteractive"},{"src":"https://hm.baidu.com/hm.js?1563bc52cb27ffbc7b5b46cdfc327ce0","strategy":"afterInteractive"}]}</script></body></html>
