@@ -52,12 +52,27 @@ config({
             }
           };
         }
+
         case 'code': {
           return {
             ...item,
             options: {
               ...item.options,
               extraTools: '<span class="extra-code-tools">额外的功能</span>'
+            }
+          };
+        }
+
+        case 'katex': {
+          return {
+            ...item,
+            options: {
+              ...item.options
+              // inlineDelimiters: [{ open: '$', close: '$' }]
+              // blockDelimiters: [
+              //   { open: '$$', close: '$$' },
+              //   { open: '$', close: '$' }
+              // ]
             }
           };
         }
