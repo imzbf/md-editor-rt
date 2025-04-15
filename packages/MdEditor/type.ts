@@ -501,6 +501,13 @@ export interface EditorProps extends MdPreviewProps {
    * @default 'fixed'
    */
   catalogLayout?: 'fixed' | 'flat';
+
+  /**
+   * 控制最大显示的目录层级
+   *
+   * >= v5.5.0
+   */
+  catalogMaxDepth?: number;
 }
 
 export interface ContentType {
