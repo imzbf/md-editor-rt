@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en-US"><head><meta charSet="utf-8" data-next-head=""/><title data-next-head="">API - MdEditorRT 使用文档</title><meta name="keywords" content="MD Editor, md-editor-rt, Markdown 编辑器, React Markdown, React TSX, Markdown 组件, Markdown preview, React 编辑器" data-next-head=""/><meta name="description" content="md-editor-rt 是一个基于 React 和 TSX 开发的 Markdown 编辑器组件，支持实时预览和丰富的 Markdown 功能。查阅详细的开发文档与使用示例。" data-next-head=""/><meta name="viewport" content="width=device-width, initial-scale=1" data-next-head=""/><link rel="preload" href="/md-editor-rt/_next/static/css/7d7b49ccfd02fdd9.css" as="style"/><link rel="stylesheet" href="/md-editor-rt/_next/static/css/7d7b49ccfd02fdd9.css" data-n-g=""/><noscript data-n-css=""></noscript><script defer="" nomodule="" src="/md-editor-rt/_next/static/chunks/polyfills-42372ed130431b0a.js"></script><script src="/md-editor-rt/_next/static/chunks/webpack-eeae57db5dc69362.js" defer=""></script><script src="/md-editor-rt/_next/static/chunks/framework-5f43af1a76a0211a.js" defer=""></script><script src="/md-editor-rt/_next/static/chunks/main-fab320bdc97e346b.js" defer=""></script><script src="/md-editor-rt/_next/static/chunks/pages/_app-cd982e2f4f4213e7.js" defer=""></script><script src="/md-editor-rt/_next/static/chunks/208-79f5a8eac723c49c.js" defer=""></script><script src="/md-editor-rt/_next/static/chunks/pages/zh-CN/api-b8e9cc457cf6f839.js" defer=""></script><script src="/md-editor-rt/_next/static/bh7QB2PXCVrMu4XXuXtn7/_buildManifest.js" defer=""></script><script src="/md-editor-rt/_next/static/bh7QB2PXCVrMu4XXuXtn7/_ssgManifest.js" defer=""></script></head><body><div id="__next"><header class="page-header"><section class="container"><h1 class="project-name">md-editor-rt<sup>@<!-- -->5.4.5</sup></h1><p class="project-desc">Markdown编辑器React版本，使用jsx和typescript语法开发，支持切换主题、prettier美化文本等。</p><div class="pc"><ul class="nav-list"><li class="nav-item"><a href="/md-editor-rt/zh-CN"><svg class="icon" aria-hidden="true"><use xlink:href="#med-icon-homepage"></use></svg>首页</a></li><li class="nav-item"><a href="/md-editor-rt/zh-CN/api"><svg class="icon" aria-hidden="true"><use xlink:href="#med-icon-api"></use></svg>API</a></li><li class="nav-item"><a href="/md-editor-rt/zh-CN/demo"><svg class="icon" aria-hidden="true"><use xlink:href="#med-icon-example"></use></svg>示例</a></li><li class="nav-item"><a target="_blank" href="https://github.com/imzbf/md-editor-rt"><svg class="icon" aria-hidden="true"><use xlink:href="#med-icon-github"></use></svg>源码</a></li><li class="nav-item"><a href="/md-editor-rt/zh-CN/syntax"><svg class="icon" aria-hidden="true"><use xlink:href="#med-icon-syntax"></use></svg>语法</a></li><li class="nav-item"><a href="/md-editor-rt/zh-CN/contrast"><svg class="icon" aria-hidden="true"><use xlink:href="#med-icon-question"></use></svg>对比</a></li><li class="nav-item"><a href="/md-editor-rt/zh-CN/about"><svg class="icon" aria-hidden="true"><use xlink:href="#med-icon-about"></use></svg>关于</a></li><li class="nav-item"><a style="display:none" href="/md-editor-rt/md-editor-rt/en-US">English</a><svg class="icon" aria-hidden="true"><use xlink:href="#med-icon-en"></use></svg>English</li></ul><p class="header-actions"><button class="btn btn-header">默认模式</button><button class="btn btn-header">暗黑模式</button><button class="btn btn-header">预览主题</button><button class="btn btn-header">代码主题</button></p></div><div class="mb"><svg class="icon m-menu-trigger" aria-hidden="true"><use xlink:href="#med-icon-drawer"></use></svg></div></section></header><div class="container"><div class="doc"><div class="content"><div id="md-api-zh" class="md-editor   md-editor-previewOnly"><div id="md-api-zh-preview-wrapper" class="md-editor-preview-wrapper"><div id="md-api-zh-preview" class="md-editor-preview default-theme md-editor-scrn"><blockquote data-line="0">
+<!DOCTYPE html><html lang="en-US"><head><meta charSet="utf-8" data-next-head=""/><title data-next-head="">API - MdEditorRT 使用文档</title><meta name="keywords" content="MD Editor, md-editor-rt, Markdown 编辑器, React Markdown, React TSX, Markdown 组件, Markdown preview, React 编辑器" data-next-head=""/><meta name="description" content="md-editor-rt 是一个基于 React 和 TSX 开发的 Markdown 编辑器组件，支持实时预览和丰富的 Markdown 功能。查阅详细的开发文档与使用示例。" data-next-head=""/><meta name="viewport" content="width=device-width, initial-scale=1" data-next-head=""/><link rel="preload" href="/md-editor-rt/_next/static/css/979db3a527f2ddbd.css" as="style"/><link rel="stylesheet" href="/md-editor-rt/_next/static/css/979db3a527f2ddbd.css" data-n-g=""/><noscript data-n-css=""></noscript><script defer="" nomodule="" src="/md-editor-rt/_next/static/chunks/polyfills-42372ed130431b0a.js"></script><script src="/md-editor-rt/_next/static/chunks/webpack-eeae57db5dc69362.js" defer=""></script><script src="/md-editor-rt/_next/static/chunks/framework-5f43af1a76a0211a.js" defer=""></script><script src="/md-editor-rt/_next/static/chunks/main-fab320bdc97e346b.js" defer=""></script><script src="/md-editor-rt/_next/static/chunks/pages/_app-e6d190ae6c5dd53d.js" defer=""></script><script src="/md-editor-rt/_next/static/chunks/208-f9ecd7a3d09cc79b.js" defer=""></script><script src="/md-editor-rt/_next/static/chunks/pages/zh-CN/api-4805b5ea8e3a7c48.js" defer=""></script><script src="/md-editor-rt/_next/static/kpCGmIvFAM4l3-UXP-G-O/_buildManifest.js" defer=""></script><script src="/md-editor-rt/_next/static/kpCGmIvFAM4l3-UXP-G-O/_ssgManifest.js" defer=""></script></head><body><div id="__next"><header class="page-header"><section class="container"><h1 class="project-name">md-editor-rt<sup>@<!-- -->5.5.0</sup></h1><p class="project-desc">Markdown编辑器React版本，使用jsx和typescript语法开发，支持切换主题、prettier美化文本等。</p><div class="pc"><ul class="nav-list"><li class="nav-item"><a href="/md-editor-rt/zh-CN"><svg class="icon" aria-hidden="true"><use xlink:href="#med-icon-homepage"></use></svg>首页</a></li><li class="nav-item"><a href="/md-editor-rt/zh-CN/api"><svg class="icon" aria-hidden="true"><use xlink:href="#med-icon-api"></use></svg>API</a></li><li class="nav-item"><a href="/md-editor-rt/zh-CN/demo"><svg class="icon" aria-hidden="true"><use xlink:href="#med-icon-example"></use></svg>示例</a></li><li class="nav-item"><a target="_blank" href="https://github.com/imzbf/md-editor-rt"><svg class="icon" aria-hidden="true"><use xlink:href="#med-icon-github"></use></svg>源码</a></li><li class="nav-item"><a href="/md-editor-rt/zh-CN/syntax"><svg class="icon" aria-hidden="true"><use xlink:href="#med-icon-syntax"></use></svg>语法</a></li><li class="nav-item"><a href="/md-editor-rt/zh-CN/contrast"><svg class="icon" aria-hidden="true"><use xlink:href="#med-icon-question"></use></svg>对比</a></li><li class="nav-item"><a href="/md-editor-rt/zh-CN/about"><svg class="icon" aria-hidden="true"><use xlink:href="#med-icon-about"></use></svg>关于</a></li><li class="nav-item"><a style="display:none" href="/md-editor-rt/md-editor-rt/en-US">English</a><svg class="icon" aria-hidden="true"><use xlink:href="#med-icon-en"></use></svg>English</li></ul><p class="header-actions"><button class="btn btn-header">默认模式</button><button class="btn btn-header">暗黑模式</button><button class="btn btn-header">预览主题</button><button class="btn btn-header">代码主题</button></p></div><div class="mb"><svg class="icon m-menu-trigger" aria-hidden="true"><use xlink:href="#med-icon-drawer"></use></svg></div></section></header><div class="container"><div class="doc"><div class="content"><div id="md-api-zh" class="md-editor   md-editor-previewOnly"><div id="md-api-zh-preview-wrapper" class="md-editor-preview-wrapper"><div id="md-api-zh-preview" class="md-editor-preview default-theme md-editor-scrn"><blockquote data-line="0">
 <p data-line="0">在线尝试示例：<a href="https://codesandbox.io/s/elated-khorana-65jmr" target="_blank">传送门</a>。</p>
 </blockquote>
 <h2 id="🔖 MdPreview Props" tabindex="-1" data-line="2"><a class="header-anchor" href="#🔖 MdPreview Props">🔖 MdPreview Props</a></h2>
@@ -1102,48 +1102,59 @@ export default () =&gt; {
 </li>
 </ul>
 <hr data-line="819">
-<h2 id="🧵 MdPreview 绑定事件" tabindex="-1" data-line="821"><a class="header-anchor" href="#🧵 MdPreview 绑定事件">🧵 MdPreview 绑定事件</a></h2>
-<h3 id="📞 onChange" tabindex="-1" data-line="823"><a class="header-anchor" href="#📞 onChange">📞 onChange</a></h3>
-<ul data-line="825">
-<li data-line="825">
-<p data-line="825"><strong>类型</strong>：<code>(v: string) =&gt; void</code></p>
-<p data-line="827">内容变化事件（当前与<code>textare</code>的<code>oninput</code>事件绑定，每输入一个单字即会触发）。</p>
+<h3 id="📇 catalogMaxDepth" tabindex="-1" data-line="821"><a class="header-anchor" href="#📇 catalogMaxDepth">📇 catalogMaxDepth</a></h3>
+<ul data-line="823">
+<li data-line="823">
+<p data-line="823"><strong>类型</strong>：<code>number</code></p>
+</li>
+<li data-line="824">
+<p data-line="824"><strong>默认值</strong>：<code>undefined</code></p>
+<p data-line="826">&gt;=5.5.0 控制要显示的目录的最大深度。</p>
 </li>
 </ul>
-<hr data-line="829">
-<h3 id="🚁 onHtmlChanged" tabindex="-1" data-line="831"><a class="header-anchor" href="#🚁 onHtmlChanged">🚁 onHtmlChanged</a></h3>
-<ul data-line="833">
-<li data-line="833">
-<p data-line="833"><strong>类型</strong>：<code>(h: string) =&gt; void</code></p>
-<p data-line="835">html 变化回调事件，用于获取预览 html 代码。</p>
+<hr data-line="828">
+<h2 id="🧵 MdPreview 绑定事件" tabindex="-1" data-line="830"><a class="header-anchor" href="#🧵 MdPreview 绑定事件">🧵 MdPreview 绑定事件</a></h2>
+<h3 id="📞 onChange" tabindex="-1" data-line="832"><a class="header-anchor" href="#📞 onChange">📞 onChange</a></h3>
+<ul data-line="834">
+<li data-line="834">
+<p data-line="834"><strong>类型</strong>：<code>(v: string) =&gt; void</code></p>
+<p data-line="836">内容变化事件（当前与<code>textare</code>的<code>oninput</code>事件绑定，每输入一个单字即会触发）。</p>
 </li>
 </ul>
-<hr data-line="837">
-<h3 id="🗒 onGetCatalog" tabindex="-1" data-line="839"><a class="header-anchor" href="#🗒 onGetCatalog">🗒 onGetCatalog</a></h3>
-<ul data-line="841">
-<li data-line="841">
-<p data-line="841"><strong>类型</strong>：<code>(list: HeadList[]) =&gt; void</code></p>
-<p data-line="843">动态获取<code>markdown</code>目录。</p>
+<hr data-line="838">
+<h3 id="🚁 onHtmlChanged" tabindex="-1" data-line="840"><a class="header-anchor" href="#🚁 onHtmlChanged">🚁 onHtmlChanged</a></h3>
+<ul data-line="842">
+<li data-line="842">
+<p data-line="842"><strong>类型</strong>：<code>(h: string) =&gt; void</code></p>
+<p data-line="844">html 变化回调事件，用于获取预览 html 代码。</p>
 </li>
 </ul>
-<hr data-line="845">
-<h3 id="🔃 onRemount" tabindex="-1" data-line="847"><a class="header-anchor" href="#🔃 onRemount">🔃 onRemount</a></h3>
-<ul data-line="849">
-<li data-line="849">
-<p data-line="849"><strong>类型</strong>：<code>() =&gt; void</code></p>
-<p data-line="851">&gt;=5.3.0 内容重新挂载事件，在这个事件中能够正确获取到内容中的节点。</p>
+<hr data-line="846">
+<h3 id="🗒 onGetCatalog" tabindex="-1" data-line="848"><a class="header-anchor" href="#🗒 onGetCatalog">🗒 onGetCatalog</a></h3>
+<ul data-line="850">
+<li data-line="850">
+<p data-line="850"><strong>类型</strong>：<code>(list: HeadList[]) =&gt; void</code></p>
+<p data-line="852">动态获取<code>markdown</code>目录。</p>
 </li>
 </ul>
-<hr data-line="853">
-<h2 id="🪢 MdEditor 绑定事件" tabindex="-1" data-line="855"><a class="header-anchor" href="#🪢 MdEditor 绑定事件">🪢 MdEditor 绑定事件</a></h2>
-<p data-line="857">除去和<code>MdPreivew</code>相同的以外：</p>
-<h3 id="💾 onSave" tabindex="-1" data-line="859"><a class="header-anchor" href="#💾 onSave">💾 onSave</a></h3>
-<ul data-line="861">
-<li data-line="861">
-<p data-line="861"><strong>类型</strong>：<code>(v: string, h: Promise&lt;string&gt;) =&gt; void</code></p>
-<p data-line="863">保存事件，快捷键与保存按钮均会触发。</p>
+<hr data-line="854">
+<h3 id="🔃 onRemount" tabindex="-1" data-line="856"><a class="header-anchor" href="#🔃 onRemount">🔃 onRemount</a></h3>
+<ul data-line="858">
+<li data-line="858">
+<p data-line="858"><strong>类型</strong>：<code>() =&gt; void</code></p>
+<p data-line="860">&gt;=5.3.0 内容重新挂载事件，在这个事件中能够正确获取到内容中的节点。</p>
+</li>
+</ul>
+<hr data-line="862">
+<h2 id="🪢 MdEditor 绑定事件" tabindex="-1" data-line="864"><a class="header-anchor" href="#🪢 MdEditor 绑定事件">🪢 MdEditor 绑定事件</a></h2>
+<p data-line="866">除去和<code>MdPreivew</code>相同的以外：</p>
+<h3 id="💾 onSave" tabindex="-1" data-line="868"><a class="header-anchor" href="#💾 onSave">💾 onSave</a></h3>
+<ul data-line="870">
+<li data-line="870">
+<p data-line="870"><strong>类型</strong>：<code>(v: string, h: Promise&lt;string&gt;) =&gt; void</code></p>
+<p data-line="872">保存事件，快捷键与保存按钮均会触发。</p>
 
-        <details  data-line="865" class="md-editor-code" open="">
+        <details  data-line="874" class="md-editor-code" open="">
           <summary class="md-editor-code-head">
             <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
             <div class="md-editor-code-action">
@@ -1169,14 +1180,14 @@ export default () =&gt; &lt;MdEditor onSave={onSave} /&gt;;</span><span rn-wrapp
         </details>
       </li>
 </ul>
-<hr data-line="880">
-<h3 id="📸 onUploadImg" tabindex="-1" data-line="882"><a class="header-anchor" href="#📸 onUploadImg">📸 onUploadImg</a></h3>
-<ul data-line="884">
-<li data-line="884">
-<p data-line="884"><strong>类型</strong>：<code>files: Array&lt;File&gt;, callback: (urls: string[] | { url: string; alt: string; title: string }[]) =&gt; void</code></p>
-<p data-line="886">上传图片事件，弹窗会等待上传结果，务必将上传后的 urls 作为 callback 入参回传。</p>
+<hr data-line="889">
+<h3 id="📸 onUploadImg" tabindex="-1" data-line="891"><a class="header-anchor" href="#📸 onUploadImg">📸 onUploadImg</a></h3>
+<ul data-line="893">
+<li data-line="893">
+<p data-line="893"><strong>类型</strong>：<code>files: Array&lt;File&gt;, callback: (urls: string[] | { url: string; alt: string; title: string }[]) =&gt; void</code></p>
+<p data-line="895">上传图片事件，弹窗会等待上传结果，务必将上传后的 urls 作为 callback 入参回传。</p>
 
-        <details  data-line="888" class="md-editor-code">
+        <details  data-line="897" class="md-editor-code">
           <summary class="md-editor-code-head">
             <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
             <div class="md-editor-code-action">
@@ -1236,14 +1247,14 @@ export default () =&gt; {
         </details>
       </li>
 </ul>
-<hr data-line="937">
-<h3 id="💀 onError" tabindex="-1" data-line="939"><a class="header-anchor" href="#💀 onError">💀 onError</a></h3>
-<ul data-line="941">
-<li data-line="941">
-<p data-line="941"><strong>类型</strong>：<code>(err: InnerError) =&gt; void</code></p>
-<p data-line="943">捕获执行错误事件，目前支持<code>Cropper</code>、<code>fullscreen</code>、<code>prettier</code>实例未加载完成操作、输入内容超出限制长度、<code>mermaid</code>渲染的错误。</p>
+<hr data-line="946">
+<h3 id="💀 onError" tabindex="-1" data-line="948"><a class="header-anchor" href="#💀 onError">💀 onError</a></h3>
+<ul data-line="950">
+<li data-line="950">
+<p data-line="950"><strong>类型</strong>：<code>(err: InnerError) =&gt; void</code></p>
+<p data-line="952">捕获执行错误事件，目前支持<code>Cropper</code>、<code>fullscreen</code>、<code>prettier</code>实例未加载完成操作、输入内容超出限制长度、<code>mermaid</code>渲染的错误。</p>
 
-        <details  data-line="945" class="md-editor-code" open="">
+        <details  data-line="954" class="md-editor-code" open="">
           <summary class="md-editor-code-head">
             <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
             <div class="md-editor-code-action">
@@ -1262,7 +1273,7 @@ export default () =&gt; {
 
         </details>
       
-        <details  data-line="954" class="md-editor-code" open="">
+        <details  data-line="963" class="md-editor-code" open="">
           <summary class="md-editor-code-head">
             <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
             <div class="md-editor-code-action">
@@ -1281,14 +1292,14 @@ export default () =&gt; &lt;MdEditor onError={onError} /&gt;;</span><span rn-wra
         </details>
       </li>
 </ul>
-<hr data-line="962">
-<h3 id="🐾 onBlur" tabindex="-1" data-line="964"><a class="header-anchor" href="#🐾 onBlur">🐾 onBlur</a></h3>
-<ul data-line="966">
-<li data-line="966">
-<p data-line="966"><strong>类型</strong>：<code>(event: FocusEvent) =&gt; void</code></p>
-<p data-line="968">输入框失去焦点时触发事件。</p>
+<hr data-line="971">
+<h3 id="🐾 onBlur" tabindex="-1" data-line="973"><a class="header-anchor" href="#🐾 onBlur">🐾 onBlur</a></h3>
+<ul data-line="975">
+<li data-line="975">
+<p data-line="975"><strong>类型</strong>：<code>(event: FocusEvent) =&gt; void</code></p>
+<p data-line="977">输入框失去焦点时触发事件。</p>
 
-        <details  data-line="970" class="md-editor-code" open="">
+        <details  data-line="979" class="md-editor-code" open="">
           <summary class="md-editor-code-head">
             <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
             <div class="md-editor-code-action">
@@ -1307,30 +1318,30 @@ export default () =&gt; &lt;MdEditor onBlur={onBlur} /&gt;;</span><span rn-wrapp
         </details>
       </li>
 </ul>
-<hr data-line="978">
-<h3 id="🔖 onFocus" tabindex="-1" data-line="980"><a class="header-anchor" href="#🔖 onFocus">🔖 onFocus</a></h3>
-<ul data-line="982">
-<li data-line="982">
-<p data-line="982"><strong>类型</strong>：<code>(event: FocusEvent) =&gt; void</code></p>
-<p data-line="984">输入框获得焦点时触发事件。</p>
+<hr data-line="987">
+<h3 id="🔖 onFocus" tabindex="-1" data-line="989"><a class="header-anchor" href="#🔖 onFocus">🔖 onFocus</a></h3>
+<ul data-line="991">
+<li data-line="991">
+<p data-line="991"><strong>类型</strong>：<code>(event: FocusEvent) =&gt; void</code></p>
+<p data-line="993">输入框获得焦点时触发事件。</p>
 </li>
 </ul>
-<hr data-line="986">
-<h3 id="🔖 onInput" tabindex="-1" data-line="988"><a class="header-anchor" href="#🔖 onInput">🔖 onInput</a></h3>
-<ul data-line="990">
-<li data-line="990">
-<p data-line="990"><strong>类型</strong>：<code>(event: Event) =&gt; void</code></p>
-<p data-line="992">输入框键入内容事件。</p>
+<hr data-line="995">
+<h3 id="🔖 onInput" tabindex="-1" data-line="997"><a class="header-anchor" href="#🔖 onInput">🔖 onInput</a></h3>
+<ul data-line="999">
+<li data-line="999">
+<p data-line="999"><strong>类型</strong>：<code>(event: Event) =&gt; void</code></p>
+<p data-line="1001">输入框键入内容事件。</p>
 </li>
 </ul>
-<hr data-line="994">
-<h3 id="🔖 onDrop" tabindex="-1" data-line="996"><a class="header-anchor" href="#🔖 onDrop">🔖 onDrop</a></h3>
-<ul data-line="998">
-<li data-line="998">
-<p data-line="998"><strong>类型</strong>：<code>(event: DragEvent) =&gt; void</code></p>
-<p data-line="1000">拖放内容事件。</p>
+<hr data-line="1003">
+<h3 id="🔖 onDrop" tabindex="-1" data-line="1005"><a class="header-anchor" href="#🔖 onDrop">🔖 onDrop</a></h3>
+<ul data-line="1007">
+<li data-line="1007">
+<p data-line="1007"><strong>类型</strong>：<code>(event: DragEvent) =&gt; void</code></p>
+<p data-line="1009">拖放内容事件。</p>
 
-        <details  data-line="1002" class="md-editor-code" open="">
+        <details  data-line="1011" class="md-editor-code" open="">
           <summary class="md-editor-code-head">
             <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
             <div class="md-editor-code-action">
@@ -1357,19 +1368,19 @@ export default () =&gt; {
         </details>
       </li>
 </ul>
-<hr data-line="1018">
-<h3 id="🔖 onInputBoxWidthChange" tabindex="-1" data-line="1020"><a class="header-anchor" href="#🔖 onInputBoxWidthChange">🔖 onInputBoxWidthChange</a></h3>
-<ul data-line="1022">
-<li data-line="1022">
-<p data-line="1022"><strong>类型</strong>：<code>(width: string) =&gt; void</code></p>
-<p data-line="1024">调整输入框宽度事件</p>
+<hr data-line="1027">
+<h3 id="🔖 onInputBoxWidthChange" tabindex="-1" data-line="1029"><a class="header-anchor" href="#🔖 onInputBoxWidthChange">🔖 onInputBoxWidthChange</a></h3>
+<ul data-line="1031">
+<li data-line="1031">
+<p data-line="1031"><strong>类型</strong>：<code>(width: string) =&gt; void</code></p>
+<p data-line="1033">调整输入框宽度事件</p>
 </li>
 </ul>
-<hr data-line="1026">
-<h2 id="🤱🏼 实例暴露" tabindex="-1" data-line="1028"><a class="header-anchor" href="#🤱🏼 实例暴露">🤱🏼 实例暴露</a></h2>
-<p data-line="1030">2.5.0 版本之后，编辑器暴露了若干方法在组件实例上，用来快捷监听编辑器内部状态或对调整内部状态。</p>
+<hr data-line="1035">
+<h2 id="🤱🏼 实例暴露" tabindex="-1" data-line="1037"><a class="header-anchor" href="#🤱🏼 实例暴露">🤱🏼 实例暴露</a></h2>
+<p data-line="1039">2.5.0 版本之后，编辑器暴露了若干方法在组件实例上，用来快捷监听编辑器内部状态或对调整内部状态。</p>
 
-        <details  data-line="1032" class="md-editor-code" open="">
+        <details  data-line="1041" class="md-editor-code" open="">
           <summary class="md-editor-code-head">
             <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
             <div class="md-editor-code-action">
@@ -1395,89 +1406,89 @@ export default () =&gt; {
 };</span><span rn-wrapper aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
         </details>
-      <table data-line="1049">
-<thead data-line="1049">
-<tr data-line="1049">
+      <table data-line="1058">
+<thead data-line="1058">
+<tr data-line="1058">
 <th>Name</th>
 <th>MdEditor</th>
 <th>MdPreview</th>
 </tr>
 </thead>
-<tbody data-line="1051">
-<tr data-line="1051">
+<tbody data-line="1060">
+<tr data-line="1060">
 <td>on</td>
 <td>√</td>
 <td>×</td>
 </tr>
-<tr data-line="1052">
+<tr data-line="1061">
 <td>togglePageFullscreen</td>
 <td>√</td>
 <td>×</td>
 </tr>
-<tr data-line="1053">
+<tr data-line="1062">
 <td>toggleFullscreen</td>
 <td>√</td>
 <td>×</td>
 </tr>
-<tr data-line="1054">
+<tr data-line="1063">
 <td>togglePreview</td>
 <td>√</td>
 <td>×</td>
 </tr>
-<tr data-line="1055">
+<tr data-line="1064">
 <td>togglePreviewOnly</td>
 <td>√</td>
 <td>×</td>
 </tr>
-<tr data-line="1056">
+<tr data-line="1065">
 <td>toggleHtmlPreview</td>
 <td>√</td>
 <td>×</td>
 </tr>
-<tr data-line="1057">
+<tr data-line="1066">
 <td>toggleCatalog</td>
 <td>√</td>
 <td>×</td>
 </tr>
-<tr data-line="1058">
+<tr data-line="1067">
 <td>triggerSave</td>
 <td>√</td>
 <td>×</td>
 </tr>
-<tr data-line="1059">
+<tr data-line="1068">
 <td>insert</td>
 <td>√</td>
 <td>×</td>
 </tr>
-<tr data-line="1060">
+<tr data-line="1069">
 <td>focus</td>
 <td>√</td>
 <td>×</td>
 </tr>
-<tr data-line="1061">
+<tr data-line="1070">
 <td>rerender</td>
 <td>√</td>
 <td>√</td>
 </tr>
-<tr data-line="1062">
+<tr data-line="1071">
 <td>getSelectedText</td>
 <td>√</td>
 <td>×</td>
 </tr>
-<tr data-line="1063">
+<tr data-line="1072">
 <td>resetHistory</td>
 <td>√</td>
 <td>×</td>
 </tr>
 </tbody>
 </table>
-<h3 id="👂🏼 on" tabindex="-1" data-line="1065"><a class="header-anchor" href="#👂🏼 on">👂🏼 on</a></h3>
-<p data-line="1067">监听编辑器内部状态，包括：屏幕全屏、浏览器全屏、预览文本、预览 html、目录等。</p>
-<ul data-line="1069">
-<li data-line="1069">
-<p data-line="1069">pageFullscreen</p>
+<h3 id="👂🏼 on" tabindex="-1" data-line="1074"><a class="header-anchor" href="#👂🏼 on">👂🏼 on</a></h3>
+<p data-line="1076">监听编辑器内部状态，包括：屏幕全屏、浏览器全屏、预览文本、预览 html、目录等。</p>
+<ul data-line="1078">
+<li data-line="1078">
+<p data-line="1078">pageFullscreen</p>
 
-        <details  data-line="1071" class="md-editor-code" open="">
+        <details  data-line="1080" class="md-editor-code" open="">
           <summary class="md-editor-code-head">
             <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
             <div class="md-editor-code-action">
@@ -1491,10 +1502,10 @@ export default () =&gt; {
 
         </details>
       </li>
-<li data-line="1075">
-<p data-line="1075">fullscreen</p>
+<li data-line="1084">
+<p data-line="1084">fullscreen</p>
 
-        <details  data-line="1077" class="md-editor-code" open="">
+        <details  data-line="1086" class="md-editor-code" open="">
           <summary class="md-editor-code-head">
             <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
             <div class="md-editor-code-action">
@@ -1508,10 +1519,10 @@ export default () =&gt; {
 
         </details>
       </li>
-<li data-line="1081">
-<p data-line="1081">preview</p>
+<li data-line="1090">
+<p data-line="1090">preview</p>
 
-        <details  data-line="1083" class="md-editor-code" open="">
+        <details  data-line="1092" class="md-editor-code" open="">
           <summary class="md-editor-code-head">
             <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
             <div class="md-editor-code-action">
@@ -1525,10 +1536,10 @@ export default () =&gt; {
 
         </details>
       </li>
-<li data-line="1087">
-<p data-line="1087">previewOnly</p>
+<li data-line="1096">
+<p data-line="1096">previewOnly</p>
 
-        <details  data-line="1089" class="md-editor-code" open="">
+        <details  data-line="1098" class="md-editor-code" open="">
           <summary class="md-editor-code-head">
             <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
             <div class="md-editor-code-action">
@@ -1542,10 +1553,10 @@ export default () =&gt; {
 
         </details>
       </li>
-<li data-line="1093">
-<p data-line="1093">htmlPreview</p>
+<li data-line="1102">
+<p data-line="1102">htmlPreview</p>
 
-        <details  data-line="1095" class="md-editor-code" open="">
+        <details  data-line="1104" class="md-editor-code" open="">
           <summary class="md-editor-code-head">
             <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
             <div class="md-editor-code-action">
@@ -1559,10 +1570,10 @@ export default () =&gt; {
 
         </details>
       </li>
-<li data-line="1099">
-<p data-line="1099">catalog</p>
+<li data-line="1108">
+<p data-line="1108">catalog</p>
 
-        <details  data-line="1101" class="md-editor-code" open="">
+        <details  data-line="1110" class="md-editor-code" open="">
           <summary class="md-editor-code-head">
             <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
             <div class="md-editor-code-action">
@@ -1577,11 +1588,11 @@ export default () =&gt; {
         </details>
       </li>
 </ul>
-<hr data-line="1105">
-<h3 id="💻 togglePageFullscreen" tabindex="-1" data-line="1107"><a class="header-anchor" href="#💻 togglePageFullscreen">💻 togglePageFullscreen</a></h3>
-<p data-line="1109">切换页面内全屏。</p>
+<hr data-line="1114">
+<h3 id="💻 togglePageFullscreen" tabindex="-1" data-line="1116"><a class="header-anchor" href="#💻 togglePageFullscreen">💻 togglePageFullscreen</a></h3>
+<p data-line="1118">切换页面内全屏。</p>
 
-        <details  data-line="1111" class="md-editor-code" open="">
+        <details  data-line="1120" class="md-editor-code" open="">
           <summary class="md-editor-code-head">
             <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
             <div class="md-editor-code-action">
@@ -1594,14 +1605,14 @@ export default () =&gt; {
           <pre><code class="language-js" language=js><span class="md-editor-code-block">editorRef.current?.togglePageFullscreen(true);</span><span rn-wrapper aria-hidden="true"><span></span></span></code></pre>
 
         </details>
-      <blockquote data-line="1115">
-<p data-line="1115">不设置入参切换为相反状态</p>
+      <blockquote data-line="1124">
+<p data-line="1124">不设置入参切换为相反状态</p>
 </blockquote>
-<hr data-line="1117">
-<h3 id="🖥 toggleFullscreen" tabindex="-1" data-line="1119"><a class="header-anchor" href="#🖥 toggleFullscreen">🖥 toggleFullscreen</a></h3>
-<p data-line="1121">切换屏幕全屏。</p>
+<hr data-line="1126">
+<h3 id="🖥 toggleFullscreen" tabindex="-1" data-line="1128"><a class="header-anchor" href="#🖥 toggleFullscreen">🖥 toggleFullscreen</a></h3>
+<p data-line="1130">切换屏幕全屏。</p>
 
-        <details  data-line="1123" class="md-editor-code" open="">
+        <details  data-line="1132" class="md-editor-code" open="">
           <summary class="md-editor-code-head">
             <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
             <div class="md-editor-code-action">
@@ -1614,14 +1625,14 @@ export default () =&gt; {
           <pre><code class="language-js" language=js><span class="md-editor-code-block">editorRef.current?.toggleFullscreen(true);</span><span rn-wrapper aria-hidden="true"><span></span></span></code></pre>
 
         </details>
-      <blockquote data-line="1127">
-<p data-line="1127">不设置入参切换为相反状态</p>
+      <blockquote data-line="1136">
+<p data-line="1136">不设置入参切换为相反状态</p>
 </blockquote>
-<hr data-line="1129">
-<h3 id="📖 togglePreview" tabindex="-1" data-line="1131"><a class="header-anchor" href="#📖 togglePreview">📖 togglePreview</a></h3>
-<p data-line="1133">切换是否显示预览。</p>
+<hr data-line="1138">
+<h3 id="📖 togglePreview" tabindex="-1" data-line="1140"><a class="header-anchor" href="#📖 togglePreview">📖 togglePreview</a></h3>
+<p data-line="1142">切换是否显示预览。</p>
 
-        <details  data-line="1135" class="md-editor-code" open="">
+        <details  data-line="1144" class="md-editor-code" open="">
           <summary class="md-editor-code-head">
             <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
             <div class="md-editor-code-action">
@@ -1634,14 +1645,14 @@ export default () =&gt; {
           <pre><code class="language-js" language=js><span class="md-editor-code-block">editorRef.current?.togglePreview(true);</span><span rn-wrapper aria-hidden="true"><span></span></span></code></pre>
 
         </details>
-      <blockquote data-line="1139">
-<p data-line="1139">不设置入参切换为相反状态</p>
+      <blockquote data-line="1148">
+<p data-line="1148">不设置入参切换为相反状态</p>
 </blockquote>
-<hr data-line="1141">
-<h3 id="📖 togglePreviewOnly" tabindex="-1" data-line="1143"><a class="header-anchor" href="#📖 togglePreviewOnly">📖 togglePreviewOnly</a></h3>
-<p data-line="1145">切换仅预览状态。</p>
+<hr data-line="1150">
+<h3 id="📖 togglePreviewOnly" tabindex="-1" data-line="1152"><a class="header-anchor" href="#📖 togglePreviewOnly">📖 togglePreviewOnly</a></h3>
+<p data-line="1154">切换仅预览状态。</p>
 
-        <details  data-line="1147" class="md-editor-code" open="">
+        <details  data-line="1156" class="md-editor-code" open="">
           <summary class="md-editor-code-head">
             <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
             <div class="md-editor-code-action">
@@ -1654,14 +1665,14 @@ export default () =&gt; {
           <pre><code class="language-js" language=js><span class="md-editor-code-block">editorRef.current?.togglePreviewOnly(true);</span><span rn-wrapper aria-hidden="true"><span></span></span></code></pre>
 
         </details>
-      <blockquote data-line="1151">
-<p data-line="1151">不设置入参切换为相反状态</p>
+      <blockquote data-line="1160">
+<p data-line="1160">不设置入参切换为相反状态</p>
 </blockquote>
-<hr data-line="1153">
-<h3 id="📼 toggleHtmlPreview" tabindex="-1" data-line="1155"><a class="header-anchor" href="#📼 toggleHtmlPreview">📼 toggleHtmlPreview</a></h3>
-<p data-line="1157">切换是否显示 html 预览。</p>
+<hr data-line="1162">
+<h3 id="📼 toggleHtmlPreview" tabindex="-1" data-line="1164"><a class="header-anchor" href="#📼 toggleHtmlPreview">📼 toggleHtmlPreview</a></h3>
+<p data-line="1166">切换是否显示 html 预览。</p>
 
-        <details  data-line="1159" class="md-editor-code" open="">
+        <details  data-line="1168" class="md-editor-code" open="">
           <summary class="md-editor-code-head">
             <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
             <div class="md-editor-code-action">
@@ -1674,14 +1685,14 @@ export default () =&gt; {
           <pre><code class="language-js" language=js><span class="md-editor-code-block">editorRef.current?.toggleHtmlPreview(true);</span><span rn-wrapper aria-hidden="true"><span></span></span></code></pre>
 
         </details>
-      <blockquote data-line="1163">
-<p data-line="1163">不设置入参切换为相反状态</p>
+      <blockquote data-line="1172">
+<p data-line="1172">不设置入参切换为相反状态</p>
 </blockquote>
-<hr data-line="1165">
-<h3 id="🧬 toggleCatalog" tabindex="-1" data-line="1167"><a class="header-anchor" href="#🧬 toggleCatalog">🧬 toggleCatalog</a></h3>
-<p data-line="1169">切换是否显示目录。</p>
+<hr data-line="1174">
+<h3 id="🧬 toggleCatalog" tabindex="-1" data-line="1176"><a class="header-anchor" href="#🧬 toggleCatalog">🧬 toggleCatalog</a></h3>
+<p data-line="1178">切换是否显示目录。</p>
 
-        <details  data-line="1171" class="md-editor-code" open="">
+        <details  data-line="1180" class="md-editor-code" open="">
           <summary class="md-editor-code-head">
             <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
             <div class="md-editor-code-action">
@@ -1694,14 +1705,14 @@ export default () =&gt; {
           <pre><code class="language-js" language=js><span class="md-editor-code-block">editorRef.current?.toggleCatalog(true);</span><span rn-wrapper aria-hidden="true"><span></span></span></code></pre>
 
         </details>
-      <blockquote data-line="1175">
-<p data-line="1175">不设置入参切换为相反状态</p>
+      <blockquote data-line="1184">
+<p data-line="1184">不设置入参切换为相反状态</p>
 </blockquote>
-<hr data-line="1177">
-<h3 id="💾 triggerSave" tabindex="-1" data-line="1179"><a class="header-anchor" href="#💾 triggerSave">💾 triggerSave</a></h3>
-<p data-line="1181">触发保存。</p>
+<hr data-line="1186">
+<h3 id="💾 triggerSave" tabindex="-1" data-line="1188"><a class="header-anchor" href="#💾 triggerSave">💾 triggerSave</a></h3>
+<p data-line="1190">触发保存。</p>
 
-        <details  data-line="1183" class="md-editor-code" open="">
+        <details  data-line="1192" class="md-editor-code" open="">
           <summary class="md-editor-code-head">
             <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
             <div class="md-editor-code-action">
@@ -1714,11 +1725,11 @@ export default () =&gt; {
           <pre><code class="language-js" language=js><span class="md-editor-code-block">editorRef.current?.triggerSave();</span><span rn-wrapper aria-hidden="true"><span></span></span></code></pre>
 
         </details>
-      <hr data-line="1187">
-<h3 id="💉 insert" tabindex="-1" data-line="1189"><a class="header-anchor" href="#💉 insert">💉 insert</a></h3>
-<p data-line="1191">手动向文本框插入内容。</p>
+      <hr data-line="1196">
+<h3 id="💉 insert" tabindex="-1" data-line="1198"><a class="header-anchor" href="#💉 insert">💉 insert</a></h3>
+<p data-line="1200">手动向文本框插入内容。</p>
 
-        <details  data-line="1193" class="md-editor-code" open="">
+        <details  data-line="1202" class="md-editor-code" open="">
           <summary class="md-editor-code-head">
             <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
             <div class="md-editor-code-action">
@@ -1747,11 +1758,11 @@ editorRef.current?.insert((selectedText) =&gt; {
 });</span><span rn-wrapper aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
         </details>
-      <hr data-line="1213">
-<h3 id="🎯 focus" tabindex="-1" data-line="1215"><a class="header-anchor" href="#🎯 focus">🎯 focus</a></h3>
-<p data-line="1217">手动聚焦输入框。</p>
+      <hr data-line="1222">
+<h3 id="🎯 focus" tabindex="-1" data-line="1224"><a class="header-anchor" href="#🎯 focus">🎯 focus</a></h3>
+<p data-line="1226">手动聚焦输入框。</p>
 
-        <details  data-line="1219" class="md-editor-code" open="">
+        <details  data-line="1228" class="md-editor-code" open="">
           <summary class="md-editor-code-head">
             <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
             <div class="md-editor-code-action">
@@ -1770,7 +1781,7 @@ editorRef.current?.focus(option);</span><span rn-wrapper aria-hidden="true"><spa
 
         </details>
       
-        <details  data-line="1228" class="md-editor-code" open="">
+        <details  data-line="1237" class="md-editor-code" open="">
           <summary class="md-editor-code-head">
             <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
             <div class="md-editor-code-action">
@@ -1793,11 +1804,11 @@ editorRef.current?.focus(option);</span><span rn-wrapper aria-hidden="true"><spa
     };</span><span rn-wrapper aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
         </details>
-      <hr data-line="1242">
-<h3 id="✒️ rerender" tabindex="-1" data-line="1244"><a class="header-anchor" href="#✒️ rerender">✒️ rerender</a></h3>
-<p data-line="1246">手动重新渲染内容。</p>
+      <hr data-line="1251">
+<h3 id="✒️ rerender" tabindex="-1" data-line="1253"><a class="header-anchor" href="#✒️ rerender">✒️ rerender</a></h3>
+<p data-line="1255">手动重新渲染内容。</p>
 
-        <details  data-line="1248" class="md-editor-code" open="">
+        <details  data-line="1257" class="md-editor-code" open="">
           <summary class="md-editor-code-head">
             <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
             <div class="md-editor-code-action">
@@ -1810,11 +1821,11 @@ editorRef.current?.focus(option);</span><span rn-wrapper aria-hidden="true"><spa
           <pre><code class="language-js" language=js><span class="md-editor-code-block">editorRef.current?.rerender();</span><span rn-wrapper aria-hidden="true"><span></span></span></code></pre>
 
         </details>
-      <hr data-line="1252">
-<h3 id="🔍 getSelectedText" tabindex="-1" data-line="1254"><a class="header-anchor" href="#🔍 getSelectedText">🔍 getSelectedText</a></h3>
-<p data-line="1256">获取当前选中的文字。</p>
+      <hr data-line="1261">
+<h3 id="🔍 getSelectedText" tabindex="-1" data-line="1263"><a class="header-anchor" href="#🔍 getSelectedText">🔍 getSelectedText</a></h3>
+<p data-line="1265">获取当前选中的文字。</p>
 
-        <details  data-line="1258" class="md-editor-code" open="">
+        <details  data-line="1267" class="md-editor-code" open="">
           <summary class="md-editor-code-head">
             <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
             <div class="md-editor-code-action">
@@ -1827,14 +1838,14 @@ editorRef.current?.focus(option);</span><span rn-wrapper aria-hidden="true"><spa
           <pre><code class="language-js" language=js><span class="md-editor-code-block">console.log(editorRef.current?.getSelectedText());</span><span rn-wrapper aria-hidden="true"><span></span></span></code></pre>
 
         </details>
-      <hr data-line="1262">
-<h3 id="🗑 resetHistory" tabindex="-1" data-line="1264"><a class="header-anchor" href="#🗑 resetHistory">🗑 resetHistory</a></h3>
-<p data-line="1266">清除当前的历史记录。</p>
-<hr data-line="1268">
-<h3 id="🎛 domEventHandlers" tabindex="-1" data-line="1270"><a class="header-anchor" href="#🎛 domEventHandlers">🎛 domEventHandlers</a></h3>
-<p data-line="1272">支持监听全部的 dom 事件。</p>
+      <hr data-line="1271">
+<h3 id="🗑 resetHistory" tabindex="-1" data-line="1273"><a class="header-anchor" href="#🗑 resetHistory">🗑 resetHistory</a></h3>
+<p data-line="1275">清除当前的历史记录。</p>
+<hr data-line="1277">
+<h3 id="🎛 domEventHandlers" tabindex="-1" data-line="1279"><a class="header-anchor" href="#🎛 domEventHandlers">🎛 domEventHandlers</a></h3>
+<p data-line="1281">支持监听全部的 dom 事件。</p>
 
-        <details  data-line="1274" class="md-editor-code" open="">
+        <details  data-line="1283" class="md-editor-code" open="">
           <summary class="md-editor-code-head">
             <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
             <div class="md-editor-code-action">
@@ -1851,11 +1862,11 @@ editorRef.current?.focus(option);</span><span rn-wrapper aria-hidden="true"><spa
 });</span><span rn-wrapper aria-hidden="true"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
         </details>
-      <hr data-line="1282">
-<h3 id="🎛 execCommand" tabindex="-1" data-line="1284"><a class="header-anchor" href="#🎛 execCommand">🎛 execCommand</a></h3>
-<p data-line="1286">通过触发器向编辑器插入内容。</p>
+      <hr data-line="1291">
+<h3 id="🎛 execCommand" tabindex="-1" data-line="1293"><a class="header-anchor" href="#🎛 execCommand">🎛 execCommand</a></h3>
+<p data-line="1295">通过触发器向编辑器插入内容。</p>
 
-        <details  data-line="1288" class="md-editor-code" open="">
+        <details  data-line="1297" class="md-editor-code" open="">
           <summary class="md-editor-code-head">
             <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
             <div class="md-editor-code-action">
@@ -1868,19 +1879,19 @@ editorRef.current?.focus(option);</span><span rn-wrapper aria-hidden="true"><spa
           <pre><code class="language-js" language=js><span class="md-editor-code-block">editorRef.current?.execCommand('bold');</span><span rn-wrapper aria-hidden="true"><span></span></span></code></pre>
 
         </details>
-      <hr data-line="1292">
-<h3 id="🔖 getEditorView" tabindex="-1" data-line="1294"><a class="header-anchor" href="#🔖 getEditorView">🔖 getEditorView</a></h3>
-<p data-line="1296">获取 codemirror 实例。</p>
-<hr data-line="1298">
-<h2 id="💴 配置编辑器" tabindex="-1" data-line="1300"><a class="header-anchor" href="#💴 配置编辑器">💴 配置编辑器</a></h2>
-<p data-line="1302">使用<code>config(option: ConfigOption)</code>方法，可以对构建实例进行定制。</p>
-<div data-line="1304" class="md-editor-admonition md-editor-admonition-warning">
-<p data-line="1306">我们建议你在项目入口配置，例如 vite 创建的项目中的 main.js。不要在组件中去调用 <code>config</code> ！</p>
+      <hr data-line="1301">
+<h3 id="🔖 getEditorView" tabindex="-1" data-line="1303"><a class="header-anchor" href="#🔖 getEditorView">🔖 getEditorView</a></h3>
+<p data-line="1305">获取 codemirror 实例。</p>
+<hr data-line="1307">
+<h2 id="💴 配置编辑器" tabindex="-1" data-line="1309"><a class="header-anchor" href="#💴 配置编辑器">💴 配置编辑器</a></h2>
+<p data-line="1311">使用<code>config(option: ConfigOption)</code>方法，可以对构建实例进行定制。</p>
+<div data-line="1313" class="md-editor-admonition md-editor-admonition-warning">
+<p data-line="1315">我们建议你在项目入口配置，例如 vite 创建的项目中的 main.js。不要在组件中去调用 <code>config</code> ！</p>
 </div>
-<h3 id="🦪 codeMirrorExtensions" tabindex="-1" data-line="1310"><a class="header-anchor" href="#🦪 codeMirrorExtensions">🦪 codeMirrorExtensions</a></h3>
-<p data-line="1312">根据主题和内部默认的 codeMirror 扩展自定义新的扩展。</p>
+<h3 id="🦪 codeMirrorExtensions" tabindex="-1" data-line="1319"><a class="header-anchor" href="#🦪 codeMirrorExtensions">🦪 codeMirrorExtensions</a></h3>
+<p data-line="1321">根据主题和内部默认的 codeMirror 扩展自定义新的扩展。</p>
 
-        <details  data-line="1314" class="md-editor-code" open="">
+        <details  data-line="1323" class="md-editor-code" open="">
           <summary class="md-editor-code-head">
             <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
             <div class="md-editor-code-action">
@@ -1900,9 +1911,9 @@ editorRef.current?.focus(option);</span><span rn-wrapper aria-hidden="true"><spa
 ) =&gt; Array&lt;Extension&gt;;</span><span rn-wrapper aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
         </details>
-      <p data-line="1325">使用示例：编辑器默认不显示输入框的行号，需要手动添加扩展</p>
+      <p data-line="1334">使用示例：编辑器默认不显示输入框的行号，需要手动添加扩展</p>
 
-        <details  data-line="1327" class="md-editor-code" open="">
+        <details  data-line="1336" class="md-editor-code" open="">
           <summary class="md-editor-code-head">
             <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
             <div class="md-editor-code-action">
@@ -1922,11 +1933,11 @@ config({
 });</span><span rn-wrapper aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
         </details>
-      <hr data-line="1338">
-<h3 id="🍤 markdownItConfig" tabindex="-1" data-line="1340"><a class="header-anchor" href="#🍤 markdownItConfig">🍤 markdownItConfig</a></h3>
-<p data-line="1342">自定义 markdown-it 核心库扩展、属性等。</p>
+      <hr data-line="1347">
+<h3 id="🍤 markdownItConfig" tabindex="-1" data-line="1349"><a class="header-anchor" href="#🍤 markdownItConfig">🍤 markdownItConfig</a></h3>
+<p data-line="1351">自定义 markdown-it 核心库扩展、属性等。</p>
 
-        <details  data-line="1344" class="md-editor-code" open="">
+        <details  data-line="1353" class="md-editor-code" open="">
           <summary class="md-editor-code-head">
             <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
             <div class="md-editor-code-action">
@@ -1944,9 +1955,9 @@ config({
 ) =&gt; void;</span><span rn-wrapper aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
         </details>
-      <p data-line="1353">使用示例：配置使用<code>markdown-it-anchor</code>并在标题右侧显示一个超链接符号</p>
+      <p data-line="1362">使用示例：配置使用<code>markdown-it-anchor</code>并在标题右侧显示一个超链接符号</p>
 
-        <details  data-line="1355" class="md-editor-code" open="">
+        <details  data-line="1364" class="md-editor-code" open="">
           <summary class="md-editor-code-head">
             <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
             <div class="md-editor-code-action">
@@ -1968,11 +1979,11 @@ config({
 });</span><span rn-wrapper aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
         </details>
-      <hr data-line="1368">
-<h3 id="🍤 markdownItPlugins" tabindex="-1" data-line="1370"><a class="header-anchor" href="#🍤 markdownItPlugins">🍤 markdownItPlugins</a></h3>
-<p data-line="1372">挑选、新增 markdown-it 核心库已预设的扩展。</p>
+      <hr data-line="1377">
+<h3 id="🍤 markdownItPlugins" tabindex="-1" data-line="1379"><a class="header-anchor" href="#🍤 markdownItPlugins">🍤 markdownItPlugins</a></h3>
+<p data-line="1381">挑选、新增 markdown-it 核心库已预设的扩展。</p>
 
-        <details  data-line="1374" class="md-editor-code" open="">
+        <details  data-line="1383" class="md-editor-code" open="">
           <summary class="md-editor-code-head">
             <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
             <div class="md-editor-code-action">
@@ -1990,9 +2001,9 @@ config({
 ) =&gt; Array&lt;MarkdownItConfigPlugin&gt;;</span><span rn-wrapper aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
         </details>
-      <p data-line="1383">使用示例：修改图片的类名</p>
+      <p data-line="1392">使用示例：修改图片的类名</p>
 
-        <details  data-line="1385" class="md-editor-code" open="">
+        <details  data-line="1394" class="md-editor-code" open="">
           <summary class="md-editor-code-head">
             <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
             <div class="md-editor-code-action">
@@ -2023,12 +2034,61 @@ config({
 });</span><span rn-wrapper aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
         </details>
-      <hr data-line="1407">
-<h3 id="🍙 editorConfig" tabindex="-1" data-line="1409"><a class="header-anchor" href="#🍙 editorConfig">🍙 editorConfig</a></h3>
-<p data-line="1411">编辑器常规配置，语言、<code>mermaid</code>默认模板、渲染延迟：</p>
-<h4 id="🍚 languageUserDefined" tabindex="-1" data-line="1413"><a class="header-anchor" href="#🍚 languageUserDefined">🍚 languageUserDefined</a></h4>
+      <p data-line="1416">内置的扩展列表</p>
+<table data-line="1418">
+<thead data-line="1418">
+<tr data-line="1418">
+<th>类型</th>
+<th>选项</th>
+</tr>
+</thead>
+<tbody data-line="1420">
+<tr data-line="1420">
+<td>image</td>
+<td><a href="https://github.com/Antonio-Laguna/markdown-it-image-figures?tab=readme-ov-file#options" target="_blank">URL</a></td>
+</tr>
+<tr data-line="1421">
+<td>admonition</td>
+<td><a href="https://github.com/imzbf/md-editor-v3/blob/develop/packages/MdEditor/layouts/Content/markdownIt/admonition/index.ts#L9" target="_blank">URL</a></td>
+</tr>
+<tr data-line="1422">
+<td>taskList</td>
+<td><a href="https://github.com/imzbf/md-editor-v3/blob/develop/packages/MdEditor/layouts/Content/markdownIt/task/index.ts#L10" target="_blank">URL</a></td>
+</tr>
+<tr data-line="1423">
+<td>heading</td>
+<td><a href="https://github.com/imzbf/md-editor-v3/blob/develop/packages/MdEditor/layouts/Content/markdownIt/heading/index.ts#L5" target="_blank">URL</a></td>
+</tr>
+<tr data-line="1424">
+<td>code</td>
+<td><a href="https://github.com/imzbf/md-editor-v3/blob/develop/packages/MdEditor/layouts/Content/markdownIt/code/index.ts#L16" target="_blank">URL</a></td>
+</tr>
+<tr data-line="1425">
+<td>sub</td>
+<td>没有</td>
+</tr>
+<tr data-line="1426">
+<td>sup</td>
+<td>没有</td>
+</tr>
+<tr data-line="1427">
+<td>katex</td>
+<td><a href="https://github.com/imzbf/md-editor-v3/blob/develop/packages/MdEditor/layouts/Content/markdownIt/katex/index.ts#L18" target="_blank">URL</a></td>
+</tr>
+<tr data-line="1428">
+<td>mermaid</td>
+<td><a href="https://github.com/imzbf/md-editor-v3/blob/develop/packages/MdEditor/layouts/Content/markdownIt/mermaid/index.ts#L7" target="_blank">URL</a></td>
+</tr>
+</tbody>
+</table>
+<p data-line="1430"><a href="https://github.com/imzbf/md-editor-v3/blob/develop/packages/MdEditor/layouts/Content/composition/useMarkdownIt.ts#L95" target="_blank">添加插件的源码</a></p>
+<p data-line="1432"><a href="https://github.com/imzbf/md-editor-v3/tree/develop/packages/MdEditor/layouts/Content/markdownIt" target="_blank">插件对应的源码</a></p>
+<hr data-line="1434">
+<h3 id="🍙 editorConfig" tabindex="-1" data-line="1436"><a class="header-anchor" href="#🍙 editorConfig">🍙 editorConfig</a></h3>
+<p data-line="1438">编辑器常规配置，语言、<code>mermaid</code>默认模板、渲染延迟：</p>
+<h4 id="🍚 languageUserDefined" tabindex="-1" data-line="1440"><a class="header-anchor" href="#🍚 languageUserDefined">🍚 languageUserDefined</a></h4>
 
-        <details  data-line="1415" class="md-editor-code">
+        <details  data-line="1442" class="md-editor-code">
           <summary class="md-editor-code-head">
             <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
             <div class="md-editor-code-action">
@@ -2130,9 +2190,9 @@ config({
 });</span><span rn-wrapper aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
         </details>
-      <h4 id="🍘 mermaidTemplate" tabindex="-1" data-line="1508"><a class="header-anchor" href="#🍘 mermaidTemplate">🍘 mermaidTemplate</a></h4>
+      <h4 id="🍘 mermaidTemplate" tabindex="-1" data-line="1535"><a class="header-anchor" href="#🍘 mermaidTemplate">🍘 mermaidTemplate</a></h4>
 
-        <details  data-line="1510" class="md-editor-code" open="">
+        <details  data-line="1537" class="md-editor-code" open="">
           <summary class="md-editor-code-head">
             <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
             <div class="md-editor-code-action">
@@ -2169,9 +2229,9 @@ config({
 });</span><span rn-wrapper aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
         </details>
-      <h4 id="🍥 renderDelay" tabindex="-1" data-line="1538"><a class="header-anchor" href="#🍥 renderDelay">🍥 renderDelay</a></h4>
+      <h4 id="🍥 renderDelay" tabindex="-1" data-line="1565"><a class="header-anchor" href="#🍥 renderDelay">🍥 renderDelay</a></h4>
 
-        <details  data-line="1540" class="md-editor-code" open="">
+        <details  data-line="1567" class="md-editor-code" open="">
           <summary class="md-editor-code-head">
             <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
             <div class="md-editor-code-action">
@@ -2191,10 +2251,10 @@ config({
 });</span><span rn-wrapper aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
         </details>
-      <hr data-line="1551">
-<h4 id="🍥 zIndex" tabindex="-1" data-line="1553"><a class="header-anchor" href="#🍥 zIndex">🍥 zIndex</a></h4>
+      <hr data-line="1578">
+<h4 id="🍥 zIndex" tabindex="-1" data-line="1580"><a class="header-anchor" href="#🍥 zIndex">🍥 zIndex</a></h4>
 
-        <details  data-line="1555" class="md-editor-code" open="">
+        <details  data-line="1582" class="md-editor-code" open="">
           <summary class="md-editor-code-head">
             <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
             <div class="md-editor-code-action">
@@ -2214,11 +2274,11 @@ config({
 });</span><span rn-wrapper aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
         </details>
-      <hr data-line="1566">
-<h3 id="🥠 editorExtensions" tabindex="-1" data-line="1568"><a class="header-anchor" href="#🥠 editorExtensions">🥠 editorExtensions</a></h3>
-<p data-line="1570">类型如下，用于配置编辑器内部的扩展</p>
+      <hr data-line="1593">
+<h3 id="🥠 editorExtensions" tabindex="-1" data-line="1595"><a class="header-anchor" href="#🥠 editorExtensions">🥠 editorExtensions</a></h3>
+<p data-line="1597">类型如下，用于配置编辑器内部的扩展</p>
 
-        <details  data-line="1572" class="md-editor-code" open="">
+        <details  data-line="1599" class="md-editor-code" open="">
           <summary class="md-editor-code-head">
             <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
             <div class="md-editor-code-action">
@@ -2236,7 +2296,7 @@ config({
 
         </details>
       
-        <details  data-line="1580" class="md-editor-code">
+        <details  data-line="1607" class="md-editor-code">
           <summary class="md-editor-code-head">
             <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
             <div class="md-editor-code-action">
@@ -2288,11 +2348,11 @@ config({
 }</span><span rn-wrapper aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
         </details>
-      <hr data-line="1623">
-<h3 id="🥠 editorExtensionsAttrs" tabindex="-1" data-line="1625"><a class="header-anchor" href="#🥠 editorExtensionsAttrs">🥠 editorExtensionsAttrs</a></h3>
-<p data-line="1627">同步添加 CDN 链接标签的上属性，类型与<code>editorExtensions</code>一直，值类型是<code>HTMLElementTagNameMap&lt;script|link&gt;</code> 内部提供所有链接的<code>integrity</code>值，使用方式如下：</p>
+      <hr data-line="1650">
+<h3 id="🥠 editorExtensionsAttrs" tabindex="-1" data-line="1652"><a class="header-anchor" href="#🥠 editorExtensionsAttrs">🥠 editorExtensionsAttrs</a></h3>
+<p data-line="1654">同步添加 CDN 链接标签的上属性，类型与<code>editorExtensions</code>一直，值类型是<code>HTMLElementTagNameMap&lt;script|link&gt;</code> 内部提供所有链接的<code>integrity</code>值，使用方式如下：</p>
 
-        <details  data-line="1629" class="md-editor-code" open="">
+        <details  data-line="1656" class="md-editor-code" open="">
           <summary class="md-editor-code-head">
             <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
             <div class="md-editor-code-action">
@@ -2325,9 +2385,9 @@ config({
 });</span><span rn-wrapper aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
         </details>
-      <p data-line="1653">使用内置的基础属性配置示例：</p>
+      <p data-line="1680">使用内置的基础属性配置示例：</p>
 
-        <details  data-line="1655" class="md-editor-code" open="">
+        <details  data-line="1682" class="md-editor-code" open="">
           <summary class="md-editor-code-head">
             <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
             <div class="md-editor-code-action">
@@ -2344,15 +2404,15 @@ config({
 });</span><span rn-wrapper aria-hidden="true"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
         </details>
-      <div data-line="1663" class="md-editor-admonition md-editor-admonition-warning">
-<p data-line="1663" class="md-editor-admonition-title">提醒</p>
-<p data-line="1665">不要尝试在 editorExtensionsAttrs 定义 script 的 src\onload\id，link 的 rel\href\id 它们会被默认值覆盖</p>
+      <div data-line="1690" class="md-editor-admonition md-editor-admonition-warning">
+<p data-line="1690" class="md-editor-admonition-title">提醒</p>
+<p data-line="1692">不要尝试在 editorExtensionsAttrs 定义 script 的 src\onload\id，link 的 rel\href\id 它们会被默认值覆盖</p>
 </div>
-<hr data-line="1669">
-<h3 id="🎨 mermaidConfig" tabindex="-1" data-line="1671"><a class="header-anchor" href="#🎨 mermaidConfig">🎨 mermaidConfig</a></h3>
-<p data-line="1673">mermaid 配置项，<a href="https://mermaid.js.org/config/schema-docs/config.html" target="_blank">配置详情</a></p>
+<hr data-line="1696">
+<h3 id="🎨 mermaidConfig" tabindex="-1" data-line="1698"><a class="header-anchor" href="#🎨 mermaidConfig">🎨 mermaidConfig</a></h3>
+<p data-line="1700">mermaid 配置项，<a href="https://mermaid.js.org/config/schema-docs/config.html" target="_blank">配置详情</a></p>
 
-        <details  data-line="1675" class="md-editor-code" open="">
+        <details  data-line="1702" class="md-editor-code" open="">
           <summary class="md-editor-code-head">
             <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
             <div class="md-editor-code-action">
@@ -2373,11 +2433,11 @@ config({
 });</span><span rn-wrapper aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
         </details>
-      <hr data-line="1687">
-<h3 id="🔧 katexConfig" tabindex="-1" data-line="1689"><a class="header-anchor" href="#🔧 katexConfig">🔧 katexConfig</a></h3>
-<p data-line="1691">katex 配置项，<a href="https://katex.org/docs/options" target="_blank">配置详情</a></p>
+      <hr data-line="1714">
+<h3 id="🔧 katexConfig" tabindex="-1" data-line="1716"><a class="header-anchor" href="#🔧 katexConfig">🔧 katexConfig</a></h3>
+<p data-line="1718">katex 配置项，<a href="https://katex.org/docs/options" target="_blank">配置详情</a></p>
 
-        <details  data-line="1693" class="md-editor-code" open="">
+        <details  data-line="1720" class="md-editor-code" open="">
           <summary class="md-editor-code-head">
             <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
             <div class="md-editor-code-action">
@@ -2399,193 +2459,193 @@ config({
 });</span><span rn-wrapper aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
         </details>
-      <hr data-line="1706">
-<h2 id="🪡 快捷键" tabindex="-1" data-line="1708"><a class="header-anchor" href="#🪡 快捷键">🪡 快捷键</a></h2>
-<p data-line="1710">主要以<code>CTRL</code>搭配对应功能英文单词首字母，冲突项添加<code>SHIFT</code>，再冲突替换为<code>ALT</code>。</p>
-<div data-line="1712" class="md-editor-admonition md-editor-admonition-warning">
-<p data-line="1712" class="md-editor-admonition-title">注意事项</p>
-<p data-line="1714">快捷键仅在输入框获取到焦点时可用！</p>
+      <hr data-line="1733">
+<h2 id="🪡 快捷键" tabindex="-1" data-line="1735"><a class="header-anchor" href="#🪡 快捷键">🪡 快捷键</a></h2>
+<p data-line="1737">主要以<code>CTRL</code>搭配对应功能英文单词首字母，冲突项添加<code>SHIFT</code>，再冲突替换为<code>ALT</code>。</p>
+<div data-line="1739" class="md-editor-admonition md-editor-admonition-warning">
+<p data-line="1739" class="md-editor-admonition-title">注意事项</p>
+<p data-line="1741">快捷键仅在输入框获取到焦点时可用！</p>
 </div>
-<table data-line="1718">
-<thead data-line="1718">
-<tr data-line="1718">
+<table data-line="1745">
+<thead data-line="1745">
+<tr data-line="1745">
 <th>键位</th>
 <th>功能</th>
 <th>说明</th>
 </tr>
 </thead>
-<tbody data-line="1720">
-<tr data-line="1720">
+<tbody data-line="1747">
+<tr data-line="1747">
 <td>TAB</td>
 <td>空格</td>
 <td>通过<code>tabWidth</code>属性预设 TAB 键位新增空格长度，默认 2，支持多行</td>
 </tr>
-<tr data-line="1721">
+<tr data-line="1748">
 <td>SHIFT + TAB</td>
 <td>取消空格</td>
 <td>同上，一次取消两个空格，支持多行</td>
 </tr>
-<tr data-line="1722">
+<tr data-line="1749">
 <td>CTRL + C</td>
 <td>复制</td>
 <td>选中时复制选中内容，未选中时复制当前行内容</td>
 </tr>
-<tr data-line="1723">
+<tr data-line="1750">
 <td>CTRL + X</td>
 <td>剪切</td>
 <td>选中时剪切选中内容，未选中时剪切当前行</td>
 </tr>
-<tr data-line="1724">
+<tr data-line="1751">
 <td>CTRL + D</td>
 <td>删除</td>
 <td>选中时删除选中内容，未选中时删除当前行</td>
 </tr>
-<tr data-line="1725">
+<tr data-line="1752">
 <td>CTRL + S</td>
 <td>保存</td>
 <td>触发编辑器的<code>onSave</code>回调</td>
 </tr>
-<tr data-line="1726">
+<tr data-line="1753">
 <td>CTRL + B</td>
 <td>加粗</td>
 <td><code>**加粗**</code></td>
 </tr>
-<tr data-line="1727">
+<tr data-line="1754">
 <td>CTRL + U</td>
 <td>下划线</td>
 <td><code>&lt;u&gt;下划线&lt;/u&gt;</code></td>
 </tr>
-<tr data-line="1728">
+<tr data-line="1755">
 <td>CTRL + I</td>
 <td>斜体</td>
 <td><code>*斜体*</code></td>
 </tr>
-<tr data-line="1729">
+<tr data-line="1756">
 <td>CTRL + 1-6</td>
 <td>1-6 级标题</td>
 <td><code># 标题</code></td>
 </tr>
-<tr data-line="1730">
+<tr data-line="1757">
 <td>CTRL + ↑</td>
 <td>上角标</td>
 <td><code>&lt;sup&gt;上角标&lt;/sup&gt;</code></td>
 </tr>
-<tr data-line="1731">
+<tr data-line="1758">
 <td>CTRL + ↓</td>
 <td>下角标</td>
 <td><code>&lt;sub&gt;下角标&lt;/sub&gt;</code></td>
 </tr>
-<tr data-line="1732">
+<tr data-line="1759">
 <td>CTRL + O</td>
 <td>有序列表</td>
 <td><code>1. 有序列表</code></td>
 </tr>
-<tr data-line="1733">
+<tr data-line="1760">
 <td>CTRL + L</td>
 <td>链接</td>
 <td><code>[链接](https://github.com/imzbf)</code></td>
 </tr>
-<tr data-line="1734">
+<tr data-line="1761">
 <td>CTRL + Z</td>
 <td>撤回</td>
 <td>触发编辑器内内容撤回，与系统无关</td>
 </tr>
-<tr data-line="1735">
+<tr data-line="1762">
 <td>CTRL + F</td>
 <td>查找替换</td>
 <td></td>
 </tr>
-<tr data-line="1736">
+<tr data-line="1763">
 <td>CTRL + SHIFT + S</td>
 <td>删除线</td>
 <td><code>~删除线~</code></td>
 </tr>
-<tr data-line="1737">
+<tr data-line="1764">
 <td>CTRL + SHIFT + U</td>
 <td>无序列表</td>
 <td><code>- 无序列表</code></td>
 </tr>
-<tr data-line="1738">
+<tr data-line="1765">
 <td>CTRL + SHIFT + C</td>
 <td>块级代码</td>
 <td>多行代码块</td>
 </tr>
-<tr data-line="1739">
+<tr data-line="1766">
 <td>CTRL + SHIFT + I</td>
 <td>图片链接</td>
 <td><code>![图片](https://github.com/imzbf)</code></td>
 </tr>
-<tr data-line="1740">
+<tr data-line="1767">
 <td>CTRL + SHIFT + Z</td>
 <td>前进一步</td>
 <td>触发编辑器内内容前进，与系统无关</td>
 </tr>
-<tr data-line="1741">
+<tr data-line="1768">
 <td>CTRL + SHIFT + F</td>
 <td>美化内容</td>
 <td></td>
 </tr>
-<tr data-line="1742">
+<tr data-line="1769">
 <td>CTRL + ALT + C</td>
 <td>行内代码</td>
 <td>行内代码块</td>
 </tr>
-<tr data-line="1743">
+<tr data-line="1770">
 <td>CTRL + SHIFT + ALT + T</td>
 <td>表格</td>
 <td><code>|表格|</code></td>
 </tr>
 </tbody>
 </table>
-<h2 id="🪤 内置组件" tabindex="-1" data-line="1745"><a class="header-anchor" href="#🪤 内置组件">🪤 内置组件</a></h2>
-<p data-line="1747">按需引用编辑器的扩展组件，例如：<code>import { DropdownToolbar } from 'md-editor-rt'</code>。</p>
-<div data-line="1749" class="md-editor-admonition md-editor-admonition-info">
-<p data-line="1749" class="md-editor-admonition-title">内置属性提示</p>
-<p data-line="1751">为了帮助开发者快速插入和使用编辑器的属性，编辑器组件已经默认向头部工具栏和尾部工具栏中的扩展组件添加了下面的属性的值（如果你也提供了，那么会优先使用你提供的内容），更详细的参考示例：<a href="https://github.com/imzbf/md-editor-extension/blob/main/packages/rt/components/ExportPDF/ExportPDF.tsx#L71" target="_blank">ExportPDF</a></p>
-<table data-line="1753">
-<thead data-line="1753">
-<tr data-line="1753">
+<h2 id="🪤 内置组件" tabindex="-1" data-line="1772"><a class="header-anchor" href="#🪤 内置组件">🪤 内置组件</a></h2>
+<p data-line="1774">按需引用编辑器的扩展组件，例如：<code>import { DropdownToolbar } from 'md-editor-rt'</code>。</p>
+<div data-line="1776" class="md-editor-admonition md-editor-admonition-info">
+<p data-line="1776" class="md-editor-admonition-title">内置属性提示</p>
+<p data-line="1778">为了帮助开发者快速插入和使用编辑器的属性，编辑器组件已经默认向头部工具栏和尾部工具栏中的扩展组件添加了下面的属性的值（如果你也提供了，那么会优先使用你提供的内容），更详细的参考示例：<a href="https://github.com/imzbf/md-editor-extension/blob/main/packages/rt/components/ExportPDF/ExportPDF.tsx#L71" target="_blank">ExportPDF</a></p>
+<table data-line="1780">
+<thead data-line="1780">
+<tr data-line="1780">
 <th>名称</th>
 <th>defToolbars</th>
 <th>defFooters</th>
 </tr>
 </thead>
-<tbody data-line="1755">
-<tr data-line="1755">
+<tbody data-line="1782">
+<tr data-line="1782">
 <td>insert</td>
 <td>√</td>
 <td>×</td>
 </tr>
-<tr data-line="1756">
+<tr data-line="1783">
 <td>theme</td>
 <td>√</td>
 <td>√</td>
 </tr>
-<tr data-line="1757">
+<tr data-line="1784">
 <td>previewtheme</td>
 <td>√</td>
 <td>×</td>
 </tr>
-<tr data-line="1758">
+<tr data-line="1785">
 <td>codeTheme</td>
 <td>√</td>
 <td>×</td>
 </tr>
-<tr data-line="1759">
+<tr data-line="1786">
 <td>language</td>
 <td>√</td>
 <td>√</td>
 </tr>
-<tr data-line="1760">
+<tr data-line="1787">
 <td>disabled</td>
 <td>√</td>
 <td>√</td>
 </tr>
 </tbody>
 </table>
-<p data-line="1762">例子：</p>
+<p data-line="1789">例子：</p>
 
-        <details  data-line="1764" class="md-editor-code" open="">
+        <details  data-line="1791" class="md-editor-code" open="">
           <summary class="md-editor-code-head">
             <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
             <div class="md-editor-code-action">
@@ -2627,25 +2687,25 @@ const MyEditor2 = () =&gt; {
 
         </details>
       </div>
-<h3 id="🐣 NormalToolbar" tabindex="-1" data-line="1798"><a class="header-anchor" href="#🐣 NormalToolbar">🐣 NormalToolbar</a></h3>
-<ul data-line="1800">
-<li data-line="1800">
-<p data-line="1800"><strong>props</strong></p>
-<ul data-line="1802">
-<li data-line="1802"><code>title</code>: <code>string</code>，非必须，作为工具栏上的 hover 提示。</li>
-<li data-line="1803"><code>children</code>: <code>ReactNode</code>，非必须，通常是个图标，用来展示在工具栏上。</li>
-<li data-line="1804"><s><code>trigger</code></s>: <code>ReactNode</code>，非必须，已废弃，同上。</li>
+<h3 id="🐣 NormalToolbar" tabindex="-1" data-line="1825"><a class="header-anchor" href="#🐣 NormalToolbar">🐣 NormalToolbar</a></h3>
+<ul data-line="1827">
+<li data-line="1827">
+<p data-line="1827"><strong>props</strong></p>
+<ul data-line="1829">
+<li data-line="1829"><strong>title</strong>: <code>string</code>，非必须，作为工具栏上的 hover 提示。</li>
+<li data-line="1830"><strong>children</strong>: <code>ReactNode</code>，非必须，通常是个图标，用来展示在工具栏上。</li>
+<li data-line="1831"><s><strong>trigger</strong></s>: <code>ReactNode</code>，非必须，已废弃，同上。</li>
 </ul>
 </li>
-<li data-line="1806">
-<p data-line="1806"><strong>events</strong></p>
-<ul data-line="1808">
-<li data-line="1808"><code>onClick</code>: <code>(e: MouseEvent) =&gt; void</code>，必须，点击事件。</li>
+<li data-line="1833">
+<p data-line="1833"><strong>events</strong></p>
+<ul data-line="1835">
+<li data-line="1835"><strong>onClick</strong>: <code>(e: MouseEvent) =&gt; void</code>，必须，点击事件。</li>
 </ul>
 </li>
 </ul>
 
-        <details  data-line="1810" class="md-editor-code">
+        <details  data-line="1837" class="md-editor-code">
           <summary class="md-editor-code-head">
             <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
             <div class="md-editor-code-action">
@@ -2708,29 +2768,29 @@ export default () =&gt; {
 };</span><span rn-wrapper aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
         </details>
-      <p data-line="1864"><a href="https://github.com/imzbf/md-editor-extension/blob/develop/packages/rt/components/Mark/Mark.tsx" target="_blank">标记组件的源码</a></p>
-<hr data-line="1866">
-<h3 id="🐼 DropdownToolbar" tabindex="-1" data-line="1868"><a class="header-anchor" href="#🐼 DropdownToolbar">🐼 DropdownToolbar</a></h3>
-<ul data-line="1870">
-<li data-line="1870">
-<p data-line="1870"><strong>props</strong></p>
-<ul data-line="1872">
-<li data-line="1872"><code>title</code>: <code>string</code>，非必须，作为工具栏上的 hover 提示。</li>
-<li data-line="1873"><code>visible</code>: <code>boolean</code>，必须，下拉状态。</li>
-<li data-line="1874"><code>children</code>: <code>ReactNode</code>，非必须，通常是个图标，用来展示在工具栏上。</li>
-<li data-line="1875"><s><code>trigger</code></s>: <code>ReactNode</code>，非必须，已废弃，同上。</li>
-<li data-line="1876"><code>overlay</code>: <code>ReactNode</code>，必须，下拉框中的内容。</li>
+      <p data-line="1891"><a href="https://github.com/imzbf/md-editor-extension/blob/develop/packages/rt/components/Mark/Mark.tsx" target="_blank">标记组件的源码</a></p>
+<hr data-line="1893">
+<h3 id="🐼 DropdownToolbar" tabindex="-1" data-line="1895"><a class="header-anchor" href="#🐼 DropdownToolbar">🐼 DropdownToolbar</a></h3>
+<ul data-line="1897">
+<li data-line="1897">
+<p data-line="1897"><strong>props</strong></p>
+<ul data-line="1899">
+<li data-line="1899"><strong>title</strong>: <code>string</code>，非必须，作为工具栏上的 hover 提示。</li>
+<li data-line="1900"><strong>visible</strong>: <code>boolean</code>，必须，下拉状态。</li>
+<li data-line="1901"><strong>children</strong>: <code>ReactNode</code>，非必须，通常是个图标，用来展示在工具栏上。</li>
+<li data-line="1902"><s><strong>trigger</strong></s>: <code>ReactNode</code>，非必须，已废弃，同上。</li>
+<li data-line="1903"><strong>overlay</strong>: <code>ReactNode</code>，必须，下拉框中的内容。</li>
 </ul>
 </li>
-<li data-line="1878">
-<p data-line="1878"><strong>events</strong></p>
-<ul data-line="1880">
-<li data-line="1880"><code>onChange</code>: <code>(visible: boolean) =&gt; void</code>，必须，状态变化事件。</li>
+<li data-line="1905">
+<p data-line="1905"><strong>events</strong></p>
+<ul data-line="1907">
+<li data-line="1907"><strong>onChange</strong>: <code>(visible: boolean) =&gt; void</code>，必须，状态变化事件。</li>
 </ul>
 </li>
 </ul>
 
-        <details  data-line="1882" class="md-editor-code">
+        <details  data-line="1909" class="md-editor-code">
           <summary class="md-editor-code-head">
             <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
             <div class="md-editor-code-action">
@@ -2804,38 +2864,38 @@ export default () =&gt; {
 };</span><span rn-wrapper aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
         </details>
-      <p data-line="1947"><a href="https://github.com/imzbf/md-editor-extension/blob/develop/packages/rt/components/Emoji/Emoji.tsx" target="_blank">Emoji 组件的源码</a></p>
-<hr data-line="1949">
-<h3 id="🦉 ModalToolbar" tabindex="-1" data-line="1951"><a class="header-anchor" href="#🦉 ModalToolbar">🦉 ModalToolbar</a></h3>
-<ul data-line="1953">
-<li data-line="1953">
-<p data-line="1953"><strong>props</strong></p>
-<ul data-line="1955">
-<li data-line="1955"><code>title</code>: <code>string</code>，非必须，作为工具栏上的 hover 提示。</li>
-<li data-line="1956"><code>modalTitle</code>: <code>ReactNode</code>，非必须，弹窗的标题。</li>
-<li data-line="1957"><code>visible</code>: <code>boolean</code>，必须，弹窗显示状态。</li>
-<li data-line="1958"><code>width</code>: <code>string</code>，非必须，弹窗宽度，默认<code>auto</code>。</li>
-<li data-line="1959"><code>height</code>：<code>string</code>，同<code>width</code>。</li>
-<li data-line="1960"><code>showAdjust</code>: <code>boolean</code>，非必须，是否显示弹窗全屏按钮。</li>
-<li data-line="1961"><code>isFullscreen</code>: <code>boolean</code>，显示全屏按钮时必须，弹窗全屏状态。</li>
-<li data-line="1962"><code>trigger</code>: <code>ReactNode</code>，必须，通常是个图标，用来展示在工具栏上。</li>
-<li data-line="1963"><code>children</code>: <code>ReactNode</code>，必须，弹窗中的内容。</li>
-<li data-line="1964"><code>className</code>: <code>string</code>，<code>^4.16.8</code>，非必须，类名。</li>
-<li data-line="1965"><code>style</code>: <code>CSSProperties</code>，<code>^4.16.8</code>，非必须，样式。</li>
-<li data-line="1966"><code>showMask</code>: <code>boolean</code>，<code>^4.16.8</code>，非必须，是否展示遮罩层，默认 true。</li>
+      <p data-line="1974"><a href="https://github.com/imzbf/md-editor-extension/blob/develop/packages/rt/components/Emoji/Emoji.tsx" target="_blank">Emoji 组件的源码</a></p>
+<hr data-line="1976">
+<h3 id="🦉 ModalToolbar" tabindex="-1" data-line="1978"><a class="header-anchor" href="#🦉 ModalToolbar">🦉 ModalToolbar</a></h3>
+<ul data-line="1980">
+<li data-line="1980">
+<p data-line="1980"><strong>props</strong></p>
+<ul data-line="1982">
+<li data-line="1982"><strong>title</strong>: <code>string</code>，非必须，作为工具栏上的 hover 提示。</li>
+<li data-line="1983"><strong>modalTitle</strong>: <code>ReactNode</code>，非必须，弹窗的标题。</li>
+<li data-line="1984"><strong>visible</strong>: <code>boolean</code>，必须，弹窗显示状态。</li>
+<li data-line="1985"><strong>width</strong>: <code>string</code>，非必须，弹窗宽度，默认<code>auto</code>。</li>
+<li data-line="1986"><strong>height</strong>: <code>string</code>，同<code>width</code>。</li>
+<li data-line="1987"><strong>showAdjust</strong>: <code>boolean</code>，非必须，是否显示弹窗全屏按钮。</li>
+<li data-line="1988"><strong>isFullscreen</strong>: <code>boolean</code>，显示全屏按钮时必须，弹窗全屏状态。</li>
+<li data-line="1989"><strong>trigger</strong>: <code>ReactNode</code>，必须，通常是个图标，用来展示在工具栏上。</li>
+<li data-line="1990"><strong>children</strong>: <code>ReactNode</code>，必须，弹窗中的内容。</li>
+<li data-line="1991"><strong>className</strong>: <code>string</code>，<code>^4.16.8</code>，非必须，类名。</li>
+<li data-line="1992"><strong>style</strong>: <code>CSSProperties</code>，<code>^4.16.8</code>，非必须，样式。</li>
+<li data-line="1993"><strong>showMask</strong>: <code>boolean</code>，<code>^4.16.8</code>，非必须，是否展示遮罩层，默认 true。</li>
 </ul>
 </li>
-<li data-line="1968">
-<p data-line="1968"><strong>events</strong></p>
-<ul data-line="1970">
-<li data-line="1970"><code>onClick</code>: <code>() =&gt; void</code>，必须，工具栏点击事件。</li>
-<li data-line="1971"><code>onClose</code>：<code>() =&gt; void</code>，必须，弹窗点击关闭事件。</li>
-<li data-line="1972"><code>onAdjust</code>：<code>(val: boolean) =&gt; void</code>，弹窗全屏按钮点击事件。</li>
+<li data-line="1995">
+<p data-line="1995"><strong>events</strong></p>
+<ul data-line="1997">
+<li data-line="1997"><strong>onClick</strong>: <code>() =&gt; void</code>，必须，工具栏点击事件。</li>
+<li data-line="1998"><strong>onClose</strong>: <code>() =&gt; void</code>，必须，弹窗点击关闭事件。</li>
+<li data-line="1999"><strong>onAdjust</strong>: <code>(val: boolean) =&gt; void</code>，弹窗全屏按钮点击事件。</li>
 </ul>
 </li>
 </ul>
 
-        <details  data-line="1974" class="md-editor-code">
+        <details  data-line="2001" class="md-editor-code">
           <summary class="md-editor-code-head">
             <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
             <div class="md-editor-code-action">
@@ -2933,35 +2993,36 @@ export default () =&gt; {
 };</span><span rn-wrapper aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
         </details>
-      <p data-line="2063"><a href="https://github.com/imzbf/md-editor-extension/blob/develop/packages/rt/components/ExportPDF/ExportPDF.tsx" target="_blank">ExportPDF 组件的源码</a></p>
-<hr data-line="2065">
-<h3 id="🐻 MdCatalog" tabindex="-1" data-line="2067"><a class="header-anchor" href="#🐻 MdCatalog">🐻 MdCatalog</a></h3>
-<ul data-line="2069">
-<li data-line="2069">
-<p data-line="2069"><strong>props</strong></p>
-<ul data-line="2071">
-<li data-line="2071"><code>editorId</code>: <code>string</code>，必须，对应编辑器的<code>id</code>，在内部注册目录变化监听事件。</li>
-<li data-line="2072"><code>className</code>: <code>string</code>，非必须，目录组件最外层类名。</li>
-<li data-line="2073"><code>mdHeadingId</code>: <code>mdHeadingId</code>，非必须，特殊化编辑器标题的算法，与编辑器相同。</li>
-<li data-line="2074"><code>scrollElement</code>: <code>string | HTMLElement</code>，非必须，为字符时应是一个元素选择器。仅预览模式中，整页滚动时，设置为<code>document.documentElement</code>。</li>
-<li data-line="2075"><code>theme</code>: <code>'light' | 'dark'</code>，非必须，当需要切换主题时提供，同编辑器的<code>theme</code>。</li>
-<li data-line="2076"><code>offsetTop</code>: <code>number</code>，非必须，标题距离顶部该像素时高亮当前目录项，默认 20 像素。</li>
-<li data-line="2077"><code>scrollElementOffsetTop</code>: <code>number</code>，非必须，滚动区域的固定顶部高度，默认 0。</li>
+      <p data-line="2090"><a href="https://github.com/imzbf/md-editor-extension/blob/develop/packages/rt/components/ExportPDF/ExportPDF.tsx" target="_blank">ExportPDF 组件的源码</a></p>
+<hr data-line="2092">
+<h3 id="🐻 MdCatalog" tabindex="-1" data-line="2094"><a class="header-anchor" href="#🐻 MdCatalog">🐻 MdCatalog</a></h3>
+<ul data-line="2096">
+<li data-line="2096">
+<p data-line="2096"><strong>props</strong></p>
+<ul data-line="2098">
+<li data-line="2098"><strong>editorId</strong>: <code>string</code>，必须，对应编辑器的<code>id</code>，在内部注册目录变化监听事件。</li>
+<li data-line="2099"><strong>className</strong>: <code>string</code>，非必须，目录组件最外层类名。</li>
+<li data-line="2100"><strong>mdHeadingId</strong>: <code>mdHeadingId</code>，非必须，特殊化编辑器标题的算法，与编辑器相同。</li>
+<li data-line="2101"><strong>scrollElement</strong>: <code>string | HTMLElement</code>，非必须，为字符时应是一个元素选择器。仅预览模式中，整页滚动时，设置为<code>document.documentElement</code>。⚠️ 该元素必须定位（如相对、绝对或固定），且内容可滚动。</li>
+<li data-line="2102"><strong>theme</strong>: <code>'light' | 'dark'</code>，非必须，当需要切换主题时提供，同编辑器的<code>theme</code>。</li>
+<li data-line="2103"><strong>offsetTop</strong>: <code>number</code>，非必须，标题距离顶部该像素时高亮当前目录项，默认 20 像素。</li>
+<li data-line="2104"><strong>scrollElementOffsetTop</strong>: <code>number</code>，非必须，滚动区域的固定顶部高度，默认 0。</li>
+<li data-line="2105"><strong>catalogMaxDepth</strong>: <code>number</code>，<code>^5.5.0</code>，非必须，控制要显示的目录的最大深度。</li>
 </ul>
 </li>
-<li data-line="2079">
-<p data-line="2079"><strong>events</strong></p>
-<ul data-line="2081">
-<li data-line="2081"><code>onClick</code>: <code>(e: MouseEvent, t: TocItem) =&gt; void</code>，非必须，导航点击事件。</li>
-<li data-line="2082"><code>onActive</code>: <code>(heading: HeadList | undefined) =&gt; void</code>，非必须，高亮的标题变化事件。</li>
+<li data-line="2107">
+<p data-line="2107"><strong>events</strong></p>
+<ul data-line="2109">
+<li data-line="2109"><strong>onClick</strong>: <code>(e: MouseEvent, t: TocItem) =&gt; void</code>，非必须，导航点击事件。</li>
+<li data-line="2110"><strong>onActive</strong>: <code>(heading: HeadList | undefined) =&gt; void</code>，非必须，高亮的标题变化事件。</li>
 </ul>
 </li>
 </ul>
-<blockquote data-line="2084">
-<p data-line="2084"><code>scrollElement</code>说明：仅预览下，该元素必须已定位的并且支持滚动。</p>
+<blockquote data-line="2112">
+<p data-line="2112"><code>scrollElement</code>说明：仅预览下，该元素必须已定位的并且支持滚动。</p>
 </blockquote>
 
-        <details  data-line="2086" class="md-editor-code" open="">
+        <details  data-line="2114" class="md-editor-code" open="">
           <summary class="md-editor-code-head">
             <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
             <div class="md-editor-code-action">
@@ -2992,35 +3053,35 @@ export default () =&gt; {
 };</span><span rn-wrapper aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
         </details>
-      <hr data-line="2108">
-<h3 id="🛸 MdModal" tabindex="-1" data-line="2110"><a class="header-anchor" href="#🛸 MdModal">🛸 MdModal</a></h3>
-<p data-line="2112">编辑器内部的弹窗组件，它通常配合下拉工具栏组件使用。</p>
-<ul data-line="2114">
-<li data-line="2114">
-<p data-line="2114"><strong>props</strong></p>
-<ul data-line="2116">
-<li data-line="2116"><code>title</code>: <code>ReactNode</code>，非必须，弹窗标题栏。</li>
-<li data-line="2117"><code>visible</code>: <code>boolean</code>，必须，弹窗显示状态。</li>
-<li data-line="2118"><code>width</code>: <code>string</code>，非必须，弹窗宽度，默认<code>auto</code>。</li>
-<li data-line="2119"><code>height</code>: <code>string</code>，同<code>width</code>。</li>
-<li data-line="2120"><code>showAdjust</code>: <code>boolean</code>，非必须，是否显示弹窗全屏按钮。</li>
-<li data-line="2121"><code>isFullscreen</code>: <code>boolean</code>，显示全屏按钮时必须，弹窗全屏状态。</li>
-<li data-line="2122"><code>children</code>: <code>ReactNode</code>，非必须，弹窗显示的内容。</li>
-<li data-line="2123"><code>className</code>: <code>string</code>，非必须，类名。</li>
-<li data-line="2124"><code>style</code>: <code>CSSProperties</code>，非必须，样式。</li>
-<li data-line="2125"><code>showMask</code>: <code>boolean</code>，<code>^4.16.8</code>，非必须，是否展示遮罩层，默认 true。</li>
+      <hr data-line="2136">
+<h3 id="🛸 MdModal" tabindex="-1" data-line="2138"><a class="header-anchor" href="#🛸 MdModal">🛸 MdModal</a></h3>
+<p data-line="2140">编辑器内部的弹窗组件，它通常配合下拉工具栏组件使用。</p>
+<ul data-line="2142">
+<li data-line="2142">
+<p data-line="2142"><strong>props</strong></p>
+<ul data-line="2144">
+<li data-line="2144"><strong>title</strong>: <code>ReactNode</code>，非必须，弹窗标题栏。</li>
+<li data-line="2145"><strong>visible</strong>: <code>boolean</code>，必须，弹窗显示状态。</li>
+<li data-line="2146"><strong>width</strong>: <code>string</code>，非必须，弹窗宽度，默认<code>auto</code>。</li>
+<li data-line="2147"><strong>height</strong>: <code>string</code>，同<code>width</code>。</li>
+<li data-line="2148"><strong>showAdjust</strong>: <code>boolean</code>，非必须，是否显示弹窗全屏按钮。</li>
+<li data-line="2149"><strong>isFullscreen</strong>: <code>boolean</code>，显示全屏按钮时必须，弹窗全屏状态。</li>
+<li data-line="2150"><strong>children</strong>: <code>ReactNode</code>，非必须，弹窗显示的内容。</li>
+<li data-line="2151"><strong>className</strong>: <code>string</code>，非必须，类名。</li>
+<li data-line="2152"><strong>style</strong>: <code>CSSProperties</code>，非必须，样式。</li>
+<li data-line="2153"><strong>showMask</strong>: <code>boolean</code>，<code>^4.16.8</code>，非必须，是否展示遮罩层，默认 true。</li>
 </ul>
 </li>
-<li data-line="2127">
-<p data-line="2127"><strong>events</strong></p>
-<ul data-line="2129">
-<li data-line="2129"><code>onClose</code>: <code>() =&gt; void</code>，必须，弹窗点击关闭事件。</li>
-<li data-line="2130"><code>onAdjust</code>: <code>(val: boolean) =&gt; void</code>，弹窗全屏按钮点击事件。</li>
+<li data-line="2155">
+<p data-line="2155"><strong>events</strong></p>
+<ul data-line="2157">
+<li data-line="2157"><strong>onClose</strong>: <code>() =&gt; void</code>，必须，弹窗点击关闭事件。</li>
+<li data-line="2158"><strong>onAdjust</strong>: <code>(val: boolean) =&gt; void</code>，弹窗全屏按钮点击事件。</li>
 </ul>
 </li>
 </ul>
 
-        <details  data-line="2132" class="md-editor-code">
+        <details  data-line="2160" class="md-editor-code">
           <summary class="md-editor-code-head">
             <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
             <div class="md-editor-code-action">
@@ -3091,25 +3152,25 @@ export default () =&gt; {
 };</span><span rn-wrapper aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
         </details>
-      <hr data-line="2194">
-<h3 id="🛸 NormalFooterToolbar" tabindex="-1" data-line="2196"><a class="header-anchor" href="#🛸 NormalFooterToolbar">🛸 NormalFooterToolbar</a></h3>
-<p data-line="2198">通用的页脚工具组件</p>
-<ul data-line="2200">
-<li data-line="2200">
-<p data-line="2200"><strong>events</strong></p>
-<ul data-line="2202">
-<li data-line="2202"><code>onClick</code>: <code>(e: MouseEvent) =&gt; void</code>，非必须，点击事件。</li>
+      <hr data-line="2222">
+<h3 id="🛸 NormalFooterToolbar" tabindex="-1" data-line="2224"><a class="header-anchor" href="#🛸 NormalFooterToolbar">🛸 NormalFooterToolbar</a></h3>
+<p data-line="2226">通用的页脚工具组件</p>
+<ul data-line="2228">
+<li data-line="2228">
+<p data-line="2228"><strong>events</strong></p>
+<ul data-line="2230">
+<li data-line="2230"><strong>onClick</strong>: <code>(e: MouseEvent) =&gt; void</code>，非必须，点击事件。</li>
 </ul>
 </li>
-<li data-line="2204">
-<p data-line="2204"><strong>slots</strong></p>
-<ul data-line="2206">
-<li data-line="2206"><code>children</code>: <code>ReactNode</code>，必须，内容。</li>
+<li data-line="2232">
+<p data-line="2232"><strong>slots</strong></p>
+<ul data-line="2234">
+<li data-line="2234"><strong>children</strong>: <code>ReactNode</code>，必须，内容。</li>
 </ul>
 </li>
 </ul>
 
-        <details  data-line="2208" class="md-editor-code" open="">
+        <details  data-line="2236" class="md-editor-code" open="">
           <summary class="md-editor-code-head">
             <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
             <div class="md-editor-code-action">
@@ -3133,10 +3194,10 @@ export default () =&gt; {
 };</span><span rn-wrapper aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
         </details>
-      <hr data-line="2223">
-<h2 id="🪤 内部配置" tabindex="-1" data-line="2225"><a class="header-anchor" href="#🪤 内部配置">🪤 内部配置</a></h2>
+      <hr data-line="2251">
+<h2 id="🪤 内部配置" tabindex="-1" data-line="2253"><a class="header-anchor" href="#🪤 内部配置">🪤 内部配置</a></h2>
 
-        <details  data-line="2227" class="md-editor-code" open="">
+        <details  data-line="2255" class="md-editor-code" open="">
           <summary class="md-editor-code-head">
             <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
             <div class="md-editor-code-action">
@@ -3157,12 +3218,12 @@ export default () =&gt; {
 console.log(allToolbar, allFooter, zh_CN, en_US, editorExtensionsAttrs);</span><span rn-wrapper aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
         </details>
-      <h2 id="📦 内部工具" tabindex="-1" data-line="2239"><a class="header-anchor" href="#📦 内部工具">📦 内部工具</a></h2>
-<h3 id="🧹 clearSideEffects" tabindex="-1" data-line="2241"><a class="header-anchor" href="#🧹 clearSideEffects">🧹 clearSideEffects</a></h3>
-<p data-line="2243"><code>&gt;=5.0.0</code></p>
-<p data-line="2245">清空组件带来的副作用，例如：使用 CDN 嵌入的链接，为了保证多个组件能够正常使用，组件在卸载时不会主动移除</p>
+      <h2 id="📦 内部工具" tabindex="-1" data-line="2267"><a class="header-anchor" href="#📦 内部工具">📦 内部工具</a></h2>
+<h3 id="🧹 clearSideEffects" tabindex="-1" data-line="2269"><a class="header-anchor" href="#🧹 clearSideEffects">🧹 clearSideEffects</a></h3>
+<p data-line="2271"><code>&gt;=5.0.0</code></p>
+<p data-line="2273">清空组件带来的副作用，例如：使用 CDN 嵌入的链接，为了保证多个组件能够正常使用，组件在卸载时不会主动移除</p>
 
-        <details  data-line="2247" class="md-editor-code" open="">
+        <details  data-line="2275" class="md-editor-code" open="">
           <summary class="md-editor-code-head">
             <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
             <div class="md-editor-code-action">
@@ -3177,12 +3238,12 @@ console.log(allToolbar, allFooter, zh_CN, en_US, editorExtensionsAttrs);</span><
 clearSideEffects();</span><span rn-wrapper aria-hidden="true"><span></span><span></span><span></span></span></code></pre>
 
         </details>
-      <div data-line="2253" class="md-editor-admonition md-editor-admonition-warning">
-<p data-line="2255">这会删除掉页面中的 CDN 引用，如果当前页面还存在该组件实例，请不要这样做！</p>
+      <div data-line="2281" class="md-editor-admonition md-editor-admonition-warning">
+<p data-line="2283">这会删除掉页面中的 CDN 引用，如果当前页面还存在该组件实例，请不要这样做！</p>
 </div>
-<h3 id="XSSPlugin" tabindex="-1" data-line="2259"><a class="header-anchor" href="#XSSPlugin">XSSPlugin</a></h3>
-<p data-line="2261"><code>&gt;=5.0.0</code></p>
-<p data-line="2263">使用示例：<a href="https://imzbf.github.io/md-editor-rt/zh-CN/demo#%F0%9F%94%92%20%E6%B7%BB%E5%8A%A0%20xss%20%E6%89%A9%E5%B1%95" target="_blank">添加 xss 扩展</a></p>
-<h2 id="✍️ 编辑此页面" tabindex="-1" data-line="2265"><a class="header-anchor" href="#✍️ 编辑此页面">✍️ 编辑此页面</a></h2>
-<p data-line="2267"><a href="https://github.com/imzbf/md-editor-rt/blob/dev-docs/public/doc-zh-CN.md" target="_blank">doc-zh-CN</a></p>
-</div></div></div></div><div class="catalog"><div class="affix"><div class="md-editor-catalog "></div></div></div></div></div></div><script id="__NEXT_DATA__" type="application/json">{"props":{"pageProps":{}},"page":"/zh-CN/api","query":{},"buildId":"bh7QB2PXCVrMu4XXuXtn7","assetPrefix":"/md-editor-rt","nextExport":true,"autoExport":true,"isFallback":false,"scriptLoader":[{"src":"//at.alicdn.com/t/c/font_2818624_gbt6qvt9lob.js","strategy":"afterInteractive"},{"async":true,"src":"https://www.googletagmanager.com/gtag/js?id=G-3R6P1XE0H0","strategy":"afterInteractive"},{"id":"gg","children":"window.dataLayer = window.dataLayer || [];\n                function gtag() {\n                  dataLayer.push(arguments);\n                }\n                gtag('js', new Date());\n                gtag('config', 'G-3R6P1XE0H0');","strategy":"afterInteractive"},{"src":"https://hm.baidu.com/hm.js?1563bc52cb27ffbc7b5b46cdfc327ce0","strategy":"afterInteractive"}]}</script></body></html>
+<h3 id="XSSPlugin" tabindex="-1" data-line="2287"><a class="header-anchor" href="#XSSPlugin">XSSPlugin</a></h3>
+<p data-line="2289"><code>&gt;=5.0.0</code></p>
+<p data-line="2291">使用示例：<a href="https://imzbf.github.io/md-editor-rt/zh-CN/demo#%F0%9F%94%92%20%E6%B7%BB%E5%8A%A0%20xss%20%E6%89%A9%E5%B1%95" target="_blank">添加 xss 扩展</a></p>
+<h2 id="✍️ 编辑此页面" tabindex="-1" data-line="2293"><a class="header-anchor" href="#✍️ 编辑此页面">✍️ 编辑此页面</a></h2>
+<p data-line="2295"><a href="https://github.com/imzbf/md-editor-rt/blob/dev-docs/public/doc-zh-CN.md" target="_blank">doc-zh-CN</a></p>
+</div></div></div></div><div class="catalog"><div class="affix"><div class="md-editor-catalog "></div></div></div></div></div></div><script id="__NEXT_DATA__" type="application/json">{"props":{"pageProps":{}},"page":"/zh-CN/api","query":{},"buildId":"kpCGmIvFAM4l3-UXP-G-O","assetPrefix":"/md-editor-rt","nextExport":true,"autoExport":true,"isFallback":false,"scriptLoader":[{"src":"//at.alicdn.com/t/c/font_2818624_gbt6qvt9lob.js","strategy":"afterInteractive"},{"async":true,"src":"https://www.googletagmanager.com/gtag/js?id=G-3R6P1XE0H0","strategy":"afterInteractive"},{"id":"gg","children":"window.dataLayer = window.dataLayer || [];\n                function gtag() {\n                  dataLayer.push(arguments);\n                }\n                gtag('js', new Date());\n                gtag('config', 'G-3R6P1XE0H0');","strategy":"afterInteractive"},{"src":"https://hm.baidu.com/hm.js?1563bc52cb27ffbc7b5b46cdfc327ce0","strategy":"afterInteractive"}]}</script></body></html>

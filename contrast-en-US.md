@@ -81,7 +81,7 @@ import React, { useState } from 'react';
 + import 'md-editor-rt/lib/preview.css';
 
 export default () => {
-  const [text] = useState('hello md-editor-rt！');
+  const [text] = useState('hello md-editor-rt!');
 - return <MdEditor modelValue={text} previewOnly />;
 + return <MdPreview modelValue={text} />;
 };
@@ -133,7 +133,7 @@ MdEditor.config({
 
 - **props**
 
-  - `markedHeadingId`: deleted, use `mdHeadingId` instead of it
+  - **markedHeadingId**: deleted, use `mdHeadingId` instead of it
 
 ---
 

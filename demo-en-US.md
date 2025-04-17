@@ -71,7 +71,7 @@ import 'md-editor-rt/lib/preview.css';
 export default () => {
   const [id] = useState('preview-only');
   const [scrollElement] = useState(document.documentElement);
-  const [text] = useState('hello md-editor-rt！');
+  const [text] = useState('hello md-editor-rt!');
 
   return (
     <>
