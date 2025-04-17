@@ -79,6 +79,12 @@ export interface CatalogProps {
    * @default 'preview'
    */
   syncWith?: 'editor' | 'preview';
+  /**
+   * 控制最大显示的目录层级
+   *
+   * >= v5.5.0
+   */
+  catalogMaxDepth?: number;
 }
 
 const MdCatalog = (props: CatalogProps) => {
@@ -118,6 +124,10 @@ const MdCatalog = (props: CatalogProps) => {
     const tocItems: TocItem[] = [];
 
     list.forEach((listItem, index) => {
+      if (props.catalogMaxDepth && listItem.level > props.catalogMaxDepth) {
+        return;
+      }
+
       const { text, level, line } = listItem;
       const item = {
         level,
@@ -159,7 +169,7 @@ const MdCatalog = (props: CatalogProps) => {
     });
 
     return tocItems;
-  }, [activeItem, list]);
+  }, [activeItem, list, props.catalogMaxDepth]);
 
   const [scrollElement] = useState(() => {
     return props.scrollElement || `#${editorId}-preview-wrapper`;

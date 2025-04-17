@@ -501,6 +501,13 @@ export interface EditorProps extends MdPreviewProps {
    * @default 'fixed'
    */
   catalogLayout?: 'fixed' | 'flat';
+
+  /**
+   * 控制最大显示的目录层级
+   *
+   * >= v5.5.0
+   */
+  catalogMaxDepth?: number;
 }
 
 export interface ContentType {
@@ -590,6 +597,12 @@ export interface ConfigOption {
     mermaid?: {
       instance?: any;
       js?: string;
+      /**
+       * 是否启用缩放功能
+       *
+       * @default true
+       */
+      enableZoom?: boolean;
     };
     katex?: {
       instance?: any;
@@ -710,9 +723,10 @@ export type Config = (options: Partial<ConfigOption>) => void;
  * 编辑器操作潜在的错误
  */
 export interface InnerError {
-  name: 'Cropper' | 'fullscreen' | 'prettier' | 'overlength';
+  name: 'Cropper' | 'fullscreen' | 'prettier' | 'overlength' | 'mermaid';
   message: string;
-  data: any;
+  data?: any;
+  error?: Error;
 }
 
 export interface CodeCss {
@@ -913,6 +927,13 @@ export interface ExposeParam {
 
 export type ExposePreviewParam = Pick<ExposeParam, 'rerender'>;
 
+export type CustomStrIcon = {
+  copy?: string;
+  'collapse-tips'?: string;
+  pin?: string;
+  'pin-off'?: string;
+};
+
 /**
  * 自定义图标的数据类型
  */
@@ -923,7 +944,4 @@ export type CustomIcon = {
       [key: string | number | symbol]: any;
     };
   };
-} & {
-  copy?: string;
-  'collapse-tips'?: string;
-};
+} & CustomStrIcon;

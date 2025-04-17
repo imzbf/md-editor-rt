@@ -133,7 +133,12 @@ export default ({ theme, previewTheme, codeTheme, lang }: PreviewProp) => {
           right: '10px'
         }}
       >
-        <MdCatalog theme={theme} editorId="md-prev" mdHeadingId={markedHeadingId} />
+        <MdCatalog
+          theme={theme}
+          editorId="md-prev"
+          mdHeadingId={markedHeadingId}
+          // catalogMaxDepth={2}
+        />
       </div>
       <button
         style={{
@@ -174,6 +179,7 @@ export default ({ theme, previewTheme, codeTheme, lang }: PreviewProp) => {
       <div className="container">
         <MdEditor
           id="md-prev"
+          // catalogMaxDepth={2}
           catalogLayout="flat"
           completions={completions}
           ref={editorRef}

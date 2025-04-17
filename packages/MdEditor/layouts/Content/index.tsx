@@ -126,6 +126,7 @@ const Content = forwardRef((props: ContentProps, ref: ForwardedRef<unknown>) => 
           scrollElementOffsetTop={2}
           syncWith={!props.setting.preview ? 'editor' : 'preview'}
           onClick={onCatalogClick}
+          catalogMaxDepth={props.catalogMaxDepth}
         />
       )}
     </div>

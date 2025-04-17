@@ -4,7 +4,9 @@ import { prefix, configOption } from '~/config';
 import { EditorContext } from '~/context';
 import { appendHandler } from '~/utils/dom';
 import { mermaidCache } from '~/utils/cache';
-import { CDN_IDS } from '~~/MdEditor/static';
+import { CDN_IDS } from '~/static';
+import { ERROR_CATCHER } from '~/static/event-name';
+import eventBus from '~/utils/event-bus';
 
 import { ContentPreviewProps } from '../props';
 
@@ -13,7 +15,7 @@ import { ContentPreviewProps } from '../props';
  *
  */
 const useMermaid = (props: ContentPreviewProps) => {
-  const { theme, rootRef } = useContext(EditorContext);
+  const { editorId, theme, rootRef } = useContext(EditorContext);
   const { noMermaid, sanitizeMermaid } = props;
 
   const mermaidRef = useRef(configOption.editorExtensions.mermaid!.instance);
@@ -107,7 +109,8 @@ const useMermaid = (props: ContentPreviewProps) => {
       await Promise.allSettled(
         Array.from(mermaidSourceEles).map((ele) => {
           const handler = async (item: HTMLElement) => {
-            let mermaidHtml = mermaidCache.get(item.innerText) as string;
+            const code = item.innerText as string;
+            let mermaidHtml = mermaidCache.get(code) as string;
 
             if (!mermaidHtml) {
               const idRand = randomId();
@@ -115,7 +118,7 @@ const useMermaid = (props: ContentPreviewProps) => {
               try {
                 result = await mermaidRef.current.render(
                   idRand,
-                  item.innerText,
+                  code,
                   svgContainingElement
                 );
 
@@ -127,15 +130,19 @@ const useMermaid = (props: ContentPreviewProps) => {
                 p.innerHTML = mermaidHtml;
                 p.children[0]?.removeAttribute('height');
 
-                mermaidCache.set(item.innerText, p.innerHTML);
+                mermaidCache.set(code, p.innerHTML);
 
                 if (item.dataset.line !== undefined) {
                   p.dataset.line = item.dataset.line;
                 }
 
                 item.replaceWith(p);
-              } catch {
-                // console.error(error.message);
+              } catch (error: any) {
+                eventBus.emit(editorId, ERROR_CATCHER, {
+                  name: 'mermaid',
+                  message: error.message,
+                  error
+                });
               }
 
               if (--count === 0) {
@@ -150,7 +157,7 @@ const useMermaid = (props: ContentPreviewProps) => {
     }
   }, [noMermaid, rootRef, sanitizeMermaid]);
 
-  return { mermaidRef, reRender, replaceMermaid };
+  return { reRender, replaceMermaid };
 };
 
 export default useMermaid;

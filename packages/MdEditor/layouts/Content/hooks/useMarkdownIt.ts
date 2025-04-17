@@ -58,7 +58,8 @@ const useMarkdownIt = (props: ContentPreviewProps, previewOnly: boolean) => {
     onHtmlChanged,
     onGetCatalog
   } = props;
-  const { editorConfig, markdownItConfig, markdownItPlugins } = configOption;
+  const { editorConfig, markdownItConfig, markdownItPlugins, editorExtensions } =
+    configOption;
   //
   const {
     editorId,
@@ -255,15 +256,26 @@ const useMarkdownIt = (props: ContentPreviewProps, previewOnly: boolean) => {
   }, [editorId, html, key, onGetCatalog, onHtmlChanged]);
 
   useEffect(() => {
+    let clearMermaidEvents = () => {};
     if (setting.preview) {
       replaceMermaid().then(() => {
-        zoomMermaid(
-          rootRef?.current?.querySelectorAll(`#${editorId} .${prefix}-mermaid`)
-        );
+        if (editorExtensions.mermaid?.enableZoom) {
+          clearMermaidEvents();
+          clearMermaidEvents = zoomMermaid(
+            rootRef!.current?.querySelectorAll(`#${editorId} .${prefix}-mermaid`),
+            {
+              customIcon: customIconRef.current
+            }
+          );
+        }
       });
       // 生成目录
       bus.emit(editorId, CATALOG_CHANGED, headsRef.current);
     }
+
+    return () => {
+      clearMermaidEvents();
+    };
   }, [editorId, replaceMermaid, rootRef, setting.preview]);
 
   useEffect(() => {
@@ -285,9 +297,22 @@ const useMarkdownIt = (props: ContentPreviewProps, previewOnly: boolean) => {
   }, [needReRender, theme, markHtml, language, previewOnly, editorConfig.renderDelay]);
 
   useEffect(() => {
+    let clearMermaidEvents = () => {};
     replaceMermaid().then(() => {
-      zoomMermaid(rootRef?.current?.querySelectorAll(`#${editorId} .${prefix}-mermaid`));
+      if (editorExtensions.mermaid?.enableZoom) {
+        clearMermaidEvents();
+        clearMermaidEvents = zoomMermaid(
+          rootRef!.current?.querySelectorAll(`#${editorId} p.${prefix}-mermaid`),
+          {
+            customIcon: customIconRef.current
+          }
+        );
+      }
     });
+
+    return () => {
+      clearMermaidEvents();
+    };
   }, [editorId, html, key, reRender, replaceMermaid, rootRef]);
 
   useEffect(() => {
