@@ -30,9 +30,12 @@ export default defineComponent({
   setup() {
     const text = ref('');
     return () => (
-      <MdEditor modelValue={text.value} onChange={(v: string) => (text.value = v)} />
+      <MdEditor
+        modelValue={text.value}
+        onChange={(v: string) => (text.value = v)}
+      />
     );
-  }
+  },
 });
 ```
 
@@ -70,3 +73,5 @@ note、abstract、info、tip、success、question、warning、failure、danger�
 !!!
 
 ## ☘️ em...
+
+none

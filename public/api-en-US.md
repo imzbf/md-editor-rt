@@ -64,7 +64,7 @@ This is the props of `MdPreview`, which is also part of `MdEditor`:
 
   Deprecated. Starting from version 5.x, Replace with `id`.
 
-  Unique identifier of the editor, use the default prefix and `useId` for concatenation. ~~When using server-side rendering, make sure to set this attribute to a constant value.~~，Starting from version 5.0, there is no such limitation.
+  Unique identifier of the editor, use the default prefix and `useId` for concatenation. ~~When using server-side rendering, make sure to set this attribute to a constant value.~~, Starting from version 5.0, there is no such limitation.
 
 ---
 
@@ -471,7 +471,7 @@ Except for the same as `MdPreview`:
 
   Show contents of toolbar.
 
-  You can sort the toolbar as you like, split tools by `'-'`, the left and right toolbars are divided by `'='`！
+  You can sort the toolbar as you like, split tools by `'-'`, the left and right toolbars are divided by `'='`!
 
   _[all]_
 
@@ -606,7 +606,7 @@ Except for the same as `MdPreview`:
 - **type**: `string`
 - **default**: `''`
 
-  em-\_-！
+  em-\_-!
 
 ---
 
@@ -783,6 +783,15 @@ Except for the same as `MdPreview`:
 - **default**: `fixed`
 
   \>=5.3.0, the built-in catalog status: 'fixed' - floats above the content; 'flat' - displays on the right side.
+
+---
+
+### 📇 catalogMaxDepth
+
+- **type**: `number`
+- **default**: `undefined`
+
+  \>=5.5.0 Controls the maximum depth of the catalog to be displayed.
 
 ---
 
@@ -1373,6 +1382,24 @@ config({
 });
 ```
 
+List of built-in Plugins.
+
+| Type       | Option                                                                                                                        |
+| ---------- | ----------------------------------------------------------------------------------------------------------------------------- |
+| image      | [URL](https://github.com/Antonio-Laguna/markdown-it-image-figures?tab=readme-ov-file#options)                                 |
+| admonition | [URL](https://github.com/imzbf/md-editor-v3/blob/develop/packages/MdEditor/layouts/Content/markdownIt/admonition/index.ts#L9) |
+| taskList   | [URL](https://github.com/imzbf/md-editor-v3/blob/develop/packages/MdEditor/layouts/Content/markdownIt/task/index.ts#L10)      |
+| heading    | [URL](https://github.com/imzbf/md-editor-v3/blob/develop/packages/MdEditor/layouts/Content/markdownIt/heading/index.ts#L5)    |
+| code       | [URL](https://github.com/imzbf/md-editor-v3/blob/develop/packages/MdEditor/layouts/Content/markdownIt/code/index.ts#L16)      |
+| sub        | none                                                                                                                          |
+| sup        | none                                                                                                                          |
+| katex      | [URL](https://github.com/imzbf/md-editor-v3/blob/develop/packages/MdEditor/layouts/Content/markdownIt/katex/index.ts#L18)     |
+| mermaid    | [URL](https://github.com/imzbf/md-editor-v3/blob/develop/packages/MdEditor/layouts/Content/markdownIt/mermaid/index.ts#L7)    |
+
+[Source code for adding plugins](https://github.com/imzbf/md-editor-v3/blob/develop/packages/MdEditor/layouts/Content/composition/useMarkdownIt.ts#L95)
+
+[Plugin corresponding source code](https://github.com/imzbf/md-editor-v3/tree/develop/packages/MdEditor/layouts/Content/markdownIt)
+
 ---
 
 ### 🍙 editorConfig
@@ -1757,13 +1784,13 @@ const MyEditor2 = () => {
 
 - **props**
 
-  - `title`: `string`, not required, title of toolbar.
-  - `children`: `ReactNode`, not required, it is usually an icon, which is displayed on the toolbar.
-  - ~~`trigger`~~: `ReactNode`, not required, deprecated, as above.
+  - **title**: `string`, optional, title of toolbar.
+  - **children**: `ReactNode`, optional, it is usually an icon, which is displayed on the toolbar.
+  - ~~**trigger**~~: `ReactNode`, optional, deprecated, as above.
 
 - **events**
 
-  - `onClick`: `(e: MouseEvent) => void`, required.
+  - **onClick**: `(e: MouseEvent) => void`, required.
 
 usage:
 
@@ -1828,15 +1855,15 @@ export default () => {
 
 - **props**
 
-  - `title`: `string`, not required, title of toolbar.
-  - `visible`: `boolean`, required.
-  - `children`: `ReactNode`, not required, it is usually an icon, which is displayed on the toolbar.
-  - ~~`trigger`~~: `ReactNode`, not required, deprecated, as above.
-  - `overlay`: `ReactNode`, required, content of dropdown box.
+  - **title**: `string`, optional, title of toolbar.
+  - **visible**: `boolean`, required.
+  - **children**: `ReactNode`, optional, it is usually an icon, which is displayed on the toolbar.
+  - ~~**trigger**~~: `ReactNode`, optional, deprecated, as above.
+  - **overlay**: `ReactNode`, required, content of dropdown box.
 
 - **events**
 
-  - `onChange`: `(visible: boolean) => void`, required.
+  - **onChange**: `(visible: boolean) => void`, required.
 
 usage:
 
@@ -1913,24 +1940,24 @@ export default () => {
 
 - **props**
 
-  - `title`: `string`, not required, title of toolbar.
-  - `modalTitle`: `ReactNode`, not required, title of the Modal.
-  - `visible`: `boolean`, required, visibility of Modal.
-  - `width`: `string`, not required, width of Modal, default `auto`.
-  - `height`: `string`, same as `width`.
-  - `showAdjust`: `boolean`, not required, visibility of fullscreen button.
-  - `isFullscreen`: `boolean`, required when `showAdjust = true`, status of fullscreen.
-  - `trigger`: `ReactNode`, required, it is usually an icon, which is displayed on the toolbar.
-  - `children`: `ReactNode`, required, content of Modal.
-  - `className`: `string`, `^4.16.8`, not required.
-  - `style`: `CSSProperties`, `^4.16.8`, not required.
-  - `showMask`: `boolean`, `^4.16.8`, not required, whether to display the mask layer, default `true`.
+  - **title**: `string`, optional, title of toolbar.
+  - **modalTitle**: `ReactNode`, optional, title of the Modal.
+  - **visible**: `boolean`, required, visibility of Modal.
+  - **width**: `string`, optional, width of Modal, default `auto`.
+  - **height**: `string`, same as `width`.
+  - **showAdjust**: `boolean`, optional, visibility of fullscreen button.
+  - **isFullscreen**: `boolean`, required when `showAdjust = true`, status of fullscreen.
+  - **trigger**: `ReactNode`, required, it is usually an icon, which is displayed on the toolbar.
+  - **children**: `ReactNode`, required, content of Modal.
+  - **className**: `string`, `^4.16.8`, optional.
+  - **style**: `CSSProperties`, `^4.16.8`, optional.
+  - **showMask**: `boolean`, `^4.16.8`, optional, whether to display the mask layer, default `true`.
 
 - **events**
 
-  - `onClick`: `() => void`, required.
-  - `onClose`: `() => void`, required, close event.
-  - `onAdjust`: `(val: boolean) => void`, fullscreen button click event.
+  - **onClick**: `() => void`, required.
+  - **onClose**: `() => void`, required, close event.
+  - **onAdjust**: `(val: boolean) => void`, fullscreen button click event.
 
 ```jsx
 import { useState } from 'react';
@@ -2029,18 +2056,19 @@ export default () => {
 
 - **props**
 
-  - `editorId`: `string`, required, editor's `id`, used to register listening events.
-  - `className`: `string`, not required.
-  - `mdHeadingId`: `mdHeadingId`, not required, same as editor.
-  - `scrollElement`: `string | HTMLElement`, not required, it is an element selector when its type is string. When using `MdPreview`, it is usually set to `document.documentElement`.
-  - `theme`: 'light' | 'dark', not required, provide it when you want to change theme online, it is the same as Editor `theme`.
-  - `offsetTop`: `number`, not required, highlight current item of catalogs when title is `offsetTop` pixels from the top, default 20.
-  - `scrollElementOffsetTop`: `number`, not required, offsetTop of the scroll container，default 0.
+  - **editorId**: `string`, required, editor's `id`, used to register listening events.
+  - **className**: `string`, optional.
+  - **mdHeadingId**: `mdHeadingId`, optional, same as editor.
+  - **scrollElement**: `string | HTMLElement`, optional, it is an element selector when its type is string. When using `MdPreview`, it is usually set to `document.documentElement`. ⚠️ This element must be positioned (e.g., relative, absolute, or fixed) and have scrollable content.
+  - **theme**: 'light' | 'dark', optional, provide it when you want to change theme online, it is the same as Editor `theme`.
+  - **offsetTop**: `number`, optional, highlight current item of catalogs when title is `offsetTop` pixels from the top, default 20.
+  - **scrollElementOffsetTop**: `number`, optional, offsetTop of the scroll container, default 0.
+  - **catalogMaxDepth**: `number`, `^5.5.0`, optional, controls the maximum depth of the catalog to be displayed.
 
 - **events**
 
-  - `onClick`: `(e: MouseEvent, t: TocItem) => void`, not required.
-  - `onActive`: `(heading: HeadList | undefined) => void`, not required, heading was highlighted.
+  - **onClick**: `(e: MouseEvent, t: TocItem) => void`, optional.
+  - **onActive**: `(heading: HeadList | undefined) => void`, optional, heading was highlighted.
 
 usage:
 
@@ -2074,21 +2102,21 @@ It is usually used in conjunction with `DropdownToolbar`.
 
 - **props**
 
-  - `title`: `ReactNode`, not required, title of Modal.
-  - `visible`: `boolean`, required, visibility of Modal.
-  - `width`: `string`, not required, width of Modal, default `auto`.
-  - `height`: `string`, same as `width`.
-  - `showAdjust`: `boolean`, not required, visibility of fullscreen button.
-  - `isFullscreen`: `boolean`, required when `showAdjust = true`, status of fullscreen.
-  - `children`: `ReactNode`, required, content of Modal.
-  - `className`: `string`, not required.
-  - `style`: `CSSProperties`, not required.
-  - `showMask`: `boolean`, `^4.16.8`, not required, whether to display the mask layer, default `true`.
+  - **title**: `ReactNode`, optional, title of Modal.
+  - **visible**: `boolean`, required, visibility of Modal.
+  - **width**: `string`, optional, width of Modal, default `auto`.
+  - **height**: `string`, same as `width`.
+  - **showAdjust**: `boolean`, optional, visibility of fullscreen button.
+  - **isFullscreen**: `boolean`, required when `showAdjust = true`, status of fullscreen.
+  - **children**: `ReactNode`, required, content of Modal.
+  - **className**: `string`, optional.
+  - **style**: `CSSProperties`, optional.
+  - **showMask**: `boolean`, `^4.16.8`, optional, whether to display the mask layer, default `true`.
 
 - **events**
 
-  - `onClose`: `() => void`, required, close event.
-  - `onAdjust`: `(val: boolean) => void`, fullscreen button click event.
+  - **onClose**: `() => void`, required, close event.
+  - **onAdjust**: `(val: boolean) => void`, fullscreen button click event.
 
 ```jsx
 import { useState } from 'react';
@@ -2159,11 +2187,11 @@ Footer toolbar components
 
 - **events**
 
-  - `onClick`: `(e: MouseEvent) => void`, not required, toolbar was clicked.
+  - **onClick**: `(e: MouseEvent) => void`, optional, toolbar was clicked.
 
 - **slots**
 
-  - `children`: `ReactNode`, required, content.
+  - **children**: `ReactNode`, required, content.
 
 ```jsx
 import { MdEditor, NormalFooterToolbar } from 'md-editor-rt';

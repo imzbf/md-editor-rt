@@ -10,7 +10,7 @@ Markdown editor for react, developed in jsx and typescript, dark theme, beautify
 
 ## Connect
 
-1. Email：zbfcqtl@gmail.com
-2. Github issue：[github issues](https://github.com/imzbf/md-editor-rt/issues)
+1. Email: zbfcqtl@gmail.com
+2. Github issue: [github issues](https://github.com/imzbf/md-editor-rt/issues)
 
 I'm not proficient in English, please help me correct wrong grammars.
