@@ -235,7 +235,7 @@ const HomePage = ({ mdText, tips }: { mdText: string; tips: string }) => {
           <span className="tips-text">
             {tips}
             <a
-              href="https://github.com/imzbf/md-editor-rt/tree/docs/src/components"
+              href="https://github.com/imzbf/md-editor-extension/tree/develop/packages/rt/components"
               target="_blank"
             >
               components
