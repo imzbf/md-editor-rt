@@ -25,12 +25,11 @@ const useResize = (
   const resizedWidth = useRef<string | number | undefined>(compatibledInputBoxWidth);
 
   useEffect(() => {
-    // 挂载后计算宽度的数值
-    const maxWidth = contentRef.current?.offsetWidth || 0;
-
-    const contentX = contentRef.current?.getBoundingClientRect().x || 0;
-
     const resizeMousemove = (e: MouseEvent) => {
+      // 挂载后计算宽度的数值
+      const maxWidth = contentRef.current?.offsetWidth || 0;
+
+      const contentX = contentRef.current?.getBoundingClientRect().x || 0;
       // 新的宽度 = 鼠标的位置 - 图标的一半宽度 - 内容区域的横坐标
       let nextWidth = e.x - contentX;
 
