@@ -84,13 +84,14 @@ export const directive2flag = async (
       return handleTable(params);
     }
     case 'link': {
-      const text = `[${params.desc}](${params.url})`;
+      const { desc = '', url = '' } = params;
+      const text = `[${desc}](${url})`;
 
       return {
         text,
         options: {
-          select: params.url === '',
-          deviationStart: text.length - params.url.length - 1,
+          select: url === '',
+          deviationStart: text.length - url.length - 1,
           deviationEnd: -1
         }
       };
@@ -279,7 +280,7 @@ const handleMermaid = (type: string) => {
  * 处理图片插入
  */
 const handleImage = (params: any) => {
-  const { desc, url, urls } = params;
+  const { desc = '', url = '', urls } = params;
   let text = '';
 
   if (urls instanceof Array) {

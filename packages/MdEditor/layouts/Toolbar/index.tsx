@@ -227,10 +227,7 @@ const Toolbar = (props: ToolbarProps) => {
               className={`${prefix}-menu-item ${prefix}-menu-item-image`}
               onClick={() => {
                 if (props.insertLinkDirect) {
-                  emitHandler('image', {
-                    desc: '',
-                    url: ''
-                  });
+                  emitHandler('image');
                 } else {
                   setModalData((_modalData) => {
                     return {
@@ -856,10 +853,7 @@ const Toolbar = (props: ToolbarProps) => {
                   }
 
                   if (props.insertLinkDirect) {
-                    emitHandler('link', {
-                      desc: '',
-                      url: ''
-                    });
+                    emitHandler('link');
                   } else {
                     setModalData({
                       ...modalData,
@@ -894,10 +888,7 @@ const Toolbar = (props: ToolbarProps) => {
                   }
 
                   if (props.insertLinkDirect) {
-                    emitHandler('image', {
-                      desc: '',
-                      url: ''
-                    });
+                    emitHandler('image');
                   } else {
                     setModalData((_modalData) => {
                       return {
