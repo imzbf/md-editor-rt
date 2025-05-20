@@ -161,6 +161,7 @@ const Editor = forwardRef((props: EditorProps, ref: ForwardedRef<unknown>) => {
             showToolbarName={props.showToolbarName}
             catalogVisible={catalogVisible}
             codeTheme={codeTheme}
+            insertLinkDirect={props.insertLinkDirect}
           />
         )}
         <Content

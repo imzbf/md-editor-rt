@@ -52,6 +52,7 @@ export interface ToolbarProps {
   showToolbarName?: boolean;
   catalogVisible: boolean;
   codeTheme: string;
+  insertLinkDirect: boolean | undefined;
 }
 
 let splitNum = 0;
@@ -225,13 +226,20 @@ const Toolbar = (props: ToolbarProps) => {
             <li
               className={`${prefix}-menu-item ${prefix}-menu-item-image`}
               onClick={() => {
-                setModalData((_modalData) => {
-                  return {
-                    ..._modalData,
-                    type: 'image',
-                    linkVisible: true
-                  };
-                });
+                if (props.insertLinkDirect) {
+                  emitHandler('image', {
+                    desc: '',
+                    url: ''
+                  });
+                } else {
+                  setModalData((_modalData) => {
+                    return {
+                      ..._modalData,
+                      type: 'image',
+                      linkVisible: true
+                    };
+                  });
+                }
               }}
               role="menuitem"
               tabIndex={0}
@@ -296,6 +304,8 @@ const Toolbar = (props: ToolbarProps) => {
     ult.toolbarTips?.image,
     disabled,
     props.showToolbarName,
+    props.insertLinkDirect,
+    emitHandler,
     setModalData
   ]);
 
@@ -844,11 +854,19 @@ const Toolbar = (props: ToolbarProps) => {
                   if (disabled) {
                     return false;
                   }
-                  setModalData({
-                    ...modalData,
-                    type: 'link',
-                    linkVisible: true
-                  });
+
+                  if (props.insertLinkDirect) {
+                    emitHandler('link', {
+                      desc: '',
+                      url: ''
+                    });
+                  } else {
+                    setModalData({
+                      ...modalData,
+                      type: 'link',
+                      linkVisible: true
+                    });
+                  }
                 }}
                 key="bar-link"
               >
@@ -875,13 +893,20 @@ const Toolbar = (props: ToolbarProps) => {
                     return false;
                   }
 
-                  setModalData((_modalData) => {
-                    return {
-                      ..._modalData,
-                      type: 'image',
-                      linkVisible: true
-                    };
-                  });
+                  if (props.insertLinkDirect) {
+                    emitHandler('image', {
+                      desc: '',
+                      url: ''
+                    });
+                  } else {
+                    setModalData((_modalData) => {
+                      return {
+                        ..._modalData,
+                        type: 'image',
+                        linkVisible: true
+                      };
+                    });
+                  }
                 }}
                 key="bar-image-no-upload"
               >

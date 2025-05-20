@@ -508,6 +508,14 @@ export interface EditorProps extends MdPreviewProps {
    * >= v5.5.0
    */
   catalogMaxDepth?: number;
+  /**
+   * 工具栏直接插入内容到输入框
+   *
+   * >= v5.6.0
+   *
+   * @default false
+   */
+  insertLinkDirect?: boolean;
 }
 
 export interface ContentType {
