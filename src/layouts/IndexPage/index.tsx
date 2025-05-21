@@ -13,14 +13,7 @@ import { useLang } from '@/hooks/router';
 import { useAppSelector } from '@/hooks/store';
 import Head from 'next/head';
 
-import {
-  DESCRIPTION_CN,
-  DESCRIPTION_EN,
-  KEYWORDS_CN,
-  KEYWORDS_EN,
-  SITE_NAME_CN,
-  SITE_NAME_EN,
-} from '@/config';
+import { DESCRIPTION_CN, DESCRIPTION_EN, KEYWORDS_CN, KEYWORDS_EN, SITE_NAME_CN, SITE_NAME_EN } from '@/config';
 
 const editorId = 'editor-preview';
 
@@ -78,10 +71,7 @@ const HomePage = ({ mdText, tips }: { mdText: string; tips: string }) => {
 
   const { SITE_NAME, KEYWORDS, DESCRIPTION } = useMemo(() => {
     return {
-      SITE_NAME:
-        lang === 'zh-CN'
-          ? `首页 - ${SITE_NAME_CN}`
-          : `HomePage - ${SITE_NAME_EN}`,
+      SITE_NAME: lang === 'zh-CN' ? `首页 - ${SITE_NAME_CN}` : `HomePage - ${SITE_NAME_EN}`,
       KEYWORDS: lang === 'zh-CN' ? KEYWORDS_CN : KEYWORDS_EN,
       DESCRIPTION: lang === 'zh-CN' ? DESCRIPTION_CN : DESCRIPTION_EN,
     };
@@ -91,12 +81,7 @@ const HomePage = ({ mdText, tips }: { mdText: string; tips: string }) => {
     if (isMobile()) {
       // 在移动端不现实分屏预览，要么编辑，要么仅预览
       setToolbars(() => {
-        const t = toolbars.filter(
-          (item) =>
-            !(['preview', 'previewOnly'] as Array<string | number>).includes(
-              item
-            )
-        );
+        const t = toolbars.filter((item) => !(['preview', 'previewOnly'] as Array<string | number>).includes(item));
 
         return ['previewOnly', ...t];
       });
@@ -117,43 +102,34 @@ const HomePage = ({ mdText, tips }: { mdText: string; tips: string }) => {
     });
   }, []);
 
-  const onUploadImg = useCallback(
-    async (files: Array<File>, callback: (urls: string[]) => void) => {
-      const res = await Promise.all(
-        files.map((file) => {
-          return new Promise((rev, rej) => {
-            const form = new FormData();
-            form.append('file', file);
+  const onUploadImg = useCallback(async (files: Array<File>, callback: (urls: string[]) => void) => {
+    const res = await Promise.all(
+      files.map((file) => {
+        return new Promise((rev, rej) => {
+          const form = new FormData();
+          form.append('file', file);
 
-            axios
-              .post('/api/img/upload', form, {
-                headers: {
-                  'Content-Type': 'multipart/form-data',
-                },
-              })
-              .then((res: unknown) => rev(res))
-              .catch((error: unknown) => rej(error));
-          });
-        })
-      );
+          axios
+            .post('/api/img/upload', form, {
+              headers: {
+                'Content-Type': 'multipart/form-data',
+              },
+            })
+            .then((res: unknown) => rev(res))
+            .catch((error: unknown) => rej(error));
+        });
+      })
+    );
 
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      callback(res.map((item: any) => item.data.url));
-    },
-    []
-  );
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    callback(res.map((item: any) => item.data.url));
+  }, []);
 
   const defToolbars = useMemo(() => {
     return [
       <Mark key="mark-extension" />,
       <Emoji key="emoji-extension" />,
-      <ExportPDF
-        key="ExportPDF"
-        modelValue={md}
-        height="700px"
-        onProgress={onProgress}
-        onSuccess={onSuccess}
-      />,
+      <ExportPDF key="ExportPDF" modelValue={md} height="700px" onProgress={onProgress} onSuccess={onSuccess} />,
     ];
   }, [md]);
 
@@ -230,14 +206,12 @@ const HomePage = ({ mdText, tips }: { mdText: string; tips: string }) => {
             footers={footers}
             defFooters={defFooters}
             catalogLayout="flat"
+            insertLinkDirect
           />
           <br />
           <span className="tips-text">
             {tips}
-            <a
-              href="https://github.com/imzbf/md-editor-extension/tree/develop/packages/rt/components"
-              target="_blank"
-            >
+            <a href="https://github.com/imzbf/md-editor-extension/tree/develop/packages/rt/components" target="_blank">
               components
             </a>
           </span>
