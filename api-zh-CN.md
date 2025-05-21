@@ -169,13 +169,11 @@
       highlight: {
         css: {
           atom: {
-            light:
-              'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/styles/atom-one-light.min.css',
+            light: 'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/styles/atom-one-light.min.css',
             dark: 'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/styles/atom-one-dark.min.css',
           },
           xxx: {
-            light:
-              'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/styles/xxx-light.css',
+            light: 'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/styles/xxx-light.css',
             dark: 'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/styles/xxx-dark.css',
           },
         },
@@ -592,9 +590,7 @@
     />,
   ];
 
-  export default () => (
-    <MdEditor modelValue="" toolbars={toolbars} defToolbars={defToolbars} />
-  );
+  export default () => <MdEditor modelValue="" toolbars={toolbars} defToolbars={defToolbars} />;
   ```
 
   ![普通扩展工具栏](https://imzbf.github.io/md-editor-rt/imgs/normal-toolbar.gif)
@@ -815,7 +811,7 @@
 - **类型**：`'fixed' | 'flat'`
 - **默认值**：`fixed`
 
-  \>=5.3.0 内置的目录显示的状态，'fixed': 悬浮在内容上方，'flat': 展示在右侧
+  \>=5.3.0 内置的目录显示的状态，'fixed': 悬浮在内容上方，'flat': 展示在右侧。
 
 ---
 
@@ -825,6 +821,17 @@
 - **默认值**：`undefined`
 
   \>=5.5.0 控制要显示的目录的最大深度。
+
+### 🖌 insertLinkDirect
+
+- **类型**：`boolean`
+- **默认值**：`false`
+
+  \>=5.6.0 设置是否直接插入链接到编辑区域，设置为 `false` 会打开弹窗后在输入框输入。
+
+  !!! warning
+  6.0 开始废弃，默认不再使用弹窗。
+  !!!
 
 ---
 
@@ -934,13 +941,7 @@
 
   export default () => {
     const [text, setText] = useState('# Hello Editor');
-    return (
-      <MdEditor
-        modelValue={text}
-        onChange={setText}
-        onUploadImg={onUploadImg}
-      />
-    );
+    return <MdEditor modelValue={text} onChange={setText} onUploadImg={onUploadImg} />;
   };
   ```
 
@@ -1960,15 +1961,7 @@ const defToolbars = [<MyToolbar key="key" />];
 export default () => {
   const [value, setValue] = useState('');
 
-  return (
-    <MdEditor
-      modelValue={value}
-      id="md-prev"
-      toolbars={toolbars}
-      defToolbars={defToolbars}
-      onChange={setValue}
-    />
-  );
+  return <MdEditor modelValue={value} id="md-prev" toolbars={toolbars} defToolbars={defToolbars} onChange={setValue} />;
 };
 ```
 
@@ -2076,15 +2069,7 @@ const defToolbars = [<MyToolbar key="key" />];
 
 export default () => {
   const [value, setValue] = useState('');
-  return (
-    <MdEditor
-      modelValue={value}
-      id="md-prev"
-      toolbars={toolbars}
-      defToolbars={defToolbars}
-      onChange={setValue}
-    />
-  );
+  return <MdEditor modelValue={value} id="md-prev" toolbars={toolbars} defToolbars={defToolbars} onChange={setValue} />;
 };
 ```
 
@@ -2208,15 +2193,7 @@ const defToolbars = [<MyToolbar key="key" />];
 export default () => {
   const [value, setValue] = useState('');
 
-  return (
-    <MdEditor
-      modelValue={value}
-      id="md-prev"
-      toolbars={toolbars}
-      defToolbars={defToolbars}
-      onChange={setValue}
-    />
-  );
+  return <MdEditor modelValue={value} id="md-prev" toolbars={toolbars} defToolbars={defToolbars} onChange={setValue} />;
 };
 ```
 
@@ -2254,13 +2231,7 @@ export default () => {
 ## 🪤 内部配置
 
 ```js
-import {
-  allToolbar,
-  allFooter,
-  zh_CN,
-  en_US,
-  editorExtensionsAttrs,
-} from 'md-editor-rt';
+import { allToolbar, allFooter, zh_CN, en_US, editorExtensionsAttrs } from 'md-editor-rt';
 
 console.log(allToolbar, allFooter, zh_CN, en_US, editorExtensionsAttrs);
 ```

@@ -163,13 +163,11 @@ This is the props of `MdPreview`, which is also part of `MdEditor`:
       highlight: {
         css: {
           atom: {
-            light:
-              'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/styles/atom-one-light.min.css',
+            light: 'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/styles/atom-one-light.min.css',
             dark: 'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/styles/atom-one-dark.min.css',
           },
           xxx: {
-            light:
-              'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/styles/xxx-light.css',
+            light: 'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/styles/xxx-light.css',
             dark: 'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/styles/xxx-dark.css',
           },
         },
@@ -552,9 +550,7 @@ Except for the same as `MdPreview`:
   ];
 
   export default () => {
-    return (
-      <MdEditor modelValue="" toolbars={toolbars} defToolbars={defToolbars} />
-    );
+    return <MdEditor modelValue="" toolbars={toolbars} defToolbars={defToolbars} />;
   };
   ```
 
@@ -793,6 +789,17 @@ Except for the same as `MdPreview`:
 
   \>=5.5.0 Controls the maximum depth of the catalog to be displayed.
 
+### 🖌 insertLinkDirect
+
+- **type**: `boolean`
+- **default**: `false`
+
+  \>=5.6.0 Set if you want to insert a link directly into the edit field, set it to `false` will open a popup window and type in the input box.
+
+  !!! warning
+  Deprecated since 6.0, popups no longer used by default.
+  !!!
+
 ---
 
 ## 🧵 MdPreview Events
@@ -901,13 +908,7 @@ Except for the same as `MdPreview`:
   export default () => {
     const [text, setText] = useState('# Hello Editor');
 
-    return (
-      <MdEditor
-        modelValue={text}
-        onChange={setText}
-        onUploadImg={onUploadImg}
-      />
-    );
+    return <MdEditor modelValue={text} onChange={setText} onUploadImg={onUploadImg} />;
   };
   ```
 
@@ -1835,15 +1836,7 @@ const defToolbars = [<MyToolbar />];
 export default () => {
   const [value, setValue] = useState('');
 
-  return (
-    <MdEditor
-      modelValue={value}
-      id="md-prev"
-      toolbars={toolbars}
-      defToolbars={defToolbars}
-      onChange={setValue}
-    />
-  );
+  return <MdEditor modelValue={value} id="md-prev" toolbars={toolbars} defToolbars={defToolbars} onChange={setValue} />;
 };
 ```
 
@@ -1920,15 +1913,7 @@ const defToolbars = [<MyToolbar key="key" />];
 export default () => {
   const [value, setValue] = useState('');
 
-  return (
-    <MdEditor
-      modelValue={value}
-      id="md-prev"
-      toolbars={toolbars}
-      defToolbars={defToolbars}
-      onChange={setValue}
-    />
-  );
+  return <MdEditor modelValue={value} id="md-prev" toolbars={toolbars} defToolbars={defToolbars} onChange={setValue} />;
 };
 ```
 
@@ -2036,15 +2021,7 @@ const defToolbars = [<MyToolbar key="key" />];
 
 export default () => {
   const [value, setValue] = useState('');
-  return (
-    <MdEditor
-      modelValue={value}
-      id="md-prev"
-      toolbars={toolbars}
-      defToolbars={defToolbars}
-      onChange={setValue}
-    />
-  );
+  return <MdEditor modelValue={value} id="md-prev" toolbars={toolbars} defToolbars={defToolbars} onChange={setValue} />;
 };
 ```
 
@@ -2213,13 +2190,7 @@ export default () => {
 ## 🪤 Internal Configuration
 
 ```js
-import {
-  allToolbar,
-  allFooter,
-  zh_CN,
-  en_US,
-  editorExtensionsAttrs,
-} from 'md-editor-rt';
+import { allToolbar, allFooter, zh_CN, en_US, editorExtensionsAttrs } from 'md-editor-rt';
 
 console.log(allToolbar, allFooter, zh_CN, en_US, editorExtensionsAttrs);
 ```
