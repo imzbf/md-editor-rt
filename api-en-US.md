@@ -217,7 +217,7 @@ This is the props of `MdPreview`, which is also part of `MdEditor`:
 
   Basic solution for dangerous code has been built-in since version 3.x. eg: `<script>alert(123)</script>`. Prior to version 4.11.3, it was recommended to utilize this attribute for cleaning more complex content to prevent XSS attacks.
 
-  A more comprehensive solution has been implemented since version 4.11.3. [Refer to](https://imzbf.github.io/md-editor-rt/en-US/demo#%F0%9F%94%8F%20Modify%20XSS%20configuration)
+  A more comprehensive solution has been implemented since version 4.11.3. Refer to [Modify XSS configuration](https://imzbf.github.io/md-editor-rt/en-US/demo#%F0%9F%94%8F%20Modify%20XSS%20configuration)
 
   !!!
 
@@ -554,11 +554,7 @@ Except for the same as `MdPreview`:
   };
   ```
 
-  ![NormalToolbar](https://imzbf.github.io/md-editor-rt/imgs/normal-toolbar.gif)
-
-  ![DropdownToolbar](https://imzbf.github.io/md-editor-rt/imgs/dropdown-toolbar.gif)
-
-  For more info, Get **Internal Components** heading. Get source code of **mark**, **emoji** and **modal preview** at [docs](https://github.com/imzbf/md-editor-rt/tree/docs/src/components) branch.
+For more info, click [Internal Components](#%F0%9F%AA%A4%20Internal%20Components). Get source code of **mark**, **emoji** and **modal preview** at [md-editor-extension](https://github.com/imzbf/md-editor-extension/tree/develop/packages/v3/components) branch.
 
 ---
 
@@ -593,7 +589,7 @@ Except for the same as `MdPreview`:
   () => <MdEditor tableShape={tableShape}>
   ```
 
-  ![Preview](https://imzbf.github.io/md-editor-rt/imgs/20211216165424.png)
+  ![Preview](https://imzbf.github.io/md-editor-v3/imgs/20211216165424.png)
 
 ---
 
@@ -749,7 +745,7 @@ Except for the same as `MdPreview`:
 
   Show toolbar name or not
 
-![](https://imzbf.github.io/md-editor-rt/imgs/showToolbarName.jpg)
+![](https://imzbf.github.io/md-editor-v3/imgs/showToolbarName.png)
 
 ---
 
@@ -760,7 +756,7 @@ Except for the same as `MdPreview`:
 
   Default width of input box
 
-![](https://imzbf.github.io/md-editor-rt/imgs/drag-width.jpg)
+![](https://imzbf.github.io/md-editor-v3/imgs/drag-width.gif)
 
 ---
 

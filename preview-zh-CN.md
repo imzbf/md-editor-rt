@@ -16,7 +16,7 @@ Markdown 编辑器，React 版本，使用 jsx 和 typescript 语法开发，支
 - [ ] 周六
 - [x] 周天
 
-![图片](https://imzbf.github.io/md-editor-rt/imgs/mark_emoji.gif)
+![图片](https://imzbf.github.io/md-editor-v3/imgs/mark_emoji.gif)
 
 ## 🤗 代码演示
 
@@ -29,12 +29,7 @@ export default defineComponent({
   name: 'MdEditor',
   setup() {
     const text = ref('');
-    return () => (
-      <MdEditor
-        modelValue={text.value}
-        onChange={(v: string) => (text.value = v)}
-      />
-    );
+    return () => <MdEditor modelValue={text.value} onChange={(v: string) => (text.value = v)} />;
   },
 });
 ```

@@ -223,7 +223,7 @@
 
   基本的危险代码处理方案在 3.x 以后已内置，例如`<script>alert(123)</script>`，4.11.3 之前建议使用该属性来清理更复杂的内容以防止 XSS。
 
-  在 4.11.3 以后实现了更完善的处理方案，[参考](https://imzbf.github.io/md-editor-rt/zh-CN/demo#%F0%9F%94%8F%20%E4%BF%AE%E6%94%B9%20xss%20%E9%85%8D%E7%BD%AE)
+  在 4.11.3 以后实现了更完善的处理方案，参阅[修改 xss 配置](https://imzbf.github.io/md-editor-rt/zh-CN/demo#%F0%9F%94%8F%20%E4%BF%AE%E6%94%B9%20xss%20%E9%85%8D%E7%BD%AE)
 
   !!!
 
@@ -593,11 +593,7 @@
   export default () => <MdEditor modelValue="" toolbars={toolbars} defToolbars={defToolbars} />;
   ```
 
-  ![普通扩展工具栏](https://imzbf.github.io/md-editor-rt/imgs/normal-toolbar.gif)
-
-  ![下拉扩展工具栏](https://imzbf.github.io/md-editor-rt/imgs/dropdown-toolbar.gif)
-
-  扩展组件属性参考**内置组件**，使用示例参见[文档分支](https://github.com/imzbf/md-editor-rt/tree/docs/src/components)，提供**标记**、**表情**和**弹窗预览**扩展组件。
+扩展组件属性参考[内置组件](#%F0%9F%AA%A4%20%E5%86%85%E7%BD%AE%E7%BB%84%E4%BB%B6)，使用示例参见[md-editor-extension](https://github.com/imzbf/md-editor-extension/tree/develop/packages/v3/components)，提供**标记**、**表情**和**弹窗预览**扩展组件。
 
 ---
 
@@ -632,7 +628,7 @@
   () => <MdEditor tableShape={tableShape}>
   ```
 
-  ![表格预设大小预览](https://imzbf.github.io/md-editor-rt/imgs/20211216165424.png)
+  ![表格预设大小预览](https://imzbf.github.io/md-editor-v3/imgs/20211216165424.png)
 
 ---
 
@@ -782,7 +778,7 @@
 
   是否在工具栏下面显示对应的文字名称
 
-![](https://imzbf.github.io/md-editor-rt/imgs/showToolbarName.jpg)
+![](https://imzbf.github.io/md-editor-v3/imgs/showToolbarName.png)
 
 ---
 
@@ -793,7 +789,7 @@
 
   输入框默认的宽度
 
-![](https://imzbf.github.io/md-editor-rt/imgs/drag-width.jpg)
+![](https://imzbf.github.io/md-editor-v3/imgs/drag-width.gif)
 
 ---
 
