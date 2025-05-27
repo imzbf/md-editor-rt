@@ -28,11 +28,11 @@ Markdown editor for `react`, developed in `jsx` and `typescript`.
 
 | Default theme | Dark theme | Preview only |
 | --- | --- | --- |
-| ![](https://imzbf.github.io/md-editor-rt/imgs/preview-light.png) | ![](https://imzbf.github.io/md-editor-rt/imgs/preview-dark.png) | ![](https://imzbf.github.io/md-editor-rt/imgs/preview-previewOnly.png) |
+| ![](https://imzbf.github.io/md-editor-v3/imgs/preview-light.png) | ![](https://imzbf.github.io/md-editor-v3/imgs/preview-dark.png) | ![](https://imzbf.github.io/md-editor-v3/imgs/preview-previewOnly.png) |
 
 Inputing prompt and mark, emoji extensions
 
-![](https://imzbf.github.io/md-editor-rt/imgs/mark_emoji.gif)
+![](https://imzbf.github.io/md-editor-v3/imgs/mark_emoji.gif)
 
 ## 📦 Install
 

@@ -225,7 +225,7 @@ export default ({ theme, previewTheme, codeTheme, lang }: PreviewProp) => {
           //   console.log(t);
 
           //   return Promise.resolve(
-          //     'https://imzbf.github.io/md-editor-rt/imgs/preview-light.png'
+          //     'https://imzbf.github.io/md-editor-v3/imgs/preview-light.png'
           //   );
           // }}
           // noImgZoomIn
