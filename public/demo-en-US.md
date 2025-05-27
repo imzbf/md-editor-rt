@@ -27,10 +27,7 @@ Use production version in html directly:
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <link
-      href="https://unpkg.com/md-editor-rt@${EDITOR_VERSION}/lib/style.css"
-      rel="stylesheet"
-    />
+    <link href="https://unpkg.com/md-editor-rt@${EDITOR_VERSION}/lib/style.css" rel="stylesheet" />
   </head>
   <body>
     <div id="root"></div>
@@ -138,10 +135,7 @@ config({
     };
 
     // 4. Add the modified shortcut key to the array
-    const newMdEditorCommands = [
-      CtrlM,
-      ...mdEditorCommands.filter((i) => i.key !== 'Ctrl-b'),
-    ];
+    const newMdEditorCommands = [CtrlM, ...mdEditorCommands.filter((i) => i.key !== 'Ctrl-b')];
 
     newExtensions.push(keymap.of(newMdEditorCommands));
 
@@ -313,13 +307,7 @@ import 'md-editor-rt/lib/style.css';
 export default () => {
   const [text, setText] = useState('hello md-editor-rt!');
   const [previewTheme] = useState('github');
-  return (
-    <MdEditor
-      modelValue={text}
-      onChange={setText}
-      previewTheme={previewTheme}
-    />
-  );
+  return <MdEditor modelValue={text} onChange={setText} previewTheme={previewTheme} />;
 };
 ```
 
@@ -361,9 +349,7 @@ There are 8 kinds of themes: `atom`, `a11y`, `github`, `gradient`, `kimbie`, `pa
   export default () => {
     const [text, setText] = useState('hello md-editor-rt!');
     const [codeTheme] = useState('atom');
-    return (
-      <MdEditor modelValue={text} onChange={setText} codeTheme={codeTheme} />
-    );
+    return <MdEditor modelValue={text} onChange={setText} codeTheme={codeTheme} />;
   };
   ```
 
@@ -379,13 +365,11 @@ There are 8 kinds of themes: `atom`, `a11y`, `github`, `gradient`, `kimbie`, `pa
       highlight: {
         css: {
           xxxxx: {
-            light:
-              'https://unpkg.com/highlight.js@11.2.0/styles/xxxxx-light.css',
+            light: 'https://unpkg.com/highlight.js@11.2.0/styles/xxxxx-light.css',
             dark: 'https://unpkg.com/highlight.js@11.2.0/styles/xxxxx-dark.css',
           },
           yyyyy: {
-            light:
-              'https://unpkg.com/highlight.js@11.2.0/styles/xxxxx-light.css',
+            light: 'https://unpkg.com/highlight.js@11.2.0/styles/xxxxx-light.css',
             dark: 'https://unpkg.com/highlight.js@11.2.0/styles/xxxxx-dark.css',
           },
         },
@@ -488,9 +472,7 @@ const onUploadImg = async (files, callback) => {
 
 export default () => {
   const [text, setText] = useState('hello md-editor-rt!');
-  return (
-    <MdEditor modelValue={text} onChange={setText} onUploadImg={onUploadImg} />
-  );
+  return <MdEditor modelValue={text} onChange={setText} onUploadImg={onUploadImg} />;
 };
 ```
 
@@ -612,9 +594,7 @@ You can install the existing language also: [md-editor-extension](https://github
     const [text, setText] = useState('hello md-editor-rt!');
     const [catalogList, setList] = useState([]);
 
-    return (
-      <MdEditor modelValue={text} onChange={setText} onGetCatalog={setList} />
-    );
+    return <MdEditor modelValue={text} onChange={setText} onGetCatalog={setList} />;
   };
   ```
 
@@ -655,14 +635,7 @@ import 'md-editor-rt/lib/style.css';
 
 export default () => {
   const [text, setText] = useState('hello md-editor-rt!');
-  const [toolbars] = useState([
-    'italic',
-    'underline',
-    '-',
-    'bold',
-    '=',
-    'github',
-  ]);
+  const [toolbars] = useState(['italic', 'underline', '-', 'bold', '=', 'github']);
 
   return <MdEditor modelValue={text} onChange={setText} toolbars={toolbars} />;
 };
@@ -674,7 +647,7 @@ There are examples of `mark` and `emoji`.
 
 To get complete code, refer to [docs](https://github.com/imzbf/md-editor-rt/blob/docs/src/pages/Preview/index.tsx).
 
-![mark and Emoji extension](https://imzbf.github.io/md-editor-rt/imgs/mark_emoji.gif)
+![mark and Emoji extension](https://imzbf.github.io/md-editor-v3/imgs/mark_emoji.gif)
 
 > Get more emojis, go to [https://getemoji.com/](https://getemoji.com/).
 
@@ -1065,9 +1038,7 @@ If you want to use it in only one editor, try distinguishing using `editorId` (`
 ```js
 config({
   codeMirrorExtensions(_theme, extensions, _keyBindings, { editorId }) {
-    return editorId === 'myId'
-      ? [...extensions, yCollab(ytext, provider.awareness, { undoManager })]
-      : extensions;
+    return editorId === 'myId' ? [...extensions, yCollab(ytext, provider.awareness, { undoManager })] : extensions;
   },
 });
 ```
@@ -1084,8 +1055,7 @@ config({
             ...item,
             options: {
               ...item.options,
-              extraTools:
-                '<span class="extra-code-tools">Additional features</span>',
+              extraTools: '<span class="extra-code-tools">Additional features</span>',
             },
           };
         }
@@ -1105,24 +1075,20 @@ Here is an example of how to print code:
 
 ```js
 const onRemount = useCallback(() => {
-  document
-    .querySelectorAll(`#${editorId} .${prefix}-preview .${prefix}-code`)
-    .forEach((codeBlock: Element) => {
-      const tools = codeBlock.querySelectorAll('.extra-code-tools');
-      tools.forEach((item) => {
-        item.addEventListener('click', (e) => {
-          e.preventDefault();
+  document.querySelectorAll(`#${editorId} .${prefix}-preview .${prefix}-code`).forEach((codeBlock: Element) => {
+    const tools = codeBlock.querySelectorAll('.extra-code-tools');
+    tools.forEach((item) => {
+      item.addEventListener('click', (e) => {
+        e.preventDefault();
 
-          const activeCode =
-            codeBlock.querySelector('input:checked + pre code') ||
-            codeBlock.querySelector('pre code');
+        const activeCode = codeBlock.querySelector('input:checked + pre code') || codeBlock.querySelector('pre code');
 
-          const codeText = activeCode?.textContent;
+        const codeText = activeCode?.textContent;
 
-          console.log(codeText);
-        });
+        console.log(codeText);
       });
     });
+  });
 }, []);
 ```
 

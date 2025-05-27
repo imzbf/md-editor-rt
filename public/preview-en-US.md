@@ -16,7 +16,7 @@ Markdown Editor for React, developed in jsx and typescript, support different th
 - [ ] Saturday
 - [x] Sunday
 
-![Picture](https://imzbf.github.io/md-editor-rt/imgs/mark_emoji.gif)
+![Picture](https://imzbf.github.io/md-editor-v3/imgs/mark_emoji.gif)
 
 ## 🤗 Demo
 
@@ -29,12 +29,7 @@ export default defineComponent({
   name: 'MdEditor',
   setup() {
     const text = ref('');
-    return () => (
-      <MdEditor
-        modelValue={text.value}
-        onChange={(v: string) => (text.value = v)}
-      />
-    );
+    return () => <MdEditor modelValue={text.value} onChange={(v: string) => (text.value = v)} />;
   },
 });
 ```
