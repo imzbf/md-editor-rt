@@ -1076,6 +1076,8 @@ config({
             options: {
               ...item.options,
               extraTools: '<span class="extra-code-tools">额外的功能</span>',
+              // 或者
+              extraTools: ({ lang }) => '<span class="extra-code-tools">额外的功能</span>',
             },
           };
         }
