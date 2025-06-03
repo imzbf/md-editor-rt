@@ -1056,6 +1056,8 @@ config({
             options: {
               ...item.options,
               extraTools: '<span class="extra-code-tools">Additional features</span>',
+              // or
+              // extraTools: ({ lang }) => '<span class="extra-code-tools">Additional features</span>',
             },
           };
         }

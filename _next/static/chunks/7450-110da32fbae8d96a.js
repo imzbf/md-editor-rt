@@ -10,7 +10,7 @@
             <div class="${g.p}-code-action">
               <span class="${g.p}-code-lang">${e[i].info.trim()}</span>
               <span class="${g.p}-copy-button" data-tips="${h}"${f?" data-is-icon=true":""}>${p}</span>
-              ${t.extraTools||""}
+              ${t.extraTools instanceof Function?t.extraTools({lang:e[i].info.trim()}):t.extraTools||""}
               ${"details"===l?m:""}
             </div>
           </${a}>
@@ -56,7 +56,7 @@
           <div class="${g.p}-code-action">
             <span class="${g.p}-codetab-lang">${A}</span>
             <span class="${g.p}-copy-button" data-tips="${h}"${f?" data-is-icon=true":""}>${p}</span>
-            ${t.extraTools||""}
+            ${t.extraTools instanceof Function?t.extraTools({lang:e[i].info.trim()}):t.extraTools||""}
             ${"details"===F?m:""}
           </div>
         </${w}>
