@@ -1,5 +1,5 @@
 import bus from '~/utils/event-bus';
-import { configOption } from '~/config';
+import { globalConfig } from '~/config';
 import { InsertContentGenerator, UploadImgCallBackParam } from '~/type';
 import CodeMirrorUt from '~/layouts/Content/codemirror';
 import { ERROR_CATCHER } from '~/static/event-name';
@@ -84,7 +84,17 @@ export const directive2flag = async (
       return handleTable(params);
     }
     case 'link': {
-      return { text: `[${params.desc}](${params.url})`, options: { select: false } };
+      const { desc = '', url = '' } = params;
+      const text = `[${desc}](${url})`;
+
+      return {
+        text,
+        options: {
+          select: url === '',
+          deviationStart: text.length - url.length - 1,
+          deviationEnd: -1
+        }
+      };
     }
     case 'image': {
       return handleImage(params);
@@ -130,10 +140,10 @@ const handleHeading = (direct: string, codeMirrorUt: CodeMirrorUt) => {
  */
 const handlePrettier = async (codeMirrorUt: CodeMirrorUt, params: any) => {
   const prettier =
-    window.prettier || configOption.editorExtensions.prettier?.prettierInstance;
+    window.prettier || globalConfig.editorExtensions.prettier?.prettierInstance;
   const prettierPlugins = [
     window.prettierPlugins?.markdown ||
-      configOption.editorExtensions.prettier?.parserMarkdownInstance
+      globalConfig.editorExtensions.prettier?.parserMarkdownInstance
   ];
 
   if (!prettier || !prettierPlugins[0]) {
@@ -257,7 +267,7 @@ const handleMermaid = (type: string) => {
     pie: 'pie\n  "Dogs" : 386\n  "Cats" : 85\n  "Rats" : 15',
     relationship: 'erDiagram\n  CAR ||--o{ NAMED-DRIVER : allows',
     journey: 'journey\n  title My Journey',
-    ...configOption.editorConfig.mermaidTemplate
+    ...globalConfig.editorConfig.mermaidTemplate
   };
 
   return {
@@ -270,7 +280,7 @@ const handleMermaid = (type: string) => {
  * 处理图片插入
  */
 const handleImage = (params: any) => {
-  const { desc, url, urls } = params;
+  const { desc = '', url = '', urls } = params;
   let text = '';
 
   if (urls instanceof Array) {
@@ -288,7 +298,14 @@ const handleImage = (params: any) => {
     text = `![${desc}](${url})\n`;
   }
 
-  return { text, options: { select: false } };
+  return {
+    text,
+    options: {
+      select: url === '',
+      deviationStart: text.length - url.length - 2,
+      deviationEnd: -2
+    }
+  };
 };
 
 /**

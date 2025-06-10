@@ -179,6 +179,7 @@ export default ({ theme, previewTheme, codeTheme, lang }: PreviewProp) => {
       <div className="container">
         <MdEditor
           id="md-prev"
+          insertLinkDirect
           // catalogMaxDepth={2}
           catalogLayout="flat"
           completions={completions}
@@ -224,7 +225,7 @@ export default ({ theme, previewTheme, codeTheme, lang }: PreviewProp) => {
           //   console.log(t);
 
           //   return Promise.resolve(
-          //     'https://imzbf.github.io/md-editor-rt/imgs/preview-light.png'
+          //     'https://imzbf.github.io/md-editor-v3/imgs/preview-light.png'
           //   );
           // }}
           // noImgZoomIn

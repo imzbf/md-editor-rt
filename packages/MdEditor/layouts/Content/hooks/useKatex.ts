@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { configOption } from '~/config';
+import { globalConfig } from '~/config';
 import { appendHandler } from '~/utils/dom';
 import { CDN_IDS } from '~~/MdEditor/static';
 
@@ -13,7 +13,7 @@ import { ContentPreviewProps } from '../props';
  */
 const useKatex = (props: ContentPreviewProps) => {
   // katex是否加载完成
-  const katexRef = useRef(configOption.editorExtensions.katex!.instance);
+  const katexRef = useRef(globalConfig.editorExtensions.katex!.instance);
   const [katexInited, setKatexInited] = useState(!!katexRef.current);
 
   useEffect(() => {
@@ -23,7 +23,7 @@ const useKatex = (props: ContentPreviewProps) => {
     // 标签引入katex
 
     // 获取相应的扩展配置链接
-    const { editorExtensions } = configOption;
+    const { editorExtensions } = globalConfig;
 
     appendHandler(
       'script',

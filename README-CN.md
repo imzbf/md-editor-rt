@@ -27,11 +27,11 @@
 
 | 默认模式 | 暗黑模式 | 仅预览 |
 | --- | --- | --- |
-| ![默认模式](https://imzbf.github.io/md-editor-rt/imgs/preview-light.png) | ![暗黑模式](https://imzbf.github.io/md-editor-rt/imgs/preview-dark.png) | ![](https://imzbf.github.io/md-editor-rt/imgs/preview-previewOnly.png) |
+| ![默认模式](https://imzbf.github.io/md-editor-v3/imgs/preview-light.png) | ![暗黑模式](https://imzbf.github.io/md-editor-v3/imgs/preview-dark.png) | ![](https://imzbf.github.io/md-editor-v3/imgs/preview-previewOnly.png) |
 
 输入提示和自定义简单的标记、表情扩展预览
 
-![](https://imzbf.github.io/md-editor-rt/imgs/mark_emoji.gif)
+![](https://imzbf.github.io/md-editor-v3/imgs/mark_emoji.gif)
 
 ## 📦 安装
 

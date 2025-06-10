@@ -19,7 +19,7 @@ export interface CodeTabsPluginOps extends markdownit.Options {
   codeFoldable: boolean;
   autoFoldThreshold: number;
   customIconRef: RefObject<CustomIcon>;
-  extraTools?: string;
+  extraTools?: string | (({ lang }: { lang: string }) => string);
 }
 
 const codetabs = (md: markdownit, _opts: CodeTabsPluginOps) => {
@@ -95,7 +95,7 @@ const codetabs = (md: markdownit, _opts: CodeTabsPluginOps) => {
             <div class="${prefix}-code-action">
               <span class="${prefix}-code-lang">${tokens[idx].info.trim()}</span>
               <span class="${prefix}-copy-button" data-tips="${codeCodeText}"${isIcon ? ' data-is-icon=true' : ''}>${copyBtnHtml}</span>
-              ${_opts.extraTools || ''}
+              ${_opts.extraTools instanceof Function ? _opts.extraTools({ lang: tokens[idx].info.trim() }) : _opts.extraTools || ''}
               ${tagContainer === 'details' ? collapseTips : ''}
             </div>
           </${tagHeader}>
@@ -181,7 +181,7 @@ const codetabs = (md: markdownit, _opts: CodeTabsPluginOps) => {
           <div class="${prefix}-code-action">
             <span class="${prefix}-codetab-lang">${langs}</span>
             <span class="${prefix}-copy-button" data-tips="${codeCodeText}"${isIcon ? ' data-is-icon=true' : ''}>${copyBtnHtml}</span>
-            ${_opts.extraTools || ''}
+            ${_opts.extraTools instanceof Function ? _opts.extraTools({ lang: tokens[idx].info.trim() }) : _opts.extraTools || ''}
             ${tagContainer === 'details' ? collapseTips : ''}
           </div>
         </${tagHeader}>

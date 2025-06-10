@@ -116,7 +116,7 @@ config({
   },
   editorExtensionsAttrs,
   editorConfig: {
-    zIndex: 2000
+    // zIndex: 2000
   }
   //   editorConfig: {
   //     mermaidTemplate: {

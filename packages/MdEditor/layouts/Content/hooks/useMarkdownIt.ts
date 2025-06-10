@@ -8,7 +8,7 @@ import { randomId } from '@vavt/util';
 import bus from '~/utils/event-bus';
 import { generateCodeRowNumber } from '~/utils';
 import { HeadList, MarkdownItConfigPlugin, Themes } from '~/type';
-import { configOption, prefix } from '~/config';
+import { globalConfig, prefix } from '~/config';
 import {
   BUILD_FINISHED,
   CATALOG_CHANGED,
@@ -59,7 +59,7 @@ const useMarkdownIt = (props: ContentPreviewProps, previewOnly: boolean) => {
     onGetCatalog
   } = props;
   const { editorConfig, markdownItConfig, markdownItPlugins, editorExtensions } =
-    configOption;
+    globalConfig;
   //
   const {
     editorId,

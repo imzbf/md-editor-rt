@@ -21,7 +21,7 @@ Markdown 编辑器，基于 react，使用 jsx 和 typescript 语法开发，支
 
 > 引用：这是一段文本引用
 
-![alt](https://imzbf.github.io/md-editor-rt/imgs/preview-light.png 'title')
+![alt](https://imzbf.github.io/md-editor-v3/imgs/preview-light.png 'title')
 
 ## 2. 代码演示
 
