@@ -74,7 +74,7 @@
     "@types/node": "^22.8.2",
     "@types/react": "^18.3.12",
     "@types/react-dom": "^18.3.1",
-    "@vavt/markdown-theme": "^4.4.0",
+    "@vavt/markdown-theme": "^4.4.1",
     "@vavt/vite-plugin-import-markdown": "^1.0.1",
     "@vitejs/plugin-react": "^4.3.3",
     "axios": "^1.7.7",
