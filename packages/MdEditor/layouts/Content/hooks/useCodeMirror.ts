@@ -12,7 +12,7 @@ import {
   undo,
   redo
 } from '@codemirror/commands';
-import { configOption } from '~/config';
+import { globalConfig } from '~/config';
 import bus from '~/utils/event-bus';
 import { directive2flag, ToolDirective } from '~/utils/content-help';
 import { EditorContext } from '~/context';
@@ -146,7 +146,7 @@ const useCodeMirror = (props: ContentProps) => {
   });
 
   const [extensions] = useState(() => {
-    return configOption.codeMirrorExtensions!(
+    return globalConfig.codeMirrorExtensions!(
       theme,
       [
         ...defaultExtensions,

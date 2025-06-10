@@ -1,6 +1,6 @@
 import { useCallback, useContext, useEffect, useRef, useState } from 'react';
 import { randomId } from '@vavt/util';
-import { prefix, configOption } from '~/config';
+import { prefix, globalConfig } from '~/config';
 import { EditorContext } from '~/context';
 import { appendHandler } from '~/utils/dom';
 import { mermaidCache } from '~/utils/cache';
@@ -18,7 +18,7 @@ const useMermaid = (props: ContentPreviewProps) => {
   const { editorId, theme, rootRef } = useContext(EditorContext);
   const { noMermaid, sanitizeMermaid } = props;
 
-  const mermaidRef = useRef(configOption.editorExtensions.mermaid!.instance);
+  const mermaidRef = useRef(globalConfig.editorExtensions.mermaid!.instance);
   const [reRender, setReRender] = useState(-1);
 
   const configMermaid = useCallback(() => {
@@ -27,7 +27,7 @@ const useMermaid = (props: ContentPreviewProps) => {
 
     if (!noMermaid && mermaid) {
       mermaid.initialize(
-        configOption.mermaidConfig({
+        globalConfig.mermaidConfig({
           startOnLoad: false,
           theme: theme === 'dark' ? 'dark' : 'default'
         })
@@ -41,7 +41,7 @@ const useMermaid = (props: ContentPreviewProps) => {
   useEffect(configMermaid, [configMermaid]);
 
   useEffect(() => {
-    const { editorExtensions, editorExtensionsAttrs } = configOption;
+    const { editorExtensions, editorExtensionsAttrs } = globalConfig;
 
     if (noMermaid || mermaidRef.current) {
       return;

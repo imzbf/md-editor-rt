@@ -1,5 +1,5 @@
 import { RefObject, useCallback, useContext, useEffect, useRef, useState } from 'react';
-import { configOption } from '~/config';
+import { globalConfig } from '~/config';
 import { EditorContext } from '~/context';
 import { appendHandler } from '~/utils/dom';
 import { ToolDirective } from '~/utils/content-help';
@@ -18,7 +18,7 @@ import { HoverData } from './TableShape';
 export const useSreenfull = (props: ToolbarProps) => {
   const { updateSetting } = props;
   const { editorId } = useContext(EditorContext);
-  const screenfull = useRef(configOption.editorExtensions.screenfull!.instance);
+  const screenfull = useRef(globalConfig.editorExtensions.screenfull!.instance);
   // 是否组件内部全屏标识
   const screenfullMe = useRef(false);
 
@@ -62,7 +62,7 @@ export const useSreenfull = (props: ToolbarProps) => {
 
     // 非预览模式且未提供screenfull时请求cdn
     if (!screenfull.current) {
-      const { editorExtensions, editorExtensionsAttrs } = configOption;
+      const { editorExtensions, editorExtensionsAttrs } = globalConfig;
 
       timer = requestAnimationFrame(() => {
         appendHandler(

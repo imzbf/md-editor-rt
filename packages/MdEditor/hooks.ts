@@ -23,7 +23,7 @@ import {
   UploadImgCallBack,
   MdPreviewProps
 } from './type';
-import { prefix, codeCss, staticTextDefault, configOption, defaultProps } from './config';
+import { prefix, codeCss, staticTextDefault, globalConfig, defaultProps } from './config';
 import { appendHandler } from './utils/dom';
 import {
   CHANGE_CATALOG_VISIBLE,
@@ -139,7 +139,7 @@ export const useExpansion = (staticProps: StaticProps) => {
   const { noPrettier, noUploadImg } = staticProps;
 
   useEffect(() => {
-    const { editorExtensions, editorExtensionsAttrs } = configOption;
+    const { editorExtensions, editorExtensionsAttrs } = globalConfig;
 
     // 判断是否需要插入prettier标签
     const noPrettierScript = noPrettier || !!editorExtensions.prettier!.prettierInstance;
@@ -304,8 +304,8 @@ export const useConfig = (props: EditorProps) => {
   } = props;
 
   const highlight = useMemo(() => {
-    const hljsUrls = configOption.editorExtensions.highlight;
-    const hljsAttrs = configOption.editorExtensionsAttrs.highlight;
+    const hljsUrls = globalConfig.editorExtensions.highlight;
+    const hljsAttrs = globalConfig.editorExtensionsAttrs.highlight;
 
     // 链接
     const { js: jsUrl } = hljsUrls!;
@@ -349,7 +349,7 @@ export const useConfig = (props: EditorProps) => {
   const usedLanguageText = useMemo(() => {
     const allText: any = {
       ...staticTextDefault,
-      ...configOption.editorConfig.languageUserDefined
+      ...globalConfig.editorConfig.languageUserDefined
     };
 
     if (allText[language]) {

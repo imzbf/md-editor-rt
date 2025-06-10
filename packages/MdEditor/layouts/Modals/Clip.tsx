@@ -1,6 +1,6 @@
 import { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
 import { EditorContext } from '~/context';
-import { configOption, prefix } from '~/config';
+import { globalConfig, prefix } from '~/config';
 import { base642File } from '~/utils';
 import { ERROR_CATCHER, UPLOAD_IMAGE } from '~/static/event-name';
 import Modal from '~/components/Modal';
@@ -18,7 +18,7 @@ const ClipModal = (props: ClipModalProps) => {
   const editorConext = useContext(EditorContext);
   const { editorId, usedLanguageText, rootRef } = editorConext;
 
-  const Cropper = configOption.editorExtensions.cropper!.instance;
+  const Cropper = globalConfig.editorExtensions.cropper!.instance;
 
   const uploadRef = useRef<HTMLInputElement>(null);
   const uploadImgRef = useRef<HTMLImageElement>(null);

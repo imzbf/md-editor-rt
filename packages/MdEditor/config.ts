@@ -2,7 +2,7 @@ import { deepMerge } from '@vavt/util';
 import {
   CodeCss,
   Config,
-  ConfigOption,
+  GlobalConfig,
   Footers,
   StaticTextDefault,
   ToolbarNames
@@ -72,7 +72,7 @@ export const codeCss: CodeCss = {
   }
 };
 // 当前版本的值
-export const editorExtensionsAttrs: ConfigOption['editorExtensionsAttrs'] = {
+export const editorExtensionsAttrs: GlobalConfig['editorExtensionsAttrs'] = {
   highlight: {
     js: {
       integrity:
@@ -485,7 +485,7 @@ export const defaultProps = {
   catalogLayout: 'fixed'
 };
 
-export const configOption: ConfigOption = {
+export const globalConfig: GlobalConfig = {
   editorExtensions: {
     highlight: {
       js: highlightUrl,
@@ -524,7 +524,7 @@ export const configOption: ConfigOption = {
 };
 
 export const config: Config = (option) => {
-  return deepMerge(configOption, option, {
+  return deepMerge(globalConfig, option, {
     excludeKeys(key) {
       return /[iI]{1}nstance/.test(key);
     }

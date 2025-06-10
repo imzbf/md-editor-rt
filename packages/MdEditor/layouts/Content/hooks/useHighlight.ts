@@ -1,5 +1,5 @@
 import { useContext, useEffect, useRef, useState } from 'react';
-import { configOption } from '~/config';
+import { globalConfig } from '~/config';
 import { EditorContext } from '~/context';
 import { appendHandler, updateHandler } from '~/utils/dom';
 import { CDN_IDS } from '~/static';
@@ -14,12 +14,12 @@ const useHighlight = (props: ContentPreviewProps) => {
   const { highlight } = useContext(EditorContext);
 
   // hljs是否已经提供
-  const hljsRef = useRef(configOption.editorExtensions.highlight!.instance);
+  const hljsRef = useRef(globalConfig.editorExtensions.highlight!.instance);
   const [hljsInited, setHljsInited] = useState(!!hljsRef.current);
 
   useEffect(() => {
     // 强制不高亮，则什么都不做
-    if (props.noHighlight || configOption.editorExtensions.highlight!.instance) {
+    if (props.noHighlight || globalConfig.editorExtensions.highlight!.instance) {
       return;
     }
 

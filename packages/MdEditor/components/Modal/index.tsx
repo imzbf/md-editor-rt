@@ -8,7 +8,7 @@ import {
   ReactNode
 } from 'react';
 import { createPortal } from 'react-dom';
-import { configOption, prefix } from '~/config';
+import { globalConfig, prefix } from '~/config';
 import { keyMove } from '~/utils/dom';
 import { EditorContext } from '~/context';
 import { getZIndexIncrement } from '~/utils';
@@ -124,10 +124,10 @@ const Modal = (props: ModalProps) => {
         return {
           ..._state,
           maskStyle: {
-            zIndex: configOption.editorConfig.zIndex! + getZIndexIncrement()
+            zIndex: globalConfig.editorConfig.zIndex! + getZIndexIncrement()
           },
           modalStyle: {
-            zIndex: configOption.editorConfig.zIndex! + getZIndexIncrement()
+            zIndex: globalConfig.editorConfig.zIndex! + getZIndexIncrement()
           },
           initPos: {
             left: halfClientWidth - halfWidth + 'px',
