@@ -1306,7 +1306,7 @@ editorRef.current?.execCommand('bold');
 
 ## 💴 配置编辑器
 
-使用`config(option: ConfigOption)`方法，可以对构建实例进行定制。
+使用`config(option: GlobalConfig)`方法，可以对构建实例进行定制。
 
 !!! warning
 
