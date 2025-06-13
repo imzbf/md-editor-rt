@@ -67,7 +67,7 @@ const HomePage = ({ mdText, tips }: { mdText: string; tips: string }) => {
   const [ufToolbars, setToolbars] = useState(toolbars);
   const [inputBoxWidth, setInputBoxWidth] = useState('50%');
 
-  const editorRef = useRef<ExposeParam>();
+  const editorRef = useRef<ExposeParam>(null);
 
   const { SITE_NAME, KEYWORDS, DESCRIPTION } = useMemo(() => {
     return {

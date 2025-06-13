@@ -19,20 +19,18 @@ const nextConfig: NextConfig = {
     });
     return config;
   },
-  experimental: {
-    turbo: {
-      rules: {
-        '*.md': {
-          loaders: [
-            {
-              loader: 'raw-loader',
-              options: {
-                esModule: false,
-              },
+  turbopack: {
+    rules: {
+      '*.md': {
+        loaders: [
+          {
+            loader: 'raw-loader',
+            options: {
+              esModule: false,
             },
-          ],
-          as: '*.txt',
-        },
+          },
+        ],
+        as: '*.txt',
       },
     },
   },

@@ -1,10 +1,4 @@
-import {
-  cloneElement,
-  CSSProperties,
-  useRef,
-  useState,
-  useEffect,
-} from 'react';
+import { cloneElement, CSSProperties, useRef, useState, useEffect, ReactNode, ReactElement } from 'react';
 import { createPortal } from 'react-dom';
 import { debounce } from '@vavt/util';
 import Menu from './Menu';
@@ -12,15 +6,15 @@ import MenuItem from './MenuItem';
 import { getOffset, classnames } from '@/utils';
 
 interface IzDropdownProp {
-  children: JSX.Element;
-  content: JSX.Element;
+  children: ReactElement;
+  content: ReactNode;
 }
 
 const IzDropdown = (props: IzDropdownProp) => {
   const triggerRef = useRef<HTMLElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
 
-  const portalRef = useRef<HTMLElement>();
+  const portalRef = useRef<HTMLElement>(null);
 
   const initedRef = useRef(false);
 
@@ -89,7 +83,8 @@ const IzDropdown = (props: IzDropdownProp) => {
     onMouseLeave() {
       func.setVisible(false);
     },
-  });
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  } as any);
 
   useEffect(() => {
     portalRef.current = document.body;
@@ -108,8 +103,7 @@ const IzDropdown = (props: IzDropdownProp) => {
           return {
             ..._state,
             style: {
-              left:
-                offsetValue.left + triggerWidth / 2 - contentWidth / 2 + 'px',
+              left: offsetValue.left + triggerWidth / 2 - contentWidth / 2 + 'px',
               top: offsetValue.top + triggerHeight + 'px',
             },
           };

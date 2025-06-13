@@ -1,16 +1,16 @@
-import { cloneElement, useCallback, useEffect, useRef, useState } from 'react';
+import { cloneElement, ReactElement, ReactNode, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 
 interface IzDrawerProp {
-  children: JSX.Element;
-  content: JSX.Element;
+  children: ReactElement;
+  content: ReactNode;
 }
 
 const Drawer = (props: IzDrawerProp) => {
   const triggerRef = useRef<HTMLElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
-  const portalRef = useRef<HTMLElement>();
+  const portalRef = useRef<HTMLElement>(null);
   const [visible, setVisible] = useState(false);
 
   const changeVisible = useCallback(() => {
@@ -51,10 +51,13 @@ const Drawer = (props: IzDrawerProp) => {
     };
   }, [visible]);
 
-  const trigger = cloneElement(props.children, {
-    ref: triggerRef,
-    onClick: changeVisible,
-  });
+  const trigger = useMemo(() => {
+    return cloneElement(props.children, {
+      ref: triggerRef,
+      onClick: changeVisible,
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } as any);
+  }, [changeVisible, props.children]);
 
   return (
     <>

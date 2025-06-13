@@ -1,5 +1,5 @@
-const Menu = ({ children }: { children: JSX.Element | string }) => (
-  <ul className="dropdown-menu">{children}</ul>
-);
+import { ReactElement } from 'react';
+
+const Menu = ({ children }: { children: ReactElement | string }) => <ul className="dropdown-menu">{children}</ul>;
 
 export default Menu;
