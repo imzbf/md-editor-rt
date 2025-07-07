@@ -21,18 +21,31 @@ const resolvePath = (p: string) => path.resolve(__dirname, p);
     MdModal: resolvePath('packages/MdEditor/components/Modal'),
     config: resolvePath('packages/config')
   };
-  const formats: LibraryFormats[] = ['es', 'cjs', 'umd'];
 
-  const entries = {
-    es: {
-      ...moduleEntry,
-      // 这里只有利用vite构建的assetFileNames为文件名的特性构建样式文件
-      preview: resolvePath('packages/MdEditor/styles/preview.less'),
-      style: resolvePath('packages/MdEditor/styles/style.less')
-    },
-    cjs: moduleEntry,
-    umd: resolvePath('packages')
-  };
+  const entries: Array<[LibraryFormats, any]> = [
+    [
+      'es',
+      {
+        ...moduleEntry,
+        // 这里只有利用vite构建的assetFileNames为文件名的特性构建样式文件
+        preview: resolvePath('packages/MdEditor/styles/preview.less'),
+        style: resolvePath('packages/MdEditor/styles/style.less')
+      }
+    ],
+    ['cjs', moduleEntry],
+    [
+      'umd',
+      {
+        index: resolvePath('packages')
+      }
+    ],
+    [
+      'umd',
+      {
+        preview: resolvePath('packages/preview')
+      }
+    ]
+  ];
 
   const extnames = {
     es: 'mjs',
@@ -44,7 +57,7 @@ const resolvePath = (p: string) => path.resolve(__dirname, p);
   buildType();
 
   await Promise.all(
-    formats.map((t) => {
+    entries.map(([t, entry]) => {
       return build({
         base: '/',
         publicDir: false,
@@ -74,7 +87,7 @@ const resolvePath = (p: string) => path.resolve(__dirname, p);
           cssCodeSplit: true,
           outDir: resolvePath('lib'),
           lib: {
-            entry: entries[t],
+            entry,
             name: 'MdEditorRT',
             formats: [t],
             fileName(format) {
@@ -86,7 +99,7 @@ const resolvePath = (p: string) => path.resolve(__dirname, p);
                   return 'cjs/[name].cjs';
                 }
                 default: {
-                  return 'umd/index.js';
+                  return 'umd/[name].js';
                 }
               }
             }
