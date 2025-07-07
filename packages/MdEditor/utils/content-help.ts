@@ -283,6 +283,9 @@ const handleImage = (params: any) => {
   const { desc = '', url = '', urls } = params;
   let text = '';
 
+  const urlIsEmpty =
+    url === '' && (!urls || (urls instanceof Array && urls.length === 0));
+
   if (urls instanceof Array) {
     text = (urls as UploadImgCallBackParam).reduce<string>((pVal, _url) => {
       const {
@@ -302,8 +305,8 @@ const handleImage = (params: any) => {
     text,
     options: {
       select: url === '',
-      deviationStart: text.length - url.length - 2,
-      deviationEnd: -2
+      deviationStart: urlIsEmpty ? text.length - url.length - 2 : text.length,
+      deviationEnd: urlIsEmpty ? -2 : 0
     }
   };
 };
