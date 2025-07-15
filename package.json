@@ -85,7 +85,7 @@
     "globals": "^15.11.0",
     "highlight.js": "^11.10.0",
     "husky": "^9.1.7",
-    "katex": "^0.16.11",
+    "katex": "^0.16.22",
     "less": "^4.2.0",
     "lint-staged": "^15.4.3",
     "mermaid": "^11.3.0",
