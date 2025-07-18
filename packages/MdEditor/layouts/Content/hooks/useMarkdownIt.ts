@@ -276,7 +276,13 @@ const useMarkdownIt = (props: ContentPreviewProps, previewOnly: boolean) => {
     return () => {
       clearMermaidEvents();
     };
-  }, [editorId, replaceMermaid, rootRef, setting.preview]);
+  }, [
+    editorExtensions.mermaid?.enableZoom,
+    editorId,
+    replaceMermaid,
+    rootRef,
+    setting.preview
+  ]);
 
   useEffect(() => {
     if (ignoreFirstRender.current) {
@@ -313,7 +319,15 @@ const useMarkdownIt = (props: ContentPreviewProps, previewOnly: boolean) => {
     return () => {
       clearMermaidEvents();
     };
-  }, [editorId, html, key, reRender, replaceMermaid, rootRef]);
+  }, [
+    editorExtensions.mermaid?.enableZoom,
+    editorId,
+    html,
+    key,
+    reRender,
+    replaceMermaid,
+    rootRef
+  ]);
 
   useEffect(() => {
     const callback = () => {

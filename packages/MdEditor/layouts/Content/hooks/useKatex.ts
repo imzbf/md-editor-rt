@@ -23,11 +23,12 @@ const useKatex = (props: ContentPreviewProps) => {
     // 标签引入katex
 
     // 获取相应的扩展配置链接
-    const { editorExtensions } = globalConfig;
+    const { editorExtensions, editorExtensionsAttrs } = globalConfig;
 
     appendHandler(
       'script',
       {
+        ...editorExtensionsAttrs.katex?.js,
         src: editorExtensions.katex!.js,
         id: CDN_IDS.katexjs,
         onload() {
@@ -38,6 +39,7 @@ const useKatex = (props: ContentPreviewProps) => {
       'katex'
     );
     appendHandler('link', {
+      ...editorExtensionsAttrs.katex?.css,
       rel: 'stylesheet',
       href: editorExtensions.katex!.css,
       id: CDN_IDS.katexcss

@@ -155,7 +155,7 @@ const useMermaid = (props: ContentPreviewProps) => {
         })
       );
     }
-  }, [noMermaid, rootRef, sanitizeMermaid]);
+  }, [editorId, noMermaid, rootRef, sanitizeMermaid]);
 
   return { reRender, replaceMermaid };
 };
