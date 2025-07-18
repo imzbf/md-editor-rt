@@ -88,7 +88,7 @@
     "katex": "^0.16.22",
     "less": "^4.2.0",
     "lint-staged": "^15.4.3",
-    "mermaid": "^11.3.0",
+    "mermaid": "^11.9.0",
     "multiparty": "^4.2.3",
     "prettier": "^3.3.3",
     "react": "^18.3.1",
