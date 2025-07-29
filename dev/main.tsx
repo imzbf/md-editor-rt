@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
 
-import { config, editorExtensionsAttrs } from '~~/index';
+import { config, editorExtensionsAttrs, XSSPlugin } from '~~/index';
 
 // import Editor from '../../lib/md-editor-rt.es';
 // import TargetBlankExtension from './image/TargetBlankExtension.js';
@@ -41,7 +41,14 @@ config({
   // mdit.use(TargetBlankExtension);
   // },
   markdownItPlugins(plugins, { editorId }) {
-    return plugins.map((item) => {
+    return [
+      ...plugins,
+      {
+        type: 'xss',
+        plugin: XSSPlugin,
+        options: {}
+      }
+    ].map((item) => {
       switch (item.type) {
         case 'taskList': {
           return {
