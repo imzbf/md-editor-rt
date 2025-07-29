@@ -222,7 +222,11 @@ const useMarkdownIt = (props: ContentPreviewProps, previewOnly: boolean) => {
   const [html, setHtml] = useState(() => {
     // 严格模式下 useState 也会执行两次
     headsRef.current = [];
-    return sanitize(md.render(modelValue));
+    return sanitize(
+      md.render(modelValue, {
+        srcLines: modelValue.split('\n')
+      })
+    );
   });
 
   const needReRender = useMemo(() => {
@@ -239,7 +243,11 @@ const useMarkdownIt = (props: ContentPreviewProps, previewOnly: boolean) => {
   const markHtml = useCallback(() => {
     // 清理历史标题
     headsRef.current = [];
-    const html_ = sanitize(md.render(modelValue));
+    const html_ = sanitize(
+      md.render(modelValue, {
+        srcLines: modelValue.split('\n')
+      })
+    );
     setHtml(html_);
   }, [md, modelValue, sanitize]);
 
