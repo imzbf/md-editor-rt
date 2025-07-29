@@ -270,7 +270,9 @@ const useMarkdownIt = (props: ContentPreviewProps, previewOnly: boolean) => {
         if (editorExtensions.mermaid?.enableZoom) {
           clearMermaidEvents();
           clearMermaidEvents = zoomMermaid(
-            rootRef!.current?.querySelectorAll(`#${editorId} .${prefix}-mermaid`),
+            rootRef!.current?.querySelectorAll(
+              `#${editorId} .${prefix}-mermaid:not([data-closed=false])`
+            ),
             {
               customIcon: customIconRef.current
             }
@@ -316,7 +318,9 @@ const useMarkdownIt = (props: ContentPreviewProps, previewOnly: boolean) => {
       if (editorExtensions.mermaid?.enableZoom) {
         clearMermaidEvents();
         clearMermaidEvents = zoomMermaid(
-          rootRef!.current?.querySelectorAll(`#${editorId} p.${prefix}-mermaid`),
+          rootRef!.current?.querySelectorAll(
+            `#${editorId} p.${prefix}-mermaid:not([data-closed=false])`
+          ),
           {
             customIcon: customIconRef.current
           }
