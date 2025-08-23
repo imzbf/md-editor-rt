@@ -24,6 +24,7 @@ const ScrollAuto = (props: ScrollAutoProps) => {
         <label
           className={`${prefix}-footer-label`}
           onClick={() => {
+            if (disabled) return;
             props.onScrollAutoChange(!props.scrollAuto);
           }}
         >
