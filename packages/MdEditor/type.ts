@@ -1,7 +1,7 @@
 import markdownit from 'markdown-it';
 import { CSSProperties, ReactElement, RefObject } from 'react';
 import { CompletionSource } from '@codemirror/autocomplete';
-import { Extension } from '@codemirror/state';
+import { Compartment, Extension } from '@codemirror/state';
 import { KeyBinding, EditorView } from '@codemirror/view';
 import { IconName } from './components/Icon/Icon';
 import { ToolDirective } from './utils/content-help';
@@ -576,6 +576,26 @@ export interface MarkdownItConfigPlugin {
   options: any;
 }
 
+/**
+ * CodeMirror扩展类型
+ *
+ * ^6.0.0
+ */
+export interface CodeMirrorExtension {
+  /**
+   * 仅用来提供开发者分别不同扩展的依据
+   */
+  type: string;
+  /**
+   * CodeMirror的扩展
+   */
+  extension: Extension;
+  /**
+   * 包裹扩展的Compartment，只有部分扩展有，提供扩展更新的能力
+   */
+  compartment?: Compartment;
+}
+
 export interface GlobalConfig {
   /**
    * 编辑器内部依赖库
@@ -678,13 +698,13 @@ export interface GlobalConfig {
    * @params keyBindings md-editor-v3内置的快捷键
    */
   codeMirrorExtensions: (
-    theme: Themes,
-    extensions: Array<Extension>,
-    keyBindings: Array<KeyBinding>,
+    extensions: Array<CodeMirrorExtension>,
     options: {
       editorId: string;
+      theme: Themes;
+      keyBindings: Array<KeyBinding>;
     }
-  ) => Array<Extension>;
+  ) => Array<CodeMirrorExtension>;
   /**
    * 自定义markdown-it核心库扩展、属性等
    */

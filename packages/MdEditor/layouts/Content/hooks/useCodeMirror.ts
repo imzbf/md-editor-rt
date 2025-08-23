@@ -129,32 +129,63 @@ const useCodeMirror = (props: ContentProps) => {
 
   const [defaultExtensions] = useState(() => {
     return [
-      keymap.of(getDefaultKeymaps()),
-      comp.history.of(history()),
-      comp.language.of(markdown({ codeLanguages: languages })),
+      {
+        type: 'keymap',
+        extension: keymap.of(getDefaultKeymaps())
+      },
+      {
+        type: 'history',
+        extension: history(),
+        compartment: comp.history
+      },
+      {
+        type: 'markdown',
+        extension: markdown({ codeLanguages: languages }),
+        compartment: comp.language
+      },
       // 横向换行
-      EditorView.lineWrapping,
-      comp.update.of(
-        EditorView.updateListener.of((update) => {
+      {
+        type: 'lineWrapping',
+        extension: EditorView.lineWrapping
+      },
+      {
+        type: 'updateListener',
+        extension: EditorView.updateListener.of((update) => {
           if (update.docChanged) props.onChange(update.state.doc.toString());
-        })
-      ),
-      comp.domEvent.of(EditorView.domEventHandlers(domEventHandlers)),
+        }),
+        compartment: comp.update
+      },
+      {
+        type: 'domEventHandlers',
+        extension: EditorView.domEventHandlers(domEventHandlers),
+        compartment: comp.domEvent
+      },
       // 解决多行placeholder时，光标异常的情况
-      drawSelection()
+      {
+        type: 'drawSelection',
+        extension: drawSelection()
+      }
     ];
   });
 
   const [extensions] = useState(() => {
     return globalConfig.codeMirrorExtensions!(
-      theme,
       [
         ...defaultExtensions,
-        comp.theme.of(theme === 'light' ? oneLight : oneDark),
-        comp.autocompletion.of(createAutocompletion(props.completions))
+        {
+          type: 'theme',
+          extension: theme === 'light' ? oneLight : oneDark,
+          compartment: comp.theme
+        },
+        {
+          type: 'completions',
+          extension: createAutocompletion(props.completions),
+          compartment: comp.autocompletion
+        }
       ],
-      getDefaultKeymaps(),
-      { editorId }
+      { editorId, theme: theme, keyBindings: getDefaultKeymaps() }
+    ).map((item) =>
+      item.compartment ? item.compartment.of(item.extension) : item.extension
     );
   });
 

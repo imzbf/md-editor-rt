@@ -28,11 +28,17 @@ import { lineNumbers } from '@codemirror/view';
 // import { cdnBase } from '../../MdEditor/config';
 
 config({
-  codeMirrorExtensions(theme, extensions) {
+  codeMirrorExtensions(extensions) {
     // console.log(theme, extensions, keyBindings);
 
     // return extensions;
-    return [...extensions, lineNumbers()];
+    return [
+      ...extensions,
+      {
+        type: 'lineNumbers',
+        extension: lineNumbers()
+      }
+    ];
   },
   // markdownItConfig: (mdit) => {
   // mdit.use(ancher, {
