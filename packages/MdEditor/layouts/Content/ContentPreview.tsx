@@ -23,16 +23,19 @@ const ContentPreview = (props: ContentPreviewProps) => {
 
   return (
     <>
-      {props.setting.preview && (
-        <div
-          id={`${editorId}-preview-wrapper`}
-          className={`${prefix}-preview-wrapper`}
-          key="content-preview-wrapper"
-        >
+      {props.setting.preview &&
+        (props.previewOnly ? (
           <UpdateOnDemand key={key} html={html} />
-        </div>
-      )}
-      {!previewOnly && props.setting.htmlPreview && (
+        ) : (
+          <div
+            id={`${editorId}-preview-wrapper`}
+            className={`${prefix}-preview-wrapper`}
+            key="content-preview-wrapper"
+          >
+            <UpdateOnDemand key={key} html={html} />
+          </div>
+        ))}
+      {props.setting.htmlPreview && (
         <div
           id={`${editorId}-html-wrapper`}
           className={`${prefix}-preview-wrapper`}
