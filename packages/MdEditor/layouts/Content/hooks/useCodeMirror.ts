@@ -1,9 +1,3 @@
-import { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
-import { EditorView } from 'codemirror';
-import { keymap, drawSelection } from '@codemirror/view';
-import { languages } from '@codemirror/language-data';
-import { markdown } from '@codemirror/lang-markdown';
-import { Compartment } from '@codemirror/state';
 import {
   indentWithTab,
   defaultKeymap,
@@ -12,9 +6,13 @@ import {
   undo,
   redo
 } from '@codemirror/commands';
+import { markdown } from '@codemirror/lang-markdown';
+import { languages } from '@codemirror/language-data';
+import { Compartment } from '@codemirror/state';
+import { keymap, drawSelection } from '@codemirror/view';
+import { EditorView } from 'codemirror';
+import { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
 import { globalConfig } from '~/config';
-import bus from '~/utils/event-bus';
-import { directive2flag, ToolDirective } from '~/utils/content-help';
 import { EditorContext } from '~/context';
 import {
   CTRL_SHIFT_Z,
@@ -27,15 +25,17 @@ import {
   GET_EDITOR_VIEW
 } from '~/static/event-name';
 import { DOMEventHandlers } from '~/type';
+import { directive2flag, ToolDirective } from '~/utils/content-help';
+import bus from '~/utils/event-bus';
 
 import CodeMirrorUt from '../codemirror';
-import { oneDark } from '../codemirror/themeOneDark';
-import { oneLight } from '../codemirror/themeLight';
-import createAutocompletion from '../codemirror/autocompletion';
-import { ContentProps } from '../props';
-import createCommands from '../codemirror/commands';
 
 import usePasteUpload from './usePasteUpload';
+import createAutocompletion from '../codemirror/autocompletion';
+import createCommands from '../codemirror/commands';
+import { oneLight } from '../codemirror/themeLight';
+import { oneDark } from '../codemirror/themeOneDark';
+import { ContentProps } from '../props';
 // import useAttach from './useAttach';
 
 // 禁用掉>=6.28.0的实验性功能
@@ -112,11 +112,13 @@ const useCodeMirror = (props: ContentProps) => {
 
       if (defaultEventNames.includes(en)) {
         nextDomEventHandlers[en] = (e, v) => {
-          domEventHandlersUserDefined[en]!(e as any, v);
-
+          (domEventHandlersUserDefined[en] as (event: Event, view: EditorView) => void)(
+            e,
+            v
+          );
           // 如果用户自行监听的事件调用了preventDefault，则不再执行内部的方法
           if (!e.defaultPrevented) {
-            basicHandlers[en]!(e as any, v);
+            (basicHandlers[en] as (event: Event, view: EditorView) => void)(e, v);
           }
         };
       } else {
@@ -169,24 +171,26 @@ const useCodeMirror = (props: ContentProps) => {
   });
 
   const [extensions] = useState(() => {
-    return globalConfig.codeMirrorExtensions!(
-      [
-        ...defaultExtensions,
-        {
-          type: 'theme',
-          extension: theme === 'light' ? oneLight : oneDark,
-          compartment: comp.theme
-        },
-        {
-          type: 'completions',
-          extension: createAutocompletion(props.completions),
-          compartment: comp.autocompletion
-        }
-      ],
-      { editorId, theme: theme, keyBindings: getDefaultKeymaps() }
-    ).map((item) =>
-      item.compartment ? item.compartment.of(item.extension) : item.extension
-    );
+    return globalConfig
+      .codeMirrorExtensions(
+        [
+          ...defaultExtensions,
+          {
+            type: 'theme',
+            extension: theme === 'light' ? oneLight : oneDark,
+            compartment: comp.theme
+          },
+          {
+            type: 'completions',
+            extension: createAutocompletion(props.completions),
+            compartment: comp.autocompletion
+          }
+        ],
+        { editorId, theme: theme, keyBindings: getDefaultKeymaps() }
+      )
+      .map((item) =>
+        item.compartment ? item.compartment.of(item.extension) : item.extension
+      );
   });
 
   const resetHistory = useCallback(() => {
@@ -288,7 +292,7 @@ const useCodeMirror = (props: ContentProps) => {
     const callback = async (direct: ToolDirective, params = {} as any) => {
       // 弹窗插入图片时，将链接使用transformImgUrl转换后再插入
       if (direct === 'image' && params.transform) {
-        const tv = props.transformImgUrl(params.url);
+        const tv = props.transformImgUrl(params.url as string);
 
         if (tv instanceof Promise) {
           tv.then(async (url) => {
@@ -300,7 +304,7 @@ const useCodeMirror = (props: ContentProps) => {
                 url
               }
             );
-            codeMirrorUt.current?.replaceSelectedText(text, options, editorId);
+            codeMirrorUt.current?.replaceSelectedText(text as string, options, editorId);
           }).catch((err) => {
             console.error(err);
           });
@@ -309,7 +313,7 @@ const useCodeMirror = (props: ContentProps) => {
             ...params,
             url: tv
           });
-          codeMirrorUt.current?.replaceSelectedText(text, options, editorId);
+          codeMirrorUt.current?.replaceSelectedText(text as string, options, editorId);
         }
       } else {
         const { text, options } = await directive2flag(
@@ -317,7 +321,7 @@ const useCodeMirror = (props: ContentProps) => {
           codeMirrorUt.current!,
           params
         );
-        codeMirrorUt.current?.replaceSelectedText(text, options, editorId);
+        codeMirrorUt.current?.replaceSelectedText(text as string, options, editorId);
       }
     };
     // 注册指令替换内容事件

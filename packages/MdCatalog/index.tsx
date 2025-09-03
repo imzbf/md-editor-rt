@@ -1,3 +1,4 @@
+import { EditorView } from 'codemirror';
 import {
   CSSProperties,
   useEffect,
@@ -8,16 +9,15 @@ import {
   useRef,
   memo
 } from 'react';
-import { EditorView } from 'codemirror';
-import { HeadList, MdHeadingId, Themes } from '~/type';
 import { defaultProps, prefix } from '~/config';
-import { classnames, getRelativeTop } from '~/utils';
 import {
   CATALOG_CHANGED,
   GET_EDITOR_VIEW,
   PUSH_CATALOG,
   SEND_EDITOR_VIEW
 } from '~/static/event-name';
+import { HeadList, MdHeadingId, Themes } from '~/type';
+import { classnames, getRelativeTop } from '~/utils';
 import bus from '~/utils/event-bus';
 import { getComputedStyleNum } from '~/utils/scroll-auto';
 

@@ -1,11 +1,11 @@
 import { MouseEvent, useContext, useEffect, useRef } from 'react';
 import { prefix } from '~/config';
-import { classnames } from '~/utils';
 import { MdHeadingId } from '~/type';
+import { classnames } from '~/utils';
 import { getComputedStyleNum } from '~/utils/scroll-auto';
 
-import { TocItem } from './index';
 import { CatalogContext } from './context';
+import { TocItem } from './index';
 
 export interface CatalogLinkProps {
   tocItem: TocItem;

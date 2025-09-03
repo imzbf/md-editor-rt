@@ -1,3 +1,4 @@
+import { createSmoothScroll } from '@vavt/util';
 import {
   useState,
   useContext,
@@ -9,15 +10,14 @@ import {
   memo,
   MouseEvent
 } from 'react';
-import { createSmoothScroll } from '@vavt/util';
-import MdCatalog, { TocItem } from '~~/MdCatalog';
 import { prefix } from '~/config';
-import { FocusOption } from '~/type';
 import { EditorContext } from '~/context';
+import { FocusOption } from '~/type';
+import MdCatalog, { TocItem } from '~~/MdCatalog';
+import ContentPreview from './ContentPreview';
 import { useAutoScroll, useCodeMirror, useResize } from './hooks';
 import { ContentProps } from './props';
 import { ContentExposeParam } from './type';
-import ContentPreview from './ContentPreview';
 
 const smoothScroll = createSmoothScroll();
 

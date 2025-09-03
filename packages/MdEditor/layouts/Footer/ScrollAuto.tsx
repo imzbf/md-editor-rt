@@ -1,9 +1,8 @@
 import { useContext, useMemo } from 'react';
+import Checkbox from '~/components/Checkbox';
 import { prefix } from '~/config';
 import { EditorContext } from '~/context';
 import { classnames } from '~/utils';
-
-import Checkbox from '~/components/Checkbox';
 
 interface ScrollAutoProps {
   scrollAuto: boolean;

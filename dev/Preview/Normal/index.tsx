@@ -1,6 +1,6 @@
 import React from 'react';
-import Icon from '~~/MdEditor/components/Icon';
 import { NormalToolbar } from '~~/index';
+import Icon from '~~/MdEditor/components/Icon';
 
 export default () => {
   return (

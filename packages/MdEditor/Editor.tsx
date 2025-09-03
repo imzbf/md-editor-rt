@@ -6,6 +6,14 @@ import {
   useEffect,
   useRef
 } from 'react';
+import { prefix, defaultProps } from '~/config';
+import Content from '~/layouts/Content';
+import Footer from '~/layouts/Footer';
+import ToolBar from '~/layouts/Toolbar';
+import { EditorProps, StaticProps, TableShapeType, Themes } from '~/type';
+import { classnames } from '~/utils';
+import bus from '~/utils/event-bus';
+import { EditorContext } from './context';
 import {
   useOnSave,
   useCatalog,
@@ -16,15 +24,7 @@ import {
   useExpose,
   useEditorId
 } from './hooks';
-import { classnames } from '~/utils';
-import { prefix, defaultProps } from '~/config';
-import { EditorProps, StaticProps, TableShapeType, Themes } from '~/type';
 import { ContentExposeParam } from './layouts/Content/type';
-import { EditorContext } from './context';
-import ToolBar from '~/layouts/Toolbar';
-import Content from '~/layouts/Content';
-import Footer from '~/layouts/Footer';
-import bus from '~/utils/event-bus';
 
 const Editor = forwardRef((props: EditorProps, ref: ForwardedRef<unknown>) => {
   // Editor.defaultProps在某些编辑器中不能被正确识别已设置默认情况

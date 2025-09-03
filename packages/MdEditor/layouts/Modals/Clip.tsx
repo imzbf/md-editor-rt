@@ -1,11 +1,11 @@
 import { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
-import { EditorContext } from '~/context';
-import { globalConfig, prefix } from '~/config';
-import { base642File } from '~/utils';
-import { ERROR_CATCHER, UPLOAD_IMAGE } from '~/static/event-name';
-import Modal from '~/components/Modal';
-import bus from '~/utils/event-bus';
 import Icon from '~/components/Icon';
+import Modal from '~/components/Modal';
+import { globalConfig, prefix } from '~/config';
+import { EditorContext } from '~/context';
+import { ERROR_CATCHER, UPLOAD_IMAGE } from '~/static/event-name';
+import { base642File } from '~/utils';
+import bus from '~/utils/event-bus';
 interface ClipModalProps {
   visible: boolean;
   onCancel: () => void;
@@ -168,7 +168,7 @@ const ClipModal = (props: ClipModalProps) => {
             type="button"
             onClick={() => {
               if (cropper) {
-                const cvs = cropper.getCroppedCanvas();
+                const cvs: HTMLCanvasElement = cropper.getCroppedCanvas();
                 bus.emit(
                   editorId,
                   UPLOAD_IMAGE,

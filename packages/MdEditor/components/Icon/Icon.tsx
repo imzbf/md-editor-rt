@@ -1,4 +1,3 @@
-import { createElement, ForwardRefExoticComponent } from 'react';
 import {
   Bold,
   ChartArea,
@@ -34,6 +33,7 @@ import {
   X,
   LucideProps
 } from 'lucide-react';
+import { createElement, ForwardRefExoticComponent } from 'react';
 import { prefix } from '~/config';
 
 import Github from './Github';

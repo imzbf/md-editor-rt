@@ -1,32 +1,32 @@
-import { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
+import { randomId } from '@vavt/util';
 import mdit from 'markdown-it';
 import ImageFiguresPlugin from 'markdown-it-image-figures';
 import SubPlugin from 'markdown-it-sub';
 import SupPlugin from 'markdown-it-sup';
 
-import { randomId } from '@vavt/util';
-import bus from '~/utils/event-bus';
-import { generateCodeRowNumber } from '~/utils';
-import { HeadList, MarkdownItConfigPlugin, Themes } from '~/type';
+import { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
 import { globalConfig, prefix } from '~/config';
+import { EditorContext } from '~/context';
 import {
   BUILD_FINISHED,
   CATALOG_CHANGED,
   PUSH_CATALOG,
   RERENDER
 } from '~/static/event-name';
-import { EditorContext } from '~/context';
+import { HeadList, MarkdownItConfigPlugin, Themes } from '~/type';
+import { generateCodeRowNumber } from '~/utils';
 import { zoomMermaid } from '~/utils/dom';
+import bus from '~/utils/event-bus';
 
 import useHighlight from './useHighlight';
-import useMermaid from './useMermaid';
 import useKatex from './useKatex';
+import useMermaid from './useMermaid';
 
-import MermaidPlugin from '../markdownIt/mermaid';
-import KatexPlugin from '../markdownIt/katex';
 import AdmonitionPlugin from '../markdownIt/admonition';
-import HeadingPlugin from '../markdownIt/heading';
 import CodePlugin from '../markdownIt/code';
+import HeadingPlugin from '../markdownIt/heading';
+import KatexPlugin from '../markdownIt/katex';
+import MermaidPlugin from '../markdownIt/mermaid';
 import TaskListPlugin from '../markdownIt/task';
 import { ContentPreviewProps } from '../props';
 
@@ -99,7 +99,7 @@ const useMarkdownIt = (props: ContentPreviewProps, previewOnly: boolean) => {
       linkify: true
     });
 
-    markdownItConfig!(md_, {
+    markdownItConfig(md_, {
       editorId
     });
 
@@ -164,7 +164,7 @@ const useMarkdownIt = (props: ContentPreviewProps, previewOnly: boolean) => {
       });
     }
 
-    markdownItPlugins!(plugins, {
+    markdownItPlugins(plugins, {
       editorId
     }).forEach((item) => {
       md_.use(item.plugin, item.options);
@@ -181,7 +181,7 @@ const useMarkdownIt = (props: ContentPreviewProps, previewOnly: boolean) => {
           }
         }
 
-        let codeHtml;
+        let codeHtml: string;
 
         // 不高亮或者没有实例，返回默认
         if (!noHighlight && hljsRef.current) {
@@ -266,7 +266,7 @@ const useMarkdownIt = (props: ContentPreviewProps, previewOnly: boolean) => {
   useEffect(() => {
     let clearMermaidEvents = () => {};
     if (setting.preview) {
-      replaceMermaid().then(() => {
+      void replaceMermaid().then(() => {
         if (editorExtensions.mermaid?.enableZoom) {
           clearMermaidEvents();
           clearMermaidEvents = zoomMermaid(
@@ -314,7 +314,7 @@ const useMarkdownIt = (props: ContentPreviewProps, previewOnly: boolean) => {
 
   useEffect(() => {
     let clearMermaidEvents = () => {};
-    replaceMermaid().then(() => {
+    void replaceMermaid().then(() => {
       if (editorExtensions.mermaid?.enableZoom) {
         clearMermaidEvents();
         clearMermaidEvents = zoomMermaid(

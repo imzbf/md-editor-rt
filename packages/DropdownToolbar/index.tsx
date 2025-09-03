@@ -1,7 +1,7 @@
 import { ReactNode, useContext, useMemo } from 'react';
+import Dropdown from '~/components/Dropdown';
 import { prefix } from '~/config';
 import { EditorContext } from '~/context';
-import Dropdown from '~/components/Dropdown';
 
 export interface DropdownToolbarProps {
   title?: string;

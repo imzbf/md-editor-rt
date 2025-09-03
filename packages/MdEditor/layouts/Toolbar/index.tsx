@@ -1,3 +1,4 @@
+import { linkTo, draggingScroll } from '@vavt/util';
 import {
   ReactElement,
   useCallback,
@@ -9,17 +10,11 @@ import {
   useEffect,
   memo
 } from 'react';
-import { linkTo, draggingScroll } from '@vavt/util';
-import {
-  ToolbarNames,
-  SettingType,
-  UpdateSetting,
-  InsertContentGenerator,
-  TableShapeType
-} from '~/type';
-import { EditorContext } from '~/context';
-import { ToolDirective } from '~/utils/content-help';
+import Divider from '~/components/Divider';
+import Dropdown from '~/components/Dropdown';
+import Icon from '~/components/Icon';
 import { allToolbar, prefix } from '~/config';
+import { EditorContext } from '~/context';
 import {
   CHANGE_CATALOG_VISIBLE,
   CTRL_SHIFT_Z,
@@ -27,16 +22,21 @@ import {
   ON_SAVE,
   REPLACE
 } from '~/static/event-name';
+import {
+  ToolbarNames,
+  SettingType,
+  UpdateSetting,
+  InsertContentGenerator,
+  TableShapeType
+} from '~/type';
 import { classnames } from '~/utils';
+import { ToolDirective } from '~/utils/content-help';
 
 import bus from '~/utils/event-bus';
-import Divider from '~/components/Divider';
-import Dropdown from '~/components/Dropdown';
-import Icon from '~/components/Icon';
 
 import Modals from '../Modals';
-import TableShape from './TableShape';
 import { useSreenfull, useModals, useDropdownState } from './hooks';
+import TableShape from './TableShape';
 
 export interface ToolbarProps {
   noPrettier: boolean;

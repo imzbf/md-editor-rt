@@ -67,19 +67,19 @@ const parentToken = (tokens: Token[], index: number) => {
 
 // these next two functions are kind of hacky; probably should really be a
 // true block-level token with .tag=='label'
-const beginLabel = (TokenConstructor: any) => {
+const beginLabel = (TokenConstructor: any): Token => {
   const token = new TokenConstructor('html_inline', '', 0);
   token.content = '<label>';
   return token;
 };
 
-const endLabel = (TokenConstructor: any) => {
+const endLabel = (TokenConstructor: any): Token => {
   const token = new TokenConstructor('html_inline', '', 0);
   token.content = '</label>';
   return token;
 };
 
-const afterLabel = (content: string, id: string, TokenConstructor: any) => {
+const afterLabel = (content: string, id: string, TokenConstructor: any): Token => {
   const token = new TokenConstructor('html_inline', '', 0);
   token.content =
     '<label class="task-list-item-label" for="' + id + '">' + content + '</label>';
@@ -87,7 +87,7 @@ const afterLabel = (content: string, id: string, TokenConstructor: any) => {
   return token;
 };
 
-const makeCheckbox = (token: Token, TokenConstructor: any, options: Options) => {
+const makeCheckbox = (token: Token, TokenConstructor: any, options: Options): Token => {
   const checkbox = new TokenConstructor('html_inline', '', 0);
   const disabledAttr = !options.enabled ? ' disabled="" ' : ' ';
   if (token.content.indexOf('[ ] ') === 0) {

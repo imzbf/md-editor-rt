@@ -1,10 +1,10 @@
 import { RefObject, useCallback, useContext } from 'react';
 import { EditorContext } from '~/context';
-import bus from '~/utils/event-bus';
 import { ERROR_CATCHER, REPLACE, UPLOAD_IMAGE } from '~/static/event-name';
+import bus from '~/utils/event-bus';
 
-import { ContentProps } from '../props';
 import CodeMirrorUt from '../codemirror';
+import { ContentProps } from '../props';
 
 /**
  * 处理粘贴板
@@ -92,13 +92,17 @@ const usePasteUpload = (
             matchArr.map((img: string) => {
               return props.transformImgUrl(img);
             })
-          ).then((newUrls: string[]) => {
-            imgInsert(
-              newUrls.reduce((prev, curr, index) => {
-                return prev.replace(matchArr[index], curr);
-              }, targetValue)
-            );
-          });
+          )
+            .then((newUrls: string[]) => {
+              imgInsert(
+                newUrls.reduce((prev, curr, index) => {
+                  return prev.replace(matchArr[index], curr);
+                }, targetValue)
+              );
+            })
+            .catch((err) => {
+              console.error(err);
+            });
         } else {
           imgInsert(targetValue);
         }

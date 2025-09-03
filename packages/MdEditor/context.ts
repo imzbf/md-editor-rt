@@ -1,6 +1,6 @@
 import { createContext } from 'react';
-import { ContentType } from './type';
 import { staticTextDefault } from './config';
+import { ContentType } from './type';
 
 export const EditorContext = createContext<ContentType>({
   editorId: '',

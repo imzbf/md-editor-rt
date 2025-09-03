@@ -1,11 +1,11 @@
 import { RefObject, useCallback, useContext, useEffect, useRef, useState } from 'react';
 import { globalConfig } from '~/config';
 import { EditorContext } from '~/context';
-import { appendHandler } from '~/utils/dom';
-import { ToolDirective } from '~/utils/content-help';
-import { CHANGE_FULL_SCREEN, ERROR_CATCHER, UPLOAD_IMAGE } from '~/static/event-name';
-import bus from '~/utils/event-bus';
 import { CDN_IDS } from '~/static';
+import { CHANGE_FULL_SCREEN, ERROR_CATCHER, UPLOAD_IMAGE } from '~/static/event-name';
+import { ToolDirective } from '~/utils/content-help';
+import { appendHandler } from '~/utils/dom';
+import bus from '~/utils/event-bus';
 
 import { ToolbarProps } from './';
 import { HoverData } from './TableShape';

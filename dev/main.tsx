@@ -1,8 +1,9 @@
+import { lineNumbers } from '@codemirror/view';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import App from './App';
-
 import { config, editorExtensionsAttrs, XSSPlugin } from '~~/index';
+
+import App from './App';
 
 // import Editor from '../../lib/md-editor-rt.es';
 // import TargetBlankExtension from './image/TargetBlankExtension.js';
@@ -10,7 +11,6 @@ import { config, editorExtensionsAttrs, XSSPlugin } from '~~/index';
 
 import '~/styles/style.less';
 // import { Extension } from '@codemirror/state';
-import { lineNumbers } from '@codemirror/view';
 // import screenfull from 'screenfull';
 // import katex from 'katex';
 // import 'katex/dist/katex.min.css';

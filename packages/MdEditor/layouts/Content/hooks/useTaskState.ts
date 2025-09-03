@@ -1,8 +1,8 @@
 import { useContext, useEffect } from 'react';
 import { EditorContext } from '~/context';
-import { ContentPreviewProps } from '../props';
-import bus from '~/utils/event-bus';
 import { TASK_STATE_CHANGED } from '~/static/event-name';
+import bus from '~/utils/event-bus';
+import { ContentPreviewProps } from '../props';
 
 const template = {
   checked: {

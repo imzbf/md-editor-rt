@@ -1,9 +1,8 @@
 import { RefObject, useContext, useEffect, useState } from 'react';
 import { EditorContext } from '~/context';
 import scrollAuto, { scrollAutoWithScale } from '~/utils/scroll-auto';
-import { ContentProps } from '../props';
-
 import CodeMirrorUt from '../codemirror';
+import { ContentProps } from '../props';
 
 /**
  * 自动滚动

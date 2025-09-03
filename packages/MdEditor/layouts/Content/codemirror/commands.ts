@@ -1,9 +1,9 @@
-import { KeyBinding } from '@codemirror/view';
 import { deleteLine } from '@codemirror/commands';
 import { searchKeymap } from '@codemirror/search';
-import bus from '~/utils/event-bus';
-import { ToolDirective } from '~/utils/content-help';
+import { KeyBinding } from '@codemirror/view';
 import { ON_SAVE, REPLACE } from '~/static/event-name';
+import { ToolDirective } from '~/utils/content-help';
+import bus from '~/utils/event-bus';
 import { ContentProps } from '../props';
 
 const createCommands = (id: string, contentProps: ContentProps) => {

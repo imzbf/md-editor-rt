@@ -1,7 +1,7 @@
-/* eslint-disable react-refresh/only-export-components */
-import React, { useEffect, useRef, useState } from 'react';
-import axios from 'axios';
 import { CompletionSource } from '@codemirror/autocomplete';
+import axios from 'axios';
+import React, { useEffect, useRef, useState } from 'react';
+import Icon from '~/components/Icon';
 
 import {
   MdEditor,
@@ -12,11 +12,10 @@ import {
   NormalFooterToolbar
 } from '~~/index';
 
-import mdText from '../data.md';
 import { Theme } from '../App';
+import mdText from '../data.md';
 
 import './index.less';
-import Icon from '~/components/Icon';
 import Normal from './Normal';
 
 const SAVE_KEY = 'XHMPGLJIZTDB';
@@ -35,7 +34,14 @@ const markedHeadingId = (_: string, __: string | number, index: number) =>
 export default ({ theme, previewTheme, codeTheme, lang }: PreviewProp) => {
   const editorRef = useRef<ExposeParam>();
 
-  const [md, setMd] = useState(() => {
+  const [md, setMd] = useState<{
+    text: string;
+    text2: string;
+    visible: boolean;
+    modalVisible: boolean;
+    isFullscreen: boolean;
+    inputBoxWitdh?: string;
+  }>(() => {
     return {
       text: localStorage.getItem(SAVE_KEY) || mdText,
       text2: 'Hello world',
@@ -71,7 +77,7 @@ export default ({ theme, previewTheme, codeTheme, lang }: PreviewProp) => {
           (context) => {
             const word = context.matchBefore(/^>\s*/);
 
-            if (word === null || (word.from == word!.to && context.explicit)) {
+            if (word === null || (word.from == word.to && context.explicit)) {
               return null;
             }
 
@@ -254,23 +260,34 @@ export default ({ theme, previewTheme, codeTheme, lang }: PreviewProp) => {
             md.inputBoxWitdh = w;
             localStorage.setItem(INPUT_BOX_WITDH, w);
           }}
-          onDrop={async (e) => {
+          onDrop={(e) => {
             e.stopPropagation();
 
-            const form = new FormData();
-            form.append('file', e.dataTransfer?.files[0] as any);
+            void (async () => {
+              const form = new FormData();
+              const file = e.dataTransfer?.files[0];
+              if (file) {
+                form.append('file', file);
 
-            const res = await axios.post('/api/img/upload', form, {
-              headers: {
-                'Content-Type': 'multipart/form-data'
+                try {
+                  const res = await axios.post('/api/img/upload', form, {
+                    headers: {
+                      'Content-Type': 'multipart/form-data'
+                    }
+                  });
+
+                  editorRef.current?.insert(() => {
+                    return {
+                      targetValue: `![](${res.data.url})`
+                    };
+                  });
+                } catch (error) {
+                  console.error('Image upload failed:', error);
+                }
+              } else {
+                console.warn('No file found in drop event.');
               }
-            });
-
-            editorRef.current?.insert(() => {
-              return {
-                targetValue: `![](${res.data.url})`
-              };
-            });
+            })();
           }}
           toolbars={[
             'bold',
@@ -356,7 +373,7 @@ export default ({ theme, previewTheme, codeTheme, lang }: PreviewProp) => {
           ]}
           onSave={(v, h) => {
             console.log('onSave');
-            h.then((html) => {
+            void h.then((html) => {
               console.log('onSaveAsync', html);
             });
             localStorage.setItem(SAVE_KEY, v);
@@ -367,32 +384,36 @@ export default ({ theme, previewTheme, codeTheme, lang }: PreviewProp) => {
               text: value
             })
           }
-          onUploadImg={async (files, callback) => {
-            const res = await Promise.all(
-              files.map((file) => {
-                return new Promise((rev, rej) => {
-                  const form = new FormData();
-                  form.append('file', file);
+          onUploadImg={(files, callback) => {
+            void (async () => {
+              const res = await Promise.all(
+                files.map((file) => {
+                  return new Promise((rev, rej) => {
+                    const form = new FormData();
+                    form.append('file', file);
 
-                  axios
-                    .post('/api/img/upload', form, {
-                      headers: {
-                        'Content-Type': 'multipart/form-data'
-                      }
-                    })
-                    .then((res) => rev(res))
-                    .catch((error) => rej(error));
-                });
-              })
-            );
+                    axios
+                      .post('/api/img/upload', form, {
+                        headers: {
+                          'Content-Type': 'multipart/form-data'
+                        }
+                      })
+                      .then((res) => rev(res))
+                      .catch((error) =>
+                        rej(error instanceof Error ? error : new Error(String(error)))
+                      );
+                  });
+                })
+              );
 
-            callback(
-              res.map((item: any) => ({
-                url: item.data.url,
-                alt: 'alt',
-                title: 'title'
-              }))
-            );
+              callback(
+                res.map((item: any) => ({
+                  url: item.data.url,
+                  alt: 'alt',
+                  title: 'title'
+                }))
+              );
+            })();
           }}
           formatCopiedText={(text: string) => {
             return `${text} \nfrom @imzbf`;

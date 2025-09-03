@@ -1,10 +1,10 @@
 import { useState, useEffect, forwardRef, ForwardedRef, useRef } from 'react';
-import { useConfig, useEditorId } from '~/hooks';
-import { classnames } from '~/utils';
 import { prefix, defaultProps } from '~/config';
-import { MdPreviewProps, MdPreviewStaticProps, Themes } from '~/type';
 import { EditorContext } from '~/context';
+import { useConfig, useEditorId } from '~/hooks';
 import ContentPreview from '~/layouts/Content/ContentPreview';
+import { MdPreviewProps, MdPreviewStaticProps, Themes } from '~/type';
+import { classnames } from '~/utils';
 import bus from '~/utils/event-bus';
 
 import { useExpose } from './hooks/useExpose';

@@ -1,5 +1,5 @@
-import { useContext, useEffect } from 'react';
 import mediumZoom from 'medium-zoom';
+import { useContext, useEffect } from 'react';
 import { EditorContext } from '~/context';
 
 import { ContentPreviewProps } from '../props';

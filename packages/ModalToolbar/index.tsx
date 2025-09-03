@@ -1,6 +1,6 @@
 import { CSSProperties, ReactNode, useMemo, MouseEvent } from 'react';
-import { prefix } from '~/config';
 import Modal from '~/components/Modal';
+import { prefix } from '~/config';
 
 export interface ModalToolbarProps {
   title?: string;

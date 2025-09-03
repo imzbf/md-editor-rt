@@ -1,16 +1,15 @@
 import path from 'path';
-import { createServer } from 'vite';
 import { fileURLToPath } from 'url';
-import react from '@vitejs/plugin-react';
 import markdown from '@vavt/vite-plugin-import-markdown';
+import react from '@vitejs/plugin-react';
+import { createServer } from 'vite';
 
 import nodeService from './plugins/nodeService';
 
 const __dirname = fileURLToPath(new URL('..', import.meta.url));
 const resolvePath = (p: string) => path.resolve(__dirname, p);
 
-// eslint-disable-next-line @typescript-eslint/no-unused-expressions
-!(async () => {
+void (async () => {
   const server = await createServer({
     base: '/',
     publicDir: resolvePath('dev/public'),

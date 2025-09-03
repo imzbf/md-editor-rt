@@ -1,5 +1,5 @@
-import { useContext, useEffect } from 'react';
 import copy2clipboard from '@vavt/copy2clipboard';
+import { useContext, useEffect } from 'react';
 import { prefix } from '~/config';
 import { EditorContext } from '~/context';
 import { ContentPreviewProps } from '../props';
@@ -31,7 +31,7 @@ const useCopyCode = (props: ContentPreviewProps, html: string, key: string) => {
                 codeBlock.querySelector('input:checked + pre code') ||
                 codeBlock.querySelector('pre code');
 
-              const codeText = (activeCode as HTMLElement).textContent!;
+              const codeText = (activeCode as HTMLElement).textContent || '';
               const { text, successTips, failTips } = usedLanguageText.copyCode!;
 
               let msg = successTips!;

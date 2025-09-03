@@ -1,8 +1,8 @@
-import markdownit from 'markdown-it';
-import { CSSProperties, ReactElement, RefObject } from 'react';
 import { CompletionSource } from '@codemirror/autocomplete';
 import { Compartment, Extension } from '@codemirror/state';
 import { KeyBinding, EditorView } from '@codemirror/view';
+import markdownit from 'markdown-it';
+import { CSSProperties, ReactElement, RefObject } from 'react';
 import { IconName } from './components/Icon/Icon';
 import { ToolDirective } from './utils/content-help';
 
@@ -180,7 +180,7 @@ export interface MdPreviewProps {
    *
    * @default 'zh-CN'
    */
-  language?: StaticTextDefaultKey | string;
+  language?: string;
   /**
    * html变化事件
    */
@@ -775,7 +775,7 @@ export interface StaticProps extends MdPreviewStaticProps {
   noUploadImg: boolean;
 }
 
-export type UpdateSetting = (k: keyof SettingType, v?: boolean | undefined) => void;
+export type UpdateSetting = (k: keyof SettingType, v?: boolean) => void;
 
 export type ChangeEvent = (v: string) => void;
 export type SaveEvent = (v: string, h: Promise<string>) => void;
