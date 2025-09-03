@@ -179,7 +179,6 @@ export default ({ theme, previewTheme, codeTheme, lang }: PreviewProp) => {
       <div className="container">
         <MdEditor
           id="md-prev"
-          insertLinkDirect
           // catalogMaxDepth={2}
           catalogLayout="flat"
           completions={completions}

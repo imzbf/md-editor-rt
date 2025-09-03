@@ -52,7 +52,6 @@ export interface ToolbarProps {
   showToolbarName?: boolean;
   catalogVisible: boolean;
   codeTheme: string;
-  insertLinkDirect: boolean | undefined;
 }
 
 let splitNum = 0;
@@ -83,7 +82,10 @@ const Toolbar = (props: ToolbarProps) => {
   // 全屏功能
   const { fullscreenHandler } = useSreenfull(props);
   // 多弹窗控制
-  const { modalData, setModalData, onCancel, onOk } = useModals(uploadRef, emitHandler);
+  const { clipVisible, setClipVisible, onCancel, onOk } = useModals(
+    uploadRef,
+    emitHandler
+  );
   // 下拉菜单控制
   const {
     visible,
@@ -226,17 +228,7 @@ const Toolbar = (props: ToolbarProps) => {
             <li
               className={`${prefix}-menu-item ${prefix}-menu-item-image`}
               onClick={() => {
-                if (props.insertLinkDirect) {
-                  emitHandler('image');
-                } else {
-                  setModalData((_modalData) => {
-                    return {
-                      ..._modalData,
-                      type: 'image',
-                      linkVisible: true
-                    };
-                  });
-                }
+                emitHandler('image');
               }}
               role="menuitem"
               tabIndex={0}
@@ -256,13 +248,7 @@ const Toolbar = (props: ToolbarProps) => {
             <li
               className={`${prefix}-menu-item ${prefix}-menu-item-image`}
               onClick={() => {
-                setModalData((_modalData) => {
-                  return {
-                    ..._modalData,
-                    type: 'image',
-                    clipVisible: true
-                  };
-                });
+                setClipVisible(true);
               }}
               role="menuitem"
               tabIndex={0}
@@ -301,9 +287,8 @@ const Toolbar = (props: ToolbarProps) => {
     ult.toolbarTips?.image,
     disabled,
     props.showToolbarName,
-    props.insertLinkDirect,
     emitHandler,
-    setModalData
+    setClipVisible
   ]);
 
   const TableDropdown = useMemo(() => {
@@ -852,15 +837,7 @@ const Toolbar = (props: ToolbarProps) => {
                     return false;
                   }
 
-                  if (props.insertLinkDirect) {
-                    emitHandler('link');
-                  } else {
-                    setModalData({
-                      ...modalData,
-                      type: 'link',
-                      linkVisible: true
-                    });
-                  }
+                  emitHandler('link');
                 }}
                 key="bar-link"
               >
@@ -887,17 +864,7 @@ const Toolbar = (props: ToolbarProps) => {
                     return false;
                   }
 
-                  if (props.insertLinkDirect) {
-                    emitHandler('image');
-                  } else {
-                    setModalData((_modalData) => {
-                      return {
-                        ..._modalData,
-                        type: 'image',
-                        linkVisible: true
-                      };
-                    });
-                  }
+                  emitHandler('image');
                 }}
                 key="bar-image-no-upload"
               >
@@ -1272,8 +1239,6 @@ const Toolbar = (props: ToolbarProps) => {
       ult.toolbarTips?.github,
       emitHandler,
       TitleDropdown,
-      setModalData,
-      modalData,
       ImageDropdown,
       TableDropdown,
       editorId,
@@ -1348,13 +1313,7 @@ const Toolbar = (props: ToolbarProps) => {
         multiple={true}
         style={{ display: 'none' }}
       />
-      <Modals
-        linkVisible={modalData.linkVisible}
-        clipVisible={modalData.clipVisible}
-        type={modalData.type}
-        onCancel={onCancel}
-        onOk={onOk}
-      />
+      <Modals clipVisible={clipVisible} onCancel={onCancel} onOk={onOk} />
     </>
   );
 };

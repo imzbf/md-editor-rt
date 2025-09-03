@@ -3,12 +3,7 @@ import { globalConfig } from '~/config';
 import { EditorContext } from '~/context';
 import { appendHandler } from '~/utils/dom';
 import { ToolDirective } from '~/utils/content-help';
-import {
-  CHANGE_FULL_SCREEN,
-  ERROR_CATCHER,
-  OPEN_MODALS,
-  UPLOAD_IMAGE
-} from '~/static/event-name';
+import { CHANGE_FULL_SCREEN, ERROR_CATCHER, UPLOAD_IMAGE } from '~/static/event-name';
 import bus from '~/utils/event-bus';
 import { CDN_IDS } from '~/static';
 
@@ -123,54 +118,27 @@ export const useModals = (
 ) => {
   const { editorId } = useContext(EditorContext);
 
-  const [modalData, setModalData] = useState<{
-    type: 'link' | 'image';
-    linkVisible: boolean;
-    clipVisible: boolean;
-  }>({
-    type: 'link',
-    linkVisible: false,
-    clipVisible: false
-  });
+  const [clipVisible, setClipVisible] = useState<boolean>(false);
 
   const onCancel = useCallback(() => {
-    setModalData((_modalData) => {
-      return {
-        ..._modalData,
-        linkVisible: false,
-        clipVisible: false
-      };
-    });
+    setClipVisible(false);
   }, []);
 
   const onOk = useCallback(
     (data: any) => {
       if (data) {
-        emitHandler(modalData.type, {
+        emitHandler('image', {
           desc: data.desc,
           url: data.url,
-          transform: modalData.type === 'image'
+          transform: true
         });
       }
       onCancel();
     },
-    [emitHandler, modalData.type, onCancel]
+    [emitHandler, onCancel]
   );
 
   useEffect(() => {
-    bus.on(editorId, {
-      name: OPEN_MODALS,
-      callback(type) {
-        setModalData((_modalData) => {
-          return {
-            ..._modalData,
-            type,
-            linkVisible: true
-          };
-        });
-      }
-    });
-
     const uploadHandler = () => {
       bus.emit(
         editorId,
@@ -186,8 +154,8 @@ export const useModals = (
   }, [editorId, uploadRef]);
 
   return {
-    modalData,
-    setModalData,
+    clipVisible,
+    setClipVisible,
     onCancel,
     onOk
   };
