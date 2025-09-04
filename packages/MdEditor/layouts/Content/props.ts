@@ -19,6 +19,7 @@ export interface ContentPreviewProps {
   codeFoldable: boolean;
   autoFoldThreshold: number;
   onRemount?: () => void;
+  noEcharts?: boolean;
 }
 
 export type ContentProps = Readonly<

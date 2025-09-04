@@ -3,7 +3,6 @@ import mdit from 'markdown-it';
 import ImageFiguresPlugin from 'markdown-it-image-figures';
 import SubPlugin from 'markdown-it-sub';
 import SupPlugin from 'markdown-it-sup';
-
 import { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
 import { globalConfig, prefix } from '~/config';
 import { EditorContext } from '~/context';
@@ -18,12 +17,14 @@ import { generateCodeRowNumber } from '~/utils';
 import { zoomMermaid } from '~/utils/dom';
 import bus from '~/utils/event-bus';
 
+import useEcharts from './useEcharts';
 import useHighlight from './useHighlight';
 import useKatex from './useKatex';
 import useMermaid from './useMermaid';
 
 import AdmonitionPlugin from '../markdownIt/admonition';
 import CodePlugin from '../markdownIt/code';
+import EchartsPlugin from '../markdownIt/echarts';
 import HeadingPlugin from '../markdownIt/heading';
 import KatexPlugin from '../markdownIt/katex';
 import MermaidPlugin from '../markdownIt/mermaid';
@@ -91,6 +92,7 @@ const useMarkdownIt = (props: ContentPreviewProps, previewOnly: boolean) => {
   const { hljsRef, hljsInited } = useHighlight(props);
   const { katexRef, katexInited } = useKatex(props);
   const { reRender, replaceMermaid } = useMermaid(props);
+  const { reRenderEcharts, replaceEcharts } = useEcharts(props);
 
   const [md] = useState(() => {
     const md_ = mdit({
@@ -160,6 +162,14 @@ const useMarkdownIt = (props: ContentPreviewProps, previewOnly: boolean) => {
       plugins.push({
         type: 'mermaid',
         plugin: MermaidPlugin,
+        options: { themeRef }
+      });
+    }
+
+    if (!props.noEcharts) {
+      plugins.push({
+        type: 'echarts',
+        plugin: EchartsPlugin,
         options: { themeRef }
       });
     }
@@ -279,6 +289,9 @@ const useMarkdownIt = (props: ContentPreviewProps, previewOnly: boolean) => {
           );
         }
       });
+
+      void replaceEcharts();
+
       // 生成目录
       bus.emit(editorId, CATALOG_CHANGED, headsRef.current);
     }
@@ -289,6 +302,7 @@ const useMarkdownIt = (props: ContentPreviewProps, previewOnly: boolean) => {
   }, [
     editorExtensions.mermaid?.enableZoom,
     editorId,
+    replaceEcharts,
     replaceMermaid,
     rootRef,
     setting.preview
@@ -328,6 +342,8 @@ const useMarkdownIt = (props: ContentPreviewProps, previewOnly: boolean) => {
       }
     });
 
+    void replaceEcharts();
+
     return () => {
       clearMermaidEvents();
     };
@@ -338,6 +354,8 @@ const useMarkdownIt = (props: ContentPreviewProps, previewOnly: boolean) => {
     key,
     reRender,
     replaceMermaid,
+    reRenderEcharts,
+    replaceEcharts,
     rootRef
   ]);
 

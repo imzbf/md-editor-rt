@@ -1,9 +1,9 @@
-import { useState, useEffect, forwardRef, ForwardedRef, useRef } from 'react';
+import { useState, useEffect, forwardRef, ForwardedRef, useRef, useMemo } from 'react';
 import { prefix, defaultProps } from '~/config';
 import { EditorContext } from '~/context';
 import { useConfig, useEditorId } from '~/hooks';
 import ContentPreview from '~/layouts/Content/ContentPreview';
-import { MdPreviewProps, MdPreviewStaticProps, Themes } from '~/type';
+import { ContextType, MdPreviewProps, MdPreviewStaticProps, Themes } from '~/type';
 import { classnames } from '~/utils';
 import bus from '~/utils/event-bus';
 
@@ -56,22 +56,44 @@ const MdPreview = forwardRef((props: MdPreviewProps, ref: ForwardedRef<unknown>)
     };
   }, [editorId]);
 
+  const providerValue = useMemo<ContextType>(() => {
+    return {
+      editorId: staticProps.editorId,
+      tabWidth: 2,
+      theme,
+      language,
+      highlight,
+      showCodeRowNumber,
+      usedLanguageText,
+      previewTheme,
+      customIcon: props.customIcon || {},
+      rootRef,
+      disabled: false,
+      showToolbarName: false,
+      setting: {
+        preview: false,
+        htmlPreview: false,
+        previewOnly: false,
+        pageFullscreen: false,
+        fullscreen: false
+      },
+      updateSetting: () => {},
+      tableShape: [6, 4],
+      catalogVisible: false
+    };
+  }, [
+    highlight,
+    language,
+    previewTheme,
+    props.customIcon,
+    showCodeRowNumber,
+    staticProps.editorId,
+    theme,
+    usedLanguageText
+  ]);
+
   return (
-    <EditorContext.Provider
-      value={{
-        editorId: staticProps.editorId,
-        tabWidth: 2,
-        theme,
-        language,
-        highlight,
-        showCodeRowNumber,
-        usedLanguageText,
-        previewTheme,
-        customIcon: props.customIcon || {},
-        rootRef,
-        disabled: false
-      }}
-    >
+    <EditorContext.Provider value={providerValue}>
       <div
         id={staticProps.editorId}
         className={classnames([
@@ -103,6 +125,7 @@ const MdPreview = forwardRef((props: MdPreviewProps, ref: ForwardedRef<unknown>)
           codeFoldable={codeFoldable}
           autoFoldThreshold={autoFoldThreshold}
           onRemount={props.onRemount}
+          noEcharts={props.noEcharts}
         />
       </div>
     </EditorContext.Provider>

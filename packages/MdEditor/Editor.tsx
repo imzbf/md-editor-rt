@@ -225,6 +225,7 @@ const Editor = forwardRef((props: EditorProps, ref: ForwardedRef<unknown>) => {
           onRemount={props.onRemount}
           catalogLayout={catalogLayout}
           catalogMaxDepth={props.catalogMaxDepth}
+          noEcharts={props.noEcharts}
         />
         {footers.length > 0 && (
           <Footer
