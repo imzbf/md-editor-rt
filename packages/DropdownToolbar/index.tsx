@@ -30,9 +30,9 @@ const DropdownToolbar = (props: DropdownToolbarProps) => {
       overlay={props.overlay}
       disabled={props.disabled}
     >
-      <div className={className} title={props.title || ''}>
+      <button className={className} title={props.title || ''} disabled={props.disabled}>
         {props.children || props.trigger}
-      </div>
+      </button>
     </Dropdown>
   );
 };

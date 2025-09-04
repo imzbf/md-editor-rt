@@ -101,7 +101,7 @@ export const getSelectionText = (textarea: HTMLTextAreaElement): string => {
  * @returns
  */
 export const classnames = (classList: Array<string | false | undefined>) => {
-  return classList.filter((item) => item !== false && item !== undefined).join(' ');
+  return classList.filter(Boolean).join(' ');
 };
 
 /**

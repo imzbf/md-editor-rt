@@ -41,6 +41,7 @@ export default ({ theme, previewTheme, codeTheme, lang }: PreviewProp) => {
     modalVisible: boolean;
     isFullscreen: boolean;
     inputBoxWitdh?: string;
+    disabled?: boolean;
   }>(() => {
     return {
       text: localStorage.getItem(SAVE_KEY) || mdText,
@@ -48,7 +49,8 @@ export default ({ theme, previewTheme, codeTheme, lang }: PreviewProp) => {
       visible: false,
       modalVisible: false,
       isFullscreen: false,
-      inputBoxWitdh: localStorage.getItem(INPUT_BOX_WITDH) ?? undefined
+      inputBoxWitdh: localStorage.getItem(INPUT_BOX_WITDH) ?? undefined,
+      disabled: false
     };
   });
 
@@ -177,7 +179,13 @@ export default ({ theme, previewTheme, codeTheme, lang }: PreviewProp) => {
           //   rangeHead: 1001,
           //   cursorPos: 1003
           // });
-          editorRef.current?.execCommand('katexBlock');
+          // editorRef.current?.execCommand('katexBlock');
+          setMd((prev) => {
+            return {
+              ...prev,
+              disabled: !prev.disabled
+            };
+          });
         }}
       >
         1
@@ -211,7 +219,7 @@ export default ({ theme, previewTheme, codeTheme, lang }: PreviewProp) => {
           // codeStyleReverse={false}
           // codeStyleReverseList={['mk-cute']}
           // autoFocus
-          // disabled
+          disabled={md.disabled}
           // readOnly={true}
           // maxLength={10}
           // noHighlight

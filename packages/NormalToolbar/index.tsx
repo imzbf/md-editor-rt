@@ -18,7 +18,7 @@ const NormalToolbar = (props: NormalToolbarProps) => {
   }, [props.disabled]);
 
   return (
-    <div
+    <button
       className={className}
       title={props.title}
       onClick={(e) => {
@@ -27,7 +27,7 @@ const NormalToolbar = (props: NormalToolbarProps) => {
       }}
     >
       {props.children || props.trigger}
-    </div>
+    </button>
   );
 };
 

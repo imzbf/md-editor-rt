@@ -1,5 +1,6 @@
-import { MouseEvent, ReactNode, useMemo } from 'react';
+import { MouseEvent, ReactNode } from 'react';
 import { prefix } from '~/config';
+import { classnames } from '~/utils';
 
 export interface NormalFooterToolbarProps {
   children: ReactNode;
@@ -8,13 +9,12 @@ export interface NormalFooterToolbarProps {
 }
 
 const NormalFooterToolbar = (props: NormalFooterToolbarProps) => {
-  const className = useMemo(() => {
-    return `${prefix}-footer-item${props.disabled ? ' ' + prefix + '-disabled' : ''}`;
-  }, [props.disabled]);
-
   return (
     <div
-      className={className}
+      className={classnames([
+        `${prefix}-footer-item`,
+        props.disabled && `${prefix}-disabled`
+      ])}
       onClick={(e) => {
         if (props.disabled) return;
         props.onClick?.(e);

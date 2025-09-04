@@ -4,13 +4,14 @@ import {
   forwardRef,
   ForwardedRef,
   useEffect,
-  useRef
+  useRef,
+  useMemo
 } from 'react';
 import { prefix, defaultProps } from '~/config';
 import Content from '~/layouts/Content';
 import Footer from '~/layouts/Footer';
 import ToolBar from '~/layouts/Toolbar';
-import { EditorProps, StaticProps, TableShapeType, Themes } from '~/type';
+import { ContextType, EditorProps, StaticProps, TableShapeType, Themes } from '~/type';
 import { classnames } from '~/utils';
 import bus from '~/utils/event-bus';
 import { EditorContext } from './context';
@@ -114,6 +115,43 @@ const Editor = forwardRef((props: EditorProps, ref: ForwardedRef<unknown>) => {
 
   useExpose(ref, staticProps, catalogVisible, setting, updateSetting, codeRef);
 
+  const contextValue = useMemo<ContextType>(() => {
+    return {
+      editorId: staticProps.editorId,
+      tabWidth,
+      theme,
+      language,
+      highlight,
+      showCodeRowNumber,
+      usedLanguageText,
+      previewTheme,
+      customIcon: props.customIcon || {},
+      rootRef,
+      disabled: props.disabled,
+      showToolbarName: props.showToolbarName,
+      setting,
+      updateSetting,
+      tableShape,
+      catalogVisible
+    };
+  }, [
+    staticProps.editorId,
+    tabWidth,
+    theme,
+    language,
+    highlight,
+    showCodeRowNumber,
+    usedLanguageText,
+    previewTheme,
+    props.customIcon,
+    props.disabled,
+    props.showToolbarName,
+    setting,
+    updateSetting,
+    tableShape,
+    catalogVisible
+  ]);
+
   useEffect(() => {
     return () => {
       // 清空所有的事件监听
@@ -122,21 +160,7 @@ const Editor = forwardRef((props: EditorProps, ref: ForwardedRef<unknown>) => {
   }, [staticProps.editorId]);
 
   return (
-    <EditorContext.Provider
-      value={{
-        editorId: staticProps.editorId,
-        tabWidth,
-        theme,
-        language,
-        highlight,
-        showCodeRowNumber,
-        usedLanguageText,
-        previewTheme,
-        customIcon: props.customIcon || {},
-        rootRef,
-        disabled: props.disabled
-      }}
-    >
+    <EditorContext.Provider value={contextValue}>
       <div
         id={staticProps.editorId}
         className={classnames([

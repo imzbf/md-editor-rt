@@ -7,12 +7,10 @@ import { ToolDirective } from '~/utils/content-help';
 import { appendHandler } from '~/utils/dom';
 import bus from '~/utils/event-bus';
 
-import { ToolbarProps } from './';
 import { HoverData } from './TableShape';
 
-export const useSreenfull = (props: ToolbarProps) => {
-  const { updateSetting } = props;
-  const { editorId } = useContext(EditorContext);
+export const useSreenfull = () => {
+  const { editorId, updateSetting } = useContext(EditorContext);
   const screenfull = useRef(globalConfig.editorExtensions.screenfull!.instance);
   // 是否组件内部全屏标识
   const screenfullMe = useRef(false);

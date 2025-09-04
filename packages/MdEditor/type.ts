@@ -510,7 +510,7 @@ export interface EditorProps extends MdPreviewProps {
   catalogMaxDepth?: number;
 }
 
-export interface ContentType {
+export interface ContextType {
   editorId: string;
   tabWidth: number;
   highlight: {
@@ -525,6 +525,11 @@ export interface ContentType {
   customIcon: CustomIcon;
   rootRef: RefObject<HTMLDivElement> | null;
   disabled: boolean | undefined;
+  showToolbarName?: boolean;
+  setting: SettingType;
+  updateSetting: UpdateSetting;
+  tableShape: TableShapeType;
+  catalogVisible: boolean;
 }
 
 export interface MermaidTemplate {

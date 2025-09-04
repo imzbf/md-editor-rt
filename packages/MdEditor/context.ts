@@ -1,8 +1,8 @@
 import { createContext } from 'react';
 import { staticTextDefault } from './config';
-import { ContentType } from './type';
+import { ContextType } from './type';
 
-export const EditorContext = createContext<ContentType>({
+export const EditorContext = createContext<ContextType>({
   editorId: '',
   tabWidth: 2,
   theme: 'light',
@@ -16,5 +16,16 @@ export const EditorContext = createContext<ContentType>({
   previewTheme: 'default',
   customIcon: {},
   rootRef: null,
-  disabled: undefined
+  disabled: undefined,
+  showToolbarName: false,
+  setting: {
+    preview: false,
+    htmlPreview: false,
+    previewOnly: false,
+    pageFullscreen: false,
+    fullscreen: false
+  },
+  updateSetting: () => {},
+  tableShape: [6, 4],
+  catalogVisible: false
 });
