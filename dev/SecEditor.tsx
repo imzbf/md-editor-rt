@@ -4,20 +4,32 @@ import data from './data.md';
 
 export default () => {
   const [text, setText] = useState(data);
+  const [visible, setVisible] = useState(false);
+  const changeVisible = () => {
+    setVisible((prev) => {
+      return !prev;
+    });
+  };
 
   return (
     <div className="container">
-      <MdEditor
-        value={text}
-        onChange={setText}
-        scrollAuto={false}
-        customIcon={{
-          copy: StrIcon('copy', {}) // '<i class="fa fa-car"></i>',
-        }}
-        // onDrop={(e) => {
-        //   console.log('ee', e);
-        // }}
-      />
+      <div style={{ margin: '1em 0' }}>
+        <button onClick={changeVisible}>点击</button>
+      </div>
+
+      {visible && (
+        <MdEditor
+          value={text}
+          onChange={setText}
+          scrollAuto={false}
+          customIcon={{
+            copy: StrIcon('copy', {}) // '<i class="fa fa-car"></i>',
+          }}
+          // onDrop={(e) => {
+          //   console.log('ee', e);
+          // }}
+        />
+      )}
     </div>
   );
 };

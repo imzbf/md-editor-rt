@@ -1,4 +1,12 @@
-import { CSSProperties, memo, ReactNode, useCallback, useEffect, useRef } from 'react';
+import {
+  CSSProperties,
+  memo,
+  MouseEventHandler,
+  ReactNode,
+  useCallback,
+  useEffect,
+  useRef
+} from 'react';
 import { prefix } from '~/config';
 import { classnames } from '~/utils';
 
@@ -9,6 +17,8 @@ interface Props {
   scrollTarget?: string;
   alwaysShowTrack?: boolean;
   children?: ReactNode;
+  onMouseEnter?: MouseEventHandler<HTMLDivElement>;
+  onMouseLeave?: MouseEventHandler<HTMLDivElement>;
 }
 
 const CustomScrollbar = (props: Props) => {
@@ -33,6 +43,7 @@ const CustomScrollbar = (props: Props) => {
 
     const clientH = wrapperRef.current.clientHeight;
     const scrollH = scrollEl.current.scrollHeight;
+    const scrollTop = scrollEl.current.scrollTop;
 
     if (scrollH <= clientH) {
       thumbRef.current.style.display = 'none';
@@ -47,8 +58,11 @@ const CustomScrollbar = (props: Props) => {
 
     const ratio = clientH / scrollH;
     const thumbHeight = Math.max(clientH * ratio, 20);
+    const maxTop = clientH - thumbHeight;
+    const thumbTop = Math.min(scrollTop * ratio, maxTop);
+
     thumbRef.current.style.height = `${thumbHeight}px`;
-    thumbRef.current.style.top = `${scrollEl.current.scrollTop * ratio}px`;
+    thumbRef.current.style.top = `${thumbTop}px`;
   }, [props.alwaysShowTrack]);
 
   const onScroll = updateThumb;
@@ -155,6 +169,8 @@ const CustomScrollbar = (props: Props) => {
       className={classnames([`${prefix}-custom-scrollbar`, props.className])}
       style={props.style}
       ref={wrapperRef}
+      onMouseEnter={props.onMouseEnter}
+      onMouseLeave={props.onMouseLeave}
     >
       {props.children}
       <div className={`${prefix}-custom-scrollbar__track`} ref={trackRef}>

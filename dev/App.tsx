@@ -28,9 +28,13 @@ function App() {
     localStorage.setItem('lang', lang);
   }, [codeTheme, lang, previewTheme, theme]);
 
+  useEffect(() => {
+    document.body.setAttribute('class', theme === 'dark' ? 'theme-dark' : 'theme-light');
+  }, [theme]);
+
   return (
     <StrictMode>
-      <div className={['app', theme === 'dark' && 'theme-dark'].join(' ')}>
+      <div className={'app'}>
         <Header
           theme={theme}
           onChange={setTheme}

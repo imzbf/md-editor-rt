@@ -295,6 +295,13 @@ const MdCatalog = (props: CatalogProps) => {
     };
   }, [offsetTop, mdHeadingId, getScrollElement, editorId, syncWith, editorView]);
 
+  const providerValue = useMemo(() => {
+    return {
+      scrollElementRef,
+      rootNodeRef
+    };
+  }, []);
+
   useEffect(() => {
     const getEditorView = (view: EditorView) => {
       setEditorView(view);
@@ -312,12 +319,7 @@ const MdCatalog = (props: CatalogProps) => {
   }, [editorId]);
 
   return (
-    <CatalogContext.Provider
-      value={{
-        scrollElementRef,
-        rootNodeRef
-      }}
-    >
+    <CatalogContext.Provider value={providerValue}>
       <div
         className={classnames([
           `${prefix}-catalog`,
