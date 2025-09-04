@@ -8,8 +8,10 @@ import {
   ForwardedRef,
   useCallback,
   memo,
-  MouseEvent
+  MouseEvent,
+  useMemo
 } from 'react';
+import CustomScrollbar from '~/components/CustomScrollbar';
 import { prefix } from '~/config';
 import { EditorContext } from '~/context';
 import { FocusOption } from '~/type';
@@ -81,14 +83,66 @@ const Content = forwardRef((props: ContentProps, ref: ForwardedRef<unknown>) => 
     [codeMirrorUt, props.setting.preview]
   );
 
+  const previewScrollbarStyle = useMemo(() => {
+    return {
+      flex: 1
+    };
+  }, []);
+
+  const inputWrapper = useMemo(() => {
+    return <div className={`${prefix}-input-wrapper`} ref={inputWrapperRef} />;
+  }, [inputWrapperRef]);
+
+  const contentPreview = useMemo(() => {
+    return (
+      <ContentPreview
+        modelValue={props.modelValue}
+        onChange={props.onChange}
+        setting={props.setting}
+        onHtmlChanged={onHtmlChangedCopy}
+        onGetCatalog={props.onGetCatalog}
+        mdHeadingId={props.mdHeadingId}
+        noMermaid={props.noMermaid}
+        sanitize={props.sanitize}
+        noKatex={props.noKatex}
+        formatCopiedText={props.formatCopiedText}
+        noHighlight={props.noHighlight}
+        noImgZoomIn={props.noImgZoomIn}
+        sanitizeMermaid={props.sanitizeMermaid}
+        codeFoldable={props.codeFoldable}
+        autoFoldThreshold={props.autoFoldThreshold}
+        onRemount={props.onRemount}
+      />
+    );
+  }, [
+    onHtmlChangedCopy,
+    props.autoFoldThreshold,
+    props.codeFoldable,
+    props.formatCopiedText,
+    props.mdHeadingId,
+    props.modelValue,
+    props.noHighlight,
+    props.noImgZoomIn,
+    props.noKatex,
+    props.noMermaid,
+    props.onChange,
+    props.onGetCatalog,
+    props.onRemount,
+    props.sanitize,
+    props.sanitizeMermaid,
+    props.setting
+  ]);
+
   return (
     <div className={`${prefix}-content`}>
       <div className={`${prefix}-content-wrapper`} ref={contentRef}>
-        <div
-          className={`${prefix}-input-wrapper`}
+        <CustomScrollbar
+          alwaysShowTrack
+          scrollTarget={`#${editorId} .cm-scroller`}
           style={inputWrapperStyle}
-          ref={inputWrapperRef}
-        />
+        >
+          {inputWrapper}
+        </CustomScrollbar>
         {/* 拖拽入口需要保持props.setting变化时就挂载 */}
         {(props.setting.htmlPreview || props.setting.preview) && (
           <div
@@ -97,24 +151,7 @@ const Content = forwardRef((props: ContentProps, ref: ForwardedRef<unknown>) => 
             ref={resizeRef}
           />
         )}
-        <ContentPreview
-          modelValue={props.modelValue}
-          onChange={props.onChange}
-          setting={props.setting}
-          onHtmlChanged={onHtmlChangedCopy}
-          onGetCatalog={props.onGetCatalog}
-          mdHeadingId={props.mdHeadingId}
-          noMermaid={props.noMermaid}
-          sanitize={props.sanitize}
-          noKatex={props.noKatex}
-          formatCopiedText={props.formatCopiedText}
-          noHighlight={props.noHighlight}
-          noImgZoomIn={props.noImgZoomIn}
-          sanitizeMermaid={props.sanitizeMermaid}
-          codeFoldable={props.codeFoldable}
-          autoFoldThreshold={props.autoFoldThreshold}
-          onRemount={props.onRemount}
-        />
+        <CustomScrollbar style={previewScrollbarStyle}>{contentPreview}</CustomScrollbar>
       </div>
       {props.catalogVisible && (
         <MdCatalog

@@ -9,7 +9,7 @@ import {
 } from './type';
 
 export const prefix = 'md-editor';
-
+export const prefixHump = 'MdEditor';
 // 编辑器ID
 export const defaultEditorId = 'md-editor-rt';
 
