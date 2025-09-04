@@ -33,7 +33,7 @@ import CodeMirrorUt from '../codemirror';
 import usePasteUpload from './usePasteUpload';
 import { createAutocompletion } from '../codemirror/autocompletion';
 import { createCommands } from '../codemirror/commands';
-import { linkShortenerPlugin } from '../codemirror/linkShortener';
+import { textShortenerPlugin } from '../codemirror/textShortener';
 import { oneLight } from '../codemirror/themeLight';
 import { oneDark } from '../codemirror/themeOneDark';
 import { ContentProps } from '../props';
@@ -169,7 +169,7 @@ const useCodeMirror = (props: ContentProps) => {
       },
       {
         type: 'linkShortener',
-        extension: linkShortenerPlugin({
+        extension: textShortenerPlugin({
           maxLength: 30
         })
       }
