@@ -33,6 +33,7 @@ import CodeMirrorUt from '../codemirror';
 import usePasteUpload from './usePasteUpload';
 import { createAutocompletion } from '../codemirror/autocompletion';
 import { createCommands } from '../codemirror/commands';
+import { createFloatingToolbarPlugin } from '../codemirror/floatingToolbar';
 import { textShortenerPlugin } from '../codemirror/textShortener';
 import { oneLight } from '../codemirror/themeLight';
 import { oneDark } from '../codemirror/themeOneDark';
@@ -48,7 +49,8 @@ import { ContentProps } from '../props';
  * @returns
  */
 const useCodeMirror = (props: ContentProps) => {
-  const { tabWidth, editorId, theme } = useContext(EditorContext);
+  const contextValue = useContext(EditorContext);
+  const { tabWidth, editorId, theme, noPrettier, disabled } = contextValue;
 
   const inputWrapperRef = useRef<HTMLDivElement>(null);
   const codeMirrorUt = useRef<CodeMirrorUt>();
@@ -66,7 +68,7 @@ const useCodeMirror = (props: ContentProps) => {
     };
   });
 
-  const [mdEditorCommands] = useState(() => createCommands(editorId, props));
+  const [mdEditorCommands] = useState(() => createCommands(editorId, { noPrettier }));
 
   // 搜集默认快捷键列表，通过方法返回，防止默认列表被篡改
   const getDefaultKeymaps = useCallback(
@@ -129,6 +131,14 @@ const useCodeMirror = (props: ContentProps) => {
     return nextDomEventHandlers;
   }, [domEventHandlersUserDefined, editorId, pasteHandler, props]);
 
+  const listeners = useRef(new Set<() => void>());
+  const contextValueRef = useRef(contextValue);
+
+  useEffect(() => {
+    contextValueRef.current = contextValue;
+    listeners.current.forEach((cb) => cb());
+  }, [contextValue]);
+
   const [defaultExtensions] = useState(() => {
     return [
       {
@@ -171,6 +181,20 @@ const useCodeMirror = (props: ContentProps) => {
         type: 'linkShortener',
         extension: textShortenerPlugin({
           maxLength: 30
+        })
+      },
+      {
+        type: 'floatingToolbar',
+        extension: createFloatingToolbarPlugin({
+          contextValue: {
+            getValue: () => {
+              return contextValueRef.current;
+            },
+            subscribe: (cb: () => void) => {
+              listeners.current.add(cb);
+              return () => listeners.current.delete(cb);
+            }
+          }
         })
       }
     ];
@@ -221,7 +245,7 @@ const useCodeMirror = (props: ContentProps) => {
 
     setTimeout(() => {
       nc.setTabSize(tabWidth);
-      nc.setDisabled(props.disabled!);
+      nc.setDisabled(!!disabled);
       nc.setReadOnly(props.readOnly!);
       if (props.placeholder) nc.setPlaceholder(props.placeholder);
       if (typeof props.maxLength === 'number') nc.setMaxLength(props.maxLength);
@@ -398,8 +422,8 @@ const useCodeMirror = (props: ContentProps) => {
       return;
     }
 
-    codeMirrorUt.current?.setDisabled(props.disabled!);
-  }, [props.disabled]);
+    codeMirrorUt.current?.setDisabled(!!disabled);
+  }, [disabled]);
 
   useEffect(() => {
     if (noSet.current) {

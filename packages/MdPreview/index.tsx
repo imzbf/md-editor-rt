@@ -1,7 +1,7 @@
 import { useState, useEffect, forwardRef, ForwardedRef, useRef, useMemo } from 'react';
 import { prefix, defaultProps } from '~/config';
 import { EditorContext } from '~/context';
-import { useConfig, useEditorId } from '~/hooks';
+import { useMdPreviewConfig, useEditorId } from '~/hooks';
 import ContentPreview from '~/layouts/Content/ContentPreview';
 import { ContextType, MdPreviewProps, MdPreviewStaticProps, Themes } from '~/type';
 import { classnames } from '~/utils';
@@ -29,7 +29,8 @@ const MdPreview = forwardRef((props: MdPreviewProps, ref: ForwardedRef<unknown>)
     language = defaultProps.language,
     sanitizeMermaid = defaultProps.sanitizeMermaid,
     codeFoldable = defaultProps.codeFoldable,
-    autoFoldThreshold = defaultProps.autoFoldThreshold
+    autoFoldThreshold = defaultProps.autoFoldThreshold,
+    codeTheme = defaultProps.codeTheme
   } = props;
 
   const editorId = useEditorId(props);
@@ -45,7 +46,7 @@ const MdPreview = forwardRef((props: MdPreviewProps, ref: ForwardedRef<unknown>)
   const rootRef = useRef<HTMLDivElement>(null);
 
   // 部分配置重构
-  const [highlight, usedLanguageText, setting] = useConfig(props);
+  const [highlight, usedLanguageText] = useMdPreviewConfig(props);
 
   useExpose(staticProps, ref);
 
@@ -79,9 +80,15 @@ const MdPreview = forwardRef((props: MdPreviewProps, ref: ForwardedRef<unknown>)
       },
       updateSetting: () => {},
       tableShape: [6, 4],
-      catalogVisible: false
+      catalogVisible: false,
+      noUploadImg: true,
+      noPrettier: true,
+      codeTheme,
+      defToolbars: [],
+      floatingToolbars: []
     };
   }, [
+    codeTheme,
     highlight,
     language,
     previewTheme,
@@ -99,8 +106,7 @@ const MdPreview = forwardRef((props: MdPreviewProps, ref: ForwardedRef<unknown>)
         className={classnames([
           prefix,
           className,
-          theme === 'dark' && `${prefix}-dark`,
-          setting.fullscreen || setting.pageFullscreen ? `${prefix}-fullscreen` : '',
+          props.theme === 'dark' && `${prefix}-dark`,
           `${prefix}-previewOnly`
         ])}
         style={props.style}
@@ -109,7 +115,6 @@ const MdPreview = forwardRef((props: MdPreviewProps, ref: ForwardedRef<unknown>)
         <ContentPreview
           modelValue={value}
           onChange={onChange}
-          setting={setting}
           mdHeadingId={mdHeadingId}
           onHtmlChanged={onHtmlChanged}
           onGetCatalog={onGetCatalog}

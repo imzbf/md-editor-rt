@@ -2,7 +2,7 @@ import { createContext } from 'react';
 import { staticTextDefault } from './config';
 import { ContextType } from './type';
 
-export const EditorContext = createContext<ContextType>({
+export const defaultContextValue: ContextType = {
   editorId: '',
   tabWidth: 2,
   theme: 'light',
@@ -27,5 +27,12 @@ export const EditorContext = createContext<ContextType>({
   },
   updateSetting: () => {},
   tableShape: [6, 4],
-  catalogVisible: false
-});
+  catalogVisible: false,
+  noUploadImg: false,
+  noPrettier: false,
+  codeTheme: 'default',
+  defToolbars: [],
+  floatingToolbars: []
+};
+
+export const EditorContext = createContext<ContextType>(defaultContextValue);

@@ -492,7 +492,9 @@ export const defaultProps = {
   transformImgUrl: (t: string) => t,
   codeFoldable: true,
   autoFoldThreshold: 30,
-  catalogLayout: 'fixed'
+  catalogLayout: 'fixed',
+  floatingToolbars: [],
+  customIcon: {}
 };
 
 export const globalConfig: GlobalConfig = {

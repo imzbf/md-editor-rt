@@ -11,7 +11,7 @@ import { ContentPreviewProps } from '../props';
  * @param html 编译后的html
  */
 const useZoom = (props: ContentPreviewProps, html: string) => {
-  const { editorId } = useContext(EditorContext);
+  const { editorId, setting } = useContext(EditorContext);
 
   useEffect(() => {
     if (props.noImgZoomIn) {
@@ -33,7 +33,7 @@ const useZoom = (props: ContentPreviewProps, html: string) => {
     };
 
     return zoomHander();
-  }, [editorId, html, props.noImgZoomIn, props.setting]);
+  }, [editorId, html, props.noImgZoomIn, setting]);
 };
 
 export default useZoom;

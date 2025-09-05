@@ -55,7 +55,6 @@ const useMarkdownIt = (props: ContentPreviewProps, previewOnly: boolean) => {
     noKatex,
     noMermaid,
     noHighlight,
-    setting,
     onHtmlChanged,
     onGetCatalog
   } = props;
@@ -69,7 +68,8 @@ const useMarkdownIt = (props: ContentPreviewProps, previewOnly: boolean) => {
     theme,
     usedLanguageText,
     customIcon,
-    rootRef
+    rootRef,
+    setting
   } = useContext(EditorContext);
 
   const headsRef = useRef<HeadList[]>([]);

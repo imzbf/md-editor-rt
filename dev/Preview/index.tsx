@@ -297,6 +297,7 @@ export default ({ theme, previewTheme, codeTheme, lang }: PreviewProp) => {
               }
             })();
           }}
+          floatingToolbars={['bold', 'underline', 'italic', 'strikeThrough']}
           toolbars={[
             'bold',
             'underline',

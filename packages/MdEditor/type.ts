@@ -513,6 +513,13 @@ export interface EditorProps extends MdPreviewProps {
    * >= v5.5.0
    */
   catalogMaxDepth?: number;
+  /**
+   * 浮动工具栏
+   *
+   * @version 6.0.0
+   * @default []
+   */
+  floatingToolbars: Array<ToolbarNames>;
 }
 
 export interface ContextType {
@@ -535,6 +542,11 @@ export interface ContextType {
   updateSetting: UpdateSetting;
   tableShape: TableShapeType;
   catalogVisible: boolean;
+  noUploadImg: boolean;
+  noPrettier: boolean;
+  codeTheme: string;
+  defToolbars: Array<ReactElement>;
+  floatingToolbars: Array<ToolbarNames>;
 }
 
 export interface MermaidTemplate {

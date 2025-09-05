@@ -1,6 +1,15 @@
-import { CSSProperties, RefObject, useEffect, useMemo, useRef, useState } from 'react';
+import {
+  CSSProperties,
+  RefObject,
+  useContext,
+  useEffect,
+  useMemo,
+  useRef,
+  useState
+} from 'react';
 import { MinInputBoxWidth } from '~/config';
 
+import { EditorContext } from '~/context';
 import { ContentProps } from '../props';
 
 const useResize = (
@@ -8,6 +17,7 @@ const useResize = (
   contentRef: RefObject<HTMLDivElement>,
   resizeRef: RefObject<HTMLDivElement>
 ) => {
+  const { setting } = useContext(EditorContext);
   const { inputBoxWidth, onInputBoxWidthChange } = props;
   // 向后兼容，防止以前使用px的用户的编辑器布局混乱
   const compatibledInputBoxWidth = useMemo(() => {
@@ -107,7 +117,7 @@ const useResize = (
   }, [compatibledInputBoxWidth]);
 
   useEffect(() => {
-    const po = props.setting.previewOnly;
+    const po = setting.previewOnly;
 
     let width: string | number | undefined = '';
     let display = '';
@@ -115,7 +125,7 @@ const useResize = (
     if (po) {
       width = '0%';
       display = 'none';
-    } else if (!props.setting.htmlPreview && !props.setting.preview) {
+    } else if (!setting.htmlPreview && !setting.preview) {
       width = '100%';
       display = 'none';
     } else {
@@ -136,7 +146,7 @@ const useResize = (
         display
       };
     });
-  }, [props.setting.htmlPreview, props.setting.preview, props.setting.previewOnly]);
+  }, [setting.htmlPreview, setting.preview, setting.previewOnly]);
 
   return {
     inputWrapperStyle,

@@ -62,7 +62,11 @@ const Editor = forwardRef((props: EditorProps, ref: ForwardedRef<unknown>) => {
     transformImgUrl = defaultProps.transformImgUrl,
     codeFoldable = defaultProps.codeFoldable,
     autoFoldThreshold = defaultProps.autoFoldThreshold,
-    catalogLayout = defaultProps.catalogLayout as typeof props.catalogLayout
+    catalogLayout = defaultProps.catalogLayout as typeof props.catalogLayout,
+    floatingToolbars = defaultProps.floatingToolbars,
+    customIcon = defaultProps.customIcon,
+    disabled,
+    showToolbarName
   } = props;
 
   const editorId = useEditorId(props);
@@ -125,31 +129,41 @@ const Editor = forwardRef((props: EditorProps, ref: ForwardedRef<unknown>) => {
       showCodeRowNumber,
       usedLanguageText,
       previewTheme,
-      customIcon: props.customIcon || {},
+      customIcon,
       rootRef,
-      disabled: props.disabled,
-      showToolbarName: props.showToolbarName,
+      disabled,
+      showToolbarName,
       setting,
       updateSetting,
       tableShape,
-      catalogVisible
+      catalogVisible,
+      noUploadImg,
+      noPrettier,
+      codeTheme,
+      defToolbars,
+      floatingToolbars
     };
   }, [
+    catalogVisible,
+    codeTheme,
+    customIcon,
+    defToolbars,
+    disabled,
+    floatingToolbars,
+    highlight,
+    language,
+    noPrettier,
+    noUploadImg,
+    previewTheme,
+    setting,
+    showCodeRowNumber,
+    showToolbarName,
     staticProps.editorId,
     tabWidth,
-    theme,
-    language,
-    highlight,
-    showCodeRowNumber,
-    usedLanguageText,
-    previewTheme,
-    props.customIcon,
-    props.disabled,
-    props.showToolbarName,
-    setting,
-    updateSetting,
     tableShape,
-    catalogVisible
+    theme,
+    updateSetting,
+    usedLanguageText
   ]);
 
   useEffect(() => {
@@ -173,19 +187,7 @@ const Editor = forwardRef((props: EditorProps, ref: ForwardedRef<unknown>) => {
         ref={rootRef}
       >
         {toolbars.length > 0 && (
-          <ToolBar
-            noPrettier={staticProps.noPrettier}
-            toolbars={toolbars}
-            toolbarsExclude={toolbarsExclude}
-            setting={setting}
-            updateSetting={updateSetting}
-            tableShape={tableShape}
-            defToolbars={defToolbars}
-            noUploadImg={staticProps.noUploadImg}
-            showToolbarName={props.showToolbarName}
-            catalogVisible={catalogVisible}
-            codeTheme={codeTheme}
-          />
+          <ToolBar toolbars={toolbars} toolbarsExclude={toolbarsExclude} />
         )}
         <Content
           ref={codeRef}
@@ -197,14 +199,12 @@ const Editor = forwardRef((props: EditorProps, ref: ForwardedRef<unknown>) => {
           onGetCatalog={onGetCatalog}
           sanitize={sanitize}
           noMermaid={staticProps.noMermaid}
-          noPrettier={staticProps.noPrettier}
           noHighlight={staticProps.noHighlight}
           placeholder={placeholder}
           noKatex={staticProps.noKatex}
           scrollAuto={state.scrollAuto}
           formatCopiedText={props.formatCopiedText}
           autoFocus={props.autoFocus}
-          disabled={props.disabled}
           readOnly={props.readOnly}
           maxLength={props.maxLength}
           autoDetectCode={props.autoDetectCode}
@@ -212,8 +212,6 @@ const Editor = forwardRef((props: EditorProps, ref: ForwardedRef<unknown>) => {
           onFocus={props.onFocus}
           onInput={props.onInput}
           completions={props.completions}
-          catalogVisible={catalogVisible}
-          theme={props.theme}
           noImgZoomIn={noImgZoomIn}
           onDrop={props.onDrop}
           inputBoxWidth={inputBoxWidth}

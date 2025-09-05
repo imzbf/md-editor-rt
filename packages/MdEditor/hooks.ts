@@ -284,19 +284,9 @@ export const useCatalog = (_props: EditorProps, staticProps: StaticProps) => {
 // 初始为空，渲染到页面后获取页面属性
 let bodyOverflowHistory = '';
 
-/**
- * 收集整理公共配置
- * highlight及language重构
- * [SettingType, (k: keyof typeof setting) => void] => {}
- * @param props
- * @returns
- */
-export const useConfig = (props: EditorProps): [any, any, SettingType, UpdateSetting] => {
+export const useMdPreviewConfig = (props: MdPreviewProps) => {
   const {
     theme = defaultProps.theme,
-    preview = defaultProps.preview,
-    htmlPreview = defaultProps.htmlPreview,
-    pageFullscreen = defaultProps.pageFullscreen,
     previewTheme = defaultProps.previewTheme,
     codeTheme = defaultProps.codeTheme,
     language = defaultProps.language,
@@ -359,6 +349,25 @@ export const useConfig = (props: EditorProps): [any, any, SettingType, UpdateSet
       return staticTextDefault['zh-CN'];
     }
   }, [language]);
+
+  return [highlight, usedLanguageText] as const;
+};
+
+/**
+ * 收集整理公共配置
+ * highlight及language重构
+ * [SettingType, (k: keyof typeof setting) => void] => {}
+ * @param props
+ * @returns
+ */
+export const useConfig = (props: EditorProps): [any, any, SettingType, UpdateSetting] => {
+  const {
+    preview = defaultProps.preview,
+    htmlPreview = defaultProps.htmlPreview,
+    pageFullscreen = defaultProps.pageFullscreen
+  } = props;
+
+  const [highlight, usedLanguageText] = useMdPreviewConfig(props);
 
   const [setting, setSetting] = useState<SettingType>({
     pageFullscreen,

@@ -18,7 +18,7 @@ const useAutoScroll = (
   html: string,
   codeMirrorUt: RefObject<CodeMirrorUt | undefined>
 ) => {
-  const { editorId } = useContext(EditorContext);
+  const { editorId, setting } = useContext(EditorContext);
   const [scrollCb, setScrollCb] = useState({
     clear() {},
     init() {}
@@ -53,10 +53,10 @@ const useAutoScroll = (
     }
   }, [
     html,
-    props.setting.fullscreen,
-    props.setting.pageFullscreen,
-    props.setting.preview,
-    props.setting.htmlPreview,
+    setting.fullscreen,
+    setting.pageFullscreen,
+    setting.preview,
+    setting.htmlPreview,
     editorId,
     codeMirrorUt
   ]);
@@ -64,8 +64,8 @@ const useAutoScroll = (
   useEffect(() => {
     if (
       props.scrollAuto &&
-      !props.setting.previewOnly &&
-      (props.setting.preview || props.setting.htmlPreview)
+      !setting.previewOnly &&
+      (setting.preview || setting.htmlPreview)
     ) {
       scrollCb.init();
     } else {
@@ -78,9 +78,9 @@ const useAutoScroll = (
   }, [
     scrollCb,
     props.scrollAuto,
-    props.setting.preview,
-    props.setting.htmlPreview,
-    props.setting.previewOnly
+    setting.preview,
+    setting.htmlPreview,
+    setting.previewOnly
   ]);
 };
 
