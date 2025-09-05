@@ -2,7 +2,9 @@ import { useContext, useEffect, useRef, useState, useCallback } from 'react';
 import { prefix, globalConfig } from '~/config';
 import { EditorContext } from '~/context';
 import { CDN_IDS } from '~/static';
+import { ERROR_CATCHER } from '~/static/event-name';
 import { appendHandler } from '~/utils/dom';
+import bus from '~/utils/event-bus';
 import { ContentPreviewProps } from '../props';
 
 const useEcharts = (props: ContentPreviewProps) => {
@@ -44,7 +46,7 @@ const useEcharts = (props: ContentPreviewProps) => {
           configEcharts();
         }
       },
-      'mermaid'
+      'echarts'
     );
   }, [props.noEcharts, configEcharts]);
 
@@ -70,18 +72,28 @@ const useEcharts = (props: ContentPreviewProps) => {
       mermaidSourceEles.current.forEach((item) => {
         if (item.dataset.closed === 'false') return;
 
-        const code = item.innerText;
-        const ins = echartsRef.current.init(item, theme);
+        try {
+          // eslint-disable-next-line @typescript-eslint/no-implied-eval
+          const options = new Function(`return ${item.innerText}`)();
+          const ins = echartsRef.current.init(item, theme);
 
-        // eslint-disable-next-line @typescript-eslint/no-implied-eval
-        ins.setOption(new Function(`return ${code}`)());
-        item.setAttribute('data-processed', '');
+          ins.setOption(options);
+          item.setAttribute('data-processed', '');
 
-        echartsInstances.current.push(ins);
+          echartsInstances.current.push(ins);
 
-        const observer = new ResizeObserver(() => ins.resize());
-        observer.observe(item);
-        observers.current.push(observer);
+          const observer = new ResizeObserver(() => {
+            ins.resize();
+          });
+          observer.observe(item);
+          observers.current.push(observer);
+        } catch (error: any) {
+          bus.emit(editorId, ERROR_CATCHER, {
+            name: 'echarts',
+            message: error?.message,
+            error
+          });
+        }
       });
     }
   }, [props.noEcharts, rootRef, editorId, theme, clearEchartsEffects]);
