@@ -519,7 +519,7 @@ export interface EditorProps extends MdPreviewProps {
    * @version 6.0.0
    * @default []
    */
-  floatingToolbars: Array<ToolbarNames>;
+  floatingToolbars?: Array<ToolbarNames>;
 }
 
 export interface ContextType {

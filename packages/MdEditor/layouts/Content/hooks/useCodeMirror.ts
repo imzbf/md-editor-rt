@@ -50,7 +50,8 @@ import { ContentProps } from '../props';
  */
 const useCodeMirror = (props: ContentProps) => {
   const contextValue = useContext(EditorContext);
-  const { tabWidth, editorId, theme, noPrettier, disabled } = contextValue;
+  const { tabWidth, editorId, theme, noPrettier, disabled, floatingToolbars } =
+    contextValue;
 
   const inputWrapperRef = useRef<HTMLDivElement>(null);
   const codeMirrorUt = useRef<CodeMirrorUt>();
@@ -64,7 +65,8 @@ const useCodeMirror = (props: ContentProps) => {
       autocompletion: new Compartment(),
       update: new Compartment(),
       domEvent: new Compartment(),
-      history: new Compartment()
+      history: new Compartment(),
+      floatingToolbar: new Compartment()
     };
   });
 
@@ -195,7 +197,8 @@ const useCodeMirror = (props: ContentProps) => {
               return () => listeners.current.delete(cb);
             }
           }
-        })
+        }),
+        compartment: comp.floatingToolbar
       }
     ];
   });
@@ -442,6 +445,29 @@ const useCodeMirror = (props: ContentProps) => {
       codeMirrorUt.current?.setMaxLength(props.maxLength);
     }
   }, [props.maxLength]);
+
+  useEffect(() => {
+    if (floatingToolbars.length > 0) {
+      codeMirrorUt.current?.view.dispatch({
+        effects: comp.floatingToolbar.reconfigure(
+          createFloatingToolbarPlugin({
+            contextValue: {
+              getValue: () => {
+                return contextValueRef.current;
+              },
+              subscribe: (cb: () => void) => {
+                listeners.current.add(cb);
+                return () => listeners.current.delete(cb);
+              }
+            }
+          })
+        )
+      });
+    } else
+      codeMirrorUt.current?.view.dispatch({
+        effects: comp.floatingToolbar.reconfigure([])
+      });
+  }, [comp.floatingToolbar, floatingToolbars]);
 
   // 附带的设置
   // useAttach(codeMirrorUt);
