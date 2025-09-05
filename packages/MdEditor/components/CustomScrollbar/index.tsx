@@ -90,9 +90,9 @@ const CustomScrollbar = (props: Props) => {
   }, []);
 
   /** 隐藏原生滚动条 */
-  const hideNativeScrollbar = useCallback((el: HTMLElement) => {
-    el.classList.add(`${prefix}-custom-scrollbar--hide-native`);
-  }, []);
+  // const hideNativeScrollbar = useCallback((el: HTMLElement) => {
+  //   el.classList.add(`${prefix}-custom-scrollbar--hide-native`);
+  // }, []);
 
   /** 绑定滚动元素事件 */
   const bindScrollEl = useCallback(
@@ -105,7 +105,7 @@ const CustomScrollbar = (props: Props) => {
       scrollEl.current = el;
 
       if (scrollEl.current) {
-        hideNativeScrollbar(scrollEl.current);
+        // hideNativeScrollbar(scrollEl.current);
         scrollEl.current.addEventListener('scroll', onScroll);
         updateThumb();
       } else {
@@ -115,7 +115,7 @@ const CustomScrollbar = (props: Props) => {
         }
       }
     },
-    [hideNativeScrollbar, onScroll, props.alwaysShowTrack, updateThumb]
+    [onScroll, props.alwaysShowTrack, updateThumb]
   );
 
   /** 查找并绑定最新的滚动元素 */
