@@ -141,6 +141,20 @@ const useCodeMirror = (props: ContentProps) => {
     listeners.current.forEach((cb) => cb());
   }, [contextValue]);
 
+  const [floatingToolbarPlugin] = useState(() => {
+    return createFloatingToolbarPlugin({
+      contextValue: {
+        getValue: () => {
+          return contextValueRef.current;
+        },
+        subscribe: (cb: () => void) => {
+          listeners.current.add(cb);
+          return () => listeners.current.delete(cb);
+        }
+      }
+    });
+  });
+
   const [defaultExtensions] = useState(() => {
     return [
       {
@@ -187,17 +201,7 @@ const useCodeMirror = (props: ContentProps) => {
       },
       {
         type: 'floatingToolbar',
-        extension: createFloatingToolbarPlugin({
-          contextValue: {
-            getValue: () => {
-              return contextValueRef.current;
-            },
-            subscribe: (cb: () => void) => {
-              listeners.current.add(cb);
-              return () => listeners.current.delete(cb);
-            }
-          }
-        }),
+        extension: floatingToolbars.length > 0 ? floatingToolbarPlugin : [],
         compartment: comp.floatingToolbar
       }
     ];
@@ -449,25 +453,13 @@ const useCodeMirror = (props: ContentProps) => {
   useEffect(() => {
     if (floatingToolbars.length > 0) {
       codeMirrorUt.current?.view.dispatch({
-        effects: comp.floatingToolbar.reconfigure(
-          createFloatingToolbarPlugin({
-            contextValue: {
-              getValue: () => {
-                return contextValueRef.current;
-              },
-              subscribe: (cb: () => void) => {
-                listeners.current.add(cb);
-                return () => listeners.current.delete(cb);
-              }
-            }
-          })
-        )
+        effects: comp.floatingToolbar.reconfigure(floatingToolbarPlugin)
       });
     } else
       codeMirrorUt.current?.view.dispatch({
         effects: comp.floatingToolbar.reconfigure([])
       });
-  }, [comp.floatingToolbar, floatingToolbars]);
+  }, [comp.floatingToolbar, floatingToolbarPlugin, floatingToolbars]);
 
   // 附带的设置
   // useAttach(codeMirrorUt);
