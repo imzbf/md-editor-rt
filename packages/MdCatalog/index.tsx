@@ -220,7 +220,13 @@ const MdCatalog = (props: CatalogProps) => {
 
           if (syncWith === 'preview') {
             const linkEle = rootNodeRef.current?.getElementById(
-              mdHeadingId(link.text, link.level, index + 1)
+              mdHeadingId({
+                text: link.text,
+                level: link.level,
+                index: index + 1,
+                currentToken: link.currentToken,
+                nextToken: link.nextToken
+              })
             );
 
             if (linkEle instanceof HTMLElement) {

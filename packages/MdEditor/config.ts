@@ -5,7 +5,8 @@ import {
   GlobalConfig,
   Footers,
   StaticTextDefault,
-  ToolbarNames
+  ToolbarNames,
+  MdHeadingId
 } from './type';
 
 export const prefix = 'md-editor';
@@ -464,7 +465,7 @@ export const defaultProps = {
   tabWidth: 2,
   showCodeRowNumber: true,
   previewTheme: 'default',
-  mdHeadingId: (text: string) => text,
+  mdHeadingId: (({ text }) => text) as MdHeadingId,
   style: {},
   tableShape: [6, 4],
   noMermaid: false,

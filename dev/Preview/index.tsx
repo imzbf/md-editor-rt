@@ -9,7 +9,8 @@ import {
   ModalToolbar,
   MdCatalog,
   ExposeParam,
-  NormalFooterToolbar
+  NormalFooterToolbar,
+  MdHeadingId
 } from '~~/index';
 
 import { Theme } from '../App';
@@ -28,8 +29,9 @@ interface PreviewProp {
   lang: 'zh-CN' | 'en-US';
 }
 
-const markedHeadingId = (_: string, __: string | number, index: number) =>
-  `heading-${index}`;
+const mdHeadingId: MdHeadingId = ({ index }) => {
+  return `heading-${index}`;
+};
 
 export default ({ theme, previewTheme, codeTheme, lang }: PreviewProp) => {
   const editorRef = useRef<ExposeParam>();
@@ -144,7 +146,7 @@ export default ({ theme, previewTheme, codeTheme, lang }: PreviewProp) => {
         <MdCatalog
           theme={theme}
           editorId="md-prev"
-          mdHeadingId={markedHeadingId}
+          mdHeadingId={mdHeadingId}
           // catalogMaxDepth={2}
         />
       </div>
@@ -213,7 +215,7 @@ export default ({ theme, previewTheme, codeTheme, lang }: PreviewProp) => {
           // noMermaid
           placeholder="placeholderplaceholderplaceholderplaceholderplaceholderplaceholderplaceholderplaceholderplaceholder"
           // noKatex
-          mdHeadingId={markedHeadingId}
+          mdHeadingId={mdHeadingId}
           // sanitize={(h) => `<a href="#">aaa</a>${h}`}
           // scrollAuto={false}
           // codeStyleReverse={false}
