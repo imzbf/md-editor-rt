@@ -1,11 +1,11 @@
-import { useCallback, useContext, useEffect, useRef, useState } from 'react';
 import { randomId } from '@vavt/util';
+import { useCallback, useContext, useEffect, useRef, useState } from 'react';
 import { prefix, globalConfig } from '~/config';
 import { EditorContext } from '~/context';
-import { appendHandler } from '~/utils/dom';
-import { mermaidCache } from '~/utils/cache';
 import { CDN_IDS } from '~/static';
 import { ERROR_CATCHER } from '~/static/event-name';
+import { mermaidCache } from '~/utils/cache';
+import { appendHandler } from '~/utils/dom';
 import eventBus from '~/utils/event-bus';
 
 import { ContentPreviewProps } from '../props';
@@ -62,10 +62,18 @@ const useMermaid = (props: ContentPreviewProps) => {
         /* @vite-ignore */
         /* webpackIgnore: true */
         jsSrc
-      ).then((module) => {
-        mermaidRef.current = module.default;
-        configMermaid();
-      });
+      )
+        .then((module) => {
+          mermaidRef.current = module.default;
+          configMermaid();
+        })
+        .catch((error) => {
+          eventBus.emit(editorId, ERROR_CATCHER, {
+            name: 'mermaid',
+            message: `Failed to load mermaid module: ${error.message}`,
+            error
+          });
+        });
     } else {
       appendHandler(
         'script',
@@ -81,7 +89,7 @@ const useMermaid = (props: ContentPreviewProps) => {
         'mermaid'
       );
     }
-  }, [configMermaid, noMermaid]);
+  }, [configMermaid, editorId, noMermaid]);
 
   const replaceMermaid = useCallback(async () => {
     if (!noMermaid && mermaidRef.current) {
@@ -109,7 +117,11 @@ const useMermaid = (props: ContentPreviewProps) => {
       await Promise.allSettled(
         Array.from(mermaidSourceEles).map((ele) => {
           const handler = async (item: HTMLElement) => {
-            const code = item.innerText as string;
+            if (item.dataset.closed === 'false') {
+              return false;
+            }
+
+            const code = item.innerText;
             let mermaidHtml = mermaidCache.get(code) as string;
 
             if (!mermaidHtml) {
@@ -122,7 +134,7 @@ const useMermaid = (props: ContentPreviewProps) => {
                   svgContainingElement
                 );
 
-                mermaidHtml = await sanitizeMermaid!(result.svg);
+                mermaidHtml = await sanitizeMermaid(result.svg);
 
                 const p = document.createElement('p');
                 p.className = `${prefix}-mermaid`;
@@ -155,7 +167,7 @@ const useMermaid = (props: ContentPreviewProps) => {
         })
       );
     }
-  }, [noMermaid, rootRef, sanitizeMermaid]);
+  }, [editorId, noMermaid, rootRef, sanitizeMermaid]);
 
   return { reRender, replaceMermaid };
 };

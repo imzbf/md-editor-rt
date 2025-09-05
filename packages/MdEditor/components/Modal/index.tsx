@@ -9,9 +9,9 @@ import {
 } from 'react';
 import { createPortal } from 'react-dom';
 import { globalConfig, prefix } from '~/config';
-import { keyMove } from '~/utils/dom';
 import { EditorContext } from '~/context';
 import { getZIndexIncrement } from '~/utils';
+import { keyMove } from '~/utils/dom';
 import Icon from '../Icon';
 
 export type ModalProps = Readonly<{

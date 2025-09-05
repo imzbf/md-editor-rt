@@ -1,8 +1,8 @@
 import { useContext, useEffect, useRef, useState } from 'react';
 import { globalConfig } from '~/config';
 import { EditorContext } from '~/context';
-import { appendHandler, updateHandler } from '~/utils/dom';
 import { CDN_IDS } from '~/static';
+import { appendHandler, updateHandler } from '~/utils/dom';
 import { ContentPreviewProps } from '../props';
 
 /**

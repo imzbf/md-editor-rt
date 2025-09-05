@@ -1,9 +1,3 @@
-import { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
-import { EditorView } from 'codemirror';
-import { keymap, drawSelection } from '@codemirror/view';
-import { languages } from '@codemirror/language-data';
-import { markdown } from '@codemirror/lang-markdown';
-import { Compartment } from '@codemirror/state';
 import {
   indentWithTab,
   defaultKeymap,
@@ -12,9 +6,13 @@ import {
   undo,
   redo
 } from '@codemirror/commands';
+import { markdown } from '@codemirror/lang-markdown';
+import { languages } from '@codemirror/language-data';
+import { Compartment } from '@codemirror/state';
+import { keymap, drawSelection } from '@codemirror/view';
+import { EditorView } from 'codemirror';
+import { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
 import { globalConfig } from '~/config';
-import bus from '~/utils/event-bus';
-import { directive2flag, ToolDirective } from '~/utils/content-help';
 import { EditorContext } from '~/context';
 import {
   CTRL_SHIFT_Z,
@@ -27,17 +25,20 @@ import {
   GET_EDITOR_VIEW
 } from '~/static/event-name';
 import { DOMEventHandlers } from '~/type';
+import { directive2flag, ToolDirective } from '~/utils/content-help';
+import bus from '~/utils/event-bus';
 
 import CodeMirrorUt from '../codemirror';
-import { oneDark } from '../codemirror/themeOneDark';
-import { oneLight } from '../codemirror/themeLight';
-import createAutocompletion from '../codemirror/autocompletion';
-import { ContentProps } from '../props';
-import createCommands from '../codemirror/commands';
 
 import usePasteUpload from './usePasteUpload';
+import { createAutocompletion } from '../codemirror/autocompletion';
+import { createCommands } from '../codemirror/commands';
+import { createFloatingToolbarPlugin } from '../codemirror/floatingToolbar';
+import { textShortenerPlugin } from '../codemirror/textShortener';
+import { oneLight } from '../codemirror/themeLight';
+import { oneDark } from '../codemirror/themeOneDark';
+import { ContentProps } from '../props';
 // import useAttach from './useAttach';
-
 // 禁用掉>=6.28.0的实验性功能
 (EditorView as any).EDIT_CONTEXT = false;
 
@@ -48,7 +49,9 @@ import usePasteUpload from './usePasteUpload';
  * @returns
  */
 const useCodeMirror = (props: ContentProps) => {
-  const { tabWidth, editorId, theme } = useContext(EditorContext);
+  const contextValue = useContext(EditorContext);
+  const { tabWidth, editorId, theme, noPrettier, disabled, floatingToolbars } =
+    contextValue;
 
   const inputWrapperRef = useRef<HTMLDivElement>(null);
   const codeMirrorUt = useRef<CodeMirrorUt>();
@@ -62,11 +65,12 @@ const useCodeMirror = (props: ContentProps) => {
       autocompletion: new Compartment(),
       update: new Compartment(),
       domEvent: new Compartment(),
-      history: new Compartment()
+      history: new Compartment(),
+      floatingToolbar: new Compartment()
     };
   });
 
-  const [mdEditorCommands] = useState(() => createCommands(editorId, props));
+  const [mdEditorCommands] = useState(() => createCommands(editorId, { noPrettier }));
 
   // 搜集默认快捷键列表，通过方法返回，防止默认列表被篡改
   const getDefaultKeymaps = useCallback(
@@ -112,11 +116,13 @@ const useCodeMirror = (props: ContentProps) => {
 
       if (defaultEventNames.includes(en)) {
         nextDomEventHandlers[en] = (e, v) => {
-          domEventHandlersUserDefined[en]!(e as any, v);
-
+          (domEventHandlersUserDefined[en] as (event: Event, view: EditorView) => void)(
+            e,
+            v
+          );
           // 如果用户自行监听的事件调用了preventDefault，则不再执行内部的方法
           if (!e.defaultPrevented) {
-            basicHandlers[en]!(e as any, v);
+            (basicHandlers[en] as (event: Event, view: EditorView) => void)(e, v);
           }
         };
       } else {
@@ -127,35 +133,97 @@ const useCodeMirror = (props: ContentProps) => {
     return nextDomEventHandlers;
   }, [domEventHandlersUserDefined, editorId, pasteHandler, props]);
 
+  const listeners = useRef(new Set<() => void>());
+  const contextValueRef = useRef(contextValue);
+
+  useEffect(() => {
+    contextValueRef.current = contextValue;
+    listeners.current.forEach((cb) => cb());
+  }, [contextValue]);
+
   const [defaultExtensions] = useState(() => {
     return [
-      keymap.of(getDefaultKeymaps()),
-      comp.history.of(history()),
-      comp.language.of(markdown({ codeLanguages: languages })),
+      {
+        type: 'keymap',
+        extension: keymap.of(getDefaultKeymaps())
+      },
+      {
+        type: 'history',
+        extension: history(),
+        compartment: comp.history
+      },
+      {
+        type: 'markdown',
+        extension: markdown({ codeLanguages: languages }),
+        compartment: comp.language
+      },
       // 横向换行
-      EditorView.lineWrapping,
-      comp.update.of(
-        EditorView.updateListener.of((update) => {
+      {
+        type: 'lineWrapping',
+        extension: EditorView.lineWrapping
+      },
+      {
+        type: 'updateListener',
+        extension: EditorView.updateListener.of((update) => {
           if (update.docChanged) props.onChange(update.state.doc.toString());
-        })
-      ),
-      comp.domEvent.of(EditorView.domEventHandlers(domEventHandlers)),
+        }),
+        compartment: comp.update
+      },
+      {
+        type: 'domEventHandlers',
+        extension: EditorView.domEventHandlers(domEventHandlers),
+        compartment: comp.domEvent
+      },
       // 解决多行placeholder时，光标异常的情况
-      drawSelection()
+      {
+        type: 'drawSelection',
+        extension: drawSelection()
+      },
+      {
+        type: 'linkShortener',
+        extension: textShortenerPlugin({
+          maxLength: 30
+        })
+      },
+      {
+        type: 'floatingToolbar',
+        extension: createFloatingToolbarPlugin({
+          contextValue: {
+            getValue: () => {
+              return contextValueRef.current;
+            },
+            subscribe: (cb: () => void) => {
+              listeners.current.add(cb);
+              return () => listeners.current.delete(cb);
+            }
+          }
+        }),
+        compartment: comp.floatingToolbar
+      }
     ];
   });
 
   const [extensions] = useState(() => {
-    return globalConfig.codeMirrorExtensions!(
-      theme,
-      [
-        ...defaultExtensions,
-        comp.theme.of(theme === 'light' ? oneLight : oneDark),
-        comp.autocompletion.of(createAutocompletion(props.completions))
-      ],
-      getDefaultKeymaps(),
-      { editorId }
-    );
+    return globalConfig
+      .codeMirrorExtensions(
+        [
+          ...defaultExtensions,
+          {
+            type: 'theme',
+            extension: theme === 'light' ? oneLight : oneDark,
+            compartment: comp.theme
+          },
+          {
+            type: 'completions',
+            extension: createAutocompletion(props.completions),
+            compartment: comp.autocompletion
+          }
+        ],
+        { editorId, theme: theme, keyBindings: getDefaultKeymaps() }
+      )
+      .map((item) =>
+        item.compartment ? item.compartment.of(item.extension) : item.extension
+      );
   });
 
   const resetHistory = useCallback(() => {
@@ -180,7 +248,7 @@ const useCodeMirror = (props: ContentProps) => {
 
     setTimeout(() => {
       nc.setTabSize(tabWidth);
-      nc.setDisabled(props.disabled!);
+      nc.setDisabled(!!disabled);
       nc.setReadOnly(props.readOnly!);
       if (props.placeholder) nc.setPlaceholder(props.placeholder);
       if (typeof props.maxLength === 'number') nc.setMaxLength(props.maxLength);
@@ -257,7 +325,7 @@ const useCodeMirror = (props: ContentProps) => {
     const callback = async (direct: ToolDirective, params = {} as any) => {
       // 弹窗插入图片时，将链接使用transformImgUrl转换后再插入
       if (direct === 'image' && params.transform) {
-        const tv = props.transformImgUrl(params.url);
+        const tv = props.transformImgUrl(params.url as string);
 
         if (tv instanceof Promise) {
           tv.then(async (url) => {
@@ -269,7 +337,7 @@ const useCodeMirror = (props: ContentProps) => {
                 url
               }
             );
-            codeMirrorUt.current?.replaceSelectedText(text, options, editorId);
+            codeMirrorUt.current?.replaceSelectedText(text as string, options, editorId);
           }).catch((err) => {
             console.error(err);
           });
@@ -278,7 +346,7 @@ const useCodeMirror = (props: ContentProps) => {
             ...params,
             url: tv
           });
-          codeMirrorUt.current?.replaceSelectedText(text, options, editorId);
+          codeMirrorUt.current?.replaceSelectedText(text as string, options, editorId);
         }
       } else {
         const { text, options } = await directive2flag(
@@ -286,7 +354,7 @@ const useCodeMirror = (props: ContentProps) => {
           codeMirrorUt.current!,
           params
         );
-        codeMirrorUt.current?.replaceSelectedText(text, options, editorId);
+        codeMirrorUt.current?.replaceSelectedText(text as string, options, editorId);
       }
     };
     // 注册指令替换内容事件
@@ -357,8 +425,8 @@ const useCodeMirror = (props: ContentProps) => {
       return;
     }
 
-    codeMirrorUt.current?.setDisabled(props.disabled!);
-  }, [props.disabled]);
+    codeMirrorUt.current?.setDisabled(!!disabled);
+  }, [disabled]);
 
   useEffect(() => {
     if (noSet.current) {
@@ -377,6 +445,29 @@ const useCodeMirror = (props: ContentProps) => {
       codeMirrorUt.current?.setMaxLength(props.maxLength);
     }
   }, [props.maxLength]);
+
+  useEffect(() => {
+    if (floatingToolbars.length > 0) {
+      codeMirrorUt.current?.view.dispatch({
+        effects: comp.floatingToolbar.reconfigure(
+          createFloatingToolbarPlugin({
+            contextValue: {
+              getValue: () => {
+                return contextValueRef.current;
+              },
+              subscribe: (cb: () => void) => {
+                listeners.current.add(cb);
+                return () => listeners.current.delete(cb);
+              }
+            }
+          })
+        )
+      });
+    } else
+      codeMirrorUt.current?.view.dispatch({
+        effects: comp.floatingToolbar.reconfigure([])
+      });
+  }, [comp.floatingToolbar, floatingToolbars]);
 
   // 附带的设置
   // useAttach(codeMirrorUt);

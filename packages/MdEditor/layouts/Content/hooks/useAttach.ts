@@ -1,9 +1,9 @@
 import { RefObject, useContext } from 'react';
 import { EditorContext } from '~/context';
 import { TEXTAREA_FOCUS } from '~/static/event-name';
+import { FocusOption } from '~/type';
 import eventBus from '~/utils/event-bus';
 import CodeMirrorUt from '../codemirror';
-
 /**
  * 一些附带的设置
  *
@@ -14,7 +14,7 @@ const useAttach = (codeMirrorUt: RefObject<CodeMirrorUt | undefined>) => {
 
   eventBus.on(editorId, {
     name: TEXTAREA_FOCUS,
-    callback(options) {
+    callback(options: FocusOption) {
       codeMirrorUt.current?.focus(options);
     }
   });

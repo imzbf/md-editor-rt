@@ -1,3 +1,4 @@
+import { EditorView } from 'codemirror';
 import {
   CSSProperties,
   useEffect,
@@ -8,16 +9,15 @@ import {
   useRef,
   memo
 } from 'react';
-import { EditorView } from 'codemirror';
-import { HeadList, MdHeadingId, Themes } from '~/type';
 import { defaultProps, prefix } from '~/config';
-import { classnames, getRelativeTop } from '~/utils';
 import {
   CATALOG_CHANGED,
   GET_EDITOR_VIEW,
   PUSH_CATALOG,
   SEND_EDITOR_VIEW
 } from '~/static/event-name';
+import { HeadList, MdHeadingId, Themes } from '~/type';
+import { classnames, getRelativeTop } from '~/utils';
 import bus from '~/utils/event-bus';
 import { getComputedStyleNum } from '~/utils/scroll-auto';
 
@@ -220,7 +220,13 @@ const MdCatalog = (props: CatalogProps) => {
 
           if (syncWith === 'preview') {
             const linkEle = rootNodeRef.current?.getElementById(
-              mdHeadingId(link.text, link.level, index + 1)
+              mdHeadingId({
+                text: link.text,
+                level: link.level,
+                index: index + 1,
+                currentToken: link.currentToken,
+                nextToken: link.nextToken
+              })
             );
 
             if (linkEle instanceof HTMLElement) {
@@ -295,6 +301,13 @@ const MdCatalog = (props: CatalogProps) => {
     };
   }, [offsetTop, mdHeadingId, getScrollElement, editorId, syncWith, editorView]);
 
+  const providerValue = useMemo(() => {
+    return {
+      scrollElementRef,
+      rootNodeRef
+    };
+  }, []);
+
   useEffect(() => {
     const getEditorView = (view: EditorView) => {
       setEditorView(view);
@@ -312,12 +325,7 @@ const MdCatalog = (props: CatalogProps) => {
   }, [editorId]);
 
   return (
-    <CatalogContext.Provider
-      value={{
-        scrollElementRef,
-        rootNodeRef
-      }}
-    >
+    <CatalogContext.Provider value={providerValue}>
       <div
         className={classnames([
           `${prefix}-catalog`,

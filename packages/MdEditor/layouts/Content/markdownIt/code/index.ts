@@ -6,12 +6,12 @@
  * 源码如果在页面中存在多个编辑器，但是内容又是相同的时候，第二个开始的内容有点混乱
  * 需要与编辑器的editorId绑定
  */
-import { RefObject } from 'react';
 import markdownit, { Renderer, Token } from 'markdown-it';
-import { CustomIcon, StaticTextDefaultValue } from '~/type';
-import { prefix } from '~/config';
-import { mergeAttrs } from '~/utils/md-it';
+import { RefObject } from 'react';
 import StrIcon from '~/components/Icon/Str';
+import { prefix } from '~/config';
+import { CustomIcon, StaticTextDefaultValue } from '~/type';
+import { mergeAttrs } from '~/utils/md-it';
 
 export interface CodeTabsPluginOps extends markdownit.Options {
   editorId: string;
@@ -93,7 +93,7 @@ const codetabs = (md: markdownit, _opts: CodeTabsPluginOps) => {
           <${tagHeader} class="${prefix}-code-head">
             <div class="${prefix}-code-flag"><span></span><span></span><span></span></div>
             <div class="${prefix}-code-action">
-              <span class="${prefix}-code-lang">${tokens[idx].info.trim()}</span>
+              <span class="${prefix}-code-lang">${md.utils.escapeHtml(tokens[idx].info.trim())}</span>
               <span class="${prefix}-copy-button" data-tips="${codeCodeText}"${isIcon ? ' data-is-icon=true' : ''}>${copyBtnHtml}</span>
               ${_opts.extraTools instanceof Function ? _opts.extraTools({ lang: tokens[idx].info.trim() }) : _opts.extraTools || ''}
               ${tagContainer === 'details' ? collapseTips : ''}
@@ -147,7 +147,7 @@ const codetabs = (md: markdownit, _opts: CodeTabsPluginOps) => {
             for="label-${prefix}-codetab-label-1-${_opts.editorId}-${idx}-${i - idx}"
             onclick="this.getRootNode().querySelectorAll('.${className}').forEach(e => e.click())"
           >
-            ${tab || getLangName(token)}
+            ${md.utils.escapeHtml(tab || getLangName(token))}
           </label>
         </li>`;
 
@@ -169,7 +169,7 @@ const codetabs = (md: markdownit, _opts: CodeTabsPluginOps) => {
           class="${className}"
           ${checked}
           role="presentation">
-        <span class=${prefix}-code-lang role="note">${getLangName(token)}</span>`;
+        <span class=${prefix}-code-lang role="note">${md.utils.escapeHtml(getLangName(token))}</span>`;
     }
 
     return `

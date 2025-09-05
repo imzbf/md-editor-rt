@@ -1,7 +1,7 @@
 import { ReactNode, useContext, useMemo } from 'react';
+import Dropdown from '~/components/Dropdown';
 import { prefix } from '~/config';
 import { EditorContext } from '~/context';
-import Dropdown from '~/components/Dropdown';
 
 export interface DropdownToolbarProps {
   title?: string;
@@ -30,9 +30,9 @@ const DropdownToolbar = (props: DropdownToolbarProps) => {
       overlay={props.overlay}
       disabled={props.disabled}
     >
-      <div className={className} title={props.title || ''}>
+      <button className={className} title={props.title || ''} disabled={props.disabled}>
         {props.children || props.trigger}
-      </div>
+      </button>
     </Dropdown>
   );
 };

@@ -1,8 +1,8 @@
-import markdownit from 'markdown-it';
-import { CSSProperties, ReactElement, RefObject } from 'react';
 import { CompletionSource } from '@codemirror/autocomplete';
-import { Extension } from '@codemirror/state';
+import { Compartment, Extension } from '@codemirror/state';
 import { KeyBinding, EditorView } from '@codemirror/view';
+import markdownit, { Token } from 'markdown-it';
+import { CSSProperties, ReactElement, RefObject } from 'react';
 import { IconName } from './components/Icon/Icon';
 import { ToolDirective } from './utils/content-help';
 
@@ -15,6 +15,7 @@ declare global {
     screenfull: any;
     mermaid: any;
     katex: any;
+    echarts: any;
   }
 }
 
@@ -137,6 +138,8 @@ export interface HeadList {
   level: 1 | 2 | 3 | 4 | 5 | 6;
   active?: boolean;
   line: number;
+  currentToken?: Token;
+  nextToken?: Token;
 }
 
 export type Themes = 'light' | 'dark';
@@ -151,7 +154,13 @@ export type PreviewThemes = string;
 /**
  * 自定义标题ID
  */
-export type MdHeadingId = (text: string, level: number, index: number) => string;
+export type MdHeadingId = (options: {
+  text: string;
+  level: number;
+  index: number;
+  currentToken?: Token;
+  nextToken?: Token;
+}) => string;
 
 export interface MdPreviewProps {
   value?: string;
@@ -180,7 +189,7 @@ export interface MdPreviewProps {
    *
    * @default 'zh-CN'
    */
-  language?: StaticTextDefaultKey | string;
+  language?: string;
   /**
    * html变化事件
    */
@@ -312,6 +321,10 @@ export interface MdPreviewProps {
    * 相比起onHtmlChanged，onRemount会在重新挂载后触发
    */
   onRemount?: () => void;
+  /**
+   * 不使用 echarts
+   */
+  noEcharts?: boolean;
 }
 
 export type TableShapeType = [number, number] | [number, number, number, number];
@@ -509,16 +522,15 @@ export interface EditorProps extends MdPreviewProps {
    */
   catalogMaxDepth?: number;
   /**
-   * 工具栏直接插入内容到输入框
+   * 浮动工具栏
    *
-   * >= v5.6.0
-   *
-   * @default false
+   * @version 6.0.0
+   * @default []
    */
-  insertLinkDirect?: boolean;
+  floatingToolbars?: Array<ToolbarNames>;
 }
 
-export interface ContentType {
+export interface ContextType {
   editorId: string;
   tabWidth: number;
   highlight: {
@@ -533,6 +545,16 @@ export interface ContentType {
   customIcon: CustomIcon;
   rootRef: RefObject<HTMLDivElement> | null;
   disabled: boolean | undefined;
+  showToolbarName?: boolean;
+  setting: SettingType;
+  updateSetting: UpdateSetting;
+  tableShape: TableShapeType;
+  catalogVisible: boolean;
+  noUploadImg: boolean;
+  noPrettier: boolean;
+  codeTheme: string;
+  defToolbars: Array<ReactElement>;
+  floatingToolbars: Array<ToolbarNames>;
 }
 
 export interface MermaidTemplate {
@@ -576,6 +598,26 @@ export interface MarkdownItConfigPlugin {
   options: any;
 }
 
+/**
+ * CodeMirror扩展类型
+ *
+ * ^6.0.0
+ */
+export interface CodeMirrorExtension {
+  /**
+   * 仅用来提供开发者分别不同扩展的依据
+   */
+  type: string;
+  /**
+   * CodeMirror的扩展
+   */
+  extension: Extension;
+  /**
+   * 包裹扩展的Compartment，只有部分扩展有，提供扩展更新的能力
+   */
+  compartment?: Compartment;
+}
+
 export interface GlobalConfig {
   /**
    * 编辑器内部依赖库
@@ -617,6 +659,10 @@ export interface GlobalConfig {
       js?: string;
       css?: string;
     };
+    echarts?: {
+      instance?: any;
+      js?: string;
+    };
   };
   /**
    * 对应editorExtensions中的cdn链接标签属性
@@ -646,6 +692,9 @@ export interface GlobalConfig {
     katex?: {
       js?: Partial<HTMLElementTagNameMap['script']>;
       css?: Partial<HTMLElementTagNameMap['link']>;
+    };
+    echarts?: {
+      js?: Partial<HTMLElementTagNameMap['script']>;
     };
   };
   editorConfig: {
@@ -678,13 +727,13 @@ export interface GlobalConfig {
    * @params keyBindings md-editor-v3内置的快捷键
    */
   codeMirrorExtensions: (
-    theme: Themes,
-    extensions: Array<Extension>,
-    keyBindings: Array<KeyBinding>,
+    extensions: Array<CodeMirrorExtension>,
     options: {
       editorId: string;
+      theme: Themes;
+      keyBindings: Array<KeyBinding>;
     }
-  ) => Array<Extension>;
+  ) => Array<CodeMirrorExtension>;
   /**
    * 自定义markdown-it核心库扩展、属性等
    */
@@ -720,6 +769,12 @@ export interface GlobalConfig {
    * @returns
    */
   katexConfig: (baseConfig: any) => any;
+  /**
+   * echarts配置
+   *
+   * @returns
+   */
+  echartsConfig: (base: any) => any;
 }
 
 /**
@@ -763,7 +818,7 @@ export interface StaticProps extends MdPreviewStaticProps {
   noUploadImg: boolean;
 }
 
-export type UpdateSetting = (k: keyof SettingType, v?: boolean | undefined) => void;
+export type UpdateSetting = (k: keyof SettingType, v?: boolean) => void;
 
 export type ChangeEvent = (v: string) => void;
 export type SaveEvent = (v: string, h: Promise<string>) => void;

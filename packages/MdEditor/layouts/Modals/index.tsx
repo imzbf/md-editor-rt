@@ -1,9 +1,6 @@
-import LinkModal from './Link';
 import ClipModal from './Clip';
 
 interface ModalsProps {
-  type: 'link' | 'image';
-  linkVisible: boolean;
   clipVisible: boolean;
   onCancel: () => void;
   onOk: (data?: any) => void;
@@ -11,19 +8,7 @@ interface ModalsProps {
 
 const Modals = (props: ModalsProps) => {
   return (
-    <>
-      <LinkModal
-        type={props.type}
-        visible={props.linkVisible}
-        onOk={props.onOk}
-        onCancel={props.onCancel}
-      />
-      <ClipModal
-        visible={props.clipVisible}
-        onOk={props.onOk}
-        onCancel={props.onCancel}
-      />
-    </>
+    <ClipModal visible={props.clipVisible} onOk={props.onOk} onCancel={props.onCancel} />
   );
 };
 

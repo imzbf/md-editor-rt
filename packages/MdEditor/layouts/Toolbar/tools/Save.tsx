@@ -1,0 +1,34 @@
+import { memo, useContext } from 'react';
+import Icon from '~/components/Icon';
+import { prefix } from '~/config';
+import { EditorContext } from '~/context';
+import { ON_SAVE } from '~/static/event-name';
+import { classnames } from '~/utils';
+import bus from '~/utils/event-bus';
+
+const ToolbarSave = () => {
+  const {
+    editorId,
+    usedLanguageText: ult,
+    showToolbarName,
+    disabled
+  } = useContext(EditorContext);
+
+  return (
+    <button
+      className={classnames([`${prefix}-toolbar-item`, disabled && `${prefix}-disabled`])}
+      title={ult.toolbarTips?.save}
+      disabled={disabled}
+      onClick={() => {
+        bus.emit(editorId, ON_SAVE);
+      }}
+    >
+      <Icon name="save" />
+      {showToolbarName && (
+        <div className={`${prefix}-toolbar-item-name`}>{ult.toolbarTips?.save}</div>
+      )}
+    </button>
+  );
+};
+
+export default memo(ToolbarSave);

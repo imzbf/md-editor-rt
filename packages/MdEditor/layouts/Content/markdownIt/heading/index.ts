@@ -24,13 +24,21 @@ const HeadingPlugin = (md: markdownit, options: HeadingPluginOps) => {
     options.headsRef.current!.push({
       text,
       level,
-      line: token.map![0]
+      line: token.map![0],
+      currentToken: token,
+      nextToken: tokens[idx + 1]
     });
 
     if (token.map && token.level === 0) {
       token.attrSet(
         'id',
-        options.mdHeadingId(text, level, options.headsRef.current!.length)
+        options.mdHeadingId({
+          text,
+          level,
+          index: options.headsRef.current!.length,
+          currentToken: token,
+          nextToken: tokens[idx + 1]
+        })
       );
     }
 

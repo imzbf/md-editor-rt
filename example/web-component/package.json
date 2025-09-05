@@ -11,9 +11,9 @@
   "dependencies": {
     "cropperjs": "^1.6.2",
     "highlight.js": "^11.10.0",
-    "katex": "^0.16.11",
+    "katex": "^0.16.22",
     "md-editor-rt": "latest",
-    "mermaid": "^10.9.1",
+    "mermaid": "^11.9.0",
     "prettier": "^3.3.3",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",

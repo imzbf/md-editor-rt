@@ -1,9 +1,8 @@
 import { RefObject, useContext, useEffect, useState } from 'react';
 import { EditorContext } from '~/context';
 import scrollAuto, { scrollAutoWithScale } from '~/utils/scroll-auto';
-import { ContentProps } from '../props';
-
 import CodeMirrorUt from '../codemirror';
+import { ContentProps } from '../props';
 
 /**
  * 自动滚动
@@ -19,7 +18,7 @@ const useAutoScroll = (
   html: string,
   codeMirrorUt: RefObject<CodeMirrorUt | undefined>
 ) => {
-  const { editorId } = useContext(EditorContext);
+  const { editorId, setting } = useContext(EditorContext);
   const [scrollCb, setScrollCb] = useState({
     clear() {},
     init() {}
@@ -30,14 +29,14 @@ const useAutoScroll = (
     const rootNode = codeMirrorUt.current?.view.contentDOM.getRootNode() as
       | Document
       | ShadowRoot;
-    const cmScroller = rootNode.querySelector<HTMLDivElement>(
+    const cmScroller = rootNode?.querySelector<HTMLDivElement>(
       `#${editorId} .cm-scroller`
     );
 
-    const previewEle = rootNode.querySelector<HTMLElement>(
+    const previewEle = rootNode?.querySelector<HTMLElement>(
       `[id="${editorId}-preview-wrapper"]`
     );
-    const htmlEle = rootNode.querySelector<HTMLElement>(
+    const htmlEle = rootNode?.querySelector<HTMLElement>(
       `[id="${editorId}-html-wrapper"]`
     );
 
@@ -54,10 +53,10 @@ const useAutoScroll = (
     }
   }, [
     html,
-    props.setting.fullscreen,
-    props.setting.pageFullscreen,
-    props.setting.preview,
-    props.setting.htmlPreview,
+    setting.fullscreen,
+    setting.pageFullscreen,
+    setting.preview,
+    setting.htmlPreview,
     editorId,
     codeMirrorUt
   ]);
@@ -65,8 +64,8 @@ const useAutoScroll = (
   useEffect(() => {
     if (
       props.scrollAuto &&
-      !props.setting.previewOnly &&
-      (props.setting.preview || props.setting.htmlPreview)
+      !setting.previewOnly &&
+      (setting.preview || setting.htmlPreview)
     ) {
       scrollCb.init();
     } else {
@@ -79,9 +78,9 @@ const useAutoScroll = (
   }, [
     scrollCb,
     props.scrollAuto,
-    props.setting.preview,
-    props.setting.htmlPreview,
-    props.setting.previewOnly
+    setting.preview,
+    setting.htmlPreview,
+    setting.previewOnly
   ]);
 };
 

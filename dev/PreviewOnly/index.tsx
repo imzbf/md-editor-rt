@@ -32,7 +32,7 @@ const PreviewOnly = (props: PreviewOnlyProp) => {
               codeBlock.querySelector('input:checked + pre code') ||
               codeBlock.querySelector('pre code');
 
-            const codeText = (activeCode as HTMLElement).textContent!;
+            const codeText = (activeCode as HTMLElement).textContent;
 
             console.log(codeText);
           });

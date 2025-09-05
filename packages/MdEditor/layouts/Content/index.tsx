@@ -1,3 +1,4 @@
+import { createSmoothScroll } from '@vavt/util';
 import {
   useState,
   useContext,
@@ -7,23 +8,24 @@ import {
   ForwardedRef,
   useCallback,
   memo,
-  MouseEvent
+  MouseEvent,
+  useMemo
 } from 'react';
-import { createSmoothScroll } from '@vavt/util';
-import MdCatalog, { TocItem } from '~~/MdCatalog';
+import CustomScrollbar from '~/components/CustomScrollbar';
 import { prefix } from '~/config';
-import { FocusOption } from '~/type';
 import { EditorContext } from '~/context';
-import { useAutoScroll, useCodeMirror, useResize } from './hooks';
+import { FocusOption } from '~/type';
+import MdCatalog, { TocItem } from '~~/MdCatalog';
+import ContentPreview from './ContentPreview';
+import { useAutoScroll, useCodeMirror, useFollowCatalog, useResize } from './hooks';
 import { ContentProps } from './props';
 import { ContentExposeParam } from './type';
-import ContentPreview from './ContentPreview';
 
 const smoothScroll = createSmoothScroll();
 
 const Content = forwardRef((props: ContentProps, ref: ForwardedRef<unknown>) => {
   const { onHtmlChanged } = props;
-  const { editorId } = useContext(EditorContext);
+  const { editorId, theme, catalogVisible, setting } = useContext(EditorContext);
   const [html, setHtml] = useState<string>('');
 
   const contentRef = useRef<HTMLDivElement>(null);
@@ -46,6 +48,9 @@ const Content = forwardRef((props: ContentProps, ref: ForwardedRef<unknown>) => 
   // 自动滚动
   useAutoScroll(props, html, codeMirrorUt);
 
+  // 跟随目录
+  const { onCatalogActive, onMouseEnter, onMouseLeave } = useFollowCatalog();
+
   useImperativeHandle(ref, (): ContentExposeParam => {
     return {
       getSelectedText() {
@@ -64,7 +69,7 @@ const Content = forwardRef((props: ContentProps, ref: ForwardedRef<unknown>) => 
   const onCatalogClick = useCallback(
     (e: MouseEvent, toc: TocItem) => {
       // 如果没有预览区域，就将目录与编辑器同步滚动
-      if (!props.setting.preview && toc.line !== undefined) {
+      if (!setting.preview && toc.line !== undefined) {
         e.preventDefault();
         const view = codeMirrorUt.current?.view;
 
@@ -78,56 +83,112 @@ const Content = forwardRef((props: ContentProps, ref: ForwardedRef<unknown>) => 
         }
       }
     },
-    [codeMirrorUt, props.setting.preview]
+    [codeMirrorUt, setting.preview]
   );
+
+  const previewScrollbarStyle = useMemo(() => {
+    return {
+      flex: 1
+    };
+  }, []);
+
+  const inputWrapper = useMemo(() => {
+    return <div className={`${prefix}-input-wrapper`} ref={inputWrapperRef} />;
+  }, [inputWrapperRef]);
+
+  const contentPreview = useMemo(() => {
+    return (
+      <ContentPreview
+        modelValue={props.modelValue}
+        onChange={props.onChange}
+        setting={setting}
+        onHtmlChanged={onHtmlChangedCopy}
+        onGetCatalog={props.onGetCatalog}
+        mdHeadingId={props.mdHeadingId}
+        noMermaid={props.noMermaid}
+        sanitize={props.sanitize}
+        noKatex={props.noKatex}
+        formatCopiedText={props.formatCopiedText}
+        noHighlight={props.noHighlight}
+        noImgZoomIn={props.noImgZoomIn}
+        sanitizeMermaid={props.sanitizeMermaid}
+        codeFoldable={props.codeFoldable}
+        autoFoldThreshold={props.autoFoldThreshold}
+        onRemount={props.onRemount}
+      />
+    );
+  }, [
+    onHtmlChangedCopy,
+    props.autoFoldThreshold,
+    props.codeFoldable,
+    props.formatCopiedText,
+    props.mdHeadingId,
+    props.modelValue,
+    props.noHighlight,
+    props.noImgZoomIn,
+    props.noKatex,
+    props.noMermaid,
+    props.onChange,
+    props.onGetCatalog,
+    props.onRemount,
+    props.sanitize,
+    props.sanitizeMermaid,
+    setting
+  ]);
+
+  const catalog = useMemo(() => {
+    return (
+      <MdCatalog
+        theme={theme}
+        className={`${prefix}-catalog-editor`}
+        editorId={editorId}
+        mdHeadingId={props.mdHeadingId}
+        key="internal-catalog"
+        scrollElementOffsetTop={2}
+        syncWith={!setting.preview ? 'editor' : 'preview'}
+        onClick={onCatalogClick}
+        catalogMaxDepth={props.catalogMaxDepth}
+        onActive={onCatalogActive}
+      />
+    );
+  }, [
+    editorId,
+    onCatalogActive,
+    onCatalogClick,
+    props.catalogMaxDepth,
+    props.mdHeadingId,
+    setting.preview,
+    theme
+  ]);
 
   return (
     <div className={`${prefix}-content`}>
       <div className={`${prefix}-content-wrapper`} ref={contentRef}>
-        <div
-          className={`${prefix}-input-wrapper`}
+        <CustomScrollbar
+          alwaysShowTrack
+          scrollTarget={`#${editorId} .cm-scroller`}
           style={inputWrapperStyle}
-          ref={inputWrapperRef}
-        />
-        {/* 拖拽入口需要保持props.setting变化时就挂载 */}
-        {(props.setting.htmlPreview || props.setting.preview) && (
+        >
+          {inputWrapper}
+        </CustomScrollbar>
+        {/* 拖拽入口需要保持setting变化时就挂载 */}
+        {(setting.htmlPreview || setting.preview) && (
           <div
             className={`${prefix}-resize-operate`}
             style={resizeOperateStyle}
             ref={resizeRef}
           />
         )}
-        <ContentPreview
-          modelValue={props.modelValue}
-          onChange={props.onChange}
-          setting={props.setting}
-          onHtmlChanged={onHtmlChangedCopy}
-          onGetCatalog={props.onGetCatalog}
-          mdHeadingId={props.mdHeadingId}
-          noMermaid={props.noMermaid}
-          sanitize={props.sanitize}
-          noKatex={props.noKatex}
-          formatCopiedText={props.formatCopiedText}
-          noHighlight={props.noHighlight}
-          noImgZoomIn={props.noImgZoomIn}
-          sanitizeMermaid={props.sanitizeMermaid}
-          codeFoldable={props.codeFoldable}
-          autoFoldThreshold={props.autoFoldThreshold}
-          onRemount={props.onRemount}
-        />
+        <CustomScrollbar style={previewScrollbarStyle}>{contentPreview}</CustomScrollbar>
       </div>
-      {props.catalogVisible && (
-        <MdCatalog
-          theme={props.theme}
-          className={`${prefix}-catalog-editor ${prefix}-catalog-${props.catalogLayout}`}
-          editorId={editorId}
-          mdHeadingId={props.mdHeadingId}
-          key="internal-catalog"
-          scrollElementOffsetTop={2}
-          syncWith={!props.setting.preview ? 'editor' : 'preview'}
-          onClick={onCatalogClick}
-          catalogMaxDepth={props.catalogMaxDepth}
-        />
+      {catalogVisible && (
+        <CustomScrollbar
+          className={`${prefix}-catalog-${props.catalogLayout}`}
+          onMouseEnter={onMouseEnter}
+          onMouseLeave={onMouseLeave}
+        >
+          {catalog}
+        </CustomScrollbar>
       )}
     </div>
   );

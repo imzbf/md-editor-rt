@@ -1,7 +1,7 @@
 import { useContext, useEffect, useRef } from 'react';
-import { prefix } from '~~/config';
 import { EditorContext } from '~/context';
 import { classnames } from '~/utils';
+import { prefix } from '~~/config';
 
 interface Props {
   html: string;

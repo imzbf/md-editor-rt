@@ -1,8 +1,9 @@
+import { lineNumbers } from '@codemirror/view';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import App from './App';
+import { config, editorExtensionsAttrs, XSSPlugin } from '~~/index';
 
-import { config, editorExtensionsAttrs } from '~~/index';
+import App from './App';
 
 // import Editor from '../../lib/md-editor-rt.es';
 // import TargetBlankExtension from './image/TargetBlankExtension.js';
@@ -10,7 +11,6 @@ import { config, editorExtensionsAttrs } from '~~/index';
 
 import '~/styles/style.less';
 // import { Extension } from '@codemirror/state';
-import { lineNumbers } from '@codemirror/view';
 // import screenfull from 'screenfull';
 // import katex from 'katex';
 // import 'katex/dist/katex.min.css';
@@ -28,11 +28,17 @@ import { lineNumbers } from '@codemirror/view';
 // import { cdnBase } from '../../MdEditor/config';
 
 config({
-  codeMirrorExtensions(theme, extensions) {
+  codeMirrorExtensions(extensions) {
     // console.log(theme, extensions, keyBindings);
 
     // return extensions;
-    return [...extensions, lineNumbers()];
+    return [
+      ...extensions,
+      {
+        type: 'lineNumbers',
+        extension: lineNumbers()
+      }
+    ];
   },
   // markdownItConfig: (mdit) => {
   // mdit.use(ancher, {
@@ -41,7 +47,14 @@ config({
   // mdit.use(TargetBlankExtension);
   // },
   markdownItPlugins(plugins, { editorId }) {
-    return plugins.map((item) => {
+    return [
+      ...plugins,
+      {
+        type: 'xss',
+        plugin: XSSPlugin,
+        options: {}
+      }
+    ].map((item) => {
       switch (item.type) {
         case 'taskList': {
           return {

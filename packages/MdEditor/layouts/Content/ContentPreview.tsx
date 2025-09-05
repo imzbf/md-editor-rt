@@ -2,12 +2,13 @@ import { useContext } from 'react';
 import { prefix } from '~/config';
 import { EditorContext } from '~/context';
 
+import { SettingType } from '~/type';
 import { useCopyCode, useMarkdownIt, useZoom, useTaskState, useRemount } from './hooks';
 import { ContentPreviewProps } from './props';
 import UpdateOnDemand from './UpdateOnDemand';
 
 const ContentPreview = (props: ContentPreviewProps) => {
-  const { previewOnly = false } = props;
+  const { previewOnly = false, setting = { preview: true } as SettingType } = props;
   const { editorId } = useContext(EditorContext);
 
   // markdown => html
@@ -23,16 +24,19 @@ const ContentPreview = (props: ContentPreviewProps) => {
 
   return (
     <>
-      {props.setting.preview && (
-        <div
-          id={`${editorId}-preview-wrapper`}
-          className={`${prefix}-preview-wrapper`}
-          key="content-preview-wrapper"
-        >
+      {setting.preview &&
+        (props.previewOnly ? (
           <UpdateOnDemand key={key} html={html} />
-        </div>
-      )}
-      {!previewOnly && props.setting.htmlPreview && (
+        ) : (
+          <div
+            id={`${editorId}-preview-wrapper`}
+            className={`${prefix}-preview-wrapper`}
+            key="content-preview-wrapper"
+          >
+            <UpdateOnDemand key={key} html={html} />
+          </div>
+        ))}
+      {setting.htmlPreview && (
         <div
           id={`${editorId}-html-wrapper`}
           className={`${prefix}-preview-wrapper`}

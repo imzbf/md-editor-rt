@@ -1,6 +1,6 @@
 import { useContext } from 'react';
-import Icon, { IconName } from './Icon';
 import { EditorContext } from '~/context';
+import Icon, { IconName } from './Icon';
 
 const IconIns = (props: { name: IconName }) => {
   const { customIcon } = useContext(EditorContext);

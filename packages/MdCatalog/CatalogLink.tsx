@@ -1,11 +1,11 @@
 import { MouseEvent, useContext, useEffect, useRef } from 'react';
 import { prefix } from '~/config';
-import { classnames } from '~/utils';
 import { MdHeadingId } from '~/type';
+import { classnames } from '~/utils';
 import { getComputedStyleNum } from '~/utils/scroll-auto';
 
-import { TocItem } from './index';
 import { CatalogContext } from './context';
+import { TocItem } from './index';
 
 export interface CatalogLinkProps {
   tocItem: TocItem;
@@ -47,7 +47,13 @@ const CatalogLink = ({
           return;
         }
 
-        const id = mdHeadingId(tocItem.text, tocItem.level, tocItem.index);
+        const id = mdHeadingId({
+          text: tocItem.text,
+          level: tocItem.level,
+          index: tocItem.index,
+          currentToken: tocItem.currentToken,
+          nextToken: tocItem.nextToken
+        });
         const targetHeadEle = rootNodeRef?.current!.getElementById(id);
         const scrollContainer = scrollElementRef?.current;
 

@@ -1,32 +1,33 @@
-import { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
+import { randomId } from '@vavt/util';
 import mdit from 'markdown-it';
 import ImageFiguresPlugin from 'markdown-it-image-figures';
 import SubPlugin from 'markdown-it-sub';
 import SupPlugin from 'markdown-it-sup';
-
-import { randomId } from '@vavt/util';
-import bus from '~/utils/event-bus';
-import { generateCodeRowNumber } from '~/utils';
-import { HeadList, MarkdownItConfigPlugin, Themes } from '~/type';
+import { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
 import { globalConfig, prefix } from '~/config';
+import { EditorContext } from '~/context';
 import {
   BUILD_FINISHED,
   CATALOG_CHANGED,
   PUSH_CATALOG,
   RERENDER
 } from '~/static/event-name';
-import { EditorContext } from '~/context';
+import { HeadList, MarkdownItConfigPlugin, Themes } from '~/type';
+import { generateCodeRowNumber } from '~/utils';
 import { zoomMermaid } from '~/utils/dom';
+import bus from '~/utils/event-bus';
 
+import useEcharts from './useEcharts';
 import useHighlight from './useHighlight';
-import useMermaid from './useMermaid';
 import useKatex from './useKatex';
+import useMermaid from './useMermaid';
 
-import MermaidPlugin from '../markdownIt/mermaid';
-import KatexPlugin from '../markdownIt/katex';
 import AdmonitionPlugin from '../markdownIt/admonition';
-import HeadingPlugin from '../markdownIt/heading';
 import CodePlugin from '../markdownIt/code';
+import EchartsPlugin from '../markdownIt/echarts';
+import HeadingPlugin from '../markdownIt/heading';
+import KatexPlugin from '../markdownIt/katex';
+import MermaidPlugin from '../markdownIt/mermaid';
 import TaskListPlugin from '../markdownIt/task';
 import { ContentPreviewProps } from '../props';
 
@@ -54,7 +55,6 @@ const useMarkdownIt = (props: ContentPreviewProps, previewOnly: boolean) => {
     noKatex,
     noMermaid,
     noHighlight,
-    setting,
     onHtmlChanged,
     onGetCatalog
   } = props;
@@ -68,7 +68,8 @@ const useMarkdownIt = (props: ContentPreviewProps, previewOnly: boolean) => {
     theme,
     usedLanguageText,
     customIcon,
-    rootRef
+    rootRef,
+    setting
   } = useContext(EditorContext);
 
   const headsRef = useRef<HeadList[]>([]);
@@ -91,6 +92,7 @@ const useMarkdownIt = (props: ContentPreviewProps, previewOnly: boolean) => {
   const { hljsRef, hljsInited } = useHighlight(props);
   const { katexRef, katexInited } = useKatex(props);
   const { reRender, replaceMermaid } = useMermaid(props);
+  const { reRenderEcharts, replaceEcharts } = useEcharts(props);
 
   const [md] = useState(() => {
     const md_ = mdit({
@@ -99,7 +101,7 @@ const useMarkdownIt = (props: ContentPreviewProps, previewOnly: boolean) => {
       linkify: true
     });
 
-    markdownItConfig!(md_, {
+    markdownItConfig(md_, {
       editorId
     });
 
@@ -164,7 +166,15 @@ const useMarkdownIt = (props: ContentPreviewProps, previewOnly: boolean) => {
       });
     }
 
-    markdownItPlugins!(plugins, {
+    if (!props.noEcharts) {
+      plugins.push({
+        type: 'echarts',
+        plugin: EchartsPlugin,
+        options: { themeRef }
+      });
+    }
+
+    markdownItPlugins(plugins, {
       editorId
     }).forEach((item) => {
       md_.use(item.plugin, item.options);
@@ -181,7 +191,7 @@ const useMarkdownIt = (props: ContentPreviewProps, previewOnly: boolean) => {
           }
         }
 
-        let codeHtml;
+        let codeHtml: string;
 
         // 不高亮或者没有实例，返回默认
         if (!noHighlight && hljsRef.current) {
@@ -222,7 +232,11 @@ const useMarkdownIt = (props: ContentPreviewProps, previewOnly: boolean) => {
   const [html, setHtml] = useState(() => {
     // 严格模式下 useState 也会执行两次
     headsRef.current = [];
-    return sanitize(md.render(modelValue));
+    return sanitize(
+      md.render(modelValue, {
+        srcLines: modelValue.split('\n')
+      })
+    );
   });
 
   const needReRender = useMemo(() => {
@@ -239,7 +253,11 @@ const useMarkdownIt = (props: ContentPreviewProps, previewOnly: boolean) => {
   const markHtml = useCallback(() => {
     // 清理历史标题
     headsRef.current = [];
-    const html_ = sanitize(md.render(modelValue));
+    const html_ = sanitize(
+      md.render(modelValue, {
+        srcLines: modelValue.split('\n')
+      })
+    );
     setHtml(html_);
   }, [md, modelValue, sanitize]);
 
@@ -258,17 +276,22 @@ const useMarkdownIt = (props: ContentPreviewProps, previewOnly: boolean) => {
   useEffect(() => {
     let clearMermaidEvents = () => {};
     if (setting.preview) {
-      replaceMermaid().then(() => {
+      void replaceMermaid().then(() => {
         if (editorExtensions.mermaid?.enableZoom) {
           clearMermaidEvents();
           clearMermaidEvents = zoomMermaid(
-            rootRef!.current?.querySelectorAll(`#${editorId} .${prefix}-mermaid`),
+            rootRef!.current?.querySelectorAll(
+              `#${editorId} .${prefix}-mermaid:not([data-closed=false])`
+            ),
             {
               customIcon: customIconRef.current
             }
           );
         }
       });
+
+      void replaceEcharts();
+
       // 生成目录
       bus.emit(editorId, CATALOG_CHANGED, headsRef.current);
     }
@@ -276,7 +299,14 @@ const useMarkdownIt = (props: ContentPreviewProps, previewOnly: boolean) => {
     return () => {
       clearMermaidEvents();
     };
-  }, [editorId, replaceMermaid, rootRef, setting.preview]);
+  }, [
+    editorExtensions.mermaid?.enableZoom,
+    editorId,
+    replaceEcharts,
+    replaceMermaid,
+    rootRef,
+    setting.preview
+  ]);
 
   useEffect(() => {
     if (ignoreFirstRender.current) {
@@ -298,11 +328,13 @@ const useMarkdownIt = (props: ContentPreviewProps, previewOnly: boolean) => {
 
   useEffect(() => {
     let clearMermaidEvents = () => {};
-    replaceMermaid().then(() => {
+    void replaceMermaid().then(() => {
       if (editorExtensions.mermaid?.enableZoom) {
         clearMermaidEvents();
         clearMermaidEvents = zoomMermaid(
-          rootRef!.current?.querySelectorAll(`#${editorId} p.${prefix}-mermaid`),
+          rootRef!.current?.querySelectorAll(
+            `#${editorId} p.${prefix}-mermaid:not([data-closed=false])`
+          ),
           {
             customIcon: customIconRef.current
           }
@@ -310,10 +342,22 @@ const useMarkdownIt = (props: ContentPreviewProps, previewOnly: boolean) => {
       }
     });
 
+    void replaceEcharts();
+
     return () => {
       clearMermaidEvents();
     };
-  }, [editorId, html, key, reRender, replaceMermaid, rootRef]);
+  }, [
+    editorExtensions.mermaid?.enableZoom,
+    editorId,
+    html,
+    key,
+    reRender,
+    replaceMermaid,
+    reRenderEcharts,
+    replaceEcharts,
+    rootRef
+  ]);
 
   useEffect(() => {
     const callback = () => {

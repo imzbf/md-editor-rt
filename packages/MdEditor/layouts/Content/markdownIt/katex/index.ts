@@ -3,8 +3,8 @@
  *
  * 该代码只是正对md-editor-v3系列功能做了适配
  */
-import { RefObject } from 'react';
 import markdownit, { Renderer, Token, ParserInline, ParserBlock } from 'markdown-it';
+import { RefObject } from 'react';
 import { prefix, globalConfig } from '~/config';
 import { mergeAttrs } from '~/utils/md-it';
 

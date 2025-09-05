@@ -9,22 +9,9 @@ import {
   useRef,
   useState
 } from 'react';
-import bus from './utils/event-bus';
-import {
-  EditorProps,
-  InnerError,
-  SettingType,
-  StaticProps,
-  Themes,
-  ExposeParam,
-  UpdateSetting,
-  ExposeEvent,
-  FocusOption,
-  UploadImgCallBack,
-  MdPreviewProps
-} from './type';
 import { prefix, codeCss, staticTextDefault, globalConfig, defaultProps } from './config';
-import { appendHandler } from './utils/dom';
+import { ContentExposeParam } from './layouts/Content/type';
+import { CDN_IDS } from './static';
 import {
   CHANGE_CATALOG_VISIBLE,
   CHANGE_FULL_SCREEN,
@@ -42,8 +29,22 @@ import {
   EVENT_LISTENER,
   PREVIEW_ONLY_CHANGED
 } from './static/event-name';
-import { ContentExposeParam } from './layouts/Content/type';
-import { CDN_IDS } from './static';
+import {
+  EditorProps,
+  InnerError,
+  SettingType,
+  StaticProps,
+  Themes,
+  ExposeParam,
+  UpdateSetting,
+  ExposeEvent,
+  FocusOption,
+  UploadImgCallBack,
+  MdPreviewProps,
+  StaticTextDefaultValue
+} from './type';
+import { appendHandler } from './utils/dom';
+import bus from './utils/event-bus';
 
 /**
  * 键盘监听
@@ -283,19 +284,9 @@ export const useCatalog = (_props: EditorProps, staticProps: StaticProps) => {
 // 初始为空，渲染到页面后获取页面属性
 let bodyOverflowHistory = '';
 
-/**
- * 收集整理公共配置
- * highlight及language重构
- * [SettingType, (k: keyof typeof setting) => void] => {}
- * @param props
- * @returns
- */
-export const useConfig = (props: EditorProps) => {
+export const useMdPreviewConfig = (props: MdPreviewProps) => {
   const {
     theme = defaultProps.theme,
-    preview = defaultProps.preview,
-    htmlPreview = defaultProps.htmlPreview,
-    pageFullscreen = defaultProps.pageFullscreen,
     previewTheme = defaultProps.previewTheme,
     codeTheme = defaultProps.codeTheme,
     language = defaultProps.language,
@@ -346,7 +337,7 @@ export const useConfig = (props: EditorProps) => {
   }, [codeStyleReverse, codeStyleReverseList, previewTheme, theme, codeTheme]);
 
   // 缓存语言设置
-  const usedLanguageText = useMemo(() => {
+  const usedLanguageText = useMemo<StaticTextDefaultValue>(() => {
     const allText: any = {
       ...staticTextDefault,
       ...globalConfig.editorConfig.languageUserDefined
@@ -359,6 +350,25 @@ export const useConfig = (props: EditorProps) => {
     }
   }, [language]);
 
+  return [highlight, usedLanguageText] as const;
+};
+
+/**
+ * 收集整理公共配置
+ * highlight及language重构
+ * [SettingType, (k: keyof typeof setting) => void] => {}
+ * @param props
+ * @returns
+ */
+export const useConfig = (props: EditorProps): [any, any, SettingType, UpdateSetting] => {
+  const {
+    preview = defaultProps.preview,
+    htmlPreview = defaultProps.htmlPreview,
+    pageFullscreen = defaultProps.pageFullscreen
+  } = props;
+
+  const [highlight, usedLanguageText] = useMdPreviewConfig(props);
+
   const [setting, setSetting] = useState<SettingType>({
     pageFullscreen,
     fullscreen: false,
@@ -369,7 +379,7 @@ export const useConfig = (props: EditorProps) => {
 
   const cacheSetting = useRef(setting);
 
-  const updateSetting = useCallback((k: keyof SettingType, v: boolean) => {
+  const updateSetting = useCallback<UpdateSetting>((k, v) => {
     setSetting((_setting) => {
       const realValue = v === undefined ? !_setting[k] : v;
 

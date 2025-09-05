@@ -11,5 +11,6 @@ export const CDN_IDS: Record<string, string> = {
   mermaidM: `${prefix}-mermaid-m`,
   mermaid: `${prefix}-mermaid`,
   katexjs: `${prefix}-katex`,
-  katexcss: `${prefix}-katexCss`
+  katexcss: `${prefix}-katexCss`,
+  echarts: `${prefix}-echarts`
 };
