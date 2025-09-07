@@ -38,6 +38,7 @@ import { textShortenerPlugin } from '../codemirror/textShortener';
 import { oneLight } from '../codemirror/themeLight';
 import { oneDark } from '../codemirror/themeOneDark';
 import { ContentProps } from '../props';
+import { useToolbarEffect } from './useToolbarEffect';
 // import useAttach from './useAttach';
 // 禁用掉>=6.28.0的实验性功能
 (EditorView as any).EDIT_CONTEXT = false;
@@ -450,7 +451,8 @@ const useCodeMirror = (props: ContentProps) => {
     }
   }, [props.maxLength]);
 
-  useEffect(() => {
+  /** 如果用户直接在组件上给floatingToolbars属性赋动态的值，会导致reconfigure抛错 */
+  useToolbarEffect(() => {
     if (floatingToolbars.length > 0) {
       codeMirrorUt.current?.view.dispatch({
         effects: comp.floatingToolbar.reconfigure(floatingToolbarPlugin)
@@ -459,7 +461,7 @@ const useCodeMirror = (props: ContentProps) => {
       codeMirrorUt.current?.view.dispatch({
         effects: comp.floatingToolbar.reconfigure([])
       });
-  }, [comp.floatingToolbar, floatingToolbarPlugin, floatingToolbars]);
+  }, floatingToolbars);
 
   // 附带的设置
   // useAttach(codeMirrorUt);
