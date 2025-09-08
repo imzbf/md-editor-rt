@@ -48,7 +48,13 @@ export const createFloatingToolbarPlugin = (options: {
         arrow: true,
         create: () => {
           const dom = document.createElement('div');
-          const root = ReactDOM.createRoot(dom);
+
+          // 这里需要创建一个 react 根节点
+          // 如果直接使用dom，每次react更新都会重置dom中codemirror添加的节点，比如箭头
+          const appNode = document.createElement('div');
+          dom.appendChild(appNode);
+
+          const root = ReactDOM.createRoot(appNode);
 
           root.render(
             <FloatingToolbarContext.Provider value={options.contextValue}>
