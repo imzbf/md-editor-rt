@@ -55,7 +55,7 @@ const useCodeMirror = (props: ContentProps) => {
     contextValue;
 
   const inputWrapperRef = useRef<HTMLDivElement>(null);
-  const codeMirrorUt = useRef<CodeMirrorUt>();
+  const codeMirrorUt = useRef<CodeMirrorUt>(null);
   // 第一次延迟设置codemirror属性
   const noSet = useRef(true);
 

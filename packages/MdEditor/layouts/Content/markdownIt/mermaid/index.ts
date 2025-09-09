@@ -11,7 +11,7 @@ const MermaidPlugin = (md: markdownit, options: { themeRef: RefObject<Themes> })
     const code = token.content.trim();
     if (token.info === 'mermaid') {
       token.attrSet('class', `${prefix}-mermaid`);
-      token.attrSet('data-mermaid-theme', options.themeRef.current!);
+      token.attrSet('data-mermaid-theme', options.themeRef.current);
 
       if (token.map && token.level === 0) {
         const closeLine = token.map[1] - 1;

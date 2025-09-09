@@ -128,7 +128,7 @@ const DropDown = (props: ModalProps) => {
   const slotOverlay = props.overlay;
 
   // 触发器
-  const trigger = cloneElement(slotDefault, {
+  const trigger = cloneElement<any>(slotDefault, {
     ref: triggerRef,
     key: 'cloned-dropdown-trigger'
   });

@@ -543,7 +543,7 @@ export interface ContextType {
   language: string;
   previewTheme: PreviewThemes;
   customIcon: CustomIcon;
-  rootRef: RefObject<HTMLDivElement> | null;
+  rootRef: RefObject<HTMLDivElement | null> | null;
   disabled: boolean | undefined;
   showToolbarName?: boolean;
   setting: SettingType;

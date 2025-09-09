@@ -69,11 +69,11 @@ const codetabs = (md: markdownit, _opts: CodeTabsPluginOps) => {
       return '';
     }
 
-    const codeCodeText = _opts.usedLanguageTextRef.current!.copyCode!.text;
-    const copyBtnHtml = _opts.customIconRef.current!.copy || codeCodeText;
-    const isIcon = !!_opts.customIconRef.current!.copy;
+    const codeCodeText = _opts.usedLanguageTextRef.current.copyCode!.text;
+    const copyBtnHtml = _opts.customIconRef.current.copy || codeCodeText;
+    const isIcon = !!_opts.customIconRef.current.copy;
 
-    const collapseTips = `<span class="${prefix}-collapse-tips">${StrIcon('collapse-tips', _opts.customIconRef.current!)}</span>`;
+    const collapseTips = `<span class="${prefix}-collapse-tips">${StrIcon('collapse-tips', _opts.customIconRef.current)}</span>`;
 
     const [GROUP] = getGroupAndTab(tokens[idx]);
     if (GROUP === null) {
