@@ -21,7 +21,7 @@ const HeadingPlugin = (md: markdownit, options: HeadingPluginOps) => {
 
     const level = token.markup.length as 1 | 2 | 3 | 4 | 5 | 6;
 
-    options.headsRef.current!.push({
+    options.headsRef.current.push({
       text,
       level,
       line: token.map![0],
@@ -35,7 +35,7 @@ const HeadingPlugin = (md: markdownit, options: HeadingPluginOps) => {
         options.mdHeadingId({
           text,
           level,
-          index: options.headsRef.current!.length,
+          index: options.headsRef.current.length,
           currentToken: token,
           nextToken: tokens[idx + 1]
         })

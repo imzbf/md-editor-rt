@@ -16,7 +16,7 @@ import { ContentProps } from '../props';
 const useAutoScroll = (
   props: ContentProps,
   html: string,
-  codeMirrorUt: RefObject<CodeMirrorUt | undefined>
+  codeMirrorUt: RefObject<CodeMirrorUt | null>
 ) => {
   const { editorId, setting } = useContext(EditorContext);
   const [scrollCb, setScrollCb] = useState({

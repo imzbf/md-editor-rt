@@ -1,4 +1,11 @@
-import { cloneElement, useCallback, useContext, useEffect, useRef } from 'react';
+import {
+  cloneElement,
+  ReactElement,
+  useCallback,
+  useContext,
+  useEffect,
+  useRef
+} from 'react';
 import Divider from '~/components/Divider';
 import { allToolbar, globalConfig } from '~/config';
 import { EditorContext } from '~/context';
@@ -258,16 +265,19 @@ export const useBarRender = () => {
         }
       }
     } else if (defToolbars) {
-      const defItem = defToolbars[barItem as number];
+      const defItem = defToolbars[barItem as number] as ReactElement<
+        any,
+        React.FunctionComponent<any>
+      >;
 
       if (defItem) {
-        const defItemCloned = cloneElement(defItem, {
-          theme: defItem.props.theme || theme,
-          codeTheme: defItem.props.codeTheme || codeTheme,
-          previewTheme: defItem.props.previewTheme || previewTheme,
-          language: defItem.props.language || language,
-          disabled: defItem.props.disabled || disabled,
-          showToolbarName: defItem.props.showToolbarName || showToolbarName,
+        const defItemCloned = cloneElement<any>(defItem, {
+          theme: defItem.props?.theme || theme,
+          codeTheme: defItem.props?.codeTheme || codeTheme,
+          previewTheme: defItem.props?.previewTheme || previewTheme,
+          language: defItem.props?.language || language,
+          disabled: defItem.props?.disabled || disabled,
+          showToolbarName: defItem.props?.showToolbarName || showToolbarName,
           insert(generate: InsertContentGenerator) {
             bus.emit(editorId, REPLACE, 'universal', { generate });
           }

@@ -14,8 +14,8 @@ import { ContentProps } from '../props';
 
 const useResize = (
   props: ContentProps,
-  contentRef: RefObject<HTMLDivElement>,
-  resizeRef: RefObject<HTMLDivElement>
+  contentRef: RefObject<HTMLDivElement | null>,
+  resizeRef: RefObject<HTMLDivElement | null>
 ) => {
   const { setting } = useContext(EditorContext);
   const { inputBoxWidth, onInputBoxWidthChange } = props;

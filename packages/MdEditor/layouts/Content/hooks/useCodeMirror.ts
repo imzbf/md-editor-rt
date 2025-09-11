@@ -8,7 +8,7 @@ import {
 } from '@codemirror/commands';
 import { markdown } from '@codemirror/lang-markdown';
 import { languages } from '@codemirror/language-data';
-import { Compartment } from '@codemirror/state';
+import { Compartment, Extension } from '@codemirror/state';
 import { keymap, drawSelection } from '@codemirror/view';
 import { EditorView } from 'codemirror';
 import { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
@@ -24,7 +24,7 @@ import {
   SEND_EDITOR_VIEW,
   GET_EDITOR_VIEW
 } from '~/static/event-name';
-import { DOMEventHandlers } from '~/type';
+import { CodeMirrorExtension, DOMEventHandlers } from '~/type';
 import { directive2flag, ToolDirective } from '~/utils/content-help';
 import bus from '~/utils/event-bus';
 
@@ -33,8 +33,8 @@ import CodeMirrorUt from '../codemirror';
 import usePasteUpload from './usePasteUpload';
 import { createAutocompletion } from '../codemirror/autocompletion';
 import { createCommands } from '../codemirror/commands';
-import { createFloatingToolbarPlugin } from '../codemirror/floatingToolbar';
-import { textShortenerPlugin } from '../codemirror/textShortener';
+import { createFloatingToolbar } from '../codemirror/floatingToolbar';
+import { TextShortenerOptions, createTextShortener } from '../codemirror/textShortener';
 import { oneLight } from '../codemirror/themeLight';
 import { oneDark } from '../codemirror/themeOneDark';
 import { ContentProps } from '../props';
@@ -42,6 +42,12 @@ import { useToolbarEffect } from './useToolbarEffect';
 // import useAttach from './useAttach';
 // 禁用掉>=6.28.0的实验性功能
 (EditorView as any).EDIT_CONTEXT = false;
+
+const produceExtension = (item: CodeMirrorExtension): Extension => {
+  const extension =
+    item.extension instanceof Function ? item.extension(item.options) : item.extension;
+  return item.compartment ? item.compartment.of(extension) : extension;
+};
 
 /**
  * 文本编辑区组件
@@ -55,13 +61,12 @@ const useCodeMirror = (props: ContentProps) => {
     contextValue;
 
   const inputWrapperRef = useRef<HTMLDivElement>(null);
-  const codeMirrorUt = useRef<CodeMirrorUt>();
+  const codeMirrorUt = useRef<CodeMirrorUt>(null);
   // 第一次延迟设置codemirror属性
   const noSet = useRef(true);
 
   const [comp] = useState(() => {
     return {
-      language: new Compartment(),
       theme: new Compartment(),
       autocompletion: new Compartment(),
       update: new Compartment(),
@@ -142,8 +147,8 @@ const useCodeMirror = (props: ContentProps) => {
     listeners.current.forEach((cb) => cb());
   }, [contextValue]);
 
-  const [floatingToolbarPlugin] = useState(() => {
-    return createFloatingToolbarPlugin({
+  const [floatingToolbarExtension] = useState(() => {
+    return createFloatingToolbar({
       contextValue: {
         getValue: () => {
           return contextValueRef.current;
@@ -156,26 +161,15 @@ const useCodeMirror = (props: ContentProps) => {
     });
   });
 
+  /**
+   * 不让用户修改的扩展
+   */
   const [defaultExtensions] = useState(() => {
     return [
       {
-        type: 'keymap',
-        extension: keymap.of(getDefaultKeymaps())
-      },
-      {
-        type: 'history',
-        extension: history(),
-        compartment: comp.history
-      },
-      {
-        type: 'markdown',
-        extension: markdown({ codeLanguages: languages }),
-        compartment: comp.language
-      },
-      // 横向换行
-      {
-        type: 'lineWrapping',
-        extension: EditorView.lineWrapping
+        type: 'theme',
+        extension: theme === 'light' ? oneLight : oneDark,
+        compartment: comp.theme
       },
       {
         type: 'updateListener',
@@ -189,48 +183,62 @@ const useCodeMirror = (props: ContentProps) => {
         extension: EditorView.domEventHandlers(domEventHandlers),
         compartment: comp.domEvent
       },
-      // 解决多行placeholder时，光标异常的情况
       {
-        type: 'drawSelection',
-        extension: drawSelection()
+        type: 'completions',
+        extension: createAutocompletion(props.completions),
+        compartment: comp.autocompletion
       },
       {
-        type: 'linkShortener',
-        extension: textShortenerPlugin({
-          maxLength: 30
-        })
-      },
-      {
-        type: 'floatingToolbar',
-        extension: floatingToolbars.length > 0 ? floatingToolbarPlugin : [],
-        compartment: comp.floatingToolbar
+        type: 'history',
+        extension: history(),
+        compartment: comp.history
       }
     ];
   });
 
-  const [extensions] = useState(() => {
-    return globalConfig
-      .codeMirrorExtensions(
-        [
-          ...defaultExtensions,
-          {
-            type: 'theme',
-            extension: theme === 'light' ? oneLight : oneDark,
-            compartment: comp.theme
-          },
-          {
-            type: 'completions',
-            extension: createAutocompletion(props.completions),
-            compartment: comp.autocompletion
+  const [userDefindeExtension] = useState(() => {
+    return globalConfig.codeMirrorExtensions(
+      [
+        // 横向换行
+        {
+          type: 'lineWrapping',
+          extension: EditorView.lineWrapping
+        },
+
+        {
+          type: 'keymap',
+          extension: keymap.of(getDefaultKeymaps())
+        },
+        // 解决多行placeholder时，光标异常的情况
+        {
+          type: 'drawSelection',
+          extension: drawSelection()
+        },
+        {
+          type: 'markdown',
+          extension: markdown({ codeLanguages: languages })
+        },
+        {
+          type: 'linkShortener',
+          extension: (options: any) =>
+            createTextShortener(options as TextShortenerOptions),
+          options: {
+            maxLength: 30
           }
-        ],
-        { editorId, theme: theme, keyBindings: getDefaultKeymaps() }
-      )
-      .map((item) =>
-        item.compartment ? item.compartment.of(item.extension) : item.extension
-      );
+        },
+        {
+          type: 'floatingToolbar',
+          extension: floatingToolbars.length > 0 ? floatingToolbarExtension : [],
+          compartment: comp.floatingToolbar
+        }
+      ],
+      { editorId, theme: theme, keyBindings: getDefaultKeymaps() }
+    );
   });
 
+  const [extensions] = useState(() => {
+    return [...userDefindeExtension, ...defaultExtensions].map(produceExtension);
+  });
   const resetHistory = useCallback(() => {
     codeMirrorUt.current?.view.dispatch({
       effects: comp.history.reconfigure([])
@@ -453,9 +461,15 @@ const useCodeMirror = (props: ContentProps) => {
 
   /** 如果用户直接在组件上给floatingToolbars属性赋动态的值，会导致reconfigure抛错 */
   useToolbarEffect(() => {
-    if (floatingToolbars.length > 0) {
+    const _floatingToolbarExtension = userDefindeExtension.find(
+      (extension) => extension.type === 'floatingToolbar'
+    );
+
+    if (floatingToolbars.length > 0 && _floatingToolbarExtension) {
       codeMirrorUt.current?.view.dispatch({
-        effects: comp.floatingToolbar.reconfigure(floatingToolbarPlugin)
+        effects: comp.floatingToolbar.reconfigure(
+          produceExtension(_floatingToolbarExtension)
+        )
       });
     } else
       codeMirrorUt.current?.view.dispatch({

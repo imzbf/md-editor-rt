@@ -11,7 +11,7 @@ import { ContentProps } from '../props';
  */
 const usePasteUpload = (
   props: ContentProps,
-  codeMirrorUt: RefObject<CodeMirrorUt | undefined>
+  codeMirrorUt: RefObject<CodeMirrorUt | null>
 ) => {
   const { editorId } = useContext(EditorContext);
 

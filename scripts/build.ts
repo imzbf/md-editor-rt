@@ -31,19 +31,7 @@ void (async () => {
         style: resolvePath('packages/MdEditor/styles/style.less')
       }
     ],
-    ['cjs', moduleEntry],
-    [
-      'umd',
-      {
-        index: resolvePath('packages')
-      }
-    ],
-    [
-      'umd',
-      {
-        preview: resolvePath('packages/preview')
-      }
-    ]
+    ['cjs', moduleEntry]
   ];
 
   const extnames = {
@@ -104,33 +92,23 @@ void (async () => {
             }
           },
           rollupOptions: {
-            external:
-              t === 'umd'
-                ? ['react', 'react-dom']
-                : [
-                    'react',
-                    'react-dom',
-                    'react/jsx-runtime',
-                    'medium-zoom',
-                    'lru-cache',
-                    'codemirror',
-                    'lucide-react',
-                    /@vavt\/.*/,
-                    /@codemirror\/.*/,
-                    /@lezer\/.*/,
-                    /markdown-it.*/
-                  ],
+            external: [
+              'react',
+              'react-dom',
+              'react-dom/client',
+              'react/jsx-runtime',
+              'medium-zoom',
+              'lru-cache',
+              'codemirror',
+              'lucide-react',
+              /@vavt\/.*/,
+              /@codemirror\/.*/,
+              /@lezer\/.*/,
+              /markdown-it.*/
+            ],
             output: {
               chunkFileNames: `${t}/chunks/[name].${extnames[t]}`,
-              assetFileNames: '[name][extname]',
-              globals:
-                t === 'umd'
-                  ? {
-                      react: 'React',
-                      'react-dom': 'ReactDOM',
-                      'react/jsx-runtime': 'jsxRuntime'
-                    }
-                  : {}
+              assetFileNames: '[name][extname]'
             }
           }
         }

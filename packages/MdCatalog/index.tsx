@@ -22,7 +22,7 @@ import bus from '~/utils/event-bus';
 import { getComputedStyleNum } from '~/utils/scroll-auto';
 
 import CatalogLink from './CatalogLink';
-import { CatalogContext } from './context';
+import { CatalogContext, CatalogContextValue } from './context';
 
 export interface TocItem extends HeadList {
   index: number;
@@ -106,11 +106,11 @@ const MdCatalog = (props: CatalogProps) => {
   // 目录根部元素
   const catalogRef = useRef<HTMLDivElement>(null);
   // 获取到的滚动root节点
-  const scrollElementRef = useRef<HTMLElement>();
+  const scrollElementRef = useRef<HTMLElement>(null);
   // 滚动容器，包括document
-  const scrollContainerRef = useRef<HTMLElement | Document>();
+  const scrollContainerRef = useRef<HTMLElement | Document>(undefined);
   // 获取到的目录root节点，注意，不支持目录和编辑器不在同一个web c中使用
-  const rootNodeRef = useRef<Document | ShadowRoot>();
+  const rootNodeRef = useRef<Document | ShadowRoot>(null);
   // 编辑器view
   const [editorView, setEditorView] = useState<EditorView>();
 
@@ -301,7 +301,7 @@ const MdCatalog = (props: CatalogProps) => {
     };
   }, [offsetTop, mdHeadingId, getScrollElement, editorId, syncWith, editorView]);
 
-  const providerValue = useMemo(() => {
+  const providerValue = useMemo<CatalogContextValue>(() => {
     return {
       scrollElementRef,
       rootNodeRef

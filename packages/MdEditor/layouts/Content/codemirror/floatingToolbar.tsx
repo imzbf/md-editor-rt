@@ -1,7 +1,7 @@
 import { StateEffect, StateField } from '@codemirror/state';
 import { EditorView, showTooltip, Tooltip } from '@codemirror/view';
 import { createContext, useContext, useSyncExternalStore } from 'react';
-import ReactDOM from 'react-dom/client';
+import { createRoot } from 'react-dom/client';
 import { defaultContextValue } from '~/context';
 import Toolbar from '~/layouts/FloatingToolbar';
 import { ContextType } from '~/type';
@@ -37,7 +37,7 @@ const tooltipField = StateField.define<Tooltip | null>({
   provide: (f) => showTooltip.from(f)
 });
 
-export const createFloatingToolbarPlugin = (options: {
+export const createFloatingToolbar = (options: {
   contextValue: FloatingToolbarContextValue<ContextType>;
 }) => {
   const showTooltip = (view: EditorView, pos: number) => {
@@ -54,7 +54,7 @@ export const createFloatingToolbarPlugin = (options: {
           const appNode = document.createElement('div');
           dom.appendChild(appNode);
 
-          const root = ReactDOM.createRoot(appNode);
+          const root = createRoot(appNode);
 
           root.render(
             <FloatingToolbarContext.Provider value={options.contextValue}>

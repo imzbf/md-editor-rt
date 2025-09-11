@@ -11,7 +11,7 @@ const arraysEqual = (prev: ToolbarNames[], curr: ToolbarNames[]) => {
 };
 
 export const useToolbarEffect = (effect: React.EffectCallback, deps: ToolbarNames[]) => {
-  const prev = useRef<ToolbarNames[]>();
+  const prev = useRef<ToolbarNames[]>([]);
 
   if (!prev.current || !arraysEqual(prev.current, deps)) {
     prev.current = deps;

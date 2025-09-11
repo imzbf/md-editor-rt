@@ -45,13 +45,16 @@ const Footer = (props: FooterProps) => {
           }
         }
       } else {
-        const defItem = props.defFooters[name as number];
+        const defItem = props.defFooters[name as number] as ReactElement<
+          any,
+          React.FunctionComponent<any>
+        >;
 
         if (typeof defItem !== 'string') {
-          const defItemCloned = cloneElement(defItem, {
-            theme: defItem.props.theme || theme,
-            language: defItem.props.language || language,
-            disabled: defItem.props.disabled || disabled
+          const defItemCloned = cloneElement<any>(defItem, {
+            theme: defItem.props?.theme || theme,
+            language: defItem.props?.language || language,
+            disabled: defItem.props?.disabled || disabled
           });
 
           return defItemCloned;

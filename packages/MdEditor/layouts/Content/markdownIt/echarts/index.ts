@@ -10,7 +10,7 @@ const EchartsPlugin = (md: markdownit, options: { themeRef: RefObject<Themes> })
     const code = token.content.trim();
     if (token.info === 'echarts') {
       token.attrSet('class', `${prefix}-echarts`);
-      token.attrSet('data-echarts-theme', options.themeRef.current!);
+      token.attrSet('data-echarts-theme', options.themeRef.current);
 
       if (token.map && token.level === 0) {
         const closeLine = token.map[1] - 1;

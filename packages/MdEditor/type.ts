@@ -543,7 +543,7 @@ export interface ContextType {
   language: string;
   previewTheme: PreviewThemes;
   customIcon: CustomIcon;
-  rootRef: RefObject<HTMLDivElement> | null;
+  rootRef: RefObject<HTMLDivElement | null> | null;
   disabled: boolean | undefined;
   showToolbarName?: boolean;
   setting: SettingType;
@@ -611,11 +611,12 @@ export interface CodeMirrorExtension {
   /**
    * CodeMirror的扩展
    */
-  extension: Extension;
+  extension: Extension | ((options: any) => Extension);
   /**
    * 包裹扩展的Compartment，只有部分扩展有，提供扩展更新的能力
    */
   compartment?: Compartment;
+  options?: any;
 }
 
 export interface GlobalConfig {

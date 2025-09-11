@@ -1,9 +1,11 @@
-import { createContext, MutableRefObject } from 'react';
+import { createContext, RefObject } from 'react';
 
-export const CatalogContext = createContext<{
-  scrollElementRef: MutableRefObject<HTMLElement | undefined> | undefined;
-  rootNodeRef: MutableRefObject<Document | ShadowRoot | undefined> | undefined;
-}>({
+export interface CatalogContextValue {
+  scrollElementRef?: RefObject<HTMLElement | null>;
+  rootNodeRef?: RefObject<Document | ShadowRoot | null>;
+}
+
+export const CatalogContext = createContext<CatalogContextValue>({
   scrollElementRef: undefined,
   rootNodeRef: undefined
 });

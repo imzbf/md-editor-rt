@@ -90,7 +90,7 @@ const Editor = forwardRef((props: EditorProps, ref: ForwardedRef<unknown>) => {
     };
   });
   const rootRef = useRef<HTMLDivElement>(null);
-  const codeRef = useRef<ContentExposeParam>();
+  const codeRef = useRef<ContentExposeParam>(undefined);
 
   const onScrollAutoChange = useCallback(
     (v: boolean) => {
