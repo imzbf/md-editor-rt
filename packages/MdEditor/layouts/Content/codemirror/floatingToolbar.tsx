@@ -37,7 +37,7 @@ const tooltipField = StateField.define<Tooltip | null>({
   provide: (f) => showTooltip.from(f)
 });
 
-export const createFloatingToolbarPlugin = (options: {
+export const createFloatingToolbar = (options: {
   contextValue: FloatingToolbarContextValue<ContextType>;
 }) => {
   const showTooltip = (view: EditorView, pos: number) => {

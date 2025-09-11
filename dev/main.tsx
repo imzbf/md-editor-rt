@@ -38,7 +38,18 @@ config({
         type: 'lineNumbers',
         extension: lineNumbers()
       }
-    ];
+    ].map((item) => {
+      if (item.type === 'linkShortener') {
+        return {
+          ...item,
+          options: {
+            maxLength: 100
+          }
+        };
+      }
+
+      return item;
+    });
   },
   // markdownItConfig: (mdit) => {
   // mdit.use(ancher, {
