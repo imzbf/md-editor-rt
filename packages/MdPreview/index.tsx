@@ -72,7 +72,7 @@ const MdPreview = forwardRef((props: MdPreviewProps, ref: ForwardedRef<unknown>)
       disabled: false,
       showToolbarName: false,
       setting: {
-        preview: false,
+        preview: true,
         htmlPreview: false,
         previewOnly: false,
         pageFullscreen: false,
