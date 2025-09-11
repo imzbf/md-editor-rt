@@ -9,8 +9,7 @@ import {
 import { markdown } from '@codemirror/lang-markdown';
 import { languages } from '@codemirror/language-data';
 import { Compartment, Extension } from '@codemirror/state';
-import { keymap, drawSelection } from '@codemirror/view';
-import { EditorView } from 'codemirror';
+import { EditorView, keymap, drawSelection } from '@codemirror/view';
 import { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
 import { globalConfig } from '~/config';
 import { EditorContext } from '~/context';
