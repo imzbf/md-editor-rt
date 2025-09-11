@@ -10,7 +10,8 @@ import {
   MdCatalog,
   ExposeParam,
   NormalFooterToolbar,
-  MdHeadingId
+  MdHeadingId,
+  ToolbarNames
 } from '~~/index';
 
 import { Theme } from '../App';
@@ -34,7 +35,7 @@ const mdHeadingId: MdHeadingId = ({ index }) => {
 };
 
 export default ({ theme, previewTheme, codeTheme, lang }: PreviewProp) => {
-  const editorRef = useRef<ExposeParam>();
+  const editorRef = useRef<ExposeParam>(null);
 
   const [md, setMd] = useState<{
     text: string;
@@ -44,6 +45,7 @@ export default ({ theme, previewTheme, codeTheme, lang }: PreviewProp) => {
     isFullscreen: boolean;
     inputBoxWitdh?: string;
     disabled?: boolean;
+    floatingToolbars: ToolbarNames[];
   }>(() => {
     return {
       text: localStorage.getItem(SAVE_KEY) || mdText,
@@ -52,7 +54,8 @@ export default ({ theme, previewTheme, codeTheme, lang }: PreviewProp) => {
       modalVisible: false,
       isFullscreen: false,
       inputBoxWitdh: localStorage.getItem(INPUT_BOX_WITDH) ?? undefined,
-      disabled: false
+      disabled: false,
+      floatingToolbars: ['bold', 'underline', 'italic', 'strikeThrough']
     };
   });
 
@@ -182,10 +185,17 @@ export default ({ theme, previewTheme, codeTheme, lang }: PreviewProp) => {
           //   cursorPos: 1003
           // });
           // editorRef.current?.execCommand('katexBlock');
+          // setMd((prev) => {
+          //   return {
+          //     ...prev,
+          //     disabled: !prev.disabled
+          //   };
+          // });
+
           setMd((prev) => {
             return {
               ...prev,
-              disabled: !prev.disabled
+              floatingToolbars: ['bold']
             };
           });
         }}
@@ -299,7 +309,7 @@ export default ({ theme, previewTheme, codeTheme, lang }: PreviewProp) => {
               }
             })();
           }}
-          floatingToolbars={['bold', 'underline', 'italic', 'strikeThrough']}
+          floatingToolbars={md.floatingToolbars}
           toolbars={[
             'bold',
             'underline',

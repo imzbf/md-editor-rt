@@ -42,12 +42,16 @@ import { useToolbarEffect } from './useToolbarEffect';
 // 禁用掉>=6.28.0的实验性功能
 (EditorView as any).EDIT_CONTEXT = false;
 
-const produceExtension = (item: CodeMirrorExtension): Extension => {
-  const extension =
-    item.extension instanceof Function ? item.extension(item.options) : item.extension;
-  return item.compartment ? item.compartment.of(extension) : extension;
+const getSourceExtension = (item: CodeMirrorExtension) => {
+  return item.extension instanceof Function
+    ? item.extension(item.options)
+    : item.extension;
 };
 
+const produceExtension = (item: CodeMirrorExtension): Extension => {
+  const extension = getSourceExtension(item);
+  return item.compartment ? item.compartment.of(extension) : extension;
+};
 /**
  * 文本编辑区组件
  *
@@ -464,15 +468,19 @@ const useCodeMirror = (props: ContentProps) => {
       (extension) => extension.type === 'floatingToolbar'
     );
 
-    if (floatingToolbars.length > 0 && _floatingToolbarExtension) {
+    if (!_floatingToolbarExtension?.compartment) {
+      return;
+    }
+
+    if (floatingToolbars.length > 0) {
       codeMirrorUt.current?.view.dispatch({
-        effects: comp.floatingToolbar.reconfigure(
-          produceExtension(_floatingToolbarExtension)
+        effects: _floatingToolbarExtension.compartment.reconfigure(
+          getSourceExtension(_floatingToolbarExtension)
         )
       });
     } else
       codeMirrorUt.current?.view.dispatch({
-        effects: comp.floatingToolbar.reconfigure([])
+        effects: _floatingToolbarExtension.compartment.reconfigure([])
       });
   }, floatingToolbars);
 
