@@ -15,7 +15,7 @@ const useEcharts = (props: ContentPreviewProps) => {
 
   const echartsInstances = useRef<any[]>([]);
   const observers = useRef<ResizeObserver[]>([]);
-  const mermaidSourceEles = useRef<HTMLElement[]>([]);
+  const echartsSourceEles = useRef<HTMLElement[]>([]);
 
   const configEcharts = useCallback(() => {
     if (!props.noEcharts && echartsRef.current) {
@@ -55,7 +55,7 @@ const useEcharts = (props: ContentPreviewProps) => {
     observers.current.forEach((observer) => observer.disconnect());
 
     echartsInstances.current = [];
-    mermaidSourceEles.current = [];
+    echartsSourceEles.current = [];
     observers.current = [];
   }, []);
 
@@ -63,13 +63,13 @@ const useEcharts = (props: ContentPreviewProps) => {
     clearEchartsEffects();
 
     if (!props.noEcharts && echartsRef.current && rootRef!.current) {
-      mermaidSourceEles.current = Array.from(
+      echartsSourceEles.current = Array.from(
         rootRef!.current.querySelectorAll<HTMLElement>(
           `#${editorId} div.${prefix}-echarts:not([data-processed])`
         )
       );
 
-      mermaidSourceEles.current.forEach((item) => {
+      echartsSourceEles.current.forEach((item) => {
         if (item.dataset.closed === 'false') return;
 
         try {
