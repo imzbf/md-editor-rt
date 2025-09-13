@@ -528,6 +528,17 @@ Except for the same as `MdPreview`:
 
 ---
 
+### 🧱 floatingToolbars
+
+- **type**: `Array`
+- **default**: `[]`
+
+  Show contents of floating toolbar.
+
+  You can sort the toolbar as you like, split tools by `'-'`.
+
+---
+
 ### 💪 defToolbars
 
 - **type**: `Array<VNode>`
