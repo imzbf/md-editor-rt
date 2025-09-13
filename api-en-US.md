@@ -94,7 +94,6 @@ This is the props of `MdPreview`, which is also part of `MdEditor`:
   Preview themes.
 
   Custom:
-
   1. Write css
 
   ```css
@@ -152,7 +151,6 @@ This is the props of `MdPreview`, which is also part of `MdEditor`:
   Highlight code css name. Get Them from `highlight.js`.
 
   Custom:
-
   1. Config `editorExtensions`
 
   ```js
@@ -164,15 +162,15 @@ This is the props of `MdPreview`, which is also part of `MdEditor`:
         css: {
           atom: {
             light: 'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/styles/atom-one-light.min.css',
-            dark: 'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/styles/atom-one-dark.min.css',
+            dark: 'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/styles/atom-one-dark.min.css'
           },
           xxx: {
             light: 'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/styles/xxx-light.css',
-            dark: 'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/styles/xxx-dark.css',
-          },
-        },
-      },
-    },
+            dark: 'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/styles/xxx-dark.css'
+          }
+        }
+      }
+    }
   });
   ```
 
@@ -186,7 +184,7 @@ This is the props of `MdPreview`, which is also part of `MdEditor`:
 
 ### 🎱 mdHeadingId
 
-- **type**: `(text: string, level: number, index: number) => string`
+- **type**: `MdHeadingId`
 - **default**: `(text) => text`
 
   Title `ID` generator.
@@ -195,11 +193,21 @@ This is the props of `MdPreview`, which is also part of `MdEditor`:
   import { MdEditor } from 'md-editor-rt';
   import 'md-editor-rt/lib/style.css';
 
-  const mdHeadingId = (_text, _level, index) => `heading-${index}`;
+  const mdHeadingId = ({ index }) => `heading-${index}`;
 
   export default () => {
     return <MdEditor mdHeadingId={mdHeadingId} />;
   };
+  ```
+
+  ```ts
+  type MdHeadingId = (options: {
+    text: string;
+    level: number;
+    index: number;
+    currentToken?: Token;
+    nextToken?: Token;
+  }) => string;
   ```
 
 ---
@@ -328,21 +336,21 @@ This is the props of `MdPreview`, which is also part of `MdEditor`:
 
   const customIcon: CustomIcon = {
     bold: {
-      component: 'A',
+      component: 'A'
     },
     // Demonstrating the use of default icons
     copy: StrIcon('copy', {}),
     // copy: '<i class="fa fa-car"></i>',
     // 'collapse-tips': '<i class="fa fa-car"></i>',
     preview: {
-      component: '<i class="fa fa-car"></i>',
+      component: '<i class="fa fa-car"></i>'
     },
     github: {
       component: IconFont,
       props: {
-        name: 'sneer',
-      },
-    },
+        name: 'sneer'
+      }
+    }
   };
 
   export default () => {
@@ -505,7 +513,7 @@ Except for the same as `MdPreview`:
     'previewOnly',
     'htmlPreview',
     'catalog',
-    'github',
+    'github'
   ];
   ```
 
@@ -546,7 +554,7 @@ Except for the same as `MdPreview`:
           <use xlinkHref="#icon-mark"></use>
         </svg>
       }
-    />,
+    />
   ];
 
   export default () => {
@@ -724,11 +732,11 @@ For more info, click [Internal Components](#%F0%9F%AA%A4%20Internal%20Components
             options: [
               {
                 label: '@imzbf',
-                type: 'text',
-              },
-            ],
+                type: 'text'
+              }
+            ]
           };
-        },
+        }
       ];
     }, []);
 
@@ -785,16 +793,12 @@ For more info, click [Internal Components](#%F0%9F%AA%A4%20Internal%20Components
 
   \>=5.5.0 Controls the maximum depth of the catalog to be displayed.
 
-### 🖌 insertLinkDirect
+### 🖌 noEcharts
 
 - **type**: `boolean`
 - **default**: `false`
 
-  \>=5.6.0 Set if you want to insert a link directly into the edit field, set it to `false` will open a popup window and type in the input box.
-
-  !!! warning
-  Deprecated since 6.0, popups no longer used by default.
-  !!!
+  \>=6.0.0 Disable echarts preview
 
 ---
 
@@ -880,8 +884,8 @@ Except for the same as `MdPreview`:
           axios
             .post('/api/img/upload', form, {
               headers: {
-                'Content-Type': 'multipart/form-data',
-              },
+                'Content-Type': 'multipart/form-data'
+              }
             })
             .then((res) => rev(res))
             .catch((error) => rej(error));
@@ -1180,7 +1184,7 @@ editorRef.current?.insert((selectedText) => {
     targetValue: `${selectedText}`,
     select: true,
     deviationStart: 0,
-    deviationEnd: 0,
+    deviationEnd: 0
   };
 });
 ```
@@ -1250,7 +1254,7 @@ Supports listening to all DOM events.
 editorRef.current?.domEventHandlers({
   compositionstart: () => {
     console.log('compositionstart');
-  },
+  }
 });
 ```
 
@@ -1288,13 +1292,32 @@ Customize new extensions based on theme and default extensions f codeMirror.
 
 ```ts
 type CodeMirrorExtensions = (
-  theme: Themes,
-  extensions: Array<Extension>,
-  keyBindings: Array<KeyBinding>,
+  extensions: Array<CodeMirrorExtension>,
   options: {
     editorId: string;
+    theme: Themes;
+    keyBindings: Array<KeyBinding>;
   }
-) => Array<Extension>;
+) => Array<CodeMirrorExtension>;
+```
+
+```ts
+interface CodeMirrorExtension {
+  /**
+   * Only used to provide developers with a basis for distinguishing between different extensions.
+   */
+  type: string;
+  /**
+   * CodeMirror extensions
+   */
+  extension: Extension | ((options: any) => Extension);
+  /**
+   * A Compartment that wraps the extension
+   * Only available for certain extensions—providing the capability to update the extension.
+   */
+  compartment?: Compartment;
+  options?: any;
+}
 ```
 
 Example: Editor does not render the line number of textarea by default, this extension needs to be manually added
@@ -1305,8 +1328,14 @@ import { lineNumbers } from '@codemirror/view';
 
 config({
   codeMirrorExtensions(_theme, extensions) {
-    return [...extensions, lineNumbers()];
-  },
+    return [
+      ...extensions,
+      {
+        type: 'lineNumbers',
+        extension: lineNumbers()
+      }
+    ];
+  }
 });
 ```
 
@@ -1334,9 +1363,9 @@ import ancher from 'markdown-it-anchor';
 config({
   markdownItConfig(mdit) {
     mdit.use(ancher, {
-      permalink: true,
+      permalink: true
     });
-  },
+  }
 });
 ```
 
@@ -1368,30 +1397,30 @@ config({
           ...p,
           options: {
             ...p.options,
-            classes: 'my-class',
-          },
+            classes: 'my-class'
+          }
         };
       }
 
       return p;
     });
-  },
+  }
 });
 ```
 
 List of built-in Plugins.
 
-| Type       | Option                                                                                                                        |
-| ---------- | ----------------------------------------------------------------------------------------------------------------------------- |
-| image      | [URL](https://github.com/Antonio-Laguna/markdown-it-image-figures?tab=readme-ov-file#options)                                 |
+| Type | Option |
+| --- | --- |
+| image | [URL](https://github.com/Antonio-Laguna/markdown-it-image-figures?tab=readme-ov-file#options) |
 | admonition | [URL](https://github.com/imzbf/md-editor-v3/blob/develop/packages/MdEditor/layouts/Content/markdownIt/admonition/index.ts#L9) |
-| taskList   | [URL](https://github.com/imzbf/md-editor-v3/blob/develop/packages/MdEditor/layouts/Content/markdownIt/task/index.ts#L10)      |
-| heading    | [URL](https://github.com/imzbf/md-editor-v3/blob/develop/packages/MdEditor/layouts/Content/markdownIt/heading/index.ts#L5)    |
-| code       | [URL](https://github.com/imzbf/md-editor-v3/blob/develop/packages/MdEditor/layouts/Content/markdownIt/code/index.ts#L16)      |
-| sub        | none                                                                                                                          |
-| sup        | none                                                                                                                          |
-| katex      | [URL](https://github.com/imzbf/md-editor-v3/blob/develop/packages/MdEditor/layouts/Content/markdownIt/katex/index.ts#L18)     |
-| mermaid    | [URL](https://github.com/imzbf/md-editor-v3/blob/develop/packages/MdEditor/layouts/Content/markdownIt/mermaid/index.ts#L7)    |
+| taskList | [URL](https://github.com/imzbf/md-editor-v3/blob/develop/packages/MdEditor/layouts/Content/markdownIt/task/index.ts#L10) |
+| heading | [URL](https://github.com/imzbf/md-editor-v3/blob/develop/packages/MdEditor/layouts/Content/markdownIt/heading/index.ts#L5) |
+| code | [URL](https://github.com/imzbf/md-editor-v3/blob/develop/packages/MdEditor/layouts/Content/markdownIt/code/index.ts#L16) |
+| sub | none |
+| sup | none |
+| katex | [URL](https://github.com/imzbf/md-editor-v3/blob/develop/packages/MdEditor/layouts/Content/markdownIt/katex/index.ts#L18) |
+| mermaid | [URL](https://github.com/imzbf/md-editor-v3/blob/develop/packages/MdEditor/layouts/Content/markdownIt/mermaid/index.ts#L7) |
 
 [Source code for adding plugins](https://github.com/imzbf/md-editor-v3/blob/develop/packages/MdEditor/layouts/Content/composition/useMarkdownIt.ts#L95)
 
@@ -1440,7 +1469,7 @@ config({
           previewOnly: 'previewOnly',
           htmlPreview: 'html preview',
           catalog: 'catalog',
-          github: 'source code',
+          github: 'source code'
         },
         titleItem: {
           h1: 'Lv1 Heading',
@@ -1448,12 +1477,12 @@ config({
           h3: 'Lv3 Heading',
           h4: 'Lv4 Heading',
           h5: 'Lv5 Heading',
-          h6: 'Lv6 Heading',
+          h6: 'Lv6 Heading'
         },
         imgTitleItem: {
           link: 'Add Img Link',
           upload: 'Upload Img',
-          clip2upload: 'Clip Upload',
+          clip2upload: 'Clip Upload'
         },
         linkModalTips: {
           linkTitle: 'Add Link',
@@ -1462,16 +1491,16 @@ config({
           descLabelPlaceHolder: 'Enter a description...',
           urlLabel: 'Link:',
           urlLabelPlaceHolder: 'Enter a link...',
-          buttonOK: 'OK',
+          buttonOK: 'OK'
         },
         clipModalTips: {
           title: 'Crop Image',
-          buttonUpload: 'Upload',
+          buttonUpload: 'Upload'
         },
         copyCode: {
           text: 'Copy',
           successTips: 'Copied!',
-          failTips: 'Copy failed!',
+          failTips: 'Copy failed!'
         },
         mermaid: {
           flow: 'flow',
@@ -1481,19 +1510,19 @@ config({
           state: 'state',
           pie: 'pie',
           relationship: 'relationship',
-          journey: 'journey',
+          journey: 'journey'
         },
         katex: {
           inline: 'inline',
-          block: 'block',
+          block: 'block'
         },
         footer: {
           markdownTotal: 'Word Count',
-          scrollAuto: 'Scroll Auto',
-        },
-      },
-    },
-  },
+          scrollAuto: 'Scroll Auto'
+        }
+      }
+    }
+  }
 });
 ```
 
@@ -1513,9 +1542,9 @@ config({
       state: `state template`,
       pie: `pie template`,
       relationship: `relationship template`,
-      journey: `journey template`,
-    },
-  },
+      journey: `journey template`
+    }
+  }
 });
 ```
 
@@ -1527,8 +1556,8 @@ import { config } from 'md-editor-rt';
 config({
   editorConfig: {
     // delay rendering time(ms)
-    renderDelay: 0,
-  },
+    renderDelay: 0
+  }
 });
 ```
 
@@ -1542,8 +1571,8 @@ import { config } from 'md-editor-rt';
 config({
   editorConfig: {
     // for modal component
-    zIndex: 2000,
-  },
+    zIndex: 2000
+  }
 });
 ```
 
@@ -1557,7 +1586,7 @@ Config some dependency libraries, like highlight..
 import { config } from 'md-editor-rt';
 
 config({
-  editorExtensions: { highlight: { js: 'https://xxx.cc' } },
+  editorExtensions: { highlight: { js: 'https://xxx.cc' } }
 });
 ```
 
@@ -1617,20 +1646,20 @@ config({
   editorExtensionsAttrs: {
     highlight: {
       js: {
-        className: 'hglh-js',
+        className: 'hglh-js'
       },
       css: {
         atom: {
           light: {
-            className: 'atom-light-css',
+            className: 'atom-light-css'
           },
           dark: {
-            className: 'atom-dark-css',
-          },
-        },
-      },
-    },
-  },
+            className: 'atom-dark-css'
+          }
+        }
+      }
+    }
+  }
 });
 ```
 
@@ -1640,7 +1669,7 @@ Example of using built-in basic configuration:
 import { config, editorExtensionsAttrs } from 'md-editor-rt';
 
 config({
-  editorExtensionsAttrs,
+  editorExtensionsAttrs
 });
 ```
 
@@ -1697,32 +1726,32 @@ Shortcut keys are only available when the textarea has received focus!
 
 !!!
 
-| key                    | function                                 | description                                                                                       |
-| ---------------------- | ---------------------------------------- | ------------------------------------------------------------------------------------------------- |
-| TAB                    | insert space                             | Insert space, the length eq `tabWidth`, default: 2, support multiline                             |
-| SHIFT + TAB            | delete space, setting is the same as Tab |                                                                                                   |
-| CTRL + C               | copy                                     | When selected, copy the selected content. When not selected, copy the content of the current line |
-| CTRL + X               | shear                                    | When selected, cut the selected content. When not selected, cut the current line                  |
-| CTRL + D               | delete                                   | When selected, delete the selected content. When not selected, delete the current line            |
-| CTRL + S               | save                                     | Trigger `onSave` event                                                                            |
-| CTRL + B               | bold text                                | `**bold**`                                                                                        |
-| CTRL + U               | underline                                | `<u>underline</u>`                                                                                |
-| CTRL + I               | italic                                   | `*italic*`                                                                                        |
-| CTRL + 1-6             | h1-h6                                    | `# title`                                                                                         |
-| CTRL + ↑               | superscript                              | `<sup>superscript</sup>`                                                                          |
-| CTRL + ↓               | subscript                                | `<sub>subscript</sub>`                                                                            |
-| CTRL + O               | ordered list                             | `1. ordered list`                                                                                 |
-| CTRL + L               | link                                     | `[link](https://github.com/imzbf/md-editor-rt)`                                                   |
-| CTRL + Z               | withdraw                                 | Withdraw history in editor, not the function of system                                            |
-| CTRL + F               | find and replace                         |                                                                                                   |
-| CTRL + SHIFT + S       | line-through                             | `~line-through~`                                                                                  |
-| CTRL + SHIFT + U       | unordered list                           | `- unordered list`                                                                                |
-| CTRL + SHIFT + C       | code block                               |                                                                                                   |
-| CTRL + SHIFT + I       | picture                                  | `![picture](https://github.com/imzbf)`                                                            |
-| CTRL + SHIFT + Z       | forward                                  | Forward history in editor, not the function of system                                             |
-| CTRL + SHIFT + F       | Beautify                                 |                                                                                                   |
-| CTRL + ALT + C         | code row                                 |                                                                                                   |
-| CTRL + SHIFT + ALT + T | table                                    | `\|table\|`                                                                                       |
+| key | function | description |
+| --- | --- | --- |
+| TAB | insert space | Insert space, the length eq `tabWidth`, default: 2, support multiline |
+| SHIFT + TAB | delete space, setting is the same as Tab |  |
+| CTRL + C | copy | When selected, copy the selected content. When not selected, copy the content of the current line |
+| CTRL + X | shear | When selected, cut the selected content. When not selected, cut the current line |
+| CTRL + D | delete | When selected, delete the selected content. When not selected, delete the current line |
+| CTRL + S | save | Trigger `onSave` event |
+| CTRL + B | bold text | `**bold**` |
+| CTRL + U | underline | `<u>underline</u>` |
+| CTRL + I | italic | `*italic*` |
+| CTRL + 1-6 | h1-h6 | `# title` |
+| CTRL + ↑ | superscript | `<sup>superscript</sup>` |
+| CTRL + ↓ | subscript | `<sub>subscript</sub>` |
+| CTRL + O | ordered list | `1. ordered list` |
+| CTRL + L | link | `[link](https://github.com/imzbf/md-editor-rt)` |
+| CTRL + Z | withdraw | Withdraw history in editor, not the function of system |
+| CTRL + F | find and replace |  |
+| CTRL + SHIFT + S | line-through | `~line-through~` |
+| CTRL + SHIFT + U | unordered list | `- unordered list` |
+| CTRL + SHIFT + C | code block |  |
+| CTRL + SHIFT + I | picture | `![picture](https://github.com/imzbf)` |
+| CTRL + SHIFT + Z | forward | Forward history in editor, not the function of system |
+| CTRL + SHIFT + F | Beautify |  |
+| CTRL + ALT + C | code row |  |
+| CTRL + SHIFT + ALT + T | table | `\|table\|` |
 
 ## 🪤 Internal components
 
@@ -1780,13 +1809,11 @@ const MyEditor2 = () => {
 ### 🐣 NormalToolbar
 
 - **props**
-
   - **title**: `string`, optional, title of toolbar.
   - **children**: `ReactNode`, optional, it is usually an icon, which is displayed on the toolbar.
   - ~~**trigger**~~: `ReactNode`, optional, deprecated, as above.
 
 - **events**
-
   - **onClick**: `(e: MouseEvent) => void`, required.
 
 usage:
@@ -1812,7 +1839,7 @@ const MyToolbar = ({ insert = () => {} }) => {
         targetValue: `==${selectedText}==`,
         select: true,
         deviationStart: 0,
-        deviationEnd: 0,
+        deviationEnd: 0
       };
     });
   }, [insert]);
@@ -1843,7 +1870,6 @@ export default () => {
 ### 🐼 DropdownToolbar
 
 - **props**
-
   - **title**: `string`, optional, title of toolbar.
   - **visible**: `boolean`, required.
   - **children**: `ReactNode`, optional, it is usually an icon, which is displayed on the toolbar.
@@ -1851,7 +1877,6 @@ export default () => {
   - **overlay**: `ReactNode`, required, content of dropdown box.
 
 - **events**
-
   - **onChange**: `(visible: boolean) => void`, required.
 
 usage:
@@ -1879,7 +1904,7 @@ const MyToolbar = ({ insert = () => {} }) => {
         targetValue: `==${selectedText}==`,
         select: true,
         deviationStart: 0,
-        deviationEnd: 0,
+        deviationEnd: 0
       };
     });
   }, [insert]);
@@ -1920,7 +1945,6 @@ export default () => {
 ### 🦉 ModalToolbar
 
 - **props**
-
   - **title**: `string`, optional, title of toolbar.
   - **modalTitle**: `ReactNode`, optional, title of the Modal.
   - **visible**: `boolean`, required, visibility of Modal.
@@ -1935,7 +1959,6 @@ export default () => {
   - **showMask**: `boolean`, `^4.16.8`, optional, whether to display the mask layer, default `true`.
 
 - **events**
-
   - **onClick**: `() => void`, required.
   - **onClose**: `() => void`, required, close event.
   - **onAdjust**: `(val: boolean) => void`, fullscreen button click event.
@@ -1976,7 +1999,7 @@ const MyToolbar = ({ insert = () => {} }) => {
         targetValue: `==${selectedText}==`,
         select: true,
         deviationStart: 0,
-        deviationEnd: 0,
+        deviationEnd: 0
       };
     });
   }, [insert]);
@@ -2003,7 +2026,7 @@ const MyToolbar = ({ insert = () => {} }) => {
         style={{
           height: '100%',
           padding: '20px',
-          overflow: 'auto',
+          overflow: 'auto'
         }}
       >
         <button onClick={insertHandler}>click me</button>
@@ -2028,7 +2051,6 @@ export default () => {
 ### 🐻 MdCatalog
 
 - **props**
-
   - **editorId**: `string`, required, editor's `id`, used to register listening events.
   - **className**: `string`, optional.
   - **mdHeadingId**: `mdHeadingId`, optional, same as editor.
@@ -2039,7 +2061,6 @@ export default () => {
   - **catalogMaxDepth**: `number`, `^5.5.0`, optional, controls the maximum depth of the catalog to be displayed.
 
 - **events**
-
   - **onClick**: `(e: MouseEvent, t: TocItem) => void`, optional.
   - **onActive**: `(heading: HeadList | undefined) => void`, optional, heading was highlighted.
 
@@ -2054,7 +2075,7 @@ const editorId = 'my-editor';
 export default () => {
   const [state] = useState({
     text: '# heading',
-    scrollElement: document.documentElement,
+    scrollElement: document.documentElement
   });
 
   return (
@@ -2074,7 +2095,6 @@ export default () => {
 It is usually used in conjunction with `DropdownToolbar`.
 
 - **props**
-
   - **title**: `ReactNode`, optional, title of Modal.
   - **visible**: `boolean`, required, visibility of Modal.
   - **width**: `string`, optional, width of Modal, default `auto`.
@@ -2087,7 +2107,6 @@ It is usually used in conjunction with `DropdownToolbar`.
   - **showMask**: `boolean`, `^4.16.8`, optional, whether to display the mask layer, default `true`.
 
 - **events**
-
   - **onClose**: `() => void`, required, close event.
   - **onAdjust**: `(val: boolean) => void`, fullscreen button click event.
 
@@ -2159,11 +2178,9 @@ export default () => {
 Footer toolbar components
 
 - **events**
-
   - **onClick**: `(e: MouseEvent) => void`, optional, toolbar was clicked.
 
 - **slots**
-
   - **children**: `ReactNode`, required, content.
 
 ```jsx

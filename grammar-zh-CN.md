@@ -330,3 +330,59 @@ failure、danger、bug、example、quote、hint、caution、error、attention
 
 !!!
 ```
+
+---
+
+## 📊 Echarts
+
+\>= v6.0.0
+
+```echarts
+{
+  tooltip: {
+    trigger: 'axis'
+  },
+  xAxis: {
+    type: 'category',
+    data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+  },
+  yAxis: {
+    type: 'value'
+  },
+  series: [
+    {
+      data: [150, 230, 224, 218, 135, 147, 260],
+      type: 'line'
+    }
+  ]
+}
+```
+
+````markdown
+```echarts
+{
+  tooltip: {
+    trigger: 'axis'
+  },
+  xAxis: {
+    type: 'category',
+    data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+  },
+  yAxis: {
+    type: 'value'
+  },
+  series: [
+    {
+      data: [150, 230, 224, 218, 135, 147, 260],
+      type: 'line'
+    }
+  ]
+}
+```
+````
+
+!!! warning
+
+请注意，该模块不会处理危险的代码，你需要自行保证数据的安全！
+
+!!!

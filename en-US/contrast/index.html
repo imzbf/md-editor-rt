@@ -1,62 +1,198 @@
-<!DOCTYPE html><html lang="en-US"><head><meta charSet="utf-8" data-next-head=""/><meta name="viewport" content="width=device-width, initial-scale=1" data-next-head=""/><title data-next-head="">Version Contrast - MdEditorRT Documentation</title><meta name="keywords" content="MD Editor, md-editor-rt, Markdown Editor, React Markdown, React TSX, Markdown Component, Markdown preview, React Editor" data-next-head=""/><meta name="description" content="md-editor-rt is a Markdown editor component developed based on React and TSX, supporting real-time preview and rich Markdown features. Review the detailed development documentation and usage examples." data-next-head=""/><link rel="preload" href="/md-editor-rt/_next/static/css/abae944807dc1c14.css" as="style"/><link rel="stylesheet" href="/md-editor-rt/_next/static/css/abae944807dc1c14.css" data-n-g=""/><noscript data-n-css=""></noscript><script defer="" noModule="" src="/md-editor-rt/_next/static/chunks/polyfills-42372ed130431b0a.js"></script><script src="/md-editor-rt/_next/static/chunks/webpack-19bc0270854db962.js" defer=""></script><script src="/md-editor-rt/_next/static/chunks/framework-0eb9657b8e2df9f9.js" defer=""></script><script src="/md-editor-rt/_next/static/chunks/main-79056af34a0d8a54.js" defer=""></script><script src="/md-editor-rt/_next/static/chunks/pages/_app-b0940a1d3404b21c.js" defer=""></script><script src="/md-editor-rt/_next/static/chunks/8570-b325be21cee81b04.js" defer=""></script><script src="/md-editor-rt/_next/static/chunks/pages/en-US/contrast-b54e2f8a42f8debe.js" defer=""></script><script src="/md-editor-rt/_next/static/07RRKZn0cDLkOnO9RXKBD/_buildManifest.js" defer=""></script><script src="/md-editor-rt/_next/static/07RRKZn0cDLkOnO9RXKBD/_ssgManifest.js" defer=""></script></head><body><div id="__next"><header class="page-header"><section class="container"><h1 class="project-name">md-editor-rt<sup>@<!-- -->5.8.4</sup></h1><p class="project-desc">Markdown Editor for React, developed in jsx and typescript, support different themes、beautify content by prettier.</p><div class="pc"><ul class="nav-list"><li class="nav-item"><a href="/md-editor-rt/en-US"><svg class="icon" aria-hidden="true"><use xlink:href="#med-icon-homepage"></use></svg>Home</a></li><li class="nav-item"><a href="/md-editor-rt/en-US/api"><svg class="icon" aria-hidden="true"><use xlink:href="#med-icon-api"></use></svg>API</a></li><li class="nav-item"><a href="/md-editor-rt/en-US/demo"><svg class="icon" aria-hidden="true"><use xlink:href="#med-icon-example"></use></svg>Demo</a></li><li class="nav-item"><a target="_blank" href="https://github.com/imzbf/md-editor-rt"><svg class="icon" aria-hidden="true"><use xlink:href="#med-icon-github"></use></svg>Github</a></li><li class="nav-item"><a href="/md-editor-rt/en-US/syntax"><svg class="icon" aria-hidden="true"><use xlink:href="#med-icon-syntax"></use></svg>Syntax</a></li><li class="nav-item"><a href="/md-editor-rt/en-US/contrast"><svg class="icon" aria-hidden="true"><use xlink:href="#med-icon-question"></use></svg>Contrast</a></li><li class="nav-item"><a href="/md-editor-rt/en-US/about"><svg class="icon" aria-hidden="true"><use xlink:href="#med-icon-about"></use></svg>About</a></li><li class="nav-item"><a style="display:none" href="/md-editor-rt/md-editor-rt/zh-CN">中文</a><svg class="icon" aria-hidden="true"><use xlink:href="#med-icon-cn"></use></svg>中文</li></ul><p class="header-actions"><button class="btn btn-header">Default Theme</button><button class="btn btn-header">Dark Theme</button><button class="btn btn-header">Preview Style</button><button class="btn btn-header">Code Style</button></p></div><div class="mb"><svg class="icon m-menu-trigger" aria-hidden="true"><use xlink:href="#med-icon-drawer"></use></svg></div></section></header><div class="container"><div class="doc"><div class="content"><div id="md-contrast-en" class="md-editor   md-editor-previewOnly"><div id="md-contrast-en-preview-wrapper" class="md-editor-preview-wrapper"><div id="md-contrast-en-preview" class="md-editor-preview default-theme md-editor-scrn"><p data-line="0">This is the content that is incompatible only.</p>
-<h2 id="🧙🏼 Upgrade from 4.x to 5.x" tabindex="-1" data-line="2"><a class="header-anchor" href="#🧙🏼 Upgrade from 4.x to 5.x">🧙🏼 Upgrade from 4.x to 5.x</a></h2>
-<div data-line="4" class="md-editor-admonition md-editor-admonition-warning">
-<p data-line="6">Version 18.0.0 or higher of <code>react</code> must be used now!!!</p>
-</div>
+<!DOCTYPE html><html lang="en-US" data-scroll-behavior="smooth"><head><meta charSet="utf-8" data-next-head=""/><meta name="viewport" content="width=device-width, initial-scale=1" data-next-head=""/><title data-next-head="">Version Contrast - MdEditorRT Documentation</title><meta name="keywords" content="MD Editor, md-editor-rt, Markdown Editor, React Markdown, React TSX, Markdown Component, Markdown preview, React Editor" data-next-head=""/><meta name="description" content="md-editor-rt is a Markdown editor component developed based on React and TSX, supporting real-time preview and rich Markdown features. Review the detailed development documentation and usage examples." data-next-head=""/><link rel="preload" href="/md-editor-rt/_next/static/css/591feeecc669fb12.css" as="style"/><link rel="stylesheet" href="/md-editor-rt/_next/static/css/591feeecc669fb12.css" data-n-g=""/><noscript data-n-css=""></noscript><script defer="" noModule="" src="/md-editor-rt/_next/static/chunks/polyfills-42372ed130431b0a.js"></script><script src="/md-editor-rt/_next/static/chunks/webpack-168d9e816187d66a.js" defer=""></script><script src="/md-editor-rt/_next/static/chunks/framework-4a99af1472046e21.js" defer=""></script><script src="/md-editor-rt/_next/static/chunks/main-53cc964ab46430d5.js" defer=""></script><script src="/md-editor-rt/_next/static/chunks/pages/_app-7772e38970dd2a56.js" defer=""></script><script src="/md-editor-rt/_next/static/chunks/6791-1aa0e1511d662562.js" defer=""></script><script src="/md-editor-rt/_next/static/chunks/pages/en-US/contrast-942c21f03d13aba5.js" defer=""></script><script src="/md-editor-rt/_next/static/wW6xp8WiIzc89MlG7ejjQ/_buildManifest.js" defer=""></script><script src="/md-editor-rt/_next/static/wW6xp8WiIzc89MlG7ejjQ/_ssgManifest.js" defer=""></script></head><body><div id="__next"><header class="page-header"><section class="container"><h1 class="project-name">md-editor-rt<sup>@<!-- -->6.0.0</sup></h1><p class="project-desc">Markdown Editor for React, developed in jsx and typescript, support different themes、beautify content by prettier.</p><div class="pc"><ul class="nav-list"><li class="nav-item"><a href="/md-editor-rt/en-US"><svg class="icon" aria-hidden="true"><use xlink:href="#med-icon-homepage"></use></svg>Home</a></li><li class="nav-item"><a href="/md-editor-rt/en-US/api"><svg class="icon" aria-hidden="true"><use xlink:href="#med-icon-api"></use></svg>API</a></li><li class="nav-item"><a href="/md-editor-rt/en-US/demo"><svg class="icon" aria-hidden="true"><use xlink:href="#med-icon-example"></use></svg>Demo</a></li><li class="nav-item"><a target="_blank" href="https://github.com/imzbf/md-editor-rt"><svg class="icon" aria-hidden="true"><use xlink:href="#med-icon-github"></use></svg>Github</a></li><li class="nav-item"><a href="/md-editor-rt/en-US/syntax"><svg class="icon" aria-hidden="true"><use xlink:href="#med-icon-syntax"></use></svg>Syntax</a></li><li class="nav-item"><a href="/md-editor-rt/en-US/contrast"><svg class="icon" aria-hidden="true"><use xlink:href="#med-icon-question"></use></svg>Contrast</a></li><li class="nav-item"><a href="/md-editor-rt/en-US/about"><svg class="icon" aria-hidden="true"><use xlink:href="#med-icon-about"></use></svg>About</a></li><li class="nav-item"><a style="display:none" href="/md-editor-rt/md-editor-rt/zh-CN">中文</a><svg class="icon" aria-hidden="true"><use xlink:href="#med-icon-cn"></use></svg>中文</li></ul><p class="header-actions"><button class="btn btn-header">Default Theme</button><button class="btn btn-header">Dark Theme</button><button class="btn btn-header">Preview Style</button><button class="btn btn-header">Code Style</button></p></div><div class="mb"><svg class="icon m-menu-trigger" aria-hidden="true"><use xlink:href="#med-icon-drawer"></use></svg></div></section></header><div class="container"><div class="doc"><div class="content"><div id="md-contrast-en" class="md-editor md-editor-previewOnly"><div id="md-contrast-en-preview" class="md-editor-preview default-theme md-editor-scrn"><p data-line="0">This is the content that is incompatible only.</p>
+<h2 id="🧙🏼 Upgrade from 5.x to 6.x" tabindex="-1" data-line="2"><a class="header-anchor" href="#🧙🏼 Upgrade from 5.x to 6.x">🧙🏼 Upgrade from 5.x to 6.x</a></h2>
+<h3 id="🐈 UMD" tabindex="-1" data-line="4"><a class="header-anchor" href="#🐈 UMD">🐈 UMD</a></h3>
+<p data-line="6">To keep pace with the evolution of the frontend ecosystem, some third-party dependencies have fully transitioned to ESM format starting from version 6.x. we will no longer provide UMD format support.</p>
+<p data-line="8">Here is the updated reference for global usage: <a href="https://imzbf.github.io/md-editor-rt/en-US/demo#%F0%9F%A4%93%20CDN" target="_blank">🤓 CDN</a></p>
 <h3 id="🔖 Props" tabindex="-1" data-line="10"><a class="header-anchor" href="#🔖 Props">🔖 Props</a></h3>
-<table data-line="12">
-<thead data-line="12">
-<tr data-line="12">
+<h4 id="🧷 insertLinkDirect" tabindex="-1" data-line="12"><a class="header-anchor" href="#🧷 insertLinkDirect">🧷 insertLinkDirect</a></h4>
+<p data-line="14">Removed, now the input box no longer pops up when clicking on the add link</p>
+<h4 id="🎱 mdHeadingId" tabindex="-1" data-line="16"><a class="header-anchor" href="#🎱 mdHeadingId">🎱 mdHeadingId</a></h4>
+<p data-line="18">Type changed</p>
+<p data-line="20">Now</p>
+
+        <details  data-line="22" class="md-editor-code" open="">
+          <summary class="md-editor-code-head">
+            <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
+            <div class="md-editor-code-action">
+              <span class="md-editor-code-lang">ts</span>
+              <span class="md-editor-copy-button" data-tips="Copy">Copy</span>
+              
+              <span class="md-editor-collapse-tips"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-chevron-left md-editor-icon"><circle cx="12" cy="12" r="10"/><path d="m14 16-4-4 4-4"/></svg></span>
+            </div>
+          </summary>
+          <pre><code class="language-ts" language=ts><span class="md-editor-code-block">type MdHeadingId = (options: {
+  text: string;
+  level: number;
+  index: number;
+  currentToken?: Token;
+  nextToken?: Token;
+}) =&gt; string;</span><span rn-wrapper aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+        </details>
+      <p data-line="32">Past</p>
+
+        <details  data-line="34" class="md-editor-code" open="">
+          <summary class="md-editor-code-head">
+            <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
+            <div class="md-editor-code-action">
+              <span class="md-editor-code-lang">ts</span>
+              <span class="md-editor-copy-button" data-tips="Copy">Copy</span>
+              
+              <span class="md-editor-collapse-tips"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-chevron-left md-editor-icon"><circle cx="12" cy="12" r="10"/><path d="m14 16-4-4 4-4"/></svg></span>
+            </div>
+          </summary>
+          <pre><code class="language-ts" language=ts><span class="md-editor-code-block">type MdHeadingId = (text: string, level: number, index: number) =&gt; string;</span><span rn-wrapper aria-hidden="true"><span></span></span></code></pre>
+
+        </details>
+      <h3 id="💴 Config" tabindex="-1" data-line="38"><a class="header-anchor" href="#💴 Config">💴 Config</a></h3>
+<p data-line="40">New:</p>
+
+        <details  data-line="42" class="md-editor-code" open="">
+          <summary class="md-editor-code-head">
+            <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
+            <div class="md-editor-code-action">
+              <span class="md-editor-code-lang">ts</span>
+              <span class="md-editor-copy-button" data-tips="Copy">Copy</span>
+              
+              <span class="md-editor-collapse-tips"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-chevron-left md-editor-icon"><circle cx="12" cy="12" r="10"/><path d="m14 16-4-4 4-4"/></svg></span>
+            </div>
+          </summary>
+          <pre><code class="language-ts" language=ts><span class="md-editor-code-block">import { config, type CodeMirrorExtension, type Themes } from 'md-editor-rt';
+import { type KeyBinding } from '@codemirror/view';
+
+config({
+  codeMirrorExtensions(
+    extensions: Array&lt;CodeMirrorExtension&gt;,
+    options: {
+      editorId: string;
+      theme: Themes;
+      keyBindings: Array&lt;KeyBinding&gt;;
+    }
+  ): Array&lt;CodeMirrorExtension&gt; {
+    return extensions;
+  }
+});</span><span rn-wrapper aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+        </details>
+      
+        <details  data-line="60" class="md-editor-code">
+          <summary class="md-editor-code-head">
+            <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
+            <div class="md-editor-code-action">
+              <span class="md-editor-code-lang">ts</span>
+              <span class="md-editor-copy-button" data-tips="Copy">Copy</span>
+              
+              <span class="md-editor-collapse-tips"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-chevron-left md-editor-icon"><circle cx="12" cy="12" r="10"/><path d="m14 16-4-4 4-4"/></svg></span>
+            </div>
+          </summary>
+          <pre><code class="language-ts" language=ts><span class="md-editor-code-block">interface CodeMirrorExtension {
+  /**
+   * Only used to provide developers with a basis for distinguishing between different extensions.
+   */
+  type: string;
+  /**
+   * Extensions of CodeMirror
+   */
+  extension: Extension | ((options: any) =&gt; Extension);
+  /**
+   * A Compartment wrapping the extension, which only exists for certain extensions,
+   * provides the capability to update the extension.
+   */
+  compartment?: Compartment;
+  options?: any;
+}</span><span rn-wrapper aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+        </details>
+      <div data-line="79" class="md-editor-admonition md-editor-admonition-note">
+<p data-line="81">Now you can accurately know which extension this is from extensions[i].type.</p>
+</div>
+<p data-line="85">Past:</p>
+
+        <details  data-line="87" class="md-editor-code" open="">
+          <summary class="md-editor-code-head">
+            <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
+            <div class="md-editor-code-action">
+              <span class="md-editor-code-lang">ts</span>
+              <span class="md-editor-copy-button" data-tips="Copy">Copy</span>
+              
+              <span class="md-editor-collapse-tips"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-chevron-left md-editor-icon"><circle cx="12" cy="12" r="10"/><path d="m14 16-4-4 4-4"/></svg></span>
+            </div>
+          </summary>
+          <pre><code class="language-ts" language=ts><span class="md-editor-code-block">import { config, type CodeMirrorExtension, type Themes } from 'md-editor-rt';
+import { type KeyBinding } from '@codemirror/view';
+
+config({
+  codeMirrorExtensions(
+    theme: Themes,
+    extensions: Array&lt;Extension&gt;,
+    keyBindings: Array&lt;KeyBinding&gt;,
+    options: {
+      editorId: string;
+    }
+  ): Array&lt;Extension&gt; {
+    return extensions;
+  }
+});</span><span rn-wrapper aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+        </details>
+      <h2 id="🧙🏼 Upgrade from 4.x to 5.x" tabindex="-1" data-line="105"><a class="header-anchor" href="#🧙🏼 Upgrade from 4.x to 5.x">🧙🏼 Upgrade from 4.x to 5.x</a></h2>
+<div data-line="107" class="md-editor-admonition md-editor-admonition-warning">
+<p data-line="109">Version 18.0.0 or higher of <code>react</code> must be used now!!!</p>
+</div>
+<h3 id="🔖 Props" tabindex="-1" data-line="113"><a class="header-anchor" href="#🔖 Props-1">🔖 Props</a></h3>
+<table data-line="115">
+<thead data-line="115">
+<tr data-line="115">
 <th>name</th>
 <th>description</th>
 </tr>
 </thead>
-<tbody data-line="14">
-<tr data-line="14">
+<tbody data-line="117">
+<tr data-line="117">
 <td>editorId</td>
 <td>Marked as deprecated, but still usable; it is recommended to use id instead. Note: Only the <code>MdEditor</code> and <code>MdPreview</code> components have been adjusted; other components still use <code>editorId</code> to identify that this is the editor's ID, not their own.</td>
 </tr>
-<tr data-line="15">
+<tr data-line="118">
 <td>inputBoxWitdh</td>
 <td>Spelling error, corrected to: inputBoxWidth.</td>
 </tr>
-<tr data-line="16">
+<tr data-line="119">
 <td>noIconfont</td>
 <td>Removed, and now use the open-source icon library <a href="https://lucide.dev/icons/" target="_blank">lucide</a> as a replacement.</td>
 </tr>
-<tr data-line="17">
+<tr data-line="120">
 <td>customIcon</td>
 <td>Still supports custom icons, but some icon keywords have been updated. Please check <a href="https://imzbf.github.io/md-editor-rt/en-US/api#%F0%9F%98%AC%20customIcon" target="_blank">CustomIcon</a>.</td>
 </tr>
 </tbody>
 </table>
-<h3 id="Events" tabindex="-1" data-line="19"><a class="header-anchor" href="#Events">Events</a></h3>
-<table data-line="21">
-<thead data-line="21">
-<tr data-line="21">
+<h3 id="Events" tabindex="-1" data-line="122"><a class="header-anchor" href="#Events">Events</a></h3>
+<table data-line="124">
+<thead data-line="124">
+<tr data-line="124">
 <th>name</th>
 <th>description</th>
 </tr>
 </thead>
-<tbody data-line="23">
-<tr data-line="23">
+<tbody data-line="126">
+<tr data-line="126">
 <td>onInputBoxWitdhChange</td>
 <td>Spelling error, corrected to: onInputBoxWidthChange</td>
 </tr>
 </tbody>
 </table>
-<h3 id="🪤 Internal Components" tabindex="-1" data-line="25"><a class="header-anchor" href="#🪤 Internal Components">🪤 Internal Components</a></h3>
-<ol data-line="27">
-<li data-line="27">Remove the default XSS extension. Now export the extension XSSPlugin. Please add it yourself. <a href="https://imzbf.github.io/md-editor-rt/en-US/demo#%F0%9F%94%92%20Add%20XSS%20extension" target="_blank">Example</a>.</li>
-<li data-line="28">Remove the configuration related to iconfont. Specifically, this includes: <code>iconfontType</code>、<code>editorExtensions.iconfont</code>、<code>editorExtensions.iconfontClass</code>、<code>editorExtensionsAttrs.iconfont</code>、<code>editorExtensionsAttrs.iconfontClass</code>.</li>
+<h3 id="🪤 Internal Components" tabindex="-1" data-line="128"><a class="header-anchor" href="#🪤 Internal Components">🪤 Internal Components</a></h3>
+<ol data-line="130">
+<li data-line="130">Remove the default XSS extension. Now export the extension XSSPlugin. Please add it yourself. <a href="https://imzbf.github.io/md-editor-rt/en-US/demo#%F0%9F%94%92%20Add%20XSS%20extension" target="_blank">Example</a>.</li>
+<li data-line="131">Remove the configuration related to iconfont. Specifically, this includes: <code>iconfontType</code>、<code>editorExtensions.iconfont</code>、<code>editorExtensions.iconfontClass</code>、<code>editorExtensionsAttrs.iconfont</code>、<code>editorExtensionsAttrs.iconfontClass</code>.</li>
 </ol>
-<hr data-line="30">
-<h2 id="🧙🏼 Upgrade from 3.x to 4.x" tabindex="-1" data-line="32"><a class="header-anchor" href="#🧙🏼 Upgrade from 3.x to 4.x">🧙🏼 Upgrade from 3.x to 4.x</a></h2>
-<h3 id="🏄🏼 Usage" tabindex="-1" data-line="34"><a class="header-anchor" href="#🏄🏼 Usage">🏄🏼 Usage</a></h3>
-<p data-line="36">Starting from version 4.0, supports on-demand importing components and no longer exporting default editor.</p>
-<h4 id="🏄🏼‍♂️ CDN" tabindex="-1" data-line="38"><a class="header-anchor" href="#🏄🏼‍♂️ CDN">🏄🏼‍♂️ CDN</a></h4>
+<hr data-line="133">
+<h2 id="🧙🏼 Upgrade from 3.x to 4.x" tabindex="-1" data-line="135"><a class="header-anchor" href="#🧙🏼 Upgrade from 3.x to 4.x">🧙🏼 Upgrade from 3.x to 4.x</a></h2>
+<h3 id="🏄🏼 Usage" tabindex="-1" data-line="137"><a class="header-anchor" href="#🏄🏼 Usage">🏄🏼 Usage</a></h3>
+<p data-line="139">Starting from version 4.0, supports on-demand importing components and no longer exporting default editor.</p>
+<h4 id="🏄🏼‍♂️ CDN" tabindex="-1" data-line="141"><a class="header-anchor" href="#🏄🏼‍♂️ CDN">🏄🏼‍♂️ CDN</a></h4>
 
-        <details  data-line="40" class="md-editor-code" open="">
+        <details  data-line="143" class="md-editor-code" open="">
           <summary class="md-editor-code-head">
             <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
             <div class="md-editor-code-action">
@@ -78,9 +214,9 @@
 &lt;/script&gt;</span><span rn-wrapper aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
         </details>
-      <h4 id="🏄🏼‍♀️ ES Module" tabindex="-1" data-line="53"><a class="header-anchor" href="#🏄🏼‍♀️ ES Module">🏄🏼‍♀️ ES Module</a></h4>
+      <h4 id="🏄🏼‍♀️ ES Module" tabindex="-1" data-line="156"><a class="header-anchor" href="#🏄🏼‍♀️ ES Module">🏄🏼‍♀️ ES Module</a></h4>
 
-        <details  data-line="55" class="md-editor-code" open="">
+        <details  data-line="158" class="md-editor-code" open="">
           <summary class="md-editor-code-head">
             <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
             <div class="md-editor-code-action">
@@ -99,25 +235,25 @@
 import 'md-editor-rt/lib/style.css';</span><span rn-wrapper aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
         </details>
-      <h3 id="🔖 Props" tabindex="-1" data-line="65"><a class="header-anchor" href="#🔖 Props-1">🔖 Props</a></h3>
-<table data-line="67">
-<thead data-line="67">
-<tr data-line="67">
+      <h3 id="🔖 Props" tabindex="-1" data-line="168"><a class="header-anchor" href="#🔖 Props-2">🔖 Props</a></h3>
+<table data-line="170">
+<thead data-line="170">
+<tr data-line="170">
 <th>name</th>
 <th>description</th>
 </tr>
 </thead>
-<tbody data-line="69">
-<tr data-line="69">
+<tbody data-line="172">
+<tr data-line="172">
 <td>previewOnly</td>
 <td>deleted, replace with <code>MdPreview</code></td>
 </tr>
 </tbody>
 </table>
-<h3 id="🪤 Internal Components" tabindex="-1" data-line="71"><a class="header-anchor" href="#🪤 Internal Components-1">🪤 Internal Components</a></h3>
-<p data-line="73">New component <code>MdPreview</code> and replacing the attribute <code>previewOnly</code>.</p>
+<h3 id="🪤 Internal Components" tabindex="-1" data-line="174"><a class="header-anchor" href="#🪤 Internal Components-1">🪤 Internal Components</a></h3>
+<p data-line="176">New component <code>MdPreview</code> and replacing the attribute <code>previewOnly</code>.</p>
 
-        <details  data-line="75" class="md-editor-code" open="">
+        <details  data-line="178" class="md-editor-code" open="">
           <summary class="md-editor-code-head">
             <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
             <div class="md-editor-code-action">
@@ -140,15 +276,15 @@ export default () =&gt; {
 };</span><span rn-wrapper aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
         </details>
-      <hr data-line="89">
-<h2 id="🧙🏻‍♂️ Upgrade from 2.x to 3.x" tabindex="-1" data-line="91"><a class="header-anchor" href="#🧙🏻‍♂️ Upgrade from 2.x to 3.x">🧙🏻‍♂️ Upgrade from 2.x to 3.x</a></h2>
-<p data-line="93">This is the content that 3.x is incompatible with version 2.x only.</p>
-<h3 id="🤹🏼‍♂️ Grammar" tabindex="-1" data-line="95"><a class="header-anchor" href="#🤹🏼‍♂️ Grammar">🤹🏼‍♂️ Grammar</a></h3>
-<ul data-line="97">
-<li data-line="97">
-<p data-line="97">Strikethrough</p>
+      <hr data-line="192">
+<h2 id="🧙🏻‍♂️ Upgrade from 2.x to 3.x" tabindex="-1" data-line="194"><a class="header-anchor" href="#🧙🏻‍♂️ Upgrade from 2.x to 3.x">🧙🏻‍♂️ Upgrade from 2.x to 3.x</a></h2>
+<p data-line="196">This is the content that 3.x is incompatible with version 2.x only.</p>
+<h3 id="🤹🏼‍♂️ Grammar" tabindex="-1" data-line="198"><a class="header-anchor" href="#🤹🏼‍♂️ Grammar">🤹🏼‍♂️ Grammar</a></h3>
+<ul data-line="200">
+<li data-line="200">
+<p data-line="200">Strikethrough</p>
 
-        <details  data-line="99" class="md-editor-code" open="">
+        <details  data-line="202" class="md-editor-code" open="">
           <summary class="md-editor-code-head">
             <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
             <div class="md-editor-code-action">
@@ -164,28 +300,28 @@ export default () =&gt; {
         </details>
       </li>
 </ul>
-<h3 id="🔩 Props" tabindex="-1" data-line="104"><a class="header-anchor" href="#🔩 Props">🔩 Props</a></h3>
-<table data-line="106">
-<thead data-line="106">
-<tr data-line="106">
+<h3 id="🔩 Props" tabindex="-1" data-line="207"><a class="header-anchor" href="#🔩 Props">🔩 Props</a></h3>
+<table data-line="209">
+<thead data-line="209">
+<tr data-line="209">
 <th>name</th>
 <th>description</th>
 </tr>
 </thead>
-<tbody data-line="108">
-<tr data-line="108">
+<tbody data-line="211">
+<tr data-line="211">
 <td>markedHeadingId</td>
 <td>rename to <code>mdHeadingId</code></td>
 </tr>
-<tr data-line="109">
+<tr data-line="212">
 <td>historyLength</td>
 <td>deleted</td>
 </tr>
 </tbody>
 </table>
-<h3 id="🤿 Config" tabindex="-1" data-line="111"><a class="header-anchor" href="#🤿 Config">🤿 Config</a></h3>
+<h3 id="🤿 Config" tabindex="-1" data-line="214"><a class="header-anchor" href="#🤿 Config">🤿 Config</a></h3>
 
-        <details  data-line="113" class="md-editor-code" open="">
+        <details  data-line="216" class="md-editor-code" open="">
           <summary class="md-editor-code-head">
             <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
             <div class="md-editor-code-action">
@@ -204,129 +340,128 @@ export default () =&gt; {
 })</span><span rn-wrapper aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
         </details>
-      <h3 id="🎤 Shortcut Key" tabindex="-1" data-line="123"><a class="header-anchor" href="#🎤 Shortcut Key">🎤 Shortcut Key</a></h3>
-<table data-line="125">
-<thead data-line="125">
-<tr data-line="125">
+      <h3 id="🎤 Shortcut Key" tabindex="-1" data-line="226"><a class="header-anchor" href="#🎤 Shortcut Key">🎤 Shortcut Key</a></h3>
+<table data-line="228">
+<thead data-line="228">
+<tr data-line="228">
 <th>key</th>
 <th>function</th>
 <th>description</th>
 </tr>
 </thead>
-<tbody data-line="127">
-<tr data-line="127">
+<tbody data-line="230">
+<tr data-line="230">
 <td>CTRL + Q</td>
 <td>quote</td>
 <td>deleted</td>
 </tr>
 </tbody>
 </table>
-<h3 id="🪤 Component" tabindex="-1" data-line="129"><a class="header-anchor" href="#🪤 Component">🪤 Component</a></h3>
-<h4 id="🐻 MdCatalog" tabindex="-1" data-line="131"><a class="header-anchor" href="#🐻 MdCatalog">🐻 MdCatalog</a></h4>
-<ul data-line="133">
-<li data-line="133">
-<p data-line="133"><strong>props</strong></p>
-<ul data-line="135">
-<li data-line="135"><strong>markedHeadingId</strong>: deleted, use <code>mdHeadingId</code> instead of it</li>
+<h3 id="🪤 Component" tabindex="-1" data-line="232"><a class="header-anchor" href="#🪤 Component">🪤 Component</a></h3>
+<h4 id="🐻 MdCatalog" tabindex="-1" data-line="234"><a class="header-anchor" href="#🐻 MdCatalog">🐻 MdCatalog</a></h4>
+<ul data-line="236">
+<li data-line="236"><strong>props</strong>
+<ul data-line="237">
+<li data-line="237"><strong>markedHeadingId</strong>: deleted, use <code>mdHeadingId</code> instead of it</li>
 </ul>
 </li>
 </ul>
-<hr data-line="137">
-<h2 id="Upgrade from 1.x to 2.x" tabindex="-1" data-line="139"><a class="header-anchor" href="#Upgrade from 1.x to 2.x">Upgrade from 1.x to 2.x</a></h2>
-<p data-line="141">This is the content that 2.x is incompatible with version 1.x only.</p>
-<h3 id="Props" tabindex="-1" data-line="143"><a class="header-anchor" href="#Props">Props</a></h3>
-<table data-line="145">
-<thead data-line="145">
-<tr data-line="145">
+<hr data-line="239">
+<h2 id="Upgrade from 1.x to 2.x" tabindex="-1" data-line="241"><a class="header-anchor" href="#Upgrade from 1.x to 2.x">Upgrade from 1.x to 2.x</a></h2>
+<p data-line="243">This is the content that 2.x is incompatible with version 1.x only.</p>
+<h3 id="Props" tabindex="-1" data-line="245"><a class="header-anchor" href="#Props">Props</a></h3>
+<table data-line="247">
+<thead data-line="247">
+<tr data-line="247">
 <th>name</th>
 <th>description</th>
 </tr>
 </thead>
-<tbody data-line="147">
-<tr data-line="147">
+<tbody data-line="249">
+<tr data-line="249">
 <td>editorClass</td>
 <td>rename to <code>className</code></td>
 </tr>
-<tr data-line="148">
+<tr data-line="250">
 <td>hljs</td>
 <td>removed, use <code>MdEditor.config</code> to config</td>
 </tr>
-<tr data-line="149">
+<tr data-line="251">
 <td>highlightJs</td>
 <td>the same</td>
 </tr>
-<tr data-line="150">
+<tr data-line="252">
 <td>highlightCss</td>
 <td>the same</td>
 </tr>
-<tr data-line="151">
+<tr data-line="253">
 <td>languageUserDefined</td>
 <td>the same</td>
 </tr>
-<tr data-line="152">
+<tr data-line="254">
 <td>prettier</td>
 <td>rename to <code>noPrettier</code>, default <code>false</code></td>
 </tr>
-<tr data-line="153">
+<tr data-line="255">
 <td>prettierCDN</td>
 <td>removed, use <code>MdEditor.config</code> to config</td>
 </tr>
-<tr data-line="154">
+<tr data-line="256">
 <td>prettierMDCDN</td>
 <td>the same</td>
 </tr>
-<tr data-line="155">
+<tr data-line="257">
 <td>cropperCss</td>
 <td>the same</td>
 </tr>
-<tr data-line="156">
+<tr data-line="258">
 <td>cropperJs</td>
 <td>the same</td>
 </tr>
-<tr data-line="157">
+<tr data-line="259">
 <td>iconfontJs</td>
 <td>the same</td>
 </tr>
-<tr data-line="158">
+<tr data-line="260">
 <td>screenfull</td>
 <td>the same</td>
 </tr>
-<tr data-line="159">
+<tr data-line="261">
 <td>screenfullJs</td>
 <td>the same</td>
 </tr>
-<tr data-line="160">
+<tr data-line="262">
 <td>mermaid</td>
 <td>the same</td>
 </tr>
-<tr data-line="161">
+<tr data-line="263">
 <td>mermaidJs</td>
 <td>the same</td>
 </tr>
-<tr data-line="162">
+<tr data-line="264">
 <td>katex</td>
 <td>the same</td>
 </tr>
-<tr data-line="163">
+<tr data-line="265">
 <td>katexJs</td>
 <td>the same</td>
 </tr>
-<tr data-line="164">
+<tr data-line="266">
 <td>katexCss</td>
 <td>the same</td>
 </tr>
-<tr data-line="165">
+<tr data-line="267">
 <td>extensions</td>
 <td>the same</td>
 </tr>
 </tbody>
 </table>
-<h3 id="Component" tabindex="-1" data-line="167"><a class="header-anchor" href="#Component">Component</a></h3>
-<ul data-line="169">
-<li data-line="169">
-<p data-line="169">Catalog</p>
-<p data-line="171"><code>Editor.Catalog</code> is renamed to <code>Editor.MdCatalog</code>.</p>
-<p data-line="173">For more usage, refer to branch <a href="https://github.com/imzbf/md-editor-rt/tree/docs" target="_blank">docs</a>.</p>
+<h3 id="Component" tabindex="-1" data-line="269"><a class="header-anchor" href="#Component">Component</a></h3>
+<ul data-line="271">
+<li data-line="271">
+<p data-line="271">Catalog</p>
+<p data-line="273"><code>Editor.Catalog</code> is renamed to <code>Editor.MdCatalog</code>.</p>
+<p data-line="275">For more usage, refer to branch <a href="https://github.com/imzbf/md-editor-rt/tree/docs" target="_blank">docs</a>.</p>
 </li>
 </ul>
-</div></div></div></div><div class="catalog"><div class="affix"><div class="md-editor-catalog "></div></div></div></div></div></div><script id="__NEXT_DATA__" type="application/json">{"props":{"pageProps":{}},"page":"/en-US/contrast","query":{},"buildId":"07RRKZn0cDLkOnO9RXKBD","assetPrefix":"/md-editor-rt","nextExport":true,"autoExport":true,"isFallback":false,"scriptLoader":[{"src":"//at.alicdn.com/t/c/font_2818624_gbt6qvt9lob.js","strategy":"afterInteractive"},{"async":true,"src":"https://www.googletagmanager.com/gtag/js?id=G-3R6P1XE0H0","strategy":"afterInteractive"},{"id":"gg","children":"window.dataLayer = window.dataLayer || [];\n                function gtag() {\n                  dataLayer.push(arguments);\n                }\n                gtag('js', new Date());\n                gtag('config', 'G-3R6P1XE0H0');","strategy":"afterInteractive"},{"src":"https://hm.baidu.com/hm.js?1563bc52cb27ffbc7b5b46cdfc327ce0","strategy":"afterInteractive"}]}</script></body></html>
+</div></div></div><div class="catalog"><div class="affix"><div class="md-editor-catalog"></div></div></div></div></div></div><script id="__NEXT_DATA__" type="application/json">{"props":{"pageProps":{}},"page":"/en-US/contrast","query":{},"buildId":"wW6xp8WiIzc89MlG7ejjQ","assetPrefix":"/md-editor-rt","nextExport":true,"autoExport":true,"isFallback":false,"scriptLoader":[{"src":"//at.alicdn.com/t/c/font_2818624_gbt6qvt9lob.js","strategy":"afterInteractive"},{"async":true,"src":"https://www.googletagmanager.com/gtag/js?id=G-3R6P1XE0H0","strategy":"afterInteractive"},{"id":"gg","children":"window.dataLayer = window.dataLayer || [];\n                function gtag() {\n                  dataLayer.push(arguments);\n                }\n                gtag('js', new Date());\n                gtag('config', 'G-3R6P1XE0H0');","strategy":"afterInteractive"},{"src":"https://hm.baidu.com/hm.js?1563bc52cb27ffbc7b5b46cdfc327ce0","strategy":"afterInteractive"}]}</script></body></html>
