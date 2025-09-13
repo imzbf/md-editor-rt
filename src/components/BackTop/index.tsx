@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 const backTop = () => {
   document.documentElement.scroll({
     top: 0,
-    behavior: 'smooth',
+    behavior: 'smooth'
   });
 };
 

@@ -5,10 +5,7 @@ export default function Page() {
   return (
     <>
       <Head>
-        <meta
-          httpEquiv="refresh"
-          content={`0;url=${ROUTE_PREFIX}/en-US/syntax`}
-        />
+        <meta httpEquiv="refresh" content={`0;url=${ROUTE_PREFIX}/en-US/syntax`} />
       </Head>
     </>
   );

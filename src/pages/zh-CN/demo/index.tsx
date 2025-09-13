@@ -4,11 +4,11 @@ import { DESCRIPTION_CN, KEYWORDS_CN, SITE_NAME_CN } from '@/config';
 import IzPreviewContent from '@/layouts/PreviewContent';
 import { replaceTemplate } from '@/utils';
 
-import mdText from '../../../../public/demo-zh-CN.md';
 import pack from '../../../..//package.json';
+import mdText from '../../../../public/demo-zh-CN.md';
 
-const value = replaceTemplate(mdText, {
-  EDITOR_VERSION: pack.dependencies['md-editor-rt'].replace('^', ''),
+const value = replaceTemplate(mdText as string, {
+  EDITOR_VERSION: pack.dependencies['md-editor-rt'].replace('^', '')
 });
 
 export default function Page() {

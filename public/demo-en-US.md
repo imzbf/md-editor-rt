@@ -14,8 +14,7 @@ yarn add md-editor-rt
 
 !!! warning
 
-~~When using server-side rendering, make sure to set `editorId` to a constant value.~~
-Starting from version 5.0, there is no such limitation.
+~~When using server-side rendering, make sure to set `editorId` to a constant value.~~ Starting from version 5.0, there is no such limitation.
 
 !!!
 
@@ -24,21 +23,44 @@ Starting from version 5.0, there is no such limitation.
 Use production version in html directly:
 
 ```html
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <link href="https://unpkg.com/md-editor-rt@${EDITOR_VERSION}/lib/style.css" rel="stylesheet" />
+    <script type="importmap">
+      {
+        "imports": {
+          "react": "https://esm.sh/react",
+          "react-dom": "https://esm.sh/react-dom",
+          "react/jsx-runtime": "https://esm.sh/react/jsx-runtime",
+          "react-dom/client": "https://esm.sh/react-dom/client",
+          "medium-zoom": "https://esm.sh/medium-zoom",
+          "lru-cache": "https://esm.sh/lru-cache",
+          "codemirror": "https://esm.sh/codemirror",
+          "lucide-react": "https://cdn.jsdelivr.net/npm/lucide-react/dist/esm/lucide-react.js",
+          "@vavt/": "https://esm.sh/@vavt/",
+          "@codemirror/": "https://esm.sh/@codemirror/",
+          "@lezer/": "https://esm.sh/@lezer/",
+          "markdown-it": "https://esm.sh/markdown-it",
+          "markdown-it-image-figures": "https://esm.sh/markdown-it-image-figures",
+          "markdown-it-sub": "https://esm.sh/markdown-it-sub",
+          "markdown-it-sup": "https://esm.sh/markdown-it-sup",
+          "md-editor-rt": "https://esm.sh/md-editor-rt@${EDITOR_VERSION}"
+        }
+      }
+    </script>
   </head>
   <body>
     <div id="root"></div>
-    <script src="https://unpkg.com/react@18.2.0/umd/react.production.min.js"></script>
-    <script src="https://unpkg.com/react-dom@18.2.0/umd/react-dom.production.min.js"></script>
-    <script src="https://unpkg.com/md-editor-rt@${EDITOR_VERSION}/lib/umd/index.js"></script>
-    <script>
-      ReactDOM.createRoot(document.getElementById('root')).render(
-        React.createElement(MdEditorRT.MdEditor, {
-          modelValue: 'Hello Editor!!',
-        })
+    <script type="module">
+      import React from 'react';
+      import ReactDOMClient from 'react-dom/client';
+      import { jsx as _jsx } from 'react/jsx-runtime';
+
+      import { MdEditor } from 'md-editor-rt';
+
+      ReactDOMClient.createRoot(document.getElementById('root')).render(
+        _jsx(MdEditor, { value: 'Hello Editor!!', floatingToolbars: ['bold'] })
       );
     </script>
   </body>
@@ -131,7 +153,7 @@ config({
       // We need the run method in CtrlB here
       ...CtrlB,
       key: 'Ctrl-m',
-      mac: 'Cmd-m',
+      mac: 'Cmd-m'
     };
 
     // 4. Add the modified shortcut key to the array
@@ -140,7 +162,7 @@ config({
     newExtensions.push(keymap.of(newMdEditorCommands));
 
     return newExtensions;
-  },
+  }
 });
 ```
 
@@ -160,7 +182,7 @@ config({
 
     // 2. Return extension list
     return newExtensions;
-  },
+  }
 });
 ```
 
@@ -228,7 +250,7 @@ const App = () => {
           targetValue: `==${selectedText}==`,
           select: true,
           deviationStart: 2,
-          deviationEnd: -2,
+          deviationEnd: -2
         };
       });
     });
@@ -312,7 +334,6 @@ export default () => {
 ```
 
 - Custom
-
   1. Write `css` under the `xxx-theme` claa. `xxx` is the name of your theme, for more examples, refer to [markdown-theme](https://github.com/imzbf/markdown-theme).
 
   _xxx.css_
@@ -354,7 +375,6 @@ There are 8 kinds of themes: `atom`, `a11y`, `github`, `gradient`, `kimbie`, `pa
   ```
 
 - Custom
-
   1. Find or Write your favorite theme, then config them:
 
   ```js
@@ -366,21 +386,19 @@ There are 8 kinds of themes: `atom`, `a11y`, `github`, `gradient`, `kimbie`, `pa
         css: {
           xxxxx: {
             light: 'https://unpkg.com/highlight.js@11.2.0/styles/xxxxx-light.css',
-            dark: 'https://unpkg.com/highlight.js@11.2.0/styles/xxxxx-dark.css',
+            dark: 'https://unpkg.com/highlight.js@11.2.0/styles/xxxxx-dark.css'
           },
           yyyyy: {
             light: 'https://unpkg.com/highlight.js@11.2.0/styles/xxxxx-light.css',
-            dark: 'https://unpkg.com/highlight.js@11.2.0/styles/xxxxx-dark.css',
-          },
-        },
-      },
-    },
+            dark: 'https://unpkg.com/highlight.js@11.2.0/styles/xxxxx-dark.css'
+          }
+        }
+      }
+    }
   });
   ```
 
-  If some keys in object `css` are same as Editor's, Editor's whill be replaced.
-
-  2. Set `codeTheme`
+  If some keys in object `css` are same as Editor's, Editor's whill be replaced. 2. Set `codeTheme`
 
   ```jsx
   <MdEditor codeTheme="xxxxx" />
@@ -403,9 +421,9 @@ import screenfull from 'screenfull';
 config({
   editorExtensions: {
     screenfull: {
-      instance: screenfull,
-    },
-  },
+      instance: screenfull
+    }
+  }
 });
 
 export default () => {
@@ -426,9 +444,9 @@ import 'md-editor-rt/lib/style.css';
 config({
   editorExtensions: {
     screenfull: {
-      js: 'https://localhost:8090/screenfull@5.2.0/index.js',
-    },
-  },
+      js: 'https://localhost:8090/screenfull@5.2.0/index.js'
+    }
+  }
 });
 
 export default () => {
@@ -458,8 +476,8 @@ const onUploadImg = async (files, callback) => {
         axios
           .post('/api/img/upload', form, {
             headers: {
-              'Content-Type': 'multipart/form-data',
-            },
+              'Content-Type': 'multipart/form-data'
+            }
           })
           .then((res) => rev(res))
           .catch((error) => rej(error));
@@ -515,7 +533,7 @@ config({
           preview: 'preview',
           htmlPreview: 'html preview',
           catalog: 'catalog',
-          github: 'source code',
+          github: 'source code'
         },
         titleItem: {
           h1: 'Lv1 Heading',
@@ -523,12 +541,12 @@ config({
           h3: 'Lv3 Heading',
           h4: 'Lv4 Heading',
           h5: 'Lv5 Heading',
-          h6: 'Lv6 Heading',
+          h6: 'Lv6 Heading'
         },
         imgTitleItem: {
           link: 'Add Img Link',
           upload: 'Upload Img',
-          clip2upload: 'Clip Upload',
+          clip2upload: 'Clip Upload'
         },
         linkModalTips: {
           linkTitle: 'Add Link',
@@ -537,16 +555,16 @@ config({
           descLabelPlaceHolder: 'Enter a description...',
           urlLabel: 'Link:',
           urlLabelPlaceHolder: 'Enter a link...',
-          buttonOK: 'OK',
+          buttonOK: 'OK'
         },
         clipModalTips: {
           title: 'Crop Image',
-          buttonUpload: 'Upload',
+          buttonUpload: 'Upload'
         },
         copyCode: {
           text: 'Copy',
           successTips: 'Copied!',
-          failTips: 'Copy failed!',
+          failTips: 'Copy failed!'
         },
         mermaid: {
           flow: 'flow',
@@ -556,19 +574,19 @@ config({
           state: 'state',
           pie: 'pie',
           relationship: 'relationship',
-          journey: 'journey',
+          journey: 'journey'
         },
         katex: {
           inline: 'inline',
-          block: 'block',
+          block: 'block'
         },
         footer: {
           markdownTotal: 'Word Count',
-          scrollAuto: 'Scroll Auto',
-        },
-      },
-    },
-  },
+          scrollAuto: 'Scroll Auto'
+        }
+      }
+    }
+  }
 });
 
 export default () => {
@@ -612,7 +630,7 @@ You can install the existing language also: [md-editor-extension](https://github
   export default () => {
     const [state] = useState({
       text: '# heading',
-      scrollElement: document.documentElement,
+      scrollElement: document.documentElement
     });
 
     return (
@@ -695,9 +713,7 @@ Change background color in dark mode:
 yarn add screenfull katex cropperjs@1 mermaid highlight.js prettier
 ```
 
-!!! info
-Currently `cropperjs@2` is being optimised, and there are no plans to switch to version 2.0.
-!!!
+!!! info Currently `cropperjs@2` is being optimised, and there are no plans to switch to version 2.0. !!!
 
 2. Configure
 
@@ -737,24 +753,24 @@ config({
   editorExtensions: {
     prettier: {
       prettierInstance: prettier,
-      parserMarkdownInstance: parserMarkdown,
+      parserMarkdownInstance: parserMarkdown
     },
     highlight: {
-      instance: highlight,
+      instance: highlight
     },
     screenfull: {
-      instance: screenfull,
+      instance: screenfull
     },
     katex: {
-      instance: katex,
+      instance: katex
     },
     cropper: {
-      instance: Cropper,
+      instance: Cropper
     },
     mermaid: {
-      instance: mermaid,
-    },
-  },
+      instance: mermaid
+    }
+  }
 });
 ```
 
@@ -806,10 +822,10 @@ config({
       {
         type: 'xss',
         plugin: XSSPlugin,
-        options: {},
-      },
+        options: {}
+      }
     ];
-  },
+  }
 });
 ```
 
@@ -855,12 +871,12 @@ config({
           // }
           // Option 2: Add on Top of the Default Whitelist. ^4.15.6
           extendedWhiteList: {
-            img: ['onerror'],
-          },
-        },
-      },
+            img: ['onerror']
+          }
+        }
+      }
     ];
-  },
+  }
 });
 ```
 
@@ -896,7 +912,7 @@ import { lineNumbers } from '@codemirror/view';
 config({
   codeMirrorExtensions(_theme, extensions) {
     return [...extensions, lineNumbers(), foldGutter()];
-  },
+  }
 });
 ```
 
@@ -960,15 +976,15 @@ config({
           ...item,
           options: {
             ...item.options,
-            enabled: true,
+            enabled: true
             // If you just want to enable this feature for a certain editor
             // enabled: editorId === 'myId'
-          },
+          }
         };
       }
       return item;
     });
-  },
+  }
 });
 ```
 
@@ -1002,7 +1018,7 @@ const usercolors = [
   { color: '#ee6352', light: '#ee635233' },
   { color: '#9ac2c9', light: '#9ac2c933' },
   { color: '#8acb88', light: '#8acb8833' },
-  { color: '#1be7ff', light: '#1be7ff33' },
+  { color: '#1be7ff', light: '#1be7ff33' }
 ];
 
 export const yjsCompartment = new Compartment();
@@ -1031,7 +1047,7 @@ export const createYjsExtension = (roomId: string) => {
   provider.awareness.setLocalStateField('user', {
     name: 'Anonymous ' + Math.floor(Math.random() * 100),
     color: userColor.color,
-    colorLight: userColor.light,
+    colorLight: userColor.light
   });
 
   currentDoc = ydoc;
@@ -1043,7 +1059,7 @@ export const createYjsExtension = (roomId: string) => {
 config({
   codeMirrorExtensions(_theme, extensions) {
     return [...extensions, yjsCompartment.of([])];
-  },
+  }
 });
 ```
 
@@ -1053,7 +1069,7 @@ If you want to use it in only one editor, try distinguishing using `editorId` (`
 config({
   codeMirrorExtensions(_theme, extensions, _keyBindings, { editorId }) {
     return editorId === 'myId' ? [...extensions, yjsCompartment.of([])] : extensions;
-  },
+  }
 });
 ```
 
@@ -1076,7 +1092,7 @@ const MyEditor = () => {
     if (view) {
       const extension = createYjsExtension(room);
       view.dispatch({
-        effects: yjsCompartment.reconfigure(extension),
+        effects: yjsCompartment.reconfigure(extension)
       });
     }
   }, []);
@@ -1118,10 +1134,10 @@ config({
             ...item,
             options: {
               ...item.options,
-              extraTools: '<span class="extra-code-tools">Additional features</span>',
+              extraTools: '<span class="extra-code-tools">Additional features</span>'
               // or
               // extraTools: ({ lang }) => '<span class="extra-code-tools">Additional features</span>',
-            },
+            }
           };
         }
 
@@ -1130,7 +1146,7 @@ config({
         }
       }
     });
-  },
+  }
 });
 ```
 

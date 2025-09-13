@@ -1,16 +1,15 @@
 'use client';
-import { ReactNode } from 'react';
-import { Provider } from 'react-redux';
-import { config } from 'md-editor-rt';
-import MarkExtension from 'markdown-it-mark';
+import { lineNumbers } from '@codemirror/view';
+import ZH_TW from '@vavt/cm-extension/dist/locale/zh-TW';
 import Anchor from 'markdown-it-anchor';
 import LinkAttr from 'markdown-it-link-attributes';
-import { lineNumbers } from '@codemirror/view';
+import MarkExtension from 'markdown-it-mark';
+import { config } from 'md-editor-rt';
+import { ReactNode } from 'react';
+import { Provider } from 'react-redux';
+import BackTop from '@/components/BackTop';
 import store from '@/store';
 import Header from './Header';
-
-import ZH_TW from '@vavt/cm-extension/dist/locale/zh-TW';
-import BackTop from '@/components/BackTop';
 
 interface AppLayout {
   children: ReactNode;
@@ -25,8 +24,8 @@ config({
             ...item,
             options: {
               ...item.options,
-              enabled: editorId === 'editor-preview',
-            },
+              enabled: editorId === 'editor-preview'
+            }
           };
         }
 
@@ -35,7 +34,7 @@ config({
       {
         type: 'mark',
         plugin: MarkExtension,
-        options: {},
+        options: {}
       },
       {
         type: 'linkAttr',
@@ -45,9 +44,9 @@ config({
             return !href.startsWith('#');
           },
           attrs: {
-            target: '_blank',
-          },
-        },
+            target: '_blank'
+          }
+        }
       },
       {
         type: 'anchor',
@@ -60,22 +59,28 @@ config({
           // permalinkSpace: false,
           slugify(s: string) {
             return s;
-          },
-        },
-      },
+          }
+        }
+      }
     ];
   },
-  codeMirrorExtensions(theme, extensions) {
-    const _exs = [...extensions, lineNumbers()];
+  codeMirrorExtensions(extensions) {
+    const _exs = [
+      ...extensions,
+      {
+        type: 'lineNumbers',
+        extension: lineNumbers()
+      }
+    ];
 
     // _exs[1] = basicSetup;
     return _exs;
   },
   editorConfig: {
     languageUserDefined: {
-      ZH_TW,
-    },
-  },
+      ZH_TW
+    }
+  }
 });
 
 const AppLayout = ({ children }: AppLayout) => {

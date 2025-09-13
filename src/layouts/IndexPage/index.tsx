@@ -1,19 +1,16 @@
-import { useEffect, useState, useRef, useCallback, useMemo } from 'react';
-import { MdEditor, ExposeParam, Footers } from 'md-editor-rt';
+import { message } from '@vavt/message';
 import { Emoji, Mark, ExportPDF } from '@vavt/rt-extension';
 import { isMobile } from '@vavt/util';
-import { message } from '@vavt/message';
-
-import axios from '@/utils/request';
-import { toolbars } from './staticConfig';
+import { MdEditor, ExposeParam, Footers, ToolbarNames } from 'md-editor-rt';
+import Head from 'next/head';
+import { useEffect, useState, useRef, useCallback, useMemo } from 'react';
 
 import TimeNow from '@/components/TimeNow';
-
+import { DESCRIPTION_CN, DESCRIPTION_EN, KEYWORDS_CN, KEYWORDS_EN, SITE_NAME_CN, SITE_NAME_EN } from '@/config';
 import { useLang } from '@/hooks/router';
 import { useAppSelector } from '@/hooks/store';
-import Head from 'next/head';
-
-import { DESCRIPTION_CN, DESCRIPTION_EN, KEYWORDS_CN, KEYWORDS_EN, SITE_NAME_CN, SITE_NAME_EN } from '@/config';
+import axios from '@/utils/request';
+import { toolbars } from './staticConfig';
 
 const editorId = 'editor-preview';
 
@@ -32,7 +29,7 @@ const onProgress = ({ ratio }: { ratio: number }) => {
   } else {
     const { close, update } = message.info(`Progress: ${ratio * 100}%`, {
       zIndex: 999999,
-      duration: 0,
+      duration: 0
     });
 
     updateRatio = update;
@@ -48,7 +45,7 @@ const onSuccess = () => {
   }, 100);
 
   message.success('Export successful.', {
-    zIndex: 999999,
+    zIndex: 999999
   });
 };
 
@@ -65,6 +62,7 @@ const HomePage = ({ mdText, tips }: { mdText: string; tips: string }) => {
   });
 
   const [ufToolbars, setToolbars] = useState(toolbars);
+  const [floatingToolbars] = useState<ToolbarNames[]>(['bold', 'underline']);
   const [inputBoxWidth, setInputBoxWidth] = useState('50%');
 
   const editorRef = useRef<ExposeParam>(null);
@@ -73,7 +71,7 @@ const HomePage = ({ mdText, tips }: { mdText: string; tips: string }) => {
     return {
       SITE_NAME: lang === 'zh-CN' ? `首页 - ${SITE_NAME_CN}` : `HomePage - ${SITE_NAME_EN}`,
       KEYWORDS: lang === 'zh-CN' ? KEYWORDS_CN : KEYWORDS_EN,
-      DESCRIPTION: lang === 'zh-CN' ? DESCRIPTION_CN : DESCRIPTION_EN,
+      DESCRIPTION: lang === 'zh-CN' ? DESCRIPTION_CN : DESCRIPTION_EN
     };
   }, [lang]);
 
@@ -97,7 +95,7 @@ const HomePage = ({ mdText, tips }: { mdText: string; tips: string }) => {
   const onSave = useCallback((v: string, h: Promise<string>) => {
     console.log('v', v);
 
-    h.then((html) => {
+    void h.then((html) => {
       console.log('h', html);
     });
   }, []);
@@ -112,24 +110,23 @@ const HomePage = ({ mdText, tips }: { mdText: string; tips: string }) => {
           axios
             .post('/api/img/upload', form, {
               headers: {
-                'Content-Type': 'multipart/form-data',
-              },
+                'Content-Type': 'multipart/form-data'
+              }
             })
             .then((res: unknown) => rev(res))
-            .catch((error: unknown) => rej(error));
+            .catch((error: Error) => rej(error));
         });
       })
     );
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    callback(res.map((item: any) => item.data.url));
+    callback(res.map((item: any) => item.data.url as string));
   }, []);
 
   const defToolbars = useMemo(() => {
     return [
       <Mark key="mark-extension" />,
       <Emoji key="emoji-extension" />,
-      <ExportPDF key="ExportPDF" modelValue={md} height="700px" onProgress={onProgress} onSuccess={onSuccess} />,
+      <ExportPDF key="ExportPDF" modelValue={md} height="700px" onProgress={onProgress} onSuccess={onSuccess} />
     ];
   }, [md]);
 
@@ -201,12 +198,13 @@ const HomePage = ({ mdText, tips }: { mdText: string; tips: string }) => {
             defToolbars={defToolbars}
             onSave={onSave}
             toolbars={ufToolbars}
+            floatingToolbars={floatingToolbars}
             onChange={setMd}
+            // eslint-disable-next-line @typescript-eslint/no-misused-promises
             onUploadImg={onUploadImg}
             footers={footers}
             defFooters={defFooters}
             catalogLayout="flat"
-            insertLinkDirect
           />
           <br />
           <span className="tips-text">

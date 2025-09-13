@@ -1,7 +1,7 @@
-import { MouseEvent, useCallback, useRef } from 'react';
+import { createSmoothScroll } from '@vavt/util';
 import { MdCatalog } from 'md-editor-rt';
 import type { TocItem } from 'md-editor-rt/lib/types/MdCatalog';
-import { createSmoothScroll } from '@vavt/util';
+import { MouseEvent, useCallback, useRef } from 'react';
 import { useAppSelector } from '@/hooks/store';
 
 interface IzCatalogProp {

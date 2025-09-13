@@ -7,17 +7,14 @@ export default function Document() {
   const lang = useLang();
 
   return (
-    <Html lang={lang}>
+    <Html lang={lang} data-scroll-behavior="smooth">
       <Head />
       <body>
         <Main />
         <NextScript />
         <Script src="//at.alicdn.com/t/c/font_2818624_gbt6qvt9lob.js" />
         {process.env.NODE_ENV === 'production' && (
-          <Script
-            async
-            src="https://www.googletagmanager.com/gtag/js?id=G-3R6P1XE0H0"
-          />
+          <Script async src="https://www.googletagmanager.com/gtag/js?id=G-3R6P1XE0H0" />
         )}
         {process.env.NODE_ENV === 'production' && (
           <Script id="gg">

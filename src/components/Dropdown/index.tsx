@@ -1,9 +1,9 @@
+import { debounce } from '@vavt/util';
 import { cloneElement, CSSProperties, useRef, useState, useEffect, ReactNode, ReactElement } from 'react';
 import { createPortal } from 'react-dom';
-import { debounce } from '@vavt/util';
+import { getOffset, classnames } from '@/utils';
 import Menu from './Menu';
 import MenuItem from './MenuItem';
-import { getOffset, classnames } from '@/utils';
 
 interface IzDropdownProp {
   children: ReactElement;
@@ -26,9 +26,9 @@ const IzDropdown = (props: IzDropdownProp) => {
     visible: false,
     style: {
       top: 0,
-      left: 0,
+      left: 0
     },
-    class: 'dropdown-content animated',
+    class: 'dropdown-content animated'
   });
 
   const [func] = useState(() => {
@@ -36,7 +36,7 @@ const IzDropdown = (props: IzDropdownProp) => {
       setState((_state) => {
         return {
           ..._state,
-          class: classnames(['dropdown-content', visible && 'dropdown-active']),
+          class: classnames(['dropdown-content', visible && 'dropdown-active'])
         };
       });
     };
@@ -49,8 +49,8 @@ const IzDropdown = (props: IzDropdownProp) => {
             'dropdown-content',
             'dropdown-active',
             'animated',
-            visible ? 'dropdown-enter' : 'dropdown-leave',
-          ]),
+            visible ? 'dropdown-enter' : 'dropdown-leave'
+          ])
         };
       });
 
@@ -63,7 +63,7 @@ const IzDropdown = (props: IzDropdownProp) => {
       setState((_state) => {
         return {
           ..._state,
-          visible: visible as boolean,
+          visible: visible as boolean
         };
       });
     });
@@ -71,19 +71,19 @@ const IzDropdown = (props: IzDropdownProp) => {
     return {
       resetClass,
       changeVisibility,
-      setVisible,
+      setVisible
     };
   });
 
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
   const trigger = cloneElement(props.children, {
     ref: triggerRef,
     onMouseEnter() {
-      func.setVisible(true);
+      void func.setVisible(true);
     },
     onMouseLeave() {
-      func.setVisible(false);
-    },
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      void func.setVisible(false);
+    }
   } as any);
 
   useEffect(() => {
@@ -104,8 +104,8 @@ const IzDropdown = (props: IzDropdownProp) => {
             ..._state,
             style: {
               left: offsetValue.left + triggerWidth / 2 - contentWidth / 2 + 'px',
-              top: offsetValue.top + triggerHeight + 'px',
-            },
+              top: offsetValue.top + triggerHeight + 'px'
+            }
           };
         });
 
@@ -128,10 +128,10 @@ const IzDropdown = (props: IzDropdownProp) => {
             style={state.style}
             ref={contentRef}
             onMouseEnter={() => {
-              func.setVisible(true);
+              void func.setVisible(true);
             }}
             onMouseLeave={() => {
-              func.setVisible(false);
+              void func.setVisible(false);
             }}
           >
             {props.content}

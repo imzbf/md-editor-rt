@@ -52,10 +52,10 @@ const Drawer = (props: IzDrawerProp) => {
   }, [visible]);
 
   const trigger = useMemo(() => {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
     return cloneElement(props.children, {
       ref: triggerRef,
-      onClick: changeVisible,
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      onClick: changeVisible
     } as any);
   }, [changeVisible, props.children]);
 

@@ -25,21 +25,44 @@ yarn add md-editor-rt
 通过直接链接生产版本来使用，下面是一个小例子：
 
 ```html
-<!DOCTYPE html>
+<!doctype html>
 <html lang="zh-CN">
   <head>
-    <link href="https://unpkg.com/md-editor-rt@${EDITOR_VERSION}/lib/style.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/md-editor-rt@${EDITOR_VERSION}/lib/style.css" rel="stylesheet" />
+    <script type="importmap">
+      {
+        "imports": {
+          "react": "https://esm.sh/react",
+          "react-dom": "https://esm.sh/react-dom",
+          "react/jsx-runtime": "https://esm.sh/react/jsx-runtime",
+          "react-dom/client": "https://esm.sh/react-dom/client",
+          "medium-zoom": "https://esm.sh/medium-zoom",
+          "lru-cache": "https://esm.sh/lru-cache",
+          "codemirror": "https://esm.sh/codemirror",
+          "lucide-react": "https://cdn.jsdelivr.net/npm/lucide-react/dist/esm/lucide-react.js",
+          "@vavt/": "https://esm.sh/@vavt/",
+          "@codemirror/": "https://esm.sh/@codemirror/",
+          "@lezer/": "https://esm.sh/@lezer/",
+          "markdown-it": "https://esm.sh/markdown-it",
+          "markdown-it-image-figures": "https://esm.sh/markdown-it-image-figures",
+          "markdown-it-sub": "https://esm.sh/markdown-it-sub",
+          "markdown-it-sup": "https://esm.sh/markdown-it-sup",
+          "md-editor-rt": "https://esm.sh/md-editor-rt@${EDITOR_VERSION}"
+        }
+      }
+    </script>
   </head>
   <body>
     <div id="root"></div>
-    <script src="https://unpkg.com/react@18.2.0/umd/react.production.min.js"></script>
-    <script src="https://unpkg.com/react-dom@18.2.0/umd/react-dom.production.min.js"></script>
-    <script src="https://unpkg.com/md-editor-rt@${EDITOR_VERSION}/lib/umd/index.js"></script>
-    <script>
-      ReactDOM.createRoot(document.getElementById('root')).render(
-        React.createElement(MdEditorRT.MdEditor, {
-          modelValue: 'Hello Editor!!',
-        })
+    <script type="module">
+      import React from 'react';
+      import ReactDOMClient from 'react-dom/client';
+      import { jsx as _jsx } from 'react/jsx-runtime';
+
+      import { MdEditor } from 'md-editor-rt';
+
+      ReactDOMClient.createRoot(document.getElementById('root')).render(
+        _jsx(MdEditor, { value: 'Hello Editor!!', floatingToolbars: ['bold'] })
       );
     </script>
   </body>
@@ -131,7 +154,7 @@ config({
       // 这里我们需要CtrlB默认触发执行的run方法，如果是新增快捷键等，就需要自行处理触发逻辑
       ...CtrlB,
       key: 'Ctrl-m',
-      mac: 'Cmd-m',
+      mac: 'Cmd-m'
     };
 
     // 4. 把修改后的快捷键放到待构建扩展的数组中
@@ -140,7 +163,7 @@ config({
     newExtensions.push(keymap.of(newMdEditorCommands));
 
     return newExtensions;
-  },
+  }
 });
 ```
 
@@ -160,7 +183,7 @@ config({
 
     // 2. 返回扩展列表即可
     return newExtensions;
-  },
+  }
 });
 ```
 
@@ -230,7 +253,7 @@ const App = () => {
           targetValue: `==${selectedText}==`,
           select: true,
           deviationStart: 2,
-          deviationEnd: -2,
+          deviationEnd: -2
         };
       });
     });
@@ -314,7 +337,6 @@ export default () => {
 ```
 
 - 自定义
-
   1. 先以`xxx-theme`为类名，定义你的主题`css`，xxx 是主题名称，具体的内容参考[markdown-theme](https://github.com/imzbf/markdown-theme)
 
   _xxx.css_
@@ -356,7 +378,6 @@ export default () => {
   ```
 
 - 自定义
-
   1. 找到你喜欢的代码主题，最好支持暗夜模式
 
   ```js
@@ -368,21 +389,19 @@ export default () => {
         css: {
           xxxxx: {
             light: 'https://unpkg.com/highlight.js@11.2.0/styles/xxxxx-light.css',
-            dark: 'https://unpkg.com/highlight.js@11.2.0/styles/xxxxx-dark.css',
+            dark: 'https://unpkg.com/highlight.js@11.2.0/styles/xxxxx-dark.css'
           },
           yyyyy: {
             light: 'https://unpkg.com/highlight.js@11.2.0/styles/xxxxx-light.css',
-            dark: 'https://unpkg.com/highlight.js@11.2.0/styles/xxxxx-dark.css',
-          },
-        },
-      },
-    },
+            dark: 'https://unpkg.com/highlight.js@11.2.0/styles/xxxxx-dark.css'
+          }
+        }
+      }
+    }
   });
   ```
 
-  你可以通过将`css`的`key`设置为内置名称来覆盖内置的链接。
-
-  2. 设置`codeTheme`
+  你可以通过将`css`的`key`设置为内置名称来覆盖内置的链接。2. 设置`codeTheme`
 
   ```jsx
   <MdEditor codeTheme="xxxxx" />
@@ -406,9 +425,9 @@ import screenfull from 'screenfull';
 config({
   editorExtensions: {
     screenfull: {
-      instance: screenfull,
-    },
-  },
+      instance: screenfull
+    }
+  }
 });
 
 export default () => {
@@ -429,9 +448,9 @@ import 'md-editor-rt/lib/style.css';
 config({
   editorExtensions: {
     screenfull: {
-      js: 'https://localhost:8090/screenfull@5.2.0/index.js',
-    },
-  },
+      js: 'https://localhost:8090/screenfull@5.2.0/index.js'
+    }
+  }
 });
 
 export default () => {
@@ -461,8 +480,8 @@ const onUploadImg = async (files, callback) => {
         axios
           .post('/api/img/upload', form, {
             headers: {
-              'Content-Type': 'multipart/form-data',
-            },
+              'Content-Type': 'multipart/form-data'
+            }
           })
           .then((res) => rev(res))
           .catch((error) => rej(error));
@@ -518,7 +537,7 @@ config({
           preview: '预览',
           htmlPreview: 'html代码预览',
           catalog: '目录',
-          github: '源码地址',
+          github: '源码地址'
         },
         titleItem: {
           h1: '一级标题',
@@ -526,12 +545,12 @@ config({
           h3: '三级标题',
           h4: '四级标题',
           h5: '五级标题',
-          h6: '六级标题',
+          h6: '六级标题'
         },
         imgTitleItem: {
           link: '添加链接',
           upload: '上传图片',
-          clip2upload: '裁剪上传',
+          clip2upload: '裁剪上传'
         },
         linkModalTips: {
           linkTitle: '添加链接',
@@ -540,16 +559,16 @@ config({
           descLabelPlaceHolder: '请输入描述...',
           urlLabel: '链接地址：',
           urlLabelPlaceHolder: '请输入链接...',
-          buttonOK: '确定',
+          buttonOK: '确定'
         },
         clipModalTips: {
           title: '裁剪图片上传',
-          buttonUpload: '上传',
+          buttonUpload: '上传'
         },
         copyCode: {
           text: '复制代码',
           successTips: '已复制！',
-          failTips: '复制失败！',
+          failTips: '复制失败！'
         },
         mermaid: {
           flow: '流程图',
@@ -559,19 +578,19 @@ config({
           state: '状态图',
           pie: '饼图',
           relationship: '关系图',
-          journey: '旅程图',
+          journey: '旅程图'
         },
         katex: {
           inline: '行内公式',
-          block: '块级公式',
+          block: '块级公式'
         },
         footer: {
           markdownTotal: '字数',
-          scrollAuto: '同步滚动',
-        },
-      },
-    },
-  },
+          scrollAuto: '同步滚动'
+        }
+      }
+    }
+  }
 });
 
 export default () => {
@@ -615,7 +634,7 @@ export default () => {
   export default () => {
     const [state] = useState({
       text: '# 标题',
-      scrollElement: document.documentElement,
+      scrollElement: document.documentElement
     });
 
     return (
@@ -702,9 +721,7 @@ export default () => {
 yarn add screenfull katex cropperjs@1 mermaid highlight.js prettier
 ```
 
-!!! info
-目前`cropperjs@2`正在优化中，暂未计划切换到 2.0 版本。
-!!!
+!!! info目前`cropperjs@2`正在优化中，暂未计划切换到 2.0 版本。!!!
 
 2. 配置到编辑器
 
@@ -753,24 +770,24 @@ config({
   editorExtensions: {
     prettier: {
       prettierInstance: prettier,
-      parserMarkdownInstance: parserMarkdown,
+      parserMarkdownInstance: parserMarkdown
     },
     highlight: {
-      instance: highlight,
+      instance: highlight
     },
     screenfull: {
-      instance: screenfull,
+      instance: screenfull
     },
     katex: {
-      instance: katex,
+      instance: katex
     },
     cropper: {
-      instance: Cropper,
+      instance: Cropper
     },
     mermaid: {
-      instance: mermaid,
-    },
-  },
+      instance: mermaid
+    }
+  }
 });
 ```
 
@@ -824,10 +841,10 @@ config({
       {
         type: 'xss',
         plugin: XSSPlugin,
-        options: {},
-      },
+        options: {}
+      }
     ];
-  },
+  }
 });
 ```
 
@@ -873,12 +890,12 @@ config({
           // },
           // 方式二：在默认白名单的基础上新增。^4.15.6
           extendedWhiteList: {
-            img: ['onerror'],
-          },
-        },
-      },
+            img: ['onerror']
+          }
+        }
+      }
     ];
-  },
+  }
 });
 ```
 
@@ -916,7 +933,7 @@ import { lineNumbers } from '@codemirror/view';
 config({
   codeMirrorExtensions(_theme, extensions) {
     return [...extensions, lineNumbers(), foldGutter()];
-  },
+  }
 });
 ```
 
@@ -980,15 +997,15 @@ config({
           ...item,
           options: {
             ...item.options,
-            enabled: true,
+            enabled: true
             // 如果只是想对某个编辑器开启这个功能
             // enabled: editorId === 'myId'
-          },
+          }
         };
       }
       return item;
     });
-  },
+  }
 });
 ```
 
@@ -1022,7 +1039,7 @@ const usercolors = [
   { color: '#ee6352', light: '#ee635233' },
   { color: '#9ac2c9', light: '#9ac2c933' },
   { color: '#8acb88', light: '#8acb8833' },
-  { color: '#1be7ff', light: '#1be7ff33' },
+  { color: '#1be7ff', light: '#1be7ff33' }
 ];
 
 export const yjsCompartment = new Compartment();
@@ -1051,7 +1068,7 @@ export const createYjsExtension = (roomId: string) => {
   provider.awareness.setLocalStateField('user', {
     name: 'Anonymous ' + Math.floor(Math.random() * 100),
     color: userColor.color,
-    colorLight: userColor.light,
+    colorLight: userColor.light
   });
 
   currentDoc = ydoc;
@@ -1063,7 +1080,7 @@ export const createYjsExtension = (roomId: string) => {
 config({
   codeMirrorExtensions(_theme, extensions) {
     return [...extensions, yjsCompartment.of([])];
-  },
+  }
 });
 ```
 
@@ -1073,7 +1090,7 @@ config({
 config({
   codeMirrorExtensions(_theme, extensions, _keyBindings, { editorId }) {
     return editorId === 'myId' ? [...extensions, yjsCompartment.of([])] : extensions;
-  },
+  }
 });
 ```
 
@@ -1096,7 +1113,7 @@ const MyEditor = () => {
     if (view) {
       const extension = createYjsExtension(room);
       view.dispatch({
-        effects: yjsCompartment.reconfigure(extension),
+        effects: yjsCompartment.reconfigure(extension)
       });
     }
   }, []);
@@ -1140,8 +1157,8 @@ config({
               ...item.options,
               extraTools: '<span class="extra-code-tools">额外的功能</span>',
               // 或者
-              extraTools: ({ lang }) => '<span class="extra-code-tools">额外的功能</span>',
-            },
+              extraTools: ({ lang }) => '<span class="extra-code-tools">额外的功能</span>'
+            }
           };
         }
 
@@ -1150,7 +1167,7 @@ config({
         }
       }
     });
-  },
+  }
 });
 ```
 

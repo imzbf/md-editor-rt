@@ -1,10 +1,9 @@
-import React, { useCallback, useMemo } from 'react';
 import Link from 'next/link';
 
-import { useLang } from '@/hooks/router';
-
 import { usePathname, useRouter } from 'next/navigation';
+import React, { useCallback, useMemo } from 'react';
 import { ROUTE_PREFIX } from '@/config';
+import { useLang } from '@/hooks/router';
 
 const Navigation = () => {
   const lang = useLang();
@@ -22,7 +21,7 @@ const Navigation = () => {
           contrast: '对比',
           about: '关于',
           lang: 'English',
-          langIcon: '#med-icon-en',
+          langIcon: '#med-icon-en'
         }
       : {
           home: 'Home',
@@ -33,7 +32,7 @@ const Navigation = () => {
           contrast: 'Contrast',
           about: 'About',
           lang: '中文',
-          langIcon: '#med-icon-cn',
+          langIcon: '#med-icon-cn'
         };
   }, [lang]);
 
@@ -42,12 +41,7 @@ const Navigation = () => {
   }, [lang]);
 
   const changeLang = useCallback(() => {
-    router.replace(
-      pathname.replace(
-        /\/[a-zA-Z-]+/,
-        `/${lang === 'zh-CN' ? 'en-US' : 'zh-CN'}`
-      )
-    );
+    router.replace(pathname.replace(/\/[a-zA-Z-]+/, `/${lang === 'zh-CN' ? 'en-US' : 'zh-CN'}`));
   }, [lang, pathname, router]);
 
   return (
@@ -109,10 +103,7 @@ const Navigation = () => {
         </Link>
       </li>
       <li className="nav-item" onClick={changeLang}>
-        <Link
-          href={`${ROUTE_PREFIX}/${lang === 'en-US' ? 'zh-CN' : 'en-US'}`}
-          style={{ display: 'none' }}
-        >
+        <Link href={`${ROUTE_PREFIX}/${lang === 'en-US' ? 'zh-CN' : 'en-US'}`} style={{ display: 'none' }}>
           {linkNames.lang}
         </Link>
         <svg className="icon" aria-hidden="true">

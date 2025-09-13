@@ -1,6 +1,6 @@
-import { STORAGED_STORE_KEY } from '@/config';
 import { createSlice, configureStore } from '@reduxjs/toolkit';
 import { PreviewThemes } from 'md-editor-rt';
+import { STORAGED_STORE_KEY } from '@/config';
 
 export const isClient = typeof window !== 'undefined';
 
@@ -16,7 +16,7 @@ export interface StateType {
 const initialState: StateType = {
   theme: 'light',
   previewTheme: 'default',
-  codeTheme: 'atom',
+  codeTheme: 'atom'
 };
 
 const settingsSlice = createSlice({
@@ -34,27 +34,23 @@ const settingsSlice = createSlice({
     },
     setAll(state, action) {
       Object.assign(state, action.payload);
-    },
-  },
+    }
+  }
 });
 
-export const { changeTheme, changePreviewTheme, changeCodeTheme, setAll } =
-  settingsSlice.actions;
+export const { changeTheme, changePreviewTheme, changeCodeTheme, setAll } = settingsSlice.actions;
 
 const store = configureStore({
   reducer: {
-    setting: settingsSlice.reducer,
-  },
+    setting: settingsSlice.reducer
+  }
 });
 
 if (isClient) {
   const themeMedia = window.matchMedia('(prefers-color-scheme: light)');
 
   store.subscribe(() => {
-    localStorage.setItem(
-      STORAGED_STORE_KEY,
-      JSON.stringify(store.getState().setting)
-    );
+    localStorage.setItem(STORAGED_STORE_KEY, JSON.stringify(store.getState().setting));
   });
 
   themeMedia.addEventListener('change', (e) => {

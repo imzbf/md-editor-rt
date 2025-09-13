@@ -96,7 +96,6 @@
   预览内容主题，支持自定义。
 
   主题自定义方式：
-
   1. 编辑 css
 
   ```css
@@ -158,7 +157,6 @@
   代码块高亮样式名称。
 
   你可以添加自己的样式，把该属性设置为你想要的即可，方式如下：
-
   1. 配置样式链接
 
   ```js
@@ -170,15 +168,15 @@
         css: {
           atom: {
             light: 'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/styles/atom-one-light.min.css',
-            dark: 'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/styles/atom-one-dark.min.css',
+            dark: 'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/styles/atom-one-dark.min.css'
           },
           xxx: {
             light: 'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/styles/xxx-light.css',
-            dark: 'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/styles/xxx-dark.css',
-          },
-        },
-      },
-    },
+            dark: 'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/styles/xxx-dark.css'
+          }
+        }
+      }
+    }
   });
   ```
 
@@ -192,7 +190,7 @@
 
 ### 🎱 mdHeadingId
 
-- **类型**：`(text: string, level: number, index: number) => string`
+- **类型**：`MdHeadingId`
 - **默认值**：`(text) => text`
 
   构造标题`ID`的生成方式。
@@ -201,11 +199,21 @@
   import { MdEditor } from 'md-editor-rt';
   import 'md-editor-rt/lib/style.css';
 
-  const mdHeadingId = (_text, _level, index) => `heading-${index}`;
+  const mdHeadingId = ({ index }) => `heading-${index}`;
 
   export default () => {
     return <MdEditor mdHeadingId={mdHeadingId} />;
   };
+  ```
+
+  ```ts
+  type MdHeadingId = (options: {
+    text: string;
+    level: number;
+    index: number;
+    currentToken?: Token;
+    nextToken?: Token;
+  }) => string;
   ```
 
 ---
@@ -334,21 +342,21 @@
 
   const customIcon: CustomIcon = {
     bold: {
-      component: 'A',
+      component: 'A'
     },
     // 演示使用默认图标复制内容
     copy: StrIcon('copy', {}),
     // copy: '<i class="fa fa-car"></i>',
     // 'collapse-tips': '<i class="fa fa-car"></i>',
     preview: {
-      component: '<i class="fa fa-car"></i>',
+      component: '<i class="fa fa-car"></i>'
     },
     github: {
       component: IconFont,
       props: {
-        name: 'sneer',
-      },
-    },
+        name: 'sneer'
+      }
+    }
   };
 
   export default () => {
@@ -515,7 +523,7 @@
     'previewOnly',
     'htmlPreview',
     'catalog',
-    'github',
+    'github'
   ];
 
   // 对应功能名称
@@ -545,7 +553,7 @@
     '内容预览',
     'html代码预览',
     '目录',
-    '源码地址',
+    '源码地址'
   ];
   ```
 
@@ -587,7 +595,7 @@
           <use xlinkHref="#icon-mark"></use>
         </svg>
       }
-    />,
+    />
   ];
 
   export default () => <MdEditor modelValue="" toolbars={toolbars} defToolbars={defToolbars} />;
@@ -757,11 +765,11 @@
             options: [
               {
                 label: '@imzbf',
-                type: 'text',
-              },
-            ],
+                type: 'text'
+              }
+            ]
           };
-        },
+        }
       ];
     }, []);
 
@@ -818,16 +826,12 @@
 
   \>=5.5.0 控制要显示的目录的最大深度。
 
-### 🖌 insertLinkDirect
+### 🖌 noEcharts
 
 - **类型**：`boolean`
 - **默认值**：`false`
 
-  \>=5.6.0 设置是否直接插入链接到编辑区域，设置为 `false` 会打开弹窗后在输入框输入。
-
-  !!! warning
-  6.0 开始废弃，默认不再使用弹窗。
-  !!!
+  \>=6.0.0 是否禁用 echarts 模块
 
 ---
 
@@ -914,8 +918,8 @@
           axios
             .post('/api/img/upload', form, {
               headers: {
-                'Content-Type': 'multipart/form-data',
-              },
+                'Content-Type': 'multipart/form-data'
+              }
             })
             .then((res) => rev(res))
             .catch((error) => rej(error));
@@ -1212,7 +1216,7 @@ editorRef.current?.insert((selectedText) => {
     targetValue: `${selectedText}`,
     select: true,
     deviationStart: 0,
-    deviationEnd: 0,
+    deviationEnd: 0
   };
 });
 ```
@@ -1282,7 +1286,7 @@ console.log(editorRef.current?.getSelectedText());
 editorRef.current?.domEventHandlers({
   compositionstart: () => {
     console.log('compositionstart');
-  },
+  }
 });
 ```
 
@@ -1320,13 +1324,31 @@ editorRef.current?.execCommand('bold');
 
 ```ts
 type CodeMirrorExtensions = (
-  theme: Themes,
-  extensions: Array<Extension>,
-  keyBindings: Array<KeyBinding>,
+  extensions: Array<CodeMirrorExtension>,
   options: {
     editorId: string;
+    theme: Themes;
+    keyBindings: Array<KeyBinding>;
   }
-) => Array<Extension>;
+) => Array<CodeMirrorExtension>;
+```
+
+```ts
+interface CodeMirrorExtension {
+  /**
+   * 仅用来提供开发者分别不同扩展的依据
+   */
+  type: string;
+  /**
+   * CodeMirror的扩展
+   */
+  extension: Extension | ((options: any) => Extension);
+  /**
+   * 包裹扩展的Compartment，只有部分扩展有，提供扩展更新的能力
+   */
+  compartment?: Compartment;
+  options?: any;
+}
 ```
 
 使用示例：编辑器默认不显示输入框的行号，需要手动添加扩展
@@ -1337,8 +1359,14 @@ import { lineNumbers } from '@codemirror/view';
 
 config({
   codeMirrorExtensions(_theme, extensions) {
-    return [...extensions, lineNumbers()];
-  },
+    return [
+      ...extensions,
+      {
+        type: 'lineNumbers',
+        extension: lineNumbers()
+      }
+    ];
+  }
 });
 ```
 
@@ -1366,9 +1394,9 @@ import ancher from 'markdown-it-anchor';
 config({
   markdownItConfig(mdit) {
     mdit.use(ancher, {
-      permalink: true,
+      permalink: true
     });
-  },
+  }
 });
 ```
 
@@ -1400,30 +1428,30 @@ config({
           ...p,
           options: {
             ...p.options,
-            classes: 'my-class',
-          },
+            classes: 'my-class'
+          }
         };
       }
 
       return p;
     });
-  },
+  }
 });
 ```
 
 内置的扩展列表
 
-| 类型       | 选项                                                                                                                          |
-| ---------- | ----------------------------------------------------------------------------------------------------------------------------- |
-| image      | [URL](https://github.com/Antonio-Laguna/markdown-it-image-figures?tab=readme-ov-file#options)                                 |
+| 类型 | 选项 |
+| --- | --- |
+| image | [URL](https://github.com/Antonio-Laguna/markdown-it-image-figures?tab=readme-ov-file#options) |
 | admonition | [URL](https://github.com/imzbf/md-editor-v3/blob/develop/packages/MdEditor/layouts/Content/markdownIt/admonition/index.ts#L9) |
-| taskList   | [URL](https://github.com/imzbf/md-editor-v3/blob/develop/packages/MdEditor/layouts/Content/markdownIt/task/index.ts#L10)      |
-| heading    | [URL](https://github.com/imzbf/md-editor-v3/blob/develop/packages/MdEditor/layouts/Content/markdownIt/heading/index.ts#L5)    |
-| code       | [URL](https://github.com/imzbf/md-editor-v3/blob/develop/packages/MdEditor/layouts/Content/markdownIt/code/index.ts#L16)      |
-| sub        | 没有                                                                                                                          |
-| sup        | 没有                                                                                                                          |
-| katex      | [URL](https://github.com/imzbf/md-editor-v3/blob/develop/packages/MdEditor/layouts/Content/markdownIt/katex/index.ts#L18)     |
-| mermaid    | [URL](https://github.com/imzbf/md-editor-v3/blob/develop/packages/MdEditor/layouts/Content/markdownIt/mermaid/index.ts#L7)    |
+| taskList | [URL](https://github.com/imzbf/md-editor-v3/blob/develop/packages/MdEditor/layouts/Content/markdownIt/task/index.ts#L10) |
+| heading | [URL](https://github.com/imzbf/md-editor-v3/blob/develop/packages/MdEditor/layouts/Content/markdownIt/heading/index.ts#L5) |
+| code | [URL](https://github.com/imzbf/md-editor-v3/blob/develop/packages/MdEditor/layouts/Content/markdownIt/code/index.ts#L16) |
+| sub | 没有 |
+| sup | 没有 |
+| katex | [URL](https://github.com/imzbf/md-editor-v3/blob/develop/packages/MdEditor/layouts/Content/markdownIt/katex/index.ts#L18) |
+| mermaid | [URL](https://github.com/imzbf/md-editor-v3/blob/develop/packages/MdEditor/layouts/Content/markdownIt/mermaid/index.ts#L7) |
 
 [添加插件的源码](https://github.com/imzbf/md-editor-v3/blob/develop/packages/MdEditor/layouts/Content/composition/useMarkdownIt.ts#L95)
 
@@ -1473,7 +1501,7 @@ config({
           previewOnly: '仅预览',
           htmlPreview: 'html代码预览',
           catalog: '目录',
-          github: '源码地址',
+          github: '源码地址'
         },
         titleItem: {
           h1: '一级标题',
@@ -1481,12 +1509,12 @@ config({
           h3: '三级标题',
           h4: '四级标题',
           h5: '五级标题',
-          h6: '六级标题',
+          h6: '六级标题'
         },
         imgTitleItem: {
           link: '添加链接',
           upload: '上传图片',
-          clip2upload: '裁剪上传',
+          clip2upload: '裁剪上传'
         },
         linkModalTips: {
           linkTitle: '添加链接',
@@ -1495,16 +1523,16 @@ config({
           descLabelPlaceHolder: '请输入描述...',
           urlLabel: '链接地址：',
           urlLabelPlaceHolder: '请输入链接...',
-          buttonOK: '确定',
+          buttonOK: '确定'
         },
         clipModalTips: {
           title: '裁剪图片上传',
-          buttonUpload: '上传',
+          buttonUpload: '上传'
         },
         copyCode: {
           text: '复制代码',
           successTips: '已复制！',
-          failTips: '复制失败！',
+          failTips: '复制失败！'
         },
         mermaid: {
           flow: '流程图',
@@ -1514,19 +1542,19 @@ config({
           state: '状态图',
           pie: '饼图',
           relationship: '关系图',
-          journey: '旅程图',
+          journey: '旅程图'
         },
         katex: {
           inline: '行内公式',
-          block: '块级公式',
+          block: '块级公式'
         },
         footer: {
           markdownTotal: '字数',
-          scrollAuto: '同步滚动',
-        },
-      },
-    },
-  },
+          scrollAuto: '同步滚动'
+        }
+      }
+    }
+  }
 });
 ```
 
@@ -1554,9 +1582,9 @@ config({
       // 关系图
       relationship: `relationship template`,
       // 旅程图
-      journey: `journey template`,
-    },
-  },
+      journey: `journey template`
+    }
+  }
 });
 ```
 
@@ -1568,8 +1596,8 @@ import { config } from 'md-editor-rt';
 config({
   editorConfig: {
     // 输入渲染延迟（ms）
-    renderDelay: 0,
-  },
+    renderDelay: 0
+  }
 });
 ```
 
@@ -1583,8 +1611,8 @@ import { config } from 'md-editor-rt';
 config({
   editorConfig: {
     // 内部弹窗的zIndex
-    zIndex: 2000,
-  },
+    zIndex: 2000
+  }
 });
 ```
 
@@ -1598,7 +1626,7 @@ config({
 import { config } from 'md-editor-rt';
 
 config({
-  editorExtensions: { highlight: { js: 'https://xxx.cc' } },
+  editorExtensions: { highlight: { js: 'https://xxx.cc' } }
 });
 ```
 
@@ -1658,20 +1686,20 @@ config({
   editorExtensionsAttrs: {
     highlight: {
       js: {
-        className: 'hglh-js',
+        className: 'hglh-js'
       },
       css: {
         atom: {
           light: {
-            className: 'atom-light-css',
+            className: 'atom-light-css'
           },
           dark: {
-            className: 'atom-dark-css',
-          },
-        },
-      },
-    },
-  },
+            className: 'atom-dark-css'
+          }
+        }
+      }
+    }
+  }
 });
 ```
 
@@ -1681,7 +1709,7 @@ config({
 import { config, editorExtensionsAttrs } from 'md-editor-rt';
 
 config({
-  editorExtensionsAttrs,
+  editorExtensionsAttrs
 });
 ```
 
@@ -1823,13 +1851,11 @@ const MyEditor2 = () => {
 ### 🐣 NormalToolbar
 
 - **props**
-
   - **title**: `string`，非必须，作为工具栏上的 hover 提示。
   - **children**: `ReactNode`，非必须，通常是个图标，用来展示在工具栏上。
   - ~~**trigger**~~: `ReactNode`，非必须，已废弃，同上。
 
 - **events**
-
   - **onClick**: `(e: MouseEvent) => void`，必须，点击事件。
 
 ```jsx
@@ -1893,7 +1919,6 @@ export default () => {
 ### 🐼 DropdownToolbar
 
 - **props**
-
   - **title**: `string`，非必须，作为工具栏上的 hover 提示。
   - **visible**: `boolean`，必须，下拉状态。
   - **children**: `ReactNode`，非必须，通常是个图标，用来展示在工具栏上。
@@ -1901,7 +1926,6 @@ export default () => {
   - **overlay**: `ReactNode`，必须，下拉框中的内容。
 
 - **events**
-
   - **onChange**: `(visible: boolean) => void`，必须，状态变化事件。
 
 ```jsx
@@ -1927,7 +1951,7 @@ const MyToolbar = ({ insert = () => {} }) => {
         targetValue: `==${selectedText}==`,
         select: true,
         deviationStart: 0,
-        deviationEnd: 0,
+        deviationEnd: 0
       };
     });
   }, [insert]);
@@ -1968,7 +1992,6 @@ export default () => {
 ### 🦉 ModalToolbar
 
 - **props**
-
   - **title**: `string`，非必须，作为工具栏上的 hover 提示。
   - **modalTitle**: `ReactNode`，非必须，弹窗的标题。
   - **visible**: `boolean`，必须，弹窗显示状态。
@@ -1983,7 +2006,6 @@ export default () => {
   - **showMask**: `boolean`，`^4.16.8`，非必须，是否展示遮罩层，默认 true。
 
 - **events**
-
   - **onClick**: `() => void`，必须，工具栏点击事件。
   - **onClose**: `() => void`，必须，弹窗点击关闭事件。
   - **onAdjust**: `(val: boolean) => void`，弹窗全屏按钮点击事件。
@@ -2024,7 +2046,7 @@ const MyToolbar = ({ insert = () => {} }) => {
         targetValue: `==${selectedText}==`,
         select: true,
         deviationStart: 0,
-        deviationEnd: 0,
+        deviationEnd: 0
       };
     });
   }, [insert]);
@@ -2051,7 +2073,7 @@ const MyToolbar = ({ insert = () => {} }) => {
         style={{
           height: '100%',
           padding: '20px',
-          overflow: 'auto',
+          overflow: 'auto'
         }}
       >
         <button onClick={insertHandler}>click me</button>
@@ -2076,7 +2098,6 @@ export default () => {
 ### 🐻 MdCatalog
 
 - **props**
-
   - **editorId**: `string`，必须，对应编辑器的`id`，在内部注册目录变化监听事件。
   - **className**: `string`，非必须，目录组件最外层类名。
   - **mdHeadingId**: `mdHeadingId`，非必须，特殊化编辑器标题的算法，与编辑器相同。
@@ -2087,7 +2108,6 @@ export default () => {
   - **catalogMaxDepth**: `number`，`^5.5.0`，非必须，控制要显示的目录的最大深度。
 
 - **events**
-
   - **onClick**: `(e: MouseEvent, t: TocItem) => void`，非必须，导航点击事件。
   - **onActive**: `(heading: HeadList | undefined) => void`，非必须，高亮的标题变化事件。
 
@@ -2102,7 +2122,7 @@ const editorId = 'my-editor';
 export default () => {
   const [state] = useState({
     text: '# 标题',
-    scrollElement: document.documentElement,
+    scrollElement: document.documentElement
   });
 
   return (
@@ -2122,7 +2142,6 @@ export default () => {
 编辑器内部的弹窗组件，它通常配合下拉工具栏组件使用。
 
 - **props**
-
   - **title**: `ReactNode`，非必须，弹窗标题栏。
   - **visible**: `boolean`，必须，弹窗显示状态。
   - **width**: `string`，非必须，弹窗宽度，默认`auto`。
@@ -2135,7 +2154,6 @@ export default () => {
   - **showMask**: `boolean`，`^4.16.8`，非必须，是否展示遮罩层，默认 true。
 
 - **events**
-
   - **onClose**: `() => void`，必须，弹窗点击关闭事件。
   - **onAdjust**: `(val: boolean) => void`，弹窗全屏按钮点击事件。
 
@@ -2200,11 +2218,9 @@ export default () => {
 通用的页脚工具组件
 
 - **events**
-
   - **onClick**: `(e: MouseEvent) => void`，非必须，点击事件。
 
 - **slots**
-
   - **children**: `ReactNode`，必须，内容。
 
 ```jsx

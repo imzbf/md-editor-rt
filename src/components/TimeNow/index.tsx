@@ -1,26 +1,10 @@
-import { useEffect, useMemo, useState } from 'react';
 import dayjs from 'dayjs';
 import { NormalFooterToolbar } from 'md-editor-rt';
+import { useEffect, useMemo, useState } from 'react';
 
 const weekNames = {
-  'en-US': [
-    'Monday',
-    'Tuesday',
-    'Wednesday',
-    'Thursday',
-    'Friday',
-    'Saturday',
-    'Sunday',
-  ],
-  'zh-CN': [
-    '星期一',
-    '星期二',
-    '星期三',
-    '星期四',
-    '星期五',
-    '星期六',
-    '星期日',
-  ],
+  'en-US': ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
+  'zh-CN': ['星期一', '星期二', '星期三', '星期四', '星期五', '星期六', '星期日']
 };
 
 interface TimeNowProps {
@@ -37,9 +21,7 @@ const TimeNow = (props: TimeNowProps) => {
   const text = useMemo(() => {
     const weekday = dayjs().day();
 
-    return `${time} ${
-      weekNames[props.language!][weekday > 0 ? weekday - 1 : 6]
-    }`;
+    return `${time} ${weekNames[props.language!][weekday > 0 ? weekday - 1 : 6]}`;
   }, [props.language, time]);
 
   useEffect(() => {

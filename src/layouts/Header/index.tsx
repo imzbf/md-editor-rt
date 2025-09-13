@@ -1,43 +1,21 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import { useAppDispatch, useAppSelector } from '@/hooks/store';
-import IzDropdown from '@/components/Dropdown';
 import IzDrawer from '@/components/Drawer';
-
-import Navigation from '../Navigation';
-import pack from '../../../package.json';
-import {
-  changeCodeTheme,
-  changePreviewTheme,
-  changeTheme,
-  setAll,
-} from '@/store';
-import { useLang } from '@/hooks/router';
+import IzDropdown from '@/components/Dropdown';
 import { STORAGED_STORE_KEY } from '@/config';
+import { useLang } from '@/hooks/router';
+import { useAppDispatch, useAppSelector } from '@/hooks/store';
+
+import { changeCodeTheme, changePreviewTheme, changeTheme, setAll } from '@/store';
+import pack from '../../../package.json';
+import Navigation from '../Navigation';
 
 const Header = () => {
   const lang = useLang();
   const dispatch = useAppDispatch();
 
   const [data] = useState({
-    previewThemes: [
-      'default',
-      'github',
-      'vuepress',
-      'mk-cute',
-      'smart-blue',
-      'cyanosis',
-      'arknights',
-    ],
-    codeThemes: [
-      'atom',
-      'a11y',
-      'github',
-      'gradient',
-      'kimbie',
-      'paraiso',
-      'qtcreator',
-      'stackoverflow',
-    ],
+    previewThemes: ['default', 'github', 'vuepress', 'mk-cute', 'smart-blue', 'cyanosis', 'arknights'],
+    codeThemes: ['atom', 'a11y', 'github', 'gradient', 'kimbie', 'paraiso', 'qtcreator', 'stackoverflow']
   });
 
   const texts = useMemo(() => {
@@ -47,14 +25,14 @@ const Header = () => {
           defaultTheme: '默认模式',
           darkTheme: '暗黑模式',
           previewBtn: '预览主题',
-          codeBtn: '代码主题',
+          codeBtn: '代码主题'
         }
       : {
           desc: 'Markdown Editor for React, developed in jsx and typescript, support different themes、beautify content by prettier.',
           defaultTheme: 'Default Theme',
           darkTheme: 'Dark Theme',
           previewBtn: 'Preview Style',
-          codeBtn: 'Code Style',
+          codeBtn: 'Code Style'
         };
   }, [lang]);
 
@@ -92,16 +70,10 @@ const Header = () => {
         <div className="pc">
           <Navigation />
           <p className="header-actions">
-            <button
-              className="btn btn-header"
-              onClick={() => dispatch(changeTheme('light'))}
-            >
+            <button className="btn btn-header" onClick={() => dispatch(changeTheme('light'))}>
               {texts.defaultTheme}
             </button>
-            <button
-              className="btn btn-header"
-              onClick={() => dispatch(changeTheme('dark'))}
-            >
+            <button className="btn btn-header" onClick={() => dispatch(changeTheme('dark'))}>
               {texts.darkTheme}
             </button>
             <IzDropdown
@@ -160,16 +132,10 @@ const Header = () => {
                 <div className="header-hr" />
 
                 <p className="header-actions">
-                  <button
-                    className="btn btn-header"
-                    onClick={() => dispatch(changeTheme('light'))}
-                  >
+                  <button className="btn btn-header" onClick={() => dispatch(changeTheme('light'))}>
                     {texts.defaultTheme}
                   </button>
-                  <button
-                    className="btn btn-header"
-                    onClick={() => dispatch(changeTheme('dark'))}
-                  >
+                  <button className="btn btn-header" onClick={() => dispatch(changeTheme('dark'))}>
                     {texts.darkTheme}
                   </button>
                   <IzDropdown
@@ -192,9 +158,7 @@ const Header = () => {
                       </IzDropdown.IzDropdownMenu>
                     }
                   >
-                    <button className="btn btn-header">
-                      {texts.previewBtn}
-                    </button>
+                    <button className="btn btn-header">{texts.previewBtn}</button>
                   </IzDropdown>
                   <IzDropdown
                     content={

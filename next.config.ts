@@ -9,13 +9,13 @@ const nextConfig: NextConfig = {
   skipTrailingSlashRedirect: true,
   // swcMinify: false,
   sassOptions: {
-    silenceDeprecations: ['legacy-js-api'],
+    silenceDeprecations: ['legacy-js-api']
   },
   basePath,
   webpack(config) {
     config.module.rules.push({
       test: /\.md$/,
-      use: 'raw-loader',
+      use: 'raw-loader'
     });
     return config;
   },
@@ -26,14 +26,14 @@ const nextConfig: NextConfig = {
           {
             loader: 'raw-loader',
             options: {
-              esModule: false,
-            },
-          },
+              esModule: false
+            }
+          }
         ],
-        as: '*.txt',
-      },
-    },
-  },
+        as: '*.txt'
+      }
+    }
+  }
   // redirects() {
   //   return Promise.resolve([
   //     {

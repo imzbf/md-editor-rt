@@ -1,5 +1,108 @@
 This is the content that is incompatible only.
 
+## 🧙🏼 Upgrade from 5.x to 6.x
+
+### 🐈 UMD
+
+To keep pace with the evolution of the frontend ecosystem, some third-party dependencies have fully transitioned to ESM format starting from version 6.x. we will no longer provide UMD format support.
+
+Here is the updated reference for global usage: [🤓 CDN](https://imzbf.github.io/md-editor-rt/en-US/demo#🤓%20CDN)
+
+### 🔖 Props
+
+#### 🧷 insertLinkDirect
+
+Removed, now the input box no longer pops up when clicking on the add link
+
+#### 🎱 mdHeadingId
+
+Type changed
+
+Now
+
+```ts
+type MdHeadingId = (options: {
+  text: string;
+  level: number;
+  index: number;
+  currentToken?: Token;
+  nextToken?: Token;
+}) => string;
+```
+
+Past
+
+```ts
+type MdHeadingId = (text: string, level: number, index: number) => string;
+```
+
+### 💴 Config
+
+New:
+
+```ts
+import { config, type CodeMirrorExtension, type Themes } from 'md-editor-rt';
+import { type KeyBinding } from '@codemirror/view';
+
+config({
+  codeMirrorExtensions(
+    extensions: Array<CodeMirrorExtension>,
+    options: {
+      editorId: string;
+      theme: Themes;
+      keyBindings: Array<KeyBinding>;
+    }
+  ): Array<CodeMirrorExtension> {
+    return extensions;
+  }
+});
+```
+
+```ts ::close
+interface CodeMirrorExtension {
+  /**
+   * Only used to provide developers with a basis for distinguishing between different extensions.
+   */
+  type: string;
+  /**
+   * Extensions of CodeMirror
+   */
+  extension: Extension | ((options: any) => Extension);
+  /**
+   * A Compartment wrapping the extension, which only exists for certain extensions,
+   * provides the capability to update the extension.
+   */
+  compartment?: Compartment;
+  options?: any;
+}
+```
+
+!!! note
+
+Now you can accurately know which extension this is from extensions[i].type.
+
+!!!
+
+Past:
+
+```ts
+import { config, type CodeMirrorExtension, type Themes } from 'md-editor-rt';
+import { type KeyBinding } from '@codemirror/view';
+
+config({
+  codeMirrorExtensions(
+    theme: Themes,
+    extensions: Array<Extension>,
+    keyBindings: Array<KeyBinding>,
+    options: {
+      editorId: string;
+    }
+  ): Array<Extension> {
+    return extensions;
+  }
+});
+```
+
 ## 🧙🏼 Upgrade from 4.x to 5.x
 
 !!! warning
@@ -10,12 +113,12 @@ Version 18.0.0 or higher of `react` must be used now!!!
 
 ### 🔖 Props
 
-| name          | description                                                                                                                                                                                                                                          |
-| ------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| editorId      | Marked as deprecated, but still usable; it is recommended to use id instead. Note: Only the `MdEditor` and `MdPreview` components have been adjusted; other components still use `editorId` to identify that this is the editor's ID, not their own. |
-| inputBoxWitdh | Spelling error, corrected to: inputBoxWidth.                                                                                                                                                                                                         |
-| noIconfont    | Removed, and now use the open-source icon library [lucide](https://lucide.dev/icons/) as a replacement.                                                                                                                                              |
-| customIcon    | Still supports custom icons, but some icon keywords have been updated. Please check [CustomIcon](https://imzbf.github.io/md-editor-rt/en-US/api#%F0%9F%98%AC%20customIcon).                                                                          |
+| name | description |
+| --- | --- |
+| editorId | Marked as deprecated, but still usable; it is recommended to use id instead. Note: Only the `MdEditor` and `MdPreview` components have been adjusted; other components still use `editorId` to identify that this is the editor's ID, not their own. |
+| inputBoxWitdh | Spelling error, corrected to: inputBoxWidth. |
+| noIconfont | Removed, and now use the open-source icon library [lucide](https://lucide.dev/icons/) as a replacement. |
+| customIcon | Still supports custom icons, but some icon keywords have been updated. Please check [CustomIcon](https://imzbf.github.io/md-editor-rt/en-US/api#%F0%9F%98%AC%20customIcon). |
 
 ### Events
 
@@ -132,7 +235,6 @@ MdEditor.config({
 #### 🐻 MdCatalog
 
 - **props**
-
   - **markedHeadingId**: deleted, use `mdHeadingId` instead of it
 
 ---
