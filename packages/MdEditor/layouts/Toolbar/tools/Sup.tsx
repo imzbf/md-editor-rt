@@ -22,6 +22,7 @@ const ToolbarSup = () => {
       onClick={() => {
         bus.emit(editorId, REPLACE, 'sup');
       }}
+      type="button"
     >
       <Icon name="sup" />
       {showToolbarName && (

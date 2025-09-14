@@ -22,6 +22,7 @@ const ToolbarLink = () => {
       onClick={() => {
         bus.emit(editorId, REPLACE, 'link');
       }}
+      type="button"
     >
       <Icon name="link" />
       {showToolbarName && (

@@ -116,6 +116,7 @@ const ToolbarTitle = () => {
         ])}
         disabled={disabled}
         title={ult.toolbarTips?.title}
+        type="button"
       >
         <Icon name="title" />
         {showToolbarName && (

@@ -22,6 +22,7 @@ const ToolbarTask = () => {
       onClick={() => {
         bus.emit(editorId, REPLACE, 'task');
       }}
+      type="button"
     >
       <Icon name="task" />
       {showToolbarName && (

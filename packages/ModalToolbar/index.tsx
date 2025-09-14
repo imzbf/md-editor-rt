@@ -46,6 +46,7 @@ const ModalToolbar = (props: ModalToolbarProps) => {
           props.onClick(e);
         }}
         disabled={props.disabled}
+        type="button"
       >
         {props.trigger}
       </button>

@@ -22,6 +22,7 @@ const ToolbarStrikeThrough = () => {
       onClick={() => {
         bus.emit(editorId, REPLACE, 'strikeThrough');
       }}
+      type="button"
     >
       <Icon name="strike-through" />
       {showToolbarName && (

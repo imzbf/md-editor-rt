@@ -16,6 +16,7 @@ const ToolbarGithub = () => {
       onClick={() => {
         linkTo('https://github.com/imzbf/md-editor-v3');
       }}
+      type="button"
     >
       <Icon name="github" />
       {showToolbarName && (

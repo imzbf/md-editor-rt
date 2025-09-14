@@ -122,6 +122,7 @@ const ToolbarImageDropdown = () => {
         ])}
         title={ult.toolbarTips?.image}
         disabled={disabled}
+        type="button"
       >
         <Icon name="image" />
         {showToolbarName && (

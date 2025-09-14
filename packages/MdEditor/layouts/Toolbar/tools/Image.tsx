@@ -22,6 +22,7 @@ const ToolbarImage = () => {
       onClick={() => {
         bus.emit(editorId, REPLACE, 'image');
       }}
+      type="button"
     >
       <Icon name="image" />
       {showToolbarName && (

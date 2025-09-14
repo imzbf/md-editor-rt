@@ -22,6 +22,7 @@ const ToolbarPrettier = () => {
       onClick={() => {
         bus.emit(editorId, REPLACE, 'prettier');
       }}
+      type="button"
     >
       <Icon name="prettier" />
       {showToolbarName && (
