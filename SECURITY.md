@@ -2,20 +2,28 @@
 
 ## Supported Versions
 
-Use this section to tell people about which versions of your project are
-currently being supported with security updates.
+I provide security updates only for actively supported versions.  
+Please upgrade to a supported version to ensure you receive the latest patches.
 
-| Version | Supported          |
-| ------- | ------------------ |
-| 5.1.x   | :white_check_mark: |
-| 5.0.x   | :x:                |
-| 4.0.x   | :white_check_mark: |
-| < 4.0   | :x:                |
+| Version | Supported |
+| ------- | --------- |
+| 6.x     | ✅        |
+| <6.x    | ❌        |
+
+---
 
 ## Reporting a Vulnerability
 
-Use this section to tell people how to report a vulnerability.
+If you discover a security vulnerability, **please do not report it publicly**.  
+Instead, use the following secure channel:
 
-Tell them where to go, how often they can expect to get an update on a
-reported vulnerability, what to expect if the vulnerability is accepted or
-declined, etc.
+- Email: [zbfcqtl@gmail.com](mailto:zbfcqtl@gmail.com)
+- GitHub Security Advisories: [Report via GitHub](https://github.com/imzbf/md-editor-rt/security/advisories/new)
+
+### What to Expect
+
+- I will acknowledge your report as soon.
+- Once fixed, I will release a patched version.
+- If I determine the issue is not a security vulnerability, I will explain the reasoning.
+
+Thank you for helping keep this project secure!
