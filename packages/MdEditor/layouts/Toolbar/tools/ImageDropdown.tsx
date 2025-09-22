@@ -48,7 +48,7 @@ const ToolbarImageDropdown = () => {
   );
 
   const onCancel = useCallback(() => {
-    setVisible(false);
+    setClipVisible(false);
   }, []);
 
   const onOk = useCallback(
