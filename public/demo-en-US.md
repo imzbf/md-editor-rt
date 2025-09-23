@@ -126,7 +126,7 @@ Usages of some APIs.
 
 - The basic principle of replacing or deleting shortcut keys is to find the corresponding extension, and handle it.
 
-- In fact, The Second input parameter `extensions` of `codeMirrorExtensions` is an array, The first item in the array is the shortcut key extension. The third input parameter is the default shortcut key configuration.
+- The first input parameter `extensions` of `codeMirrorExtensions` is an array, use `extensions[i].type` to distinguish the type.
 
 #### 💅 Modify Shortcut Key
 
@@ -137,15 +137,15 @@ import { config } from 'md-editor-rt';
 import { keymap } from '@codemirror/view';
 
 config({
-  // [keymap, minimalSetup, markdown, EditorView.lineWrapping, EditorView.updateListener, EditorView.domEventHandlers, oneDark??oneLight]
-  codeMirrorExtensions(theme, extensions, mdEditorCommands) {
-    const newExtensions = [...extensions];
+  codeMirrorExtensions(extensions, { keyBindings }) {
     // 1. Remove the default shortcut key extension first
-    newExtensions.shift();
+    const newExtensions = [...extensions].filter((item) => {
+      return item.type !== 'keymap';
+    });
 
     // 2. Reference the source code for shortcut key configuration
-    // Find the location of the configuration item for CtrlB in mdEditorCommands
-    const CtrlB = mdEditorCommands[0];
+    // Find the location of the configuration item for CtrlB in keyBindings
+    const CtrlB = keyBindings.find((i) => i.key === 'Ctrl-b');
 
     // 3. Document for configuring shortcut keys of codemirror
     // https://codemirror.net/docs/ref/#commands
@@ -157,9 +157,12 @@ config({
     };
 
     // 4. Add the modified shortcut key to the array
-    const newMdEditorCommands = [CtrlM, ...mdEditorCommands.filter((i) => i.key !== 'Ctrl-b')];
+    const newKeyBindings = [CtrlM, ...keyBindings.filter((i) => i.key !== 'Ctrl-b')];
 
-    newExtensions.push(keymap.of(newMdEditorCommands));
+    newExtensions.push({
+      type: 'newKeymap',
+      extension: keymap.of(newKeyBindings)
+    });
 
     return newExtensions;
   }
@@ -174,11 +177,11 @@ Disable all shortcut keys
 import { config } from 'md-editor-rt';
 
 config({
-  // [keymap, minimalSetup, markdown, EditorView.lineWrapping, EditorView.updateListener, EditorView.domEventHandlers, oneDark??oneLight]
-  codeMirrorExtensions(theme, extensions) {
-    const newExtensions = [...extensions];
+  codeMirrorExtensions(extensions) {
     // 1. Remove default shortcut key extensions
-    newExtensions.shift();
+    const newExtensions = [...extensions].filter((item) => {
+      return item.type !== 'keymap';
+    });
 
     // 2. Return extension list
     return newExtensions;
@@ -203,11 +206,11 @@ import { keymap, KeyBinding } from '@codemirror/view';
 import bus from '@/utils/event-bus';
 
 config({
-  // [keymap, minimalSetup, markdown, EditorView.lineWrapping, EditorView.updateListener, EditorView.domEventHandlers, oneDark??oneLight]
-  codeMirrorExtensions(theme, extensions, mdEditorCommands) {
-    const newExtensions = [...extensions];
+  codeMirrorExtensions(extensions, { keyBindings }) {
     // 1. Remove the default shortcut key extension first
-    newExtensions.shift();
+  const newExtensions = [...extensions].filter((item) => {
+      return item.type !== 'keymap';
+    });
 
     // 2. Create a new shortcut key configuration, reference: https://codemirror.net/docs/ref/#commands
     const CtrlM: KeyBinding = {
@@ -220,9 +223,12 @@ config({
     };
 
     // 4. Add a new shortcut key to the array
-    const newMdEditorCommands = [...mdEditorCommands, CtrlM];
+    const newKeyBindings = [...keyBindings, CtrlM];
 
-    newExtensions.push(keymap.of(newMdEditorCommands));
+    newExtensions.push({
+      type: 'newKeymap',
+      extension: keymap.of(newKeyBindings),
+    });
 
     return newExtensions;
   },
@@ -910,8 +916,18 @@ import { foldGutter } from '@codemirror/language';
 import { lineNumbers } from '@codemirror/view';
 
 config({
-  codeMirrorExtensions(_theme, extensions) {
-    return [...extensions, lineNumbers(), foldGutter()];
+  codeMirrorExtensions(extensions) {
+    return [
+      ...extensions,
+      {
+        type: 'lineNumbers',
+        extension: lineNumbers()
+      },
+      {
+        type: 'foldGutter',
+        extension: foldGutter()
+      }
+    ];
   }
 });
 ```
@@ -1057,8 +1073,14 @@ export const createYjsExtension = (roomId: string) => {
 };
 
 config({
-  codeMirrorExtensions(_theme, extensions) {
-    return [...extensions, yjsCompartment.of([])];
+  codeMirrorExtensions(extensions) {
+    return [
+      ...extensions,
+      {
+        type: 'yjs',
+        extension: yjsCompartment.of([])
+      }
+    ];
   }
 });
 ```
@@ -1067,8 +1089,16 @@ If you want to use it in only one editor, try distinguishing using `editorId` (`
 
 ```js
 config({
-  codeMirrorExtensions(_theme, extensions, _keyBindings, { editorId }) {
-    return editorId === 'myId' ? [...extensions, yjsCompartment.of([])] : extensions;
+  codeMirrorExtensions(extensions, { editorId }) {
+    return editorId === 'myId'
+      ? [
+          ...extensions,
+          {
+            type: 'yjs',
+            extension: yjsCompartment.of([])
+          }
+        ]
+      : extensions;
   }
 });
 ```
