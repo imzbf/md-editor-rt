@@ -2,24 +2,6 @@
 
 目前一直在迭代开发，所以尽量安装最新版本。发布日志请前往：[releases](https://github.com/imzbf/md-editor-rt/releases)
 
-### 🤖 NPM 安装
-
-```shell [install:npm]
-npm install md-editor-rt
-```
-
-```shell [install:yarn]
-yarn add md-editor-rt
-```
-
-!!! warning
-
-~~当使用服务端渲染时，请务必设置`editorId`为固定值。~~
-
-5.0 开始，没有该限制了。
-
-!!!
-
 ### 🤓 CDN 链接
 
 通过直接链接生产版本来使用，下面是一个小例子：
@@ -68,6 +50,24 @@ yarn add md-editor-rt
   </body>
 </html>
 ```
+
+### 🤖 NPM 安装
+
+```shell [install:npm]
+npm install md-editor-rt
+```
+
+```shell [install:yarn]
+yarn add md-editor-rt
+```
+
+!!! warning
+
+~~当使用服务端渲染时，请务必设置`editorId`为固定值。~~
+
+5.0 开始，没有该限制了。
+
+!!!
 
 #### 🤓 基本使用
 

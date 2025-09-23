@@ -2,22 +2,6 @@
 
 It has been developing iteratively, so update the latest version please. Publish logs: [releases](https://github.com/imzbf/md-editor-rt/releases)
 
-### 🤖 Npm Install
-
-```shell [install:npm]
-npm install md-editor-rt
-```
-
-```shell [install:yarn]
-yarn add md-editor-rt
-```
-
-!!! warning
-
-~~When using server-side rendering, make sure to set `editorId` to a constant value.~~ Starting from version 5.0, there is no such limitation.
-
-!!!
-
 ### 🤓 CDN
 
 Use production version in html directly:
@@ -66,6 +50,22 @@ Use production version in html directly:
   </body>
 </html>
 ```
+
+### 🤖 Npm Install
+
+```shell [install:npm]
+npm install md-editor-rt
+```
+
+```shell [install:yarn]
+yarn add md-editor-rt
+```
+
+!!! warning
+
+~~When using server-side rendering, make sure to set `editorId` to a constant value.~~ Starting from version 5.0, there is no such limitation.
+
+!!!
 
 #### 🤓 Jsx Template
 
