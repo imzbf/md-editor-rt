@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en-US" data-scroll-behavior="smooth"><head><meta charSet="utf-8" data-next-head=""/><meta name="viewport" content="width=device-width, initial-scale=1" data-next-head=""/><title data-next-head="">示例 - MdEditorRT 使用文档</title><meta name="keywords" content="MD Editor, md-editor-rt, Markdown 编辑器, React Markdown, React TSX, Markdown 组件, Markdown preview, React 编辑器" data-next-head=""/><meta name="description" content="md-editor-rt 是一个基于 React 和 TSX 开发的 Markdown 编辑器组件，支持实时预览和丰富的 Markdown 功能。查阅详细的开发文档与使用示例。" data-next-head=""/><link rel="preload" href="/md-editor-rt/_next/static/css/591feeecc669fb12.css" as="style"/><link rel="stylesheet" href="/md-editor-rt/_next/static/css/591feeecc669fb12.css" data-n-g=""/><noscript data-n-css=""></noscript><script defer="" noModule="" src="/md-editor-rt/_next/static/chunks/polyfills-42372ed130431b0a.js"></script><script src="/md-editor-rt/_next/static/chunks/webpack-168d9e816187d66a.js" defer=""></script><script src="/md-editor-rt/_next/static/chunks/framework-4a99af1472046e21.js" defer=""></script><script src="/md-editor-rt/_next/static/chunks/main-53cc964ab46430d5.js" defer=""></script><script src="/md-editor-rt/_next/static/chunks/pages/_app-c69aeadce337e5a7.js" defer=""></script><script src="/md-editor-rt/_next/static/chunks/6791-1aa0e1511d662562.js" defer=""></script><script src="/md-editor-rt/_next/static/chunks/pages/zh-CN/demo-78144b71a4824625.js" defer=""></script><script src="/md-editor-rt/_next/static/0Kx-6Z7aLqHftZD4do46Y/_buildManifest.js" defer=""></script><script src="/md-editor-rt/_next/static/0Kx-6Z7aLqHftZD4do46Y/_ssgManifest.js" defer=""></script></head><body><div id="__next"><header class="page-header"><section class="container"><h1 class="project-name">md-editor-rt<sup>@<!-- -->6.0.2</sup></h1><p class="project-desc">Markdown编辑器React版本，使用jsx和typescript语法开发，支持切换主题、prettier美化文本等。</p><div class="pc"><ul class="nav-list"><li class="nav-item"><a href="/md-editor-rt/zh-CN"><svg class="icon" aria-hidden="true"><use xlink:href="#med-icon-homepage"></use></svg>首页</a></li><li class="nav-item"><a href="/md-editor-rt/zh-CN/api"><svg class="icon" aria-hidden="true"><use xlink:href="#med-icon-api"></use></svg>API</a></li><li class="nav-item"><a href="/md-editor-rt/zh-CN/demo"><svg class="icon" aria-hidden="true"><use xlink:href="#med-icon-example"></use></svg>示例</a></li><li class="nav-item"><a target="_blank" href="https://github.com/imzbf/md-editor-rt"><svg class="icon" aria-hidden="true"><use xlink:href="#med-icon-github"></use></svg>源码</a></li><li class="nav-item"><a href="/md-editor-rt/zh-CN/syntax"><svg class="icon" aria-hidden="true"><use xlink:href="#med-icon-syntax"></use></svg>语法</a></li><li class="nav-item"><a href="/md-editor-rt/zh-CN/contrast"><svg class="icon" aria-hidden="true"><use xlink:href="#med-icon-question"></use></svg>对比</a></li><li class="nav-item"><a href="/md-editor-rt/zh-CN/about"><svg class="icon" aria-hidden="true"><use xlink:href="#med-icon-about"></use></svg>关于</a></li><li class="nav-item"><a style="display:none" href="/md-editor-rt/md-editor-rt/en-US">English</a><svg class="icon" aria-hidden="true"><use xlink:href="#med-icon-en"></use></svg>English</li></ul><p class="header-actions"><button class="btn btn-header">默认模式</button><button class="btn btn-header">暗黑模式</button><button class="btn btn-header">预览主题</button><button class="btn btn-header">代码主题</button></p></div><div class="mb"><svg class="icon m-menu-trigger" aria-hidden="true"><use xlink:href="#med-icon-drawer"></use></svg></div></section></header><div class="container"><div class="doc"><div class="content"><div id="md-demo-zh" class="md-editor md-editor-previewOnly"><div id="md-demo-zh-preview" class="md-editor-preview default-theme md-editor-scrn"><h2 id="😁 基本使用示例" tabindex="-1" data-line="0"><a class="header-anchor" href="#😁 基本使用示例">😁 基本使用示例</a></h2>
+<!DOCTYPE html><html lang="en-US" data-scroll-behavior="smooth"><head><meta charSet="utf-8" data-next-head=""/><meta name="viewport" content="width=device-width, initial-scale=1" data-next-head=""/><title data-next-head="">示例 - MdEditorRT 使用文档</title><meta name="keywords" content="MD Editor, md-editor-rt, Markdown 编辑器, React Markdown, React TSX, Markdown 组件, Markdown preview, React 编辑器" data-next-head=""/><meta name="description" content="md-editor-rt 是一个基于 React 和 TSX 开发的 Markdown 编辑器组件，支持实时预览和丰富的 Markdown 功能。查阅详细的开发文档与使用示例。" data-next-head=""/><link rel="preload" href="/md-editor-rt/_next/static/css/591feeecc669fb12.css" as="style"/><link rel="stylesheet" href="/md-editor-rt/_next/static/css/591feeecc669fb12.css" data-n-g=""/><noscript data-n-css=""></noscript><script defer="" noModule="" src="/md-editor-rt/_next/static/chunks/polyfills-42372ed130431b0a.js"></script><script src="/md-editor-rt/_next/static/chunks/webpack-168d9e816187d66a.js" defer=""></script><script src="/md-editor-rt/_next/static/chunks/framework-4a99af1472046e21.js" defer=""></script><script src="/md-editor-rt/_next/static/chunks/main-53cc964ab46430d5.js" defer=""></script><script src="/md-editor-rt/_next/static/chunks/pages/_app-c69aeadce337e5a7.js" defer=""></script><script src="/md-editor-rt/_next/static/chunks/6791-1aa0e1511d662562.js" defer=""></script><script src="/md-editor-rt/_next/static/chunks/pages/zh-CN/demo-3a37419d66dd0d77.js" defer=""></script><script src="/md-editor-rt/_next/static/WqZWCWROKLRNHwaNdwz6E/_buildManifest.js" defer=""></script><script src="/md-editor-rt/_next/static/WqZWCWROKLRNHwaNdwz6E/_ssgManifest.js" defer=""></script></head><body><div id="__next"><header class="page-header"><section class="container"><h1 class="project-name">md-editor-rt<sup>@<!-- -->6.0.2</sup></h1><p class="project-desc">Markdown编辑器React版本，使用jsx和typescript语法开发，支持切换主题、prettier美化文本等。</p><div class="pc"><ul class="nav-list"><li class="nav-item"><a href="/md-editor-rt/zh-CN"><svg class="icon" aria-hidden="true"><use xlink:href="#med-icon-homepage"></use></svg>首页</a></li><li class="nav-item"><a href="/md-editor-rt/zh-CN/api"><svg class="icon" aria-hidden="true"><use xlink:href="#med-icon-api"></use></svg>API</a></li><li class="nav-item"><a href="/md-editor-rt/zh-CN/demo"><svg class="icon" aria-hidden="true"><use xlink:href="#med-icon-example"></use></svg>示例</a></li><li class="nav-item"><a target="_blank" href="https://github.com/imzbf/md-editor-rt"><svg class="icon" aria-hidden="true"><use xlink:href="#med-icon-github"></use></svg>源码</a></li><li class="nav-item"><a href="/md-editor-rt/zh-CN/syntax"><svg class="icon" aria-hidden="true"><use xlink:href="#med-icon-syntax"></use></svg>语法</a></li><li class="nav-item"><a href="/md-editor-rt/zh-CN/contrast"><svg class="icon" aria-hidden="true"><use xlink:href="#med-icon-question"></use></svg>对比</a></li><li class="nav-item"><a href="/md-editor-rt/zh-CN/about"><svg class="icon" aria-hidden="true"><use xlink:href="#med-icon-about"></use></svg>关于</a></li><li class="nav-item"><a style="display:none" href="/md-editor-rt/md-editor-rt/en-US">English</a><svg class="icon" aria-hidden="true"><use xlink:href="#med-icon-en"></use></svg>English</li></ul><p class="header-actions"><button class="btn btn-header">默认模式</button><button class="btn btn-header">暗黑模式</button><button class="btn btn-header">预览主题</button><button class="btn btn-header">代码主题</button></p></div><div class="mb"><svg class="icon m-menu-trigger" aria-hidden="true"><use xlink:href="#med-icon-drawer"></use></svg></div></section></header><div class="container"><div class="doc"><div class="content"><div id="md-demo-zh" class="md-editor md-editor-previewOnly"><div id="md-demo-zh-preview" class="md-editor-preview default-theme md-editor-scrn"><h2 id="😁 基本使用示例" tabindex="-1" data-line="0"><a class="header-anchor" href="#😁 基本使用示例">😁 基本使用示例</a></h2>
 <p data-line="2">目前一直在迭代开发，所以尽量安装最新版本。发布日志请前往：<a href="https://github.com/imzbf/md-editor-rt/releases" target="_blank">releases</a></p>
 <h3 id="🤓 CDN 链接" tabindex="-1" data-line="4"><a class="header-anchor" href="#🤓 CDN 链接">🤓 CDN 链接</a></h3>
 <p data-line="6">通过直接链接生产版本来使用，下面是一个小例子：</p>
@@ -215,7 +215,7 @@ export default () =&gt; {
 <p data-line="128">想要替换、删除快捷键的基本原理是找到对应的扩展，然后遍历这个快捷键配置的数组，找到并处理它。</p>
 </li>
 <li data-line="130">
-<p data-line="130">事实上，<code>config</code>中<code>codeMirrorExtensions</code>的第二入参<code>extensions</code>是一个数组，它的第一项就是快捷键扩展，第三入参就是默认的快捷键配置。</p>
+<p data-line="130"><code>config</code>中<code>codeMirrorExtensions</code>的第一入参<code>extensions</code>是一个数组，可以用<code>extensions[i].type</code>区分类型。</p>
 </li>
 </ul>
 <h4 id="💅 修改快捷键" tabindex="-1" data-line="132"><a class="header-anchor" href="#💅 修改快捷键">💅 修改快捷键</a></h4>
@@ -235,14 +235,14 @@ export default () =&gt; {
 import { keymap } from '@codemirror/view';
 
 config({
-  // [keymap, minimalSetup, markdown, EditorView.lineWrapping, EditorView.updateListener, EditorView.domEventHandlers, oneDark??oneLight]
-  codeMirrorExtensions(theme, extensions, mdEditorCommands) {
-    const newExtensions = [...extensions];
+  codeMirrorExtensions(extensions, { keyBindings }) {
     // 1. 先把默认的快捷键扩展移除
-    newExtensions.shift();
+    const newExtensions = [...extensions].filter((item) =&gt; {
+      return item.type !== 'keymap';
+    });
 
-    // 2. 参考快捷键配置的源码，找到CtrlB的配置项在mdEditorCommands中的位置
-    const CtrlB = mdEditorCommands[0];
+    // 2. 参考快捷键配置的源码，找到CtrlB的配置项在keyBindings中的位置
+    const CtrlB = keyBindings.find((i) =&gt; i.key === 'Ctrl-b');
 
     // 3. 配置codemirror快捷键的文档
     // https://codemirror.net/docs/ref/#commands
@@ -254,19 +254,22 @@ config({
     };
 
     // 4. 把修改后的快捷键放到待构建扩展的数组中
-    const newMdEditorCommands = [CtrlM, ...mdEditorCommands.filter((i) =&gt; i.key !== 'Ctrl-b')];
+    const newKeyBindings = [CtrlM, ...keyBindings.filter((i) =&gt; i.key !== 'Ctrl-b')];
 
-    newExtensions.push(keymap.of(newMdEditorCommands));
+    newExtensions.push({
+      type: 'newKeymap',
+      extension: keymap.of(newKeyBindings)
+    });
 
     return newExtensions;
   }
-});</span><span rn-wrapper aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+});</span><span rn-wrapper aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
         </details>
-      <h4 id="✂️ 删除快捷键" tabindex="-1" data-line="169"><a class="header-anchor" href="#✂️ 删除快捷键">✂️ 删除快捷键</a></h4>
-<p data-line="171">禁用所有快捷键</p>
+      <h4 id="✂️ 删除快捷键" tabindex="-1" data-line="172"><a class="header-anchor" href="#✂️ 删除快捷键">✂️ 删除快捷键</a></h4>
+<p data-line="174">禁用所有快捷键</p>
 
-        <details  data-line="173" class="md-editor-code" open="">
+        <details  data-line="176" class="md-editor-code" open="">
           <summary class="md-editor-code-head">
             <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
             <div class="md-editor-code-action">
@@ -279,11 +282,11 @@ config({
           <pre><code class="language-js" language=js><span class="md-editor-code-block">import { config } from 'md-editor-rt';
 
 config({
-  // [keymap, minimalSetup, markdown, EditorView.lineWrapping, EditorView.updateListener, EditorView.domEventHandlers, oneDark??oneLight]
-  codeMirrorExtensions(theme, extensions) {
-    const newExtensions = [...extensions];
+  codeMirrorExtensions(extensions) {
     // 1. 把默认的快捷键扩展移除
-    newExtensions.shift();
+    const newExtensions = [...extensions].filter((item) =&gt; {
+      return item.type !== 'keymap';
+    });
 
     // 2. 返回扩展列表即可
     return newExtensions;
@@ -291,13 +294,13 @@ config({
 });</span><span rn-wrapper aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
         </details>
-      <h4 id="💉 新增快捷键" tabindex="-1" data-line="189"><a class="header-anchor" href="#💉 新增快捷键">💉 新增快捷键</a></h4>
-<p data-line="191">如果涉及到向编辑框插入内容，这是需要借助组件实例上绑定的<code>insert</code>方法，参考<a href="/md-editor-rt/zh-CN/docs#%F0%9F%92%89%20insert" target="_blank">手动向文本框插入内容</a>。</p>
-<p data-line="193">如果不是在编辑器所在的组件中使用<code>config</code>，这是无法拿到编辑器组件实例，这时，你可能需要借助<code>event-bus</code>。</p>
-<p data-line="195">示例实现<code>Ctrl+m</code>向编辑框插入标记模块(<code>==mark==</code>)</p>
-<p data-line="197"><code>index.ts</code></p>
+      <h4 id="💉 新增快捷键" tabindex="-1" data-line="192"><a class="header-anchor" href="#💉 新增快捷键">💉 新增快捷键</a></h4>
+<p data-line="194">如果涉及到向编辑框插入内容，这是需要借助组件实例上绑定的<code>insert</code>方法，参考<a href="/md-editor-rt/zh-CN/docs#%F0%9F%92%89%20insert" target="_blank">手动向文本框插入内容</a>。</p>
+<p data-line="196">如果不是在编辑器所在的组件中使用<code>config</code>，这是无法拿到编辑器组件实例，这时，你可能需要借助<code>event-bus</code>。</p>
+<p data-line="198">示例实现<code>Ctrl+m</code>向编辑框插入标记模块(<code>==mark==</code>)</p>
+<p data-line="200"><code>index.ts</code></p>
 
-        <details  data-line="199" class="md-editor-code">
+        <details  data-line="202" class="md-editor-code">
           <summary class="md-editor-code-head">
             <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
             <div class="md-editor-code-action">
@@ -313,11 +316,11 @@ import { keymap, KeyBinding } from '@codemirror/view';
 import bus from '@/utils/event-bus';
 
 config({
-  // [keymap, minimalSetup, markdown, EditorView.lineWrapping, EditorView.updateListener, EditorView.domEventHandlers, oneDark??oneLight]
-  codeMirrorExtensions(theme, extensions, mdEditorCommands) {
-    const newExtensions = [...extensions];
-    // 1. 先把默认的快捷键扩展移除
-    newExtensions.shift();
+  codeMirrorExtensions(extensions, { keyBindings }) {
+    // 1. 把默认的快捷键扩展移除
+    const newExtensions = [...extensions].filter((item) =&gt; {
+      return item.type !== 'keymap';
+    });
 
     // 2. 创建一个新的快捷键配置，参考https://codemirror.net/docs/ref/#commands
     const CtrlM: KeyBinding = {
@@ -330,19 +333,22 @@ config({
     };
 
     // 4. 把新的快捷键添加到数组中
-    const newMdEditorCommands = [...mdEditorCommands, CtrlM];
+    const newKeyBindings = [...keyBindings, CtrlM];
 
-    newExtensions.push(keymap.of(newMdEditorCommands));
+    newExtensions.push({
+      type: 'newKeymap',
+      extension: keymap.of(newKeyBindings),
+    });
 
     return newExtensions;
   },
-});</span><span rn-wrapper aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+});</span><span rn-wrapper aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
         </details>
-      <p data-line="232">接下来在编辑器所在组件监听<code>insertMarkBlock</code>这个事件</p>
-<p data-line="234"><code>App.tsx</code></p>
+      <p data-line="238">接下来在编辑器所在组件监听<code>insertMarkBlock</code>这个事件</p>
+<p data-line="240"><code>App.tsx</code></p>
 
-        <details  data-line="236" class="md-editor-code" open="">
+        <details  data-line="242" class="md-editor-code" open="">
           <summary class="md-editor-code-head">
             <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
             <div class="md-editor-code-action">
@@ -380,9 +386,9 @@ const App = () =&gt; {
 };</span><span rn-wrapper aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
         </details>
-      <p data-line="265">附：<code>EventBus</code>最简单实现</p>
+      <p data-line="271">附：<code>EventBus</code>最简单实现</p>
 
-        <details  data-line="267" class="md-editor-code">
+        <details  data-line="273" class="md-editor-code">
           <summary class="md-editor-code-head">
             <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
             <div class="md-editor-code-action">
@@ -426,12 +432,12 @@ class EventBus {
 export default new EventBus();</span><span rn-wrapper aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
         </details>
-      <h3 id="🍦 主题切换" tabindex="-1" data-line="302"><a class="header-anchor" href="#🍦 主题切换">🍦 主题切换</a></h3>
-<p data-line="304">主题分为了编辑器主题（<code>theme</code>，称为全局主题）、预览内容主题（<code>previewTheme</code>）和块级代码主题（<code>codeTheme</code>）。</p>
-<h4 id="🍧 编辑器主题" tabindex="-1" data-line="306"><a class="header-anchor" href="#🍧 编辑器主题">🍧 编辑器主题</a></h4>
-<p data-line="308">支持默认和暗夜模式两种</p>
+      <h3 id="🍦 主题切换" tabindex="-1" data-line="308"><a class="header-anchor" href="#🍦 主题切换">🍦 主题切换</a></h3>
+<p data-line="310">主题分为了编辑器主题（<code>theme</code>，称为全局主题）、预览内容主题（<code>previewTheme</code>）和块级代码主题（<code>codeTheme</code>）。</p>
+<h4 id="🍧 编辑器主题" tabindex="-1" data-line="312"><a class="header-anchor" href="#🍧 编辑器主题">🍧 编辑器主题</a></h4>
+<p data-line="314">支持默认和暗夜模式两种</p>
 
-        <details  data-line="310" class="md-editor-code" open="">
+        <details  data-line="316" class="md-editor-code" open="">
           <summary class="md-editor-code-head">
             <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
             <div class="md-editor-code-action">
@@ -452,10 +458,10 @@ export default () =&gt; {
 };</span><span rn-wrapper aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
         </details>
-      <h4 id="🍡 预览主题" tabindex="-1" data-line="322"><a class="header-anchor" href="#🍡 预览主题">🍡 预览主题</a></h4>
-<p data-line="324">内置了<code>default</code>、<code>github</code>、<code>vuepress</code>、<code>mk-cute</code>、<code>smart-blue</code>、<code>cyanosis</code>6 种主题，在一些直接预览文档内容时使用。并且支持在线切换（修改<code>previewTheme</code>即可）和自行扩展。</p>
+      <h4 id="🍡 预览主题" tabindex="-1" data-line="328"><a class="header-anchor" href="#🍡 预览主题">🍡 预览主题</a></h4>
+<p data-line="330">内置了<code>default</code>、<code>github</code>、<code>vuepress</code>、<code>mk-cute</code>、<code>smart-blue</code>、<code>cyanosis</code>6 种主题，在一些直接预览文档内容时使用。并且支持在线切换（修改<code>previewTheme</code>即可）和自行扩展。</p>
 
-        <details  data-line="326" class="md-editor-code" open="">
+        <details  data-line="332" class="md-editor-code" open="">
           <summary class="md-editor-code-head">
             <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
             <div class="md-editor-code-action">
@@ -476,15 +482,15 @@ export default () =&gt; {
 };</span><span rn-wrapper aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
         </details>
-      <ul data-line="338">
-<li data-line="338">
-<p data-line="338">自定义</p>
-<ol data-line="339">
-<li data-line="339">先以<code>xxx-theme</code>为类名，定义你的主题<code>css</code>，xxx 是主题名称，具体的内容参考<a href="https://github.com/imzbf/markdown-theme" target="_blank">markdown-theme</a></li>
+      <ul data-line="344">
+<li data-line="344">
+<p data-line="344">自定义</p>
+<ol data-line="345">
+<li data-line="345">先以<code>xxx-theme</code>为类名，定义你的主题<code>css</code>，xxx 是主题名称，具体的内容参考<a href="https://github.com/imzbf/markdown-theme" target="_blank">markdown-theme</a></li>
 </ol>
-<p data-line="341"><em>xxx.css</em></p>
+<p data-line="347"><em>xxx.css</em></p>
 
-        <details  data-line="343" class="md-editor-code" open="">
+        <details  data-line="349" class="md-editor-code" open="">
           <summary class="md-editor-code-head">
             <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
             <div class="md-editor-code-action">
@@ -499,11 +505,11 @@ export default () =&gt; {
 }</span><span rn-wrapper aria-hidden="true"><span></span><span></span><span></span></span></code></pre>
 
         </details>
-      <ol start="2" data-line="349">
-<li data-line="349">全局引入</li>
+      <ol start="2" data-line="355">
+<li data-line="355">全局引入</li>
 </ol>
 
-        <details  data-line="351" class="md-editor-code" open="">
+        <details  data-line="357" class="md-editor-code" open="">
           <summary class="md-editor-code-head">
             <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
             <div class="md-editor-code-action">
@@ -516,11 +522,11 @@ export default () =&gt; {
           <pre><code class="language-js" language=js><span class="md-editor-code-block">import 'xxx.css';</span><span rn-wrapper aria-hidden="true"><span></span></span></code></pre>
 
         </details>
-      <ol start="3" data-line="355">
-<li data-line="355">设置<code>previewTheme</code>为 xxx</li>
+      <ol start="3" data-line="361">
+<li data-line="361">设置<code>previewTheme</code>为 xxx</li>
 </ol>
 
-        <details  data-line="357" class="md-editor-code" open="">
+        <details  data-line="363" class="md-editor-code" open="">
           <summary class="md-editor-code-head">
             <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
             <div class="md-editor-code-action">
@@ -535,13 +541,13 @@ export default () =&gt; {
         </details>
       </li>
 </ul>
-<h4 id="🎄 代码主题" tabindex="-1" data-line="361"><a class="header-anchor" href="#🎄 代码主题">🎄 代码主题</a></h4>
-<p data-line="363">内置了<code>atom</code>、<code>a11y</code>、<code>github</code>、<code>gradient</code>、<code>kimbie</code>、<code>paraiso</code>、<code>qtcreator</code>、<code>stackoverflow</code>代码主题，均来至<a href="https://highlightjs.org/" target="_blank">highlight.js</a></p>
-<ul data-line="365">
-<li data-line="365">
-<p data-line="365">使用</p>
+<h4 id="🎄 代码主题" tabindex="-1" data-line="367"><a class="header-anchor" href="#🎄 代码主题">🎄 代码主题</a></h4>
+<p data-line="369">内置了<code>atom</code>、<code>a11y</code>、<code>github</code>、<code>gradient</code>、<code>kimbie</code>、<code>paraiso</code>、<code>qtcreator</code>、<code>stackoverflow</code>代码主题，均来至<a href="https://highlightjs.org/" target="_blank">highlight.js</a></p>
+<ul data-line="371">
+<li data-line="371">
+<p data-line="371">使用</p>
 
-        <details  data-line="367" class="md-editor-code" open="">
+        <details  data-line="373" class="md-editor-code" open="">
           <summary class="md-editor-code-head">
             <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
             <div class="md-editor-code-action">
@@ -563,13 +569,13 @@ export default () =&gt; {
 
         </details>
       </li>
-<li data-line="379">
-<p data-line="379">自定义</p>
-<ol data-line="380">
-<li data-line="380">找到你喜欢的代码主题，最好支持暗夜模式</li>
+<li data-line="385">
+<p data-line="385">自定义</p>
+<ol data-line="386">
+<li data-line="386">找到你喜欢的代码主题，最好支持暗夜模式</li>
 </ol>
 
-        <details  data-line="382" class="md-editor-code" open="">
+        <details  data-line="388" class="md-editor-code" open="">
           <summary class="md-editor-code-head">
             <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
             <div class="md-editor-code-action">
@@ -599,9 +605,9 @@ config({
 });</span><span rn-wrapper aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
         </details>
-      <p data-line="403">你可以通过将<code>css</code>的<code>key</code>设置为内置名称来覆盖内置的链接。2. 设置<code>codeTheme</code></p>
+      <p data-line="409">你可以通过将<code>css</code>的<code>key</code>设置为内置名称来覆盖内置的链接。2. 设置<code>codeTheme</code></p>
 
-        <details  data-line="405" class="md-editor-code" open="">
+        <details  data-line="411" class="md-editor-code" open="">
           <summary class="md-editor-code-head">
             <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
             <div class="md-editor-code-action">
@@ -616,12 +622,12 @@ config({
         </details>
       </li>
 </ul>
-<h3 id="🛠 扩展库替换" tabindex="-1" data-line="409"><a class="header-anchor" href="#🛠 扩展库替换">🛠 扩展库替换</a></h3>
-<p data-line="411">highlight、prettier、cropper、screenfull 均使用外链引入，在无外网的时候，部分可将项目中已安装的依赖传入，也可以使用下载好的引用。</p>
-<p data-line="413"><code>screenfull</code> 的例子：</p>
-<h4 id="⚰️ 内置实例" tabindex="-1" data-line="415"><a class="header-anchor" href="#⚰️ 内置实例">⚰️ 内置实例</a></h4>
+<h3 id="🛠 扩展库替换" tabindex="-1" data-line="415"><a class="header-anchor" href="#🛠 扩展库替换">🛠 扩展库替换</a></h3>
+<p data-line="417">highlight、prettier、cropper、screenfull 均使用外链引入，在无外网的时候，部分可将项目中已安装的依赖传入，也可以使用下载好的引用。</p>
+<p data-line="419"><code>screenfull</code> 的例子：</p>
+<h4 id="⚰️ 内置实例" tabindex="-1" data-line="421"><a class="header-anchor" href="#⚰️ 内置实例">⚰️ 内置实例</a></h4>
 
-        <details  data-line="417" class="md-editor-code" open="">
+        <details  data-line="423" class="md-editor-code" open="">
           <summary class="md-editor-code-head">
             <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
             <div class="md-editor-code-action">
@@ -651,10 +657,10 @@ export default () =&gt; {
 };</span><span rn-wrapper aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
         </details>
-      <h4 id="📡 内网链接" tabindex="-1" data-line="438"><a class="header-anchor" href="#📡 内网链接">📡 内网链接</a></h4>
-<p data-line="440">对应的 js 文件可以去<a href="https://unpkg.com" target="_blank">unpkg.com</a>，直接找到对应的文件下载即可。</p>
+      <h4 id="📡 内网链接" tabindex="-1" data-line="444"><a class="header-anchor" href="#📡 内网链接">📡 内网链接</a></h4>
+<p data-line="446">对应的 js 文件可以去<a href="https://unpkg.com" target="_blank">unpkg.com</a>，直接找到对应的文件下载即可。</p>
 
-        <details  data-line="442" class="md-editor-code" open="">
+        <details  data-line="448" class="md-editor-code" open="">
           <summary class="md-editor-code-head">
             <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
             <div class="md-editor-code-action">
@@ -682,13 +688,13 @@ export default () =&gt; {
 };</span><span rn-wrapper aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
         </details>
-      <h3 id="📷 图片上传" tabindex="-1" data-line="461"><a class="header-anchor" href="#📷 图片上传">📷 图片上传</a></h3>
-<p data-line="463">默认可以选择多张图片，支持截图粘贴板上传图片，支持复制网页图片粘贴上传。</p>
-<blockquote data-line="465">
-<p data-line="465">注意：粘贴板上传时，如果是网页上的 gif 图，无法正确上传为 gif 格式！请保存本地后再手动上传。</p>
+      <h3 id="📷 图片上传" tabindex="-1" data-line="467"><a class="header-anchor" href="#📷 图片上传">📷 图片上传</a></h3>
+<p data-line="469">默认可以选择多张图片，支持截图粘贴板上传图片，支持复制网页图片粘贴上传。</p>
+<blockquote data-line="471">
+<p data-line="471">注意：粘贴板上传时，如果是网页上的 gif 图，无法正确上传为 gif 格式！请保存本地后再手动上传。</p>
 </blockquote>
 
-        <details  data-line="467" class="md-editor-code">
+        <details  data-line="473" class="md-editor-code">
           <summary class="md-editor-code-head">
             <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
             <div class="md-editor-code-action">
@@ -730,9 +736,9 @@ export default () =&gt; {
 };</span><span rn-wrapper aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
         </details>
-      <h3 id="🏳️‍🌈 语言扩展与替换" tabindex="-1" data-line="500"><a class="header-anchor" href="#🏳️‍🌈 语言扩展与替换">🏳️‍🌈 语言扩展与替换</a></h3>
+      <h3 id="🏳️‍🌈 语言扩展与替换" tabindex="-1" data-line="506"><a class="header-anchor" href="#🏳️‍🌈 语言扩展与替换">🏳️‍🌈 语言扩展与替换</a></h3>
 
-        <details  data-line="502" class="md-editor-code">
+        <details  data-line="508" class="md-editor-code">
           <summary class="md-editor-code-head">
             <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
             <div class="md-editor-code-action">
@@ -842,13 +848,13 @@ export default () =&gt; {
 };</span><span rn-wrapper aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
         </details>
-      <p data-line="603">你也可以使用现成的扩展语言：<a href="https://github.com/imzbf/md-editor-extension" target="_blank">md-editor-extension</a>。使用及贡献方式见扩展库文档~</p>
-<h3 id="📄 目录获取与展示" tabindex="-1" data-line="605"><a class="header-anchor" href="#📄 目录获取与展示">📄 目录获取与展示</a></h3>
-<ul data-line="607">
-<li data-line="607">
-<p data-line="607">获取</p>
+      <p data-line="609">你也可以使用现成的扩展语言：<a href="https://github.com/imzbf/md-editor-extension" target="_blank">md-editor-extension</a>。使用及贡献方式见扩展库文档~</p>
+<h3 id="📄 目录获取与展示" tabindex="-1" data-line="611"><a class="header-anchor" href="#📄 目录获取与展示">📄 目录获取与展示</a></h3>
+<ul data-line="613">
+<li data-line="613">
+<p data-line="613">获取</p>
 
-        <details  data-line="609" class="md-editor-code" open="">
+        <details  data-line="615" class="md-editor-code" open="">
           <summary class="md-editor-code-head">
             <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
             <div class="md-editor-code-action">
@@ -871,11 +877,11 @@ export default () =&gt; {
 
         </details>
       </li>
-<li data-line="622">
-<p data-line="622">展示</p>
-<p data-line="624">使用内置<code>MdCatalog</code>组件</p>
+<li data-line="628">
+<p data-line="628">展示</p>
+<p data-line="630">使用内置<code>MdCatalog</code>组件</p>
 
-        <details  data-line="626" class="md-editor-code" open="">
+        <details  data-line="632" class="md-editor-code" open="">
           <summary class="md-editor-code-head">
             <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
             <div class="md-editor-code-action">
@@ -908,10 +914,10 @@ export default () =&gt; {
         </details>
       </li>
 </ul>
-<h3 id="🪚 调整工具栏" tabindex="-1" data-line="648"><a class="header-anchor" href="#🪚 调整工具栏">🪚 调整工具栏</a></h3>
-<p data-line="650">从<code>v1.2.0</code>开始，支持调整工具栏内容顺序和分割符了 🤔。</p>
+<h3 id="🪚 调整工具栏" tabindex="-1" data-line="654"><a class="header-anchor" href="#🪚 调整工具栏">🪚 调整工具栏</a></h3>
+<p data-line="656">从<code>v1.2.0</code>开始，支持调整工具栏内容顺序和分割符了 🤔。</p>
 
-        <details  data-line="652" class="md-editor-code" open="">
+        <details  data-line="658" class="md-editor-code" open="">
           <summary class="md-editor-code-head">
             <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
             <div class="md-editor-code-action">
@@ -933,17 +939,17 @@ export default () =&gt; {
 };</span><span rn-wrapper aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
         </details>
-      <h3 id="💪 自定义工具栏" tabindex="-1" data-line="665"><a class="header-anchor" href="#💪 自定义工具栏">💪 自定义工具栏</a></h3>
-<p data-line="667">这里包含了<code>mark</code>标记扩展普通工具栏和<code>emoji</code>扩展下拉工具栏的类型</p>
-<p data-line="669">可运行源码参考本文档<a href="https://github.com/imzbf/md-editor-rt/blob/docs/src/pages/Preview/index.tsx" target="_blank">docs</a>。</p>
-<figure data-line="671"><img src="https://imzbf.github.io/md-editor-v3/imgs/mark_emoji.gif" alt="标记及Emoji预览" class="md-zoom"></figure>
-<blockquote data-line="673">
-<p data-line="673">更多 emoji，<a href="https://getemoji.com/" target="_blank">https://getemoji.com/</a>。</p>
+      <h3 id="💪 自定义工具栏" tabindex="-1" data-line="671"><a class="header-anchor" href="#💪 自定义工具栏">💪 自定义工具栏</a></h3>
+<p data-line="673">这里包含了<code>mark</code>标记扩展普通工具栏和<code>emoji</code>扩展下拉工具栏的类型</p>
+<p data-line="675">可运行源码参考本文档<a href="https://github.com/imzbf/md-editor-rt/blob/docs/src/pages/Preview/index.tsx" target="_blank">docs</a>。</p>
+<figure data-line="677"><img src="https://imzbf.github.io/md-editor-v3/imgs/mark_emoji.gif" alt="标记及Emoji预览" class="md-zoom"></figure>
+<blockquote data-line="679">
+<p data-line="679">更多 emoji，<a href="https://getemoji.com/" target="_blank">https://getemoji.com/</a>。</p>
 </blockquote>
-<h3 id="🧙‍♂️ 调整编辑器样式" tabindex="-1" data-line="675"><a class="header-anchor" href="#🧙‍♂️ 调整编辑器样式">🧙‍♂️ 调整编辑器样式</a></h3>
-<p data-line="677">2.x 使用 css 变量定义了大部分内容：</p>
+<h3 id="🧙‍♂️ 调整编辑器样式" tabindex="-1" data-line="681"><a class="header-anchor" href="#🧙‍♂️ 调整编辑器样式">🧙‍♂️ 调整编辑器样式</a></h3>
+<p data-line="683">2.x 使用 css 变量定义了大部分内容：</p>
 
-        <details  data-line="679" class="md-editor-code" open="">
+        <details  data-line="685" class="md-editor-code" open="">
           <summary class="md-editor-code-head">
             <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
             <div class="md-editor-code-action">
@@ -978,9 +984,9 @@ export default () =&gt; {
 }</span><span rn-wrapper aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
         </details>
-      <p data-line="705">只需要调整对应的 css 变量，比如调整暗夜模式下的背景：</p>
+      <p data-line="711">只需要调整对应的 css 变量，比如调整暗夜模式下的背景：</p>
 
-        <details  data-line="707" class="md-editor-code" open="">
+        <details  data-line="713" class="md-editor-code" open="">
           <summary class="md-editor-code-head">
             <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
             <div class="md-editor-code-action">
@@ -995,13 +1001,13 @@ export default () =&gt; {
 }</span><span rn-wrapper aria-hidden="true"><span></span><span></span><span></span></span></code></pre>
 
         </details>
-      <h3 id="🙍🏻‍♂️ 自行引入扩展库" tabindex="-1" data-line="713"><a class="header-anchor" href="#🙍🏻‍♂️ 自行引入扩展库">🙍🏻‍♂️ 自行引入扩展库</a></h3>
-<p data-line="715">这里给出一个完全不使用外部链接，全部自行引入的示例：</p>
-<ol data-line="717">
-<li data-line="717">安装依赖</li>
+      <h3 id="🙍🏻‍♂️ 自行引入扩展库" tabindex="-1" data-line="719"><a class="header-anchor" href="#🙍🏻‍♂️ 自行引入扩展库">🙍🏻‍♂️ 自行引入扩展库</a></h3>
+<p data-line="721">这里给出一个完全不使用外部链接，全部自行引入的示例：</p>
+<ol data-line="723">
+<li data-line="723">安装依赖</li>
 </ol>
 
-        <details  data-line="719" class="md-editor-code" open="">
+        <details  data-line="725" class="md-editor-code" open="">
           <summary class="md-editor-code-head">
             <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
             <div class="md-editor-code-action">
@@ -1014,18 +1020,18 @@ export default () =&gt; {
           <pre><code class="language-shell" language=shell><span class="md-editor-code-block">yarn add screenfull katex cropperjs@1 mermaid highlight.js prettier</span><span rn-wrapper aria-hidden="true"><span></span></span></code></pre>
 
         </details>
-      <div data-line="723" class="md-editor-admonition md-editor-admonition-info目前`cropperjs@2`正在优化中，暂未计划切换到">
-<p data-line="723" class="md-editor-admonition-title">2.0 版本。!!!</p>
-<ol start="2" data-line="725">
-<li data-line="725">配置到编辑器</li>
+      <div data-line="729" class="md-editor-admonition md-editor-admonition-info目前`cropperjs@2`正在优化中，暂未计划切换到">
+<p data-line="729" class="md-editor-admonition-title">2.0 版本。!!!</p>
+<ol start="2" data-line="731">
+<li data-line="731">配置到编辑器</li>
 </ol>
-<div data-line="727" class="md-editor-admonition md-editor-admonition-warning">
-<p data-line="729">我们建议你在项目入口配置，例如 vite 创建的项目中的 main.js。不要在组件中去调用 <code>config</code> ！</p>
+<div data-line="733" class="md-editor-admonition md-editor-admonition-warning">
+<p data-line="735">我们建议你在项目入口配置，例如 vite 创建的项目中的 main.js。不要在组件中去调用 <code>config</code> ！</p>
 </div>
 </div>
-<p data-line="733">main.js</p>
+<p data-line="739">main.js</p>
 
-        <details  data-line="735" class="md-editor-code">
+        <details  data-line="741" class="md-editor-code">
           <summary class="md-editor-code-head">
             <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
             <div class="md-editor-code-action">
@@ -1092,9 +1098,9 @@ config({
 });</span><span rn-wrapper aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
         </details>
-      <p data-line="793">App.jsx</p>
+      <p data-line="799">App.jsx</p>
 
-        <details  data-line="795" class="md-editor-code" open="">
+        <details  data-line="801" class="md-editor-code" open="">
           <summary class="md-editor-code-head">
             <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
             <div class="md-editor-code-action">
@@ -1112,13 +1118,13 @@ export default () =&gt; {
 };</span><span rn-wrapper aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
         </details>
-      <blockquote data-line="804">
-<p data-line="804">注意：highlight 的样式自行引入后，将不支持切换代码样式。</p>
+      <blockquote data-line="810">
+<p data-line="810">注意：highlight 的样式自行引入后，将不支持切换代码样式。</p>
 </blockquote>
-<h3 id="🔒 编译时处理 XSS" tabindex="-1" data-line="806"><a class="header-anchor" href="#🔒 编译时处理 XSS">🔒 编译时处理 XSS</a></h3>
-<p data-line="808">5.0 版本将内置的 XSS 扩展导出了，不再默认添加， 导出的 XSS 扩展在默认白名单的基础上，增加了部分标签和属性：</p>
+<h3 id="🔒 编译时处理 XSS" tabindex="-1" data-line="812"><a class="header-anchor" href="#🔒 编译时处理 XSS">🔒 编译时处理 XSS</a></h3>
+<p data-line="814">5.0 版本将内置的 XSS 扩展导出了，不再默认添加， 导出的 XSS 扩展在默认白名单的基础上，增加了部分标签和属性：</p>
 
-        <details  data-line="810" class="md-editor-code">
+        <details  data-line="816" class="md-editor-code">
           <summary class="md-editor-code-head">
             <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
             <div class="md-editor-code-action">
@@ -1148,9 +1154,9 @@ export default () =&gt; {
 }</span><span rn-wrapper aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
         </details>
-      <h4 id="🔒 添加 xss 扩展" tabindex="-1" data-line="831"><a class="header-anchor" href="#🔒 添加 xss 扩展">🔒 添加 xss 扩展</a></h4>
+      <h4 id="🔒 添加 xss 扩展" tabindex="-1" data-line="837"><a class="header-anchor" href="#🔒 添加 xss 扩展">🔒 添加 xss 扩展</a></h4>
 
-        <details  data-line="833" class="md-editor-code" open="">
+        <details  data-line="839" class="md-editor-code" open="">
           <summary class="md-editor-code-head">
             <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
             <div class="md-editor-code-action">
@@ -1176,10 +1182,10 @@ config({
 });</span><span rn-wrapper aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
         </details>
-      <h4 id="🔏 修改 xss 配置" tabindex="-1" data-line="850"><a class="header-anchor" href="#🔏 修改 xss 配置">🔏 修改 xss 配置</a></h4>
-<p data-line="852">我们添加一个允许图片加载失败的事件</p>
+      <h4 id="🔏 修改 xss 配置" tabindex="-1" data-line="856"><a class="header-anchor" href="#🔏 修改 xss 配置">🔏 修改 xss 配置</a></h4>
+<p data-line="858">我们添加一个允许图片加载失败的事件</p>
 
-        <details  data-line="854" class="md-editor-code">
+        <details  data-line="860" class="md-editor-code">
           <summary class="md-editor-code-head">
             <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
             <div class="md-editor-code-action">
@@ -1235,11 +1241,11 @@ config({
 });</span><span rn-wrapper aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
         </details>
-      <p data-line="901">更新详细配置参考 <a href="https://github.com/leizongmin/js-xss/blob/master/README.zh.md" target="_blank">js-xss</a></p>
-<h3 id="🔒 编译后处理 XSS" tabindex="-1" data-line="903"><a class="header-anchor" href="#🔒 编译后处理 XSS">🔒 编译后处理 XSS</a></h3>
-<p data-line="905">通过<code>sanitize</code>属性，自行处理不安全的 html 内容。例如：使用<code>sanitize-html</code>处理</p>
+      <p data-line="907">更新详细配置参考 <a href="https://github.com/leizongmin/js-xss/blob/master/README.zh.md" target="_blank">js-xss</a></p>
+<h3 id="🔒 编译后处理 XSS" tabindex="-1" data-line="909"><a class="header-anchor" href="#🔒 编译后处理 XSS">🔒 编译后处理 XSS</a></h3>
+<p data-line="911">通过<code>sanitize</code>属性，自行处理不安全的 html 内容。例如：使用<code>sanitize-html</code>处理</p>
 
-        <details  data-line="907" class="md-editor-code" open="">
+        <details  data-line="913" class="md-editor-code" open="">
           <summary class="md-editor-code-head">
             <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
             <div class="md-editor-code-action">
@@ -1253,7 +1259,7 @@ config({
 
         </details>
       
-        <details  data-line="911" class="md-editor-code" open="">
+        <details  data-line="917" class="md-editor-code" open="">
           <summary class="md-editor-code-head">
             <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
             <div class="md-editor-code-action">
@@ -1274,10 +1280,10 @@ export default () =&gt; {
 };</span><span rn-wrapper aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
         </details>
-      <p data-line="923">更详细的实现可以参考本文档的源码！</p>
-<h3 id="🗂 折叠文档内容" tabindex="-1" data-line="925"><a class="header-anchor" href="#🗂 折叠文档内容">🗂 折叠文档内容</a></h3>
+      <p data-line="929">更详细的实现可以参考本文档的源码！</p>
+<h3 id="🗂 折叠文档内容" tabindex="-1" data-line="931"><a class="header-anchor" href="#🗂 折叠文档内容">🗂 折叠文档内容</a></h3>
 
-        <details  data-line="927" class="md-editor-code" open="">
+        <details  data-line="933" class="md-editor-code" open="">
           <summary class="md-editor-code-head">
             <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
             <div class="md-editor-code-action">
@@ -1292,18 +1298,28 @@ import { foldGutter } from '@codemirror/language';
 import { lineNumbers } from '@codemirror/view';
 
 config({
-  codeMirrorExtensions(_theme, extensions) {
-    return [...extensions, lineNumbers(), foldGutter()];
+  codeMirrorExtensions(extensions) {
+    return [
+      ...extensions,
+      {
+        type: 'lineNumbers',
+        extension: lineNumbers()
+      },
+      {
+        type: 'foldGutter',
+        extension: foldGutter()
+      }
+    ];
   }
-});</span><span rn-wrapper aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+});</span><span rn-wrapper aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
         </details>
-      <h3 id="🏄🏻‍♂️ 新窗口打开链接" tabindex="-1" data-line="939"><a class="header-anchor" href="#🏄🏻‍♂️ 新窗口打开链接">🏄🏻‍♂️ 新窗口打开链接</a></h3>
-<ol data-line="941">
-<li data-line="941">安装额外的扩展</li>
+      <h3 id="🏄🏻‍♂️ 新窗口打开链接" tabindex="-1" data-line="955"><a class="header-anchor" href="#🏄🏻‍♂️ 新窗口打开链接">🏄🏻‍♂️ 新窗口打开链接</a></h3>
+<ol data-line="957">
+<li data-line="957">安装额外的扩展</li>
 </ol>
 
-        <details  data-line="943" class="md-editor-code" open="">
+        <details  data-line="959" class="md-editor-code" open="">
           <summary class="md-editor-code-head">
             <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
             <div class="md-editor-code-action">
@@ -1316,11 +1332,11 @@ config({
           <pre><code class="language-shell" language=shell><span class="md-editor-code-block">yarn add markdown-it-link-attributes</span><span rn-wrapper aria-hidden="true"><span></span></span></code></pre>
 
         </details>
-      <ol start="2" data-line="947">
-<li data-line="947">将扩展添加到编译器中</li>
+      <ol start="2" data-line="963">
+<li data-line="963">将扩展添加到编译器中</li>
 </ol>
 
-        <details  data-line="949" class="md-editor-code">
+        <details  data-line="965" class="md-editor-code">
           <summary class="md-editor-code-head">
             <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
             <div class="md-editor-code-action">
@@ -1367,9 +1383,9 @@ config({
 });</span><span rn-wrapper aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
         </details>
-      <h3 id="☑️ 可切换状态的任务列表" tabindex="-1" data-line="987"><a class="header-anchor" href="#☑️ 可切换状态的任务列表">☑️ 可切换状态的任务列表</a></h3>
+      <h3 id="☑️ 可切换状态的任务列表" tabindex="-1" data-line="1003"><a class="header-anchor" href="#☑️ 可切换状态的任务列表">☑️ 可切换状态的任务列表</a></h3>
 
-        <details  data-line="989" class="md-editor-code" open="">
+        <details  data-line="1005" class="md-editor-code" open="">
           <summary class="md-editor-code-head">
             <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
             <div class="md-editor-code-action">
@@ -1401,7 +1417,7 @@ config({
 
         </details>
       
-        <details  data-line="1011" class="md-editor-code" open="">
+        <details  data-line="1027" class="md-editor-code" open="">
           <summary class="md-editor-code-head">
             <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
             <div class="md-editor-code-action">
@@ -1414,10 +1430,10 @@ config({
           <pre><code class="language-jsx" language=jsx><span class="md-editor-code-block">&lt;MdEditor id=&quot;myId&quot; modelValue={text} onChange={setText} /&gt;</span><span rn-wrapper aria-hidden="true"><span></span></span></code></pre>
 
         </details>
-      <h3 id="🎳 协同办公" tabindex="-1" data-line="1015"><a class="header-anchor" href="#🎳 协同办公">🎳 协同办公</a></h3>
-<p data-line="1017">安装<a href="https://github.com/yjs/yjs" target="_blank">yjs</a>及相关库</p>
+      <h3 id="🎳 协同办公" tabindex="-1" data-line="1031"><a class="header-anchor" href="#🎳 协同办公">🎳 协同办公</a></h3>
+<p data-line="1033">安装<a href="https://github.com/yjs/yjs" target="_blank">yjs</a>及相关库</p>
 
-        <details  data-line="1019" class="md-editor-code" open="">
+        <details  data-line="1035" class="md-editor-code" open="">
           <summary class="md-editor-code-head">
             <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
             <div class="md-editor-code-action">
@@ -1430,9 +1446,9 @@ config({
           <pre><code class="language-shell" language=shell><span class="md-editor-code-block">npm i yjs y-codemirror.next y-websocket</span><span rn-wrapper aria-hidden="true"><span></span></span></code></pre>
 
         </details>
-      <p data-line="1023">在 <code>editorConfig.ts</code> 中添加 <code>yjs</code> 扩展：</p>
+      <p data-line="1039">在 <code>editorConfig.ts</code> 中添加 <code>yjs</code> 扩展：</p>
 
-        <details  data-line="1025" class="md-editor-code">
+        <details  data-line="1041" class="md-editor-code">
           <summary class="md-editor-code-head">
             <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
             <div class="md-editor-code-action">
@@ -1496,15 +1512,21 @@ export const createYjsExtension = (roomId: string) =&gt; {
 };
 
 config({
-  codeMirrorExtensions(_theme, extensions) {
-    return [...extensions, yjsCompartment.of([])];
+  codeMirrorExtensions(extensions) {
+    return [
+      ...extensions,
+      {
+        type: 'yjs',
+        extension: yjsCompartment.of([])
+      }
+    ];
   }
-});</span><span rn-wrapper aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+});</span><span rn-wrapper aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
         </details>
-      <p data-line="1086">如果只想在某一个编辑器中使用，尝试通过<code>editorId</code>进行区别(<code>^4.20.0</code>)：</p>
+      <p data-line="1108">如果只想在某一个编辑器中使用，尝试通过<code>editorId</code>进行区别(<code>^4.20.0</code>)：</p>
 
-        <details  data-line="1088" class="md-editor-code" open="">
+        <details  data-line="1110" class="md-editor-code" open="">
           <summary class="md-editor-code-head">
             <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
             <div class="md-editor-code-action">
@@ -1515,15 +1537,23 @@ config({
             </div>
           </summary>
           <pre><code class="language-js" language=js><span class="md-editor-code-block">config({
-  codeMirrorExtensions(_theme, extensions, _keyBindings, { editorId }) {
-    return editorId === 'myId' ? [...extensions, yjsCompartment.of([])] : extensions;
+  codeMirrorExtensions(extensions, { editorId }) {
+    return editorId === 'myId'
+      ? [
+          ...extensions,
+          {
+            type: 'yjs',
+            extension: yjsCompartment.of([])
+          }
+        ]
+      : extensions;
   }
-});</span><span rn-wrapper aria-hidden="true"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+});</span><span rn-wrapper aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
         </details>
-      <p data-line="1096">MyEditor.tsx</p>
+      <p data-line="1126">MyEditor.tsx</p>
 
-        <details  data-line="1098" class="md-editor-code">
+        <details  data-line="1128" class="md-editor-code">
           <summary class="md-editor-code-head">
             <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
             <div class="md-editor-code-action">
@@ -1573,12 +1603,12 @@ const MyEditor = () =&gt; {
 export default MyEditor;</span><span rn-wrapper aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
         </details>
-      <div data-line="1139" class="md-editor-admonition md-editor-admonition-tip">
-<p data-line="1141">上面的代码只展示了单个编辑器切换房间的方式，如果单页面存在多个编辑器并且需要切换房间，请自行探索。</p>
+      <div data-line="1169" class="md-editor-admonition md-editor-admonition-tip">
+<p data-line="1171">上面的代码只展示了单个编辑器切换房间的方式，如果单页面存在多个编辑器并且需要切换房间，请自行探索。</p>
 </div>
-<h3 id="📝 扩展代码块工具" tabindex="-1" data-line="1145"><a class="header-anchor" href="#📝 扩展代码块工具">📝 扩展代码块工具</a></h3>
+<h3 id="📝 扩展代码块工具" tabindex="-1" data-line="1175"><a class="header-anchor" href="#📝 扩展代码块工具">📝 扩展代码块工具</a></h3>
 
-        <details  data-line="1147" class="md-editor-code" open="">
+        <details  data-line="1177" class="md-editor-code" open="">
           <summary class="md-editor-code-head">
             <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
             <div class="md-editor-code-action">
@@ -1613,10 +1643,10 @@ export default MyEditor;</span><span rn-wrapper aria-hidden="true"><span></span>
 });</span><span rn-wrapper aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
         </details>
-      <p data-line="1173">它会被显示在复制代码按钮后面，配合<code>onRemount</code>事件，你能够正确的通过<code>querySelectorAll</code>获取到它们并绑定监听事件。</p>
-<p data-line="1175">下面是一个打印代码的示例：</p>
+      <p data-line="1203">它会被显示在复制代码按钮后面，配合<code>onRemount</code>事件，你能够正确的通过<code>querySelectorAll</code>获取到它们并绑定监听事件。</p>
+<p data-line="1205">下面是一个打印代码的示例：</p>
 
-        <details  data-line="1177" class="md-editor-code" open="">
+        <details  data-line="1207" class="md-editor-code" open="">
           <summary class="md-editor-code-head">
             <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
             <div class="md-editor-code-action">
@@ -1644,6 +1674,6 @@ export default MyEditor;</span><span rn-wrapper aria-hidden="true"><span></span>
 }, []);</span><span rn-wrapper aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
         </details>
-      <h2 id="🧻 编辑此页面" tabindex="-1" data-line="1196"><a class="header-anchor" href="#🧻 编辑此页面">🧻 编辑此页面</a></h2>
-<p data-line="1198"><a href="https://github.com/imzbf/md-editor-rt/blob/dev-docs/public/demo-zh-CN.md" target="_blank">demo-zh-CN</a></p>
-</div></div></div><div class="catalog"><div class="affix"><div class="md-editor-catalog"></div></div></div></div></div></div><script id="__NEXT_DATA__" type="application/json">{"props":{"pageProps":{}},"page":"/zh-CN/demo","query":{},"buildId":"0Kx-6Z7aLqHftZD4do46Y","assetPrefix":"/md-editor-rt","nextExport":true,"autoExport":true,"isFallback":false,"scriptLoader":[{"src":"//at.alicdn.com/t/c/font_2818624_gbt6qvt9lob.js","strategy":"afterInteractive"},{"async":true,"src":"https://www.googletagmanager.com/gtag/js?id=G-3R6P1XE0H0","strategy":"afterInteractive"},{"id":"gg","children":"window.dataLayer = window.dataLayer || [];\n                function gtag() {\n                  dataLayer.push(arguments);\n                }\n                gtag('js', new Date());\n                gtag('config', 'G-3R6P1XE0H0');","strategy":"afterInteractive"},{"src":"https://hm.baidu.com/hm.js?1563bc52cb27ffbc7b5b46cdfc327ce0","strategy":"afterInteractive"}]}</script></body></html>
+      <h2 id="🧻 编辑此页面" tabindex="-1" data-line="1226"><a class="header-anchor" href="#🧻 编辑此页面">🧻 编辑此页面</a></h2>
+<p data-line="1228"><a href="https://github.com/imzbf/md-editor-rt/blob/dev-docs/public/demo-zh-CN.md" target="_blank">demo-zh-CN</a></p>
+</div></div></div><div class="catalog"><div class="affix"><div class="md-editor-catalog"></div></div></div></div></div></div><script id="__NEXT_DATA__" type="application/json">{"props":{"pageProps":{}},"page":"/zh-CN/demo","query":{},"buildId":"WqZWCWROKLRNHwaNdwz6E","assetPrefix":"/md-editor-rt","nextExport":true,"autoExport":true,"isFallback":false,"scriptLoader":[{"src":"//at.alicdn.com/t/c/font_2818624_gbt6qvt9lob.js","strategy":"afterInteractive"},{"async":true,"src":"https://www.googletagmanager.com/gtag/js?id=G-3R6P1XE0H0","strategy":"afterInteractive"},{"id":"gg","children":"window.dataLayer = window.dataLayer || [];\n                function gtag() {\n                  dataLayer.push(arguments);\n                }\n                gtag('js', new Date());\n                gtag('config', 'G-3R6P1XE0H0');","strategy":"afterInteractive"},{"src":"https://hm.baidu.com/hm.js?1563bc52cb27ffbc7b5b46cdfc327ce0","strategy":"afterInteractive"}]}</script></body></html>
