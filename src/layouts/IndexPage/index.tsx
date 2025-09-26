@@ -1,4 +1,3 @@
-import { message } from '@vavt/message';
 import { Emoji, Mark, ExportPDF } from '@vavt/rt-extension';
 import { isMobile } from '@vavt/util';
 import { MdEditor, ExposeParam, Footers, ToolbarNames } from 'md-editor-rt';
@@ -19,35 +18,6 @@ const editorId = 'editor-preview';
 //     editorInstance: any;
 //   }
 // }
-
-let updateRatio: ((str: string) => void) | undefined;
-let closrRatio = () => {};
-
-const onProgress = ({ ratio }: { ratio: number }) => {
-  if (updateRatio) {
-    updateRatio(`Progress: ${ratio * 100}%`);
-  } else {
-    const { close, update } = message.info(`Progress: ${ratio * 100}%`, {
-      zIndex: 999999,
-      duration: 0
-    });
-
-    updateRatio = update;
-    closrRatio = close;
-  }
-};
-
-const onSuccess = () => {
-  closrRatio();
-
-  setTimeout(() => {
-    updateRatio = undefined;
-  }, 100);
-
-  message.success('Export successful.', {
-    zIndex: 999999
-  });
-};
 
 const footers: Footers[] = ['markdownTotal', '=', 0, 'scrollSwitch'];
 
@@ -126,7 +96,7 @@ const HomePage = ({ mdText, tips }: { mdText: string; tips: string }) => {
     return [
       <Mark key="mark-extension" />,
       <Emoji key="emoji-extension" />,
-      <ExportPDF key="ExportPDF" modelValue={md} height="700px" onProgress={onProgress} onSuccess={onSuccess} />
+      <ExportPDF key="ExportPDF" value={md} height="700px" />
     ];
   }, [md]);
 
@@ -182,7 +152,7 @@ const HomePage = ({ mdText, tips }: { mdText: string; tips: string }) => {
         <meta name="description" content={DESCRIPTION} />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
-
+      {state.theme}
       <div className="project-preview">
         <div className="container">
           <MdEditor

@@ -1195,10 +1195,10 @@
   resolved "https://registry.npmjs.org/@vavt/message/-/message-2.0.1.tgz#c6cd6863ce9cafeef4b3b27951accac65f0af657"
   integrity sha512-8WSw/MMFKXjf+021IhyawxPqWr/nbH8fPjzQtbVNwwjkhkpbdaanjDB6RI1Q2pn+cVOhFoORgEZuGUNj12CBMw==
 
-"@vavt/rt-extension@^3.0.0":
-  version "3.0.0"
-  resolved "https://registry.npmjs.org/@vavt/rt-extension/-/rt-extension-3.0.0.tgz#fa99f939a8b18ab05edac450c15689eb1d7baf10"
-  integrity sha512-6KxYg7ES/qfYhXhwUmAX1vODJNIYJtGy3UaNflXiIrwHqpiHzOmy5fPrTwjxP4jqccbTBD6qA5bR1DrtJ7lJng==
+"@vavt/rt-extension@^4.0.0":
+  version "4.0.0"
+  resolved "https://registry.npmjs.org/@vavt/rt-extension/-/rt-extension-4.0.0.tgz#34983850aac8fd290676e7a442adc9912f6bb20c"
+  integrity sha512-xo83NTW9+Qe41mU2W9yl9oLEyiovvsrnqCPdO/+bFMnjfMXPkEqDh132ANEXp4N6x0xNFAf9gJummEBYud6PfQ==
 
 "@vavt/util@^2.1.0":
   version "2.1.0"

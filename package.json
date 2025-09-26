@@ -12,7 +12,7 @@
     "@reduxjs/toolkit": "^2.9.0",
     "@vavt/cm-extension": "^1.11.0",
     "@vavt/message": "^2.0.1",
-    "@vavt/rt-extension": "^3.0.0",
+    "@vavt/rt-extension": "^4.0.0",
     "axios": "^1.11.0",
     "dayjs": "^1.11.18",
     "markdown-it-anchor": "^9.2.0",
