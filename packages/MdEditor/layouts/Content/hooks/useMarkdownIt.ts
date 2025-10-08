@@ -14,7 +14,7 @@ import {
 } from '~/static/event-name';
 import { HeadList, MarkdownItConfigPlugin, Themes } from '~/type';
 import { generateCodeRowNumber } from '~/utils';
-import { zoomMermaid } from '~/utils/dom';
+import { zoomMermaid, copyMermaid } from '~/utils/dom';
 import bus from '~/utils/event-bus';
 
 import useEcharts from './useEcharts';
@@ -261,6 +261,26 @@ const useMarkdownIt = (props: ContentPreviewProps, previewOnly: boolean) => {
     setHtml(html_);
   }, [md, modelValue, sanitize]);
 
+  // mermaid相关操作统一处理
+  const handleMermaidActions = useCallback(() => {
+    let clearZoomMermaidEvents = () => {};
+    let clearCopyMermaidEvents = () => {};
+
+    const mermaidEles = rootRef!.current?.querySelectorAll<HTMLElement>(
+      `#${editorId} p.${prefix}-mermaid:not([data-closed=false])`
+    );
+    clearCopyMermaidEvents = copyMermaid(mermaidEles, {
+      customIcon: customIconRef.current
+    });
+    if (editorExtensions.mermaid?.enableZoom) {
+      clearZoomMermaidEvents = zoomMermaid(mermaidEles, {
+        customIcon: customIconRef.current
+      });
+    }
+
+    return [clearZoomMermaidEvents, clearCopyMermaidEvents];
+  }, [editorExtensions.mermaid?.enableZoom, editorId, rootRef]);
+
   useEffect(() => {
     // 触发异步的保存事件（html总是会比text后更新）
     bus.emit(editorId, BUILD_FINISHED, html);
@@ -274,20 +294,11 @@ const useMarkdownIt = (props: ContentPreviewProps, previewOnly: boolean) => {
   }, [editorId, html, key, onGetCatalog, onHtmlChanged]);
 
   useEffect(() => {
-    let clearMermaidEvents = () => {};
+    let clearZoomMermaidEvents = () => {};
+    let clearCopyMermaidEvents = () => {};
     if (setting.preview) {
       void replaceMermaid().then(() => {
-        if (editorExtensions.mermaid?.enableZoom) {
-          clearMermaidEvents();
-          clearMermaidEvents = zoomMermaid(
-            rootRef!.current?.querySelectorAll(
-              `#${editorId} .${prefix}-mermaid:not([data-closed=false])`
-            ),
-            {
-              customIcon: customIconRef.current
-            }
-          );
-        }
+        [clearZoomMermaidEvents, clearCopyMermaidEvents] = handleMermaidActions();
       });
 
       void replaceEcharts();
@@ -297,16 +308,10 @@ const useMarkdownIt = (props: ContentPreviewProps, previewOnly: boolean) => {
     }
 
     return () => {
-      clearMermaidEvents();
+      clearZoomMermaidEvents();
+      clearCopyMermaidEvents();
     };
-  }, [
-    editorExtensions.mermaid?.enableZoom,
-    editorId,
-    replaceEcharts,
-    replaceMermaid,
-    rootRef,
-    setting.preview
-  ]);
+  }, [editorId, handleMermaidActions, replaceEcharts, replaceMermaid, setting.preview]);
 
   useEffect(() => {
     if (ignoreFirstRender.current) {
@@ -327,36 +332,26 @@ const useMarkdownIt = (props: ContentPreviewProps, previewOnly: boolean) => {
   }, [needReRender, theme, markHtml, language, previewOnly, editorConfig.renderDelay]);
 
   useEffect(() => {
-    let clearMermaidEvents = () => {};
+    let clearZoomMermaidEvents = () => {};
+    let clearCopyMermaidEvents = () => {};
     void replaceMermaid().then(() => {
-      if (editorExtensions.mermaid?.enableZoom) {
-        clearMermaidEvents();
-        clearMermaidEvents = zoomMermaid(
-          rootRef!.current?.querySelectorAll(
-            `#${editorId} p.${prefix}-mermaid:not([data-closed=false])`
-          ),
-          {
-            customIcon: customIconRef.current
-          }
-        );
-      }
+      [clearZoomMermaidEvents, clearCopyMermaidEvents] = handleMermaidActions();
     });
 
     void replaceEcharts();
 
     return () => {
-      clearMermaidEvents();
+      clearZoomMermaidEvents();
+      clearCopyMermaidEvents();
     };
   }, [
-    editorExtensions.mermaid?.enableZoom,
-    editorId,
+    handleMermaidActions,
     html,
     key,
     reRender,
     replaceMermaid,
     reRenderEcharts,
-    replaceEcharts,
-    rootRef
+    replaceEcharts
   ]);
 
   useEffect(() => {

@@ -996,6 +996,7 @@ export type CustomStrIcon = {
   'collapse-tips'?: string;
   pin?: string;
   'pin-off'?: string;
+  check?: string;
 };
 
 /**
