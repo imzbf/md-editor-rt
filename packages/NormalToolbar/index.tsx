@@ -25,6 +25,7 @@ const NormalToolbar = (props: NormalToolbarProps) => {
         if (props.disabled) return;
         props.onClick(e);
       }}
+      type="button"
     >
       {props.children || props.trigger}
     </button>

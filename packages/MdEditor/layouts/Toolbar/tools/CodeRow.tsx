@@ -22,6 +22,7 @@ const ToolbarCodeRow = () => {
       onClick={() => {
         bus.emit(editorId, REPLACE, 'codeRow');
       }}
+      type="button"
     >
       <Icon name="code-row" />
       {showToolbarName && (

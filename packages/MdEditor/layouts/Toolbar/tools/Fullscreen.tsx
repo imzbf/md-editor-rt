@@ -28,6 +28,7 @@ const ToolbarFullscreen = () => {
       onClick={() => {
         fullscreenHandler();
       }}
+      type="button"
     >
       <Icon name={setting.fullscreen ? 'fullscreen-exit' : 'fullscreen'} />
 

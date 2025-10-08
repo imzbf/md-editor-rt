@@ -22,6 +22,7 @@ const ToolbarBold = () => {
       onClick={() => {
         bus.emit(editorId, REPLACE, 'bold');
       }}
+      type="button"
     >
       <Icon name="bold" />
       {showToolbarName && (

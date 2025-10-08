@@ -25,6 +25,7 @@ const ToolbarPreviewOnly = () => {
       onClick={() => {
         updateSetting('previewOnly');
       }}
+      type="button"
     >
       <Icon name="preview-only" />
       {showToolbarName && (

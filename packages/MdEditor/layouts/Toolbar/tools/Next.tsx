@@ -22,6 +22,7 @@ const ToolbarNext = () => {
       onClick={() => {
         bus.emit(editorId, CTRL_SHIFT_Z);
       }}
+      type="button"
     >
       <Icon name="next" />
       {showToolbarName && (

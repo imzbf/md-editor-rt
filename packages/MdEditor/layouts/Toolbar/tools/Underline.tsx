@@ -22,6 +22,7 @@ const ToolbarUnderline = () => {
       onClick={() => {
         bus.emit(editorId, REPLACE, 'underline');
       }}
+      type="button"
     >
       <Icon name="underline" />
       {showToolbarName && (

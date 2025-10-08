@@ -139,6 +139,7 @@ const ToolbarMermaid = () => {
         ])}
         title={ult.toolbarTips?.mermaid}
         disabled={disabled}
+        type="button"
       >
         <Icon name="mermaid" />
         {showToolbarName && (

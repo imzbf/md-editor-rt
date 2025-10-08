@@ -22,6 +22,7 @@ const ToolbarSave = () => {
       onClick={() => {
         bus.emit(editorId, ON_SAVE);
       }}
+      type="button"
     >
       <Icon name="save" />
       {showToolbarName && (

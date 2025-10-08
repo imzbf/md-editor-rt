@@ -40,6 +40,7 @@ const ToolbarTable = () => {
         ])}
         title={ult.toolbarTips?.table}
         disabled={disabled}
+        type="button"
       >
         <Icon name="table" />
         {showToolbarName && (

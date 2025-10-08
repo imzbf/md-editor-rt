@@ -22,6 +22,7 @@ const ToolbarItalic = () => {
       onClick={() => {
         bus.emit(editorId, REPLACE, 'italic');
       }}
+      type="button"
     >
       <Icon name="italic" />
       {showToolbarName && (

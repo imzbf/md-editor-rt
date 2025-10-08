@@ -28,6 +28,7 @@ const ToolbarCatalog = () => {
         bus.emit(editorId, CHANGE_CATALOG_VISIBLE);
       }}
       key="bar-catalog"
+      type="button"
     >
       <Icon name="catalog" />
 

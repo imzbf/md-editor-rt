@@ -22,6 +22,7 @@ const ToolbarOrderedList = () => {
       onClick={() => {
         bus.emit(editorId, REPLACE, 'orderedList');
       }}
+      type="button"
     >
       <Icon name="ordered-list" />
       {showToolbarName && (

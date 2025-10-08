@@ -69,6 +69,7 @@ const ToolbarKatex = () => {
         ])}
         title={ult.toolbarTips?.katex}
         disabled={disabled}
+        type="button"
       >
         <Icon name="formula" />
         {showToolbarName && (

@@ -22,6 +22,7 @@ const ToolbarQuote = () => {
       onClick={() => {
         bus.emit(editorId, REPLACE, 'quote');
       }}
+      type="button"
     >
       <Icon name="quote" />
       {showToolbarName && (

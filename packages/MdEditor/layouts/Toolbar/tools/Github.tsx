@@ -14,8 +14,9 @@ const ToolbarGithub = () => {
       title={ult.toolbarTips?.github}
       disabled={disabled}
       onClick={() => {
-        linkTo('https://github.com/imzbf/md-editor-v3');
+        linkTo('https://github.com/imzbf/md-editor-rt');
       }}
+      type="button"
     >
       <Icon name="github" />
       {showToolbarName && (

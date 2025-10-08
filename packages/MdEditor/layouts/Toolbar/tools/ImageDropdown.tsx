@@ -48,7 +48,7 @@ const ToolbarImageDropdown = () => {
   );
 
   const onCancel = useCallback(() => {
-    setVisible(false);
+    setClipVisible(false);
   }, []);
 
   const onOk = useCallback(
@@ -122,6 +122,7 @@ const ToolbarImageDropdown = () => {
         ])}
         title={ult.toolbarTips?.image}
         disabled={disabled}
+        type="button"
       >
         <Icon name="image" />
         {showToolbarName && (

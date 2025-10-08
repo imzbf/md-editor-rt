@@ -22,6 +22,7 @@ const ToolbarRevoke = () => {
       onClick={() => {
         bus.emit(editorId, CTRL_Z);
       }}
+      type="button"
     >
       <Icon name="revoke" />
       {showToolbarName && (
