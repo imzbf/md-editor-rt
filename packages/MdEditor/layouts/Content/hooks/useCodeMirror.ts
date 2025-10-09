@@ -23,7 +23,7 @@ import {
   SEND_EDITOR_VIEW,
   GET_EDITOR_VIEW
 } from '~/static/event-name';
-import { CodeMirrorExtension, DOMEventHandlers } from '~/type';
+import { CodeMirrorExtension, DOMEventHandlers, Themes } from '~/type';
 import { directive2flag, ToolDirective } from '~/utils/content-help';
 import bus from '~/utils/event-bus';
 
@@ -171,8 +171,12 @@ const useCodeMirror = (props: ContentProps) => {
     return [
       {
         type: 'theme',
-        extension: theme === 'light' ? oneLight : oneDark,
-        compartment: comp.theme
+        extension: ({ theme }: { theme: Themes }) =>
+          theme === 'light' ? oneLight : oneDark,
+        compartment: comp.theme,
+        options: {
+          theme
+        }
       },
       {
         type: 'updateListener',
