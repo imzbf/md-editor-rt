@@ -2287,4 +2287,4 @@ clearSideEffects();
 
 ## ✍️ 编辑此页面
 
-[doc-zh-CN](https://github.com/imzbf/md-editor-rt/blob/dev-docs/public/doc-zh-CN.md)
+[doc-zh-CN](https://github.com/imzbf/md-editor-rt/blob/dev-docs/public/api-zh-CN.md)

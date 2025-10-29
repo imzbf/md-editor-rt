@@ -2247,8 +2247,4 @@ Example: [Add XSS extension](https://imzbf.github.io/md-editor-rt/en-US/demo#%F0
 
 ## ✍️ Edit This Page
 
-[doc-en-US](https://github.com/imzbf/md-editor-rt/blob/dev-docs/public/doc-en-US.md)
-
-```
-
-```
+[doc-en-US](https://github.com/imzbf/md-editor-rt/blob/dev-docs/public/api-en-US.md)
