@@ -1203,6 +1203,30 @@ const onRemount = useCallback(() => {
 }, []);
 ```
 
+### 🛞 Link Shortener Extension
+
+```js
+import { config } from 'md-editor-rt';
+
+config({
+  codeMirrorExtensions(extensions) {
+    return extensions.map((item) => {
+      if (item.type === 'linkShortener') {
+        return {
+          ...item,
+          options: {
+            maxLength: 100,
+            shortenText: (url: string) => '...',
+          },
+        };
+      }
+
+      return item;
+    });
+  },
+});
+```
+
 ## 🧻 Edit This Page
 
 [demo-en-US](https://github.com/imzbf/md-editor-rt/blob/dev-docs/public/demo-en-US.md)

@@ -1224,6 +1224,30 @@ const onRemount = useCallback(() => {
 }, []);
 ```
 
+### 🛞 缩短链接配置
+
+```js
+import { config } from 'md-editor-v3';
+
+config({
+  codeMirrorExtensions(extensions) {
+    return extensions.map((item) => {
+      if (item.type === 'linkShortener') {
+        return {
+          ...item,
+          options: {
+            maxLength: 100,
+            shortenText: (url: string) => '...',
+          },
+        };
+      }
+
+      return item;
+    });
+  },
+});
+```
+
 ## 🧻 编辑此页面
 
 [demo-zh-CN](https://github.com/imzbf/md-editor-rt/blob/dev-docs/public/demo-zh-CN.md)
