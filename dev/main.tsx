@@ -43,7 +43,7 @@ config({
         return {
           ...item,
           options: {
-            maxLength: 100
+            // maxLength: 100
           }
         };
       }

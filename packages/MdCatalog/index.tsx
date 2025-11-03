@@ -94,7 +94,8 @@ const MdCatalog = (props: CatalogProps) => {
     mdHeadingId = defaultProps.mdHeadingId,
     theme = 'light',
     offsetTop = 20,
-    syncWith = 'preview'
+    syncWith = 'preview',
+    catalogMaxDepth
   } = props;
   const defaultScrollElement = useMemo(() => {
     return `#${editorId}-preview-wrapper`;
@@ -124,7 +125,7 @@ const MdCatalog = (props: CatalogProps) => {
     const tocItems: TocItem[] = [];
 
     list.forEach((listItem, index) => {
-      if (props.catalogMaxDepth && listItem.level > props.catalogMaxDepth) {
+      if (catalogMaxDepth && listItem.level > catalogMaxDepth) {
         return;
       }
 
@@ -169,7 +170,7 @@ const MdCatalog = (props: CatalogProps) => {
     });
 
     return tocItems;
-  }, [activeItem, list, props.catalogMaxDepth]);
+  }, [activeItem, list, catalogMaxDepth]);
 
   const [scrollElement] = useState(() => {
     return props.scrollElement || `#${editorId}-preview-wrapper`;
@@ -214,7 +215,7 @@ const MdCatalog = (props: CatalogProps) => {
       }
 
       // 获取标记当前位置的目录
-      const { activeHead } = list_.reduce(
+      const { activeHead, activeIndex } = list_.reduce(
         (activeData, link, index) => {
           let relativeTop = 0;
 
@@ -248,6 +249,7 @@ const MdCatalog = (props: CatalogProps) => {
           if (relativeTop < offsetTop && relativeTop > activeData.minTop) {
             return {
               activeHead: link,
+              activeIndex: index,
               minTop: relativeTop
             };
           }
@@ -256,11 +258,32 @@ const MdCatalog = (props: CatalogProps) => {
         },
         {
           activeHead: list_[0],
+          activeIndex: 0,
           minTop: Number.MIN_SAFE_INTEGER
         }
       );
 
-      setActiveItem(activeHead);
+      let highlightHead = activeHead;
+
+      if (catalogMaxDepth && highlightHead.level > catalogMaxDepth) {
+        for (let i = activeIndex; i >= 0; i--) {
+          const candidate = list_[i];
+
+          if (candidate.level <= catalogMaxDepth) {
+            highlightHead = candidate;
+            break;
+          }
+        }
+
+        if (highlightHead.level > catalogMaxDepth) {
+          const fallback = list_.find((item) => item.level <= catalogMaxDepth);
+          if (fallback) {
+            highlightHead = fallback;
+          }
+        }
+      }
+
+      setActiveItem(highlightHead);
       setList(list_);
       cacheList = list_;
     };
@@ -299,7 +322,15 @@ const MdCatalog = (props: CatalogProps) => {
       bus.remove(editorId, CATALOG_CHANGED, callback);
       scrollContainerRef.current?.removeEventListener('scroll', scrollHandler);
     };
-  }, [offsetTop, mdHeadingId, getScrollElement, editorId, syncWith, editorView]);
+  }, [
+    offsetTop,
+    mdHeadingId,
+    getScrollElement,
+    editorId,
+    syncWith,
+    editorView,
+    catalogMaxDepth
+  ]);
 
   const providerValue = useMemo<CatalogContextValue>(() => {
     return {
