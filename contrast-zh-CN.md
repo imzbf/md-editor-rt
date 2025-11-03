@@ -265,3 +265,11 @@ MdEditor.config({
 | katexJs             | 同上                              |
 | katexCss            | 同上                              |
 | extensions          | 同上                              |
+
+### 组件
+
+- Catalog
+
+  `Editor.Catalog` 已重命名为 `Editor.MdCatalog`.
+
+  更多用法，请查阅 [docs](https://github.com/imzbf/md-editor-rt/tree/docs).
