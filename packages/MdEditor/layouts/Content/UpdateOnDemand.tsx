@@ -1,98 +1,117 @@
-import { useContext, useEffect, useRef } from 'react';
+import { useContext, useEffect, useMemo, useRef } from 'react';
 import { EditorContext } from '~/context';
 import { classnames } from '~/utils';
 import { prefix } from '~~/config';
-
-interface Props {
-  html: string;
-}
 
 // 将 HTML 字符串拆分为元素，返回第一层子节点（包括文本节点）
 const splitNodes = (html: string): ChildNode[] => {
   const parser = new DOMParser();
   const doc = parser.parseFromString(html, 'text/html');
-  return Array.from(doc.body.childNodes); // 包括文本节点
+  return Array.from(doc.body.childNodes);
 };
 
-// 比较新旧 HTML，返回需更新和删除的节点信息
-const compareHtml = (newNodes: ChildNode[], currentNodes: ChildNode[]) => {
-  const updates: { index: number; newNode: ChildNode }[] = [];
-  const deletes: ChildNode[] = [];
+// 比较新旧节点是否相同
+const isSameNode = (newNode: ChildNode, currentNode: ChildNode) => {
+  if (newNode.nodeType !== currentNode.nodeType) {
+    return false;
+  }
 
-  newNodes.forEach((newNode, index) => {
-    const currentNode = currentNodes[index];
+  if (newNode.nodeType === Node.TEXT_NODE || newNode.nodeType === Node.COMMENT_NODE) {
+    return newNode.textContent === currentNode.textContent;
+  }
 
-    // 如果旧节点不存在，标记为新增
-    if (!currentNode) {
-      updates.push({ index, newNode });
-      return;
-    }
+  if (newNode.nodeType === Node.ELEMENT_NODE) {
+    return (newNode as Element).outerHTML === (currentNode as Element).outerHTML;
+  }
 
-    // 如果节点类型不一致或内容不同，标记更新
-    if (
-      newNode.nodeType !== currentNode.nodeType ||
-      newNode.textContent !== currentNode.textContent ||
-      (newNode.nodeType === 1 &&
-        (newNode as HTMLElement).outerHTML !== (currentNode as HTMLElement).outerHTML)
-    ) {
-      updates.push({ index, newNode });
-    }
-  });
+  return newNode.isEqualNode ? newNode.isEqualNode(currentNode) : false;
+};
 
-  // 旧节点中有但新 HTML 中不存在的，标记为需要删除
-  if (currentNodes.length > newNodes.length) {
-    for (let i = newNodes.length; i < currentNodes.length; i++) {
-      deletes.push(currentNodes[i]);
+const updateHtmlContent = (
+  container: HTMLElement,
+  newNodes: ChildNode[],
+  prevNodes: ChildNode[]
+) => {
+  const currentNodes = Array.from(container.childNodes);
+  const minLength = Math.min(newNodes.length, prevNodes.length);
+
+  let divergenceIndex = -1;
+
+  for (let i = 0; i < minLength; i += 1) {
+    if (!isSameNode(newNodes[i], prevNodes[i])) {
+      divergenceIndex = i;
+      break;
     }
   }
 
-  return { updates, deletes };
+  if (divergenceIndex === -1) {
+    if (prevNodes.length > newNodes.length) {
+      divergenceIndex = newNodes.length;
+    } else if (newNodes.length > prevNodes.length) {
+      divergenceIndex = prevNodes.length;
+    } else {
+      return;
+    }
+  }
+
+  const startRemove = Math.min(divergenceIndex, currentNodes.length);
+
+  for (let i = currentNodes.length - 1; i >= startRemove; i -= 1) {
+    currentNodes[i].remove();
+  }
+
+  for (let i = divergenceIndex; i < newNodes.length; i += 1) {
+    container.appendChild(newNodes[i].cloneNode(true));
+  }
 };
 
-const UpdateOnDemand = ({ html }: Props) => {
+interface UpdateOnDemandProps {
+  html: string;
+}
+
+const UpdateOnDemand: React.FC<UpdateOnDemandProps> = ({ html }) => {
   const { editorId, previewTheme, showCodeRowNumber } = useContext(EditorContext);
 
+  const containerRef = useRef<HTMLDivElement | null>(null);
   // 永远缓存一份第一次的html，保证ssr正确
   const firstHtml = useRef<{ __html: string }>({ __html: html });
-
-  const htmlContainer = useRef<HTMLDivElement>(null);
+  const prevHtmlRef = useRef<string>(html);
 
   useEffect(() => {
-    if (!htmlContainer.current) return;
+    const container = containerRef.current;
+
+    if (!container) {
+      return;
+    }
+
+    const prevHtml = prevHtmlRef.current;
+
+    if (prevHtml === html) {
+      return;
+    }
+
     const newNodes = splitNodes(html);
-    // 从页面上获取真实的节点
-    const currentNodes = Array.from(htmlContainer.current.childNodes || []);
-    const { updates, deletes } = compareHtml(newNodes, currentNodes);
+    const prevNodes = splitNodes(prevHtml);
 
-    // 先删除待删除的节点
-    deletes.forEach((node) => {
-      node.remove();
-    });
+    updateHtmlContent(container, newNodes, prevNodes);
 
-    // 更新或插入新的节点
-    updates.forEach(({ index, newNode }) => {
-      const targetNode = htmlContainer.current!.childNodes[index];
-
-      // 如果目标节点不存在，直接插入新节点
-      if (!targetNode) {
-        htmlContainer.current!.appendChild(newNode.cloneNode(true));
-      } else {
-        // 如果目标节点存在但内容需要更新，替换
-        htmlContainer.current!.replaceChild(newNode.cloneNode(true), targetNode);
-      }
-    });
+    prevHtmlRef.current = html;
   }, [html]);
+
+  const className = useMemo(() => {
+    return classnames([
+      `${prefix}-preview`,
+      `${previewTheme || 'default'}-theme`,
+      showCodeRowNumber && `${prefix}-scrn`
+    ]);
+  }, [previewTheme, showCodeRowNumber]);
 
   return (
     <div
       id={`${editorId}-preview`}
-      className={classnames([
-        `${prefix}-preview`,
-        `${previewTheme}-theme`,
-        showCodeRowNumber && `${prefix}-scrn`
-      ])}
+      className={className}
       dangerouslySetInnerHTML={firstHtml.current}
-      ref={htmlContainer}
+      ref={containerRef}
     />
   );
 };

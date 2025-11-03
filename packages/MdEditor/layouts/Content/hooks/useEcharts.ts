@@ -23,12 +23,10 @@ const useEcharts = (props: ContentPreviewProps) => {
     }
   }, [props.noEcharts]);
 
-  // 监听 theme 变化（等价于 Vue watch）
   useEffect(() => {
     configEcharts();
   }, [theme, configEcharts]);
 
-  // onMounted
   useEffect(() => {
     if (props.noEcharts || echartsRef.current) return;
     const { editorExtensions, editorExtensionsAttrs } = globalConfig;
@@ -50,27 +48,74 @@ const useEcharts = (props: ContentPreviewProps) => {
     );
   }, [props.noEcharts, configEcharts]);
 
-  const clearEchartsEffects = useCallback(() => {
-    echartsInstances.current.forEach((instance) => instance.dispose());
-    observers.current.forEach((observer) => observer.disconnect());
+  const clearEchartsEffects = useCallback(
+    (force = false) => {
+      const sourceEles = echartsSourceEles.current;
 
-    echartsInstances.current = [];
-    echartsSourceEles.current = [];
-    observers.current = [];
-  }, []);
+      if (!sourceEles.length) {
+        if (force) {
+          echartsInstances.current.forEach((instance) => instance?.dispose?.());
+          observers.current.forEach((observer) => observer?.disconnect?.());
+
+          echartsInstances.current = [];
+          observers.current = [];
+          echartsSourceEles.current = [];
+        }
+
+        return;
+      }
+
+      const nextSourceEles: HTMLElement[] = [];
+      const nextInstances: any[] = [];
+      const nextObservers: ResizeObserver[] = [];
+
+      sourceEles.forEach((element, index) => {
+        const instance = echartsInstances.current[index];
+        const observer = observers.current[index];
+        const shouldDispose =
+          force ||
+          !element ||
+          !element.isConnected ||
+          (rootRef?.current ? !rootRef.current.contains(element) : false);
+
+        if (shouldDispose) {
+          instance?.dispose?.();
+          observer?.disconnect?.();
+          return;
+        }
+
+        nextSourceEles.push(element);
+
+        if (instance) {
+          nextInstances.push(instance);
+        }
+
+        if (observer) {
+          nextObservers.push(observer);
+        }
+      });
+
+      echartsSourceEles.current = nextSourceEles;
+      echartsInstances.current = nextInstances;
+      observers.current = nextObservers;
+    },
+    [rootRef]
+  );
 
   const replaceEcharts = useCallback(() => {
     clearEchartsEffects();
 
-    if (!props.noEcharts && echartsRef.current && rootRef!.current) {
-      echartsSourceEles.current = Array.from(
-        rootRef!.current.querySelectorAll<HTMLElement>(
+    if (!props.noEcharts && echartsRef.current && rootRef?.current) {
+      const pendingSourceEles = Array.from(
+        rootRef.current.querySelectorAll<HTMLElement>(
           `#${editorId} div.${prefix}-echarts:not([data-processed])`
         )
       );
 
-      echartsSourceEles.current.forEach((item) => {
-        if (item.dataset.closed === 'false') return;
+      pendingSourceEles.forEach((item) => {
+        if (item.dataset.closed === 'false') {
+          return;
+        }
 
         try {
           // eslint-disable-next-line @typescript-eslint/no-implied-eval
@@ -80,6 +125,7 @@ const useEcharts = (props: ContentPreviewProps) => {
           ins.setOption(options);
           item.setAttribute('data-processed', '');
 
+          echartsSourceEles.current.push(item);
           echartsInstances.current.push(ins);
 
           const observer = new ResizeObserver(() => {
@@ -98,10 +144,9 @@ const useEcharts = (props: ContentPreviewProps) => {
     }
   }, [props.noEcharts, rootRef, editorId, theme, clearEchartsEffects]);
 
-  // onBeforeUnmount
   useEffect(() => {
     return () => {
-      clearEchartsEffects();
+      clearEchartsEffects(true);
     };
   }, [clearEchartsEffects]);
 

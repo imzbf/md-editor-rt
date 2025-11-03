@@ -19,10 +19,10 @@ const useCopyCode = (props: ContentPreviewProps, html: string, key: string) => {
           let clearTimer = -1;
 
           const copyButton = codeBlock.querySelector<HTMLSpanElement>(
-            `.${prefix}-copy-button`
+            `.${prefix}-copy-button:not([data-processed])`
           );
 
-          if (copyButton)
+          if (copyButton) {
             copyButton.onclick = (e) => {
               e.preventDefault();
               // 多次点击移除上次的恢复进程
@@ -57,6 +57,9 @@ const useCopyCode = (props: ContentPreviewProps, html: string, key: string) => {
                   }, 1500);
                 });
             };
+
+            copyButton.setAttribute('data-processed', 'true');
+          }
         });
     }
   }, [

@@ -4,6 +4,7 @@ import Preview from './Preview';
 import PreviewOnly from './PreviewOnly';
 import './style.less';
 import SecEditor from './SecEditor';
+import StreamDemo from './StreamDemo';
 
 export type Theme = 'dark' | 'light';
 
@@ -50,6 +51,12 @@ function App() {
             codeTheme={codeTheme}
           />
           <SecEditor />
+          <StreamDemo
+            theme={theme}
+            previewTheme={previewTheme}
+            codeTheme={codeTheme}
+            lang={lang}
+          />
           <PreviewOnly
             lang={lang}
             theme={theme}
