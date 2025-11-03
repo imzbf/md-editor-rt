@@ -232,7 +232,7 @@ export const useBarRender = () => {
           return <ToolbarSave key="bar-save" />;
         }
         case 'prettier': {
-          return noPrettier && <ToolbarPrettier key="bar-prettier" />;
+          return !noPrettier && <ToolbarPrettier key="bar-prettier" />;
         }
         case 'pageFullscreen': {
           return (
