@@ -2,6 +2,7 @@ import { StateEffect, StateField } from '@codemirror/state';
 import { EditorView, showTooltip, Tooltip } from '@codemirror/view';
 import { createContext, useContext, useSyncExternalStore } from 'react';
 import { createRoot } from 'react-dom/client';
+import { prefix } from '~/config';
 import { defaultContextValue } from '~/context';
 import Toolbar from '~/layouts/FloatingToolbar';
 import { ContextType } from '~/type';
@@ -40,14 +41,36 @@ const tooltipField = StateField.define<Tooltip | null>({
 export const createFloatingToolbar = (options: {
   contextValue: FloatingToolbarContextValue<ContextType>;
 }) => {
-  const showTooltip = (view: EditorView, pos: number) => {
+  type TooltipState = { kind: 'selection' | 'emptyLine'; pos: number };
+
+  let lastTooltip: TooltipState | null = null;
+
+  const showTooltip = (view: EditorView, nextState: TooltipState) => {
+    if (
+      lastTooltip &&
+      lastTooltip.kind === nextState.kind &&
+      lastTooltip.pos === nextState.pos
+    ) {
+      return;
+    }
+
+    lastTooltip = nextState;
+
     view.dispatch({
       effects: tooltipEffect.of({
-        pos,
+        pos: nextState.pos,
         above: true,
         arrow: true,
         create: () => {
           const dom = document.createElement('div');
+          const tooltipClass = `${prefix}-floating-toolbar-container`;
+
+          dom.classList.add(tooltipClass);
+          dom.dataset.state = 'hidden';
+
+          requestAnimationFrame(() => {
+            dom.dataset.state = 'visible';
+          });
 
           // 这里需要创建一个 react 根节点
           // 如果直接使用dom，每次react更新都会重置dom中codemirror添加的节点，比如箭头
@@ -68,6 +91,13 @@ export const createFloatingToolbar = (options: {
     });
   };
 
+  const hideTooltip = (view: EditorView) => {
+    if (!lastTooltip) return;
+
+    lastTooltip = null;
+    view.dispatch({ effects: tooltipEffect.of(null) });
+  };
+
   const selectionAndEmptyLineTooltip = EditorView.updateListener.of((update) => {
     if (update.selectionSet || update.docChanged) {
       const state = update.state;
@@ -75,15 +105,15 @@ export const createFloatingToolbar = (options: {
 
       if (!sel.empty) {
         // 选中文字 → 显示
-        showTooltip(update.view, sel.from);
+        showTooltip(update.view, { kind: 'selection', pos: sel.anchor });
       } else {
         // 光标位置 → 判断是不是空白行
         const pos = sel.head;
         const line = state.doc.lineAt(pos);
         if (/^\s*$/.test(line.text)) {
-          showTooltip(update.view, pos);
+          showTooltip(update.view, { kind: 'emptyLine', pos });
         } else {
-          update.view.dispatch({ effects: tooltipEffect.of(null) });
+          hideTooltip(update.view);
         }
       }
     }
