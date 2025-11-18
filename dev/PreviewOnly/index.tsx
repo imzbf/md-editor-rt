@@ -14,8 +14,18 @@ interface PreviewOnlyProp {
   lang: 'zh-CN' | 'en-US';
 }
 
+const previewComponent = (props: { html: string; id: string; className: string }) => {
+  return (
+    <div
+      id={props.id}
+      className={props.className}
+      dangerouslySetInnerHTML={{ __html: props.html }}
+    />
+  );
+};
+
 const PreviewOnly = (props: PreviewOnlyProp) => {
-  const previewRef = useRef<ExposePreviewParam>();
+  const previewRef = useRef<ExposePreviewParam | null>(null);
 
   const [value, setValue] = useState(mdText);
 
@@ -61,6 +71,7 @@ const PreviewOnly = (props: PreviewOnlyProp) => {
           onChange={setValue}
           showCodeRowNumber
           onRemount={onRemount}
+          previewComponent={previewComponent}
         />
       </div>
     </div>

@@ -1,7 +1,5 @@
-import { useContext, useEffect, useMemo, useRef } from 'react';
-import { EditorContext } from '~/context';
-import { classnames } from '~/utils';
-import { prefix } from '~~/config';
+import { useEffect, useRef } from 'react';
+import type { PreviewRendererProps } from '~/type';
 
 // 将 HTML 字符串拆分为元素，返回第一层子节点（包括文本节点）
 const splitNodes = (html: string): ChildNode[] => {
@@ -65,13 +63,9 @@ const updateHtmlContent = (
   }
 };
 
-interface UpdateOnDemandProps {
-  html: string;
-}
+type UpdateOnDemandProps = PreviewRendererProps;
 
-const UpdateOnDemand: React.FC<UpdateOnDemandProps> = ({ html }) => {
-  const { editorId, previewTheme, showCodeRowNumber } = useContext(EditorContext);
-
+const UpdateOnDemand: React.FC<UpdateOnDemandProps> = ({ html, id, className }) => {
   const containerRef = useRef<HTMLDivElement | null>(null);
   // 永远缓存一份第一次的html，保证ssr正确
   const firstHtml = useRef<{ __html: string }>({ __html: html });
@@ -98,17 +92,9 @@ const UpdateOnDemand: React.FC<UpdateOnDemandProps> = ({ html }) => {
     prevHtmlRef.current = html;
   }, [html]);
 
-  const className = useMemo(() => {
-    return classnames([
-      `${prefix}-preview`,
-      `${previewTheme || 'default'}-theme`,
-      showCodeRowNumber && `${prefix}-scrn`
-    ]);
-  }, [previewTheme, showCodeRowNumber]);
-
   return (
     <div
-      id={`${editorId}-preview`}
+      id={id}
       className={className}
       dangerouslySetInnerHTML={firstHtml.current}
       ref={containerRef}

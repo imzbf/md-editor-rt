@@ -1,15 +1,20 @@
-import { useContext } from 'react';
+import { useContext, useMemo } from 'react';
 import { prefix } from '~/config';
 import { EditorContext } from '~/context';
 
 import { SettingType } from '~/type';
+import { classnames } from '~/utils';
 import { useCopyCode, useMarkdownIt, useZoom, useTaskState, useRemount } from './hooks';
 import { ContentPreviewProps } from './props';
 import UpdateOnDemand from './UpdateOnDemand';
 
 const ContentPreview = (props: ContentPreviewProps) => {
-  const { previewOnly = false, setting = { preview: true } as SettingType } = props;
-  const { editorId } = useContext(EditorContext);
+  const {
+    previewOnly = false,
+    setting = { preview: true } as SettingType,
+    previewComponent: PreviewComponent = UpdateOnDemand
+  } = props;
+  const { editorId, previewTheme, showCodeRowNumber } = useContext(EditorContext);
 
   // markdown => html
   const { html, key } = useMarkdownIt(props, !!previewOnly);
@@ -22,18 +27,33 @@ const ContentPreview = (props: ContentPreviewProps) => {
   // 标准的重新渲染事件，能够正确获取到html
   useRemount(props, html, key);
 
+  const previewNode = useMemo(() => {
+    return (
+      <PreviewComponent
+        key={key}
+        html={html}
+        id={`${editorId}-preview`}
+        className={classnames([
+          `${prefix}-preview`,
+          `${previewTheme || 'default'}-theme`,
+          showCodeRowNumber && `${prefix}-scrn`
+        ])}
+      />
+    );
+  }, [PreviewComponent, editorId, html, key, previewTheme, showCodeRowNumber]);
+
   return (
     <>
       {setting.preview &&
-        (props.previewOnly ? (
-          <UpdateOnDemand key={key} html={html} />
+        (previewOnly ? (
+          previewNode
         ) : (
           <div
             id={`${editorId}-preview-wrapper`}
             className={`${prefix}-preview-wrapper`}
             key="content-preview-wrapper"
           >
-            <UpdateOnDemand key={key} html={html} />
+            {previewNode}
           </div>
         ))}
       {setting.htmlPreview && (

@@ -115,6 +115,7 @@ const Content = forwardRef((props: ContentProps, ref: ForwardedRef<unknown>) => 
         codeFoldable={props.codeFoldable}
         autoFoldThreshold={props.autoFoldThreshold}
         onRemount={props.onRemount}
+        previewComponent={props.previewComponent}
       />
     );
   }, [
@@ -131,6 +132,7 @@ const Content = forwardRef((props: ContentProps, ref: ForwardedRef<unknown>) => 
     props.onChange,
     props.onGetCatalog,
     props.onRemount,
+    props.previewComponent,
     props.sanitize,
     props.sanitizeMermaid,
     setting

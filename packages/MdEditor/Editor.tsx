@@ -65,6 +65,7 @@ const Editor = forwardRef((props: EditorProps, ref: ForwardedRef<unknown>) => {
     catalogLayout = defaultProps.catalogLayout as typeof props.catalogLayout,
     floatingToolbars = defaultProps.floatingToolbars,
     customIcon = defaultProps.customIcon,
+    previewComponent,
     disabled,
     showToolbarName
   } = props;
@@ -224,6 +225,7 @@ const Editor = forwardRef((props: EditorProps, ref: ForwardedRef<unknown>) => {
           catalogLayout={catalogLayout}
           catalogMaxDepth={props.catalogMaxDepth}
           noEcharts={props.noEcharts}
+          previewComponent={previewComponent}
         />
         {footers.length > 0 && (
           <Footer

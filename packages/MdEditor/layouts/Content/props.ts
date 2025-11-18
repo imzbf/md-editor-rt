@@ -1,5 +1,5 @@
 import { CompletionSource } from '@codemirror/autocomplete';
-import { HeadList, MdHeadingId, SettingType } from '~/type';
+import { HeadList, MdHeadingId, PreviewRendererComponent, SettingType } from '~/type';
 
 export interface ContentPreviewProps {
   modelValue: string;
@@ -20,6 +20,7 @@ export interface ContentPreviewProps {
   autoFoldThreshold: number;
   onRemount?: () => void;
   noEcharts?: boolean;
+  previewComponent?: PreviewRendererComponent;
 }
 
 export type ContentProps = Readonly<

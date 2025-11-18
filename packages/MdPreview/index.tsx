@@ -30,7 +30,8 @@ const MdPreview = forwardRef((props: MdPreviewProps, ref: ForwardedRef<unknown>)
     sanitizeMermaid = defaultProps.sanitizeMermaid,
     codeFoldable = defaultProps.codeFoldable,
     autoFoldThreshold = defaultProps.autoFoldThreshold,
-    codeTheme = defaultProps.codeTheme
+    codeTheme = defaultProps.codeTheme,
+    previewComponent
   } = props;
 
   const editorId = useEditorId(props);
@@ -131,6 +132,7 @@ const MdPreview = forwardRef((props: MdPreviewProps, ref: ForwardedRef<unknown>)
           autoFoldThreshold={autoFoldThreshold}
           onRemount={props.onRemount}
           noEcharts={props.noEcharts}
+          previewComponent={previewComponent}
         />
       </div>
     </EditorContext.Provider>

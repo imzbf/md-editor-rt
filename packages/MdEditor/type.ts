@@ -2,7 +2,7 @@ import { CompletionSource } from '@codemirror/autocomplete';
 import { Compartment, Extension } from '@codemirror/state';
 import { KeyBinding, EditorView } from '@codemirror/view';
 import markdownit, { Token } from 'markdown-it';
-import { CSSProperties, ReactElement, RefObject } from 'react';
+import { CSSProperties, ComponentType, ReactElement, RefObject } from 'react';
 import { IconName } from './components/Icon/Icon';
 import { ToolDirective } from './utils/content-help';
 
@@ -150,6 +150,14 @@ export type Themes = 'light' | 'dark';
  * @list ['default', 'github', 'vuepress', 'mk-cute', 'smart-blue', 'cyanosis']
  */
 export type PreviewThemes = string;
+
+export interface PreviewRendererProps {
+  html: string;
+  id: string;
+  className: string;
+}
+
+export type PreviewRendererComponent = ComponentType<PreviewRendererProps>;
 
 /**
  * 自定义标题ID
@@ -325,6 +333,12 @@ export interface MdPreviewProps {
    * 不使用 echarts
    */
   noEcharts?: boolean;
+  /**
+   * 自定义渲染预览的组件
+   *
+   * 组件会接收到 html、id、className，请确保将后两者应用到根节点
+   */
+  previewComponent?: PreviewRendererComponent;
 }
 
 export type TableShapeType = [number, number] | [number, number, number, number];
