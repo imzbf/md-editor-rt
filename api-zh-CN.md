@@ -445,6 +445,15 @@
 
 ---
 
+### 🖌 noEcharts
+
+- **类型**：`boolean`
+- **默认值**：`false`
+
+  \>=6.0.0 是否禁用 echarts 模块
+
+---
+
 ### 🎨 previewComponent
 
 If you need full control over how the preview area is rendered, you can inject a custom component via `previewComponent`. The component will receive three props: `html`, `id`, and `className`. Apply `id` and `className` to the container element to preserve the built-in styles and behavior.
@@ -852,13 +861,6 @@ export default () => {
 - **默认值**：`undefined`
 
   \>=5.5.0 控制要显示的目录的最大深度。
-
-### 🖌 noEcharts
-
-- **类型**：`boolean`
-- **默认值**：`false`
-
-  \>=6.0.0 是否禁用 echarts 模块
 
 ---
 
