@@ -439,6 +439,22 @@ This is the props of `MdPreview`, which is also part of `MdEditor`:
 
 ---
 
+### 🎨 previewComponent
+
+如果你需要完全掌控预览区域的渲染方式，可以通过 `previewComponent` 注入自定义组件。组件会接收到 `html`、`id` 和 `className` 三个属性，其中 `id` 与 `className` 需要应用在容器元素上以保持内置样式与行为。
+
+```tsx
+import { MdEditor } from 'md-editor-rt';
+const CustomPreview = ({ html, id, className }) => {
+  return <div id={id} className={className} dangerouslySetInnerHTML={{ __html: html }} />;
+};
+export default () => {
+  return <MdEditor previewComponent={CustomPreview} />;
+};
+```
+
+---
+
 ## 🔩 MdEditor Props
 
 Except for the same as `MdPreview`:

@@ -445,6 +445,22 @@
 
 ---
 
+### 🎨 previewComponent
+
+If you need full control over how the preview area is rendered, you can inject a custom component via `previewComponent`. The component will receive three props: `html`, `id`, and `className`. Apply `id` and `className` to the container element to preserve the built-in styles and behavior.
+
+```tsx
+import { MdEditor } from 'md-editor-rt';
+const CustomPreview = ({ html, id, className }) => {
+  return <div id={id} className={className} dangerouslySetInnerHTML={{ __html: html }} />;
+};
+export default () => {
+  return <MdEditor previewComponent={CustomPreview} />;
+};
+```
+
+---
+
 ## 🔩 MdEditor Props
 
 除去和`MdPreivew`相同的以外：
