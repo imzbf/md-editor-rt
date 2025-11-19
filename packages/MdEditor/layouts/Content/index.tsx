@@ -111,6 +111,7 @@ const Content = forwardRef((props: ContentProps, ref: ForwardedRef<unknown>) => 
         autoFoldThreshold={props.autoFoldThreshold}
         onRemount={props.onRemount}
         previewComponent={props.previewComponent}
+        noEcharts={props.noEcharts}
       />
     );
   }, [
@@ -120,6 +121,7 @@ const Content = forwardRef((props: ContentProps, ref: ForwardedRef<unknown>) => 
     props.formatCopiedText,
     props.mdHeadingId,
     props.modelValue,
+    props.noEcharts,
     props.noHighlight,
     props.noImgZoomIn,
     props.noKatex,
