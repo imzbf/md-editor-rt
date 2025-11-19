@@ -66,6 +66,24 @@ const ToolbarImageDropdown = () => {
   );
 
   const overlay = useMemo(() => {
+    const menuItems = [
+      {
+        key: 'link',
+        label: ult.imgTitleItem?.link,
+        onClick: () => emitHandler('image')
+      },
+      {
+        key: 'upload',
+        label: ult.imgTitleItem?.upload,
+        onClick: () => uploadRef.current?.click()
+      },
+      {
+        key: 'clip',
+        label: ult.imgTitleItem?.clip2upload,
+        onClick: () => setClipVisible(true)
+      }
+    ];
+
     return (
       <ul
         className={`${prefix}-menu`}
@@ -74,44 +92,20 @@ const ToolbarImageDropdown = () => {
         }}
         role="menu"
       >
-        <li
-          className={`${prefix}-menu-item ${prefix}-menu-item-image`}
-          onClick={() => {
-            emitHandler('image');
-          }}
-          role="menuitem"
-          tabIndex={0}
-        >
-          {ult.imgTitleItem?.link}
-        </li>
-        <li
-          className={`${prefix}-menu-item ${prefix}-menu-item-image`}
-          onClick={() => {
-            uploadRef.current?.click();
-          }}
-          role="menuitem"
-          tabIndex={0}
-        >
-          {ult.imgTitleItem?.upload}
-        </li>
-        <li
-          className={`${prefix}-menu-item ${prefix}-menu-item-image`}
-          onClick={() => {
-            setClipVisible(true);
-          }}
-          role="menuitem"
-          tabIndex={0}
-        >
-          {ult.imgTitleItem?.clip2upload}
-        </li>
+        {menuItems.map((item) => (
+          <li
+            className={`${prefix}-menu-item ${prefix}-menu-item-image`}
+            onClick={item.onClick}
+            role="menuitem"
+            tabIndex={0}
+            key={item.key}
+          >
+            {item.label}
+          </li>
+        ))}
       </ul>
     );
-  }, [
-    emitHandler,
-    ult.imgTitleItem?.clip2upload,
-    ult.imgTitleItem?.link,
-    ult.imgTitleItem?.upload
-  ]);
+  }, [emitHandler, ult.imgTitleItem]);
 
   const child = useMemo(() => {
     return (

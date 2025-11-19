@@ -1,4 +1,4 @@
-import { MouseEvent, useContext, useEffect, useRef } from 'react';
+import { memo, MouseEvent, useContext, useEffect, useRef } from 'react';
 import { prefix } from '~/config';
 import { MdHeadingId } from '~/type';
 import { classnames } from '~/utils';
@@ -102,4 +102,4 @@ const CatalogLink = ({
   );
 };
 
-export default CatalogLink;
+export default memo(CatalogLink);

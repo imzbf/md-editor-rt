@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { memo, useEffect, useRef } from 'react';
 import type { PreviewRendererProps } from '~/type';
 
 // 将 HTML 字符串拆分为元素，返回第一层子节点（包括文本节点）
@@ -102,4 +102,4 @@ const UpdateOnDemand: React.FC<UpdateOnDemandProps> = ({ html, id, className }) 
   );
 };
 
-export default UpdateOnDemand;
+export default memo(UpdateOnDemand);

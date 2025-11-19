@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import ClipModal from './Clip';
 
 interface ModalsProps {
@@ -13,4 +14,4 @@ const Modals = (props: ModalsProps) => {
 };
 
 // 链接弹窗\图片弹窗\帮助弹窗
-export default Modals;
+export default memo(Modals);

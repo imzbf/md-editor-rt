@@ -1,4 +1,4 @@
-import { MouseEvent, ReactNode, useMemo } from 'react';
+import { memo, MouseEvent, ReactNode, useMemo } from 'react';
 import { prefix } from '~/config';
 
 export interface NormalToolbarProps {
@@ -32,4 +32,4 @@ const NormalToolbar = (props: NormalToolbarProps) => {
   );
 };
 
-export default NormalToolbar;
+export default memo(NormalToolbar);

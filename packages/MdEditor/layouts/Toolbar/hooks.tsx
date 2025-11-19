@@ -147,8 +147,6 @@ export const useSreenfull = () => {
   return { fullscreenHandler };
 };
 
-let splitNum = 0;
-
 export const useBarRender = () => {
   const {
     editorId,
@@ -164,135 +162,151 @@ export const useBarRender = () => {
     defToolbars
   } = useContext(EditorContext);
 
-  const barRender = (barItem: ToolbarNames) => {
-    if (allToolbar.includes(barItem)) {
-      switch (barItem) {
-        case '-': {
-          return <Divider key={`bar-${splitNum++}`} />;
-        }
-        case 'bold': {
-          return <ToolbarBold key="bar-bold" />;
-        }
-        case 'underline': {
-          return <ToolbarUnderline key="bar-unorderline" />;
-        }
-        case 'italic': {
-          return <ToolbarItalic key="bar-italic" />;
-        }
-        case 'strikeThrough': {
-          return <ToolbarStrikeThrough key="bar-strikeThrough" />;
-        }
-        case 'title': {
-          return <ToolbarTitle key="bar-title" />;
-        }
-        case 'sub': {
-          return <ToolbarSub key="bar-sub" />;
-        }
-        case 'sup': {
-          return <ToolbarSup key="bar-sup" />;
-        }
-        case 'quote': {
-          return <ToolbarQuote key="bar-quote" />;
-        }
-        case 'unorderedList': {
-          return <ToolbarUnorderedList key="bar-unorderedList" />;
-        }
-        case 'orderedList': {
-          return <ToolbarOrderedList key="bar-orderedList" />;
-        }
-        case 'task': {
-          return <ToolbarTask key="bar-task" />;
-        }
-        case 'codeRow': {
-          return <ToolbarCodeRow key="bar-codeRow" />;
-        }
-        case 'code': {
-          return <ToolbarCode key="bar-code" />;
-        }
-        case 'link': {
-          return <ToolbarLink key="bar-link" />;
-        }
-        case 'image': {
-          return noUploadImg ? (
-            <ToolbarImage key="bar-image" />
-          ) : (
-            <ToolbarImageDropdown key="bar-imageDropdown" />
-          );
-        }
-        case 'table': {
-          return <ToolbarTable key="bar-table" />;
-        }
-        case 'revoke': {
-          return <ToolbarRevoke key="bar-revoke" />;
-        }
-        case 'next': {
-          return <ToolbarNext key="bar-next" />;
-        }
-        case 'save': {
-          return <ToolbarSave key="bar-save" />;
-        }
-        case 'prettier': {
-          return !noPrettier && <ToolbarPrettier key="bar-prettier" />;
-        }
-        case 'pageFullscreen': {
-          return (
-            !setting.fullscreen && <ToolbarPageFullscreen key="bar-pageFullscreen" />
-          );
-        }
-        case 'fullscreen': {
-          return <ToolbarFullscreen key="bar-fullscreen" />;
-        }
-        case 'catalog': {
-          return <ToolbarCatalog key="bar-catalog" />;
-        }
-        case 'preview': {
-          return <ToolbarPreview key="bar-preview" />;
-        }
-        case 'previewOnly': {
-          return <ToolbarPreviewOnly key="bar-previewOnly" />;
-        }
-        case 'htmlPreview': {
-          return <ToolbarHtmlPreview key="bar-htmlPreview" />;
-        }
-        case 'github': {
-          return <ToolbarGithub key="bar-github" />;
-        }
-        case 'mermaid': {
-          return <ToolbarMermaid key="bar-mermaid" />;
-        }
-        case 'katex': {
-          return <ToolbarKatex key="bar-katex" />;
-        }
-      }
-    } else if (defToolbars) {
-      const defItem = defToolbars[barItem as number] as ReactElement<
-        any,
-        React.FunctionComponent<any>
-      >;
+  const barRender = useCallback(
+    (barItem: ToolbarNames, keyHint?: string | number) => {
+      if (allToolbar.includes(barItem)) {
+        const dividerKey = `bar-divider-${keyHint ?? editorId}`;
 
-      if (defItem) {
-        const defItemCloned = cloneElement<any>(defItem, {
-          theme: defItem.props?.theme || theme,
-          codeTheme: defItem.props?.codeTheme || codeTheme,
-          previewTheme: defItem.props?.previewTheme || previewTheme,
-          language: defItem.props?.language || language,
-          disabled: defItem.props?.disabled || disabled,
-          showToolbarName: defItem.props?.showToolbarName || showToolbarName,
-          insert(generate: InsertContentGenerator) {
-            bus.emit(editorId, REPLACE, 'universal', { generate });
+        switch (barItem) {
+          case '-': {
+            return <Divider key={dividerKey} />;
           }
-        });
-
-        return defItemCloned;
+          case 'bold': {
+            return <ToolbarBold key="bar-bold" />;
+          }
+          case 'underline': {
+            return <ToolbarUnderline key="bar-unorderline" />;
+          }
+          case 'italic': {
+            return <ToolbarItalic key="bar-italic" />;
+          }
+          case 'strikeThrough': {
+            return <ToolbarStrikeThrough key="bar-strikeThrough" />;
+          }
+          case 'title': {
+            return <ToolbarTitle key="bar-title" />;
+          }
+          case 'sub': {
+            return <ToolbarSub key="bar-sub" />;
+          }
+          case 'sup': {
+            return <ToolbarSup key="bar-sup" />;
+          }
+          case 'quote': {
+            return <ToolbarQuote key="bar-quote" />;
+          }
+          case 'unorderedList': {
+            return <ToolbarUnorderedList key="bar-unorderedList" />;
+          }
+          case 'orderedList': {
+            return <ToolbarOrderedList key="bar-orderedList" />;
+          }
+          case 'task': {
+            return <ToolbarTask key="bar-task" />;
+          }
+          case 'codeRow': {
+            return <ToolbarCodeRow key="bar-codeRow" />;
+          }
+          case 'code': {
+            return <ToolbarCode key="bar-code" />;
+          }
+          case 'link': {
+            return <ToolbarLink key="bar-link" />;
+          }
+          case 'image': {
+            return noUploadImg ? (
+              <ToolbarImage key="bar-image" />
+            ) : (
+              <ToolbarImageDropdown key="bar-imageDropdown" />
+            );
+          }
+          case 'table': {
+            return <ToolbarTable key="bar-table" />;
+          }
+          case 'revoke': {
+            return <ToolbarRevoke key="bar-revoke" />;
+          }
+          case 'next': {
+            return <ToolbarNext key="bar-next" />;
+          }
+          case 'save': {
+            return <ToolbarSave key="bar-save" />;
+          }
+          case 'prettier': {
+            return !noPrettier && <ToolbarPrettier key="bar-prettier" />;
+          }
+          case 'pageFullscreen': {
+            return (
+              !setting.fullscreen && <ToolbarPageFullscreen key="bar-pageFullscreen" />
+            );
+          }
+          case 'fullscreen': {
+            return <ToolbarFullscreen key="bar-fullscreen" />;
+          }
+          case 'catalog': {
+            return <ToolbarCatalog key="bar-catalog" />;
+          }
+          case 'preview': {
+            return <ToolbarPreview key="bar-preview" />;
+          }
+          case 'previewOnly': {
+            return <ToolbarPreviewOnly key="bar-previewOnly" />;
+          }
+          case 'htmlPreview': {
+            return <ToolbarHtmlPreview key="bar-htmlPreview" />;
+          }
+          case 'github': {
+            return <ToolbarGithub key="bar-github" />;
+          }
+          case 'mermaid': {
+            return <ToolbarMermaid key="bar-mermaid" />;
+          }
+          case 'katex': {
+            return <ToolbarKatex key="bar-katex" />;
+          }
+          default: {
+            return null;
+          }
+        }
       }
 
-      return '';
-    } else {
-      return '';
-    }
-  };
+      if (defToolbars) {
+        const defItem = defToolbars[barItem as number] as ReactElement<
+          any,
+          React.FunctionComponent<any>
+        >;
 
-  return {
-    barRender
-  };
+        if (defItem) {
+          return cloneElement<any>(defItem, {
+            theme: defItem.props?.theme || theme,
+            codeTheme: defItem.props?.codeTheme || codeTheme,
+            previewTheme: defItem.props?.previewTheme || previewTheme,
+            language: defItem.props?.language || language,
+            disabled: defItem.props?.disabled || disabled,
+            showToolbarName: defItem.props?.showToolbarName || showToolbarName,
+            insert(generate: InsertContentGenerator) {
+              bus.emit(editorId, REPLACE, 'universal', { generate });
+            }
+          });
+        }
+      }
+
+      return null;
+    },
+    [
+      codeTheme,
+      defToolbars,
+      disabled,
+      editorId,
+      language,
+      noPrettier,
+      noUploadImg,
+      previewTheme,
+      setting.fullscreen,
+      showToolbarName,
+      theme
+    ]
+  );
+
+  return { barRender };
 };

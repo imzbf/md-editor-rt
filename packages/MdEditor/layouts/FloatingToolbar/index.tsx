@@ -11,8 +11,8 @@ const FloatingToolbar = () => {
   return (
     <EditorContext.Provider value={contextValue}>
       <div className={`${prefix}-floating-toolbar`}>
-        {contextValue.floatingToolbars.map((barItem: ToolbarNames) => {
-          return barRender(barItem);
+        {contextValue.floatingToolbars.map((barItem: ToolbarNames, idx) => {
+          return barRender(barItem, `floating-${idx}`);
         })}
       </div>
     </EditorContext.Provider>

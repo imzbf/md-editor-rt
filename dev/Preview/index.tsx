@@ -1,6 +1,6 @@
 import { CompletionSource } from '@codemirror/autocomplete';
 import axios from 'axios';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState, useCallback } from 'react';
 import Icon from '~/components/Icon';
 
 import {
@@ -33,6 +33,45 @@ interface PreviewProp {
 const mdHeadingId: MdHeadingId = ({ index }) => {
   return `heading-${index}`;
 };
+
+const DEFAULT_TOOLBARS = [
+  'bold',
+  'underline',
+  'italic',
+  'strikeThrough',
+  '-',
+  'title',
+  'sub',
+  'sup',
+  'quote',
+  'unorderedList',
+  'orderedList',
+  'task',
+  '-',
+  'codeRow',
+  'code',
+  'link',
+  'image',
+  'table',
+  'mermaid',
+  'katex',
+  '-',
+  'revoke',
+  'next',
+  'save',
+  0,
+  1,
+  2,
+  '=',
+  'prettier',
+  'pageFullscreen',
+  'fullscreen',
+  'preview',
+  'previewOnly',
+  'htmlPreview',
+  'catalog',
+  'github'
+] as unknown as ToolbarNames[];
 
 export default ({ theme, previewTheme, codeTheme, lang }: PreviewProp) => {
   const editorRef = useRef<ExposeParam>(null);
@@ -77,30 +116,137 @@ export default ({ theme, previewTheme, codeTheme, lang }: PreviewProp) => {
 
   const [completions, setCompletions] = useState<Array<CompletionSource>>([]);
 
+  const completionOption = useCallback<CompletionSource>((context) => {
+    const word = context.matchBefore(/^>\s*/);
+
+    if (word === null || (word.from == word.to && context.explicit)) {
+      return null;
+    }
+
+    return {
+      from: word.from,
+      options: [
+        {
+          label: '> ',
+          type: 'text'
+        }
+      ]
+    } as any;
+  }, []);
+
+  const COMPLETIONS_ARRAY = useMemo(() => [completionOption], [completionOption]);
+
   useEffect(() => {
-    setTimeout(() => {
-      setCompletions(() => {
-        return [
-          (context) => {
-            const word = context.matchBefore(/^>\s*/);
-
-            if (word === null || (word.from == word.to && context.explicit)) {
-              return null;
-            }
-
-            return {
-              from: word.from,
-              options: [
-                {
-                  label: '> ',
-                  type: 'text'
-                }
-              ]
-            };
-          }
-        ];
-      });
+    const id = window.setTimeout(() => {
+      setCompletions(COMPLETIONS_ARRAY);
     }, 5000);
+
+    return () => {
+      clearTimeout(id);
+    };
+  }, [COMPLETIONS_ARRAY]);
+
+  const strikeIcon = useMemo(() => <Icon name="strike-through" />, []);
+  const dropdownOverlay = useMemo(() => <div>下拉内容</div>, []);
+
+  const DEFAULT_FOOTERS = useMemo(
+    () => ['markdownTotal', '=', 0, 'scrollSwitch'] as unknown as any[],
+    []
+  );
+  const DEF_FOOTERS_NODES = useMemo(
+    () => [<NormalFooterToolbar key="NormalFooterToolbar">^_^</NormalFooterToolbar>],
+    []
+  );
+
+  const SINGLE_BOLD = useMemo(() => ['bold'] as ToolbarNames[], []);
+
+  const handleDrop = useCallback((e: DragEvent) => {
+    e.stopPropagation();
+
+    void (async () => {
+      const form = new FormData();
+      const file = e.dataTransfer?.files[0];
+      if (file) {
+        form.append('file', file);
+
+        try {
+          const res = await axios.post('/api/img/upload', form, {
+            headers: {
+              'Content-Type': 'multipart/form-data'
+            }
+          });
+
+          editorRef.current?.insert(() => {
+            return {
+              targetValue: `![](${res.data.url})`
+            };
+          });
+        } catch (error) {
+          console.error('Image upload failed:', error);
+        }
+      } else {
+        console.warn('No file found in drop event.');
+      }
+    })();
+  }, []);
+
+  const handleInputBoxWidthChange = useCallback((w: string) => {
+    setMd((prev) => ({
+      ...prev,
+      inputBoxWitdh: w
+    }));
+    localStorage.setItem(INPUT_BOX_WITDH, w);
+  }, []);
+
+  const handleSave = useCallback((v: string, h: Promise<any>) => {
+    console.log('onSave');
+    void h.then((html) => {
+      console.log('onSaveAsync', html);
+    });
+    localStorage.setItem(SAVE_KEY, v);
+  }, []);
+
+  const handleChange = useCallback((value: string) => {
+    setMd((prev) => ({
+      ...prev,
+      text: value
+    }));
+  }, []);
+
+  const handleUploadImg = useCallback((files: File[], callback: (arr: any[]) => void) => {
+    void (async () => {
+      const res = await Promise.all(
+        files.map((file) => {
+          return new Promise((rev, rej) => {
+            const form = new FormData();
+            form.append('file', file);
+
+            axios
+              .post('/api/img/upload', form, {
+                headers: {
+                  'Content-Type': 'multipart/form-data'
+                }
+              })
+              .then((res) => rev(res))
+              .catch((error) =>
+                rej(error instanceof Error ? error : new Error(String(error)))
+              );
+          });
+        })
+      );
+
+      callback(
+        res.map((item: any) => ({
+          url: item.data.url,
+          alt: 'alt',
+          title: 'title'
+        }))
+      );
+    })();
+  }, []);
+
+  const formatCopiedTextCb = useCallback((text: string) => {
+    return `${text} \nfrom @imzbf`;
   }, []);
 
   useEffect(() => {
@@ -134,6 +280,54 @@ export default ({ theme, previewTheme, codeTheme, lang }: PreviewProp) => {
       }
     });
   }, []);
+
+  const defToolbars = useMemo(() => {
+    return [
+      <Normal key="ddd1" />,
+      <DropdownToolbar
+        visible={defVisible}
+        onChange={setDefVisible}
+        overlay={dropdownOverlay}
+        key="dddd3"
+      >
+        {strikeIcon}
+      </DropdownToolbar>,
+      <ModalToolbar
+        key="ddd-modal"
+        title="弹窗扩展"
+        modalTitle="外置弹窗"
+        showAdjust
+        visible={md.modalVisible}
+        isFullscreen={md.isFullscreen}
+        onAdjust={(isFullscreen) => {
+          setMd((prev) => ({
+            ...prev,
+            isFullscreen
+          }));
+        }}
+        trigger={strikeIcon}
+        onClick={() => {
+          setMd((prev) => ({
+            ...prev,
+            modalVisible: true
+          }));
+        }}
+        onClose={() => {
+          setMd((prev) => ({
+            ...prev,
+            modalVisible: false
+          }));
+        }}
+      >
+        <div
+          style={{
+            width: '500px',
+            height: '300px'
+          }}
+        ></div>
+      </ModalToolbar>
+    ];
+  }, [defVisible, md.modalVisible, md.isFullscreen, strikeIcon, dropdownOverlay]);
 
   return (
     <div className="project-preview">
@@ -195,7 +389,7 @@ export default ({ theme, previewTheme, codeTheme, lang }: PreviewProp) => {
           setMd((prev) => {
             return {
               ...prev,
-              floatingToolbars: ['bold']
+              floatingToolbars: SINGLE_BOLD
             };
           });
         }}
@@ -254,195 +448,39 @@ export default ({ theme, previewTheme, codeTheme, lang }: PreviewProp) => {
           //   );
           // }}
           // noImgZoomIn
-          customIcon={
-            {
-              // bold: {
-              //   component: 'A',
-              //   props: {}
-              // },
-              // copy: StrIcon('copy', {}) // '<i class="fa fa-car"></i>',
-              // preview: {
-              //   component: '<i class="fa fa-car"></i>',
-              //   props: {
-              //     name: 'copy'
-              //   }
-              // },
-              // github: {
-              //   component: Icon,
-              //   props: {
-              //     name: 'italic'
-              //   }
-              // }
-            }
-          }
+          // customIcon={
+          //   {
+          // bold: {
+          //   component: 'A',
+          //   props: {}
+          // },
+          // copy: StrIcon('copy', {}) // '<i class="fa fa-car"></i>',
+          // preview: {
+          //   component: '<i class="fa fa-car"></i>',
+          //   props: {
+          //     name: 'copy'
+          //   }
+          // },
+          // github: {
+          //   component: Icon,
+          //   props: {
+          //     name: 'italic'
+          //   }
+          // }
+          // }
+          // }
           inputBoxWidth={md.inputBoxWitdh}
-          onInputBoxWidthChange={(w) => {
-            md.inputBoxWitdh = w;
-            localStorage.setItem(INPUT_BOX_WITDH, w);
-          }}
-          onDrop={(e) => {
-            e.stopPropagation();
-
-            void (async () => {
-              const form = new FormData();
-              const file = e.dataTransfer?.files[0];
-              if (file) {
-                form.append('file', file);
-
-                try {
-                  const res = await axios.post('/api/img/upload', form, {
-                    headers: {
-                      'Content-Type': 'multipart/form-data'
-                    }
-                  });
-
-                  editorRef.current?.insert(() => {
-                    return {
-                      targetValue: `![](${res.data.url})`
-                    };
-                  });
-                } catch (error) {
-                  console.error('Image upload failed:', error);
-                }
-              } else {
-                console.warn('No file found in drop event.');
-              }
-            })();
-          }}
+          onInputBoxWidthChange={handleInputBoxWidthChange}
+          onDrop={handleDrop}
           floatingToolbars={md.floatingToolbars}
-          toolbars={[
-            'bold',
-            'underline',
-            'italic',
-            'strikeThrough',
-            '-',
-            'title',
-            'sub',
-            'sup',
-            'quote',
-            'unorderedList',
-            'orderedList',
-            'task',
-            '-',
-            'codeRow',
-            'code',
-            'link',
-            'image',
-            'table',
-            'mermaid',
-            'katex',
-            '-',
-            'revoke',
-            'next',
-            'save',
-            0,
-            1,
-            2,
-            '=',
-            'prettier',
-            'pageFullscreen',
-            'fullscreen',
-            'preview',
-            'previewOnly',
-            'htmlPreview',
-            'catalog',
-            'github'
-          ]}
-          defToolbars={[
-            <Normal key="ddd1" />,
-            <DropdownToolbar
-              visible={defVisible}
-              trigger={<Icon name="strike-through" />}
-              onChange={setDefVisible}
-              overlay={<div>下拉内容</div>}
-              key="dddd3"
-            ></DropdownToolbar>,
-            <ModalToolbar
-              key="ddd-modal"
-              title="弹窗扩展"
-              modalTitle="外置弹窗"
-              showAdjust
-              visible={md.modalVisible}
-              isFullscreen={md.isFullscreen}
-              onAdjust={(isFullscreen) => {
-                setMd({
-                  ...md,
-                  isFullscreen
-                });
-              }}
-              trigger={<Icon name="strike-through" />}
-              onClick={() => {
-                setMd({
-                  ...md,
-                  modalVisible: true
-                });
-              }}
-              onClose={() => {
-                setMd({
-                  ...md,
-                  modalVisible: false
-                });
-              }}
-            >
-              <div
-                style={{
-                  width: '500px',
-                  height: '300px'
-                }}
-              ></div>
-            </ModalToolbar>
-          ]}
-          onSave={(v, h) => {
-            console.log('onSave');
-            void h.then((html) => {
-              console.log('onSaveAsync', html);
-            });
-            localStorage.setItem(SAVE_KEY, v);
-          }}
-          onChange={(value) =>
-            setMd({
-              ...md,
-              text: value
-            })
-          }
-          onUploadImg={(files, callback) => {
-            void (async () => {
-              const res = await Promise.all(
-                files.map((file) => {
-                  return new Promise((rev, rej) => {
-                    const form = new FormData();
-                    form.append('file', file);
-
-                    axios
-                      .post('/api/img/upload', form, {
-                        headers: {
-                          'Content-Type': 'multipart/form-data'
-                        }
-                      })
-                      .then((res) => rev(res))
-                      .catch((error) =>
-                        rej(error instanceof Error ? error : new Error(String(error)))
-                      );
-                  });
-                })
-              );
-
-              callback(
-                res.map((item: any) => ({
-                  url: item.data.url,
-                  alt: 'alt',
-                  title: 'title'
-                }))
-              );
-            })();
-          }}
-          formatCopiedText={(text: string) => {
-            return `${text} \nfrom @imzbf`;
-          }}
-          footers={['markdownTotal', '=', 0, 'scrollSwitch']}
-          defFooters={[
-            <NormalFooterToolbar key="NormalFooterToolbar">^_^</NormalFooterToolbar>
-          ]}
+          toolbars={DEFAULT_TOOLBARS}
+          defToolbars={defToolbars}
+          onSave={handleSave}
+          onChange={handleChange}
+          onUploadImg={handleUploadImg}
+          formatCopiedText={formatCopiedTextCb}
+          footers={DEFAULT_FOOTERS}
+          defFooters={DEF_FOOTERS_NODES}
         />
         <br />
         {/* <MdEditor

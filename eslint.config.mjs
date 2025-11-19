@@ -10,7 +10,7 @@ import reactRefresh from 'eslint-plugin-react-refresh';
 
 export default defineConfig(
   {
-    ignores: ['lib', 'eslint.config.mjs']
+    ignores: ['lib', 'eslint.config.mjs', '**/.local/**']
   },
   eslint.configs.recommended,
   ...tseslint.configs.recommendedTypeChecked,

@@ -6,7 +6,8 @@ import {
   useRef,
   useState,
   useCallback,
-  ReactNode
+  ReactNode,
+  memo
 } from 'react';
 
 import { prefix } from '~/config';
@@ -193,4 +194,4 @@ const DropDown = (props: ModalProps) => {
   );
 };
 
-export default DropDown;
+export default memo(DropDown);

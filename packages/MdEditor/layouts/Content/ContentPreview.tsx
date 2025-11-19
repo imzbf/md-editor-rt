@@ -1,4 +1,4 @@
-import { useContext, useMemo } from 'react';
+import { memo, useContext, useMemo } from 'react';
 import { prefix } from '~/config';
 import { EditorContext } from '~/context';
 
@@ -69,4 +69,4 @@ const ContentPreview = (props: ContentPreviewProps) => {
   );
 };
 
-export default ContentPreview;
+export default memo(ContentPreview);

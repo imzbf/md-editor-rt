@@ -5,7 +5,8 @@ import {
   ForwardedRef,
   useEffect,
   useRef,
-  useMemo
+  useMemo,
+  memo
 } from 'react';
 import { prefix, defaultProps } from '~/config';
 import Content from '~/layouts/Content';
@@ -244,4 +245,4 @@ const Editor = forwardRef((props: EditorProps, ref: ForwardedRef<unknown>) => {
   );
 });
 
-export default Editor;
+export default memo(Editor);

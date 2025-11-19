@@ -1,4 +1,12 @@
-import { useState, useEffect, forwardRef, ForwardedRef, useRef, useMemo } from 'react';
+import {
+  useState,
+  useEffect,
+  forwardRef,
+  ForwardedRef,
+  useRef,
+  useMemo,
+  memo
+} from 'react';
 import { prefix, defaultProps } from '~/config';
 import { EditorContext } from '~/context';
 import { useMdPreviewConfig, useEditorId } from '~/hooks';
@@ -139,4 +147,4 @@ const MdPreview = forwardRef((props: MdPreviewProps, ref: ForwardedRef<unknown>)
   );
 });
 
-export default MdPreview;
+export default memo(MdPreview);

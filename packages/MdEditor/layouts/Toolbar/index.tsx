@@ -39,8 +39,8 @@ const Toolbar = (props: ToolbarProps) => {
         : excluedBars.slice(moduleSplitIndex, Number.MAX_SAFE_INTEGER);
 
     return [
-      barLeft.map((barItem) => barRender(barItem)),
-      barRight.map((barItem) => barRender(barItem))
+      barLeft.map((barItem, idx) => barRender(barItem, `left-${idx}`)),
+      barRight.map((barItem, idx) => barRender(barItem, `right-${idx}`))
     ];
   }, [toolbars, toolbarsExclude, barRender]);
 

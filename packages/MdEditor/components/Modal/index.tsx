@@ -1,11 +1,12 @@
 import {
   CSSProperties,
-  useRef,
-  useState,
+  memo,
+  ReactNode,
+  useContext,
   useEffect,
   useMemo,
-  useContext,
-  ReactNode
+  useRef,
+  useState
 } from 'react';
 import { createPortal } from 'react-dom';
 import { globalConfig, prefix } from '~/config';
@@ -231,4 +232,4 @@ const Modal = (props: ModalProps) => {
   );
 };
 
-export default Modal;
+export default memo(Modal);
