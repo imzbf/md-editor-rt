@@ -439,6 +439,15 @@ This is the props of `MdPreview`, which is also part of `MdEditor`:
 
 ---
 
+### 🖌 noEcharts
+
+- **type**: `boolean`
+- **default**: `false`
+
+  \>=6.0.0 Disable echarts preview
+
+---
+
 ### 🎨 previewComponent
 
 如果你需要完全掌控预览区域的渲染方式，可以通过 `previewComponent` 注入自定义组件。组件会接收到 `html`、`id` 和 `className` 三个属性，其中 `id` 与 `className` 需要应用在容器元素上以保持内置样式与行为。
@@ -819,13 +828,6 @@ For more info, click [Internal Components](#%F0%9F%AA%A4%20Internal%20Components
 - **default**: `undefined`
 
   \>=5.5.0 Controls the maximum depth of the catalog to be displayed.
-
-### 🖌 noEcharts
-
-- **type**: `boolean`
-- **default**: `false`
-
-  \>=6.0.0 Disable echarts preview
 
 ---
 
