@@ -2524,10 +2524,10 @@ math-intrinsics@^1.1.0:
   resolved "https://registry.npmjs.org/math-intrinsics/-/math-intrinsics-1.1.0.tgz#a0dd74be81e2aa5c2f27e65ce283605ee4e2b7f9"
   integrity sha512-/IXtbwEk5HTPyEwyKX6hGkYXxM9nbj64B+ilVJnC/R6B0pH5G4V3b0pVbL7DBj4tkhBAppbQUlf6F6Xl9LHu1g==
 
-md-editor-rt@^6.2.1:
-  version "6.2.1"
-  resolved "https://registry.npmjs.org/md-editor-rt/-/md-editor-rt-6.2.1.tgz#037d627e83b10d3195fdb667e8d9c7e9fc4bb452"
-  integrity sha512-BTQRyMNZJToP5D9YgIDGip9WmBSQQ4P+pbvM2xFu6rojJbDFzie9BDqbNrOSplAKt+dJ9UOPt10tvW3K5+oALg==
+md-editor-rt@^6.3.0:
+  version "6.3.0"
+  resolved "https://registry.npmjs.org/md-editor-rt/-/md-editor-rt-6.3.0.tgz#63c9c2ae277f34c58eb55abfd222cf39d708a64b"
+  integrity sha512-X7bOYRfN+LWCoVfDr7P30vRoT4zynGue36WC4XeSqr81bekn82frps5yjpSlIOEq6D+x6HsYNesy57eMl9mJTw==
   dependencies:
     "@codemirror/autocomplete" "^6.18.7"
     "@codemirror/commands" "^6.8.1"
