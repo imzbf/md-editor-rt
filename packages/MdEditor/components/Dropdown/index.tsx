@@ -87,8 +87,8 @@ const DropDown = (props: ModalProps) => {
     setCtl((_ctl) => ({
       ..._ctl,
       overlayStyle: {
-        top: triggerTop + triggerHeight + 'px',
-        left: left + 'px'
+        insetBlockStart: triggerTop + triggerHeight + 'px',
+        insetInlineStart: left + 'px'
       }
     }));
 

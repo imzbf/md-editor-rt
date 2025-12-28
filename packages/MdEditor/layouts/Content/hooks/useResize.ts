@@ -29,7 +29,7 @@ const useResize = (
   });
 
   const [resizeOperateStyle, setResizeOperateStyle] = useState<CSSProperties>({
-    left: compatibledInputBoxWidth
+    insetInlineStart: compatibledInputBoxWidth
   });
 
   const resizedWidth = useRef<string | number | undefined>(compatibledInputBoxWidth);
@@ -61,7 +61,7 @@ const useResize = (
       setResizeOperateStyle((prevState) => {
         return {
           ...prevState,
-          left: ibw
+          insetInlineStart: ibw
         };
       });
 
@@ -111,7 +111,7 @@ const useResize = (
     setResizeOperateStyle((prevState) => {
       return {
         ...prevState,
-        left: compatibledInputBoxWidth
+        insetInlineStart: compatibledInputBoxWidth
       };
     });
   }, [compatibledInputBoxWidth]);

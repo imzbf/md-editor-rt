@@ -73,7 +73,7 @@ const CatalogLink = ({
           const pel = targetHeadEle.previousElementSibling;
           let currMarginTop = 0;
           if (!pel) {
-            currMarginTop = getComputedStyleNum(targetHeadEle, 'margin-top');
+            currMarginTop = getComputedStyleNum(targetHeadEle, 'margin-block-start');
           }
 
           scrollContainer?.scrollTo({

@@ -60,12 +60,12 @@ const Modal = (props: ModalProps) => {
       zIndex: -1
     },
     initPos: {
-      left: '0px',
-      top: '0px'
+      insetInlineStart: '0px',
+      insetBlockStart: '0px'
     },
     historyPos: {
-      left: '0px',
-      top: '0px'
+      insetInlineStart: '0px',
+      insetBlockStart: '0px'
     }
   });
 
@@ -102,8 +102,8 @@ const Modal = (props: ModalProps) => {
             return {
               ..._state,
               initPos: {
-                left: left + 'px',
-                top: top + 'px'
+                insetInlineStart: left + 'px',
+                insetBlockStart: top + 'px'
               }
             };
           });
@@ -131,8 +131,8 @@ const Modal = (props: ModalProps) => {
             zIndex: globalConfig.editorConfig.zIndex! + getZIndexIncrement()
           },
           initPos: {
-            left: halfClientWidth - halfWidth + 'px',
-            top: halfClientHeight - halfHeight + 'px'
+            insetInlineStart: halfClientWidth - halfWidth + 'px',
+            insetBlockStart: halfClientHeight - halfHeight + 'px'
           }
         };
       });
@@ -195,8 +195,8 @@ const Modal = (props: ModalProps) => {
                             ..._state,
                             historyPos: _state.initPos,
                             initPos: {
-                              left: '0',
-                              top: '0'
+                              insetInlineStart: '0',
+                              insetBlockStart: '0'
                             }
                           }));
                         } else {

@@ -192,7 +192,7 @@ const MdCatalog = (props: CatalogProps) => {
   const onActive = useCallback(
     (tocItem: TocItem, ele: HTMLDivElement) => {
       setIStyles({
-        top: ele.offsetTop + getComputedStyleNum(ele, 'padding-top') + 'px'
+        top: ele.offsetTop + getComputedStyleNum(ele, 'padding-block-start') + 'px'
       });
       props.onActive?.(tocItem, ele);
     },

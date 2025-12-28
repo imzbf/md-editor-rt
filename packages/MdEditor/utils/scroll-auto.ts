@@ -172,7 +172,7 @@ const scrollAuto = (pEle: HTMLElement, cEle: HTMLElement, codeMirrorUt: CodeMirr
 
     const { scrollDOM, contentHeight } = view;
 
-    let cElePaddingTop = getComputedStyleNum(cEle, 'padding-top');
+    let cElePaddingTop = getComputedStyleNum(cEle, 'padding-block-start');
 
     const blockInfo = view.lineBlockAtHeight(scrollDOM.scrollTop);
     // 可视区域第一行行号
@@ -206,7 +206,7 @@ const scrollAuto = (pEle: HTMLElement, cEle: HTMLElement, codeMirrorUt: CodeMirr
     let blockHeight = endEle.offsetTop - startEleOffetTop;
 
     if (startTop === 0) {
-      // offsetTop会包含margin，所以当是开始行时，要将margin-top纳入高度
+      // offsetTop会包含margin，所以当是开始行时，要将margin-block-start纳入高度
       // 而后面的则不需要
       startEleOffetTop = 0;
       // 开始结束相同时(文档中只存在一个模块)，需要将padding算入滚动区域
@@ -247,7 +247,9 @@ const scrollAuto = (pEle: HTMLElement, cEle: HTMLElement, codeMirrorUt: CodeMirr
       }
 
       blockHeight =
-        cMaxScrollLength - startEleOffetTop + getComputedStyleNum(cEle, 'padding-top');
+        cMaxScrollLength -
+        startEleOffetTop +
+        getComputedStyleNum(cEle, 'padding-block-start');
     }
 
     const scrollToTop = startEleOffetTop - cElePaddingTop + blockHeight * scale;
@@ -353,7 +355,8 @@ const scrollAuto = (pEle: HTMLElement, cEle: HTMLElement, codeMirrorUt: CodeMirr
     let eleStartOffsetTop =
       realEleStart === cEle.firstElementChild?.firstElementChild
         ? 0
-        : realEleStart.offsetTop - getComputedStyleNum(realEleStart, 'margin-top');
+        : realEleStart.offsetTop -
+          getComputedStyleNum(realEleStart, 'margin-block-start');
 
     let eleEndOffsetTop = realEleEnd.offsetTop;
 
@@ -378,7 +381,7 @@ const scrollAuto = (pEle: HTMLElement, cEle: HTMLElement, codeMirrorUt: CodeMirr
       const _startEle = cEle.querySelector<HTMLElement>(`[data-line="${lineNumer}"]`);
 
       eleStartOffsetTop = _startEle
-        ? _startEle.offsetTop - getComputedStyleNum(_startEle, 'margin-top')
+        ? _startEle.offsetTop - getComputedStyleNum(_startEle, 'margin-block-start')
         : eleStartOffsetTop;
       firstLineScrollTop = getTopByLine(lineNumer);
 
@@ -392,7 +395,7 @@ const scrollAuto = (pEle: HTMLElement, cEle: HTMLElement, codeMirrorUt: CodeMirr
         eleEndOffsetTop =
           realEleEnd.offsetTop +
           realEleEnd.offsetHeight +
-          +getComputedStyle(realEleEnd).marginBottom.replace('px', '');
+          +getComputedStyle(realEleEnd).marginBlockEnd.replace('px', '');
 
         blockHeight = endLineScrollTop;
       } else {

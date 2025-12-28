@@ -13,7 +13,7 @@ export default () => {
 
   return (
     <div className="container">
-      <div style={{ margin: '1em 0' }}>
+      <div style={{ marginBlock: '1em', marginInline: '0' }}>
         <button onClick={changeVisible}>点击</button>
       </div>
 

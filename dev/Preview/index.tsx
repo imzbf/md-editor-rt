@@ -334,10 +334,12 @@ export default ({ theme, previewTheme, codeTheme, lang }: PreviewProp) => {
       <div
         style={{
           width: '200px',
-          padding: '10px',
+          paddingBlock: '10px',
+          paddingInline: '10px',
           border: '1px solid #666',
           position: 'fixed',
-          right: '10px'
+          insetInlineEnd: '10px',
+          insetBlockStart: '170px'
         }}
       >
         <MdCatalog
@@ -350,8 +352,8 @@ export default ({ theme, previewTheme, codeTheme, lang }: PreviewProp) => {
       <button
         style={{
           position: 'absolute',
-          top: '10px',
-          left: '10px',
+          insetBlockStart: '10px',
+          insetInlineStart: '10px',
           zIndex: 1000000
         }}
         onClick={() => {
