@@ -24,6 +24,7 @@ const ToolbarFullscreen = () => {
         disabled && `${prefix}-disabled`
       ])}
       title={ult.toolbarTips?.fullscreen}
+      aria-label={ult.toolbarTips?.fullscreen}
       disabled={disabled}
       onClick={() => {
         fullscreenHandler();

@@ -39,6 +39,7 @@ const ToolbarTable = () => {
           disabled && `${prefix}-disabled`
         ])}
         title={ult.toolbarTips?.table}
+        aria-label={ult.toolbarTips?.table}
         disabled={disabled}
         type="button"
       >

@@ -116,6 +116,7 @@ const ToolbarTitle = () => {
         ])}
         disabled={disabled}
         title={ult.toolbarTips?.title}
+        aria-label={ult.toolbarTips?.title}
         type="button"
       >
         <Icon name="title" />

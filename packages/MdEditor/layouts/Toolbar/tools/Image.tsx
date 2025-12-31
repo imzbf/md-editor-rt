@@ -18,6 +18,7 @@ const ToolbarImage = () => {
     <button
       className={classnames([`${prefix}-toolbar-item`, disabled && `${prefix}-disabled`])}
       title={ult.toolbarTips?.image}
+      aria-label={ult.toolbarTips?.image}
       disabled={disabled}
       onClick={() => {
         bus.emit(editorId, REPLACE, 'image');

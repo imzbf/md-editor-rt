@@ -138,6 +138,7 @@ const ToolbarMermaid = () => {
           disabled && `${prefix}-disabled`
         ])}
         title={ult.toolbarTips?.mermaid}
+        aria-label={ult.toolbarTips?.mermaid}
         disabled={disabled}
         type="button"
       >

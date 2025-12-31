@@ -33,6 +33,7 @@ const DropdownToolbar = (props: DropdownToolbarProps) => {
       <button
         className={className}
         title={props.title || ''}
+        aria-label={props.title || ''}
         disabled={props.disabled}
         type="button"
       >

@@ -37,7 +37,8 @@ const ModalToolbar = (props: ModalToolbarProps) => {
     <>
       <button
         className={`${prefix}-toolbar-item${props.disabled ? ' ' + prefix + '-disabled' : ''}`}
-        title={props.title}
+        title={props.title || ''}
+        aria-label={props.title || ''}
         onClick={(e) => {
           props.onClick(e);
         }}

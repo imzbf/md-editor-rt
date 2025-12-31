@@ -18,6 +18,7 @@ const ToolbarUnderline = () => {
     <button
       className={classnames([`${prefix}-toolbar-item`, disabled && `${prefix}-disabled`])}
       title={ult.toolbarTips?.underline}
+      aria-label={ult.toolbarTips?.underline}
       disabled={disabled}
       onClick={() => {
         bus.emit(editorId, REPLACE, 'underline');

@@ -18,6 +18,7 @@ const ToolbarRevoke = () => {
     <button
       className={classnames([`${prefix}-toolbar-item`, disabled && `${prefix}-disabled`])}
       title={ult.toolbarTips?.revoke}
+      aria-label={ult.toolbarTips?.revoke}
       disabled={disabled}
       onClick={() => {
         bus.emit(editorId, CTRL_Z);

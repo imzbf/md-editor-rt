@@ -18,6 +18,7 @@ const ToolbarQuote = () => {
     <button
       className={classnames([`${prefix}-toolbar-item`, disabled && `${prefix}-disabled`])}
       title={ult.toolbarTips?.quote}
+      aria-label={ult.toolbarTips?.quote}
       disabled={disabled}
       onClick={() => {
         bus.emit(editorId, REPLACE, 'quote');

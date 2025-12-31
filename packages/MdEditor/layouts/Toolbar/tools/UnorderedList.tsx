@@ -18,6 +18,7 @@ const ToolbarUnorderedList = () => {
     <button
       className={classnames([`${prefix}-toolbar-item`, disabled && `${prefix}-disabled`])}
       title={ult.toolbarTips?.unorderedList}
+      aria-label={ult.toolbarTips?.unorderedList}
       disabled={disabled}
       onClick={() => {
         bus.emit(editorId, REPLACE, 'unorderedList');

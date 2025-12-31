@@ -115,6 +115,7 @@ const ToolbarImageDropdown = () => {
           disabled && `${prefix}-disabled`
         ])}
         title={ult.toolbarTips?.image}
+        aria-label={ult.toolbarTips?.image}
         disabled={disabled}
         type="button"
       >

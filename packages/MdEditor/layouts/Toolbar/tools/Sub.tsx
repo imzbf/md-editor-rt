@@ -18,6 +18,7 @@ const ToolbarSub = () => {
     <button
       className={classnames([`${prefix}-toolbar-item`, disabled && `${prefix}-disabled`])}
       title={ult.toolbarTips?.sub}
+      aria-label={ult.toolbarTips?.sub}
       disabled={disabled}
       onClick={() => {
         bus.emit(editorId, REPLACE, 'sub');

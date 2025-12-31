@@ -18,6 +18,7 @@ const ToolbarSup = () => {
     <button
       className={classnames([`${prefix}-toolbar-item`, disabled && `${prefix}-disabled`])}
       title={ult.toolbarTips?.sup}
+      aria-label={ult.toolbarTips?.sup}
       disabled={disabled}
       onClick={() => {
         bus.emit(editorId, REPLACE, 'sup');

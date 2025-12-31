@@ -18,6 +18,7 @@ const ToolbarNext = () => {
     <button
       className={classnames([`${prefix}-toolbar-item`, disabled && `${prefix}-disabled`])}
       title={ult.toolbarTips?.next}
+      aria-label={ult.toolbarTips?.next}
       disabled={disabled}
       onClick={() => {
         bus.emit(editorId, CTRL_SHIFT_Z);
