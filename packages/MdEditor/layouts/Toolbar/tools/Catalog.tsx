@@ -23,6 +23,7 @@ const ToolbarCatalog = () => {
         disabled && `${prefix}-disabled`
       ])}
       title={ult.toolbarTips?.catalog}
+      aria-label={ult.toolbarTips?.catalog}
       disabled={disabled}
       onClick={() => {
         bus.emit(editorId, CHANGE_CATALOG_VISIBLE);

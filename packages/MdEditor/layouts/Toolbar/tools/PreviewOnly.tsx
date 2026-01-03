@@ -21,6 +21,7 @@ const ToolbarPreviewOnly = () => {
         disabled && `${prefix}-disabled`
       ])}
       title={ult.toolbarTips?.previewOnly}
+      aria-label={ult.toolbarTips?.previewOnly}
       disabled={disabled}
       onClick={() => {
         updateSetting('previewOnly');

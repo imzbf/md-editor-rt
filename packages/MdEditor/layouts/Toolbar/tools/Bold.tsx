@@ -18,6 +18,7 @@ const ToolbarBold = () => {
     <button
       className={classnames([`${prefix}-toolbar-item`, disabled && `${prefix}-disabled`])}
       title={ult.toolbarTips?.bold}
+      aria-label={ult.toolbarTips?.bold}
       disabled={disabled}
       onClick={() => {
         bus.emit(editorId, REPLACE, 'bold');

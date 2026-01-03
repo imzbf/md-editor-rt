@@ -18,6 +18,7 @@ const ToolbarOrderedList = () => {
     <button
       className={classnames([`${prefix}-toolbar-item`, disabled && `${prefix}-disabled`])}
       title={ult.toolbarTips?.orderedList}
+      aria-label={ult.toolbarTips?.orderedList}
       disabled={disabled}
       onClick={() => {
         bus.emit(editorId, REPLACE, 'orderedList');

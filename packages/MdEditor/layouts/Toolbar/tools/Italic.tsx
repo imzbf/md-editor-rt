@@ -18,6 +18,7 @@ const ToolbarItalic = () => {
     <button
       className={classnames([`${prefix}-toolbar-item`, disabled && `${prefix}-disabled`])}
       title={ult.toolbarTips?.italic}
+      aria-label={ult.toolbarTips?.italic}
       disabled={disabled}
       onClick={() => {
         bus.emit(editorId, REPLACE, 'italic');

@@ -18,6 +18,7 @@ const ToolbarTask = () => {
     <button
       className={classnames([`${prefix}-toolbar-item`, disabled && `${prefix}-disabled`])}
       title={ult.toolbarTips?.task}
+      aria-label={ult.toolbarTips?.task}
       disabled={disabled}
       onClick={() => {
         bus.emit(editorId, REPLACE, 'task');

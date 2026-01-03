@@ -20,7 +20,8 @@ const NormalToolbar = (props: NormalToolbarProps) => {
   return (
     <button
       className={className}
-      title={props.title}
+      title={props.title || ''}
+      aria-label={props.title || ''}
       onClick={(e) => {
         if (props.disabled) return;
         props.onClick(e);

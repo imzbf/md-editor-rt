@@ -18,6 +18,7 @@ const ToolbarLink = () => {
     <button
       className={classnames([`${prefix}-toolbar-item`, disabled && `${prefix}-disabled`])}
       title={ult.toolbarTips?.link}
+      aria-label={ult.toolbarTips?.link}
       disabled={disabled}
       onClick={() => {
         bus.emit(editorId, REPLACE, 'link');

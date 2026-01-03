@@ -68,6 +68,7 @@ const ToolbarKatex = () => {
           disabled && `${prefix}-disabled`
         ])}
         title={ult.toolbarTips?.katex}
+        aria-label={ult.toolbarTips?.katex}
         disabled={disabled}
         type="button"
       >

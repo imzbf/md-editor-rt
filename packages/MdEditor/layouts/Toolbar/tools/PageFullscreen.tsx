@@ -21,6 +21,7 @@ const ToolbarPageFullscreen = () => {
         disabled && `${prefix}-disabled`
       ])}
       title={ult.toolbarTips?.pageFullscreen}
+      aria-label={ult.toolbarTips?.pageFullscreen}
       disabled={disabled}
       onClick={() => {
         updateSetting('pageFullscreen');

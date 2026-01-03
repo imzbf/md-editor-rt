@@ -18,6 +18,7 @@ const ToolbarPrettier = () => {
     <button
       className={classnames([`${prefix}-toolbar-item`, disabled && `${prefix}-disabled`])}
       title={ult.toolbarTips?.prettier}
+      aria-label={ult.toolbarTips?.prettier}
       disabled={disabled}
       onClick={() => {
         bus.emit(editorId, REPLACE, 'prettier');
