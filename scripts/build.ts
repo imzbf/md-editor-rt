@@ -41,7 +41,7 @@ void (async () => {
 
   rmSync(resolvePath('lib'), { recursive: true, force: true });
 
-  buildType();
+  await buildType();
 
   await Promise.all(
     entries.map(([t, entry]) => {
