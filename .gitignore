@@ -18,4 +18,4 @@ dist
 
 lib/
 
-example/**/yarn.lock
+example/**/package-lock.json

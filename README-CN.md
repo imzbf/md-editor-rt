@@ -36,19 +36,19 @@
 ## 📦 安装
 
 ```shell
-yarn add md-editor-rt
+npm i md-editor-rt
 ```
 
 使用已存在的语言、主题扩展，例如：日语
 
 ```shell
-yarn add @vavt/cm-extension
+npm i @vavt/cm-extension
 ```
 
 使用更多的扩展工具栏组件，例如：导出内容为 PDF
 
 ```shell
-yarn add @vavt/rt-extension
+npm i @vavt/rt-extension
 ```
 
 更多使用及贡献方式参考：[md-editor-extension](https://github.com/imzbf/md-editor-extension)
