@@ -1,6 +1,5 @@
 import { createSmoothScroll } from '@vavt/util';
 import { MdCatalog } from 'md-editor-rt';
-import type { TocItem } from 'md-editor-rt/lib/types/MdCatalog';
 import { MouseEvent, useCallback, useRef } from 'react';
 import { useAppSelector } from '@/hooks/store';
 
@@ -8,7 +7,7 @@ interface IzCatalogProp {
   editorId: string;
 }
 
-const onClick = (e: MouseEvent, t: TocItem) => {
+const onClick = (e: MouseEvent, t: any) => {
   history.replaceState({}, '', `${location.pathname}#${t.text}`);
 };
 
