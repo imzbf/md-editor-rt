@@ -26,12 +26,30 @@ const useMermaid = (props: ContentPreviewProps) => {
     const mermaid = mermaidRef.current;
 
     if (!noMermaid && mermaid) {
-      mermaid.initialize(
-        globalConfig.mermaidConfig({
-          startOnLoad: false,
-          theme: theme === 'dark' ? 'dark' : 'default'
-        })
-      );
+      const mermaidBaseConfig =
+        theme === 'dark'
+          ? {
+              startOnLoad: false,
+              theme: 'dark'
+            }
+          : {
+              startOnLoad: false,
+              theme: 'base',
+              themeVariables: {
+                background: '#ffffff',
+                primaryColor: '#ffffff',
+                primaryTextColor: '#1f2329',
+                primaryBorderColor: '#b7c0cc',
+                secondaryColor: '#f7f8fa',
+                tertiaryColor: '#f7f8fa',
+                lineColor: '#596273',
+                edgeLabelBackground: '#ffffff',
+                clusterBkg: '#ffffff',
+                clusterBorder: '#b7c0cc'
+              }
+            };
+
+      mermaid.initialize(globalConfig.mermaidConfig(mermaidBaseConfig));
 
       // 严格模式下，如果reRender是boolean型，会执行两次，这是reRender将不会effect
       setReRender((_r) => _r + 1);
