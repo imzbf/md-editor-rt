@@ -1,5 +1,24 @@
 <!-- next-release -->
 
+## 6.4.0 (2026-03-05)
+
+### Features
+
+- use white mermaid theme in light mode ([commit 7412331](https://github.com/imzbf/md-editor-rt/commit/74123316f07f51b87e5b3552d84d4f653e65dc6e))
+
+### Fixed Bugs
+
+- bump @vavt/markdown-theme to fix mermaid overflow ([commit e5f3277](https://github.com/imzbf/md-editor-rt/commit/e5f327751264be5ae4b75a9f7537913a9982e118))
+  - Fixes preview clipping where mermaid blocks with many lines overflow on the last line due to p line-height behavior.
+
+### Others
+
+- docs(readme): clarify commit message should include solved problem ([commit 889bb45](https://github.com/imzbf/md-editor-rt/commit/889bb456711592f95e932ca39e60dd386a7e1162))
+
+**Full Changelog**: [v6.3.2...v6.4.0](https://github.com/imzbf/md-editor-rt/compare/v6.3.2...v6.4.0)
+
+---
+
 ## 6.3.2 (2026-03-04)
 
 ### Refactors
