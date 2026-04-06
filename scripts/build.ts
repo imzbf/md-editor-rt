@@ -98,7 +98,6 @@ void (async () => {
               'react-dom/client',
               'react/jsx-runtime',
               'medium-zoom',
-              'lru-cache',
               'codemirror',
               'lucide-react',
               /@vavt\/.*/,
