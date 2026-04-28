@@ -7,14 +7,14 @@ description: 集成、定制或排查 md-editor-rt 时使用。适用于在 Reac
 
 默认把这个 skill 用在**下游业务项目**里，而不是 md-editor-rt 仓库维护流程里。
 
-本 skill 依据当前仓库的 `md-editor-rt@6.4.2` 整理。如果用户项目安装的版本不同，先核对本地安装包版本，再决定是否沿用这里的结论。
+本 skill 依据 `md-editor-rt@6.5.0` 新版本 API 整理。如果用户项目安装的版本不同，先核对本地安装包版本，再决定是否沿用这里的结论。
 
 ## 典型用户请求
 
 - 帮我在 React / Next.js 项目里接入 `md-editor-rt`
 - 帮我把 `MdPreview` 和 `MdCatalog` 接到文章详情页
 - 给 `md-editor-rt` 加图片上传或自定义工具栏 / 页脚
-- 用 `config()` 把 `highlight.js` / `katex` / `mermaid` / `prettier` 改成本地实例
+- 用 `config()` 把 `highlight.js` / `katex` / `mermaid` / `prettier` / `echarts` 改成本地实例或自定义解析策略
 - 排查 `MdCatalog` 不跟随滚动、SSR 报错、样式不对、保存时 HTML 不更新
 
 ## 先按任务找文档
@@ -29,6 +29,7 @@ description: 集成、定制或排查 md-editor-rt 时使用。适用于在 Reac
 - 想扩展 markdown-it：看 `references/playbook.md#8-扩展-markdown-it-插件链`
 - 想扩展 CodeMirror：看 `references/playbook.md#9-扩展-codemirror-6`
 - 想确认某个功能依赖什么库、是否建议本地注入：看 `references/dependency-matrix.md`
+- 想调整 ECharts 代码块解析方式：看 `references/api.md#7-config-全局配置` 和 `references/playbook.md#32-echarts-配置解析`
 - 遇到 SSR、目录滚动、旧 API、样式或安全问题：看 `references/pitfalls.md`
 - 想理解实现机制或需要深度排障：看 `references/architecture.md`
 
@@ -84,6 +85,7 @@ description: 集成、定制或排查 md-editor-rt 时使用。适用于在 Reac
 - 把 `config()` 当作全局单例初始化，而不是组件局部状态。
 - 默认没有内置 XSS 扩展；面向用户输入时要主动接入 `sanitize` 或 `XSSPlugin`。
 - 如果依赖默认 CDN 注入，记得评估 CSP / 内网 / Electron 约束；必要时用 `clearSideEffects()` 清理副作用。
+- ECharts 解析策略要按版本区分：`<6.5.0` 不支持 `parseOption`；`6.5.x` 默认仍用 `new Function`，可通过 `editorExtensions.echarts.parseOption` 改成 `JSON.parse`；未来 `7.0` 计划默认改为 `JSON.parse`，需要函数写法时再由业务显式配置。
 
 ## 先核对安装版本，再决定是否深挖源码
 

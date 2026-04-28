@@ -1,6 +1,6 @@
 # md-editor-rt 公开 API 速查
 
-> 基于 `md-editor-rt@6.4.2` 整理。若用户项目版本不同，先核对本地安装包类型定义。
+> 基于 `md-editor-rt@6.5.0` 新版本 API 整理。若用户项目版本不同，先核对本地安装包类型定义。
 
 ## 目录
 
@@ -212,6 +212,8 @@
   - `mermaid`
   - `katex`
   - `echarts`
+    - `editorExtensions.echarts.parseOption(code, { editorId, element })`
+    - `>=6.5.0` 支持；用于自定义 echarts 代码块内容解析
 - `editorExtensionsAttrs`
 - `editorConfig`
 - `codeMirrorExtensions(extensions, { editorId, theme, keyBindings })`
@@ -220,12 +222,17 @@
 - `mermaidConfig(base)`
 - `katexConfig(base)`
 - `echartsConfig(base)`
+  - 只处理解析后的 option，不负责解析代码块文本
 
 高优先级规则：
 
 - 默认在应用入口初始化，如 `main.tsx`、`app/providers.tsx`
 - 不要在 React 组件 render / effect 里反复调用
 - 自定义 CodeMirror / markdown-it 时先保留内置扩展，再做增删改
+- ECharts 代码块解析版本边界：
+  - `>=6.0.0 <6.5.0`：内部使用 `new Function`，不能自定义解析器。
+  - `>=6.5.0 <7.0.0`：默认仍使用 `new Function`，可以用 `editorExtensions.echarts.parseOption` 自定义，例如提前切换到 `JSON.parse`。
+  - `>=7.0.0`：未来计划默认使用 `JSON.parse`，仍保留 `parseOption`；如果需要兼容函数写法，由业务显式配置执行型解析器。
 
 ## 8. 安全与 HTML 清洗
 
