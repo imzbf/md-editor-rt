@@ -106,6 +106,7 @@ const useEcharts = (props: ContentPreviewProps) => {
     clearEchartsEffects();
 
     if (!props.noEcharts && echartsRef.current && rootRef?.current) {
+      const { editorExtensions, echartsConfig } = globalConfig;
       const pendingSourceEles = Array.from(
         rootRef.current.querySelectorAll<HTMLElement>(
           `#${editorId} div.${prefix}-echarts:not([data-processed])`
@@ -118,8 +119,11 @@ const useEcharts = (props: ContentPreviewProps) => {
         }
 
         try {
-          // eslint-disable-next-line @typescript-eslint/no-implied-eval
-          const options = new Function(`return ${item.innerText}`)();
+          const baseOptions = editorExtensions.echarts!.parseOption!(item.innerText, {
+            editorId,
+            element: item
+          });
+          const options = echartsConfig(baseOptions);
           const ins = echartsRef.current.init(item, theme);
 
           ins.setOption(options);
