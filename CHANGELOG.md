@@ -1,5 +1,19 @@
 <!-- next-release -->
 
+## 6.5.0 (2026-04-28)
+
+### Features
+
+- allow custom option parser ([commit a1a1ec8](https://github.com/imzbf/md-editor-rt/commit/a1a1ec8b77b851c2b7a5f602d03af516215abe7d))
+
+### Others
+
+- docs(skill): add downstream usage skill for react consumers ([commit 30b6db6](https://github.com/imzbf/md-editor-rt/commit/30b6db63a19aa17ec258127b16853660a3f63bfc))
+
+**Full Changelog**: [v6.4.2...v6.5.0](https://github.com/imzbf/md-editor-rt/compare/v6.4.2...v6.5.0)
+
+---
+
 ## 6.4.2 (2026-04-06)
 
 ### Fixed Bugs
