@@ -1,5 +1,27 @@
 <!-- next-release -->
 
+## 6.5.1 (2026-05-22)
+
+### Refactors
+
+- upgrade lucide-react ([commit afa50fc](https://github.com/imzbf/md-editor-rt/commit/afa50fc4f52c9b8a574354290369ed936b38911e))
+
+- replace axios with native fetch for image upload Extract a shared `uploadImage` helper that uses the Fetch API with proper HTTP status and response-code validation, and remove the `axios` dev dependency. ([commit c615e49](https://github.com/imzbf/md-editor-rt/commit/c615e494d07f0ae5e9bb440ad7b637f57af24a95))
+
+### Others
+
+- build(scripts): replace tsx with native Node TypeScript support ([commit c3cc143](https://github.com/imzbf/md-editor-rt/commit/c3cc14332702b176e93a080deea72f3fdc12e202))
+  - Remove the `tsx` dev dependency and switch npm scripts to use `node` directly, leveraging Node's
+  - built-in TypeScript stripping. Update imports to use `.ts` extensions and type-only imports where
+  - appropriate, and add the required tsconfig flags (`allowImportingTsExtensions`,
+  - `emitDeclarationOnly`).
+
+- docs(skill): update echarts parser guidance ([commit 73953d4](https://github.com/imzbf/md-editor-rt/commit/73953d46efa23455ea2795631b8ef7472f960d08))
+
+**Full Changelog**: [v6.5.0...v6.5.1](https://github.com/imzbf/md-editor-rt/compare/v6.5.0...v6.5.1)
+
+---
+
 ## 6.5.0 (2026-04-28)
 
 ### Features
