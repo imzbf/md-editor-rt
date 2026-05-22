@@ -79,7 +79,6 @@
     "@vavt/markdown-theme": "^5.0.2",
     "@vavt/vite-plugin-import-markdown": "^1.0.1",
     "@vitejs/plugin-react": "^5.0.2",
-    "axios": "^1.11.0",
     "cropperjs": "^1.6.2",
     "echarts": "^6.0.0",
     "eslint": "^9.35.0",

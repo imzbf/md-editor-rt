@@ -1,5 +1,4 @@
 import { CompletionSource } from '@codemirror/autocomplete';
-import axios from 'axios';
 import React, { useEffect, useMemo, useRef, useState, useCallback } from 'react';
 import Icon from '~/components/Icon';
 
@@ -32,6 +31,11 @@ interface PreviewProp {
 
 const mdHeadingId: MdHeadingId = ({ index }) => {
   return `heading-${index}`;
+};
+
+type UploadImageResponse = {
+  code: number;
+  url: string;
 };
 
 const DEFAULT_TOOLBARS = [
@@ -160,35 +164,57 @@ export default ({ theme, previewTheme, codeTheme, lang }: PreviewProp) => {
 
   const SINGLE_BOLD = useMemo(() => ['bold'] as ToolbarNames[], []);
 
-  const handleDrop = useCallback((e: DragEvent) => {
-    e.stopPropagation();
+  /**
+   * `fetch` 遇到 4xx/5xx 时不会自动抛错，这里统一补上状态校验，
+   * 让拖拽上传和批量上传都复用同一套返回值与错误处理。
+   */
+  const uploadImage = useCallback(async (file: File) => {
+    const form = new FormData();
+    form.append('file', file);
 
-    void (async () => {
-      const form = new FormData();
-      const file = e.dataTransfer?.files[0];
-      if (file) {
-        form.append('file', file);
+    const response = await fetch('/api/img/upload', {
+      method: 'POST',
+      body: form
+    });
 
-        try {
-          const res = await axios.post('/api/img/upload', form, {
-            headers: {
-              'Content-Type': 'multipart/form-data'
-            }
-          });
+    if (!response.ok) {
+      throw new Error(`图片上传失败：${response.status}`);
+    }
 
-          editorRef.current?.insert(() => {
-            return {
-              targetValue: `![](${res.data.url})`
-            };
-          });
-        } catch (error) {
-          console.error('Image upload failed:', error);
-        }
-      } else {
-        console.warn('No file found in drop event.');
-      }
-    })();
+    const data = (await response.json()) as UploadImageResponse;
+
+    if (data.code !== 0) {
+      throw new Error('图片上传失败：无效的响应代码');
+    }
+
+    return data;
   }, []);
+
+  const handleDrop = useCallback(
+    (e: DragEvent) => {
+      e.stopPropagation();
+
+      void (async () => {
+        const file = e.dataTransfer?.files[0];
+        if (file) {
+          try {
+            const res = await uploadImage(file);
+
+            editorRef.current?.insert(() => {
+              return {
+                targetValue: `![](${res.url})`
+              };
+            });
+          } catch (error) {
+            console.error('Image upload failed:', error);
+          }
+        } else {
+          console.warn('No file found in drop event.');
+        }
+      })();
+    },
+    [uploadImage]
+  );
 
   const handleInputBoxWidthChange = useCallback((w: string) => {
     setMd((prev) => ({
@@ -213,37 +239,22 @@ export default ({ theme, previewTheme, codeTheme, lang }: PreviewProp) => {
     }));
   }, []);
 
-  const handleUploadImg = useCallback((files: File[], callback: (arr: any[]) => void) => {
-    void (async () => {
-      const res = await Promise.all(
-        files.map((file) => {
-          return new Promise((rev, rej) => {
-            const form = new FormData();
-            form.append('file', file);
+  const handleUploadImg = useCallback(
+    (files: File[], callback: (arr: any[]) => void) => {
+      void (async () => {
+        const res = await Promise.all(files.map((file) => uploadImage(file)));
 
-            axios
-              .post('/api/img/upload', form, {
-                headers: {
-                  'Content-Type': 'multipart/form-data'
-                }
-              })
-              .then((res) => rev(res))
-              .catch((error) =>
-                rej(error instanceof Error ? error : new Error(String(error)))
-              );
-          });
-        })
-      );
-
-      callback(
-        res.map((item: any) => ({
-          url: item.data.url,
-          alt: 'alt',
-          title: 'title'
-        }))
-      );
-    })();
-  }, []);
+        callback(
+          res.map((item: any) => ({
+            url: item.url,
+            alt: 'alt',
+            title: 'title'
+          }))
+        );
+      })();
+    },
+    [uploadImage]
+  );
 
   const formatCopiedTextCb = useCallback((text: string) => {
     return `${text} \nfrom @imzbf`;
