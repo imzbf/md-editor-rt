@@ -2,8 +2,9 @@ import { rmSync } from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import react from '@vitejs/plugin-react';
-import { build, LibraryFormats } from 'vite';
-import { buildType } from './build.type';
+import { build } from 'vite';
+import type { LibraryFormats } from 'vite';
+import { buildType } from './build.type.ts';
 
 const __dirname = fileURLToPath(new URL('..', import.meta.url));
 const resolvePath = (p: string) => path.resolve(__dirname, p);
