@@ -9,7 +9,7 @@ import App from './App';
 // import TargetBlankExtension from './image/TargetBlankExtension.js';
 // import '../../lib/style.css';
 
-import '~/styles/style.less';
+import '~/styles/style.scss';
 // import { Extension } from '@codemirror/state';
 // import screenfull from 'screenfull';
 // import katex from 'katex';

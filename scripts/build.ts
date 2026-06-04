@@ -1,7 +1,8 @@
-import { rmSync } from 'fs';
+import fs from 'node:fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import react from '@vitejs/plugin-react';
+import * as sass from 'sass';
 import { build } from 'vite';
 import type { LibraryFormats } from 'vite';
 import { buildType } from './build.type.ts';
@@ -9,110 +10,96 @@ import { buildType } from './build.type.ts';
 const __dirname = fileURLToPath(new URL('..', import.meta.url));
 const resolvePath = (p: string) => path.resolve(__dirname, p);
 
-void (async () => {
-  const moduleEntry = {
-    index: resolvePath('packages'),
-    MdEditor: resolvePath('packages/MdEditor'),
-    MdPreview: resolvePath('packages/MdPreview'),
-    NormalToolbar: resolvePath('packages/NormalToolbar'),
-    DropdownToolbar: resolvePath('packages/DropdownToolbar'),
-    ModalToolbar: resolvePath('packages/ModalToolbar'),
-    MdCatalog: resolvePath('packages/MdCatalog'),
-    MdModal: resolvePath('packages/MdEditor/components/Modal'),
-    config: resolvePath('packages/config')
-  };
+const moduleEntry = {
+  index: resolvePath('packages'),
+  MdEditor: resolvePath('packages/MdEditor'),
+  MdPreview: resolvePath('packages/MdPreview'),
+  NormalToolbar: resolvePath('packages/NormalToolbar'),
+  DropdownToolbar: resolvePath('packages/DropdownToolbar'),
+  ModalToolbar: resolvePath('packages/ModalToolbar'),
+  MdCatalog: resolvePath('packages/MdCatalog'),
+  MdModal: resolvePath('packages/MdEditor/components/Modal'),
+  config: resolvePath('packages/config')
+};
 
-  const entries: Array<[LibraryFormats, any]> = [
-    [
-      'es',
-      {
-        ...moduleEntry,
-        // 这里只有利用vite构建的assetFileNames为文件名的特性构建样式文件
-        preview: resolvePath('packages/MdEditor/styles/preview.less'),
-        style: resolvePath('packages/MdEditor/styles/style.less')
+const buildStyle = (inputFile: string, outputFile: string) => {
+  const result = sass.compile(inputFile, {
+    loadPaths: [resolvePath('node_modules')],
+    style: 'expanded'
+  });
+
+  fs.mkdirSync(path.dirname(outputFile), { recursive: true });
+  fs.writeFileSync(outputFile, result.css);
+};
+
+(async () => {
+  await build({
+    base: '/',
+    publicDir: false,
+    resolve: {
+      alias: {
+        '~~': resolvePath('packages'),
+        '~': resolvePath('packages/MdEditor')
       }
-    ],
-    ['cjs', moduleEntry]
-  ];
-
-  const extnames = {
-    es: 'mjs',
-    cjs: 'cjs'
-  };
-
-  rmSync(resolvePath('lib'), { recursive: true, force: true });
-
-  await buildType();
-
-  await Promise.all(
-    entries.map(([t, entry]) => {
-      return build({
-        base: '/',
-        publicDir: false,
-        define: {
-          // vite没有标记这个常理，在打包的时候，会将runtime-dev打包进去
-          'process.env.NODE_ENV': '"production"'
-        },
-        resolve: {
-          alias: {
-            '~~': resolvePath('packages'),
-            '~': resolvePath('packages/MdEditor')
-          }
-        },
-        plugins: [react()],
-        css: {
-          modules: {
-            localsConvention: 'camelCase' // 默认只支持驼峰，修改为同事支持横线和驼峰
-          },
-          preprocessorOptions: {
-            less: {
-              javascriptEnabled: true
+    },
+    plugins: [react()],
+    css: {
+      modules: {
+        localsConvention: 'camelCase' // 默认只支持驼峰，修改为同事支持横线和驼峰
+      }
+    },
+    build: {
+      emptyOutDir: false,
+      cssCodeSplit: true,
+      outDir: resolvePath('lib'),
+      lib: {
+        entry: moduleEntry,
+        name: 'MdEditorRT',
+        fileName(format) {
+          switch (format) {
+            case 'es': {
+              return 'es/[name].mjs';
             }
-          }
-        },
-        build: {
-          emptyOutDir: false,
-          cssCodeSplit: true,
-          outDir: resolvePath('lib'),
-          lib: {
-            entry,
-            name: 'MdEditorRT',
-            formats: [t],
-            fileName(format) {
-              switch (format) {
-                case 'es': {
-                  return 'es/[name].mjs';
-                }
-                case 'cjs': {
-                  return 'cjs/[name].cjs';
-                }
-                default: {
-                  return 'umd/[name].js';
-                }
-              }
+            case 'cjs': {
+              return 'cjs/[name].cjs';
             }
-          },
-          rollupOptions: {
-            external: [
-              'react',
-              'react-dom',
-              'react-dom/client',
-              'react/jsx-runtime',
-              'medium-zoom',
-              'codemirror',
-              'lucide-react',
-              /@vavt\/.*/,
-              /@codemirror\/.*/,
-              /@lezer\/.*/,
-              /markdown-it.*/
-            ],
-            output: {
-              chunkFileNames: `${t}/chunks/[name].${extnames[t]}`,
-              assetFileNames: '[name][extname]'
+            default: {
+              return 'umd/[name].js';
             }
           }
         }
-      });
-    })
+      },
+      rollupOptions: {
+        external: [
+          'react',
+          'react-dom',
+          'react-dom/client',
+          'react/jsx-runtime',
+          'medium-zoom',
+          'codemirror',
+          'lucide-react',
+          /@vavt\/.*/,
+          /@codemirror\/.*/,
+          /@lezer\/.*/,
+          /markdown-it.*/
+        ],
+        output: ['es', 'cjs'].map((format: LibraryFormats) => ({
+          format,
+          chunkFileNames: `${format}/chunks/[name].${format === 'es' ? 'mjs' : 'cjs'}`,
+          assetFileNames: '[name][extname]'
+        }))
+      }
+    }
+  });
+  await buildType();
+  buildStyle(
+    resolvePath('packages/MdEditor/styles/style.scss'),
+    resolvePath('lib/style.css')
   );
-})();
+  buildStyle(
+    resolvePath('packages/MdEditor/styles/preview.scss'),
+    resolvePath('lib/preview.css')
+  );
+})().catch((error) => {
+  console.error('Error during build:', error);
+});

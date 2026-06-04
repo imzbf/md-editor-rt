@@ -1,0 +1,36 @@
+// 统一的前缀
+$prefix: 'md-editor';
+
+@mixin css-vars($is-dark) {
+  --md-modal-mask: #00000073;
+
+  @if $is-dark {
+    --md-color: #999;
+    --md-hover-color: #bbb;
+    --md-bk-color: #000;
+    --md-bk-color-outstand: #333;
+    --md-bk-hover-color: #1b1a1a;
+    --md-border-color: #2d2d2d;
+    --md-border-hover-color: #636262;
+    --md-border-active-color: #777;
+    --md-modal-shadow: 0px 6px 24px 2px #00000066;
+    --md-scrollbar-bg-color: #0f0f0f;
+    --md-scrollbar-thumb-color: #2d2d2d;
+    --md-scrollbar-thumb-hover-color: #3a3a3a;
+    --md-scrollbar-thumb-active-color: #3a3a3a;
+  } @else {
+    --md-color: #3f4a54;
+    --md-hover-color: #000;
+    --md-bk-color: #fff;
+    --md-bk-color-outstand: #f2f2f2;
+    --md-bk-hover-color: #f5f7fa;
+    --md-border-color: #e6e6e6;
+    --md-border-hover-color: #b9b9b9;
+    --md-border-active-color: #999;
+    --md-modal-shadow: 0px 6px 24px 2px #00000019;
+    --md-scrollbar-bg-color: #e2e2e2;
+    --md-scrollbar-thumb-color: #0000004d;
+    --md-scrollbar-thumb-hover-color: #00000059;
+    --md-scrollbar-thumb-active-color: #00000061;
+  }
+}

@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react';
 import { Theme } from '../App';
-import './index.less';
+import './index.scss';
 
 interface HeaderProp {
   theme: Theme;

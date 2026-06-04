@@ -1,18 +1,19 @@
+@use './vars' as *;
+@use '../../MdCatalog/index';
+
 // 部分样式来源于其他开源UI库
 @import '@vavt/markdown-theme/css/all.css';
-@import '~/styles/vars.less';
-@import '~~/MdCatalog/index.less';
 
-.basic-style() {
+@mixin basic-style {
   color: var(--md-color);
   font-family:
     -apple-system, BlinkMacSystemFont, 'Segoe UI Variable', 'Segoe UI', system-ui,
     ui-sans-serif, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji';
 }
 
-.@{prefix} {
-  .css-vars(false);
-  .basic-style();
+.#{$prefix} {
+  @include css-vars(false);
+  @include basic-style;
 
   width: 100%;
   height: 500px;
@@ -24,7 +25,7 @@
   overflow: hidden;
   background-color: var(--md-bk-color);
 
-  .@{prefix}-fullscreen {
+  .#{$prefix}-fullscreen {
     position: fixed !important;
     inset-block-start: 0;
     inset-inline-end: 0;
@@ -35,7 +36,7 @@
     z-index: 10000;
   }
 
-  svg&-icon {
+  svg.#{$prefix}-icon {
     width: 16px;
     height: 16px;
     padding-block: 4px;
@@ -66,9 +67,9 @@
   }
 }
 
-.@{prefix}-modal-container {
-  .css-vars(false);
-  .basic-style();
+.#{$prefix}-modal-container {
+  @include css-vars(false);
+  @include basic-style;
 
   .lucide-x {
     width: 20px;
@@ -78,28 +79,28 @@
   }
 }
 
-.@{prefix}-previewOnly {
+.#{$prefix}-previewOnly {
   border: none;
   height: auto;
   overflow: visible;
 
-  .@{prefix}-content {
+  .#{$prefix}-content {
     height: 100%;
   }
 
-  .@{prefix}-preview {
+  .#{$prefix}-preview {
     padding-block: 0;
     padding-inline: 0;
   }
 
-  .@{prefix}-preview-wrapper {
+  .#{$prefix}-preview-wrapper {
     overflow: visible;
   }
 }
 
-.@{prefix}-dark,
-.@{prefix}-modal-container[data-theme='dark'] {
-  .css-vars(true);
+.#{$prefix}-dark,
+.#{$prefix}-modal-container[data-theme='dark'] {
+  @include css-vars(true);
 }
 
 // 图片预览优先级高于编辑器，低于编辑器弹窗

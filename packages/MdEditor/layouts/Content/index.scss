@@ -1,4 +1,6 @@
-.@{prefix} {
+@use '../../styles/vars' as *;
+
+.#{$prefix} {
   &-content {
     direction: ltr;
     position: relative;
@@ -56,8 +58,7 @@
   }
 }
 
-.@{prefix}-catalog-editor {
-  // .css-vars(false);
+.#{$prefix}-catalog-editor {
   position: relative;
   overflow-x: hidden;
   overflow-y: auto;
@@ -85,14 +86,14 @@
   }
 }
 
-.@{prefix}-catalog-fixed {
+.#{$prefix}-catalog-fixed {
   position: absolute;
   inset-block-start: 0;
   inset-inline-end: 0;
   z-index: 10002;
 }
 
-.@{prefix}-catalog-flat {
+.#{$prefix}-catalog-flat {
   position: initial;
   flex-shrink: 0;
 }

@@ -16,7 +16,7 @@ import {
 import { Theme } from '../App';
 import mdText from '../data.md';
 
-import './index.less';
+import './index.scss';
 import Normal from './Normal';
 
 const SAVE_KEY = 'XHMPGLJIZTDB';
