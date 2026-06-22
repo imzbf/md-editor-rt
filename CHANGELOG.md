@@ -1,5 +1,19 @@
 <!-- next-release -->
 
+## 6.5.2 (2026-06-22)
+
+### Refactors
+
+- replace Less with Sass and optimize project build scripts ([commit 1b6f4cc](https://github.com/imzbf/md-editor-rt/commit/1b6f4ccbc3412aff1850eca3d2aa9bc26987ca28))
+
+### Fixed Bugs
+
+- handle content before first preview anchor ([commit abba880](https://github.com/imzbf/md-editor-rt/commit/abba88072957bf4ef7601fb9b67b949c30b9e57f))
+
+**Full Changelog**: [v6.5.1...v6.5.2](https://github.com/imzbf/md-editor-rt/compare/v6.5.1...v6.5.2)
+
+---
+
 ## 6.5.1 (2026-05-22)
 
 ### Refactors
