@@ -11,6 +11,18 @@ import { languages } from '@codemirror/language-data';
 import { Compartment, Extension } from '@codemirror/state';
 import { EditorView, keymap, drawSelection } from '@codemirror/view';
 import { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
+
+import CodeMirrorUt from '../codemirror';
+
+import usePasteUpload from './usePasteUpload';
+import { createAutocompletion } from '../codemirror/autocompletion';
+import { createCommands } from '../codemirror/commands';
+import { createFloatingToolbar } from '../codemirror/floatingToolbar';
+import { TextShortenerOptions, createTextShortener } from '../codemirror/textShortener';
+import { oneLight } from '../codemirror/themeLight';
+import { oneDark } from '../codemirror/themeOneDark';
+import { ContentProps } from '../props';
+import { useToolbarEffect } from './useToolbarEffect';
 import { globalConfig } from '~/config';
 import { EditorContext } from '~/context';
 import {
@@ -26,18 +38,6 @@ import {
 import { CodeMirrorExtension, DOMEventHandlers, Themes } from '~/type';
 import { directive2flag, ToolDirective } from '~/utils/content-help';
 import bus from '~/utils/event-bus';
-
-import CodeMirrorUt from '../codemirror';
-
-import usePasteUpload from './usePasteUpload';
-import { createAutocompletion } from '../codemirror/autocompletion';
-import { createCommands } from '../codemirror/commands';
-import { createFloatingToolbar } from '../codemirror/floatingToolbar';
-import { TextShortenerOptions, createTextShortener } from '../codemirror/textShortener';
-import { oneLight } from '../codemirror/themeLight';
-import { oneDark } from '../codemirror/themeOneDark';
-import { ContentProps } from '../props';
-import { useToolbarEffect } from './useToolbarEffect';
 // import useAttach from './useAttach';
 // 禁用掉>=6.28.0的实验性功能
 (EditorView as any).EDIT_CONTEXT = false;
@@ -244,7 +244,7 @@ const useCodeMirror = (props: ContentProps) => {
   });
 
   const [extensions] = useState(() => {
-    return [...userDefindeExtension, ...defaultExtensions].map(produceExtension);
+    return [...defaultExtensions, ...userDefindeExtension].map(produceExtension);
   });
   const resetHistory = useCallback(() => {
     codeMirrorUt.current?.view.dispatch({

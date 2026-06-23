@@ -1,7 +1,6 @@
 import { debounce, createSmoothScroll } from '@vavt/util';
-import CodeMirrorUt from '~/layouts/Content/codemirror';
-
 import { prefix } from '../config';
+import CodeMirrorUt from '~/layouts/Content/codemirror';
 
 const DATA_LINE_SELECTOR = `.${prefix}-preview > [data-line]`;
 
@@ -403,7 +402,7 @@ const scrollAuto = (pEle: HTMLElement, cEle: HTMLElement, codeMirrorUt: CodeMirr
         eleEndOffsetTop =
           realEleEnd.offsetTop +
           realEleEnd.offsetHeight +
-          +getComputedStyle(realEleEnd).marginBlockEnd.replace('px', '');
+          getComputedStyleNum(realEleEnd, 'margin-block-end');
 
         blockHeight = endLineScrollTop;
       } else {
