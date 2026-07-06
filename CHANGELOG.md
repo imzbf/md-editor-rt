@@ -1,5 +1,17 @@
 <!-- next-release -->
 
+## 6.5.3 (2026-06-23)
+
+### Fixed Bugs
+
+- align shared preview runtime logic ([commit 70159e4](https://github.com/imzbf/md-editor-rt/commit/70159e43918f20c474a67ee1d8c10b4dfd94193a))
+  - Move @vavt/markdown-theme into production dependencies and keep preview icon sizing aligned with the Vue package.
+  - Match the shared editor behavior for CodeMirror extension order, task-list token attrs, and scroll margin handling.
+
+**Full Changelog**: [v6.5.2...v6.5.3](https://github.com/imzbf/md-editor-rt/compare/v6.5.2...v6.5.3)
+
+---
+
 ## 6.5.2 (2026-06-22)
 
 ### Refactors
