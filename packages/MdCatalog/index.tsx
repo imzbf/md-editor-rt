@@ -9,6 +9,8 @@ import {
   useRef,
   memo
 } from 'react';
+import CatalogLink from './CatalogLink';
+import { CatalogContext, CatalogContextValue } from './context';
 import { defaultProps, prefix } from '~/config';
 import {
   CATALOG_CHANGED,
@@ -20,9 +22,6 @@ import { HeadList, MdHeadingId, Themes } from '~/type';
 import { classnames, getRelativeTop } from '~/utils';
 import bus from '~/utils/event-bus';
 import { getComputedStyleNum } from '~/utils/scroll-auto';
-
-import CatalogLink from './CatalogLink';
-import { CatalogContext, CatalogContextValue } from './context';
 
 export interface TocItem extends HeadList {
   index: number;
@@ -358,11 +357,8 @@ const MdCatalog = (props: CatalogProps) => {
   return (
     <CatalogContext.Provider value={providerValue}>
       <div
-        className={classnames([
-          `${prefix}-catalog`,
-          theme === 'dark' && `${prefix}-catalog-dark`,
-          props.className || ''
-        ])}
+        className={classnames([`${prefix}-catalog`, props.className || ''])}
+        data-theme={theme}
         style={props.style}
         ref={catalogRef}
       >

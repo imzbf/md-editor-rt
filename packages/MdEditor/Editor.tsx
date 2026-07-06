@@ -8,13 +8,6 @@ import {
   useMemo,
   memo
 } from 'react';
-import { prefix, defaultProps } from '~/config';
-import Content from '~/layouts/Content';
-import Footer from '~/layouts/Footer';
-import ToolBar from '~/layouts/Toolbar';
-import { ContextType, EditorProps, StaticProps, TableShapeType, Themes } from '~/type';
-import { classnames } from '~/utils';
-import bus from '~/utils/event-bus';
 import { EditorContext } from './context';
 import {
   useOnSave,
@@ -27,6 +20,13 @@ import {
   useEditorId
 } from './hooks';
 import { ContentExposeParam } from './layouts/Content/type';
+import { prefix, defaultProps } from '~/config';
+import Content from '~/layouts/Content';
+import Footer from '~/layouts/Footer';
+import ToolBar from '~/layouts/Toolbar';
+import { ContextType, EditorProps, StaticProps, TableShapeType, Themes } from '~/type';
+import { classnames } from '~/utils';
+import bus from '~/utils/event-bus';
 
 const Editor = forwardRef((props: EditorProps, ref: ForwardedRef<unknown>) => {
   // Editor.defaultProps在某些编辑器中不能被正确识别已设置默认情况
@@ -182,9 +182,9 @@ const Editor = forwardRef((props: EditorProps, ref: ForwardedRef<unknown>) => {
         className={classnames([
           prefix,
           !!className && className,
-          theme === 'dark' && `${prefix}-dark`,
           (setting.fullscreen || setting.pageFullscreen) && `${prefix}-fullscreen`
         ])}
+        data-theme={theme}
         style={props.style}
         ref={rootRef}
       >
