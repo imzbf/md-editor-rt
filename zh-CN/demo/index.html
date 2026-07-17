@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en-US" data-scroll-behavior="smooth"><head><meta charSet="utf-8" data-next-head=""/><meta name="viewport" content="width=device-width, initial-scale=1" data-next-head=""/><title data-next-head="">示例 - MdEditorRT 使用文档</title><meta name="keywords" content="MD Editor, md-editor-rt, Markdown 编辑器, React Markdown, React TSX, Markdown 组件, Markdown preview, React 编辑器" data-next-head=""/><meta name="description" content="md-editor-rt 是一个基于 React 和 TSX 开发的 Markdown 编辑器组件，支持实时预览和丰富的 Markdown 功能。查阅详细的开发文档与使用示例。" data-next-head=""/><link rel="preload" href="/md-editor-rt/_next/static/css/64d627ef7c8ddb4d.css" as="style"/><link rel="stylesheet" href="/md-editor-rt/_next/static/css/64d627ef7c8ddb4d.css" data-n-g=""/><noscript data-n-css=""></noscript><script defer="" noModule="" src="/md-editor-rt/_next/static/chunks/polyfills-42372ed130431b0a.js"></script><script src="/md-editor-rt/_next/static/chunks/webpack-f4424e020172bff2.js" defer=""></script><script src="/md-editor-rt/_next/static/chunks/framework-4a99af1472046e21.js" defer=""></script><script src="/md-editor-rt/_next/static/chunks/main-53cc964ab46430d5.js" defer=""></script><script src="/md-editor-rt/_next/static/chunks/pages/_app-b8f187cd79ec617a.js" defer=""></script><script src="/md-editor-rt/_next/static/chunks/6791-a300e1a17fbfb5a6.js" defer=""></script><script src="/md-editor-rt/_next/static/chunks/pages/zh-CN/demo-3489a858f19d22ca.js" defer=""></script><script src="/md-editor-rt/_next/static/-BlZAEfLaxqXYdl0_RYoD/_buildManifest.js" defer=""></script><script src="/md-editor-rt/_next/static/-BlZAEfLaxqXYdl0_RYoD/_ssgManifest.js" defer=""></script></head><body><div id="__next"><header class="page-header"><section class="container"><h1 class="project-name">md-editor-rt<sup>@<!-- -->6.5.3</sup></h1><p class="project-desc">Markdown编辑器React版本，使用jsx和typescript语法开发，支持切换主题、prettier美化文本等。</p><div class="pc"><ul class="nav-list"><li class="nav-item"><a href="/md-editor-rt/zh-CN"><svg class="icon" aria-hidden="true"><use xlink:href="#med-icon-homepage"></use></svg>首页</a></li><li class="nav-item"><a href="/md-editor-rt/zh-CN/api"><svg class="icon" aria-hidden="true"><use xlink:href="#med-icon-api"></use></svg>API</a></li><li class="nav-item"><a href="/md-editor-rt/zh-CN/demo"><svg class="icon" aria-hidden="true"><use xlink:href="#med-icon-example"></use></svg>示例</a></li><li class="nav-item"><a target="_blank" href="https://github.com/imzbf/md-editor-rt"><svg class="icon" aria-hidden="true"><use xlink:href="#med-icon-github"></use></svg>源码</a></li><li class="nav-item"><a href="/md-editor-rt/zh-CN/syntax"><svg class="icon" aria-hidden="true"><use xlink:href="#med-icon-syntax"></use></svg>语法</a></li><li class="nav-item"><a href="/md-editor-rt/zh-CN/contrast"><svg class="icon" aria-hidden="true"><use xlink:href="#med-icon-question"></use></svg>对比</a></li><li class="nav-item"><a href="/md-editor-rt/zh-CN/about"><svg class="icon" aria-hidden="true"><use xlink:href="#med-icon-about"></use></svg>关于</a></li><li class="nav-item"><a style="display:none" href="/md-editor-rt/md-editor-rt/en-US">English</a><svg class="icon" aria-hidden="true"><use xlink:href="#med-icon-en"></use></svg>English</li></ul><p class="header-actions"><button class="btn btn-header">默认模式</button><button class="btn btn-header">暗黑模式</button><button class="btn btn-header">预览主题</button><button class="btn btn-header">代码主题</button></p></div><div class="mb"><svg class="icon m-menu-trigger" aria-hidden="true"><use xlink:href="#med-icon-drawer"></use></svg></div></section></header><div class="container"><div class="doc"><div class="content"><div id="md-demo-zh" class="md-editor md-editor-previewOnly"><div id="md-demo-zh-preview" class="md-editor-preview default-theme md-editor-scrn"><h2 id="😁 基本使用示例" tabindex="-1" data-line="0"><a class="header-anchor" href="#😁 基本使用示例">😁 基本使用示例</a></h2>
+<!DOCTYPE html><html lang="en-US" data-scroll-behavior="smooth"><head><meta charSet="utf-8" data-next-head=""/><meta name="viewport" content="width=device-width, initial-scale=1" data-next-head=""/><title data-next-head="">示例 - MdEditorRT 使用文档</title><meta name="keywords" content="MD Editor, md-editor-rt, Markdown 编辑器, React Markdown, React TSX, Markdown 组件, Markdown preview, React 编辑器" data-next-head=""/><meta name="description" content="md-editor-rt 是一个基于 React 和 TSX 开发的 Markdown 编辑器组件，支持实时预览和丰富的 Markdown 功能。查阅详细的开发文档与使用示例。" data-next-head=""/><link rel="preload" href="/md-editor-rt/_next/static/css/64d627ef7c8ddb4d.css" as="style"/><link rel="stylesheet" href="/md-editor-rt/_next/static/css/64d627ef7c8ddb4d.css" data-n-g=""/><noscript data-n-css=""></noscript><script defer="" noModule="" src="/md-editor-rt/_next/static/chunks/polyfills-42372ed130431b0a.js"></script><script src="/md-editor-rt/_next/static/chunks/webpack-f4424e020172bff2.js" defer=""></script><script src="/md-editor-rt/_next/static/chunks/framework-4a99af1472046e21.js" defer=""></script><script src="/md-editor-rt/_next/static/chunks/main-53cc964ab46430d5.js" defer=""></script><script src="/md-editor-rt/_next/static/chunks/pages/_app-08067a5ea013571a.js" defer=""></script><script src="/md-editor-rt/_next/static/chunks/6791-cb36bb4e67be0006.js" defer=""></script><script src="/md-editor-rt/_next/static/chunks/pages/zh-CN/demo-3489a858f19d22ca.js" defer=""></script><script src="/md-editor-rt/_next/static/2ArTeBVfw0QGhwNMGEoeo/_buildManifest.js" defer=""></script><script src="/md-editor-rt/_next/static/2ArTeBVfw0QGhwNMGEoeo/_ssgManifest.js" defer=""></script></head><body><div id="__next"><header class="page-header"><section class="container"><h1 class="project-name">md-editor-rt<sup>@<!-- -->6.5.4</sup></h1><p class="project-desc">Markdown编辑器React版本，使用jsx和typescript语法开发，支持切换主题、prettier美化文本等。</p><div class="pc"><ul class="nav-list"><li class="nav-item"><a href="/md-editor-rt/zh-CN"><svg class="icon" aria-hidden="true"><use xlink:href="#med-icon-homepage"></use></svg>首页</a></li><li class="nav-item"><a href="/md-editor-rt/zh-CN/api"><svg class="icon" aria-hidden="true"><use xlink:href="#med-icon-api"></use></svg>API</a></li><li class="nav-item"><a href="/md-editor-rt/zh-CN/demo"><svg class="icon" aria-hidden="true"><use xlink:href="#med-icon-example"></use></svg>示例</a></li><li class="nav-item"><a target="_blank" href="https://github.com/imzbf/md-editor-rt"><svg class="icon" aria-hidden="true"><use xlink:href="#med-icon-github"></use></svg>源码</a></li><li class="nav-item"><a href="/md-editor-rt/zh-CN/syntax"><svg class="icon" aria-hidden="true"><use xlink:href="#med-icon-syntax"></use></svg>语法</a></li><li class="nav-item"><a href="/md-editor-rt/zh-CN/contrast"><svg class="icon" aria-hidden="true"><use xlink:href="#med-icon-question"></use></svg>对比</a></li><li class="nav-item"><a href="/md-editor-rt/zh-CN/about"><svg class="icon" aria-hidden="true"><use xlink:href="#med-icon-about"></use></svg>关于</a></li><li class="nav-item"><a style="display:none" href="/md-editor-rt/md-editor-rt/en-US">English</a><svg class="icon" aria-hidden="true"><use xlink:href="#med-icon-en"></use></svg>English</li></ul><p class="header-actions"><button class="btn btn-header">默认模式</button><button class="btn btn-header">暗黑模式</button><button class="btn btn-header">预览主题</button><button class="btn btn-header">代码主题</button></p></div><div class="mb"><svg class="icon m-menu-trigger" aria-hidden="true"><use xlink:href="#med-icon-drawer"></use></svg></div></section></header><div class="container"><div class="doc"><div class="content"><div id="md-demo-zh" class="md-editor md-editor-previewOnly"><div id="md-demo-zh-preview" class="md-editor-preview default-theme md-editor-scrn"><h2 id="😁 基本使用示例" tabindex="-1" data-line="0"><a class="header-anchor" href="#😁 基本使用示例">😁 基本使用示例</a></h2>
 <p data-line="2">目前一直在迭代开发，所以尽量安装最新版本。发布日志请前往：<a href="https://github.com/imzbf/md-editor-rt/releases" target="_blank">releases</a></p>
 <h3 id="🤓 CDN 链接" tabindex="-1" data-line="4"><a class="header-anchor" href="#🤓 CDN 链接">🤓 CDN 链接</a></h3>
 <p data-line="6">通过直接链接生产版本来使用，下面是一个小例子：</p>
@@ -13,10 +13,10 @@
               <span class="md-editor-collapse-tips"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-chevron-left md-editor-icon"><circle cx="12" cy="12" r="10"/><path d="m14 16-4-4 4-4"/></svg></span>
             </div>
           </summary>
-          <pre><code class="language-html" language=html><span class="md-editor-code-block">&lt;!doctype html&gt;
+          <pre><code class="language-html" language="html"><span class="md-editor-code-block">&lt;!doctype html&gt;
 &lt;html lang=&quot;zh-CN&quot;&gt;
   &lt;head&gt;
-    &lt;link href=&quot;https://cdn.jsdelivr.net/npm/md-editor-rt@6.5.3/lib/style.css&quot; rel=&quot;stylesheet&quot; /&gt;
+    &lt;link href=&quot;https://cdn.jsdelivr.net/npm/md-editor-rt@6.5.4/lib/style.css&quot; rel=&quot;stylesheet&quot; /&gt;
     &lt;script type=&quot;importmap&quot;&gt;
       {
         &quot;imports&quot;: {
@@ -35,7 +35,7 @@
           &quot;markdown-it-image-figures&quot;: &quot;https://esm.sh/markdown-it-image-figures&quot;,
           &quot;markdown-it-sub&quot;: &quot;https://esm.sh/markdown-it-sub&quot;,
           &quot;markdown-it-sup&quot;: &quot;https://esm.sh/markdown-it-sup&quot;,
-          &quot;md-editor-rt&quot;: &quot;https://esm.sh/md-editor-rt@6.5.3&quot;
+          &quot;md-editor-rt&quot;: &quot;https://esm.sh/md-editor-rt@6.5.4&quot;
         }
       }
     &lt;/script&gt;
@@ -123,7 +123,7 @@
             class="md-editor-codetab-md-demo-zh-16-0"
             checked
             role="presentation">
-          <pre><code class="language-shell" language=shell><span class="md-editor-code-block">npm install md-editor-rt</span><span rn-wrapper aria-hidden="true"><span></span></span></code></pre>
+          <pre><code class="language-shell" language="shell"><span class="md-editor-code-block">npm install md-editor-rt</span><span rn-wrapper aria-hidden="true"><span></span></span></code></pre>
 
         </div>
         <div role="tabpanel">
@@ -133,7 +133,7 @@
             class="md-editor-codetab-md-demo-zh-16-1"
             
             role="presentation">
-          <pre><code class="language-shell" language=shell><span class="md-editor-code-block">yarn add md-editor-rt</span><span rn-wrapper aria-hidden="true"><span></span></span></code></pre>
+          <pre><code class="language-shell" language="shell"><span class="md-editor-code-block">yarn add md-editor-rt</span><span rn-wrapper aria-hidden="true"><span></span></span></code></pre>
 
         </div>
       </details>
@@ -154,7 +154,7 @@
               <span class="md-editor-collapse-tips"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-chevron-left md-editor-icon"><circle cx="12" cy="12" r="10"/><path d="m14 16-4-4 4-4"/></svg></span>
             </div>
           </summary>
-          <pre><code class="language-jsx" language=jsx><span class="md-editor-code-block">import { useState } from 'react';
+          <pre><code class="language-jsx" language="jsx"><span class="md-editor-code-block">import { useState } from 'react';
 import { MdEditor } from 'md-editor-rt';
 import 'md-editor-rt/lib/style.css';
 
@@ -176,7 +176,7 @@ export default () =&gt; {
               <span class="md-editor-collapse-tips"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-chevron-left md-editor-icon"><circle cx="12" cy="12" r="10"/><path d="m14 16-4-4 4-4"/></svg></span>
             </div>
           </summary>
-          <pre><code class="language-jsx" language=jsx><span class="md-editor-code-block">import { useState } from 'react';
+          <pre><code class="language-jsx" language="jsx"><span class="md-editor-code-block">import { useState } from 'react';
 import { MdPreview, MdCatalog } from 'md-editor-rt';
 import 'md-editor-rt/lib/preview.css';
 
@@ -231,7 +231,7 @@ export default () =&gt; {
               <span class="md-editor-collapse-tips"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-chevron-left md-editor-icon"><circle cx="12" cy="12" r="10"/><path d="m14 16-4-4 4-4"/></svg></span>
             </div>
           </summary>
-          <pre><code class="language-js" language=js><span class="md-editor-code-block">import { config } from 'md-editor-rt';
+          <pre><code class="language-js" language="js"><span class="md-editor-code-block">import { config } from 'md-editor-rt';
 import { keymap } from '@codemirror/view';
 
 config({
@@ -279,7 +279,7 @@ config({
               <span class="md-editor-collapse-tips"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-chevron-left md-editor-icon"><circle cx="12" cy="12" r="10"/><path d="m14 16-4-4 4-4"/></svg></span>
             </div>
           </summary>
-          <pre><code class="language-js" language=js><span class="md-editor-code-block">import { config } from 'md-editor-rt';
+          <pre><code class="language-js" language="js"><span class="md-editor-code-block">import { config } from 'md-editor-rt';
 
 config({
   codeMirrorExtensions(extensions) {
@@ -310,7 +310,7 @@ config({
               <span class="md-editor-collapse-tips"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-chevron-left md-editor-icon"><circle cx="12" cy="12" r="10"/><path d="m14 16-4-4 4-4"/></svg></span>
             </div>
           </summary>
-          <pre><code class="language-js" language=js><span class="md-editor-code-block">import { config } from 'md-editor-rt';
+          <pre><code class="language-js" language="js"><span class="md-editor-code-block">import { config } from 'md-editor-rt';
 import { keymap, KeyBinding } from '@codemirror/view';
 // 假设你使用了EventBus
 import bus from '@/utils/event-bus';
@@ -358,7 +358,7 @@ config({
               <span class="md-editor-collapse-tips"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-chevron-left md-editor-icon"><circle cx="12" cy="12" r="10"/><path d="m14 16-4-4 4-4"/></svg></span>
             </div>
           </summary>
-          <pre><code class="language-tsx" language=tsx><span class="md-editor-code-block">import { useState, useRef, useEffect } from 'react';
+          <pre><code class="language-tsx" language="tsx"><span class="md-editor-code-block">import { useState, useRef, useEffect } from 'react';
 import { MdEditor, ExposeParam } from 'md-editor-rt';
 // 假设你使用了EventBus
 import bus from '@/utils/event-bus';
@@ -398,7 +398,7 @@ const App = () =&gt; {
               <span class="md-editor-collapse-tips"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-chevron-left md-editor-icon"><circle cx="12" cy="12" r="10"/><path d="m14 16-4-4 4-4"/></svg></span>
             </div>
           </summary>
-          <pre><code class="language-ts" language=ts><span class="md-editor-code-block">/* eslint-disable @typescript-eslint/ban-types */
+          <pre><code class="language-ts" language="ts"><span class="md-editor-code-block">/* eslint-disable @typescript-eslint/ban-types */
 class EventBus {
   private events: Map&lt;string, Function[]&gt;;
 
@@ -447,7 +447,7 @@ export default new EventBus();</span><span rn-wrapper aria-hidden="true"><span><
               <span class="md-editor-collapse-tips"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-chevron-left md-editor-icon"><circle cx="12" cy="12" r="10"/><path d="m14 16-4-4 4-4"/></svg></span>
             </div>
           </summary>
-          <pre><code class="language-jsx" language=jsx><span class="md-editor-code-block">import { useState } from 'react';
+          <pre><code class="language-jsx" language="jsx"><span class="md-editor-code-block">import { useState } from 'react';
 import { MdEditor } from 'md-editor-rt';
 import 'md-editor-rt/lib/style.css';
 
@@ -471,7 +471,7 @@ export default () =&gt; {
               <span class="md-editor-collapse-tips"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-chevron-left md-editor-icon"><circle cx="12" cy="12" r="10"/><path d="m14 16-4-4 4-4"/></svg></span>
             </div>
           </summary>
-          <pre><code class="language-jsx" language=jsx><span class="md-editor-code-block">import { useState } from 'react';
+          <pre><code class="language-jsx" language="jsx"><span class="md-editor-code-block">import { useState } from 'react';
 import { MdEditor } from 'md-editor-rt';
 import 'md-editor-rt/lib/style.css';
 
@@ -500,7 +500,7 @@ export default () =&gt; {
               <span class="md-editor-collapse-tips"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-chevron-left md-editor-icon"><circle cx="12" cy="12" r="10"/><path d="m14 16-4-4 4-4"/></svg></span>
             </div>
           </summary>
-          <pre><code class="language-css" language=css><span class="md-editor-code-block">.xxx-theme code {
+          <pre><code class="language-css" language="css"><span class="md-editor-code-block">.xxx-theme code {
   color: red;
 }</span><span rn-wrapper aria-hidden="true"><span></span><span></span><span></span></span></code></pre>
 
@@ -519,7 +519,7 @@ export default () =&gt; {
               <span class="md-editor-collapse-tips"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-chevron-left md-editor-icon"><circle cx="12" cy="12" r="10"/><path d="m14 16-4-4 4-4"/></svg></span>
             </div>
           </summary>
-          <pre><code class="language-js" language=js><span class="md-editor-code-block">import 'xxx.css';</span><span rn-wrapper aria-hidden="true"><span></span></span></code></pre>
+          <pre><code class="language-js" language="js"><span class="md-editor-code-block">import 'xxx.css';</span><span rn-wrapper aria-hidden="true"><span></span></span></code></pre>
 
         </details>
       <ol start="3" data-line="361">
@@ -536,7 +536,7 @@ export default () =&gt; {
               <span class="md-editor-collapse-tips"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-chevron-left md-editor-icon"><circle cx="12" cy="12" r="10"/><path d="m14 16-4-4 4-4"/></svg></span>
             </div>
           </summary>
-          <pre><code class="language-jsx" language=jsx><span class="md-editor-code-block">&lt;MdEditor previewTheme=&quot;xxx&quot; /&gt;</span><span rn-wrapper aria-hidden="true"><span></span></span></code></pre>
+          <pre><code class="language-jsx" language="jsx"><span class="md-editor-code-block">&lt;MdEditor previewTheme=&quot;xxx&quot; /&gt;</span><span rn-wrapper aria-hidden="true"><span></span></span></code></pre>
 
         </details>
       </li>
@@ -557,7 +557,7 @@ export default () =&gt; {
               <span class="md-editor-collapse-tips"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-chevron-left md-editor-icon"><circle cx="12" cy="12" r="10"/><path d="m14 16-4-4 4-4"/></svg></span>
             </div>
           </summary>
-          <pre><code class="language-jsx" language=jsx><span class="md-editor-code-block">import { useState } from 'react';
+          <pre><code class="language-jsx" language="jsx"><span class="md-editor-code-block">import { useState } from 'react';
 import { MdEditor } from 'md-editor-rt';
 import 'md-editor-rt/lib/style.css';
 
@@ -585,7 +585,7 @@ export default () =&gt; {
               <span class="md-editor-collapse-tips"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-chevron-left md-editor-icon"><circle cx="12" cy="12" r="10"/><path d="m14 16-4-4 4-4"/></svg></span>
             </div>
           </summary>
-          <pre><code class="language-js" language=js><span class="md-editor-code-block">import { config } from 'md-editor-rt';
+          <pre><code class="language-js" language="js"><span class="md-editor-code-block">import { config } from 'md-editor-rt';
 
 config({
   editorExtensions: {
@@ -617,7 +617,7 @@ config({
               <span class="md-editor-collapse-tips"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-chevron-left md-editor-icon"><circle cx="12" cy="12" r="10"/><path d="m14 16-4-4 4-4"/></svg></span>
             </div>
           </summary>
-          <pre><code class="language-jsx" language=jsx><span class="md-editor-code-block">&lt;MdEditor codeTheme=&quot;xxxxx&quot; /&gt;</span><span rn-wrapper aria-hidden="true"><span></span></span></code></pre>
+          <pre><code class="language-jsx" language="jsx"><span class="md-editor-code-block">&lt;MdEditor codeTheme=&quot;xxxxx&quot; /&gt;</span><span rn-wrapper aria-hidden="true"><span></span></span></code></pre>
 
         </details>
       </li>
@@ -637,7 +637,7 @@ config({
               <span class="md-editor-collapse-tips"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-chevron-left md-editor-icon"><circle cx="12" cy="12" r="10"/><path d="m14 16-4-4 4-4"/></svg></span>
             </div>
           </summary>
-          <pre><code class="language-jsx" language=jsx><span class="md-editor-code-block">import { useState } from 'react';
+          <pre><code class="language-jsx" language="jsx"><span class="md-editor-code-block">import { useState } from 'react';
 import { MdEditor, config } from 'md-editor-rt';
 import 'md-editor-rt/lib/style.css';
 // 引用screenfull
@@ -670,7 +670,7 @@ export default () =&gt; {
               <span class="md-editor-collapse-tips"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-chevron-left md-editor-icon"><circle cx="12" cy="12" r="10"/><path d="m14 16-4-4 4-4"/></svg></span>
             </div>
           </summary>
-          <pre><code class="language-jsx" language=jsx><span class="md-editor-code-block">import { useState } from 'react';
+          <pre><code class="language-jsx" language="jsx"><span class="md-editor-code-block">import { useState } from 'react';
 import { MdEditor, config } from 'md-editor-rt';
 import 'md-editor-rt/lib/style.css';
 
@@ -704,7 +704,7 @@ export default () =&gt; {
               <span class="md-editor-collapse-tips"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-chevron-left md-editor-icon"><circle cx="12" cy="12" r="10"/><path d="m14 16-4-4 4-4"/></svg></span>
             </div>
           </summary>
-          <pre><code class="language-jsx" language=jsx><span class="md-editor-code-block">import { useState } from 'react';
+          <pre><code class="language-jsx" language="jsx"><span class="md-editor-code-block">import { useState } from 'react';
 import { MdEditor } from 'md-editor-rt';
 import 'md-editor-rt/lib/style.css';
 
@@ -748,7 +748,7 @@ export default () =&gt; {
               <span class="md-editor-collapse-tips"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-chevron-left md-editor-icon"><circle cx="12" cy="12" r="10"/><path d="m14 16-4-4 4-4"/></svg></span>
             </div>
           </summary>
-          <pre><code class="language-js" language=js><span class="md-editor-code-block">import { useState } from 'react';
+          <pre><code class="language-js" language="js"><span class="md-editor-code-block">import { useState } from 'react';
 import { MdEditor, config } from 'md-editor-rt';
 import 'md-editor-rt/lib/style.css';
 
@@ -864,7 +864,7 @@ export default () =&gt; {
               <span class="md-editor-collapse-tips"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-chevron-left md-editor-icon"><circle cx="12" cy="12" r="10"/><path d="m14 16-4-4 4-4"/></svg></span>
             </div>
           </summary>
-          <pre><code class="language-jsx" language=jsx><span class="md-editor-code-block">import { useState } from 'react';
+          <pre><code class="language-jsx" language="jsx"><span class="md-editor-code-block">import { useState } from 'react';
 import { MdEditor } from 'md-editor-rt';
 import 'md-editor-rt/lib/style.css';
 
@@ -891,7 +891,7 @@ export default () =&gt; {
               <span class="md-editor-collapse-tips"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-chevron-left md-editor-icon"><circle cx="12" cy="12" r="10"/><path d="m14 16-4-4 4-4"/></svg></span>
             </div>
           </summary>
-          <pre><code class="language-jsx" language=jsx><span class="md-editor-code-block">import { useState } from 'react';
+          <pre><code class="language-jsx" language="jsx"><span class="md-editor-code-block">import { useState } from 'react';
 import { MdPreview, MdCatalog } from 'md-editor-rt';
 import 'md-editor-rt/lib/preview.css';
 
@@ -927,7 +927,7 @@ export default () =&gt; {
               <span class="md-editor-collapse-tips"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-chevron-left md-editor-icon"><circle cx="12" cy="12" r="10"/><path d="m14 16-4-4 4-4"/></svg></span>
             </div>
           </summary>
-          <pre><code class="language-jsx" language=jsx><span class="md-editor-code-block">import { useState } from 'react';
+          <pre><code class="language-jsx" language="jsx"><span class="md-editor-code-block">import { useState } from 'react';
 import { MdEditor } from 'md-editor-rt';
 import 'md-editor-rt/lib/style.css';
 
@@ -959,7 +959,7 @@ export default () =&gt; {
               <span class="md-editor-collapse-tips"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-chevron-left md-editor-icon"><circle cx="12" cy="12" r="10"/><path d="m14 16-4-4 4-4"/></svg></span>
             </div>
           </summary>
-          <pre><code class="language-less" language=less><span class="md-editor-code-block">.css-vars(@isDark) {
+          <pre><code class="language-less" language="less"><span class="md-editor-code-block">.css-vars(@isDark) {
   --md-color: if(@isDark, #999, #222);
   --md-hover-color: if(@isDark, #bbb, #000);
   --md-bk-color: if(@isDark, #000, #fff);
@@ -996,7 +996,7 @@ export default () =&gt; {
               <span class="md-editor-collapse-tips"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-chevron-left md-editor-icon"><circle cx="12" cy="12" r="10"/><path d="m14 16-4-4 4-4"/></svg></span>
             </div>
           </summary>
-          <pre><code class="language-css" language=css><span class="md-editor-code-block">.md-editor-dark {
+          <pre><code class="language-css" language="css"><span class="md-editor-code-block">.md-editor-dark {
   --md-bk-color: #333 !important;
 }</span><span rn-wrapper aria-hidden="true"><span></span><span></span><span></span></span></code></pre>
 
@@ -1017,7 +1017,7 @@ export default () =&gt; {
               <span class="md-editor-collapse-tips"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-chevron-left md-editor-icon"><circle cx="12" cy="12" r="10"/><path d="m14 16-4-4 4-4"/></svg></span>
             </div>
           </summary>
-          <pre><code class="language-shell" language=shell><span class="md-editor-code-block">yarn add screenfull katex cropperjs@1 mermaid highlight.js prettier</span><span rn-wrapper aria-hidden="true"><span></span></span></code></pre>
+          <pre><code class="language-shell" language="shell"><span class="md-editor-code-block">yarn add screenfull katex cropperjs@1 mermaid highlight.js prettier</span><span rn-wrapper aria-hidden="true"><span></span></span></code></pre>
 
         </details>
       <div data-line="729" class="md-editor-admonition md-editor-admonition-info目前`cropperjs@2`正在优化中，暂未计划切换到">
@@ -1041,7 +1041,7 @@ export default () =&gt; {
               <span class="md-editor-collapse-tips"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-chevron-left md-editor-icon"><circle cx="12" cy="12" r="10"/><path d="m14 16-4-4 4-4"/></svg></span>
             </div>
           </summary>
-          <pre><code class="language-js" language=js><span class="md-editor-code-block">import { config } from 'md-editor-rt';
+          <pre><code class="language-js" language="js"><span class="md-editor-code-block">import { config } from 'md-editor-rt';
 import 'md-editor-rt/lib/style.css';
 
 import screenfull from 'screenfull';
@@ -1110,7 +1110,7 @@ config({
               <span class="md-editor-collapse-tips"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-chevron-left md-editor-icon"><circle cx="12" cy="12" r="10"/><path d="m14 16-4-4 4-4"/></svg></span>
             </div>
           </summary>
-          <pre><code class="language-jsx" language=jsx><span class="md-editor-code-block">import { MdEditor } from 'md-editor-rt';
+          <pre><code class="language-jsx" language="jsx"><span class="md-editor-code-block">import { MdEditor } from 'md-editor-rt';
 import 'md-editor-rt/lib/style.css';
 
 export default () =&gt; {
@@ -1134,7 +1134,7 @@ export default () =&gt; {
               <span class="md-editor-collapse-tips"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-chevron-left md-editor-icon"><circle cx="12" cy="12" r="10"/><path d="m14 16-4-4 4-4"/></svg></span>
             </div>
           </summary>
-          <pre><code class="language-json" language=json><span class="md-editor-code-block">{
+          <pre><code class="language-json" language="json"><span class="md-editor-code-block">{
   &quot;img&quot;: [&quot;class&quot;],
   // 支持任务列表
   &quot;input&quot;: [&quot;class&quot;, &quot;disabled&quot;, &quot;type&quot;, &quot;checked&quot;],
@@ -1166,7 +1166,7 @@ export default () =&gt; {
               <span class="md-editor-collapse-tips"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-chevron-left md-editor-icon"><circle cx="12" cy="12" r="10"/><path d="m14 16-4-4 4-4"/></svg></span>
             </div>
           </summary>
-          <pre><code class="language-js" language=js><span class="md-editor-code-block">import { config, XSSPlugin } from 'md-editor-rt';
+          <pre><code class="language-js" language="js"><span class="md-editor-code-block">import { config, XSSPlugin } from 'md-editor-rt';
 
 config({
   markdownItPlugins(plugins) {
@@ -1195,7 +1195,7 @@ config({
               <span class="md-editor-collapse-tips"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-chevron-left md-editor-icon"><circle cx="12" cy="12" r="10"/><path d="m14 16-4-4 4-4"/></svg></span>
             </div>
           </summary>
-          <pre><code class="language-js" language=js><span class="md-editor-code-block">import { config, XSSPlugin } from 'md-editor-rt';
+          <pre><code class="language-js" language="js"><span class="md-editor-code-block">import { config, XSSPlugin } from 'md-editor-rt';
 // import { getDefaultWhiteList } from 'xss';
 
 config({
@@ -1255,7 +1255,7 @@ config({
               <span class="md-editor-collapse-tips"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-chevron-left md-editor-icon"><circle cx="12" cy="12" r="10"/><path d="m14 16-4-4 4-4"/></svg></span>
             </div>
           </summary>
-          <pre><code class="language-shell" language=shell><span class="md-editor-code-block">yarn add sanitize-html</span><span rn-wrapper aria-hidden="true"><span></span></span></code></pre>
+          <pre><code class="language-shell" language="shell"><span class="md-editor-code-block">yarn add sanitize-html</span><span rn-wrapper aria-hidden="true"><span></span></span></code></pre>
 
         </details>
       
@@ -1269,7 +1269,7 @@ config({
               <span class="md-editor-collapse-tips"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-chevron-left md-editor-icon"><circle cx="12" cy="12" r="10"/><path d="m14 16-4-4 4-4"/></svg></span>
             </div>
           </summary>
-          <pre><code class="language-jsx" language=jsx><span class="md-editor-code-block">import { MdEditor } from 'md-editor-rt';
+          <pre><code class="language-jsx" language="jsx"><span class="md-editor-code-block">import { MdEditor } from 'md-editor-rt';
 import 'md-editor-rt/lib/style.css';
 import sanitizeHtml from 'sanitize-html';
 
@@ -1293,7 +1293,7 @@ export default () =&gt; {
               <span class="md-editor-collapse-tips"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-chevron-left md-editor-icon"><circle cx="12" cy="12" r="10"/><path d="m14 16-4-4 4-4"/></svg></span>
             </div>
           </summary>
-          <pre><code class="language-js" language=js><span class="md-editor-code-block">import { config } from 'md-editor-rt';
+          <pre><code class="language-js" language="js"><span class="md-editor-code-block">import { config } from 'md-editor-rt';
 import { foldGutter } from '@codemirror/language';
 import { lineNumbers } from '@codemirror/view';
 
@@ -1329,7 +1329,7 @@ config({
               <span class="md-editor-collapse-tips"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-chevron-left md-editor-icon"><circle cx="12" cy="12" r="10"/><path d="m14 16-4-4 4-4"/></svg></span>
             </div>
           </summary>
-          <pre><code class="language-shell" language=shell><span class="md-editor-code-block">yarn add markdown-it-link-attributes</span><span rn-wrapper aria-hidden="true"><span></span></span></code></pre>
+          <pre><code class="language-shell" language="shell"><span class="md-editor-code-block">yarn add markdown-it-link-attributes</span><span rn-wrapper aria-hidden="true"><span></span></span></code></pre>
 
         </details>
       <ol start="2" data-line="963">
@@ -1346,7 +1346,7 @@ config({
               <span class="md-editor-collapse-tips"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-chevron-left md-editor-icon"><circle cx="12" cy="12" r="10"/><path d="m14 16-4-4 4-4"/></svg></span>
             </div>
           </summary>
-          <pre><code class="language-js" language=js><span class="md-editor-code-block">import { config } from 'md-editor-rt';
+          <pre><code class="language-js" language="js"><span class="md-editor-code-block">import { config } from 'md-editor-rt';
 import LinkAttr from 'markdown-it-link-attributes';
 // import Anchor from 'markdown-it-anchor';
 
@@ -1395,7 +1395,7 @@ config({
               <span class="md-editor-collapse-tips"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-chevron-left md-editor-icon"><circle cx="12" cy="12" r="10"/><path d="m14 16-4-4 4-4"/></svg></span>
             </div>
           </summary>
-          <pre><code class="language-js" language=js><span class="md-editor-code-block">import { config } from 'md-editor-rt';
+          <pre><code class="language-js" language="js"><span class="md-editor-code-block">import { config } from 'md-editor-rt';
 config({
   markdownItPlugins(plugins, { editorId }) {
     return plugins.map((item) =&gt; {
@@ -1427,7 +1427,7 @@ config({
               <span class="md-editor-collapse-tips"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-chevron-left md-editor-icon"><circle cx="12" cy="12" r="10"/><path d="m14 16-4-4 4-4"/></svg></span>
             </div>
           </summary>
-          <pre><code class="language-jsx" language=jsx><span class="md-editor-code-block">&lt;MdEditor id=&quot;myId&quot; modelValue={text} onChange={setText} /&gt;</span><span rn-wrapper aria-hidden="true"><span></span></span></code></pre>
+          <pre><code class="language-jsx" language="jsx"><span class="md-editor-code-block">&lt;MdEditor id=&quot;myId&quot; modelValue={text} onChange={setText} /&gt;</span><span rn-wrapper aria-hidden="true"><span></span></span></code></pre>
 
         </details>
       <h3 id="🎳 协同办公" tabindex="-1" data-line="1031"><a class="header-anchor" href="#🎳 协同办公">🎳 协同办公</a></h3>
@@ -1443,7 +1443,7 @@ config({
               <span class="md-editor-collapse-tips"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-chevron-left md-editor-icon"><circle cx="12" cy="12" r="10"/><path d="m14 16-4-4 4-4"/></svg></span>
             </div>
           </summary>
-          <pre><code class="language-shell" language=shell><span class="md-editor-code-block">npm i yjs y-codemirror.next y-websocket</span><span rn-wrapper aria-hidden="true"><span></span></span></code></pre>
+          <pre><code class="language-shell" language="shell"><span class="md-editor-code-block">npm i yjs y-codemirror.next y-websocket</span><span rn-wrapper aria-hidden="true"><span></span></span></code></pre>
 
         </details>
       <p data-line="1039">在 <code>editorConfig.ts</code> 中添加 <code>yjs</code> 扩展：</p>
@@ -1458,7 +1458,7 @@ config({
               <span class="md-editor-collapse-tips"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-chevron-left md-editor-icon"><circle cx="12" cy="12" r="10"/><path d="m14 16-4-4 4-4"/></svg></span>
             </div>
           </summary>
-          <pre><code class="language-ts" language=ts><span class="md-editor-code-block">import { config } from 'md-editor-rt';
+          <pre><code class="language-ts" language="ts"><span class="md-editor-code-block">import { config } from 'md-editor-rt';
 import { Compartment } from '@codemirror/state';
 import * as Y from 'yjs';
 import { yCollab } from 'y-codemirror.next';
@@ -1536,7 +1536,7 @@ config({
               <span class="md-editor-collapse-tips"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-chevron-left md-editor-icon"><circle cx="12" cy="12" r="10"/><path d="m14 16-4-4 4-4"/></svg></span>
             </div>
           </summary>
-          <pre><code class="language-js" language=js><span class="md-editor-code-block">config({
+          <pre><code class="language-js" language="js"><span class="md-editor-code-block">config({
   codeMirrorExtensions(extensions, { editorId }) {
     return editorId === 'myId'
       ? [
@@ -1563,7 +1563,7 @@ config({
               <span class="md-editor-collapse-tips"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-chevron-left md-editor-icon"><circle cx="12" cy="12" r="10"/><path d="m14 16-4-4 4-4"/></svg></span>
             </div>
           </summary>
-          <pre><code class="language-tsx" language=tsx><span class="md-editor-code-block">import React, { useCallback, useEffect, useId, useRef, useState } from 'react';
+          <pre><code class="language-tsx" language="tsx"><span class="md-editor-code-block">import React, { useCallback, useEffect, useId, useRef, useState } from 'react';
 import { MdEditor, ExposeParam } from 'md-editor-rt';
 
 import { createYjsExtension, yjsCompartment, cleanupYjs } from './extendEditor';
@@ -1618,7 +1618,7 @@ export default MyEditor;</span><span rn-wrapper aria-hidden="true"><span></span>
               <span class="md-editor-collapse-tips"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-chevron-left md-editor-icon"><circle cx="12" cy="12" r="10"/><path d="m14 16-4-4 4-4"/></svg></span>
             </div>
           </summary>
-          <pre><code class="language-js" language=js><span class="md-editor-code-block">config({
+          <pre><code class="language-js" language="js"><span class="md-editor-code-block">config({
   markdownItPlugins(plugins, { editorId }) {
     return plugins.map((item) =&gt; {
       switch (item.type) {
@@ -1656,7 +1656,7 @@ export default MyEditor;</span><span rn-wrapper aria-hidden="true"><span></span>
               <span class="md-editor-collapse-tips"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-chevron-left md-editor-icon"><circle cx="12" cy="12" r="10"/><path d="m14 16-4-4 4-4"/></svg></span>
             </div>
           </summary>
-          <pre><code class="language-js" language=js><span class="md-editor-code-block">const onRemount = useCallback(() =&gt; {
+          <pre><code class="language-js" language="js"><span class="md-editor-code-block">const onRemount = useCallback(() =&gt; {
   document.querySelectorAll(`#${editorId} .${prefix}-preview .${prefix}-code`).forEach((codeBlock: Element) =&gt; {
     const tools = codeBlock.querySelectorAll('.extra-code-tools');
     tools.forEach((item) =&gt; {
@@ -1686,7 +1686,7 @@ export default MyEditor;</span><span rn-wrapper aria-hidden="true"><span></span>
               <span class="md-editor-collapse-tips"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-chevron-left md-editor-icon"><circle cx="12" cy="12" r="10"/><path d="m14 16-4-4 4-4"/></svg></span>
             </div>
           </summary>
-          <pre><code class="language-js" language=js><span class="md-editor-code-block">import { config } from 'md-editor-v3';
+          <pre><code class="language-js" language="js"><span class="md-editor-code-block">import { config } from 'md-editor-v3';
 
 config({
   codeMirrorExtensions(extensions) {
@@ -1709,4 +1709,4 @@ config({
         </details>
       <h2 id="🧻 编辑此页面" tabindex="-1" data-line="1250"><a class="header-anchor" href="#🧻 编辑此页面">🧻 编辑此页面</a></h2>
 <p data-line="1252"><a href="https://github.com/imzbf/md-editor-rt/blob/dev-docs/public/demo-zh-CN.md" target="_blank">demo-zh-CN</a></p>
-</div></div></div><div class="catalog"><div class="affix"><div class="md-editor-catalog"></div></div></div></div></div></div><script id="__NEXT_DATA__" type="application/json">{"props":{"pageProps":{}},"page":"/zh-CN/demo","query":{},"buildId":"-BlZAEfLaxqXYdl0_RYoD","assetPrefix":"/md-editor-rt","nextExport":true,"autoExport":true,"isFallback":false,"scriptLoader":[{"src":"//at.alicdn.com/t/c/font_2818624_gbt6qvt9lob.js","strategy":"afterInteractive"},{"async":true,"src":"https://www.googletagmanager.com/gtag/js?id=G-3R6P1XE0H0","strategy":"afterInteractive"},{"id":"gg","children":"window.dataLayer = window.dataLayer || [];\n                function gtag() {\n                  dataLayer.push(arguments);\n                }\n                gtag('js', new Date());\n                gtag('config', 'G-3R6P1XE0H0');","strategy":"afterInteractive"},{"src":"https://hm.baidu.com/hm.js?1563bc52cb27ffbc7b5b46cdfc327ce0","strategy":"afterInteractive"}]}</script></body></html>
+</div></div></div><div class="catalog"><div class="affix"><div class="md-editor-catalog"></div></div></div></div></div></div><script id="__NEXT_DATA__" type="application/json">{"props":{"pageProps":{}},"page":"/zh-CN/demo","query":{},"buildId":"2ArTeBVfw0QGhwNMGEoeo","assetPrefix":"/md-editor-rt","nextExport":true,"autoExport":true,"isFallback":false,"scriptLoader":[{"src":"//at.alicdn.com/t/c/font_2818624_gbt6qvt9lob.js","strategy":"afterInteractive"},{"async":true,"src":"https://www.googletagmanager.com/gtag/js?id=G-3R6P1XE0H0","strategy":"afterInteractive"},{"id":"gg","children":"window.dataLayer = window.dataLayer || [];\n                function gtag() {\n                  dataLayer.push(arguments);\n                }\n                gtag('js', new Date());\n                gtag('config', 'G-3R6P1XE0H0');","strategy":"afterInteractive"},{"src":"https://hm.baidu.com/hm.js?1563bc52cb27ffbc7b5b46cdfc327ce0","strategy":"afterInteractive"}]}</script></body></html>
