@@ -11,15 +11,18 @@ const ToolbarNext = () => {
     editorId,
     usedLanguageText: ult,
     showToolbarName,
-    disabled
+    contentDisabled
   } = useContext(EditorContext);
 
   return (
     <button
-      className={classnames([`${prefix}-toolbar-item`, disabled && `${prefix}-disabled`])}
+      className={classnames([
+        `${prefix}-toolbar-item`,
+        contentDisabled && `${prefix}-disabled`
+      ])}
       title={ult.toolbarTips?.next}
       aria-label={ult.toolbarTips?.next}
-      disabled={disabled}
+      disabled={contentDisabled}
       onClick={() => {
         bus.emit(editorId, CTRL_SHIFT_Z);
       }}

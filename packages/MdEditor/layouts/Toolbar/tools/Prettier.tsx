@@ -2,26 +2,28 @@ import { memo, useContext } from 'react';
 import Icon from '~/components/Icon';
 import { prefix } from '~/config';
 import { EditorContext } from '~/context';
-import { REPLACE } from '~/static/event-name';
 import { classnames } from '~/utils';
-import bus from '~/utils/event-bus';
+import { emitReplace } from '~/utils/replace';
 
 const ToolbarPrettier = () => {
   const {
     editorId,
     usedLanguageText: ult,
     showToolbarName,
-    disabled
+    contentDisabled
   } = useContext(EditorContext);
 
   return (
     <button
-      className={classnames([`${prefix}-toolbar-item`, disabled && `${prefix}-disabled`])}
+      className={classnames([
+        `${prefix}-toolbar-item`,
+        contentDisabled && `${prefix}-disabled`
+      ])}
       title={ult.toolbarTips?.prettier}
       aria-label={ult.toolbarTips?.prettier}
-      disabled={disabled}
+      disabled={contentDisabled}
       onClick={() => {
-        bus.emit(editorId, REPLACE, 'prettier');
+        emitReplace(editorId, { direct: 'prettier' });
       }}
       type="button"
     >

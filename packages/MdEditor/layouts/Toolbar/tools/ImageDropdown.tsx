@@ -7,22 +7,23 @@ import {
   useRef,
   useState
 } from 'react';
+import Modals from '../../Modals';
 import Dropdown from '~/components/Dropdown';
 import Icon from '~/components/Icon';
 import { prefix } from '~/config';
 import { EditorContext } from '~/context';
-import { REPLACE, UPLOAD_IMAGE } from '~/static/event-name';
+import { UPLOAD_IMAGE } from '~/static/event-name';
 import { classnames } from '~/utils';
 import { ToolDirective } from '~/utils/content-help';
 import bus from '~/utils/event-bus';
-import Modals from '../../Modals';
+import { emitReplace } from '~/utils/replace';
 
 const ToolbarImageDropdown = () => {
   const {
     editorId,
     usedLanguageText: ult,
     showToolbarName,
-    disabled
+    contentDisabled
   } = useContext(EditorContext);
 
   const wrapperId = `${editorId}-toolbar-wrapper`;
@@ -39,12 +40,12 @@ const ToolbarImageDropdown = () => {
   }, [editorId]);
 
   const emitHandler = useCallback(
-    (direct: ToolDirective, params?: unknown) => {
-      if (disabled) return;
+    (direct: ToolDirective, params?: Record<string, unknown>) => {
+      if (contentDisabled) return;
 
-      bus.emit(editorId, REPLACE, direct, params);
+      emitReplace(editorId, { direct, params });
     },
-    [editorId, disabled]
+    [editorId, contentDisabled]
   );
 
   const onCancel = useCallback(() => {
@@ -112,11 +113,11 @@ const ToolbarImageDropdown = () => {
       <button
         className={classnames([
           `${prefix}-toolbar-item`,
-          disabled && `${prefix}-disabled`
+          contentDisabled && `${prefix}-disabled`
         ])}
         title={ult.toolbarTips?.image}
         aria-label={ult.toolbarTips?.image}
-        disabled={disabled}
+        disabled={contentDisabled}
         type="button"
       >
         <Icon name="image" />
@@ -125,7 +126,7 @@ const ToolbarImageDropdown = () => {
         )}
       </button>
     );
-  }, [disabled, showToolbarName, ult.toolbarTips?.image]);
+  }, [contentDisabled, showToolbarName, ult.toolbarTips?.image]);
 
   useEffect(() => {
     const uploadNode = uploadRef.current;
@@ -156,7 +157,7 @@ const ToolbarImageDropdown = () => {
         relative={`#${wrapperId}`}
         visible={visible}
         onChange={setVisible}
-        disabled={disabled}
+        disabled={contentDisabled}
         overlay={overlay}
       >
         {child}

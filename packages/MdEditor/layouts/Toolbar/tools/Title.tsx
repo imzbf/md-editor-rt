@@ -3,27 +3,26 @@ import DropDown from '~/components/Dropdown';
 import Icon from '~/components/Icon';
 import { prefix } from '~/config';
 import { EditorContext } from '~/context';
-import { REPLACE } from '~/static/event-name';
 import { classnames } from '~/utils';
 import { ToolDirective } from '~/utils/content-help';
-import bus from '~/utils/event-bus';
+import { emitReplace } from '~/utils/replace';
 
 const ToolbarTitle = () => {
   const {
     editorId,
     usedLanguageText: ult,
     showToolbarName,
-    disabled
+    contentDisabled
   } = useContext(EditorContext);
   const wrapperId = `${editorId}-toolbar-wrapper`;
   const [visible, setVisible] = useState(false);
 
   const emitHandler = useCallback(
     (direct: ToolDirective) => {
-      if (disabled) return;
-      bus.emit(editorId, REPLACE, direct);
+      if (contentDisabled) return;
+      emitReplace(editorId, { direct });
     },
-    [disabled, editorId]
+    [contentDisabled, editorId]
   );
 
   const overlay = useMemo(() => {
@@ -112,9 +111,9 @@ const ToolbarTitle = () => {
       <button
         className={classnames([
           `${prefix}-toolbar-item`,
-          disabled && `${prefix}-disabled`
+          contentDisabled && `${prefix}-disabled`
         ])}
-        disabled={disabled}
+        disabled={contentDisabled}
         title={ult.toolbarTips?.title}
         aria-label={ult.toolbarTips?.title}
         type="button"
@@ -125,14 +124,14 @@ const ToolbarTitle = () => {
         )}
       </button>
     );
-  }, [disabled, showToolbarName, ult.toolbarTips?.title]);
+  }, [contentDisabled, showToolbarName, ult.toolbarTips?.title]);
 
   return (
     <DropDown
       relative={`#${wrapperId}`}
       visible={visible}
       onChange={setVisible}
-      disabled={disabled}
+      disabled={contentDisabled}
       overlay={overlay}
     >
       {child}

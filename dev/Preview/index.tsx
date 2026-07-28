@@ -1,7 +1,11 @@
 import { CompletionSource } from '@codemirror/autocomplete';
 import React, { useEffect, useMemo, useRef, useState, useCallback } from 'react';
-import Icon from '~/components/Icon';
 
+import { Theme } from '../App';
+import mdText from '../data.md';
+import Normal from './Normal';
+
+import Icon from '~/components/Icon';
 import {
   MdEditor,
   DropdownToolbar,
@@ -13,11 +17,7 @@ import {
   ToolbarNames
 } from '~~/index';
 
-import { Theme } from '../App';
-import mdText from '../data.md';
-
 import './index.scss';
-import Normal from './Normal';
 
 const SAVE_KEY = 'XHMPGLJIZTDB';
 const INPUT_BOX_WITDH = 'tcxll8alg5jx52hw';
@@ -88,6 +88,7 @@ export default ({ theme, previewTheme, codeTheme, lang }: PreviewProp) => {
     isFullscreen: boolean;
     inputBoxWitdh?: string;
     disabled?: boolean;
+    readOnly?: boolean;
     floatingToolbars: ToolbarNames[];
   }>(() => {
     return {
@@ -98,6 +99,7 @@ export default ({ theme, previewTheme, codeTheme, lang }: PreviewProp) => {
       isFullscreen: false,
       inputBoxWitdh: localStorage.getItem(INPUT_BOX_WITDH) ?? undefined,
       disabled: false,
+      readOnly: false,
       floatingToolbars: ['bold', 'underline', 'italic', 'strikeThrough']
     };
   });
@@ -135,7 +137,7 @@ export default ({ theme, previewTheme, codeTheme, lang }: PreviewProp) => {
           type: 'text'
         }
       ]
-    } as any;
+    };
   }, []);
 
   const COMPLETIONS_ARRAY = useMemo(() => [completionOption], [completionOption]);
@@ -153,16 +155,11 @@ export default ({ theme, previewTheme, codeTheme, lang }: PreviewProp) => {
   const strikeIcon = useMemo(() => <Icon name="strike-through" />, []);
   const dropdownOverlay = useMemo(() => <div>下拉内容</div>, []);
 
-  const DEFAULT_FOOTERS = useMemo(
-    () => ['markdownTotal', '=', 0, 'scrollSwitch'] as unknown as any[],
-    []
-  );
+  const DEFAULT_FOOTERS = useMemo(() => ['markdownTotal', '=', 0, 'scrollSwitch'], []);
   const DEF_FOOTERS_NODES = useMemo(
     () => [<NormalFooterToolbar key="NormalFooterToolbar">^_^</NormalFooterToolbar>],
     []
   );
-
-  const SINGLE_BOLD = useMemo(() => ['bold'] as ToolbarNames[], []);
 
   /**
    * `fetch` 遇到 4xx/5xx 时不会自动抛错，这里统一补上状态校验，
@@ -402,7 +399,7 @@ export default ({ theme, previewTheme, codeTheme, lang }: PreviewProp) => {
           setMd((prev) => {
             return {
               ...prev,
-              floatingToolbars: SINGLE_BOLD
+              readOnly: !prev.readOnly
             };
           });
         }}
@@ -439,7 +436,7 @@ export default ({ theme, previewTheme, codeTheme, lang }: PreviewProp) => {
           // codeStyleReverseList={['mk-cute']}
           // autoFocus
           disabled={md.disabled}
-          // readOnly={true}
+          readOnly={md.readOnly}
           // maxLength={10}
           // noHighlight
           // autoDetectCode

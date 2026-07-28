@@ -3,28 +3,27 @@ import DropDown from '~/components/Dropdown';
 import Icon from '~/components/Icon';
 import { prefix } from '~/config';
 import { EditorContext } from '~/context';
-import { REPLACE } from '~/static/event-name';
 import { classnames } from '~/utils';
 import { ToolDirective } from '~/utils/content-help';
-import bus from '~/utils/event-bus';
+import { emitReplace } from '~/utils/replace';
 
 const ToolbarMermaid = () => {
   const {
     editorId,
     usedLanguageText: ult,
     showToolbarName,
-    disabled
+    contentDisabled
   } = useContext(EditorContext);
   const wrapperId = `${editorId}-toolbar-wrapper`;
   const [visible, setVisible] = useState(false);
 
   const emitHandler = useCallback(
     (direct: ToolDirective) => {
-      if (disabled) return;
+      if (contentDisabled) return;
 
-      bus.emit(editorId, REPLACE, direct);
+      emitReplace(editorId, { direct });
     },
-    [disabled, editorId]
+    [contentDisabled, editorId]
   );
 
   const overlay = useMemo(() => {
@@ -135,11 +134,11 @@ const ToolbarMermaid = () => {
       <button
         className={classnames([
           `${prefix}-toolbar-item`,
-          disabled && `${prefix}-disabled`
+          contentDisabled && `${prefix}-disabled`
         ])}
         title={ult.toolbarTips?.mermaid}
         aria-label={ult.toolbarTips?.mermaid}
-        disabled={disabled}
+        disabled={contentDisabled}
         type="button"
       >
         <Icon name="mermaid" />
@@ -148,14 +147,14 @@ const ToolbarMermaid = () => {
         )}
       </button>
     );
-  }, [disabled, showToolbarName, ult.toolbarTips?.mermaid]);
+  }, [contentDisabled, showToolbarName, ult.toolbarTips?.mermaid]);
 
   return (
     <DropDown
       relative={`#${wrapperId}`}
       visible={visible}
       onChange={setVisible}
-      disabled={disabled}
+      disabled={contentDisabled}
       overlay={overlay}
       key="bar-mermaid"
     >

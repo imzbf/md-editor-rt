@@ -559,6 +559,7 @@ export interface ContextType {
   customIcon: CustomIcon;
   rootRef: RefObject<HTMLDivElement | null> | null;
   disabled: boolean | undefined;
+  contentDisabled: boolean;
   showToolbarName?: boolean;
   setting: SettingType;
   updateSetting: UpdateSetting;

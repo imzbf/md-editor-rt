@@ -3,28 +3,27 @@ import DropDown from '~/components/Dropdown';
 import Icon from '~/components/Icon';
 import { prefix } from '~/config';
 import { EditorContext } from '~/context';
-import { REPLACE } from '~/static/event-name';
 import { classnames } from '~/utils';
 import { ToolDirective } from '~/utils/content-help';
-import bus from '~/utils/event-bus';
+import { emitReplace } from '~/utils/replace';
 
 const ToolbarKatex = () => {
   const {
     editorId,
     usedLanguageText: ult,
     showToolbarName,
-    disabled
+    contentDisabled
   } = useContext(EditorContext);
   const wrapperId = `${editorId}-toolbar-wrapper`;
   const [visible, setVisible] = useState(false);
 
   const emitHandler = useCallback(
     (direct: ToolDirective) => {
-      if (disabled) return;
+      if (contentDisabled) return;
 
-      bus.emit(editorId, REPLACE, direct);
+      emitReplace(editorId, { direct });
     },
-    [disabled, editorId]
+    [contentDisabled, editorId]
   );
 
   const overlay = useMemo(() => {
@@ -65,11 +64,11 @@ const ToolbarKatex = () => {
       <button
         className={classnames([
           `${prefix}-toolbar-item`,
-          disabled && `${prefix}-disabled`
+          contentDisabled && `${prefix}-disabled`
         ])}
         title={ult.toolbarTips?.katex}
         aria-label={ult.toolbarTips?.katex}
-        disabled={disabled}
+        disabled={contentDisabled}
         type="button"
       >
         <Icon name="formula" />
@@ -78,14 +77,14 @@ const ToolbarKatex = () => {
         )}
       </button>
     );
-  }, [disabled, showToolbarName, ult.toolbarTips?.katex]);
+  }, [contentDisabled, showToolbarName, ult.toolbarTips?.katex]);
 
   return (
     <DropDown
       relative={`#${wrapperId}`}
       visible={visible}
       onChange={setVisible}
-      disabled={disabled}
+      disabled={contentDisabled}
       overlay={overlay}
       key="bar-katex"
     >

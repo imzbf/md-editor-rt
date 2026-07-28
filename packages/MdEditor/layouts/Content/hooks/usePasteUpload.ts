@@ -1,10 +1,12 @@
 import { RefObject, useCallback, useContext } from 'react';
-import { EditorContext } from '~/context';
-import { ERROR_CATCHER, REPLACE, UPLOAD_IMAGE } from '~/static/event-name';
-import bus from '~/utils/event-bus';
 
 import CodeMirrorUt from '../codemirror';
 import { ContentProps } from '../props';
+
+import { EditorContext } from '~/context';
+import { ERROR_CATCHER, UPLOAD_IMAGE } from '~/static/event-name';
+import bus from '~/utils/event-bus';
+import { emitReplace } from '~/utils/replace';
 
 /**
  * 处理粘贴板
@@ -19,22 +21,28 @@ const usePasteUpload = (
     (tv: string | Promise<string>) => {
       if (tv instanceof Promise) {
         tv.then((targetValue) => {
-          bus.emit(editorId, REPLACE, 'universal', {
-            generate() {
-              return {
-                targetValue
-              };
+          emitReplace(editorId, {
+            direct: 'universal',
+            params: {
+              generate() {
+                return {
+                  targetValue
+                };
+              }
             }
           });
         }).catch((err) => {
           console.error(err);
         });
       } else {
-        bus.emit(editorId, REPLACE, 'universal', {
-          generate() {
-            return {
-              targetValue: tv
-            };
+        emitReplace(editorId, {
+          direct: 'universal',
+          params: {
+            generate() {
+              return {
+                targetValue: tv
+              };
+            }
           }
         });
       }
@@ -90,7 +98,7 @@ const usePasteUpload = (
         if (matchArr) {
           Promise.all(
             matchArr.map((img: string) => {
-              return props.transformImgUrl(img);
+              return Promise.resolve(props.transformImgUrl(img));
             })
           )
             .then((newUrls: string[]) => {
@@ -115,9 +123,12 @@ const usePasteUpload = (
       if (props.autoDetectCode && e.clipboardData.types.includes('vscode-editor-data')) {
         const vscCoodInfo = JSON.parse(e.clipboardData.getData('vscode-editor-data'));
 
-        bus.emit(editorId, REPLACE, 'code', {
-          mode: vscCoodInfo.mode,
-          text: e.clipboardData.getData('text/plain')
+        emitReplace(editorId, {
+          direct: 'code',
+          params: {
+            mode: vscCoodInfo.mode,
+            text: e.clipboardData.getData('text/plain')
+          }
         });
 
         e.preventDefault();

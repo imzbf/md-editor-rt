@@ -8,13 +8,6 @@ import {
   useMemo,
   memo
 } from 'react';
-import { prefix, defaultProps } from '~/config';
-import Content from '~/layouts/Content';
-import Footer from '~/layouts/Footer';
-import ToolBar from '~/layouts/Toolbar';
-import { ContextType, EditorProps, StaticProps, TableShapeType, Themes } from '~/type';
-import { classnames } from '~/utils';
-import bus from '~/utils/event-bus';
 import { EditorContext } from './context';
 import {
   useOnSave,
@@ -27,6 +20,13 @@ import {
   useEditorId
 } from './hooks';
 import { ContentExposeParam } from './layouts/Content/type';
+import { prefix, defaultProps } from '~/config';
+import Content from '~/layouts/Content';
+import Footer from '~/layouts/Footer';
+import ToolBar from '~/layouts/Toolbar';
+import { ContextType, EditorProps, StaticProps, TableShapeType, Themes } from '~/type';
+import { classnames } from '~/utils';
+import bus from '~/utils/event-bus';
 
 const Editor = forwardRef((props: EditorProps, ref: ForwardedRef<unknown>) => {
   // Editor.defaultProps在某些编辑器中不能被正确识别已设置默认情况
@@ -134,6 +134,9 @@ const Editor = forwardRef((props: EditorProps, ref: ForwardedRef<unknown>) => {
       customIcon,
       rootRef,
       disabled,
+      // 内容写入入口统一使用组合状态，CodeMirror 本身仍分别处理 disabled
+      // 与 readOnly，以保留只读状态下选中、复制文本的能力。
+      contentDisabled: !!disabled || !!props.readOnly,
       showToolbarName,
       setting,
       updateSetting,
@@ -157,6 +160,7 @@ const Editor = forwardRef((props: EditorProps, ref: ForwardedRef<unknown>) => {
     noPrettier,
     noUploadImg,
     previewTheme,
+    props.readOnly,
     setting,
     showCodeRowNumber,
     showToolbarName,

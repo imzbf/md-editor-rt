@@ -7,6 +7,7 @@ import {
   useMemo,
   memo
 } from 'react';
+import { useExpose } from './hooks/useExpose';
 import { prefix, defaultProps } from '~/config';
 import { EditorContext } from '~/context';
 import { useMdPreviewConfig, useEditorId } from '~/hooks';
@@ -14,8 +15,6 @@ import ContentPreview from '~/layouts/Content/ContentPreview';
 import { ContextType, MdPreviewProps, MdPreviewStaticProps, Themes } from '~/type';
 import { classnames } from '~/utils';
 import bus from '~/utils/event-bus';
-
-import { useExpose } from './hooks/useExpose';
 
 const MdPreview = forwardRef((props: MdPreviewProps, ref: ForwardedRef<unknown>) => {
   // Editor.defaultProps在某些编辑器中不能被正确识别已设置默认情况
@@ -79,6 +78,7 @@ const MdPreview = forwardRef((props: MdPreviewProps, ref: ForwardedRef<unknown>)
       customIcon: props.customIcon || {},
       rootRef,
       disabled: false,
+      contentDisabled: false,
       showToolbarName: false,
       setting: {
         preview: true,

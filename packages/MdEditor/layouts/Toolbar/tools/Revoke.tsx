@@ -11,15 +11,18 @@ const ToolbarRevoke = () => {
     editorId,
     usedLanguageText: ult,
     showToolbarName,
-    disabled
+    contentDisabled
   } = useContext(EditorContext);
 
   return (
     <button
-      className={classnames([`${prefix}-toolbar-item`, disabled && `${prefix}-disabled`])}
+      className={classnames([
+        `${prefix}-toolbar-item`,
+        contentDisabled && `${prefix}-disabled`
+      ])}
       title={ult.toolbarTips?.revoke}
       aria-label={ult.toolbarTips?.revoke}
-      disabled={disabled}
+      disabled={contentDisabled}
       onClick={() => {
         bus.emit(editorId, CTRL_Z);
       }}
