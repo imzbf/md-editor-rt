@@ -1,5 +1,8 @@
 import { randomId } from '@vavt/util';
 import { useCallback, useContext, useEffect, useRef, useState } from 'react';
+
+import { ContentPreviewProps } from '../props';
+
 import { prefix, globalConfig } from '~/config';
 import { EditorContext } from '~/context';
 import { CDN_IDS } from '~/static';
@@ -7,8 +10,6 @@ import { ERROR_CATCHER } from '~/static/event-name';
 import { mermaidCache } from '~/utils/cache';
 import { appendHandler } from '~/utils/dom';
 import eventBus from '~/utils/event-bus';
-
-import { ContentPreviewProps } from '../props';
 
 /**
  * 注册katex扩展到页面
@@ -114,6 +115,8 @@ const useMermaid = (props: ContentPreviewProps) => {
       const mermaidSourceEles =
         rootRef!.current?.querySelectorAll<HTMLElement>(`div.${prefix}-mermaid`) || [];
 
+      if (mermaidSourceEles.length === 0) return;
+
       const svgContainingElement = document.createElement('div');
       const sceWidth =
         document.body.offsetWidth > 1366 ? document.body.offsetWidth : 1366;
@@ -124,67 +127,65 @@ const useMermaid = (props: ContentPreviewProps) => {
       svgContainingElement.style.height = sceHeight + 'px';
       svgContainingElement.style.position = 'fixed';
       svgContainingElement.style.zIndex = '-10000';
-      svgContainingElement.style.top = '-10000';
+      svgContainingElement.style.top = '-10000px';
+      svgContainingElement.style.left = '-10000px';
 
-      let count = mermaidSourceEles.length;
+      document.body.appendChild(svgContainingElement);
 
-      if (count > 0) {
-        document.body.appendChild(svgContainingElement);
-      }
+      try {
+        await Promise.allSettled(
+          Array.from(mermaidSourceEles).map((ele) => {
+            const handler = async (item: HTMLElement) => {
+              if (item.dataset.closed === 'false') {
+                return false;
+              }
 
-      await Promise.allSettled(
-        Array.from(mermaidSourceEles).map((ele) => {
-          const handler = async (item: HTMLElement) => {
-            if (item.dataset.closed === 'false') {
-              return false;
-            }
+              const code = item.innerText;
+              let mermaidHtml = mermaidCache.get(code) as string;
 
-            const code = item.innerText;
-            let mermaidHtml = mermaidCache.get(code) as string;
+              if (!mermaidHtml) {
+                const idRand = randomId();
+                let result: { svg: string } = { svg: '' };
+                try {
+                  result = await mermaidRef.current.render(
+                    idRand,
+                    code,
+                    svgContainingElement
+                  );
 
-            if (!mermaidHtml) {
-              const idRand = randomId();
-              let result: { svg: string } = { svg: '' };
-              try {
-                result = await mermaidRef.current.render(
-                  idRand,
-                  code,
-                  svgContainingElement
-                );
+                  mermaidHtml = await sanitizeMermaid(result.svg);
 
-                mermaidHtml = await sanitizeMermaid(result.svg);
+                  const p = document.createElement('p');
+                  p.className = `${prefix}-mermaid`;
+                  p.setAttribute('data-processed', '');
+                  p.setAttribute('data-content', code);
+                  p.innerHTML = mermaidHtml;
+                  p.children[0]?.removeAttribute('height');
 
-                const p = document.createElement('p');
-                p.className = `${prefix}-mermaid`;
-                p.setAttribute('data-processed', '');
-                p.setAttribute('data-content', code);
-                p.innerHTML = mermaidHtml;
-                p.children[0]?.removeAttribute('height');
+                  mermaidCache.set(code, p.innerHTML);
 
-                mermaidCache.set(code, p.innerHTML);
+                  if (item.dataset.line !== undefined) {
+                    p.dataset.line = item.dataset.line;
+                  }
 
-                if (item.dataset.line !== undefined) {
-                  p.dataset.line = item.dataset.line;
+                  item.replaceWith(p);
+                } catch (error: any) {
+                  eventBus.emit(editorId, ERROR_CATCHER, {
+                    name: 'mermaid',
+                    message: error.message,
+                    error
+                  });
                 }
-
-                item.replaceWith(p);
-              } catch (error: any) {
-                eventBus.emit(editorId, ERROR_CATCHER, {
-                  name: 'mermaid',
-                  message: error.message,
-                  error
-                });
               }
+            };
 
-              if (--count === 0) {
-                svgContainingElement.remove();
-              }
-            }
-          };
-
-          return handler(ele);
-        })
-      );
+            return handler(ele);
+          })
+        );
+      } finally {
+        // 缓存命中、未闭合节点和渲染异常都会提前结束，离屏测量容器必须统一清理。
+        svgContainingElement.remove();
+      }
     }
   }, [editorId, noMermaid, rootRef, sanitizeMermaid]);
 
