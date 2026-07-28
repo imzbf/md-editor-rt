@@ -1,8 +1,8 @@
 import copy2clipboard from '@vavt/copy2clipboard';
 import { useContext, useEffect } from 'react';
+import { ContentPreviewProps } from '../props';
 import { prefix } from '~/config';
 import { EditorContext } from '~/context';
-import { ContentPreviewProps } from '../props';
 
 const useCopyCode = (props: ContentPreviewProps, html: string, key: string) => {
   const { editorId, usedLanguageText, customIcon, rootRef, setting } =
@@ -45,14 +45,14 @@ const useCopyCode = (props: ContentPreviewProps, html: string, key: string) => {
                   if (copyButton.dataset.isIcon) {
                     copyButton.dataset.tips = msg;
                   } else {
-                    copyButton.innerHTML = msg;
+                    copyButton.textContent = msg;
                   }
 
                   clearTimer = window.setTimeout(() => {
                     if (copyButton.dataset.isIcon) {
                       copyButton.dataset.tips = text;
                     } else {
-                      copyButton.innerHTML = text!;
+                      copyButton.textContent = text!;
                     }
                   }, 1500);
                 });

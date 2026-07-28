@@ -78,6 +78,7 @@ const MdPreview = forwardRef((props: MdPreviewProps, ref: ForwardedRef<unknown>)
       customIcon: props.customIcon || {},
       rootRef,
       disabled: false,
+      contentDisabled: false,
       showToolbarName: false,
       setting: {
         preview: true,

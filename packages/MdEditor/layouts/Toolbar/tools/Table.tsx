@@ -1,19 +1,18 @@
 import { memo, useCallback, useContext, useMemo, useState } from 'react';
+import TableShape, { HoverData } from '../TableShape';
 import DropDown from '~/components/Dropdown';
 import Icon from '~/components/Icon';
 import { prefix } from '~/config';
 import { EditorContext } from '~/context';
-import { REPLACE } from '~/static/event-name';
 import { classnames } from '~/utils';
-import bus from '~/utils/event-bus';
-import TableShape, { HoverData } from '../TableShape';
+import { emitReplace } from '~/utils/replace';
 
 const ToolbarTable = () => {
   const {
     editorId,
     usedLanguageText: ult,
     showToolbarName,
-    disabled,
+    contentDisabled,
     tableShape
   } = useContext(EditorContext);
   const wrapperId = `${editorId}-toolbar-wrapper`;
@@ -21,10 +20,10 @@ const ToolbarTable = () => {
 
   const onSelected = useCallback(
     (selectedShape: HoverData) => {
-      if (disabled) return;
-      bus.emit(editorId, REPLACE, 'table', { selectedShape });
+      if (contentDisabled) return;
+      emitReplace(editorId, { direct: 'table', params: { selectedShape } });
     },
-    [disabled, editorId]
+    [contentDisabled, editorId]
   );
 
   const overlay = useMemo(() => {
@@ -36,11 +35,11 @@ const ToolbarTable = () => {
       <button
         className={classnames([
           `${prefix}-toolbar-item`,
-          disabled && `${prefix}-disabled`
+          contentDisabled && `${prefix}-disabled`
         ])}
         title={ult.toolbarTips?.table}
         aria-label={ult.toolbarTips?.table}
-        disabled={disabled}
+        disabled={contentDisabled}
         type="button"
       >
         <Icon name="table" />
@@ -49,14 +48,14 @@ const ToolbarTable = () => {
         )}
       </button>
     );
-  }, [disabled, showToolbarName, ult.toolbarTips?.table]);
+  }, [contentDisabled, showToolbarName, ult.toolbarTips?.table]);
 
   return (
     <DropDown
       relative={`#${wrapperId}`}
       visible={visible}
       onChange={setVisible}
-      disabled={disabled}
+      disabled={contentDisabled}
       key="bar-table"
       overlay={overlay}
     >

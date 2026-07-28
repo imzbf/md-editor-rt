@@ -134,6 +134,9 @@ const Editor = forwardRef((props: EditorProps, ref: ForwardedRef<unknown>) => {
       customIcon,
       rootRef,
       disabled,
+      // 内容写入入口统一使用组合状态，CodeMirror 本身仍分别处理 disabled
+      // 与 readOnly，以保留只读状态下选中、复制文本的能力。
+      contentDisabled: !!disabled || !!props.readOnly,
       showToolbarName,
       setting,
       updateSetting,
@@ -157,6 +160,7 @@ const Editor = forwardRef((props: EditorProps, ref: ForwardedRef<unknown>) => {
     noPrettier,
     noUploadImg,
     previewTheme,
+    props.readOnly,
     setting,
     showCodeRowNumber,
     showToolbarName,

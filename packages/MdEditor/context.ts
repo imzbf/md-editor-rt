@@ -17,6 +17,7 @@ export const defaultContextValue: ContextType = {
   customIcon: {},
   rootRef: null,
   disabled: undefined,
+  contentDisabled: false,
   showToolbarName: false,
   setting: {
     preview: false,

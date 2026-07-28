@@ -6,14 +6,6 @@ import {
   useEffect,
   useRef
 } from 'react';
-import Divider from '~/components/Divider';
-import { allToolbar, globalConfig } from '~/config';
-import { EditorContext } from '~/context';
-import { CDN_IDS } from '~/static';
-import { CHANGE_FULL_SCREEN, ERROR_CATCHER, REPLACE } from '~/static/event-name';
-import { ToolbarNames, InsertContentGenerator } from '~/type';
-import { appendHandler } from '~/utils/dom';
-import bus from '~/utils/event-bus';
 
 import ToolbarBold from './tools/Bold';
 import ToolbarCatalog from './tools/Catalog';
@@ -45,6 +37,15 @@ import ToolbarTask from './tools/Task';
 import ToolbarTitle from './tools/Title';
 import ToolbarUnderline from './tools/Underline';
 import ToolbarUnorderedList from './tools/UnorderedList';
+import Divider from '~/components/Divider';
+import { allToolbar, globalConfig } from '~/config';
+import { EditorContext } from '~/context';
+import { CDN_IDS } from '~/static';
+import { CHANGE_FULL_SCREEN, ERROR_CATCHER } from '~/static/event-name';
+import { ToolbarNames, InsertContentGenerator } from '~/type';
+import { appendHandler } from '~/utils/dom';
+import bus from '~/utils/event-bus';
+import { emitReplace } from '~/utils/replace';
 
 export const useSreenfull = () => {
   const { editorId, updateSetting } = useContext(EditorContext);
@@ -282,10 +283,12 @@ export const useBarRender = () => {
             codeTheme: defItem.props?.codeTheme || codeTheme,
             previewTheme: defItem.props?.previewTheme || previewTheme,
             language: defItem.props?.language || language,
+            // `disabled` 是自定义工具栏的公开属性，只绑定真正的 disabled 状态；
+            // 只读下的正文写入由统一替换入口拦截。
             disabled: defItem.props?.disabled || disabled,
             showToolbarName: defItem.props?.showToolbarName || showToolbarName,
             insert(generate: InsertContentGenerator) {
-              bus.emit(editorId, REPLACE, 'universal', { generate });
+              emitReplace(editorId, { direct: 'universal', params: { generate } });
             }
           });
         }
