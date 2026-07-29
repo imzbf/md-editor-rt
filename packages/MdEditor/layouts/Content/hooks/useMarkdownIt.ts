@@ -27,9 +27,10 @@ import {
   RERENDER
 } from '~/static/event-name';
 import { HeadList, MarkdownItConfigPlugin, Themes } from '~/type';
-import { generateCodeRowNumber } from '~/utils';
+import { generateCodeBlock, prepareCustomCodeHighlight } from '~/utils';
 import { zoomMermaid, copyMermaid } from '~/utils/dom';
 import bus from '~/utils/event-bus';
+import { parseCodeBlockInfo } from '~/utils/md-it';
 
 const initLineNumber = (md: mdit) => {
   md.core.ruler.push('init-line-number', (state) => {
@@ -184,42 +185,58 @@ const useMarkdownIt = (props: ContentPreviewProps, previewOnly: boolean) => {
 
     md_.set({
       highlight: (str, language, attrs) => {
+        const codeInfo = parseCodeBlockInfo(language, attrs);
+        const {
+          attrs: codeAttrs,
+          language: codeLanguage,
+          lineHighlightRanges
+        } = codeInfo;
+        let codeHtml = '';
+
         if (userDefHighlight) {
-          const result = userDefHighlight(str, language, attrs);
+          const result = userDefHighlight(str, codeLanguage, codeAttrs);
           if (result) {
-            return result;
+            const customCodeHighlight = prepareCustomCodeHighlight(result, str, {
+              lineHighlightRanges,
+              showLineNumber: showCodeRowNumber
+            });
+            if (customCodeHighlight.shouldReturnDirectly) {
+              return customCodeHighlight.html;
+            }
+
+            codeHtml = customCodeHighlight.html;
           }
         }
 
-        let codeHtml: string;
-
-        // 不高亮或者没有实例，返回默认
-        if (!noHighlight && hljsRef.current) {
-          const hljsLang = hljsRef.current.getLanguage(language);
-          if (hljsLang) {
-            codeHtml = hljsRef.current.highlight(str, {
-              language,
-              ignoreIllegals: true
-            }).value;
+        if (!codeHtml) {
+          // 不高亮或者没有实例，返回默认
+          if (!noHighlight && hljsRef.current) {
+            const hljsLang = hljsRef.current.getLanguage(codeLanguage);
+            if (hljsLang) {
+              codeHtml = hljsRef.current.highlight(str, {
+                language: codeLanguage,
+                ignoreIllegals: true
+              }).value;
+            } else {
+              codeHtml = hljsRef.current.highlightAuto(str).value;
+            }
           } else {
-            codeHtml = hljsRef.current.highlightAuto(str).value;
+            codeHtml = md_.utils.escapeHtml(str);
           }
-        } else {
-          codeHtml = md_.utils.escapeHtml(str);
         }
 
-        const escapedLanguage = md_.utils.escapeHtml(language);
+        const escapedLanguage = md_.utils.escapeHtml(codeLanguage);
 
         let codeSpan = `<span class="${prefix}-code-block">${codeHtml.replace(/^\n+|\n+$/g, '')}</span>`;
-        let codeStyle = '';
 
-        if (showCodeRowNumber) {
-          const rowNumberResult = generateCodeRowNumber(codeHtml, str);
-          codeSpan = rowNumberResult.html;
-          codeStyle = ` style="--md-code-line-number-width: ${rowNumberResult.lineNumberWidth};"`;
+        if (showCodeRowNumber || lineHighlightRanges.length) {
+          codeSpan = generateCodeBlock(codeHtml, str, {
+            lineHighlightRanges,
+            showLineNumber: showCodeRowNumber
+          });
         }
 
-        return `<pre><code class="language-${escapedLanguage}" language="${escapedLanguage}"${codeStyle}>${codeSpan}</code></pre>`;
+        return `<pre><code class="language-${escapedLanguage}" language="${escapedLanguage}">${codeSpan}</code></pre>`;
       }
     });
 

@@ -222,7 +222,7 @@ export interface MdPreviewProps {
   /**
    * 预览中代码是否显示行号
    *
-   * @default false
+   * @default true
    */
   showCodeRowNumber?: boolean;
   /**
