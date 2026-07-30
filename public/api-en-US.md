@@ -60,7 +60,7 @@ This is the props of `MdPreview`, which is also part of `MdEditor`:
 ### 🎲 editorId
 
 - **type**: `string`
-- **default**: `'md-editor-v-\d'`
+- **default**: `undefined` (generated automatically when omitted)
 
   Deprecated. Starting from version 5.x, Replace with `id`.
 
@@ -71,7 +71,7 @@ This is the props of `MdPreview`, which is also part of `MdEditor`:
 ### 🎲 id
 
 - **type**: `string`
-- **default**: `'md-editor-v-\d'`
+- **default**: `undefined` (generated automatically when omitted)
 
   Unique identifier of the editor, use the default prefix and `useId` for concatenation.
 
@@ -88,10 +88,10 @@ This is the props of `MdPreview`, which is also part of `MdEditor`:
 
 ### 🔦 previewTheme
 
-- **type**: `'default' | 'github' | 'vuepress' | 'mk-cute' | 'smart-blue' | 'cyanosis'`
+- **type**: `string`
 - **default**: `'default'`
 
-  Preview themes.
+  Preview theme. Built-in values are `default`, `github`, `vuepress`, `mk-cute`, `smart-blue`, and `cyanosis`; custom theme names are also supported.
 
   Custom:
   1. Write css
@@ -145,10 +145,10 @@ This is the props of `MdPreview`, which is also part of `MdEditor`:
 
 ### 🦉 codeTheme
 
-- **type**: `'atom'|'a11y'|'github'|'gradient'|'kimbie'|'paraiso'|'qtcreator'|'stackoverflow'`
+- **type**: `string`
 - **default**: `'atom'`
 
-  Highlight code css name. Get Them from `highlight.js`.
+  Code highlighting theme name. Built-in values are `atom`, `a11y`, `github`, `gradient`, `kimbie`, `paraiso`, `qtcreator`, and `stackoverflow`; custom names are also supported.
 
   Custom:
   1. Config `editorExtensions`
@@ -185,7 +185,7 @@ This is the props of `MdPreview`, which is also part of `MdEditor`:
 ### 🎱 mdHeadingId
 
 - **type**: `MdHeadingId`
-- **default**: `(text) => text`
+- **default**: `({ text }) => text`
 
   Title `ID` generator.
 
@@ -221,11 +221,7 @@ This is the props of `MdPreview`, which is also part of `MdEditor`:
 
   !!! warning
 
-  This is a reserved attribute.
-
-  Basic solution for dangerous code has been built-in since version 3.x. eg: `<script>alert(123)</script>`. Prior to version 4.11.3, it was recommended to utilize this attribute for cleaning more complex content to prevent XSS attacks.
-
-  A more comprehensive solution has been implemented since version 4.11.3. Refer to [Modify XSS configuration](https://imzbf.github.io/md-editor-rt/en-US/demo#%F0%9F%94%8F%20Modify%20XSS%20configuration)
+  Raw HTML in Markdown is not sanitized by default. When rendering untrusted content, sanitize the compiled HTML with this prop or explicitly enable `XSSPlugin`, which has been exported since v5 but is not enabled by default. Refer to [Modify XSS configuration](https://imzbf.github.io/md-editor-rt/en-US/demo#%F0%9F%94%8F%20Modify%20XSS%20configuration).
 
   !!!
 
@@ -278,7 +274,7 @@ This is the props of `MdPreview`, which is also part of `MdEditor`:
 
 ### 🧼 codeStyleReverseList
 
-- **type**: `Array`
+- **type**: `Array<string>`
 - **default**: `['default', 'mk-cute']`
 
   Themes to be reversed.
@@ -322,7 +318,7 @@ This is the props of `MdPreview`, which is also part of `MdEditor`:
 
   !!! warning Type Warning
 
-  The icon corresponding to `copy` and `collapse-tips` can only be a string, while others can be components or strings
+  The icons for `copy`, `collapse-tips`, `pin`, `pin-off`, and `check` can only be strings. Other icons can be components or strings.
 
   !!!
 
@@ -354,7 +350,7 @@ This is the props of `MdPreview`, which is also part of `MdEditor`:
   };
 
   export default () => {
-    return <MdEditor modelValue="" customIcon={customIcon} />;
+    return <MdEditor value="" customIcon={customIcon} />;
   };
   ```
 
@@ -400,13 +396,16 @@ This is the props of `MdPreview`, which is also part of `MdEditor`:
   type CustomIcon = {
     [key in IconName]?: {
       component: Component | JSX.Element | string;
-      props: {
+      props?: {
         [key: string | number | symbol]: any;
       };
     };
   } & {
     copy?: string;
     'collapse-tips'?: string;
+    pin?: string;
+    'pin-off'?: string;
+    check?: string;
   };
   ```
 
@@ -450,7 +449,10 @@ This is the props of `MdPreview`, which is also part of `MdEditor`:
 
 ### 🎨 previewComponent
 
-如果你需要完全掌控预览区域的渲染方式，可以通过 `previewComponent` 注入自定义组件。组件会接收到 `html`、`id` 和 `className` 三个属性，其中 `id` 与 `className` 需要应用在容器元素上以保持内置样式与行为。
+- **type**: `PreviewRendererComponent`
+- **default**: `undefined`
+
+To take full control of preview rendering, provide a custom component through `previewComponent`. It receives `html`, `id`, and `className`; apply `id` and `className` to the container element to preserve the built-in styles and behavior.
 
 ```tsx
 import { MdEditor } from 'md-editor-rt';
@@ -497,7 +499,7 @@ Except for the same as `MdPreview`:
 
 ### 🧱 toolbars
 
-- **type**: `Array`
+- **type**: `Array<ToolbarNames>`
 - **default**: `[all]`
 
   Show contents of toolbar.
@@ -511,8 +513,9 @@ Except for the same as `MdPreview`:
     'bold',
     'underline',
     'italic',
-    '-',
     'strikeThrough',
+    '-',
+    'title',
     'sub',
     'sup',
     'quote',
@@ -532,6 +535,7 @@ Except for the same as `MdPreview`:
     'next',
     'save',
     '=',
+    'prettier',
     'pageFullscreen',
     'fullscreen',
     'preview',
@@ -546,7 +550,7 @@ Except for the same as `MdPreview`:
 
 ### 🧱 toolbarsExclude
 
-- **type**: `Array`
+- **type**: `Array<ToolbarNames>`
 - **default**: `[]`
 
   Don't show some item of toolbars, all keys.
@@ -555,7 +559,7 @@ Except for the same as `MdPreview`:
 
 ### 🧱 floatingToolbars
 
-- **type**: `Array`
+- **type**: `Array<ToolbarNames>`
 - **default**: `[]`
 
   Show contents of floating toolbar.
@@ -566,7 +570,7 @@ Except for the same as `MdPreview`:
 
 ### 💪 defToolbars
 
-- **type**: `Array<VNode>`
+- **type**: `Array<ReactElement>`
 - **default**: `[]`
 
   Custom toolbar in `DropdownToolbar`, `NormalToolbar` or `ModalToolbar`. To display them, put index of `defToolbars` into `toolbars`(this is not standard).
@@ -594,20 +598,20 @@ Except for the same as `MdPreview`:
   ];
 
   export default () => {
-    return <MdEditor modelValue="" toolbars={toolbars} defToolbars={defToolbars} />;
+    return <MdEditor value="" toolbars={toolbars} defToolbars={defToolbars} />;
   };
   ```
 
-For more info, click [Internal Components](#%F0%9F%AA%A4%20Internal%20Components). Get source code of **mark**, **emoji** and **modal preview** at [md-editor-extension](https://github.com/imzbf/md-editor-extension/tree/develop/packages/v3/components) branch.
+For more info, click [Internal Components](#%F0%9F%AA%A4%20Internal%20Components). Get source code of **mark**, **emoji** and **modal preview** at [md-editor-extension](https://github.com/imzbf/md-editor-extension/tree/develop/packages/rt/components) branch.
 
 ---
 
 ### 🪒 noPrettier
 
 - **type**: `boolean`
-- **default**: `true`
+- **default**: `false`
 
-  Use prettier to beautify content or not.
+  Disable Prettier formatting for Markdown content. Set it to `true` to disable Prettier.
 
 ---
 
@@ -633,7 +637,7 @@ For more info, click [Internal Components](#%F0%9F%AA%A4%20Internal%20Components
   () => <MdEditor tableShape={tableShape}>
   ```
 
-  ![Preview](https://imzbf.github.io/md-editor-v3/imgs/20211216165424.png)
+  ![Preview](https://imzbf.github.io/md-editor-rt/imgs/20211216165424.png)
 
 ---
 
@@ -657,7 +661,7 @@ For more info, click [Internal Components](#%F0%9F%AA%A4%20Internal%20Components
 
 ### 🦿 defFooters
 
-- **type**: `Array<ReactNode>`
+- **type**: `Array<string | ReactElement>`
 - **default**: `[]`
 
   Custom footer.
@@ -716,14 +720,14 @@ For more info, click [Internal Components](#%F0%9F%AA%A4%20Internal%20Components
 - **type**: `boolean`
 - **default**: `false`
 
-  Same as `readonly` in native textarea.
+  Prevent editing while still allowing text selection and copying.
 
 ---
 
 ### 📏 maxLength
 
 - **type**: `number`
-- **default**: ``
+- **default**: `undefined`
 
   Same as `maxlength` in native textarea.
 
@@ -741,7 +745,7 @@ For more info, click [Internal Components](#%F0%9F%AA%A4%20Internal%20Components
 ### 📝 completions
 
 - **type**: `Array<CompletionSource>`
-- **default**: `[]`
+- **default**: `undefined`
 
   Additional completion sources.
 
@@ -776,7 +780,7 @@ For more info, click [Internal Components](#%F0%9F%AA%A4%20Internal%20Components
       ];
     }, []);
 
-    return <MdEditor modelValue={t} onChange={s} completions={completions} />;
+    return <MdEditor value={t} onChange={s} completions={completions} />;
   };
   ```
 
@@ -789,18 +793,18 @@ For more info, click [Internal Components](#%F0%9F%AA%A4%20Internal%20Components
 
   Show toolbar name or not
 
-![](https://imzbf.github.io/md-editor-v3/imgs/showToolbarName.png)
+![](https://imzbf.github.io/md-editor-rt/imgs/showToolbarName.png)
 
 ---
 
 ### 📥 inputBoxWidth
 
 - **type**: `string`
-- **default**: `50%`
+- **default**: `'50%'`
 
   Default width of input box
 
-![](https://imzbf.github.io/md-editor-v3/imgs/drag-width.gif)
+![](https://imzbf.github.io/md-editor-rt/imgs/drag-width.gif)
 
 ---
 
@@ -816,7 +820,7 @@ For more info, click [Internal Components](#%F0%9F%AA%A4%20Internal%20Components
 ### 🔖 catalogLayout
 
 - **type**: `'fixed' | 'flat'`
-- **default**: `fixed`
+- **default**: `'fixed'`
 
   \>=5.3.0, the built-in catalog status: 'fixed' - floats above the content; 'flat' - displays on the right side.
 
@@ -894,7 +898,7 @@ Except for the same as `MdPreview`:
 
 ### 📸 onUploadImg
 
-- **type**: `files: Array<File>, callback: (urls: string[] | { url: string; alt: string; title: string }[]) => void`
+- **type**: `(files: Array<File>, callback: (urls: string[] | { url: string; alt: string; title: string }[]) => void) => void`
 
   Uploading picture event, when picture is uploading the modal will not close, please provide right urls to the callback function.
 
@@ -937,7 +941,7 @@ Except for the same as `MdPreview`:
   export default () => {
     const [text, setText] = useState('# Hello Editor');
 
-    return <MdEditor modelValue={text} onChange={setText} onUploadImg={onUploadImg} />;
+    return <MdEditor value={text} onChange={setText} onUploadImg={onUploadImg} />;
   };
   ```
 
@@ -970,7 +974,7 @@ Except for the same as `MdPreview`:
 
 ### 🐾 onBlur
 
-- **type**: `(event: FocusEvent<HTMLTextAreaElement, Element>) => void`
+- **type**: `(event: FocusEvent) => void`
 
   Textarea has lost focus.
 
@@ -986,7 +990,7 @@ Except for the same as `MdPreview`:
 
 ### 🔖 onFocus
 
-- **type**: `(event: FocusEvent<HTMLTextAreaElement, Element>) => void`
+- **type**: `(event: FocusEvent) => void`
 
   Textarea has received focus.
 
@@ -1018,7 +1022,7 @@ Except for the same as `MdPreview`:
 
   export default () => {
     const [text, setText] = useState('');
-    return <MdEditor modelValue={text} onChange={setText} onDrop={onDrop} />;
+    return <MdEditor value={text} onChange={setText} onDrop={onDrop} />;
   };
   ```
 
@@ -1038,7 +1042,8 @@ After 2.5.0, Editor exposes several methods on the instance, used to get or chan
 
 ```jsx
 import React, { useState, useEffect, useRef } from 'react';
-import { MdEditor, ExposeParam } from 'md-editor-rt';
+import { MdEditor } from 'md-editor-rt';
+import type { ExposeParam } from 'md-editor-rt';
 //
 // import type { ExposePreviewParam } from 'md-editor-rt';
 import 'md-editor-rt/lib/style.css';
@@ -1052,7 +1057,7 @@ export default () => {
     editorRef.current?.on('catalog', console.log);
   }, []);
 
-  return <MdEditor ref={editorRef} modelValue={text} onChange={setText} />;
+  return <MdEditor ref={editorRef} value={text} onChange={setText} />;
 };
 ```
 
@@ -1071,6 +1076,9 @@ export default () => {
 | rerender             | √        | √         |
 | getSelectedText      | √        | ×         |
 | resetHistory         | √        | ×         |
+| domEventHandlers     | √        | ×         |
+| execCommand          | √        | ×         |
+| getEditorView        | √        | ×         |
 
 ### 👂🏼 on
 
@@ -1470,18 +1478,19 @@ List of built-in Plugins.
 | Type | Option |
 | --- | --- |
 | image | [URL](https://github.com/Antonio-Laguna/markdown-it-image-figures?tab=readme-ov-file#options) |
-| admonition | [URL](https://github.com/imzbf/md-editor-v3/blob/develop/packages/MdEditor/layouts/Content/markdownIt/admonition/index.ts#L9) |
-| taskList | [URL](https://github.com/imzbf/md-editor-v3/blob/develop/packages/MdEditor/layouts/Content/markdownIt/task/index.ts#L10) |
-| heading | [URL](https://github.com/imzbf/md-editor-v3/blob/develop/packages/MdEditor/layouts/Content/markdownIt/heading/index.ts#L5) |
-| code | [URL](https://github.com/imzbf/md-editor-v3/blob/develop/packages/MdEditor/layouts/Content/markdownIt/code/index.ts#L16) |
+| admonition | [URL](https://github.com/imzbf/md-editor-rt/blob/develop/packages/MdEditor/layouts/Content/markdownIt/admonition/index.ts) |
+| taskList | [URL](https://github.com/imzbf/md-editor-rt/blob/develop/packages/MdEditor/layouts/Content/markdownIt/task/index.ts) |
+| heading | [URL](https://github.com/imzbf/md-editor-rt/blob/develop/packages/MdEditor/layouts/Content/markdownIt/heading/index.ts) |
+| code | [URL](https://github.com/imzbf/md-editor-rt/blob/develop/packages/MdEditor/layouts/Content/markdownIt/code/index.ts) |
 | sub | none |
 | sup | none |
-| katex | [URL](https://github.com/imzbf/md-editor-v3/blob/develop/packages/MdEditor/layouts/Content/markdownIt/katex/index.ts#L18) |
-| mermaid | [URL](https://github.com/imzbf/md-editor-v3/blob/develop/packages/MdEditor/layouts/Content/markdownIt/mermaid/index.ts#L7) |
+| katex | [URL](https://github.com/imzbf/md-editor-rt/blob/develop/packages/MdEditor/layouts/Content/markdownIt/katex/index.ts) |
+| mermaid | [URL](https://github.com/imzbf/md-editor-rt/blob/develop/packages/MdEditor/layouts/Content/markdownIt/mermaid/index.ts) |
+| echarts | [URL](https://github.com/imzbf/md-editor-rt/blob/develop/packages/MdEditor/layouts/Content/markdownIt/echarts/index.ts) |
 
-[Source code for adding plugins](https://github.com/imzbf/md-editor-v3/blob/develop/packages/MdEditor/layouts/Content/composition/useMarkdownIt.ts#L95)
+[Source code for adding plugins](https://github.com/imzbf/md-editor-rt/blob/develop/packages/MdEditor/layouts/Content/hooks/useMarkdownIt.ts)
 
-[Plugin corresponding source code](https://github.com/imzbf/md-editor-v3/tree/develop/packages/MdEditor/layouts/Content/markdownIt)
+[Plugin corresponding source code](https://github.com/imzbf/md-editor-rt/tree/develop/packages/MdEditor/layouts/Content/markdownIt)
 
 ---
 
@@ -1792,6 +1801,25 @@ config({
 
 ---
 
+### 📊 echartsConfig
+
+Configure ECharts options. This function receives the option already parsed and validated by `editorExtensions.echarts.parseOption`; its return value is passed to ECharts `setOption`. It does not receive the raw code-block string.
+
+```js
+import { config } from 'md-editor-rt';
+
+config({
+  echartsConfig(option) {
+    return {
+      ...option,
+      animation: false
+    };
+  }
+});
+```
+
+---
+
 ## 🪡 Shortcut Keys
 
 !!! warning Pay attention
@@ -1839,10 +1867,11 @@ To help developers quickly insert content and use editor attributes, the editor 
 | ------------ | ----------- | ---------- |
 | insert       | √           | ×          |
 | theme        | √           | √          |
-| previewtheme | √           | ×          |
+| previewTheme | √           | ×          |
 | codeTheme    | √           | ×          |
 | language     | √           | √          |
 | disabled     | √           | √          |
+| showToolbarName | √        | ×          |
 
 Example:
 
@@ -1884,6 +1913,7 @@ const MyEditor2 = () => {
 
 - **props**
   - **title**: `string`, optional, title of toolbar.
+  - **disabled**: `boolean`, optional, whether the toolbar is disabled.
   - **children**: `ReactNode`, optional, it is usually an icon, which is displayed on the toolbar.
   - ~~**trigger**~~: `ReactNode`, optional, deprecated, as above.
 
@@ -1933,7 +1963,7 @@ const defToolbars = [<MyToolbar />];
 export default () => {
   const [value, setValue] = useState('');
 
-  return <MdEditor modelValue={value} id="md-prev" toolbars={toolbars} defToolbars={defToolbars} onChange={setValue} />;
+  return <MdEditor value={value} id="md-prev" toolbars={toolbars} defToolbars={defToolbars} onChange={setValue} />;
 };
 ```
 
@@ -1946,6 +1976,7 @@ export default () => {
 - **props**
   - **title**: `string`, optional, title of toolbar.
   - **visible**: `boolean`, required.
+  - **disabled**: `boolean`, optional, whether the toolbar is disabled.
   - **children**: `ReactNode`, optional, it is usually an icon, which is displayed on the toolbar.
   - ~~**trigger**~~: `ReactNode`, optional, deprecated, as above.
   - **overlay**: `ReactNode`, required, content of dropdown box.
@@ -2008,7 +2039,7 @@ const defToolbars = [<MyToolbar key="key" />];
 export default () => {
   const [value, setValue] = useState('');
 
-  return <MdEditor modelValue={value} id="md-prev" toolbars={toolbars} defToolbars={defToolbars} onChange={setValue} />;
+  return <MdEditor value={value} id="md-prev" toolbars={toolbars} defToolbars={defToolbars} onChange={setValue} />;
 };
 ```
 
@@ -2020,25 +2051,26 @@ export default () => {
 
 - **props**
   - **title**: `string`, optional, title of toolbar.
-  - **modalTitle**: `ReactNode`, optional, title of the Modal.
+  - **modalTitle**: `string`, optional, title of the Modal.
   - **visible**: `boolean`, required, visibility of Modal.
   - **width**: `string`, optional, width of Modal, default `auto`.
   - **height**: `string`, same as `width`.
   - **showAdjust**: `boolean`, optional, visibility of fullscreen button.
-  - **isFullscreen**: `boolean`, required when `showAdjust = true`, status of fullscreen.
+  - **isFullscreen**: `boolean`, optional, fullscreen state of the Modal.
   - **trigger**: `ReactNode`, required, it is usually an icon, which is displayed on the toolbar.
-  - **children**: `ReactNode`, required, content of Modal.
+  - **children**: `any`, optional, content of Modal.
   - **className**: `string`, `^4.16.8`, optional.
   - **style**: `CSSProperties`, `^4.16.8`, optional.
   - **showMask**: `boolean`, `^4.16.8`, optional, whether to display the mask layer, default `true`.
+  - **disabled**: `boolean`, optional, whether the toolbar is disabled.
 
 - **events**
-  - **onClick**: `() => void`, required.
+  - **onClick**: `(e: MouseEvent) => void`, required.
   - **onClose**: `() => void`, required, close event.
-  - **onAdjust**: `(val: boolean) => void`, fullscreen button click event.
+  - **onAdjust**: `(val: boolean) => void`, optional, fullscreen button click event.
 
 ```jsx
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import { MdEditor, ModalToolbar } from 'md-editor-rt';
 import 'md-editor-rt/lib/style.css';
 
@@ -2114,7 +2146,7 @@ const defToolbars = [<MyToolbar key="key" />];
 
 export default () => {
   const [value, setValue] = useState('');
-  return <MdEditor modelValue={value} id="md-prev" toolbars={toolbars} defToolbars={defToolbars} onChange={setValue} />;
+  return <MdEditor value={value} id="md-prev" toolbars={toolbars} defToolbars={defToolbars} onChange={setValue} />;
 };
 ```
 
@@ -2127,16 +2159,19 @@ export default () => {
 - **props**
   - **editorId**: `string`, required, editor's `id`, used to register listening events.
   - **className**: `string`, optional.
-  - **mdHeadingId**: `mdHeadingId`, optional, same as editor.
+  - **mdHeadingId**: `MdHeadingId`, optional, same as editor.
   - **scrollElement**: `string | HTMLElement`, optional, it is an element selector when its type is string. When using `MdPreview`, it is usually set to `document.documentElement`. ⚠️ This element must be positioned (e.g., relative, absolute, or fixed) and have scrollable content.
+  - **style**: `CSSProperties`, optional, inline style for the catalog root element.
   - **theme**: 'light' | 'dark', optional, provide it when you want to change theme online, it is the same as Editor `theme`.
   - **offsetTop**: `number`, optional, highlight current item of catalogs when title is `offsetTop` pixels from the top, default 20.
   - **scrollElementOffsetTop**: `number`, optional, offsetTop of the scroll container, default 0.
+  - **isScrollElementInShadow**: `boolean`, optional, whether the scroll container is inside Shadow DOM, default `false`.
+  - **syncWith**: `'editor' | 'preview'`, optional, synchronize with the editor or preview area, default `'preview'`.
   - **catalogMaxDepth**: `number`, `^5.5.0`, optional, controls the maximum depth of the catalog to be displayed.
 
 - **events**
   - **onClick**: `(e: MouseEvent, t: TocItem) => void`, optional.
-  - **onActive**: `(heading: HeadList | undefined) => void`, optional, heading was highlighted.
+  - **onActive**: `(heading: HeadList | undefined, activeElement: HTMLDivElement) => void`, optional; the second argument is the active catalog item element.
 
 usage:
 
@@ -2155,7 +2190,7 @@ export default () => {
   return (
     <>
       {/* Ensure that the editorId is the same */}
-      <MdPreview id={editorId} modelValue={state.text} />
+      <MdPreview id={editorId} value={state.text} />
       <MdCatalog editorId={editorId} scrollElement={state.scrollElement} />
     </>
   );
@@ -2170,22 +2205,22 @@ It is usually used in conjunction with `DropdownToolbar`.
 
 - **props**
   - **title**: `ReactNode`, optional, title of Modal.
-  - **visible**: `boolean`, required, visibility of Modal.
+  - **visible**: `boolean`, optional, visibility of Modal.
   - **width**: `string`, optional, width of Modal, default `auto`.
   - **height**: `string`, same as `width`.
   - **showAdjust**: `boolean`, optional, visibility of fullscreen button.
-  - **isFullscreen**: `boolean`, required when `showAdjust = true`, status of fullscreen.
-  - **children**: `ReactNode`, required, content of Modal.
+  - **isFullscreen**: `boolean`, optional, fullscreen state of the Modal.
+  - **children**: `any`, optional, content of Modal.
   - **className**: `string`, optional.
   - **style**: `CSSProperties`, optional.
   - **showMask**: `boolean`, `^4.16.8`, optional, whether to display the mask layer, default `true`.
 
 - **events**
-  - **onClose**: `() => void`, required, close event.
-  - **onAdjust**: `(val: boolean) => void`, fullscreen button click event.
+  - **onClose**: `() => void`, optional, close event.
+  - **onAdjust**: `(val: boolean) => void`, optional, fullscreen button click event.
 
 ```jsx
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import { MdEditor, DropdownToolbar, MdModal } from 'md-editor-rt';
 import 'md-editor-rt/lib/style.css';
 
@@ -2235,7 +2270,7 @@ export default () => {
 
   return (
     <MdEditor
-      modelValue={value}
+      value={value}
       id="md-prev"
       toolbars={['bold', 0, '=', 'github']}
       defToolbars={defToolbars}
@@ -2250,6 +2285,9 @@ export default () => {
 ### 🛸 NormalFooterToolbar
 
 Footer toolbar components
+
+- **props**
+  - **disabled**: `boolean`, optional, whether the footer toolbar is disabled.
 
 - **events**
   - **onClick**: `(e: MouseEvent) => void`, optional, toolbar was clicked.
@@ -2277,9 +2315,9 @@ export default () => {
 ## 🪤 Internal Configuration
 
 ```js
-import { allToolbar, allFooter, zh_CN, en_US, editorExtensionsAttrs } from 'md-editor-rt';
+import { allToolbar, allFooter, zh_CN, en_US, editorExtensionsAttrs, prefix } from 'md-editor-rt';
 
-console.log(allToolbar, allFooter, zh_CN, en_US, editorExtensionsAttrs);
+console.log(allToolbar, allFooter, zh_CN, en_US, editorExtensionsAttrs, prefix);
 ```
 
 ## 📦 Internal Tools

@@ -76,7 +76,7 @@ import 'md-editor-rt/lib/style.css';
 
 export default () => {
   const [text, setText] = useState('hello md-editor-rt!');
-  return <MdEditor modelValue={text} onChange={setText} />;
+  return <MdEditor value={text} onChange={setText} />;
 };
 ```
 
@@ -94,7 +94,7 @@ export default () => {
 
   return (
     <>
-      <MdPreview id={id} modelValue={text} />
+      <MdPreview id={id} value={text} />
       <MdCatalog editorId={id} scrollElement={scrollElement} />
     </>
   );
@@ -109,7 +109,7 @@ When using server-side rendering, `scrollElement` should be of string type, eg: 
 
 ## 🎛 Used in Web Component
 
-Complete example reference [the sample project](https://github.com/imzbf/md-editor-rt/tree/main/example/webComponent) provided in the source code.
+Complete example reference [the sample project](https://github.com/imzbf/md-editor-rt/tree/main/example/web-component) provided in the source code.
 
 Here are the precautions:
 
@@ -241,7 +241,8 @@ Next, listening 'insertMarkBlock' in the component where the editor is located
 
 ```tsx
 import { useState, useRef, useEffect } from 'react';
-import { MdEditor, ExposeParam } from 'md-editor-rt';
+import { MdEditor } from 'md-editor-rt';
+import type { ExposeParam } from 'md-editor-rt';
 // If you used EventBus
 import bus from '@/utils/event-bus';
 
@@ -262,7 +263,7 @@ const App = () => {
     });
   }, []);
 
-  return <MdEditor modelValue={text} ref={mdEditorRef} />;
+  return <MdEditor value={text} ref={mdEditorRef} />;
 };
 ```
 
@@ -319,7 +320,7 @@ import 'md-editor-rt/lib/style.css';
 export default () => {
   const [text, setText] = useState('hello md-editor-rt!');
   const [theme] = useState('dark');
-  return <MdEditor modelValue={text} onChange={setText} theme={theme} />;
+  return <MdEditor value={text} onChange={setText} theme={theme} />;
 };
 ```
 
@@ -335,7 +336,7 @@ import 'md-editor-rt/lib/style.css';
 export default () => {
   const [text, setText] = useState('hello md-editor-rt!');
   const [previewTheme] = useState('github');
-  return <MdEditor modelValue={text} onChange={setText} previewTheme={previewTheme} />;
+  return <MdEditor value={text} onChange={setText} previewTheme={previewTheme} />;
 };
 ```
 
@@ -376,7 +377,7 @@ There are 8 kinds of themes: `atom`, `a11y`, `github`, `gradient`, `kimbie`, `pa
   export default () => {
     const [text, setText] = useState('hello md-editor-rt!');
     const [codeTheme] = useState('atom');
-    return <MdEditor modelValue={text} onChange={setText} codeTheme={codeTheme} />;
+    return <MdEditor value={text} onChange={setText} codeTheme={codeTheme} />;
   };
   ```
 
@@ -434,7 +435,7 @@ config({
 
 export default () => {
   const [text, setText] = useState('hello md-editor-rt!');
-  return <MdEditor modelValue={text} onChange={setText} />;
+  return <MdEditor value={text} onChange={setText} />;
 };
 ```
 
@@ -457,7 +458,7 @@ config({
 
 export default () => {
   const [text, setText] = useState('hello md-editor-rt!');
-  return <MdEditor modelValue={text} onChange={setText} />;
+  return <MdEditor value={text} onChange={setText} />;
 };
 ```
 
@@ -496,7 +497,7 @@ const onUploadImg = async (files, callback) => {
 
 export default () => {
   const [text, setText] = useState('hello md-editor-rt!');
-  return <MdEditor modelValue={text} onChange={setText} onUploadImg={onUploadImg} />;
+  return <MdEditor value={text} onChange={setText} onUploadImg={onUploadImg} />;
 };
 ```
 
@@ -599,7 +600,7 @@ export default () => {
   const [text, setText] = useState('hello md-editor-rt!');
   const [language] = useState('my-lang');
 
-  return <MdEditor modelValue={text} onChange={setText} language={language} />;
+  return <MdEditor value={text} onChange={setText} language={language} />;
 };
 ```
 
@@ -618,7 +619,7 @@ You can install the existing language also: [md-editor-extension](https://github
     const [text, setText] = useState('hello md-editor-rt!');
     const [catalogList, setList] = useState([]);
 
-    return <MdEditor modelValue={text} onChange={setText} onGetCatalog={setList} />;
+    return <MdEditor value={text} onChange={setText} onGetCatalog={setList} />;
   };
   ```
 
@@ -641,7 +642,7 @@ You can install the existing language also: [md-editor-extension](https://github
 
     return (
       <>
-        <MdPreview modelValue={state.text} id={editorId} />
+        <MdPreview value={state.text} id={editorId} />
         <MdCatalog editorId={editorId} scrollElement={state.scrollElement} />
       </>
     );
@@ -661,7 +662,7 @@ export default () => {
   const [text, setText] = useState('hello md-editor-rt!');
   const [toolbars] = useState(['italic', 'underline', '-', 'bold', '=', 'github']);
 
-  return <MdEditor modelValue={text} onChange={setText} toolbars={toolbars} />;
+  return <MdEditor value={text} onChange={setText} toolbars={toolbars} />;
 };
 ```
 
@@ -671,7 +672,7 @@ There are examples of `mark` and `emoji`.
 
 To get complete code, refer to [docs](https://github.com/imzbf/md-editor-rt/blob/docs/src/pages/Preview/index.tsx).
 
-![mark and Emoji extension](https://imzbf.github.io/md-editor-v3/imgs/mark_emoji.gif)
+![mark and Emoji extension](https://imzbf.github.io/md-editor-rt/imgs/mark_emoji.gif)
 
 > Get more emojis, go to [https://getemoji.com/](https://getemoji.com/).
 
@@ -698,7 +699,7 @@ To get complete code, refer to [docs](https://github.com/imzbf/md-editor-rt/blob
   .css-vars(false);
 }
 
-.md-editor-dark {
+.md-editor[data-theme='dark'] {
   .css-vars(true);
 }
 ```
@@ -706,7 +707,7 @@ To get complete code, refer to [docs](https://github.com/imzbf/md-editor-rt/blob
 Change background color in dark mode:
 
 ```css
-.md-editor-dark {
+.md-editor[data-theme='dark'] {
   --md-bk-color: #333 !important;
 }
 ```
@@ -785,7 +786,7 @@ import { MdEditor } from 'md-editor-rt';
 import 'md-editor-rt/lib/style.css';
 
 export default () => {
-  return <MdEditor modelValue="" />;
+  return <MdEditor value="" />;
 };
 ```
 
@@ -1005,7 +1006,7 @@ config({
 ```
 
 ```jsx
-<MdEditor id="myId" modelValue={text} onChange={setText} />
+<MdEditor id="myId" value={text} onChange={setText} />
 ```
 
 ### 🎳 co-working
@@ -1107,7 +1108,8 @@ MyEditor.tsx
 
 ```tsx
 import React, { useCallback, useEffect, useId, useRef, useState } from 'react';
-import { MdEditor, ExposeParam } from 'md-editor-rt';
+import { MdEditor } from 'md-editor-rt';
+import type { ExposeParam } from 'md-editor-rt';
 
 import { createYjsExtension, yjsCompartment, cleanupYjs } from './extendEditor';
 

@@ -62,7 +62,7 @@
 ### 🎲 editorId
 
 - **类型**：`string`
-- **默认值**：`'md-editor-r\d'`
+- **默认值**：`undefined`（未传入时自动生成）
 
   已过时。5.x 版本开始使用 id 替换。
 
@@ -73,7 +73,7 @@
 ### 🎲 id
 
 - **类型**：`string`
-- **默认值**：`'md-editor-r\d'`
+- **默认值**：`undefined`（未传入时自动生成）
 
   编辑器唯一标识，使用默认前缀和`useId`拼接。
 
@@ -90,10 +90,10 @@
 
 ### 🔦 previewTheme
 
-- **类型**：`'default' | 'github' | 'vuepress' | 'mk-cute' | 'smart-blue' | 'cyanosis'`
+- **类型**：`string`
 - **默认值**：`'default'`
 
-  预览内容主题，支持自定义。
+  预览内容主题。内置主题包括`default`、`github`、`vuepress`、`mk-cute`、`smart-blue`和`cyanosis`，也支持自定义主题名称。
 
   主题自定义方式：
   1. 编辑 css
@@ -151,10 +151,10 @@
 
 ### 🦉 codeTheme
 
-- **类型**：`'atom'|'a11y'|'github'|'gradient'|'kimbie'|'paraiso'|'qtcreator'|'stackoverflow'`
+- **类型**：`string`
 - **默认值**：`'atom'`
 
-  代码块高亮样式名称。
+  代码块高亮样式名称。内置值包括`atom`、`a11y`、`github`、`gradient`、`kimbie`、`paraiso`、`qtcreator`和`stackoverflow`，也支持自定义名称。
 
   你可以添加自己的样式，把该属性设置为你想要的即可，方式如下：
   1. 配置样式链接
@@ -191,7 +191,7 @@
 ### 🎱 mdHeadingId
 
 - **类型**：`MdHeadingId`
-- **默认值**：`(text) => text`
+- **默认值**：`({ text }) => text`
 
   构造标题`ID`的生成方式。
 
@@ -227,11 +227,7 @@
 
   !!! warning
 
-  该属性为保留属性
-
-  基本的危险代码处理方案在 3.x 以后已内置，例如`<script>alert(123)</script>`，4.11.3 之前建议使用该属性来清理更复杂的内容以防止 XSS。
-
-  在 4.11.3 以后实现了更完善的处理方案，参阅[修改 xss 配置](https://imzbf.github.io/md-editor-rt/zh-CN/demo#%F0%9F%94%8F%20%E4%BF%AE%E6%94%B9%20xss%20%E9%85%8D%E7%BD%AE)
+  Markdown 中的原生 HTML 默认不会被清洗。渲染不可信内容时，请通过该属性清洗编译后的 HTML，或者显式启用从 v5 起导出的`XSSPlugin`；`XSSPlugin`不会默认启用。参阅[修改 xss 配置](https://imzbf.github.io/md-editor-rt/zh-CN/demo#%F0%9F%94%8F%20%E4%BF%AE%E6%94%B9%20xss%20%E9%85%8D%E7%BD%AE)。
 
   !!!
 
@@ -284,7 +280,7 @@
 
 ### 🧼 codeStyleReverseList
 
-- **类型**：`Array`
+- **类型**：`Array<string>`
 - **默认值**：`['default', 'mk-cute']`
 
   需要自动调整的预览主题，已默认包含 default、mk-cute。
@@ -328,7 +324,7 @@
 
   !!! warning 类型提示
 
-  copy、collapse-tips 对应的图标只能是字符串，其他的都可以是组件或者字符串
+  `copy`、`collapse-tips`、`pin`、`pin-off`和`check`对应的图标只能是字符串，其他图标可以是组件或者字符串。
 
   !!!
 
@@ -360,7 +356,7 @@
   };
 
   export default () => {
-    return <MdEditor modelValue="" customIcon={customIcon} />;
+    return <MdEditor value="" customIcon={customIcon} />;
   };
   ```
 
@@ -406,13 +402,16 @@
   type CustomIcon = {
     [key in IconName]?: {
       component: Component | JSX.Element | string;
-      props: {
+      props?: {
         [key: string | number | symbol]: any;
       };
     };
   } & {
     copy?: string;
     'collapse-tips'?: string;
+    pin?: string;
+    'pin-off'?: string;
+    check?: string;
   };
   ```
 
@@ -456,7 +455,10 @@
 
 ### 🎨 previewComponent
 
-If you need full control over how the preview area is rendered, you can inject a custom component via `previewComponent`. The component will receive three props: `html`, `id`, and `className`. Apply `id` and `className` to the container element to preserve the built-in styles and behavior.
+- **类型**：`PreviewRendererComponent`
+- **默认值**：`undefined`
+
+如果需要完全控制预览区域的渲染方式，可以通过`previewComponent`注入自定义组件。组件会接收到`html`、`id`和`className`三个属性，请将`id`和`className`应用到容器元素，以保留内置样式和行为。
 
 ```tsx
 import { MdEditor } from 'md-editor-rt';
@@ -507,7 +509,7 @@ export default () => {
 
 ### 🧱 toolbars
 
-- **类型**：`Array`
+- **类型**：`Array<ToolbarNames>`
 - **默认值**：`[all]`
 
   选择性展示工具栏，可选内容见下方。
@@ -521,8 +523,9 @@ export default () => {
     'bold',
     'underline',
     'italic',
-    '-',
     'strikeThrough',
+    '-',
+    'title',
     'sub',
     'sup',
     'quote',
@@ -542,6 +545,7 @@ export default () => {
     'next',
     'save',
     '=',
+    'prettier',
     'pageFullscreen',
     'fullscreen',
     'preview',
@@ -557,6 +561,7 @@ export default () => {
     '下划线',
     '斜体',
     '删除线',
+    '标题',
     '下标',
     '上标',
     '引用',
@@ -573,6 +578,7 @@ export default () => {
     '后退一步',
     '前进一步',
     '保存',
+    '美化',
     '页面内全屏',
     '屏幕全屏',
     '内容预览',
@@ -586,7 +592,7 @@ export default () => {
 
 ### 🧱 toolbarsExclude
 
-- **类型**：`Array`
+- **类型**：`Array<ToolbarNames>`
 - **默认值**：`[]`
 
   选择性不展示工具栏，内容同上。
@@ -595,7 +601,7 @@ export default () => {
 
 ### 🧱 floatingToolbars
 
-- **类型**：`Array`
+- **类型**：`Array<ToolbarNames>`
 - **默认值**：`[]`
 
   选择性展示浮动工具栏，可选内容和 `toolbars` 相同。
@@ -606,7 +612,7 @@ export default () => {
 
 ### 💪 defToolbars
 
-- **类型**：`Array<ReactNode>`
+- **类型**：`Array<ReactElement>`
 - **默认值**：`[]`
 
   自定义工具栏插槽，通过使用内置的`NormalToolbar`普通点击触发事件组件，`DropdownToolbar`下拉点击触发事件组件，和`ModalToolbar`弹窗组件进行扩展。将`defToolbars`插槽中的组件下标穿插在`toolbars`实现展示（这并不规范）
@@ -634,10 +640,10 @@ export default () => {
     />
   ];
 
-  export default () => <MdEditor modelValue="" toolbars={toolbars} defToolbars={defToolbars} />;
+  export default () => <MdEditor value="" toolbars={toolbars} defToolbars={defToolbars} />;
   ```
 
-扩展组件属性参考[内置组件](#%F0%9F%AA%A4%20%E5%86%85%E7%BD%AE%E7%BB%84%E4%BB%B6)，使用示例参见[md-editor-extension](https://github.com/imzbf/md-editor-extension/tree/develop/packages/v3/components)，提供**标记**、**表情**和**弹窗预览**扩展组件。
+扩展组件属性参考[内置组件](#%F0%9F%AA%A4%20%E5%86%85%E7%BD%AE%E7%BB%84%E4%BB%B6)，使用示例参见[md-editor-extension](https://github.com/imzbf/md-editor-extension/tree/develop/packages/rt/components)，提供**标记**、**表情**和**弹窗预览**扩展组件。
 
 ---
 
@@ -646,7 +652,7 @@ export default () => {
 - **类型**：`boolean`
 - **默认值**：`false`
 
-  是否启用 prettier 优化 md 内容。
+  是否禁用 Prettier 对 Markdown 内容的格式化。设置为`true`时禁用。
 
 ---
 
@@ -672,7 +678,7 @@ export default () => {
   () => <MdEditor tableShape={tableShape}>
   ```
 
-  ![表格预设大小预览](https://imzbf.github.io/md-editor-v3/imgs/20211216165424.png)
+  ![表格预设大小预览](https://imzbf.github.io/md-editor-rt/imgs/20211216165424.png)
 
 ---
 
@@ -696,7 +702,7 @@ export default () => {
 
 ### 🦿 defFooters
 
-- **类型**：`Array<ReactNode>`
+- **类型**：`Array<string | ReactElement>`
 - **默认值**：`[]`
 
   自定义扩展页脚。
@@ -716,8 +722,8 @@ export default () => {
 
 ### 🥹 noUploadImg
 
-- **type**: `boolean`
-- **default**: `false`
+- **类型**：`boolean`
+- **默认值**：`false`
 
   工具栏不显示上传图片入口。
 
@@ -750,14 +756,14 @@ export default () => {
 - **类型**：`boolean`
 - **默认值**：`false`
 
-  原生属性，文本区域为只读。
+  文本区域为只读，禁止编辑，但仍可选择和复制内容。
 
 ---
 
 ### 📏 maxLength
 
 - **类型**：`number`
-- **默认值**：``
+- **默认值**：`undefined`
 
   原生属性，文本区域允许的最大字符数。
 
@@ -775,7 +781,7 @@ export default () => {
 ### 📝 completions
 
 - **类型**：`Array<CompletionSource>`
-- **默认值**：`[]`
+- **默认值**：`undefined`
 
   添加额外的输入自动完成来源。
 
@@ -809,7 +815,7 @@ export default () => {
       ];
     }, []);
 
-    return <MdEditor modelValue={t} onChange={s} completions={completions} />;
+    return <MdEditor value={t} onChange={s} completions={completions} />;
   };
   ```
 
@@ -822,18 +828,18 @@ export default () => {
 
   是否在工具栏下面显示对应的文字名称
 
-![](https://imzbf.github.io/md-editor-v3/imgs/showToolbarName.png)
+![](https://imzbf.github.io/md-editor-rt/imgs/showToolbarName.png)
 
 ---
 
 ### 📥 inputBoxWidth
 
 - **类型**：`string`
-- **默认值**：`50%`
+- **默认值**：`'50%'`
 
   输入框默认的宽度
 
-![](https://imzbf.github.io/md-editor-v3/imgs/drag-width.gif)
+![](https://imzbf.github.io/md-editor-rt/imgs/drag-width.gif)
 
 ---
 
@@ -849,7 +855,7 @@ export default () => {
 ### 🔖 catalogLayout
 
 - **类型**：`'fixed' | 'flat'`
-- **默认值**：`fixed`
+- **默认值**：`'fixed'`
 
   \>=5.3.0 内置的目录显示的状态，'fixed': 悬浮在内容上方，'flat': 展示在右侧。
 
@@ -927,7 +933,7 @@ export default () => {
 
 ### 📸 onUploadImg
 
-- **类型**：`files: Array<File>, callback: (urls: string[] | { url: string; alt: string; title: string }[]) => void`
+- **类型**：`(files: Array<File>, callback: (urls: string[] | { url: string; alt: string; title: string }[]) => void) => void`
 
   上传图片事件，弹窗会等待上传结果，务必将上传后的 urls 作为 callback 入参回传。
 
@@ -970,7 +976,7 @@ export default () => {
 
   export default () => {
     const [text, setText] = useState('# Hello Editor');
-    return <MdEditor modelValue={text} onChange={setText} onUploadImg={onUploadImg} />;
+    return <MdEditor value={text} onChange={setText} onUploadImg={onUploadImg} />;
   };
   ```
 
@@ -1051,7 +1057,7 @@ export default () => {
 
   export default () => {
     const [text, setText] = useState('');
-    return <MdEditor modelValue={text} onChange={setText} onDrop={onDrop} />;
+    return <MdEditor value={text} onChange={setText} onDrop={onDrop} />;
   };
   ```
 
@@ -1071,7 +1077,8 @@ export default () => {
 
 ```jsx
 import { useState, useEffect, useRef } from 'react';
-import { MdEditor, ExposeParam } from 'md-editor-rt';
+import { MdEditor } from 'md-editor-rt';
+import type { ExposeParam } from 'md-editor-rt';
 import 'md-editor-rt/lib/style.css';
 
 export default () => {
@@ -1082,7 +1089,7 @@ export default () => {
     editorRef.current?.on('catalog', console.log);
   }, []);
 
-  return <MdEditor ref={editorRef} modelValue={text} onChange={setText} />;
+  return <MdEditor ref={editorRef} value={text} onChange={setText} />;
 };
 ```
 
@@ -1101,6 +1108,9 @@ export default () => {
 | rerender             | √        | √         |
 | getSelectedText      | √        | ×         |
 | resetHistory         | √        | ×         |
+| domEventHandlers     | √        | ×         |
+| execCommand          | √        | ×         |
+| getEditorView        | √        | ×         |
 
 ### 👂🏼 on
 
@@ -1500,18 +1510,19 @@ config({
 | 类型 | 选项 |
 | --- | --- |
 | image | [URL](https://github.com/Antonio-Laguna/markdown-it-image-figures?tab=readme-ov-file#options) |
-| admonition | [URL](https://github.com/imzbf/md-editor-v3/blob/develop/packages/MdEditor/layouts/Content/markdownIt/admonition/index.ts#L9) |
-| taskList | [URL](https://github.com/imzbf/md-editor-v3/blob/develop/packages/MdEditor/layouts/Content/markdownIt/task/index.ts#L10) |
-| heading | [URL](https://github.com/imzbf/md-editor-v3/blob/develop/packages/MdEditor/layouts/Content/markdownIt/heading/index.ts#L5) |
-| code | [URL](https://github.com/imzbf/md-editor-v3/blob/develop/packages/MdEditor/layouts/Content/markdownIt/code/index.ts#L16) |
+| admonition | [URL](https://github.com/imzbf/md-editor-rt/blob/develop/packages/MdEditor/layouts/Content/markdownIt/admonition/index.ts) |
+| taskList | [URL](https://github.com/imzbf/md-editor-rt/blob/develop/packages/MdEditor/layouts/Content/markdownIt/task/index.ts) |
+| heading | [URL](https://github.com/imzbf/md-editor-rt/blob/develop/packages/MdEditor/layouts/Content/markdownIt/heading/index.ts) |
+| code | [URL](https://github.com/imzbf/md-editor-rt/blob/develop/packages/MdEditor/layouts/Content/markdownIt/code/index.ts) |
 | sub | 没有 |
 | sup | 没有 |
-| katex | [URL](https://github.com/imzbf/md-editor-v3/blob/develop/packages/MdEditor/layouts/Content/markdownIt/katex/index.ts#L18) |
-| mermaid | [URL](https://github.com/imzbf/md-editor-v3/blob/develop/packages/MdEditor/layouts/Content/markdownIt/mermaid/index.ts#L7) |
+| katex | [URL](https://github.com/imzbf/md-editor-rt/blob/develop/packages/MdEditor/layouts/Content/markdownIt/katex/index.ts) |
+| mermaid | [URL](https://github.com/imzbf/md-editor-rt/blob/develop/packages/MdEditor/layouts/Content/markdownIt/mermaid/index.ts) |
+| echarts | [URL](https://github.com/imzbf/md-editor-rt/blob/develop/packages/MdEditor/layouts/Content/markdownIt/echarts/index.ts) |
 
-[添加插件的源码](https://github.com/imzbf/md-editor-v3/blob/develop/packages/MdEditor/layouts/Content/composition/useMarkdownIt.ts#L95)
+[添加插件的源码](https://github.com/imzbf/md-editor-rt/blob/develop/packages/MdEditor/layouts/Content/hooks/useMarkdownIt.ts)
 
-[插件对应的源码](https://github.com/imzbf/md-editor-v3/tree/develop/packages/MdEditor/layouts/Content/markdownIt)
+[插件对应的源码](https://github.com/imzbf/md-editor-rt/tree/develop/packages/MdEditor/layouts/Content/markdownIt)
 
 ---
 
@@ -1831,6 +1842,25 @@ config({
 
 ---
 
+### 📊 echartsConfig
+
+ECharts 配置项。该函数接收`editorExtensions.echarts.parseOption`已经解析并校验后的 option，其返回值会传给 ECharts 的`setOption`；它不会接收原始代码块字符串。
+
+```js
+import { config } from 'md-editor-rt';
+
+config({
+  echartsConfig(option) {
+    return {
+      ...option,
+      animation: false
+    };
+  }
+});
+```
+
+---
+
 ## 🪡 快捷键
 
 主要以`CTRL`搭配对应功能英文单词首字母，冲突项添加`SHIFT`，再冲突替换为`ALT`。
@@ -1880,10 +1910,11 @@ config({
 | ------------ | ----------- | ---------- |
 | insert       | √           | ×          |
 | theme        | √           | √          |
-| previewtheme | √           | ×          |
+| previewTheme | √           | ×          |
 | codeTheme    | √           | ×          |
 | language     | √           | √          |
 | disabled     | √           | √          |
+| showToolbarName | √        | ×          |
 
 例子：
 
@@ -1925,6 +1956,7 @@ const MyEditor2 = () => {
 
 - **props**
   - **title**: `string`，非必须，作为工具栏上的 hover 提示。
+  - **disabled**: `boolean`，非必须，是否禁用工具栏。
   - **children**: `ReactNode`，非必须，通常是个图标，用来展示在工具栏上。
   - ~~**trigger**~~: `ReactNode`，非必须，已废弃，同上。
 
@@ -1975,7 +2007,7 @@ export default () => {
 
   return (
     <MdEditor
-      modelValue={value}
+      value={value}
       id="md-prev"
       toolbars={['bold', 0, '=', 'github']}
       defToolbars={[<MyToolbar />]}
@@ -1994,6 +2026,7 @@ export default () => {
 - **props**
   - **title**: `string`，非必须，作为工具栏上的 hover 提示。
   - **visible**: `boolean`，必须，下拉状态。
+  - **disabled**: `boolean`，非必须，是否禁用工具栏。
   - **children**: `ReactNode`，非必须，通常是个图标，用来展示在工具栏上。
   - ~~**trigger**~~: `ReactNode`，非必须，已废弃，同上。
   - **overlay**: `ReactNode`，必须，下拉框中的内容。
@@ -2054,7 +2087,7 @@ const defToolbars = [<MyToolbar key="key" />];
 export default () => {
   const [value, setValue] = useState('');
 
-  return <MdEditor modelValue={value} id="md-prev" toolbars={toolbars} defToolbars={defToolbars} onChange={setValue} />;
+  return <MdEditor value={value} id="md-prev" toolbars={toolbars} defToolbars={defToolbars} onChange={setValue} />;
 };
 ```
 
@@ -2066,22 +2099,23 @@ export default () => {
 
 - **props**
   - **title**: `string`，非必须，作为工具栏上的 hover 提示。
-  - **modalTitle**: `ReactNode`，非必须，弹窗的标题。
+  - **modalTitle**: `string`，非必须，弹窗的标题。
   - **visible**: `boolean`，必须，弹窗显示状态。
   - **width**: `string`，非必须，弹窗宽度，默认`auto`。
   - **height**: `string`，同`width`。
   - **showAdjust**: `boolean`，非必须，是否显示弹窗全屏按钮。
-  - **isFullscreen**: `boolean`，显示全屏按钮时必须，弹窗全屏状态。
+  - **isFullscreen**: `boolean`，非必须，弹窗全屏状态。
   - **trigger**: `ReactNode`，必须，通常是个图标，用来展示在工具栏上。
-  - **children**: `ReactNode`，必须，弹窗中的内容。
+  - **children**: `any`，非必须，弹窗中的内容。
   - **className**: `string`，`^4.16.8`，非必须，类名。
   - **style**: `CSSProperties`，`^4.16.8`，非必须，样式。
   - **showMask**: `boolean`，`^4.16.8`，非必须，是否展示遮罩层，默认 true。
+  - **disabled**: `boolean`，非必须，是否禁用工具栏。
 
 - **events**
-  - **onClick**: `() => void`，必须，工具栏点击事件。
+  - **onClick**: `(e: MouseEvent) => void`，必须，工具栏点击事件。
   - **onClose**: `() => void`，必须，弹窗点击关闭事件。
-  - **onAdjust**: `(val: boolean) => void`，弹窗全屏按钮点击事件。
+  - **onAdjust**: `(val: boolean) => void`，非必须，弹窗全屏按钮点击事件。
 
 ```jsx
 import { useCallback, useState } from 'react';
@@ -2160,7 +2194,7 @@ const defToolbars = [<MyToolbar key="key" />];
 
 export default () => {
   const [value, setValue] = useState('');
-  return <MdEditor modelValue={value} id="md-prev" toolbars={toolbars} defToolbars={defToolbars} onChange={setValue} />;
+  return <MdEditor value={value} id="md-prev" toolbars={toolbars} defToolbars={defToolbars} onChange={setValue} />;
 };
 ```
 
@@ -2173,16 +2207,19 @@ export default () => {
 - **props**
   - **editorId**: `string`，必须，对应编辑器的`id`，在内部注册目录变化监听事件。
   - **className**: `string`，非必须，目录组件最外层类名。
-  - **mdHeadingId**: `mdHeadingId`，非必须，特殊化编辑器标题的算法，与编辑器相同。
+  - **mdHeadingId**: `MdHeadingId`，非必须，特殊化编辑器标题的算法，与编辑器相同。
   - **scrollElement**: `string | HTMLElement`，非必须，为字符时应是一个元素选择器。仅预览模式中，整页滚动时，设置为`document.documentElement`。⚠️ 该元素必须定位（如相对、绝对或固定），且内容可滚动。
+  - **style**: `CSSProperties`，非必须，目录组件最外层内联样式。
   - **theme**: `'light' | 'dark'`，非必须，当需要切换主题时提供，同编辑器的`theme`。
   - **offsetTop**: `number`，非必须，标题距离顶部该像素时高亮当前目录项，默认 20 像素。
   - **scrollElementOffsetTop**: `number`，非必须，滚动区域的固定顶部高度，默认 0。
+  - **isScrollElementInShadow**: `boolean`，非必须，滚动容器是否位于 Shadow DOM 中，默认`false`。
+  - **syncWith**: `'editor' | 'preview'`，非必须，目录与编辑区或预览区同步，默认`'preview'`。
   - **catalogMaxDepth**: `number`，`^5.5.0`，非必须，控制要显示的目录的最大深度。
 
 - **events**
   - **onClick**: `(e: MouseEvent, t: TocItem) => void`，非必须，导航点击事件。
-  - **onActive**: `(heading: HeadList | undefined) => void`，非必须，高亮的标题变化事件。
+  - **onActive**: `(heading: HeadList | undefined, activeElement: HTMLDivElement) => void`，非必须，高亮的标题变化事件，第二个参数是当前目录项元素。
 
 > `scrollElement`说明：仅预览下，该元素必须已定位的并且支持滚动。
 
@@ -2201,7 +2238,7 @@ export default () => {
   return (
     <>
       {/* 保证editorId是相同的 */}
-      <MdPreview id={editorId} modelValue={state.text} />
+      <MdPreview id={editorId} value={state.text} />
       <MdCatalog editorId={editorId} scrollElement={state.scrollElement} />
     </>
   );
@@ -2216,19 +2253,19 @@ export default () => {
 
 - **props**
   - **title**: `ReactNode`，非必须，弹窗标题栏。
-  - **visible**: `boolean`，必须，弹窗显示状态。
+  - **visible**: `boolean`，非必须，弹窗显示状态。
   - **width**: `string`，非必须，弹窗宽度，默认`auto`。
   - **height**: `string`，同`width`。
   - **showAdjust**: `boolean`，非必须，是否显示弹窗全屏按钮。
-  - **isFullscreen**: `boolean`，显示全屏按钮时必须，弹窗全屏状态。
-  - **children**: `ReactNode`，非必须，弹窗显示的内容。
+  - **isFullscreen**: `boolean`，非必须，弹窗全屏状态。
+  - **children**: `any`，非必须，弹窗显示的内容。
   - **className**: `string`，非必须，类名。
   - **style**: `CSSProperties`，非必须，样式。
   - **showMask**: `boolean`，`^4.16.8`，非必须，是否展示遮罩层，默认 true。
 
 - **events**
-  - **onClose**: `() => void`，必须，弹窗点击关闭事件。
-  - **onAdjust**: `(val: boolean) => void`，弹窗全屏按钮点击事件。
+  - **onClose**: `() => void`，非必须，弹窗点击关闭事件。
+  - **onAdjust**: `(val: boolean) => void`，非必须，弹窗全屏按钮点击事件。
 
 ```jsx
 import { useCallback, useState } from 'react';
@@ -2280,7 +2317,7 @@ const defToolbars = [<MyToolbar key="key" />];
 export default () => {
   const [value, setValue] = useState('');
 
-  return <MdEditor modelValue={value} id="md-prev" toolbars={toolbars} defToolbars={defToolbars} onChange={setValue} />;
+  return <MdEditor value={value} id="md-prev" toolbars={toolbars} defToolbars={defToolbars} onChange={setValue} />;
 };
 ```
 
@@ -2289,6 +2326,9 @@ export default () => {
 ### 🛸 NormalFooterToolbar
 
 通用的页脚工具组件
+
+- **props**
+  - **disabled**: `boolean`，非必须，是否禁用页脚工具。
 
 - **events**
   - **onClick**: `(e: MouseEvent) => void`，非必须，点击事件。
@@ -2316,9 +2356,9 @@ export default () => {
 ## 🪤 内部配置
 
 ```js
-import { allToolbar, allFooter, zh_CN, en_US, editorExtensionsAttrs } from 'md-editor-rt';
+import { allToolbar, allFooter, zh_CN, en_US, editorExtensionsAttrs, prefix } from 'md-editor-rt';
 
-console.log(allToolbar, allFooter, zh_CN, en_US, editorExtensionsAttrs);
+console.log(allToolbar, allFooter, zh_CN, en_US, editorExtensionsAttrs, prefix);
 ```
 
 ## 📦 内部工具

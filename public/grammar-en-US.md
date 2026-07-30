@@ -62,10 +62,10 @@ _It is a dream deeply rooted in the American dream._
 
 ## 🐼 Picture
 
-![Description](https://imzbf.github.io/md-editor-v3/imgs/mark_emoji.gif 'title')
+![Description](https://imzbf.github.io/md-editor-rt/imgs/mark_emoji.gif 'title')
 
 ```markdown
-![Description](https://imzbf.github.io/md-editor-v3/imgs/mark_emoji.gif 'title')
+![Description](https://imzbf.github.io/md-editor-rt/imgs/mark_emoji.gif 'title')
 ```
 
 ---
@@ -114,7 +114,7 @@ I have a dream that one day this nation will rise up.~[2]~
 
 ````markdown
 ```js
-import MdEditor from 'md-editor-rt';
+import { MdEditor } from 'md-editor-rt';
 import 'md-editor-rt/lib/style.css';
 ```
 ````
@@ -126,7 +126,7 @@ import 'md-editor-rt/lib/style.css';
 Append a `{...}` marker to the language identifier to highlight specific code lines. Line numbers are 1-based; separate individual lines with commas and use `start-end` for ranges. Both `js {2,4-5}` and `js{2,4-5}` are supported.
 
 ```js {2,4-5}
-import MdEditor from 'md-editor-rt';
+import { MdEditor } from 'md-editor-rt';
 import 'md-editor-rt/lib/style.css';
 const value = '# Hello';
 const editor = <MdEditor value={value} />;
@@ -135,7 +135,7 @@ export default editor;
 
 ````markdown
 ```js {2,4-5}
-import MdEditor from 'md-editor-rt';
+import { MdEditor } from 'md-editor-rt';
 import 'md-editor-rt/lib/style.css';
 const value = '# Hello';
 const editor = <MdEditor value={value} />;
@@ -176,13 +176,13 @@ pnpm install md-editor-rt
 ### 🤌🏻 Forcefully fold
 
 ```js ::close
-import MdEditor from 'md-editor-rt';
+import { MdEditor } from 'md-editor-rt';
 import 'md-editor-rt/lib/style.css';
 ```
 
 ````markdown
 ```js ::close
-import MdEditor from 'md-editor-rt';
+import { MdEditor } from 'md-editor-rt';
 import 'md-editor-rt/lib/style.css';
 ```
 ````
@@ -190,13 +190,13 @@ import 'md-editor-rt/lib/style.css';
 ### 👐 Forcefully open
 
 ```js ::open
-import MdEditor from 'md-editor-rt';
+import { MdEditor } from 'md-editor-rt';
 import 'md-editor-rt/lib/style.css';
 ```
 
 ````markdown
 ```js ::open
-import MdEditor from 'md-editor-rt';
+import { MdEditor } from 'md-editor-rt';
 import 'md-editor-rt/lib/style.css';
 ```
 ````

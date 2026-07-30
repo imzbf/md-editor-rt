@@ -62,10 +62,10 @@ _It is a dream deeply rooted in the American dream._
 
 ## 🐼 图片
 
-![描述文字](https://imzbf.github.io/md-editor-v3/imgs/mark_emoji.gif 'title')
+![描述文字](https://imzbf.github.io/md-editor-rt/imgs/mark_emoji.gif 'title')
 
 ```markdown
-![描述文字](https://imzbf.github.io/md-editor-v3/imgs/mark_emoji.gif 'title')
+![描述文字](https://imzbf.github.io/md-editor-rt/imgs/mark_emoji.gif 'title')
 ```
 
 ---
@@ -114,7 +114,7 @@ I have a dream that one day this nation will rise up.~[2]~
 
 ````markdown
 ```js
-import MdEditor from 'md-editor-rt';
+import { MdEditor } from 'md-editor-rt';
 import 'md-editor-rt/lib/style.css';
 ```
 ````
@@ -126,7 +126,7 @@ import 'md-editor-rt/lib/style.css';
 在语言标识后添加 `{...}` 可高亮指定代码行。行号从 `1` 开始，多个行号使用逗号分隔，连续区间使用 `起始行-结束行`；支持 `js {2,4-5}` 和 `js{2,4-5}` 两种写法。
 
 ```js {2,4-5}
-import MdEditor from 'md-editor-rt';
+import { MdEditor } from 'md-editor-rt';
 import 'md-editor-rt/lib/style.css';
 const value = '# Hello';
 const editor = <MdEditor value={value} />;
@@ -135,7 +135,7 @@ export default editor;
 
 ````markdown
 ```js {2,4-5}
-import MdEditor from 'md-editor-rt';
+import { MdEditor } from 'md-editor-rt';
 import 'md-editor-rt/lib/style.css';
 const value = '# Hello';
 const editor = <MdEditor value={value} />;
@@ -176,13 +176,13 @@ pnpm install md-editor-rt
 ### 🤌🏻 强制折叠
 
 ```js ::close
-import MdEditor from 'md-editor-rt';
+import { MdEditor } from 'md-editor-rt';
 import 'md-editor-rt/lib/style.css';
 ```
 
 ````markdown
 ```js ::close
-import MdEditor from 'md-editor-rt';
+import { MdEditor } from 'md-editor-rt';
 import 'md-editor-rt/lib/style.css';
 ```
 ````
@@ -190,13 +190,13 @@ import 'md-editor-rt/lib/style.css';
 ### 👐 强制展开
 
 ```js ::open
-import MdEditor from 'md-editor-rt';
+import { MdEditor } from 'md-editor-rt';
 import 'md-editor-rt/lib/style.css';
 ```
 
 ````markdown
 ```js ::open
-import MdEditor from 'md-editor-rt';
+import { MdEditor } from 'md-editor-rt';
 import 'md-editor-rt/lib/style.css';
 ```
 ````

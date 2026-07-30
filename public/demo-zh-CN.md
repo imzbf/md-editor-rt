@@ -78,7 +78,7 @@ import 'md-editor-rt/lib/style.css';
 
 export default () => {
   const [text, setText] = useState('hello md-editor-rt！');
-  return <MdEditor modelValue={text} onChange={setText} />;
+  return <MdEditor value={text} onChange={setText} />;
 };
 ```
 
@@ -96,7 +96,7 @@ export default () => {
 
   return (
     <>
-      <MdPreview id={id} modelValue={text} />
+      <MdPreview id={id} value={text} />
       <MdCatalog editorId={id} scrollElement={scrollElement} />
     </>
   );
@@ -111,7 +111,7 @@ export default () => {
 
 ## 🎛 Web Component 中使用
 
-完整的示例参考源码中提供的[示例项目](https://github.com/imzbf/md-editor-rt/tree/main/example/webComponent)
+完整的示例参考源码中提供的[示例项目](https://github.com/imzbf/md-editor-rt/tree/main/example/web-component)
 
 下面是注意事项：
 
@@ -242,7 +242,8 @@ config({
 
 ```tsx
 import { useState, useRef, useEffect } from 'react';
-import { MdEditor, ExposeParam } from 'md-editor-rt';
+import { MdEditor } from 'md-editor-rt';
+import type { ExposeParam } from 'md-editor-rt';
 // 假设你使用了EventBus
 import bus from '@/utils/event-bus';
 
@@ -265,7 +266,7 @@ const App = () => {
     });
   }, []);
 
-  return <MdEditor modelValue={text} ref={mdEditorRef} />;
+  return <MdEditor value={text} ref={mdEditorRef} />;
 };
 ```
 
@@ -322,7 +323,7 @@ import 'md-editor-rt/lib/style.css';
 export default () => {
   const [text, setText] = useState('hello md-editor-rt！');
   const [theme] = useState('dark');
-  return <MdEditor modelValue={text} onChange={setText} theme={theme} />;
+  return <MdEditor value={text} onChange={setText} theme={theme} />;
 };
 ```
 
@@ -338,7 +339,7 @@ import 'md-editor-rt/lib/style.css';
 export default () => {
   const [text, setText] = useState('hello md-editor-rt！');
   const [previewTheme] = useState('github');
-  return <MdEditor modelValue={text} onChange={setText} previewTheme={previewTheme} />;
+  return <MdEditor value={text} onChange={setText} previewTheme={previewTheme} />;
 };
 ```
 
@@ -379,7 +380,7 @@ export default () => {
   export default () => {
     const [text, setText] = useState('hello md-editor-rt！');
     const [codeTheme] = useState('atom');
-    return <MdEditor modelValue={text} onChange={setText} codeTheme={codeTheme} />;
+    return <MdEditor value={text} onChange={setText} codeTheme={codeTheme} />;
   };
   ```
 
@@ -438,7 +439,7 @@ config({
 
 export default () => {
   const [text, setText] = useState('hello md-editor-rt！');
-  return <MdEditor modelValue={text} onChange={setText} />;
+  return <MdEditor value={text} onChange={setText} />;
 };
 ```
 
@@ -461,7 +462,7 @@ config({
 
 export default () => {
   const [text, setText] = useState('hello md-editor-rt！');
-  return <MdEditor modelValue={text} onChange={setText} />;
+  return <MdEditor value={text} onChange={setText} />;
 };
 ```
 
@@ -500,7 +501,7 @@ const onUploadImg = async (files, callback) => {
 
 export default () => {
   const [text, setText] = useState('hello md-editor-rt！');
-  return <MdEditor modelValue={text} onChange={setText} onUploadImg={onUploadImg} />;
+  return <MdEditor value={text} onChange={setText} onUploadImg={onUploadImg} />;
 };
 ```
 
@@ -603,7 +604,7 @@ export default () => {
   const [text, setText] = useState('hello md-editor-rt！');
   const [language] = useState('my-lang');
 
-  return <MdEditor modelValue={text} onChange={setText} language={language} />;
+  return <MdEditor value={text} onChange={setText} language={language} />;
 };
 ```
 
@@ -622,7 +623,7 @@ export default () => {
     const [text, setText] = useState('hello md-editor-rt！');
     const [catalogList, setList] = useState([]);
 
-    return <MdEditor modelValue={text} onChange={setText} onGetCatalog={setList} />;
+    return <MdEditor value={text} onChange={setText} onGetCatalog={setList} />;
   };
   ```
 
@@ -645,7 +646,7 @@ export default () => {
 
     return (
       <>
-        <MdPreview id={editorId} modelValue={state.text} />
+        <MdPreview id={editorId} value={state.text} />
         <MdCatalog editorId={editorId} scrollElement={state.scrollElement} />
       </>
     );
@@ -665,7 +666,7 @@ export default () => {
   const [text, setText] = useState('hello md-editor-rt！');
   const [toolbars] = useState(['italic', 'underline', '-', 'bold', '=', 'github']);
 
-  return <MdEditor modelValue={text} onChange={setText} toolbars={toolbars} />;
+  return <MdEditor value={text} onChange={setText} toolbars={toolbars} />;
 };
 ```
 
@@ -675,7 +676,7 @@ export default () => {
 
 可运行源码参考本文档[docs](https://github.com/imzbf/md-editor-rt/blob/docs/src/pages/Preview/index.tsx)。
 
-![标记及Emoji预览](https://imzbf.github.io/md-editor-v3/imgs/mark_emoji.gif)
+![标记及Emoji预览](https://imzbf.github.io/md-editor-rt/imgs/mark_emoji.gif)
 
 > 更多 emoji，[https://getemoji.com/](https://getemoji.com/)。
 
@@ -704,7 +705,7 @@ export default () => {
   .css-vars(false);
 }
 
-.md-editor-dark {
+.md-editor[data-theme='dark'] {
   .css-vars(true);
 }
 ```
@@ -712,7 +713,7 @@ export default () => {
 只需要调整对应的 css 变量，比如调整暗夜模式下的背景：
 
 ```css
-.md-editor-dark {
+.md-editor[data-theme='dark'] {
   --md-bk-color: #333 !important;
 }
 ```
@@ -804,7 +805,7 @@ import { MdEditor } from 'md-editor-rt';
 import 'md-editor-rt/lib/style.css';
 
 export default () => {
-  return <MdEditor modelValue="" />;
+  return <MdEditor value="" />;
 };
 ```
 
@@ -1026,7 +1027,7 @@ config({
 ```
 
 ```jsx
-<MdEditor id="myId" modelValue={text} onChange={setText} />
+<MdEditor id="myId" value={text} onChange={setText} />
 ```
 
 ### 🎳 协同办公
@@ -1128,7 +1129,8 @@ MyEditor.tsx
 
 ```tsx
 import React, { useCallback, useEffect, useId, useRef, useState } from 'react';
-import { MdEditor, ExposeParam } from 'md-editor-rt';
+import { MdEditor } from 'md-editor-rt';
+import type { ExposeParam } from 'md-editor-rt';
 
 import { createYjsExtension, yjsCompartment, cleanupYjs } from './extendEditor';
 
@@ -1227,7 +1229,7 @@ const onRemount = useCallback(() => {
 ### 🛞 缩短链接配置
 
 ```js
-import { config } from 'md-editor-v3';
+import { config } from 'md-editor-rt';
 
 config({
   codeMirrorExtensions(extensions) {
