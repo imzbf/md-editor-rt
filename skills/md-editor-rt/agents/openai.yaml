@@ -1,0 +1,4 @@
+interface:
+  display_name: 'md-editor-rt'
+  short_description: 'Integrate and customize md-editor-rt'
+  default_prompt: 'Use $md-editor-rt to integrate, customize, or debug md-editor-rt in my React project.'

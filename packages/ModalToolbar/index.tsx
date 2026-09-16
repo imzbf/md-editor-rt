@@ -1,4 +1,4 @@
-import { CSSProperties, ReactNode, useMemo, MouseEvent, useCallback } from 'react';
+import { CSSProperties, MouseEvent, ReactNode, memo, useCallback } from 'react';
 import Modal from '~/components/Modal';
 import { prefix } from '~/config';
 
@@ -24,10 +24,6 @@ export interface ModalToolbarProps {
 const ModalToolbar = (props: ModalToolbarProps) => {
   const { width = 'auto', height = 'auto' } = props;
 
-  const className = useMemo(() => {
-    return `${prefix}-toolbar-item${props.disabled ? ' ' + prefix + '-disabled' : ''}`;
-  }, [props.disabled]);
-
   const onAdjust = useCallback(
     (v: boolean) => {
       if (props.onAdjust instanceof Function) {
@@ -40,8 +36,9 @@ const ModalToolbar = (props: ModalToolbarProps) => {
   return (
     <>
       <button
-        className={className}
-        title={props.title}
+        className={`${prefix}-toolbar-item${props.disabled ? ' ' + prefix + '-disabled' : ''}`}
+        title={props.title || ''}
+        aria-label={props.title || ''}
         onClick={(e) => {
           props.onClick(e);
         }}
@@ -69,4 +66,4 @@ const ModalToolbar = (props: ModalToolbarProps) => {
   );
 };
 
-export default ModalToolbar;
+export default memo(ModalToolbar);

@@ -1,11 +1,10 @@
 import { draggingScroll } from '@vavt/util';
 import { useContext, useMemo, useRef, useState, useEffect, memo } from 'react';
+import { useBarRender } from './hooks';
 import { prefix } from '~/config';
 import { EditorContext } from '~/context';
 import { ToolbarNames } from '~/type';
 import { classnames } from '~/utils';
-
-import { useBarRender } from './hooks';
 
 export interface ToolbarProps {
   // 工具栏选择显示
@@ -39,8 +38,8 @@ const Toolbar = (props: ToolbarProps) => {
         : excluedBars.slice(moduleSplitIndex, Number.MAX_SAFE_INTEGER);
 
     return [
-      barLeft.map((barItem) => barRender(barItem)),
-      barRight.map((barItem) => barRender(barItem))
+      barLeft.map((barItem, idx) => barRender(barItem, `left-${idx}`)),
+      barRight.map((barItem, idx) => barRender(barItem, `right-${idx}`))
     ];
   }, [toolbars, toolbarsExclude, barRender]);
 

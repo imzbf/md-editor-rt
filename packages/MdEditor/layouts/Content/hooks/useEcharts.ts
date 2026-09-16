@@ -1,11 +1,11 @@
 import { useContext, useEffect, useRef, useState, useCallback } from 'react';
+import { ContentPreviewProps } from '../props';
 import { prefix, globalConfig } from '~/config';
 import { EditorContext } from '~/context';
 import { CDN_IDS } from '~/static';
 import { ERROR_CATCHER } from '~/static/event-name';
 import { appendHandler } from '~/utils/dom';
 import bus from '~/utils/event-bus';
-import { ContentPreviewProps } from '../props';
 
 const useEcharts = (props: ContentPreviewProps) => {
   const { editorId, theme, rootRef } = useContext(EditorContext);
@@ -106,6 +106,7 @@ const useEcharts = (props: ContentPreviewProps) => {
     clearEchartsEffects();
 
     if (!props.noEcharts && echartsRef.current && rootRef?.current) {
+      const { editorExtensions, echartsConfig } = globalConfig;
       const pendingSourceEles = Array.from(
         rootRef.current.querySelectorAll<HTMLElement>(
           `#${editorId} div.${prefix}-echarts:not([data-processed])`
@@ -118,8 +119,11 @@ const useEcharts = (props: ContentPreviewProps) => {
         }
 
         try {
-          // eslint-disable-next-line @typescript-eslint/no-implied-eval
-          const options = new Function(`return ${item.innerText}`)();
+          const baseOptions = editorExtensions.echarts!.parseOption!(item.innerText, {
+            editorId,
+            element: item
+          });
+          const options = echartsConfig(baseOptions);
           const ins = echartsRef.current.init(item, theme);
 
           ins.setOption(options);

@@ -2,7 +2,7 @@ import { CompletionSource } from '@codemirror/autocomplete';
 import { Compartment, Extension } from '@codemirror/state';
 import { KeyBinding, EditorView } from '@codemirror/view';
 import markdownit, { Token } from 'markdown-it';
-import { CSSProperties, ReactElement, RefObject } from 'react';
+import { CSSProperties, ComponentType, ReactElement, RefObject } from 'react';
 import { IconName } from './components/Icon/Icon';
 import { ToolDirective } from './utils/content-help';
 
@@ -151,6 +151,14 @@ export type Themes = 'light' | 'dark';
  */
 export type PreviewThemes = string;
 
+export interface PreviewRendererProps {
+  html: string;
+  id: string;
+  className: string;
+}
+
+export type PreviewRendererComponent = ComponentType<PreviewRendererProps>;
+
 /**
  * 自定义标题ID
  */
@@ -214,7 +222,7 @@ export interface MdPreviewProps {
   /**
    * 预览中代码是否显示行号
    *
-   * @default false
+   * @default true
    */
   showCodeRowNumber?: boolean;
   /**
@@ -325,6 +333,12 @@ export interface MdPreviewProps {
    * 不使用 echarts
    */
   noEcharts?: boolean;
+  /**
+   * 自定义渲染预览的组件
+   *
+   * 组件会接收到 html、id、className，请确保将后两者应用到根节点
+   */
+  previewComponent?: PreviewRendererComponent;
 }
 
 export type TableShapeType = [number, number] | [number, number, number, number];
@@ -545,6 +559,7 @@ export interface ContextType {
   customIcon: CustomIcon;
   rootRef: RefObject<HTMLDivElement | null> | null;
   disabled: boolean | undefined;
+  contentDisabled: boolean;
   showToolbarName?: boolean;
   setting: SettingType;
   updateSetting: UpdateSetting;
@@ -663,6 +678,19 @@ export interface GlobalConfig {
     echarts?: {
       instance?: any;
       js?: string;
+      /**
+       * 解析 ECharts 代码块内容。
+       *
+       * 从 v7.x 开始，默认基于 JSON5.parse 解析 JSON5 数据，并要求顶层为对象，不会执行代码块中的 JavaScript。
+       * 如需函数回调等 JavaScript 配置可覆盖该方法；自定义解析器需要自行保证输入安全。
+       */
+      parseOption?: (
+        code: string,
+        options: {
+          editorId: string;
+          element: HTMLElement;
+        }
+      ) => any;
     };
   };
   /**

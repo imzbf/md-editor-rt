@@ -18,6 +18,7 @@ const ToolbarSave = () => {
     <button
       className={classnames([`${prefix}-toolbar-item`, disabled && `${prefix}-disabled`])}
       title={ult.toolbarTips?.save}
+      aria-label={ult.toolbarTips?.save}
       disabled={disabled}
       onClick={() => {
         bus.emit(editorId, ON_SAVE);

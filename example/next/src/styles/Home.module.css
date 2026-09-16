@@ -1,12 +1,15 @@
 .container {
   width: 1170px;
-  margin: 0 auto;
-  padding: 0 2rem;
+  margin-block: 0;
+  margin-inline: auto;
+  padding-block: 0;
+  padding-inline: 2rem;
 }
 
 .main {
   min-height: 100vh;
-  padding: 4rem 0;
+  padding-block: 4rem;
+  padding-inline: 0;
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -26,7 +29,8 @@
 }
 
 .title {
-  margin: 0;
+  margin-block: 0;
+  margin-inline: 0;
   line-height: 1.15;
   font-size: 4rem;
 }
@@ -37,7 +41,8 @@
 }
 
 .description {
-  margin: 4rem 0;
+  margin-block: 4rem;
+  margin-inline: 0;
   line-height: 1.5;
   font-size: 1.5rem;
 }
@@ -45,7 +50,8 @@
 .code {
   background: #fafafa;
   border-radius: 5px;
-  padding: 0.75rem;
+  padding-block: 0.75rem;
+  padding-inline: 0.75rem;
   font-size: 1.1rem;
   font-family: Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono,
     Bitstream Vera Sans Mono, Courier New, monospace;

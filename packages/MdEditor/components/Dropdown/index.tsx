@@ -6,7 +6,8 @@ import {
   useRef,
   useState,
   useCallback,
-  ReactNode
+  ReactNode,
+  memo
 } from 'react';
 
 import { prefix } from '~/config';
@@ -86,8 +87,8 @@ const DropDown = (props: ModalProps) => {
     setCtl((_ctl) => ({
       ..._ctl,
       overlayStyle: {
-        top: triggerTop + triggerHeight + 'px',
-        left: left + 'px'
+        insetBlockStart: triggerTop + triggerHeight + 'px',
+        insetInlineStart: left + 'px'
       }
     }));
 
@@ -193,4 +194,4 @@ const DropDown = (props: ModalProps) => {
   );
 };
 
-export default DropDown;
+export default memo(DropDown);

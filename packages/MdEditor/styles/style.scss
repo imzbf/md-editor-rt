@@ -1,0 +1,33 @@
+@use './vars' as *;
+
+@use '../components/Checkbox/index' as checkbox;
+@use '../components/Divider/index' as divider;
+@use '../components/Dropdown/index' as dropdown;
+@use '../components/Modal/index' as modal;
+@use '../components/CustomScrollbar/index' as customScrollbar;
+
+@use '../layouts/Content/index' as content;
+@use '../layouts/Footer/index' as footer;
+@use '../layouts/Modals/index' as modals;
+@use '../layouts/Toolbar/index' as toolbar;
+@use '../layouts/FloatingToolbar/index' as floatingToolbar;
+
+@use './codeMirror' as codeMirror;
+
+@use './preview' as preview;
+
+.#{$prefix}-fullscreen {
+  position: fixed !important;
+  inset-block-start: 0;
+  inset-inline-end: 0;
+  inset-block-end: 0;
+  inset-inline-start: 0;
+  width: auto !important;
+  height: auto !important;
+  z-index: 10000;
+}
+
+.#{$prefix}-disabled {
+  cursor: not-allowed !important;
+  opacity: 0.6;
+}

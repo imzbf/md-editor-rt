@@ -21,6 +21,7 @@ const ToolbarHtmlPreview = () => {
         disabled && `${prefix}-disabled`
       ])}
       title={ult.toolbarTips?.htmlPreview}
+      aria-label={ult.toolbarTips?.htmlPreview}
       disabled={disabled}
       onClick={() => {
         updateSetting('htmlPreview');

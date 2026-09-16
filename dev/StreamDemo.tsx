@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
-import { MdPreview } from '~~/index';
 import type { Theme } from './App';
 import mdText from './data.md';
+import { MdPreview } from '~~/index';
 
 const SOURCE_TEXT = mdText as string;
 const SOURCE_CHARS = Array.from(SOURCE_TEXT);
@@ -154,7 +154,7 @@ const StreamDemo: React.FC<StreamDemoProps> = ({
         <h2>模拟流式输出</h2>
         <p>点击"播放"开始模拟，文本会逐字追加到预览区,可随时切换速度、暂停或跳过。</p>
       </header>
-      <div className="stream-demo__controls" style={{ marginTop: '14px' }}>
+      <div className="stream-demo__controls" style={{ marginBlockStart: '14px' }}>
         <button className="btn" disabled={running} onClick={startStream}>
           播放
         </button>
@@ -168,7 +168,7 @@ const StreamDemo: React.FC<StreamDemoProps> = ({
           快速完成
         </button>
       </div>
-      <div className="stream-demo__speeds" style={{ marginTop: '14px' }}>
+      <div className="stream-demo__speeds" style={{ marginBlockStart: '14px' }}>
         {SPEED_PRESETS.map((item) => (
           <button
             className={`btn ${speed === item.value ? 'btn-active' : ''}`}

@@ -83,7 +83,7 @@ const afterLabel = (content: string, id: string, TokenConstructor: any): Token =
   const token = new TokenConstructor('html_inline', '', 0);
   token.content =
     '<label class="task-list-item-label" for="' + id + '">' + content + '</label>';
-  token.attrs = [{ for: id }];
+  token.attrs = [['for', id]];
   return token;
 };
 

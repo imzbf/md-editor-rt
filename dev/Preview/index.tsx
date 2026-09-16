@@ -1,8 +1,11 @@
 import { CompletionSource } from '@codemirror/autocomplete';
-import axios from 'axios';
-import React, { useEffect, useRef, useState } from 'react';
-import Icon from '~/components/Icon';
+import React, { useEffect, useMemo, useRef, useState, useCallback } from 'react';
 
+import { Theme } from '../App';
+import mdText from '../data.md';
+import Normal from './Normal';
+
+import Icon from '~/components/Icon';
 import {
   MdEditor,
   DropdownToolbar,
@@ -14,11 +17,7 @@ import {
   ToolbarNames
 } from '~~/index';
 
-import { Theme } from '../App';
-import mdText from '../data.md';
-
-import './index.less';
-import Normal from './Normal';
+import './index.scss';
 
 const SAVE_KEY = 'XHMPGLJIZTDB';
 const INPUT_BOX_WITDH = 'tcxll8alg5jx52hw';
@@ -34,6 +33,50 @@ const mdHeadingId: MdHeadingId = ({ index }) => {
   return `heading-${index}`;
 };
 
+type UploadImageResponse = {
+  code: number;
+  url: string;
+};
+
+const DEFAULT_TOOLBARS = [
+  'bold',
+  'underline',
+  'italic',
+  'strikeThrough',
+  '-',
+  'title',
+  'sub',
+  'sup',
+  'quote',
+  'unorderedList',
+  'orderedList',
+  'task',
+  '-',
+  'codeRow',
+  'code',
+  'link',
+  'image',
+  'table',
+  'mermaid',
+  'katex',
+  '-',
+  'revoke',
+  'next',
+  'save',
+  0,
+  1,
+  2,
+  '=',
+  'prettier',
+  'pageFullscreen',
+  'fullscreen',
+  'preview',
+  'previewOnly',
+  'htmlPreview',
+  'catalog',
+  'github'
+] as unknown as ToolbarNames[];
+
 export default ({ theme, previewTheme, codeTheme, lang }: PreviewProp) => {
   const editorRef = useRef<ExposeParam>(null);
 
@@ -45,6 +88,7 @@ export default ({ theme, previewTheme, codeTheme, lang }: PreviewProp) => {
     isFullscreen: boolean;
     inputBoxWitdh?: string;
     disabled?: boolean;
+    readOnly?: boolean;
     floatingToolbars: ToolbarNames[];
   }>(() => {
     return {
@@ -55,6 +99,7 @@ export default ({ theme, previewTheme, codeTheme, lang }: PreviewProp) => {
       isFullscreen: false,
       inputBoxWitdh: localStorage.getItem(INPUT_BOX_WITDH) ?? undefined,
       disabled: false,
+      readOnly: false,
       floatingToolbars: ['bold', 'underline', 'italic', 'strikeThrough']
     };
   });
@@ -77,30 +122,139 @@ export default ({ theme, previewTheme, codeTheme, lang }: PreviewProp) => {
 
   const [completions, setCompletions] = useState<Array<CompletionSource>>([]);
 
+  const completionOption = useCallback<CompletionSource>((context) => {
+    const word = context.matchBefore(/^>\s*/);
+
+    if (word === null || (word.from == word.to && context.explicit)) {
+      return null;
+    }
+
+    return {
+      from: word.from,
+      options: [
+        {
+          label: '> ',
+          type: 'text'
+        }
+      ]
+    };
+  }, []);
+
+  const COMPLETIONS_ARRAY = useMemo(() => [completionOption], [completionOption]);
+
   useEffect(() => {
-    setTimeout(() => {
-      setCompletions(() => {
-        return [
-          (context) => {
-            const word = context.matchBefore(/^>\s*/);
-
-            if (word === null || (word.from == word.to && context.explicit)) {
-              return null;
-            }
-
-            return {
-              from: word.from,
-              options: [
-                {
-                  label: '> ',
-                  type: 'text'
-                }
-              ]
-            };
-          }
-        ];
-      });
+    const id = window.setTimeout(() => {
+      setCompletions(COMPLETIONS_ARRAY);
     }, 5000);
+
+    return () => {
+      clearTimeout(id);
+    };
+  }, [COMPLETIONS_ARRAY]);
+
+  const strikeIcon = useMemo(() => <Icon name="strike-through" />, []);
+  const dropdownOverlay = useMemo(() => <div>下拉内容</div>, []);
+
+  const DEFAULT_FOOTERS = useMemo(() => ['markdownTotal', '=', 0, 'scrollSwitch'], []);
+  const DEF_FOOTERS_NODES = useMemo(
+    () => [<NormalFooterToolbar key="NormalFooterToolbar">^_^</NormalFooterToolbar>],
+    []
+  );
+
+  /**
+   * `fetch` 遇到 4xx/5xx 时不会自动抛错，这里统一补上状态校验，
+   * 让拖拽上传和批量上传都复用同一套返回值与错误处理。
+   */
+  const uploadImage = useCallback(async (file: File) => {
+    const form = new FormData();
+    form.append('file', file);
+
+    const response = await fetch('/api/img/upload', {
+      method: 'POST',
+      body: form
+    });
+
+    if (!response.ok) {
+      throw new Error(`图片上传失败：${response.status}`);
+    }
+
+    const data = (await response.json()) as UploadImageResponse;
+
+    if (data.code !== 0) {
+      throw new Error('图片上传失败：无效的响应代码');
+    }
+
+    return data;
+  }, []);
+
+  const handleDrop = useCallback(
+    (e: DragEvent) => {
+      e.stopPropagation();
+
+      void (async () => {
+        const file = e.dataTransfer?.files[0];
+        if (file) {
+          try {
+            const res = await uploadImage(file);
+
+            editorRef.current?.insert(() => {
+              return {
+                targetValue: `![](${res.url})`
+              };
+            });
+          } catch (error) {
+            console.error('Image upload failed:', error);
+          }
+        } else {
+          console.warn('No file found in drop event.');
+        }
+      })();
+    },
+    [uploadImage]
+  );
+
+  const handleInputBoxWidthChange = useCallback((w: string) => {
+    setMd((prev) => ({
+      ...prev,
+      inputBoxWitdh: w
+    }));
+    localStorage.setItem(INPUT_BOX_WITDH, w);
+  }, []);
+
+  const handleSave = useCallback((v: string, h: Promise<any>) => {
+    console.log('onSave');
+    void h.then((html) => {
+      console.log('onSaveAsync', html);
+    });
+    localStorage.setItem(SAVE_KEY, v);
+  }, []);
+
+  const handleChange = useCallback((value: string) => {
+    setMd((prev) => ({
+      ...prev,
+      text: value
+    }));
+  }, []);
+
+  const handleUploadImg = useCallback(
+    (files: File[], callback: (arr: any[]) => void) => {
+      void (async () => {
+        const res = await Promise.all(files.map((file) => uploadImage(file)));
+
+        callback(
+          res.map((item: any) => ({
+            url: item.url,
+            alt: 'alt',
+            title: 'title'
+          }))
+        );
+      })();
+    },
+    [uploadImage]
+  );
+
+  const formatCopiedTextCb = useCallback((text: string) => {
+    return `${text} \nfrom @imzbf`;
   }, []);
 
   useEffect(() => {
@@ -135,15 +289,65 @@ export default ({ theme, previewTheme, codeTheme, lang }: PreviewProp) => {
     });
   }, []);
 
+  const defToolbars = useMemo(() => {
+    return [
+      <Normal key="ddd1" />,
+      <DropdownToolbar
+        visible={defVisible}
+        onChange={setDefVisible}
+        overlay={dropdownOverlay}
+        key="dddd3"
+      >
+        {strikeIcon}
+      </DropdownToolbar>,
+      <ModalToolbar
+        key="ddd-modal"
+        title="弹窗扩展"
+        modalTitle="外置弹窗"
+        showAdjust
+        visible={md.modalVisible}
+        isFullscreen={md.isFullscreen}
+        onAdjust={(isFullscreen) => {
+          setMd((prev) => ({
+            ...prev,
+            isFullscreen
+          }));
+        }}
+        trigger={strikeIcon}
+        onClick={() => {
+          setMd((prev) => ({
+            ...prev,
+            modalVisible: true
+          }));
+        }}
+        onClose={() => {
+          setMd((prev) => ({
+            ...prev,
+            modalVisible: false
+          }));
+        }}
+      >
+        <div
+          style={{
+            width: '500px',
+            height: '300px'
+          }}
+        ></div>
+      </ModalToolbar>
+    ];
+  }, [defVisible, md.modalVisible, md.isFullscreen, strikeIcon, dropdownOverlay]);
+
   return (
     <div className="project-preview">
       <div
         style={{
           width: '200px',
-          padding: '10px',
+          paddingBlock: '10px',
+          paddingInline: '10px',
           border: '1px solid #666',
           position: 'fixed',
-          right: '10px'
+          insetInlineEnd: '10px',
+          insetBlockStart: '170px'
         }}
       >
         <MdCatalog
@@ -156,8 +360,8 @@ export default ({ theme, previewTheme, codeTheme, lang }: PreviewProp) => {
       <button
         style={{
           position: 'absolute',
-          top: '10px',
-          left: '10px',
+          insetBlockStart: '10px',
+          insetInlineStart: '10px',
           zIndex: 1000000
         }}
         onClick={() => {
@@ -195,7 +399,7 @@ export default ({ theme, previewTheme, codeTheme, lang }: PreviewProp) => {
           setMd((prev) => {
             return {
               ...prev,
-              floatingToolbars: ['bold']
+              readOnly: !prev.readOnly
             };
           });
         }}
@@ -232,7 +436,7 @@ export default ({ theme, previewTheme, codeTheme, lang }: PreviewProp) => {
           // codeStyleReverseList={['mk-cute']}
           // autoFocus
           disabled={md.disabled}
-          // readOnly={true}
+          readOnly={md.readOnly}
           // maxLength={10}
           // noHighlight
           // autoDetectCode
@@ -254,195 +458,39 @@ export default ({ theme, previewTheme, codeTheme, lang }: PreviewProp) => {
           //   );
           // }}
           // noImgZoomIn
-          customIcon={
-            {
-              // bold: {
-              //   component: 'A',
-              //   props: {}
-              // },
-              // copy: StrIcon('copy', {}) // '<i class="fa fa-car"></i>',
-              // preview: {
-              //   component: '<i class="fa fa-car"></i>',
-              //   props: {
-              //     name: 'copy'
-              //   }
-              // },
-              // github: {
-              //   component: Icon,
-              //   props: {
-              //     name: 'italic'
-              //   }
-              // }
-            }
-          }
+          // customIcon={
+          //   {
+          // bold: {
+          //   component: 'A',
+          //   props: {}
+          // },
+          // copy: StrIcon('copy', {}) // '<i class="fa fa-car"></i>',
+          // preview: {
+          //   component: '<i class="fa fa-car"></i>',
+          //   props: {
+          //     name: 'copy'
+          //   }
+          // },
+          // github: {
+          //   component: Icon,
+          //   props: {
+          //     name: 'italic'
+          //   }
+          // }
+          // }
+          // }
           inputBoxWidth={md.inputBoxWitdh}
-          onInputBoxWidthChange={(w) => {
-            md.inputBoxWitdh = w;
-            localStorage.setItem(INPUT_BOX_WITDH, w);
-          }}
-          onDrop={(e) => {
-            e.stopPropagation();
-
-            void (async () => {
-              const form = new FormData();
-              const file = e.dataTransfer?.files[0];
-              if (file) {
-                form.append('file', file);
-
-                try {
-                  const res = await axios.post('/api/img/upload', form, {
-                    headers: {
-                      'Content-Type': 'multipart/form-data'
-                    }
-                  });
-
-                  editorRef.current?.insert(() => {
-                    return {
-                      targetValue: `![](${res.data.url})`
-                    };
-                  });
-                } catch (error) {
-                  console.error('Image upload failed:', error);
-                }
-              } else {
-                console.warn('No file found in drop event.');
-              }
-            })();
-          }}
+          onInputBoxWidthChange={handleInputBoxWidthChange}
+          onDrop={handleDrop}
           floatingToolbars={md.floatingToolbars}
-          toolbars={[
-            'bold',
-            'underline',
-            'italic',
-            'strikeThrough',
-            '-',
-            'title',
-            'sub',
-            'sup',
-            'quote',
-            'unorderedList',
-            'orderedList',
-            'task',
-            '-',
-            'codeRow',
-            'code',
-            'link',
-            'image',
-            'table',
-            'mermaid',
-            'katex',
-            '-',
-            'revoke',
-            'next',
-            'save',
-            0,
-            1,
-            2,
-            '=',
-            'prettier',
-            'pageFullscreen',
-            'fullscreen',
-            'preview',
-            'previewOnly',
-            'htmlPreview',
-            'catalog',
-            'github'
-          ]}
-          defToolbars={[
-            <Normal key="ddd1" />,
-            <DropdownToolbar
-              visible={defVisible}
-              trigger={<Icon name="strike-through" />}
-              onChange={setDefVisible}
-              overlay={<div>下拉内容</div>}
-              key="dddd3"
-            ></DropdownToolbar>,
-            <ModalToolbar
-              key="ddd-modal"
-              title="弹窗扩展"
-              modalTitle="外置弹窗"
-              showAdjust
-              visible={md.modalVisible}
-              isFullscreen={md.isFullscreen}
-              onAdjust={(isFullscreen) => {
-                setMd({
-                  ...md,
-                  isFullscreen
-                });
-              }}
-              trigger={<Icon name="strike-through" />}
-              onClick={() => {
-                setMd({
-                  ...md,
-                  modalVisible: true
-                });
-              }}
-              onClose={() => {
-                setMd({
-                  ...md,
-                  modalVisible: false
-                });
-              }}
-            >
-              <div
-                style={{
-                  width: '500px',
-                  height: '300px'
-                }}
-              ></div>
-            </ModalToolbar>
-          ]}
-          onSave={(v, h) => {
-            console.log('onSave');
-            void h.then((html) => {
-              console.log('onSaveAsync', html);
-            });
-            localStorage.setItem(SAVE_KEY, v);
-          }}
-          onChange={(value) =>
-            setMd({
-              ...md,
-              text: value
-            })
-          }
-          onUploadImg={(files, callback) => {
-            void (async () => {
-              const res = await Promise.all(
-                files.map((file) => {
-                  return new Promise((rev, rej) => {
-                    const form = new FormData();
-                    form.append('file', file);
-
-                    axios
-                      .post('/api/img/upload', form, {
-                        headers: {
-                          'Content-Type': 'multipart/form-data'
-                        }
-                      })
-                      .then((res) => rev(res))
-                      .catch((error) =>
-                        rej(error instanceof Error ? error : new Error(String(error)))
-                      );
-                  });
-                })
-              );
-
-              callback(
-                res.map((item: any) => ({
-                  url: item.data.url,
-                  alt: 'alt',
-                  title: 'title'
-                }))
-              );
-            })();
-          }}
-          formatCopiedText={(text: string) => {
-            return `${text} \nfrom @imzbf`;
-          }}
-          footers={['markdownTotal', '=', 0, 'scrollSwitch']}
-          defFooters={[
-            <NormalFooterToolbar key="NormalFooterToolbar">^_^</NormalFooterToolbar>
-          ]}
+          toolbars={DEFAULT_TOOLBARS}
+          defToolbars={defToolbars}
+          onSave={handleSave}
+          onChange={handleChange}
+          onUploadImg={handleUploadImg}
+          formatCopiedText={formatCopiedTextCb}
+          footers={DEFAULT_FOOTERS}
+          defFooters={DEF_FOOTERS_NODES}
         />
         <br />
         {/* <MdEditor

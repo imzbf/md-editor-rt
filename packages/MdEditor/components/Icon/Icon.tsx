@@ -33,10 +33,9 @@ import {
   X,
   LucideProps
 } from 'lucide-react';
-import { createElement, ForwardRefExoticComponent } from 'react';
-import { prefix } from '~/config';
-
+import { createElement, ForwardRefExoticComponent, memo } from 'react';
 import Github from './Github';
+import { prefix } from '~/config';
 
 export type IconName =
   | 'bold'
@@ -121,4 +120,4 @@ const Icon = (props: { name: IconName }) => {
   });
 };
 
-export default Icon;
+export default memo(Icon);

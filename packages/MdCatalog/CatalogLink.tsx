@@ -1,11 +1,10 @@
-import { MouseEvent, useContext, useEffect, useRef } from 'react';
+import { memo, MouseEvent, useContext, useEffect, useRef } from 'react';
+import { CatalogContext } from './context';
+import { TocItem } from './index';
 import { prefix } from '~/config';
 import { MdHeadingId } from '~/type';
 import { classnames } from '~/utils';
 import { getComputedStyleNum } from '~/utils/scroll-auto';
-
-import { CatalogContext } from './context';
-import { TocItem } from './index';
 
 export interface CatalogLinkProps {
   tocItem: TocItem;
@@ -73,7 +72,7 @@ const CatalogLink = ({
           const pel = targetHeadEle.previousElementSibling;
           let currMarginTop = 0;
           if (!pel) {
-            currMarginTop = getComputedStyleNum(targetHeadEle, 'margin-top');
+            currMarginTop = getComputedStyleNum(targetHeadEle, 'margin-block-start');
           }
 
           scrollContainer?.scrollTo({
@@ -102,4 +101,4 @@ const CatalogLink = ({
   );
 };
 
-export default CatalogLink;
+export default memo(CatalogLink);

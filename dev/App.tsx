@@ -2,7 +2,7 @@ import React, { useEffect, useState, StrictMode } from 'react';
 import Header from './Header';
 import Preview from './Preview';
 import PreviewOnly from './PreviewOnly';
-import './style.less';
+import './style.scss';
 import SecEditor from './SecEditor';
 import StreamDemo from './StreamDemo';
 

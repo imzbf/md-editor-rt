@@ -11,17 +11,18 @@ import {
   MouseEvent,
   useMemo
 } from 'react';
+import ContentPreview from './ContentPreview';
+import { useAutoScroll, useCodeMirror, useFollowCatalog, useResize } from './hooks';
+import { ContentProps } from './props';
+import { ContentExposeParam } from './type';
 import CustomScrollbar from '~/components/CustomScrollbar';
 import { prefix } from '~/config';
 import { EditorContext } from '~/context';
 import { FocusOption } from '~/type';
 import MdCatalog, { TocItem } from '~~/MdCatalog';
-import ContentPreview from './ContentPreview';
-import { useAutoScroll, useCodeMirror, useFollowCatalog, useResize } from './hooks';
-import { ContentProps } from './props';
-import { ContentExposeParam } from './type';
 
 const smoothScroll = createSmoothScroll();
+const PREVIEW_SCROLLBAR_STYLE = { flex: 1 };
 
 const Content = forwardRef((props: ContentProps, ref: ForwardedRef<unknown>) => {
   const { onHtmlChanged } = props;
@@ -86,12 +87,6 @@ const Content = forwardRef((props: ContentProps, ref: ForwardedRef<unknown>) => 
     [codeMirrorUt, setting.preview]
   );
 
-  const previewScrollbarStyle = useMemo(() => {
-    return {
-      flex: 1
-    };
-  }, []);
-
   const inputWrapper = useMemo(() => {
     return <div className={`${prefix}-input-wrapper`} ref={inputWrapperRef} />;
   }, [inputWrapperRef]);
@@ -115,6 +110,8 @@ const Content = forwardRef((props: ContentProps, ref: ForwardedRef<unknown>) => 
         codeFoldable={props.codeFoldable}
         autoFoldThreshold={props.autoFoldThreshold}
         onRemount={props.onRemount}
+        previewComponent={props.previewComponent}
+        noEcharts={props.noEcharts}
       />
     );
   }, [
@@ -124,6 +121,7 @@ const Content = forwardRef((props: ContentProps, ref: ForwardedRef<unknown>) => 
     props.formatCopiedText,
     props.mdHeadingId,
     props.modelValue,
+    props.noEcharts,
     props.noHighlight,
     props.noImgZoomIn,
     props.noKatex,
@@ -131,6 +129,7 @@ const Content = forwardRef((props: ContentProps, ref: ForwardedRef<unknown>) => 
     props.onChange,
     props.onGetCatalog,
     props.onRemount,
+    props.previewComponent,
     props.sanitize,
     props.sanitizeMermaid,
     setting
@@ -179,7 +178,9 @@ const Content = forwardRef((props: ContentProps, ref: ForwardedRef<unknown>) => 
             ref={resizeRef}
           />
         )}
-        <CustomScrollbar style={previewScrollbarStyle}>{contentPreview}</CustomScrollbar>
+        <CustomScrollbar style={PREVIEW_SCROLLBAR_STYLE}>
+          {contentPreview}
+        </CustomScrollbar>
       </div>
       {catalogVisible && (
         <CustomScrollbar

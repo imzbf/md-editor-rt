@@ -4,18 +4,6 @@ import ImageFiguresPlugin from 'markdown-it-image-figures';
 import SubPlugin from 'markdown-it-sub';
 import SupPlugin from 'markdown-it-sup';
 import { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
-import { globalConfig, prefix } from '~/config';
-import { EditorContext } from '~/context';
-import {
-  BUILD_FINISHED,
-  CATALOG_CHANGED,
-  PUSH_CATALOG,
-  RERENDER
-} from '~/static/event-name';
-import { HeadList, MarkdownItConfigPlugin, Themes } from '~/type';
-import { generateCodeRowNumber } from '~/utils';
-import { zoomMermaid, copyMermaid } from '~/utils/dom';
-import bus from '~/utils/event-bus';
 
 import useEcharts from './useEcharts';
 import useHighlight from './useHighlight';
@@ -30,15 +18,26 @@ import KatexPlugin from '../markdownIt/katex';
 import MermaidPlugin from '../markdownIt/mermaid';
 import TaskListPlugin from '../markdownIt/task';
 import { ContentPreviewProps } from '../props';
+import { globalConfig, prefix } from '~/config';
+import { EditorContext } from '~/context';
+import {
+  BUILD_FINISHED,
+  CATALOG_CHANGED,
+  PUSH_CATALOG,
+  RERENDER
+} from '~/static/event-name';
+import { HeadList, MarkdownItConfigPlugin, Themes } from '~/type';
+import { generateCodeBlock, prepareCustomCodeHighlight } from '~/utils';
+import { zoomMermaid, copyMermaid } from '~/utils/dom';
+import bus from '~/utils/event-bus';
+import { parseCodeBlockInfo } from '~/utils/md-it';
 
 const initLineNumber = (md: mdit) => {
   md.core.ruler.push('init-line-number', (state) => {
     state.tokens.forEach((token) => {
       if (token.map) {
-        if (!token.attrs) {
-          token.attrs = [];
-        }
-        token.attrs.push(['data-line', token.map[0].toString()]);
+        // 使用官方属性 API 覆盖同名值，避免扩展提前声明 data-line 时产生重复属性。
+        token.attrSet('data-line', token.map[0].toString());
       }
     });
     return true;
@@ -96,7 +95,8 @@ const useMarkdownIt = (props: ContentPreviewProps, previewOnly: boolean) => {
 
   const [md] = useState(() => {
     const md_ = mdit({
-      html: true,
+      // 关闭源文本中的原生 HTML 解析，插件生成的 HTML 不受影响。
+      html: false,
       breaks: true,
       linkify: true
     });
@@ -184,38 +184,58 @@ const useMarkdownIt = (props: ContentPreviewProps, previewOnly: boolean) => {
 
     md_.set({
       highlight: (str, language, attrs) => {
+        const codeInfo = parseCodeBlockInfo(language, attrs);
+        const {
+          attrs: codeAttrs,
+          language: codeLanguage,
+          lineHighlightRanges
+        } = codeInfo;
+        let codeHtml = '';
+
         if (userDefHighlight) {
-          const result = userDefHighlight(str, language, attrs);
+          const result = userDefHighlight(str, codeLanguage, codeAttrs);
           if (result) {
-            return result;
+            const customCodeHighlight = prepareCustomCodeHighlight(result, str, {
+              lineHighlightRanges,
+              showLineNumber: showCodeRowNumber
+            });
+            if (customCodeHighlight.shouldReturnDirectly) {
+              return customCodeHighlight.html;
+            }
+
+            codeHtml = customCodeHighlight.html;
           }
         }
 
-        let codeHtml: string;
-
-        // 不高亮或者没有实例，返回默认
-        if (!noHighlight && hljsRef.current) {
-          const hljsLang = hljsRef.current.getLanguage(language);
-          if (hljsLang) {
-            codeHtml = hljsRef.current.highlight(str, {
-              language,
-              ignoreIllegals: true
-            }).value;
+        if (!codeHtml) {
+          // 不高亮或者没有实例，返回默认
+          if (!noHighlight && hljsRef.current) {
+            const hljsLang = hljsRef.current.getLanguage(codeLanguage);
+            if (hljsLang) {
+              codeHtml = hljsRef.current.highlight(str, {
+                language: codeLanguage,
+                ignoreIllegals: true
+              }).value;
+            } else {
+              codeHtml = hljsRef.current.highlightAuto(str).value;
+            }
           } else {
-            codeHtml = hljsRef.current.highlightAuto(str).value;
+            codeHtml = md_.utils.escapeHtml(str);
           }
-        } else {
-          codeHtml = md.utils.escapeHtml(str);
         }
 
-        const codeSpan = showCodeRowNumber
-          ? generateCodeRowNumber(
-              codeHtml.replace(/^\n+|\n+$/g, ''),
-              str.replace(/^\n+|\n+$/g, '')
-            )
-          : `<span class="${prefix}-code-block">${codeHtml.replace(/^\n+|\n+$/g, '')}</span>`;
+        const escapedLanguage = md_.utils.escapeHtml(codeLanguage);
 
-        return `<pre><code class="language-${language}" language=${language}>${codeSpan}</code></pre>`;
+        let codeSpan = `<span class="${prefix}-code-block">${codeHtml.replace(/^\n+|\n+$/g, '')}</span>`;
+
+        if (showCodeRowNumber || lineHighlightRanges.length) {
+          codeSpan = generateCodeBlock(codeHtml, str, {
+            lineHighlightRanges,
+            showLineNumber: showCodeRowNumber
+          });
+        }
+
+        return `<pre><code class="language-${escapedLanguage}" language="${escapedLanguage}">${codeSpan}</code></pre>`;
       }
     });
 

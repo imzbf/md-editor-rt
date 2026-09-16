@@ -12,6 +12,7 @@ const ToolbarGithub = () => {
     <button
       className={classnames([`${prefix}-toolbar-item`, disabled && `${prefix}-disabled`])}
       title={ult.toolbarTips?.github}
+      aria-label={ult.toolbarTips?.github}
       disabled={disabled}
       onClick={() => {
         linkTo('https://github.com/imzbf/md-editor-rt');

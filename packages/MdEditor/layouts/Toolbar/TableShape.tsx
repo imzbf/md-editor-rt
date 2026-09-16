@@ -1,4 +1,4 @@
-import { useCallback, useState, useEffect, useMemo } from 'react';
+import { useCallback, useState, useEffect, useMemo, memo } from 'react';
 import { prefix } from '~/config';
 import { TableShapeType } from '~/type';
 
@@ -126,4 +126,4 @@ const TableShape = (props: TableShapeProps) => {
   );
 };
 
-export default TableShape;
+export default memo(TableShape);

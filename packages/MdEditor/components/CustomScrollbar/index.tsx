@@ -128,6 +128,11 @@ const CustomScrollbar = (props: Props) => {
   }, [bindScrollEl, props.scrollTarget]);
 
   useEffect(() => {
+    const wrapper = wrapperRef.current;
+
+    // 组件卸载时 DOM ref 会被清空，容器不存在时不要继续注册观察器。
+    if (!wrapper) return;
+
     findAndBindScrollEl();
 
     const thumbEle = thumbRef.current;
@@ -141,7 +146,7 @@ const CustomScrollbar = (props: Props) => {
         findAndBindScrollEl();
       });
     });
-    observer.observe(wrapperRef.current!, {
+    observer.observe(wrapper, {
       childList: true,
       subtree: true
     });

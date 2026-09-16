@@ -1,4 +1,4 @@
-import { MouseEvent, ReactNode } from 'react';
+import { memo, MouseEvent, ReactNode } from 'react';
 import { prefix } from '~/config';
 import { classnames } from '~/utils';
 
@@ -25,4 +25,4 @@ const NormalFooterToolbar = (props: NormalFooterToolbarProps) => {
   );
 };
 
-export default NormalFooterToolbar;
+export default memo(NormalFooterToolbar);

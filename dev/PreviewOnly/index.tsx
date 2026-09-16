@@ -1,9 +1,9 @@
 import React, { useCallback, useRef, useState } from 'react';
-import { ExposePreviewParam, MdPreview, prefix } from '~~/index';
 import { Theme } from '../App';
 import mdText from '../data.md';
+import { ExposePreviewParam, MdPreview, prefix } from '~~/index';
 
-// import '~/styles/preview.less';
+// import '~/styles/preview.scss';
 
 const editorId = 'preview-only-test';
 
@@ -14,8 +14,18 @@ interface PreviewOnlyProp {
   lang: 'zh-CN' | 'en-US';
 }
 
+const previewComponent = (props: { html: string; id: string; className: string }) => {
+  return (
+    <div
+      id={props.id}
+      className={props.className}
+      dangerouslySetInnerHTML={{ __html: props.html }}
+    />
+  );
+};
+
 const PreviewOnly = (props: PreviewOnlyProp) => {
-  const previewRef = useRef<ExposePreviewParam>();
+  const previewRef = useRef<ExposePreviewParam | null>(null);
 
   const [value, setValue] = useState(mdText);
 
@@ -61,6 +71,7 @@ const PreviewOnly = (props: PreviewOnlyProp) => {
           onChange={setValue}
           showCodeRowNumber
           onRemount={onRemount}
+          previewComponent={previewComponent}
         />
       </div>
     </div>

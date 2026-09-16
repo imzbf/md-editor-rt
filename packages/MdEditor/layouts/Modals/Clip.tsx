@@ -1,4 +1,12 @@
-import { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
+import {
+  memo,
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useRef,
+  useState
+} from 'react';
 import Icon from '~/components/Icon';
 import Modal from '~/components/Modal';
 import { globalConfig, prefix } from '~/config';
@@ -209,4 +217,4 @@ const ClipModal = (props: ClipModalProps) => {
   ]);
 };
 
-export default ClipModal;
+export default memo(ClipModal);

@@ -1,4 +1,4 @@
-import { ReactNode, useContext, useMemo } from 'react';
+import { ReactNode, memo, useContext, useMemo } from 'react';
 import Dropdown from '~/components/Dropdown';
 import { prefix } from '~/config';
 import { EditorContext } from '~/context';
@@ -33,6 +33,7 @@ const DropdownToolbar = (props: DropdownToolbarProps) => {
       <button
         className={className}
         title={props.title || ''}
+        aria-label={props.title || ''}
         disabled={props.disabled}
         type="button"
       >
@@ -42,4 +43,4 @@ const DropdownToolbar = (props: DropdownToolbarProps) => {
   );
 };
 
-export default DropdownToolbar;
+export default memo(DropdownToolbar);

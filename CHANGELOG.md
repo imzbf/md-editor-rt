@@ -1,0 +1,184 @@
+<!-- next-release -->
+
+## 6.5.6 (2026-08-05)
+
+### Fixed Bugs
+
+- preserve structured tokens for rich content ([commit e39fc5c](https://github.com/imzbf/md-editor-rt/commit/e39fc5cb582c5d315f4165ad52bcbdadf6a44a21))
+
+### Others
+
+- ci(release): use changelog entry as release notes ([commit e0cdde0](https://github.com/imzbf/md-editor-rt/commit/e0cdde0773791efffda37620f87cbc505a805e2a))
+
+**Full Changelog**: [v6.5.5...v6.5.6](https://github.com/imzbf/md-editor-rt/compare/v6.5.5...v6.5.6)
+
+---
+
+## 6.5.5 (2026-07-30)
+
+### Fixed Bugs
+
+- guard DOM work after unmount ([commit 5a14eb4](https://github.com/imzbf/md-editor-rt/commit/5a14eb41f69ee6aa9d735adb20aca32ec6af49c3))
+
+- clean up temporary render container ([commit 24a9c2c](https://github.com/imzbf/md-editor-rt/commit/24a9c2c54d1e7f244edbe5f1d36d5ad088943831))
+  - Always remove the off-screen container after rendering, including unclosed and failed render paths.
+
+- preserve selection and copy in read-only mode ([commit 271c00e](https://github.com/imzbf/md-editor-rt/commit/271c00e08a870786b4f3debb0500b27e970b9ec3))
+  - Separate read-only behavior from disabled state and block user-triggered mutations while keeping programmatic updates available.
+
+**Full Changelog**: [v6.5.4...v6.5.5](https://github.com/imzbf/md-editor-rt/compare/v6.5.4...v6.5.5)
+
+---
+
+## 6.5.4 (2026-07-17)
+
+### Fixed Bugs
+
+- escape code fence metadata in preview output ([commit dd14fa2](https://github.com/imzbf/md-editor-rt/commit/dd14fa2b0e2bf27db268a51259160fff8da8c69b))
+
+- fix misalignment when syncing editor to preview at the top ([commit 41279bc](https://github.com/imzbf/md-editor-rt/commit/41279bc39984798472b7c9b48f024e1d978644b3))
+  - ### 描述
+  - - 修复 `pEleHandler` 中 `startTop === 0` 且无显式初始块时的隐式高度计算，避免开头留白时映射错误。
+  - - 修改 `getLineNumber` 倒序遍历逻辑
+  - - 移除冗余的越界条件判断
+  - ### 问题
+  - 编辑区开头有空白时滑动，预览区会直接跳到文档中段
+  - ### 解决
+  - - 如果“文档中只存在一个模块”，实际应该被触底逻辑覆盖
+  - - `startEle === endEle`条件在`buildMap`隐式填充0、且无多余DOM才会进入，对应预览区域无实际dom，直接置零
+  - (cherry picked from commit 389f926b18030ef1c80c900472d44ed6957dbcb7)
+
+- fix misalignment when syncing preview to editor at the top ([commit c721ed7](https://github.com/imzbf/md-editor-rt/commit/c721ed798873612071e66f7812a3efb22b3d3b9d))
+  - ### Description
+  - Fixed a bug where the editor and preview areas failed to align at the top when scrolling the preview area.
+  - ### Cause
+  - In `cEleHandler` (preview-to-editor), when `realEleStart` matches the first child, `scale` is calculated from absolute `0`, but `firstLineScrollTop` was not reset to `0`. This caused the old/cached `firstLineScrollTop` value to be added, preventing the editor from scrolling back to the absolute top.
+  - ### Solution
+  - Explicitly set `firstLineScrollTop = 0` inside the `else if` branch for the top element area to ensure a proper 0-based scale mapping.
+  - (cherry picked from commit d3ebcfe19dbbd7e9dd385ac143a331879f321fce)
+
+**Full Changelog**: [v6.5.3...v6.5.4](https://github.com/imzbf/md-editor-rt/compare/v6.5.3...v6.5.4)
+
+---
+
+## 6.5.3 (2026-06-23)
+
+### Fixed Bugs
+
+- align shared preview runtime logic ([commit 70159e4](https://github.com/imzbf/md-editor-rt/commit/70159e43918f20c474a67ee1d8c10b4dfd94193a))
+  - Move @vavt/markdown-theme into production dependencies and keep preview icon sizing aligned with the Vue package.
+  - Match the shared editor behavior for CodeMirror extension order, task-list token attrs, and scroll margin handling.
+
+**Full Changelog**: [v6.5.2...v6.5.3](https://github.com/imzbf/md-editor-rt/compare/v6.5.2...v6.5.3)
+
+---
+
+## 6.5.2 (2026-06-22)
+
+### Refactors
+
+- replace Less with Sass and optimize project build scripts ([commit 1b6f4cc](https://github.com/imzbf/md-editor-rt/commit/1b6f4ccbc3412aff1850eca3d2aa9bc26987ca28))
+
+### Fixed Bugs
+
+- handle content before first preview anchor ([commit abba880](https://github.com/imzbf/md-editor-rt/commit/abba88072957bf4ef7601fb9b67b949c30b9e57f))
+
+**Full Changelog**: [v6.5.1...v6.5.2](https://github.com/imzbf/md-editor-rt/compare/v6.5.1...v6.5.2)
+
+---
+
+## 6.5.1 (2026-05-22)
+
+### Refactors
+
+- upgrade lucide-react ([commit afa50fc](https://github.com/imzbf/md-editor-rt/commit/afa50fc4f52c9b8a574354290369ed936b38911e))
+
+- replace axios with native fetch for image upload Extract a shared `uploadImage` helper that uses the Fetch API with proper HTTP status and response-code validation, and remove the `axios` dev dependency. ([commit c615e49](https://github.com/imzbf/md-editor-rt/commit/c615e494d07f0ae5e9bb440ad7b637f57af24a95))
+
+### Others
+
+- build(scripts): replace tsx with native Node TypeScript support ([commit c3cc143](https://github.com/imzbf/md-editor-rt/commit/c3cc14332702b176e93a080deea72f3fdc12e202))
+  - Remove the `tsx` dev dependency and switch npm scripts to use `node` directly, leveraging Node's
+  - built-in TypeScript stripping. Update imports to use `.ts` extensions and type-only imports where
+  - appropriate, and add the required tsconfig flags (`allowImportingTsExtensions`,
+  - `emitDeclarationOnly`).
+
+- docs(skill): update echarts parser guidance ([commit 73953d4](https://github.com/imzbf/md-editor-rt/commit/73953d46efa23455ea2795631b8ef7472f960d08))
+
+**Full Changelog**: [v6.5.0...v6.5.1](https://github.com/imzbf/md-editor-rt/compare/v6.5.0...v6.5.1)
+
+---
+
+## 6.5.0 (2026-04-28)
+
+### Features
+
+- allow custom option parser ([commit a1a1ec8](https://github.com/imzbf/md-editor-rt/commit/a1a1ec8b77b851c2b7a5f602d03af516215abe7d))
+
+### Others
+
+- docs(skill): add downstream usage skill for react consumers ([commit 30b6db6](https://github.com/imzbf/md-editor-rt/commit/30b6db63a19aa17ec258127b16853660a3f63bfc))
+
+**Full Changelog**: [v6.4.2...v6.5.0](https://github.com/imzbf/md-editor-rt/compare/v6.4.2...v6.5.0)
+
+---
+
+## 6.4.2 (2026-04-06)
+
+### Fixed Bugs
+
+- remove lru-cache runtime dependency ([commit 1f4f52d](https://github.com/imzbf/md-editor-rt/commit/1f4f52d37c7ccb6152c468f4d0eae78b67b9ed3e))
+  - Replace the mermaid cache implementation with an internal TTL/LRU cache and stop externalizing lru-cache in library builds.
+
+**Full Changelog**: [v6.4.1...v6.4.2](https://github.com/imzbf/md-editor-rt/compare/v6.4.1...v6.4.2)
+
+---
+
+## 6.4.1 (2026-03-21)
+
+### Fixed Bugs
+
+- bump @vavt/util to address prototype pollution ([commit 863662c](https://github.com/imzbf/md-editor-rt/commit/863662c6b013857676ffb276cef7dea527e80675))
+
+**Full Changelog**: [v6.4.0...v6.4.1](https://github.com/imzbf/md-editor-rt/compare/v6.4.0...v6.4.1)
+
+---
+
+## 6.4.0 (2026-03-05)
+
+### Features
+
+- use white mermaid theme in light mode ([commit 7412331](https://github.com/imzbf/md-editor-rt/commit/74123316f07f51b87e5b3552d84d4f653e65dc6e))
+
+### Fixed Bugs
+
+- bump @vavt/markdown-theme to fix mermaid overflow ([commit e5f3277](https://github.com/imzbf/md-editor-rt/commit/e5f327751264be5ae4b75a9f7537913a9982e118))
+  - Fixes preview clipping where mermaid blocks with many lines overflow on the last line due to p line-height behavior.
+
+### Others
+
+- docs(readme): clarify commit message should include solved problem ([commit 889bb45](https://github.com/imzbf/md-editor-rt/commit/889bb456711592f95e932ca39e60dd386a7e1162))
+
+**Full Changelog**: [v6.3.2...v6.4.0](https://github.com/imzbf/md-editor-rt/compare/v6.3.2...v6.4.0)
+
+---
+
+## 6.3.2 (2026-03-04)
+
+### Refactors
+
+- replace dts pipeline with rollup-plugin-dts ([commit 467bb1f](https://github.com/imzbf/md-editor-rt/commit/467bb1f937c7efdec6838152830a44e8afc65b28))
+
+### Others
+
+- chore(deps): upgrade highlightjs/prettier/mermaid/katex and refresh sri ([commit e4b7bb5](https://github.com/imzbf/md-editor-rt/commit/e4b7bb5c7cac610fbaf2196b744c90270a19e793))
+
+- docs(readme): add release-aligned commit convention ([commit 8b18232](https://github.com/imzbf/md-editor-rt/commit/8b18232521617d7bf9a03fe35dd1ab8804238c53))
+
+- chore(deps): migrate package management from yarn to npm ([commit bcc8597](https://github.com/imzbf/md-editor-rt/commit/bcc859766476316b56540547d3e8fff20c1d65f8))
+
+- ci(github): automate issue triage and release workflows ([commit bcaf1cd](https://github.com/imzbf/md-editor-rt/commit/bcaf1cd115f36519a91027c04fab035ad3e30a9e))
+
+**Full Changelog**: [v6.3.1...v6.3.2](https://github.com/imzbf/md-editor-rt/compare/v6.3.1...v6.3.2)
+
+---

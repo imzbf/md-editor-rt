@@ -11,12 +11,13 @@ export const defaultContextValue: ContextType = {
     css: '',
     js: ''
   },
-  showCodeRowNumber: false,
+  showCodeRowNumber: true,
   usedLanguageText: staticTextDefault['zh-CN'],
   previewTheme: 'default',
   customIcon: {},
   rootRef: null,
   disabled: undefined,
+  contentDisabled: false,
   showToolbarName: false,
   setting: {
     preview: false,

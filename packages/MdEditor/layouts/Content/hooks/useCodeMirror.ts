@@ -11,6 +11,18 @@ import { languages } from '@codemirror/language-data';
 import { Compartment, Extension } from '@codemirror/state';
 import { EditorView, keymap, drawSelection } from '@codemirror/view';
 import { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
+
+import CodeMirrorUt from '../codemirror';
+
+import usePasteUpload from './usePasteUpload';
+import { createAutocompletion } from '../codemirror/autocompletion';
+import { createCommands } from '../codemirror/commands';
+import { createFloatingToolbar } from '../codemirror/floatingToolbar';
+import { TextShortenerOptions, createTextShortener } from '../codemirror/textShortener';
+import { oneLight } from '../codemirror/themeLight';
+import { oneDark } from '../codemirror/themeOneDark';
+import { ContentProps } from '../props';
+import { useToolbarEffect } from './useToolbarEffect';
 import { globalConfig } from '~/config';
 import { EditorContext } from '~/context';
 import {
@@ -24,20 +36,9 @@ import {
   GET_EDITOR_VIEW
 } from '~/static/event-name';
 import { CodeMirrorExtension, DOMEventHandlers, Themes } from '~/type';
-import { directive2flag, ToolDirective } from '~/utils/content-help';
+import { directive2flag } from '~/utils/content-help';
 import bus from '~/utils/event-bus';
-
-import CodeMirrorUt from '../codemirror';
-
-import usePasteUpload from './usePasteUpload';
-import { createAutocompletion } from '../codemirror/autocompletion';
-import { createCommands } from '../codemirror/commands';
-import { createFloatingToolbar } from '../codemirror/floatingToolbar';
-import { TextShortenerOptions, createTextShortener } from '../codemirror/textShortener';
-import { oneLight } from '../codemirror/themeLight';
-import { oneDark } from '../codemirror/themeOneDark';
-import { ContentProps } from '../props';
-import { useToolbarEffect } from './useToolbarEffect';
+import type { ReplacePayload } from '~/utils/replace';
 // import useAttach from './useAttach';
 // 禁用掉>=6.28.0的实验性功能
 (EditorView as any).EDIT_CONTEXT = false;
@@ -244,7 +245,7 @@ const useCodeMirror = (props: ContentProps) => {
   });
 
   const [extensions] = useState(() => {
-    return [...userDefindeExtension, ...defaultExtensions].map(produceExtension);
+    return [...defaultExtensions, ...userDefindeExtension].map(produceExtension);
   });
   const resetHistory = useCallback(() => {
     codeMirrorUt.current?.view.dispatch({
@@ -284,6 +285,8 @@ const useCodeMirror = (props: ContentProps) => {
     };
 
     const taskStateChanged = (lineNumber: number, value: string) => {
+      if (contextValueRef.current.contentDisabled) return;
+
       const line = view.state.doc.line(lineNumber);
       // 应用交易到编辑器视图
       view.dispatch(
@@ -342,39 +345,43 @@ const useCodeMirror = (props: ContentProps) => {
   }, []);
 
   useEffect(() => {
-    const callback = async (direct: ToolDirective, params = {} as any) => {
+    const callback = async ({
+      direct,
+      params = {},
+      source = 'interaction'
+    }: ReplacePayload) => {
+      // 公开 API 与直接设置 modelValue 一样属于程序化更新，不受原生 disabled/readOnly 约束；
+      // 工具栏、快捷键和异步上传等用户交互则在真正写入前再次校验当前状态。
+      const replaceDisabled = () =>
+        contextValueRef.current.contentDisabled && source !== 'programmatic';
+
+      if (replaceDisabled()) return;
+
+      const applyReplace = async (nextParams: Record<string, unknown>) => {
+        const { text, options } = await directive2flag(
+          direct,
+          codeMirrorUt.current!,
+          nextParams
+        );
+
+        if (replaceDisabled()) return;
+
+        codeMirrorUt.current?.replaceSelectedText(text as string, options, editorId);
+      };
+
       // 弹窗插入图片时，将链接使用transformImgUrl转换后再插入
       if (direct === 'image' && params.transform) {
         const tv = props.transformImgUrl(params.url as string);
 
         if (tv instanceof Promise) {
-          tv.then(async (url) => {
-            const { text, options } = await directive2flag(
-              direct,
-              codeMirrorUt.current!,
-              {
-                ...params,
-                url
-              }
-            );
-            codeMirrorUt.current?.replaceSelectedText(text as string, options, editorId);
-          }).catch((err) => {
+          tv.then((url) => applyReplace({ ...params, url })).catch((err) => {
             console.error(err);
           });
         } else {
-          const { text, options } = await directive2flag(direct, codeMirrorUt.current!, {
-            ...params,
-            url: tv
-          });
-          codeMirrorUt.current?.replaceSelectedText(text as string, options, editorId);
+          await applyReplace({ ...params, url: tv });
         }
       } else {
-        const { text, options } = await directive2flag(
-          direct,
-          codeMirrorUt.current!,
-          params
-        );
-        codeMirrorUt.current?.replaceSelectedText(text as string, options, editorId);
+        await applyReplace(params);
       }
     };
     // 注册指令替换内容事件
@@ -453,7 +460,7 @@ const useCodeMirror = (props: ContentProps) => {
       return;
     }
 
-    codeMirrorUt.current?.setDisabled(props.readOnly!);
+    codeMirrorUt.current?.setReadOnly(props.readOnly!);
   }, [props.readOnly]);
 
   useEffect(() => {

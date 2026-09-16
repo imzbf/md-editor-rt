@@ -1,9 +1,9 @@
 import { memo, useContext } from 'react';
+import { useSreenfull } from '../hooks';
 import Icon from '~/components/Icon';
 import { prefix } from '~/config';
 import { EditorContext } from '~/context';
 import { classnames } from '~/utils';
-import { useSreenfull } from '../hooks';
 
 const ToolbarFullscreen = () => {
   const {
@@ -24,6 +24,7 @@ const ToolbarFullscreen = () => {
         disabled && `${prefix}-disabled`
       ])}
       title={ult.toolbarTips?.fullscreen}
+      aria-label={ult.toolbarTips?.fullscreen}
       disabled={disabled}
       onClick={() => {
         fullscreenHandler();

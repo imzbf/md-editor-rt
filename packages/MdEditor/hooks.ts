@@ -23,7 +23,6 @@ import {
   CATALOG_VISIBLE_CHANGED,
   BUILD_FINISHED,
   ERROR_CATCHER,
-  REPLACE,
   UPLOAD_IMAGE,
   RERENDER,
   EVENT_LISTENER,
@@ -37,7 +36,6 @@ import {
   Themes,
   ExposeParam,
   UpdateSetting,
-  ExposeEvent,
   FocusOption,
   UploadImgCallBack,
   MdPreviewProps,
@@ -45,6 +43,7 @@ import {
 } from './type';
 import { appendHandler } from './utils/dom';
 import bus from './utils/event-bus';
+import { emitReplace } from './utils/replace';
 
 /**
  * 键盘监听
@@ -225,9 +224,12 @@ export const useUploadImg = (props: EditorProps, staticProps: StaticProps) => {
   useEffect(() => {
     const uploadImageCallBack = (files: Array<File>, cb: () => void) => {
       const insertHanlder: UploadImgCallBack = (urls) => {
-        bus.emit(editorId, REPLACE, 'image', {
-          desc: '',
-          urls
+        emitReplace(editorId, {
+          direct: 'image',
+          params: {
+            desc: '',
+            urls
+          }
         });
 
         cb?.();
@@ -496,7 +498,7 @@ export const useExpose = (
             bus.on(editorId, {
               name: PAGE_FULL_SCREEN_CHANGED,
               callback(status: boolean) {
-                (callBack as ExposeEvent['pageFullscreen'])(status);
+                callBack(status);
               }
             });
 
@@ -506,7 +508,7 @@ export const useExpose = (
             bus.on(editorId, {
               name: FULL_SCREEN_CHANGED,
               callback(status: boolean) {
-                (callBack as ExposeEvent['fullscreen'])(status);
+                callBack(status);
               }
             });
 
@@ -517,7 +519,7 @@ export const useExpose = (
             bus.on(editorId, {
               name: PREVIEW_CHANGED,
               callback(status: boolean) {
-                (callBack as ExposeEvent['preview'])(status);
+                callBack(status);
               }
             });
 
@@ -528,7 +530,7 @@ export const useExpose = (
             bus.on(editorId, {
               name: PREVIEW_ONLY_CHANGED,
               callback(status: boolean) {
-                (callBack as ExposeEvent['previewOnly'])(status);
+                callBack(status);
               }
             });
 
@@ -539,7 +541,7 @@ export const useExpose = (
             bus.on(editorId, {
               name: HTML_PREVIEW_CHANGED,
               callback(status: boolean) {
-                (callBack as ExposeEvent['htmlPreview'])(status);
+                callBack(status);
               }
             });
 
@@ -550,7 +552,7 @@ export const useExpose = (
             bus.on(editorId, {
               name: CATALOG_VISIBLE_CHANGED,
               callback(status: boolean) {
-                (callBack as ExposeEvent['catalog'])(status);
+                callBack(status);
               }
             });
 
@@ -584,7 +586,11 @@ export const useExpose = (
         bus.emit(editorId, ON_SAVE);
       },
       insert(generate) {
-        bus.emit(editorId, REPLACE, 'universal', { generate });
+        emitReplace(editorId, {
+          direct: 'universal',
+          params: { generate },
+          source: 'programmatic'
+        });
       },
       focus(options: FocusOption) {
         codeRef.current?.focus(options);
@@ -602,7 +608,7 @@ export const useExpose = (
         bus.emit(editorId, EVENT_LISTENER, handlers);
       },
       execCommand(direct) {
-        bus.emit(editorId, REPLACE, direct);
+        emitReplace(editorId, { direct, source: 'programmatic' });
       },
       getEditorView() {
         return codeRef.current?.getEditorView();

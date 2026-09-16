@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { MdEditor, StrIcon } from '~~/index';
 import data from './data.md';
+import { MdEditor, StrIcon } from '~~/index';
 
 export default () => {
   const [text, setText] = useState(data);
@@ -13,7 +13,7 @@ export default () => {
 
   return (
     <div className="container">
-      <div style={{ margin: '1em 0' }}>
+      <div style={{ marginBlock: '1em', marginInline: '0' }}>
         <button onClick={changeVisible}>点击</button>
       </div>
 
