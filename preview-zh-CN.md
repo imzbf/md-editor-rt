@@ -4,7 +4,9 @@ Markdown 编辑器，React 版本，使用 jsx 和 typescript 语法开发，支
 
 ### 🤖 基本演示
 
-**加粗**，<u>下划线</u>，_斜体_，~~删除线~~，上标^26^，下标~1~，`inline code`，[超链接](https://github.com/imzbf)
+**加粗**，_斜体_，~~删除线~~，上标^26^，下标~1~，`inline code`，[超链接](https://github.com/imzbf)
+
+> 原生 HTML 默认关闭。`<u>下划线</u>` 等写法会显示为文本，开启方式见 [markdownItConfig](https://imzbf.github.io/md-editor-rt/zh-CN/api#%F0%9F%8D%A4%20markdownItConfig)。
 
 > 引用：《I Have a Dream》
 
@@ -16,22 +18,19 @@ Markdown 编辑器，React 版本，使用 jsx 和 typescript 语法开发，支
 - [ ] 周六
 - [x] 周天
 
-![图片](https://imzbf.github.io/md-editor-v3/imgs/mark_emoji.gif)
+![图片](https://imzbf.github.io/md-editor-rt/imgs/mark_emoji.gif)
 
 ## 🤗 代码演示
 
 ```js
-import { defineComponent, ref } from 'vue';
+import { useState } from 'react';
 import { MdEditor } from 'md-editor-rt';
 import 'md-editor-rt/lib/style.css';
 
-export default defineComponent({
-  name: 'MdEditor',
-  setup() {
-    const text = ref('');
-    return () => <MdEditor modelValue={text.value} onChange={(v: string) => (text.value = v)} />;
-  },
-});
+export default () => {
+  const [text, setText] = useState('');
+  return <MdEditor value={text} onChange={setText} />;
+};
 ```
 
 ## 🖨 文本演示

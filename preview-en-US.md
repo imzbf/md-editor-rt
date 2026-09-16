@@ -4,7 +4,9 @@ Markdown Editor for React, developed in jsx and typescript, support different th
 
 ### 🤖 Base
 
-**bold**, <u>underline</u>, _italic_, ~~line-through~~, superscript^26^, subscript~1~, `inline code`, [link](https://github.com/imzbf)
+**bold**, _italic_, ~~line-through~~, superscript^26^, subscript~1~, `inline code`, [link](https://github.com/imzbf)
+
+> Raw HTML is disabled by default. Markup such as `<u>underline</u>` is displayed as text. See [markdownItConfig](https://imzbf.github.io/md-editor-rt/en-US/api#%F0%9F%8D%A4%20markdownItConfig) to enable it.
 
 > quote: I Have a Dream
 
@@ -16,22 +18,19 @@ Markdown Editor for React, developed in jsx and typescript, support different th
 - [ ] Saturday
 - [x] Sunday
 
-![Picture](https://imzbf.github.io/md-editor-v3/imgs/mark_emoji.gif)
+![Picture](https://imzbf.github.io/md-editor-rt/imgs/mark_emoji.gif)
 
 ## 🤗 Demo
 
 ```js
-import { defineComponent, ref } from 'vue';
+import { useState } from 'react';
 import { MdEditor } from 'md-editor-rt';
 import 'md-editor-rt/lib/style.css';
 
-export default defineComponent({
-  name: 'MdEditor',
-  setup() {
-    const text = ref('');
-    return () => <MdEditor modelValue={text.value} onChange={(v: string) => (text.value = v)} />;
-  },
-});
+export default () => {
+  const [text, setText] = useState('');
+  return <MdEditor value={text} onChange={setText} />;
+};
 ```
 
 ## 🖨 Text

@@ -1,37 +1,28 @@
-<!DOCTYPE html><html lang="en-US" data-scroll-behavior="smooth"><head><meta charSet="utf-8" data-next-head=""/><meta name="viewport" content="width=device-width, initial-scale=1" data-next-head=""/><title data-next-head="">版本对比 - MdEditorRT 使用文档</title><meta name="keywords" content="MD Editor, md-editor-rt, Markdown 编辑器, React Markdown, React TSX, Markdown 组件, Markdown preview, React 编辑器" data-next-head=""/><meta name="description" content="md-editor-rt 是一个基于 React 和 TSX 开发的 Markdown 编辑器组件，支持实时预览和丰富的 Markdown 功能。查阅详细的开发文档与使用示例。" data-next-head=""/><link rel="preload" href="/md-editor-rt/_next/static/css/64d627ef7c8ddb4d.css" as="style"/><link rel="stylesheet" href="/md-editor-rt/_next/static/css/64d627ef7c8ddb4d.css" data-n-g=""/><noscript data-n-css=""></noscript><script defer="" noModule="" src="/md-editor-rt/_next/static/chunks/polyfills-42372ed130431b0a.js"></script><script src="/md-editor-rt/_next/static/chunks/webpack-f4424e020172bff2.js" defer=""></script><script src="/md-editor-rt/_next/static/chunks/framework-4a99af1472046e21.js" defer=""></script><script src="/md-editor-rt/_next/static/chunks/main-53cc964ab46430d5.js" defer=""></script><script src="/md-editor-rt/_next/static/chunks/pages/_app-2a55dcdf39b4d2c9.js" defer=""></script><script src="/md-editor-rt/_next/static/chunks/6791-02eee24719333ea2.js" defer=""></script><script src="/md-editor-rt/_next/static/chunks/pages/zh-CN/contrast-3a7af97a489b81b6.js" defer=""></script><script src="/md-editor-rt/_next/static/zz01ctlJxhV2g_w3jfcY3/_buildManifest.js" defer=""></script><script src="/md-editor-rt/_next/static/zz01ctlJxhV2g_w3jfcY3/_ssgManifest.js" defer=""></script></head><body><div id="__next"><header class="page-header"><section class="container"><h1 class="project-name">md-editor-rt<sup>@<!-- -->6.5.6</sup></h1><p class="project-desc">Markdown编辑器React版本，使用jsx和typescript语法开发，支持切换主题、prettier美化文本等。</p><div class="pc"><ul class="nav-list"><li class="nav-item"><a href="/md-editor-rt/zh-CN"><svg class="icon" aria-hidden="true"><use xlink:href="#med-icon-homepage"></use></svg>首页</a></li><li class="nav-item"><a href="/md-editor-rt/zh-CN/api"><svg class="icon" aria-hidden="true"><use xlink:href="#med-icon-api"></use></svg>API</a></li><li class="nav-item"><a href="/md-editor-rt/zh-CN/demo"><svg class="icon" aria-hidden="true"><use xlink:href="#med-icon-example"></use></svg>示例</a></li><li class="nav-item"><a target="_blank" href="https://github.com/imzbf/md-editor-rt"><svg class="icon" aria-hidden="true"><use xlink:href="#med-icon-github"></use></svg>源码</a></li><li class="nav-item"><a href="/md-editor-rt/zh-CN/syntax"><svg class="icon" aria-hidden="true"><use xlink:href="#med-icon-syntax"></use></svg>语法</a></li><li class="nav-item"><a href="/md-editor-rt/zh-CN/contrast"><svg class="icon" aria-hidden="true"><use xlink:href="#med-icon-question"></use></svg>对比</a></li><li class="nav-item"><a href="/md-editor-rt/zh-CN/about"><svg class="icon" aria-hidden="true"><use xlink:href="#med-icon-about"></use></svg>关于</a></li><li class="nav-item"><a style="display:none" href="/md-editor-rt/md-editor-rt/en-US">English</a><svg class="icon" aria-hidden="true"><use xlink:href="#med-icon-en"></use></svg>English</li></ul><p class="header-actions"><button class="btn btn-header">默认模式</button><button class="btn btn-header">暗黑模式</button><button class="btn btn-header">预览主题</button><button class="btn btn-header">代码主题</button></p></div><div class="mb"><svg class="icon m-menu-trigger" aria-hidden="true"><use xlink:href="#med-icon-drawer"></use></svg></div></section></header><div class="container"><div class="doc"><div class="content"><div id="md-contrast-zh" class="md-editor md-editor-previewOnly"><div id="md-contrast-zh-preview" class="md-editor-preview default-theme md-editor-scrn"><p data-line="0">下面仅列举不兼容的内容，兼容内容不作展示。</p>
-<h2 id="🧙🏼 从 5.x 升级到 6.x" tabindex="-1" data-line="2"><a class="header-anchor" href="#🧙🏼 从 5.x 升级到 6.x">🧙🏼 从 5.x 升级到 6.x</a></h2>
-<h3 id="🐈 UMD" tabindex="-1" data-line="4"><a class="header-anchor" href="#🐈 UMD">🐈 UMD</a></h3>
-<p data-line="6">为了跟进前端生态的发展，部分三方依赖自 6.x 开始已全面转向 ESM 模式，我们也不再继续提供 UMD 格式支持。</p>
-<p data-line="8">这里提供了全局使用的新的参考： <a href="https://imzbf.github.io/md-editor-rt/zh-CN/demo#%F0%9F%A4%93%20CDN%20%E9%93%BE%E6%8E%A5" target="_blank">🤓 CDN 链接</a></p>
-<h3 id="🔖 Props" tabindex="-1" data-line="10"><a class="header-anchor" href="#🔖 Props">🔖 Props</a></h3>
-<h4 id="🧷 insertLinkDirect" tabindex="-1" data-line="12"><a class="header-anchor" href="#🧷 insertLinkDirect">🧷 insertLinkDirect</a></h4>
-<p data-line="14">移除，现在点击添加链接时不再弹出输入框</p>
-<h4 id="🎱 mdHeadingId" tabindex="-1" data-line="16"><a class="header-anchor" href="#🎱 mdHeadingId">🎱 mdHeadingId</a></h4>
-<p data-line="18">类型变更</p>
-<p data-line="20">现在</p>
+<!DOCTYPE html><html lang="en-US" data-scroll-behavior="smooth"><head><meta charSet="utf-8" data-next-head=""/><meta name="viewport" content="width=device-width, initial-scale=1" data-next-head=""/><title data-next-head="">版本对比 - MdEditorRT 使用文档</title><meta name="keywords" content="MD Editor, md-editor-rt, Markdown 编辑器, React Markdown, React TSX, Markdown 组件, Markdown preview, React 编辑器" data-next-head=""/><meta name="description" content="md-editor-rt 是一个基于 React 和 TSX 开发的 Markdown 编辑器组件，支持实时预览和丰富的 Markdown 功能。查阅详细的开发文档与使用示例。" data-next-head=""/><link rel="preload" href="/md-editor-rt/_next/static/css/e5e899188ac33be5.css" as="style"/><link rel="stylesheet" href="/md-editor-rt/_next/static/css/e5e899188ac33be5.css" data-n-g=""/><noscript data-n-css=""></noscript><script defer="" noModule="" src="/md-editor-rt/_next/static/chunks/polyfills-42372ed130431b0a.js"></script><script src="/md-editor-rt/_next/static/chunks/webpack-f4424e020172bff2.js" defer=""></script><script src="/md-editor-rt/_next/static/chunks/framework-4a99af1472046e21.js" defer=""></script><script src="/md-editor-rt/_next/static/chunks/main-53cc964ab46430d5.js" defer=""></script><script src="/md-editor-rt/_next/static/chunks/pages/_app-cba605531b7a78a3.js" defer=""></script><script src="/md-editor-rt/_next/static/chunks/6791-facc43bea0de9e8a.js" defer=""></script><script src="/md-editor-rt/_next/static/chunks/pages/zh-CN/contrast-ec70e67d63d7b101.js" defer=""></script><script src="/md-editor-rt/_next/static/WebYh8vLjB80Qdb4nIBZJ/_buildManifest.js" defer=""></script><script src="/md-editor-rt/_next/static/WebYh8vLjB80Qdb4nIBZJ/_ssgManifest.js" defer=""></script></head><body><div id="__next"><header class="page-header"><section class="container"><h1 class="project-name">md-editor-rt<sup>@<!-- -->7.0.0</sup></h1><p class="project-desc">Markdown编辑器React版本，使用jsx和typescript语法开发，支持切换主题、prettier美化文本等。</p><div class="pc"><ul class="nav-list"><li class="nav-item"><a href="/md-editor-rt/zh-CN"><svg class="icon" aria-hidden="true"><use xlink:href="#med-icon-homepage"></use></svg>首页</a></li><li class="nav-item"><a href="/md-editor-rt/zh-CN/api"><svg class="icon" aria-hidden="true"><use xlink:href="#med-icon-api"></use></svg>API</a></li><li class="nav-item"><a href="/md-editor-rt/zh-CN/demo"><svg class="icon" aria-hidden="true"><use xlink:href="#med-icon-example"></use></svg>示例</a></li><li class="nav-item"><a target="_blank" href="https://github.com/imzbf/md-editor-rt"><svg class="icon" aria-hidden="true"><use xlink:href="#med-icon-github"></use></svg>源码</a></li><li class="nav-item"><a href="/md-editor-rt/zh-CN/syntax"><svg class="icon" aria-hidden="true"><use xlink:href="#med-icon-syntax"></use></svg>语法</a></li><li class="nav-item"><a href="/md-editor-rt/zh-CN/contrast"><svg class="icon" aria-hidden="true"><use xlink:href="#med-icon-question"></use></svg>对比</a></li><li class="nav-item"><a href="/md-editor-rt/zh-CN/about"><svg class="icon" aria-hidden="true"><use xlink:href="#med-icon-about"></use></svg>关于</a></li><li class="nav-item"><a style="display:none" href="/md-editor-rt/md-editor-rt/en-US">English</a><svg class="icon" aria-hidden="true"><use xlink:href="#med-icon-en"></use></svg>English</li></ul><p class="header-actions"><button class="btn btn-header">默认模式</button><button class="btn btn-header">暗黑模式</button><button class="btn btn-header">预览主题</button><button class="btn btn-header">代码主题</button></p></div><div class="mb"><svg class="icon m-menu-trigger" aria-hidden="true"><use xlink:href="#med-icon-drawer"></use></svg></div></section></header><div class="container"><div class="doc"><div class="content"><div id="md-contrast-zh" class="md-editor md-editor-previewOnly" data-theme="light"><div id="md-contrast-zh-preview" class="md-editor-preview default-theme md-editor-scrn"><p data-line="0">下面仅列举不兼容的内容，兼容内容不作展示。</p>
+<h2 id="🧙🏼 从 6.x 升级到 7.x" tabindex="-1" data-line="2"><a class="header-anchor" href="#🧙🏼 从 6.x 升级到 7.x">🧙🏼 从 6.x 升级到 7.x</a></h2>
+<h3 id="💴 Config" tabindex="-1" data-line="4"><a class="header-anchor" href="#💴 Config">💴 Config</a></h3>
+<h4 id="🍤 markdownItConfig：原生 HTML 默认关闭" tabindex="-1" data-line="6"><a class="header-anchor" href="#🍤 markdownItConfig：原生 HTML 默认关闭">🍤 markdownItConfig：原生 HTML 默认关闭</a></h4>
+<p data-line="8">这是一个破坏性变更：7.x 中，<code>MdEditor</code> 和 <code>MdPreview</code> 初始化 markdown-it 时，<code>html</code> 的默认值从 <code>true</code> 改为 <code>false</code>：</p>
 
-        <details  data-line="22" class="md-editor-code" open="">
+        <details  data-line="10" class="md-editor-code" open="">
           <summary class="md-editor-code-head">
             <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
             <div class="md-editor-code-action">
-              <span class="md-editor-code-lang">ts</span>
+              <span class="md-editor-code-lang">diff</span>
               <span class="md-editor-copy-button" data-tips="复制代码">复制代码</span>
               
               <span class="md-editor-collapse-tips"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-chevron-left md-editor-icon"><circle cx="12" cy="12" r="10"/><path d="m14 16-4-4 4-4"/></svg></span>
             </div>
           </summary>
-          <pre><code class="language-ts" language="ts"><span class="md-editor-code-block">type MdHeadingId = (options: {
-  text: string;
-  level: number;
-  index: number;
-  currentToken?: Token;
-  nextToken?: Token;
-}) =&gt; string;</span><span rn-wrapper aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+          <pre><code class="language-diff" language="diff"><span class="md-editor-code-block-lines" style="--md-code-line-number-width: 2.5ch;"><span class="md-editor-code-line md-editor-code-line-numbered"><span rn-wrapper aria-hidden="true" data-line-number="1"></span><span class="md-editor-code-line-content">- html: true</span></span>
+<span class="md-editor-code-line md-editor-code-line-numbered"><span rn-wrapper aria-hidden="true" data-line-number="2"></span><span class="md-editor-code-line-content">+ html: false</span></span></span></code></pre>
 
         </details>
-      <p data-line="32">以前</p>
+      <p data-line="15">升级后，Markdown 中直接书写的 <code>&lt;u&gt;</code>、<code>&lt;img&gt;</code>、<code>&lt;br&gt;</code>、<code>&lt;iframe&gt;</code>、<code>&lt;details&gt;</code> 等原生 HTML 会显示为文本，图片说明中的 HTML 也不再按标签渲染。下划线工具栏和快捷键仍插入 <code>&lt;u&gt;文字&lt;/u&gt;</code>，默认不再显示下划线。</p>
+<p data-line="17">可以将已有内容中的 HTML 图片、上下标改为 <code>![描述](地址)</code>、<code>^上标^</code>、<code>~下标~</code> 等 Markdown 或插件语法。任务列表、代码块、公式和图表等由插件生成的 HTML 不受此选项影响。</p>
+<p data-line="19">若需要保留 6.x 的原生 HTML 渲染行为，请在创建编辑器或预览组件前显式开启：</p>
 
-        <details  data-line="34" class="md-editor-code" open="">
+        <details  data-line="21" class="md-editor-code" open="">
           <summary class="md-editor-code-head">
             <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
             <div class="md-editor-code-action">
@@ -41,13 +32,64 @@
               <span class="md-editor-collapse-tips"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-chevron-left md-editor-icon"><circle cx="12" cy="12" r="10"/><path d="m14 16-4-4 4-4"/></svg></span>
             </div>
           </summary>
-          <pre><code class="language-ts" language="ts"><span class="md-editor-code-block">type MdHeadingId = (text: string, level: number, index: number) =&gt; string;</span><span rn-wrapper aria-hidden="true"><span></span></span></code></pre>
+          <pre><code class="language-ts" language="ts"><span class="md-editor-code-block-lines" style="--md-code-line-number-width: 2.5ch;"><span class="md-editor-code-line md-editor-code-line-numbered"><span rn-wrapper aria-hidden="true" data-line-number="1"></span><span class="md-editor-code-line-content">import { config } from 'md-editor-rt';</span></span>
+<span class="md-editor-code-line md-editor-code-line-numbered"><span rn-wrapper aria-hidden="true" data-line-number="2"></span><span class="md-editor-code-line-content"></span></span>
+<span class="md-editor-code-line md-editor-code-line-numbered"><span rn-wrapper aria-hidden="true" data-line-number="3"></span><span class="md-editor-code-line-content">config({</span></span>
+<span class="md-editor-code-line md-editor-code-line-numbered"><span rn-wrapper aria-hidden="true" data-line-number="4"></span><span class="md-editor-code-line-content">  markdownItConfig(mdit) {</span></span>
+<span class="md-editor-code-line md-editor-code-line-numbered"><span rn-wrapper aria-hidden="true" data-line-number="5"></span><span class="md-editor-code-line-content">    mdit.set({ html: true });</span></span>
+<span class="md-editor-code-line md-editor-code-line-numbered"><span rn-wrapper aria-hidden="true" data-line-number="6"></span><span class="md-editor-code-line-content">  },</span></span>
+<span class="md-editor-code-line md-editor-code-line-numbered"><span rn-wrapper aria-hidden="true" data-line-number="7"></span><span class="md-editor-code-line-content">});</span></span></span></code></pre>
 
         </details>
-      <h3 id="💴 Config" tabindex="-1" data-line="38"><a class="header-anchor" href="#💴 Config">💴 Config</a></h3>
-<p data-line="40">新：</p>
+      <p data-line="31"><code>html</code> 控制原生 HTML 的解析，不负责清洗最终输出；需要清洗生成的 HTML 时，请使用 <code>sanitize</code>。更多配置说明见 <a href="https://imzbf.github.io/md-editor-rt/zh-CN/api#%F0%9F%8D%A4%20markdownItConfig" target="_blank">markdownItConfig</a>。</p>
+<h4 id="📊 editorExtensions.echarts.parseOption" tabindex="-1" data-line="33"><a class="header-anchor" href="#📊 editorExtensions.echarts.parseOption">📊 editorExtensions.echarts.parseOption</a></h4>
+<p data-line="35">6.x 的默认解析器会执行代码块中的 JavaScript，因此可以直接使用函数：</p>
 
-        <details  data-line="42" class="md-editor-code" open="">
+        <details  data-line="37" class="md-editor-code" open="">
+          <summary class="md-editor-code-head">
+            <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
+            <div class="md-editor-code-action">
+              <span class="md-editor-code-lang">js</span>
+              <span class="md-editor-copy-button" data-tips="复制代码">复制代码</span>
+              
+              <span class="md-editor-collapse-tips"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-chevron-left md-editor-icon"><circle cx="12" cy="12" r="10"/><path d="m14 16-4-4 4-4"/></svg></span>
+            </div>
+          </summary>
+          <pre><code class="language-js" language="js"><span class="md-editor-code-block-lines" style="--md-code-line-number-width: 2.5ch;"><span class="md-editor-code-line md-editor-code-line-numbered"><span rn-wrapper aria-hidden="true" data-line-number="1"></span><span class="md-editor-code-line-content">{</span></span>
+<span class="md-editor-code-line md-editor-code-line-numbered"><span rn-wrapper aria-hidden="true" data-line-number="2"></span><span class="md-editor-code-line-content">  tooltip: {</span></span>
+<span class="md-editor-code-line md-editor-code-line-numbered"><span rn-wrapper aria-hidden="true" data-line-number="3"></span><span class="md-editor-code-line-content">    formatter: (params) =&gt; `${params[0].value}`,</span></span>
+<span class="md-editor-code-line md-editor-code-line-numbered"><span rn-wrapper aria-hidden="true" data-line-number="4"></span><span class="md-editor-code-line-content">  },</span></span>
+<span class="md-editor-code-line md-editor-code-line-numbered"><span rn-wrapper aria-hidden="true" data-line-number="5"></span><span class="md-editor-code-line-content">}</span></span></span></code></pre>
+
+        </details>
+      <p data-line="45">7.x 默认使用<code>JSON5.parse</code>，并要求顶层结果为非数组对象。配置需要调整为不包含函数、变量引用、<code>new</code>或调用表达式的 JSON5 数据：</p>
+
+        <details  data-line="47" class="md-editor-code" open="">
+          <summary class="md-editor-code-head">
+            <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
+            <div class="md-editor-code-action">
+              <span class="md-editor-code-lang">json5</span>
+              <span class="md-editor-copy-button" data-tips="复制代码">复制代码</span>
+              
+              <span class="md-editor-collapse-tips"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-chevron-left md-editor-icon"><circle cx="12" cy="12" r="10"/><path d="m14 16-4-4 4-4"/></svg></span>
+            </div>
+          </summary>
+          <pre><code class="language-json5" language="json5"><span class="md-editor-code-block-lines" style="--md-code-line-number-width: 2.5ch;"><span class="md-editor-code-line md-editor-code-line-numbered"><span rn-wrapper aria-hidden="true" data-line-number="1"></span><span class="md-editor-code-line-content">{</span></span>
+<span class="md-editor-code-line md-editor-code-line-numbered"><span rn-wrapper aria-hidden="true" data-line-number="2"></span><span class="md-editor-code-line-content">  tooltip: {</span></span>
+<span class="md-editor-code-line md-editor-code-line-numbered"><span rn-wrapper aria-hidden="true" data-line-number="3"></span><span class="md-editor-code-line-content">    trigger: 'axis',</span></span>
+<span class="md-editor-code-line md-editor-code-line-numbered"><span rn-wrapper aria-hidden="true" data-line-number="4"></span><span class="md-editor-code-line-content">  },</span></span>
+<span class="md-editor-code-line md-editor-code-line-numbered"><span rn-wrapper aria-hidden="true" data-line-number="5"></span><span class="md-editor-code-line-content">  series: [</span></span>
+<span class="md-editor-code-line md-editor-code-line-numbered"><span rn-wrapper aria-hidden="true" data-line-number="6"></span><span class="md-editor-code-line-content">    {</span></span>
+<span class="md-editor-code-line md-editor-code-line-numbered"><span rn-wrapper aria-hidden="true" data-line-number="7"></span><span class="md-editor-code-line-content">      type: 'line',</span></span>
+<span class="md-editor-code-line md-editor-code-line-numbered"><span rn-wrapper aria-hidden="true" data-line-number="8"></span><span class="md-editor-code-line-content">      data: [1, 2, 3],</span></span>
+<span class="md-editor-code-line md-editor-code-line-numbered"><span rn-wrapper aria-hidden="true" data-line-number="9"></span><span class="md-editor-code-line-content">    },</span></span>
+<span class="md-editor-code-line md-editor-code-line-numbered"><span rn-wrapper aria-hidden="true" data-line-number="10"></span><span class="md-editor-code-line-content">  ],</span></span>
+<span class="md-editor-code-line md-editor-code-line-numbered"><span rn-wrapper aria-hidden="true" data-line-number="11"></span><span class="md-editor-code-line-content">}</span></span></span></code></pre>
+
+        </details>
+      <p data-line="61">如果仍需兼容函数写法，可以显式覆盖<code>parseOption(code, { editorId, element })</code>：</p>
+
+        <details  data-line="63" class="md-editor-code" open="">
           <summary class="md-editor-code-head">
             <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
             <div class="md-editor-code-action">
@@ -57,25 +99,121 @@
               <span class="md-editor-collapse-tips"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-chevron-left md-editor-icon"><circle cx="12" cy="12" r="10"/><path d="m14 16-4-4 4-4"/></svg></span>
             </div>
           </summary>
-          <pre><code class="language-ts" language="ts"><span class="md-editor-code-block">import { config, type CodeMirrorExtension, type Themes } from 'md-editor-rt';
-import { type KeyBinding } from '@codemirror/view';
+          <pre><code class="language-ts" language="ts"><span class="md-editor-code-block-lines" style="--md-code-line-number-width: 2.5ch;"><span class="md-editor-code-line md-editor-code-line-numbered"><span rn-wrapper aria-hidden="true" data-line-number="1"></span><span class="md-editor-code-line-content">import { config } from 'md-editor-rt';</span></span>
+<span class="md-editor-code-line md-editor-code-line-numbered"><span rn-wrapper aria-hidden="true" data-line-number="2"></span><span class="md-editor-code-line-content"></span></span>
+<span class="md-editor-code-line md-editor-code-line-numbered"><span rn-wrapper aria-hidden="true" data-line-number="3"></span><span class="md-editor-code-line-content">config({</span></span>
+<span class="md-editor-code-line md-editor-code-line-numbered"><span rn-wrapper aria-hidden="true" data-line-number="4"></span><span class="md-editor-code-line-content">  editorExtensions: {</span></span>
+<span class="md-editor-code-line md-editor-code-line-numbered"><span rn-wrapper aria-hidden="true" data-line-number="5"></span><span class="md-editor-code-line-content">    echarts: {</span></span>
+<span class="md-editor-code-line md-editor-code-line-numbered"><span rn-wrapper aria-hidden="true" data-line-number="6"></span><span class="md-editor-code-line-content">      parseOption(code) {</span></span>
+<span class="md-editor-code-line md-editor-code-line-numbered"><span rn-wrapper aria-hidden="true" data-line-number="7"></span><span class="md-editor-code-line-content">        return new Function(`return (${code})`)();</span></span>
+<span class="md-editor-code-line md-editor-code-line-numbered"><span rn-wrapper aria-hidden="true" data-line-number="8"></span><span class="md-editor-code-line-content">      },</span></span>
+<span class="md-editor-code-line md-editor-code-line-numbered"><span rn-wrapper aria-hidden="true" data-line-number="9"></span><span class="md-editor-code-line-content">    },</span></span>
+<span class="md-editor-code-line md-editor-code-line-numbered"><span rn-wrapper aria-hidden="true" data-line-number="10"></span><span class="md-editor-code-line-content">  },</span></span>
+<span class="md-editor-code-line md-editor-code-line-numbered"><span rn-wrapper aria-hidden="true" data-line-number="11"></span><span class="md-editor-code-line-content">});</span></span></span></code></pre>
 
-config({
-  codeMirrorExtensions(
-    extensions: Array&lt;CodeMirrorExtension&gt;,
-    options: {
-      editorId: string;
-      theme: Themes;
-      keyBindings: Array&lt;KeyBinding&gt;;
-    }
-  ): Array&lt;CodeMirrorExtension&gt; {
-    return extensions;
-  }
-});</span><span rn-wrapper aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+        </details>
+      <div data-line="77" class="md-editor-admonition md-editor-admonition-warning">
+<p data-line="79">执行型解析器只适用于完全可信的 Markdown 内容，自定义解析器需要自行完成输入校验和安全控制。</p>
+</div>
+<h3 id="🎨 样式" tabindex="-1" data-line="83"><a class="header-anchor" href="#🎨 样式">🎨 样式</a></h3>
+<h4 id="🌗 暗色主题选择器" tabindex="-1" data-line="85"><a class="header-anchor" href="#🌗 暗色主题选择器">🌗 暗色主题选择器</a></h4>
+<p data-line="87">暗色模式选择器需要按下面的方式迁移：</p>
+
+        <details  data-line="89" class="md-editor-code" open="">
+          <summary class="md-editor-code-head">
+            <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
+            <div class="md-editor-code-action">
+              <span class="md-editor-code-lang">diff</span>
+              <span class="md-editor-copy-button" data-tips="复制代码">复制代码</span>
+              
+              <span class="md-editor-collapse-tips"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-chevron-left md-editor-icon"><circle cx="12" cy="12" r="10"/><path d="m14 16-4-4 4-4"/></svg></span>
+            </div>
+          </summary>
+          <pre><code class="language-diff" language="diff"><span class="md-editor-code-block-lines" style="--md-code-line-number-width: 2.5ch;"><span class="md-editor-code-line md-editor-code-line-numbered"><span rn-wrapper aria-hidden="true" data-line-number="1"></span><span class="md-editor-code-line-content">-.md-editor-dark,</span></span>
+<span class="md-editor-code-line md-editor-code-line-numbered"><span rn-wrapper aria-hidden="true" data-line-number="2"></span><span class="md-editor-code-line-content">-.md-editor-catalog-dark {</span></span>
+<span class="md-editor-code-line md-editor-code-line-numbered"><span rn-wrapper aria-hidden="true" data-line-number="3"></span><span class="md-editor-code-line-content">+.md-editor[data-theme='dark'],</span></span>
+<span class="md-editor-code-line md-editor-code-line-numbered"><span rn-wrapper aria-hidden="true" data-line-number="4"></span><span class="md-editor-code-line-content">+.md-editor-catalog[data-theme='dark'] {</span></span>
+<span class="md-editor-code-line md-editor-code-line-numbered"><span rn-wrapper aria-hidden="true" data-line-number="5"></span><span class="md-editor-code-line-content">  /* 自定义暗色样式 */</span></span>
+<span class="md-editor-code-line md-editor-code-line-numbered"><span rn-wrapper aria-hidden="true" data-line-number="6"></span><span class="md-editor-code-line-content">}</span></span></span></code></pre>
+
+        </details>
+      <h2 id="🧙🏼 从 5.x 升级到 6.x" tabindex="-1" data-line="98"><a class="header-anchor" href="#🧙🏼 从 5.x 升级到 6.x">🧙🏼 从 5.x 升级到 6.x</a></h2>
+<h3 id="🐈 UMD" tabindex="-1" data-line="100"><a class="header-anchor" href="#🐈 UMD">🐈 UMD</a></h3>
+<p data-line="102">为了跟进前端生态的发展，部分三方依赖自 6.x 开始已全面转向 ESM 模式，我们也不再继续提供 UMD 格式支持。</p>
+<p data-line="104">这里提供了全局使用的新的参考： <a href="https://imzbf.github.io/md-editor-rt/zh-CN/demo#%F0%9F%A4%93%20CDN%20%E9%93%BE%E6%8E%A5" target="_blank">🤓 CDN 链接</a></p>
+<h3 id="🔖 Props" tabindex="-1" data-line="106"><a class="header-anchor" href="#🔖 Props">🔖 Props</a></h3>
+<h4 id="🧷 insertLinkDirect" tabindex="-1" data-line="108"><a class="header-anchor" href="#🧷 insertLinkDirect">🧷 insertLinkDirect</a></h4>
+<p data-line="110">移除，现在点击添加链接时不再弹出输入框</p>
+<h4 id="🎱 mdHeadingId" tabindex="-1" data-line="112"><a class="header-anchor" href="#🎱 mdHeadingId">🎱 mdHeadingId</a></h4>
+<p data-line="114">类型变更</p>
+<p data-line="116">现在</p>
+
+        <details  data-line="118" class="md-editor-code" open="">
+          <summary class="md-editor-code-head">
+            <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
+            <div class="md-editor-code-action">
+              <span class="md-editor-code-lang">ts</span>
+              <span class="md-editor-copy-button" data-tips="复制代码">复制代码</span>
+              
+              <span class="md-editor-collapse-tips"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-chevron-left md-editor-icon"><circle cx="12" cy="12" r="10"/><path d="m14 16-4-4 4-4"/></svg></span>
+            </div>
+          </summary>
+          <pre><code class="language-ts" language="ts"><span class="md-editor-code-block-lines" style="--md-code-line-number-width: 2.5ch;"><span class="md-editor-code-line md-editor-code-line-numbered"><span rn-wrapper aria-hidden="true" data-line-number="1"></span><span class="md-editor-code-line-content">type MdHeadingId = (options: {</span></span>
+<span class="md-editor-code-line md-editor-code-line-numbered"><span rn-wrapper aria-hidden="true" data-line-number="2"></span><span class="md-editor-code-line-content">  text: string;</span></span>
+<span class="md-editor-code-line md-editor-code-line-numbered"><span rn-wrapper aria-hidden="true" data-line-number="3"></span><span class="md-editor-code-line-content">  level: number;</span></span>
+<span class="md-editor-code-line md-editor-code-line-numbered"><span rn-wrapper aria-hidden="true" data-line-number="4"></span><span class="md-editor-code-line-content">  index: number;</span></span>
+<span class="md-editor-code-line md-editor-code-line-numbered"><span rn-wrapper aria-hidden="true" data-line-number="5"></span><span class="md-editor-code-line-content">  currentToken?: Token;</span></span>
+<span class="md-editor-code-line md-editor-code-line-numbered"><span rn-wrapper aria-hidden="true" data-line-number="6"></span><span class="md-editor-code-line-content">  nextToken?: Token;</span></span>
+<span class="md-editor-code-line md-editor-code-line-numbered"><span rn-wrapper aria-hidden="true" data-line-number="7"></span><span class="md-editor-code-line-content">}) =&gt; string;</span></span></span></code></pre>
+
+        </details>
+      <p data-line="128">以前</p>
+
+        <details  data-line="130" class="md-editor-code" open="">
+          <summary class="md-editor-code-head">
+            <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
+            <div class="md-editor-code-action">
+              <span class="md-editor-code-lang">ts</span>
+              <span class="md-editor-copy-button" data-tips="复制代码">复制代码</span>
+              
+              <span class="md-editor-collapse-tips"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-chevron-left md-editor-icon"><circle cx="12" cy="12" r="10"/><path d="m14 16-4-4 4-4"/></svg></span>
+            </div>
+          </summary>
+          <pre><code class="language-ts" language="ts"><span class="md-editor-code-block-lines" style="--md-code-line-number-width: 2.5ch;"><span class="md-editor-code-line md-editor-code-line-numbered"><span rn-wrapper aria-hidden="true" data-line-number="1"></span><span class="md-editor-code-line-content">type MdHeadingId = (text: string, level: number, index: number) =&gt; string;</span></span></span></code></pre>
+
+        </details>
+      <h3 id="💴 Config" tabindex="-1" data-line="134"><a class="header-anchor" href="#💴 Config-1">💴 Config</a></h3>
+<p data-line="136">新：</p>
+
+        <details  data-line="138" class="md-editor-code" open="">
+          <summary class="md-editor-code-head">
+            <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
+            <div class="md-editor-code-action">
+              <span class="md-editor-code-lang">ts</span>
+              <span class="md-editor-copy-button" data-tips="复制代码">复制代码</span>
+              
+              <span class="md-editor-collapse-tips"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-chevron-left md-editor-icon"><circle cx="12" cy="12" r="10"/><path d="m14 16-4-4 4-4"/></svg></span>
+            </div>
+          </summary>
+          <pre><code class="language-ts" language="ts"><span class="md-editor-code-block-lines" style="--md-code-line-number-width: 2.5ch;"><span class="md-editor-code-line md-editor-code-line-numbered"><span rn-wrapper aria-hidden="true" data-line-number="1"></span><span class="md-editor-code-line-content">import { config, type CodeMirrorExtension, type Themes } from 'md-editor-rt';</span></span>
+<span class="md-editor-code-line md-editor-code-line-numbered"><span rn-wrapper aria-hidden="true" data-line-number="2"></span><span class="md-editor-code-line-content">import { type KeyBinding } from '@codemirror/view';</span></span>
+<span class="md-editor-code-line md-editor-code-line-numbered"><span rn-wrapper aria-hidden="true" data-line-number="3"></span><span class="md-editor-code-line-content"></span></span>
+<span class="md-editor-code-line md-editor-code-line-numbered"><span rn-wrapper aria-hidden="true" data-line-number="4"></span><span class="md-editor-code-line-content">config({</span></span>
+<span class="md-editor-code-line md-editor-code-line-numbered"><span rn-wrapper aria-hidden="true" data-line-number="5"></span><span class="md-editor-code-line-content">  codeMirrorExtensions(</span></span>
+<span class="md-editor-code-line md-editor-code-line-numbered"><span rn-wrapper aria-hidden="true" data-line-number="6"></span><span class="md-editor-code-line-content">    extensions: Array&lt;CodeMirrorExtension&gt;,</span></span>
+<span class="md-editor-code-line md-editor-code-line-numbered"><span rn-wrapper aria-hidden="true" data-line-number="7"></span><span class="md-editor-code-line-content">    options: {</span></span>
+<span class="md-editor-code-line md-editor-code-line-numbered"><span rn-wrapper aria-hidden="true" data-line-number="8"></span><span class="md-editor-code-line-content">      editorId: string;</span></span>
+<span class="md-editor-code-line md-editor-code-line-numbered"><span rn-wrapper aria-hidden="true" data-line-number="9"></span><span class="md-editor-code-line-content">      theme: Themes;</span></span>
+<span class="md-editor-code-line md-editor-code-line-numbered"><span rn-wrapper aria-hidden="true" data-line-number="10"></span><span class="md-editor-code-line-content">      keyBindings: Array&lt;KeyBinding&gt;;</span></span>
+<span class="md-editor-code-line md-editor-code-line-numbered"><span rn-wrapper aria-hidden="true" data-line-number="11"></span><span class="md-editor-code-line-content">    }</span></span>
+<span class="md-editor-code-line md-editor-code-line-numbered"><span rn-wrapper aria-hidden="true" data-line-number="12"></span><span class="md-editor-code-line-content">  ): Array&lt;CodeMirrorExtension&gt; {</span></span>
+<span class="md-editor-code-line md-editor-code-line-numbered"><span rn-wrapper aria-hidden="true" data-line-number="13"></span><span class="md-editor-code-line-content">    return extensions;</span></span>
+<span class="md-editor-code-line md-editor-code-line-numbered"><span rn-wrapper aria-hidden="true" data-line-number="14"></span><span class="md-editor-code-line-content">  }</span></span>
+<span class="md-editor-code-line md-editor-code-line-numbered"><span rn-wrapper aria-hidden="true" data-line-number="15"></span><span class="md-editor-code-line-content">});</span></span></span></code></pre>
 
         </details>
       
-        <details  data-line="60" class="md-editor-code">
+        <details  data-line="156" class="md-editor-code">
           <summary class="md-editor-code-head">
             <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
             <div class="md-editor-code-action">
@@ -85,29 +223,29 @@ config({
               <span class="md-editor-collapse-tips"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-chevron-left md-editor-icon"><circle cx="12" cy="12" r="10"/><path d="m14 16-4-4 4-4"/></svg></span>
             </div>
           </summary>
-          <pre><code class="language-ts" language="ts"><span class="md-editor-code-block">interface CodeMirrorExtension {
-  /**
-   * 仅用来提供开发者分别不同扩展的依据
-   */
-  type: string;
-  /**
-   * CodeMirror的扩展
-   */
-  extension: Extension | ((options: any) =&gt; Extension);
-  /**
-   * 包裹扩展的Compartment，只有部分扩展有，提供扩展更新的能力
-   */
-  compartment?: Compartment;
-  options?: any;
-}</span><span rn-wrapper aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+          <pre><code class="language-ts" language="ts"><span class="md-editor-code-block-lines" style="--md-code-line-number-width: 2.5ch;"><span class="md-editor-code-line md-editor-code-line-numbered"><span rn-wrapper aria-hidden="true" data-line-number="1"></span><span class="md-editor-code-line-content">interface CodeMirrorExtension {</span></span>
+<span class="md-editor-code-line md-editor-code-line-numbered"><span rn-wrapper aria-hidden="true" data-line-number="2"></span><span class="md-editor-code-line-content">  /**</span></span>
+<span class="md-editor-code-line md-editor-code-line-numbered"><span rn-wrapper aria-hidden="true" data-line-number="3"></span><span class="md-editor-code-line-content">   * 仅用来提供开发者分别不同扩展的依据</span></span>
+<span class="md-editor-code-line md-editor-code-line-numbered"><span rn-wrapper aria-hidden="true" data-line-number="4"></span><span class="md-editor-code-line-content">   */</span></span>
+<span class="md-editor-code-line md-editor-code-line-numbered"><span rn-wrapper aria-hidden="true" data-line-number="5"></span><span class="md-editor-code-line-content">  type: string;</span></span>
+<span class="md-editor-code-line md-editor-code-line-numbered"><span rn-wrapper aria-hidden="true" data-line-number="6"></span><span class="md-editor-code-line-content">  /**</span></span>
+<span class="md-editor-code-line md-editor-code-line-numbered"><span rn-wrapper aria-hidden="true" data-line-number="7"></span><span class="md-editor-code-line-content">   * CodeMirror的扩展</span></span>
+<span class="md-editor-code-line md-editor-code-line-numbered"><span rn-wrapper aria-hidden="true" data-line-number="8"></span><span class="md-editor-code-line-content">   */</span></span>
+<span class="md-editor-code-line md-editor-code-line-numbered"><span rn-wrapper aria-hidden="true" data-line-number="9"></span><span class="md-editor-code-line-content">  extension: Extension | ((options: any) =&gt; Extension);</span></span>
+<span class="md-editor-code-line md-editor-code-line-numbered"><span rn-wrapper aria-hidden="true" data-line-number="10"></span><span class="md-editor-code-line-content">  /**</span></span>
+<span class="md-editor-code-line md-editor-code-line-numbered"><span rn-wrapper aria-hidden="true" data-line-number="11"></span><span class="md-editor-code-line-content">   * 包裹扩展的Compartment，只有部分扩展有，提供扩展更新的能力</span></span>
+<span class="md-editor-code-line md-editor-code-line-numbered"><span rn-wrapper aria-hidden="true" data-line-number="12"></span><span class="md-editor-code-line-content">   */</span></span>
+<span class="md-editor-code-line md-editor-code-line-numbered"><span rn-wrapper aria-hidden="true" data-line-number="13"></span><span class="md-editor-code-line-content">  compartment?: Compartment;</span></span>
+<span class="md-editor-code-line md-editor-code-line-numbered"><span rn-wrapper aria-hidden="true" data-line-number="14"></span><span class="md-editor-code-line-content">  options?: any;</span></span>
+<span class="md-editor-code-line md-editor-code-line-numbered"><span rn-wrapper aria-hidden="true" data-line-number="15"></span><span class="md-editor-code-line-content">}</span></span></span></code></pre>
 
         </details>
-      <div data-line="78" class="md-editor-admonition md-editor-admonition-note">
-<p data-line="80">现在你可以从 extensions[i].type 中准确的知道这个哪个扩展。</p>
+      <div data-line="174" class="md-editor-admonition md-editor-admonition-note">
+<p data-line="176">现在你可以从 extensions[i].type 中准确的知道这个哪个扩展。</p>
 </div>
-<p data-line="84">旧：</p>
+<p data-line="180">旧：</p>
 
-        <details  data-line="86" class="md-editor-code" open="">
+        <details  data-line="182" class="md-editor-code" open="">
           <summary class="md-editor-code-head">
             <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
             <div class="md-editor-code-action">
@@ -117,81 +255,81 @@ config({
               <span class="md-editor-collapse-tips"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-chevron-left md-editor-icon"><circle cx="12" cy="12" r="10"/><path d="m14 16-4-4 4-4"/></svg></span>
             </div>
           </summary>
-          <pre><code class="language-ts" language="ts"><span class="md-editor-code-block">import { config, type CodeMirrorExtension, type Themes } from 'md-editor-rt';
-import { type KeyBinding } from '@codemirror/view';
-
-config({
-  codeMirrorExtensions(
-    theme: Themes,
-    extensions: Array&lt;Extension&gt;,
-    keyBindings: Array&lt;KeyBinding&gt;,
-    options: {
-      editorId: string;
-    }
-  ): Array&lt;Extension&gt; {
-    return extensions;
-  }
-});</span><span rn-wrapper aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+          <pre><code class="language-ts" language="ts"><span class="md-editor-code-block-lines" style="--md-code-line-number-width: 2.5ch;"><span class="md-editor-code-line md-editor-code-line-numbered"><span rn-wrapper aria-hidden="true" data-line-number="1"></span><span class="md-editor-code-line-content">import { config, type CodeMirrorExtension, type Themes } from 'md-editor-rt';</span></span>
+<span class="md-editor-code-line md-editor-code-line-numbered"><span rn-wrapper aria-hidden="true" data-line-number="2"></span><span class="md-editor-code-line-content">import { type KeyBinding } from '@codemirror/view';</span></span>
+<span class="md-editor-code-line md-editor-code-line-numbered"><span rn-wrapper aria-hidden="true" data-line-number="3"></span><span class="md-editor-code-line-content"></span></span>
+<span class="md-editor-code-line md-editor-code-line-numbered"><span rn-wrapper aria-hidden="true" data-line-number="4"></span><span class="md-editor-code-line-content">config({</span></span>
+<span class="md-editor-code-line md-editor-code-line-numbered"><span rn-wrapper aria-hidden="true" data-line-number="5"></span><span class="md-editor-code-line-content">  codeMirrorExtensions(</span></span>
+<span class="md-editor-code-line md-editor-code-line-numbered"><span rn-wrapper aria-hidden="true" data-line-number="6"></span><span class="md-editor-code-line-content">    theme: Themes,</span></span>
+<span class="md-editor-code-line md-editor-code-line-numbered"><span rn-wrapper aria-hidden="true" data-line-number="7"></span><span class="md-editor-code-line-content">    extensions: Array&lt;Extension&gt;,</span></span>
+<span class="md-editor-code-line md-editor-code-line-numbered"><span rn-wrapper aria-hidden="true" data-line-number="8"></span><span class="md-editor-code-line-content">    keyBindings: Array&lt;KeyBinding&gt;,</span></span>
+<span class="md-editor-code-line md-editor-code-line-numbered"><span rn-wrapper aria-hidden="true" data-line-number="9"></span><span class="md-editor-code-line-content">    options: {</span></span>
+<span class="md-editor-code-line md-editor-code-line-numbered"><span rn-wrapper aria-hidden="true" data-line-number="10"></span><span class="md-editor-code-line-content">      editorId: string;</span></span>
+<span class="md-editor-code-line md-editor-code-line-numbered"><span rn-wrapper aria-hidden="true" data-line-number="11"></span><span class="md-editor-code-line-content">    }</span></span>
+<span class="md-editor-code-line md-editor-code-line-numbered"><span rn-wrapper aria-hidden="true" data-line-number="12"></span><span class="md-editor-code-line-content">  ): Array&lt;Extension&gt; {</span></span>
+<span class="md-editor-code-line md-editor-code-line-numbered"><span rn-wrapper aria-hidden="true" data-line-number="13"></span><span class="md-editor-code-line-content">    return extensions;</span></span>
+<span class="md-editor-code-line md-editor-code-line-numbered"><span rn-wrapper aria-hidden="true" data-line-number="14"></span><span class="md-editor-code-line-content">  }</span></span>
+<span class="md-editor-code-line md-editor-code-line-numbered"><span rn-wrapper aria-hidden="true" data-line-number="15"></span><span class="md-editor-code-line-content">});</span></span></span></code></pre>
 
         </details>
-      <h2 id="🧙🏼 从 4.x 升级到 5.x" tabindex="-1" data-line="104"><a class="header-anchor" href="#🧙🏼 从 4.x 升级到 5.x">🧙🏼 从 4.x 升级到 5.x</a></h2>
-<div data-line="106" class="md-editor-admonition md-editor-admonition-warning">
-<p data-line="108">现在必须使用 react &gt;=18.0.0 的版本！！！</p>
+      <h2 id="🧙🏼 从 4.x 升级到 5.x" tabindex="-1" data-line="200"><a class="header-anchor" href="#🧙🏼 从 4.x 升级到 5.x">🧙🏼 从 4.x 升级到 5.x</a></h2>
+<div data-line="202" class="md-editor-admonition md-editor-admonition-warning">
+<p data-line="204">现在必须使用 react &gt;=18.0.0 的版本！！！</p>
 </div>
-<h3 id="🔖 Props" tabindex="-1" data-line="112"><a class="header-anchor" href="#🔖 Props-1">🔖 Props</a></h3>
-<table data-line="114">
-<thead data-line="114">
-<tr data-line="114">
+<h3 id="🔖 Props" tabindex="-1" data-line="208"><a class="header-anchor" href="#🔖 Props-1">🔖 Props</a></h3>
+<table data-line="210">
+<thead data-line="210">
+<tr data-line="210">
 <th>名称</th>
 <th>说明</th>
 </tr>
 </thead>
-<tbody data-line="116">
-<tr data-line="116">
+<tbody data-line="212">
+<tr data-line="212">
 <td>editorId</td>
 <td>标记为过时，仍然可以使用，建议使用 id 替换。注意：仅<code>MdEditor</code>和<code>MdPreview</code>组件调整，其他的组件仍然使用<code>editorId</code>，标识这是编辑器的 id 而非本身的。</td>
 </tr>
-<tr data-line="117">
+<tr data-line="213">
 <td>inputBoxWitdh</td>
 <td>拼写错误，修改为：inputBoxWidth 。</td>
 </tr>
-<tr data-line="118">
+<tr data-line="214">
 <td>noIconfont</td>
 <td>移除，现使用 <a href="https://lucide.dev/icons/" target="_blank">lucide</a> 开源图标库替换。</td>
 </tr>
-<tr data-line="119">
+<tr data-line="215">
 <td>customIcon</td>
 <td>仍然支持自定义图标，但是更新了部分图标关键词，注意查阅 <a href="https://imzbf.github.io/md-editor-rt/zh-CN/api#%F0%9F%98%AC%20customIcon" target="_blank">CustomIcon</a> 。</td>
 </tr>
 </tbody>
 </table>
-<h3 id="事件" tabindex="-1" data-line="121"><a class="header-anchor" href="#事件">事件</a></h3>
-<table data-line="123">
-<thead data-line="123">
-<tr data-line="123">
+<h3 id="事件" tabindex="-1" data-line="217"><a class="header-anchor" href="#事件">事件</a></h3>
+<table data-line="219">
+<thead data-line="219">
+<tr data-line="219">
 <th>名称</th>
 <th>说明</th>
 </tr>
 </thead>
-<tbody data-line="125">
-<tr data-line="125">
+<tbody data-line="221">
+<tr data-line="221">
 <td>onInputBoxWitdhChange</td>
 <td>拼写错误，修改为：onInputBoxWidthChange</td>
 </tr>
 </tbody>
 </table>
-<h3 id="🪤 内部扩展" tabindex="-1" data-line="127"><a class="header-anchor" href="#🪤 内部扩展">🪤 内部扩展</a></h3>
-<ol data-line="129">
-<li data-line="129">移除默认的 XSS 扩展，现在导出扩展<code>XSSPlugin</code>，请自行添加，<a href="https://imzbf.github.io/md-editor-rt/zh-CN/demo#%F0%9F%94%92%20%E6%B7%BB%E5%8A%A0%20xss%20%E6%89%A9%E5%B1%95" target="_blank">使用示例</a>。</li>
-<li data-line="130">移除 iconfont 相关的配置，详细的有：<code>iconfontType</code>、<code>editorExtensions.iconfont</code>、<code>editorExtensions.iconfontClass</code>、<code>editorExtensionsAttrs.iconfont</code>、<code>editorExtensionsAttrs.iconfontClass</code>。</li>
+<h3 id="🪤 内部扩展" tabindex="-1" data-line="223"><a class="header-anchor" href="#🪤 内部扩展">🪤 内部扩展</a></h3>
+<ol data-line="225">
+<li data-line="225">移除默认的 XSS 扩展，现在导出扩展<code>XSSPlugin</code>，请自行添加，<a href="https://imzbf.github.io/md-editor-rt/zh-CN/demo#%F0%9F%94%92%20%E6%B7%BB%E5%8A%A0%20xss%20%E6%89%A9%E5%B1%95" target="_blank">使用示例</a>。</li>
+<li data-line="226">移除 iconfont 相关的配置，详细的有：<code>iconfontType</code>、<code>editorExtensions.iconfont</code>、<code>editorExtensions.iconfontClass</code>、<code>editorExtensionsAttrs.iconfont</code>、<code>editorExtensionsAttrs.iconfontClass</code>。</li>
 </ol>
-<hr data-line="132">
-<h2 id="🧙🏼 从 3.x 升级到 4.x" tabindex="-1" data-line="134"><a class="header-anchor" href="#🧙🏼 从 3.x 升级到 4.x">🧙🏼 从 3.x 升级到 4.x</a></h2>
-<h3 id="🏄🏼 引用方式" tabindex="-1" data-line="136"><a class="header-anchor" href="#🏄🏼 引用方式">🏄🏼 引用方式</a></h3>
-<p data-line="138">4.0 版本开始支持按需引用组件，不再默认导出编辑器。</p>
-<h4 id="🏄🏼‍♂️ 全局引用" tabindex="-1" data-line="140"><a class="header-anchor" href="#🏄🏼‍♂️ 全局引用">🏄🏼‍♂️ 全局引用</a></h4>
+<hr data-line="228">
+<h2 id="🧙🏼 从 3.x 升级到 4.x" tabindex="-1" data-line="230"><a class="header-anchor" href="#🧙🏼 从 3.x 升级到 4.x">🧙🏼 从 3.x 升级到 4.x</a></h2>
+<h3 id="🏄🏼 引用方式" tabindex="-1" data-line="232"><a class="header-anchor" href="#🏄🏼 引用方式">🏄🏼 引用方式</a></h3>
+<p data-line="234">4.0 版本开始支持按需引用组件，不再默认导出编辑器。</p>
+<h4 id="🏄🏼‍♂️ 全局引用" tabindex="-1" data-line="236"><a class="header-anchor" href="#🏄🏼‍♂️ 全局引用">🏄🏼‍♂️ 全局引用</a></h4>
 
-        <details  data-line="142" class="md-editor-code" open="">
+        <details  data-line="238" class="md-editor-code" open="">
           <summary class="md-editor-code-head">
             <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
             <div class="md-editor-code-action">
@@ -201,21 +339,21 @@ config({
               <span class="md-editor-collapse-tips"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-chevron-left md-editor-icon"><circle cx="12" cy="12" r="10"/><path d="m14 16-4-4 4-4"/></svg></span>
             </div>
           </summary>
-          <pre><code class="language-diff" language="diff"><span class="md-editor-code-block">- &lt;script src=&quot;https://unpkg.com/md-editor-rt@latest/lib/md-editor-rt.umd.js&quot;&gt;&lt;/script&gt;
-+ &lt;script src=&quot;https://unpkg.com/md-editor-rt@latest/lib/umd/index.js&quot;&gt;&lt;/script&gt;
-&lt;script&gt;
-  ReactDOM.createRoot(document.getElementById('root')).render(
--   React.createElement(MdEditorRT, {
-+    React.createElement(MdEditorRT.MdEditor, {
-      modelValue: 'Hello Editor!!'
-    })
-  );
-&lt;/script&gt;</span><span rn-wrapper aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+          <pre><code class="language-diff" language="diff"><span class="md-editor-code-block-lines" style="--md-code-line-number-width: 2.5ch;"><span class="md-editor-code-line md-editor-code-line-numbered"><span rn-wrapper aria-hidden="true" data-line-number="1"></span><span class="md-editor-code-line-content">- &lt;script src=&quot;https://unpkg.com/md-editor-rt@latest/lib/md-editor-rt.umd.js&quot;&gt;&lt;/script&gt;</span></span>
+<span class="md-editor-code-line md-editor-code-line-numbered"><span rn-wrapper aria-hidden="true" data-line-number="2"></span><span class="md-editor-code-line-content">+ &lt;script src=&quot;https://unpkg.com/md-editor-rt@latest/lib/umd/index.js&quot;&gt;&lt;/script&gt;</span></span>
+<span class="md-editor-code-line md-editor-code-line-numbered"><span rn-wrapper aria-hidden="true" data-line-number="3"></span><span class="md-editor-code-line-content">&lt;script&gt;</span></span>
+<span class="md-editor-code-line md-editor-code-line-numbered"><span rn-wrapper aria-hidden="true" data-line-number="4"></span><span class="md-editor-code-line-content">  ReactDOM.createRoot(document.getElementById('root')).render(</span></span>
+<span class="md-editor-code-line md-editor-code-line-numbered"><span rn-wrapper aria-hidden="true" data-line-number="5"></span><span class="md-editor-code-line-content">-   React.createElement(MdEditorRT, {</span></span>
+<span class="md-editor-code-line md-editor-code-line-numbered"><span rn-wrapper aria-hidden="true" data-line-number="6"></span><span class="md-editor-code-line-content">+    React.createElement(MdEditorRT.MdEditor, {</span></span>
+<span class="md-editor-code-line md-editor-code-line-numbered"><span rn-wrapper aria-hidden="true" data-line-number="7"></span><span class="md-editor-code-line-content">      modelValue: 'Hello Editor!!'</span></span>
+<span class="md-editor-code-line md-editor-code-line-numbered"><span rn-wrapper aria-hidden="true" data-line-number="8"></span><span class="md-editor-code-line-content">    })</span></span>
+<span class="md-editor-code-line md-editor-code-line-numbered"><span rn-wrapper aria-hidden="true" data-line-number="9"></span><span class="md-editor-code-line-content">  );</span></span>
+<span class="md-editor-code-line md-editor-code-line-numbered"><span rn-wrapper aria-hidden="true" data-line-number="10"></span><span class="md-editor-code-line-content">&lt;/script&gt;</span></span></span></code></pre>
 
         </details>
-      <h4 id="🏄🏼‍♀️ ES Module" tabindex="-1" data-line="155"><a class="header-anchor" href="#🏄🏼‍♀️ ES Module">🏄🏼‍♀️ ES Module</a></h4>
+      <h4 id="🏄🏼‍♀️ ES Module" tabindex="-1" data-line="251"><a class="header-anchor" href="#🏄🏼‍♀️ ES Module">🏄🏼‍♀️ ES Module</a></h4>
 
-        <details  data-line="157" class="md-editor-code" open="">
+        <details  data-line="253" class="md-editor-code" open="">
           <summary class="md-editor-code-head">
             <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
             <div class="md-editor-code-action">
@@ -225,34 +363,34 @@ config({
               <span class="md-editor-collapse-tips"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-chevron-left md-editor-icon"><circle cx="12" cy="12" r="10"/><path d="m14 16-4-4 4-4"/></svg></span>
             </div>
           </summary>
-          <pre><code class="language-diff" language="diff"><span class="md-editor-code-block">- import MdEditor from 'md-editor-rt';
-- const NormalToolbar = MdEditor.NormalToolbar;
-- const DropdownToolbar = MdEditor.DropdownToolbar;
-- const ModalToolbar = MdEditor.ModalToolbar;
-- const MdCatalog = MdEditor.MdCatalog;
-+ import { MdEditor, NormalToolbar, DropdownToolbar, ModalToolbar, MdCatalog } from 'md-editor-rt';
-import 'md-editor-rt/lib/style.css';</span><span rn-wrapper aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+          <pre><code class="language-diff" language="diff"><span class="md-editor-code-block-lines" style="--md-code-line-number-width: 2.5ch;"><span class="md-editor-code-line md-editor-code-line-numbered"><span rn-wrapper aria-hidden="true" data-line-number="1"></span><span class="md-editor-code-line-content">- import MdEditor from 'md-editor-rt';</span></span>
+<span class="md-editor-code-line md-editor-code-line-numbered"><span rn-wrapper aria-hidden="true" data-line-number="2"></span><span class="md-editor-code-line-content">- const NormalToolbar = MdEditor.NormalToolbar;</span></span>
+<span class="md-editor-code-line md-editor-code-line-numbered"><span rn-wrapper aria-hidden="true" data-line-number="3"></span><span class="md-editor-code-line-content">- const DropdownToolbar = MdEditor.DropdownToolbar;</span></span>
+<span class="md-editor-code-line md-editor-code-line-numbered"><span rn-wrapper aria-hidden="true" data-line-number="4"></span><span class="md-editor-code-line-content">- const ModalToolbar = MdEditor.ModalToolbar;</span></span>
+<span class="md-editor-code-line md-editor-code-line-numbered"><span rn-wrapper aria-hidden="true" data-line-number="5"></span><span class="md-editor-code-line-content">- const MdCatalog = MdEditor.MdCatalog;</span></span>
+<span class="md-editor-code-line md-editor-code-line-numbered"><span rn-wrapper aria-hidden="true" data-line-number="6"></span><span class="md-editor-code-line-content">+ import { MdEditor, NormalToolbar, DropdownToolbar, ModalToolbar, MdCatalog } from 'md-editor-rt';</span></span>
+<span class="md-editor-code-line md-editor-code-line-numbered"><span rn-wrapper aria-hidden="true" data-line-number="7"></span><span class="md-editor-code-line-content">import 'md-editor-rt/lib/style.css';</span></span></span></code></pre>
 
         </details>
-      <h3 id="🔖 Props" tabindex="-1" data-line="167"><a class="header-anchor" href="#🔖 Props-2">🔖 Props</a></h3>
-<table data-line="169">
-<thead data-line="169">
-<tr data-line="169">
+      <h3 id="🔖 Props" tabindex="-1" data-line="263"><a class="header-anchor" href="#🔖 Props-2">🔖 Props</a></h3>
+<table data-line="265">
+<thead data-line="265">
+<tr data-line="265">
 <th>名称</th>
 <th>说明</th>
 </tr>
 </thead>
-<tbody data-line="171">
-<tr data-line="171">
+<tbody data-line="267">
+<tr data-line="267">
 <td>previewOnly</td>
 <td>已移除，使用组件<code>MdPreview</code>替换</td>
 </tr>
 </tbody>
 </table>
-<h3 id="🪤 内部组件" tabindex="-1" data-line="173"><a class="header-anchor" href="#🪤 内部组件">🪤 内部组件</a></h3>
-<p data-line="175">新增<code>MdPreview</code>组件，替换原编辑器的<code>previewOnly</code>属性，可以减少代码体积。</p>
+<h3 id="🪤 内部组件" tabindex="-1" data-line="269"><a class="header-anchor" href="#🪤 内部组件">🪤 内部组件</a></h3>
+<p data-line="271">新增<code>MdPreview</code>组件，替换原编辑器的<code>previewOnly</code>属性，可以减少代码体积。</p>
 
-        <details  data-line="177" class="md-editor-code" open="">
+        <details  data-line="273" class="md-editor-code" open="">
           <summary class="md-editor-code-head">
             <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
             <div class="md-editor-code-action">
@@ -262,28 +400,28 @@ import 'md-editor-rt/lib/style.css';</span><span rn-wrapper aria-hidden="true"><
               <span class="md-editor-collapse-tips"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-chevron-left md-editor-icon"><circle cx="12" cy="12" r="10"/><path d="m14 16-4-4 4-4"/></svg></span>
             </div>
           </summary>
-          <pre><code class="language-diff" language="diff"><span class="md-editor-code-block">import React, { useState } from 'react';
-- import MdEditor from 'md-editor-rt';
-+ import { MdPreview } from 'md-editor-rt';
-- import 'md-editor-rt/lib/style.css';
-+ import 'md-editor-rt/lib/preview.css';
-
-export default () =&gt; {
-  const [text] = useState('hello md-editor-rt！');
-- return &lt;MdEditor modelValue={text} previewOnly /&gt;;
-+ return &lt;MdPreview modelValue={text} /&gt;;
-};</span><span rn-wrapper aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+          <pre><code class="language-diff" language="diff"><span class="md-editor-code-block-lines" style="--md-code-line-number-width: 2.5ch;"><span class="md-editor-code-line md-editor-code-line-numbered"><span rn-wrapper aria-hidden="true" data-line-number="1"></span><span class="md-editor-code-line-content">import React, { useState } from 'react';</span></span>
+<span class="md-editor-code-line md-editor-code-line-numbered"><span rn-wrapper aria-hidden="true" data-line-number="2"></span><span class="md-editor-code-line-content">- import MdEditor from 'md-editor-rt';</span></span>
+<span class="md-editor-code-line md-editor-code-line-numbered"><span rn-wrapper aria-hidden="true" data-line-number="3"></span><span class="md-editor-code-line-content">+ import { MdPreview } from 'md-editor-rt';</span></span>
+<span class="md-editor-code-line md-editor-code-line-numbered"><span rn-wrapper aria-hidden="true" data-line-number="4"></span><span class="md-editor-code-line-content">- import 'md-editor-rt/lib/style.css';</span></span>
+<span class="md-editor-code-line md-editor-code-line-numbered"><span rn-wrapper aria-hidden="true" data-line-number="5"></span><span class="md-editor-code-line-content">+ import 'md-editor-rt/lib/preview.css';</span></span>
+<span class="md-editor-code-line md-editor-code-line-numbered"><span rn-wrapper aria-hidden="true" data-line-number="6"></span><span class="md-editor-code-line-content"></span></span>
+<span class="md-editor-code-line md-editor-code-line-numbered"><span rn-wrapper aria-hidden="true" data-line-number="7"></span><span class="md-editor-code-line-content">export default () =&gt; {</span></span>
+<span class="md-editor-code-line md-editor-code-line-numbered"><span rn-wrapper aria-hidden="true" data-line-number="8"></span><span class="md-editor-code-line-content">  const [text] = useState('hello md-editor-rt！');</span></span>
+<span class="md-editor-code-line md-editor-code-line-numbered"><span rn-wrapper aria-hidden="true" data-line-number="9"></span><span class="md-editor-code-line-content">- return &lt;MdEditor modelValue={text} previewOnly /&gt;;</span></span>
+<span class="md-editor-code-line md-editor-code-line-numbered"><span rn-wrapper aria-hidden="true" data-line-number="10"></span><span class="md-editor-code-line-content">+ return &lt;MdPreview modelValue={text} /&gt;;</span></span>
+<span class="md-editor-code-line md-editor-code-line-numbered"><span rn-wrapper aria-hidden="true" data-line-number="11"></span><span class="md-editor-code-line-content">};</span></span></span></code></pre>
 
         </details>
-      <hr data-line="191">
-<h2 id="🧙🏻‍♂️ 从 2.x 升级到 3.x" tabindex="-1" data-line="193"><a class="header-anchor" href="#🧙🏻‍♂️ 从 2.x 升级到 3.x">🧙🏻‍♂️ 从 2.x 升级到 3.x</a></h2>
-<p data-line="195">下面列举的是<code>3.x</code>不兼容<code>2.x</code>的内容，兼容内容不作展示。</p>
-<h3 id="🤹🏼‍♂️ 语法" tabindex="-1" data-line="197"><a class="header-anchor" href="#🤹🏼‍♂️ 语法">🤹🏼‍♂️ 语法</a></h3>
-<ul data-line="199">
-<li data-line="199">
-<p data-line="199">删除线</p>
+      <hr data-line="287">
+<h2 id="🧙🏻‍♂️ 从 2.x 升级到 3.x" tabindex="-1" data-line="289"><a class="header-anchor" href="#🧙🏻‍♂️ 从 2.x 升级到 3.x">🧙🏻‍♂️ 从 2.x 升级到 3.x</a></h2>
+<p data-line="291">下面列举的是<code>3.x</code>不兼容<code>2.x</code>的内容，兼容内容不作展示。</p>
+<h3 id="🤹🏼‍♂️ 语法" tabindex="-1" data-line="293"><a class="header-anchor" href="#🤹🏼‍♂️ 语法">🤹🏼‍♂️ 语法</a></h3>
+<ul data-line="295">
+<li data-line="295">
+<p data-line="295">删除线</p>
 
-        <details  data-line="201" class="md-editor-code" open="">
+        <details  data-line="297" class="md-editor-code" open="">
           <summary class="md-editor-code-head">
             <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
             <div class="md-editor-code-action">
@@ -293,34 +431,34 @@ export default () =&gt; {
               <span class="md-editor-collapse-tips"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-chevron-left md-editor-icon"><circle cx="12" cy="12" r="10"/><path d="m14 16-4-4 4-4"/></svg></span>
             </div>
           </summary>
-          <pre><code class="language-diff" language="diff"><span class="md-editor-code-block">- ~It is a dream deeply rooted in the American dream.~
-+ ~~It is a dream deeply rooted in the American dream.~~</span><span rn-wrapper aria-hidden="true"><span></span><span></span></span></code></pre>
+          <pre><code class="language-diff" language="diff"><span class="md-editor-code-block-lines" style="--md-code-line-number-width: 2.5ch;"><span class="md-editor-code-line md-editor-code-line-numbered"><span rn-wrapper aria-hidden="true" data-line-number="1"></span><span class="md-editor-code-line-content">- ~It is a dream deeply rooted in the American dream.~</span></span>
+<span class="md-editor-code-line md-editor-code-line-numbered"><span rn-wrapper aria-hidden="true" data-line-number="2"></span><span class="md-editor-code-line-content">+ ~~It is a dream deeply rooted in the American dream.~~</span></span></span></code></pre>
 
         </details>
       </li>
 </ul>
-<h3 id="🔩 Props" tabindex="-1" data-line="206"><a class="header-anchor" href="#🔩 Props">🔩 Props</a></h3>
-<table data-line="208">
-<thead data-line="208">
-<tr data-line="208">
+<h3 id="🔩 Props" tabindex="-1" data-line="302"><a class="header-anchor" href="#🔩 Props">🔩 Props</a></h3>
+<table data-line="304">
+<thead data-line="304">
+<tr data-line="304">
 <th>名称</th>
 <th>说明</th>
 </tr>
 </thead>
-<tbody data-line="210">
-<tr data-line="210">
+<tbody data-line="306">
+<tr data-line="306">
 <td>markedHeadingId</td>
 <td>修改为<code>mdHeadingId</code></td>
 </tr>
-<tr data-line="211">
+<tr data-line="307">
 <td>historyLength</td>
 <td>已移除</td>
 </tr>
 </tbody>
 </table>
-<h3 id="🤿 配置项" tabindex="-1" data-line="213"><a class="header-anchor" href="#🤿 配置项">🤿 配置项</a></h3>
+<h3 id="🤿 配置项" tabindex="-1" data-line="309"><a class="header-anchor" href="#🤿 配置项">🤿 配置项</a></h3>
 
-        <details  data-line="215" class="md-editor-code" open="">
+        <details  data-line="311" class="md-editor-code" open="">
           <summary class="md-editor-code-head">
             <div class="md-editor-code-flag"><span></span><span></span><span></span></div>
             <div class="md-editor-code-action">
@@ -330,137 +468,137 @@ export default () =&gt; {
               <span class="md-editor-collapse-tips"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-chevron-left md-editor-icon"><circle cx="12" cy="12" r="10"/><path d="m14 16-4-4 4-4"/></svg></span>
             </div>
           </summary>
-          <pre><code class="language-diff" language="diff"><span class="md-editor-code-block">MdEditor.config({
--  markedRenderer: (renderer) =&gt; renderer,
--  markedExtensions: [],
--  markedOptions,
-+  codeMirrorExtensions: (theme, extensions) =&gt; extensions,
-+  markdownItConfig: (mdit) { }
-})</span><span rn-wrapper aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+          <pre><code class="language-diff" language="diff"><span class="md-editor-code-block-lines" style="--md-code-line-number-width: 2.5ch;"><span class="md-editor-code-line md-editor-code-line-numbered"><span rn-wrapper aria-hidden="true" data-line-number="1"></span><span class="md-editor-code-line-content">MdEditor.config({</span></span>
+<span class="md-editor-code-line md-editor-code-line-numbered"><span rn-wrapper aria-hidden="true" data-line-number="2"></span><span class="md-editor-code-line-content">-  markedRenderer: (renderer) =&gt; renderer,</span></span>
+<span class="md-editor-code-line md-editor-code-line-numbered"><span rn-wrapper aria-hidden="true" data-line-number="3"></span><span class="md-editor-code-line-content">-  markedExtensions: [],</span></span>
+<span class="md-editor-code-line md-editor-code-line-numbered"><span rn-wrapper aria-hidden="true" data-line-number="4"></span><span class="md-editor-code-line-content">-  markedOptions,</span></span>
+<span class="md-editor-code-line md-editor-code-line-numbered"><span rn-wrapper aria-hidden="true" data-line-number="5"></span><span class="md-editor-code-line-content">+  codeMirrorExtensions: (theme, extensions) =&gt; extensions,</span></span>
+<span class="md-editor-code-line md-editor-code-line-numbered"><span rn-wrapper aria-hidden="true" data-line-number="6"></span><span class="md-editor-code-line-content">+  markdownItConfig: (mdit) { }</span></span>
+<span class="md-editor-code-line md-editor-code-line-numbered"><span rn-wrapper aria-hidden="true" data-line-number="7"></span><span class="md-editor-code-line-content">})</span></span></span></code></pre>
 
         </details>
-      <h3 id="🎤 快捷键" tabindex="-1" data-line="225"><a class="header-anchor" href="#🎤 快捷键">🎤 快捷键</a></h3>
-<table data-line="227">
-<thead data-line="227">
-<tr data-line="227">
+      <h3 id="🎤 快捷键" tabindex="-1" data-line="321"><a class="header-anchor" href="#🎤 快捷键">🎤 快捷键</a></h3>
+<table data-line="323">
+<thead data-line="323">
+<tr data-line="323">
 <th>键位</th>
 <th>功能</th>
 <th>说明</th>
 </tr>
 </thead>
-<tbody data-line="229">
-<tr data-line="229">
+<tbody data-line="325">
+<tr data-line="325">
 <td>CTRL + Q</td>
 <td>添加引用</td>
 <td>已移除</td>
 </tr>
 </tbody>
 </table>
-<h3 id="🪤 内部组件" tabindex="-1" data-line="231"><a class="header-anchor" href="#🪤 内部组件-1">🪤 内部组件</a></h3>
-<h4 id="🐻 目录导航" tabindex="-1" data-line="233"><a class="header-anchor" href="#🐻 目录导航">🐻 目录导航</a></h4>
-<ul data-line="235">
-<li data-line="235"><strong>props</strong>
-<ul data-line="236">
-<li data-line="236"><strong>markedHeadingId</strong>: 已删除，使用<code>mdHeadingId</code>代替。</li>
+<h3 id="🪤 内部组件" tabindex="-1" data-line="327"><a class="header-anchor" href="#🪤 内部组件-1">🪤 内部组件</a></h3>
+<h4 id="🐻 目录导航" tabindex="-1" data-line="329"><a class="header-anchor" href="#🐻 目录导航">🐻 目录导航</a></h4>
+<ul data-line="331">
+<li data-line="331"><strong>props</strong>
+<ul data-line="332">
+<li data-line="332"><strong>markedHeadingId</strong>: 已删除，使用<code>mdHeadingId</code>代替。</li>
 </ul>
 </li>
 </ul>
-<hr data-line="238">
-<h2 id="从 1.x 升级到 2.x" tabindex="-1" data-line="240"><a class="header-anchor" href="#从 1.x 升级到 2.x">从 1.x 升级到 2.x</a></h2>
-<p data-line="242">下面列举的是<code>2.x</code>不兼容<code>1.x</code>的内容，兼容内容不作展示。</p>
-<h3 id="Props" tabindex="-1" data-line="244"><a class="header-anchor" href="#Props">Props</a></h3>
-<table data-line="246">
-<thead data-line="246">
-<tr data-line="246">
+<hr data-line="334">
+<h2 id="从 1.x 升级到 2.x" tabindex="-1" data-line="336"><a class="header-anchor" href="#从 1.x 升级到 2.x">从 1.x 升级到 2.x</a></h2>
+<p data-line="338">下面列举的是<code>2.x</code>不兼容<code>1.x</code>的内容，兼容内容不作展示。</p>
+<h3 id="Props" tabindex="-1" data-line="340"><a class="header-anchor" href="#Props">Props</a></h3>
+<table data-line="342">
+<thead data-line="342">
+<tr data-line="342">
 <th>名称</th>
 <th>说明</th>
 </tr>
 </thead>
-<tbody data-line="248">
-<tr data-line="248">
+<tbody data-line="344">
+<tr data-line="344">
 <td>editorClass</td>
 <td>修改为<code>className</code></td>
 </tr>
-<tr data-line="249">
+<tr data-line="345">
 <td>hljs</td>
 <td>已移除，使用<code>MdEditor.config</code>配置</td>
 </tr>
-<tr data-line="250">
+<tr data-line="346">
 <td>highlightJs</td>
 <td>同上</td>
 </tr>
-<tr data-line="251">
+<tr data-line="347">
 <td>highlightCss</td>
 <td>同上</td>
 </tr>
-<tr data-line="252">
+<tr data-line="348">
 <td>languageUserDefined</td>
 <td>同上</td>
 </tr>
-<tr data-line="253">
+<tr data-line="349">
 <td>prettier</td>
 <td>修改为<code>noPrettier</code>，默认<code>false</code></td>
 </tr>
-<tr data-line="254">
+<tr data-line="350">
 <td>prettierCDN</td>
 <td>已移除，使用<code>MdEditor.config</code>配置</td>
 </tr>
-<tr data-line="255">
+<tr data-line="351">
 <td>prettierMDCDN</td>
 <td>同上</td>
 </tr>
-<tr data-line="256">
+<tr data-line="352">
 <td>cropperCss</td>
 <td>同上</td>
 </tr>
-<tr data-line="257">
+<tr data-line="353">
 <td>cropperJs</td>
 <td>同上</td>
 </tr>
-<tr data-line="258">
+<tr data-line="354">
 <td>iconfontJs</td>
 <td>同上</td>
 </tr>
-<tr data-line="259">
+<tr data-line="355">
 <td>screenfull</td>
 <td>同上</td>
 </tr>
-<tr data-line="260">
+<tr data-line="356">
 <td>screenfullJs</td>
 <td>同上</td>
 </tr>
-<tr data-line="261">
+<tr data-line="357">
 <td>mermaid</td>
 <td>同上</td>
 </tr>
-<tr data-line="262">
+<tr data-line="358">
 <td>mermaidJs</td>
 <td>同上</td>
 </tr>
-<tr data-line="263">
+<tr data-line="359">
 <td>katex</td>
 <td>同上</td>
 </tr>
-<tr data-line="264">
+<tr data-line="360">
 <td>katexJs</td>
 <td>同上</td>
 </tr>
-<tr data-line="265">
+<tr data-line="361">
 <td>katexCss</td>
 <td>同上</td>
 </tr>
-<tr data-line="266">
+<tr data-line="362">
 <td>extensions</td>
 <td>同上</td>
 </tr>
 </tbody>
 </table>
-<h3 id="组件" tabindex="-1" data-line="268"><a class="header-anchor" href="#组件">组件</a></h3>
-<ul data-line="270">
-<li data-line="270">
-<p data-line="270">Catalog</p>
-<p data-line="272"><code>Editor.Catalog</code> 已重命名为 <code>Editor.MdCatalog</code>.</p>
-<p data-line="274">更多用法，请查阅 <a href="https://github.com/imzbf/md-editor-rt/tree/docs" target="_blank">docs</a>.</p>
+<h3 id="组件" tabindex="-1" data-line="364"><a class="header-anchor" href="#组件">组件</a></h3>
+<ul data-line="366">
+<li data-line="366">
+<p data-line="366">Catalog</p>
+<p data-line="368"><code>Editor.Catalog</code> 已重命名为 <code>Editor.MdCatalog</code>.</p>
+<p data-line="370">更多用法，请查阅 <a href="https://github.com/imzbf/md-editor-rt/tree/docs" target="_blank">docs</a>.</p>
 </li>
 </ul>
-</div></div></div><div class="catalog"><div class="affix"><div class="md-editor-catalog"></div></div></div></div></div></div><script id="__NEXT_DATA__" type="application/json">{"props":{"pageProps":{}},"page":"/zh-CN/contrast","query":{},"buildId":"zz01ctlJxhV2g_w3jfcY3","assetPrefix":"/md-editor-rt","nextExport":true,"autoExport":true,"isFallback":false,"scriptLoader":[{"src":"//at.alicdn.com/t/c/font_2818624_gbt6qvt9lob.js","strategy":"afterInteractive"},{"async":true,"src":"https://www.googletagmanager.com/gtag/js?id=G-3R6P1XE0H0","strategy":"afterInteractive"},{"id":"gg","children":"window.dataLayer = window.dataLayer || [];\n                function gtag() {\n                  dataLayer.push(arguments);\n                }\n                gtag('js', new Date());\n                gtag('config', 'G-3R6P1XE0H0');","strategy":"afterInteractive"},{"src":"https://hm.baidu.com/hm.js?1563bc52cb27ffbc7b5b46cdfc327ce0","strategy":"afterInteractive"}]}</script></body></html>
+</div></div></div><div class="catalog"><div class="affix"><div class="md-editor-catalog" data-theme="light"></div></div></div></div></div></div><script id="__NEXT_DATA__" type="application/json">{"props":{"pageProps":{}},"page":"/zh-CN/contrast","query":{},"buildId":"WebYh8vLjB80Qdb4nIBZJ","assetPrefix":"/md-editor-rt","nextExport":true,"autoExport":true,"isFallback":false,"scriptLoader":[{"src":"//at.alicdn.com/t/c/font_2818624_gbt6qvt9lob.js","strategy":"afterInteractive"},{"async":true,"src":"https://www.googletagmanager.com/gtag/js?id=G-3R6P1XE0H0","strategy":"afterInteractive"},{"id":"gg","children":"window.dataLayer = window.dataLayer || [];\n                function gtag() {\n                  dataLayer.push(arguments);\n                }\n                gtag('js', new Date());\n                gtag('config', 'G-3R6P1XE0H0');","strategy":"afterInteractive"},{"src":"https://hm.baidu.com/hm.js?1563bc52cb27ffbc7b5b46cdfc327ce0","strategy":"afterInteractive"}]}</script></body></html>
