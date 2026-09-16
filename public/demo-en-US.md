@@ -794,6 +794,8 @@ export default () => {
 
 ### 🔒 Handling XSS at Compile Time
 
+Raw HTML is disabled by default through `html: false`. Adding `XSSPlugin` does not enable HTML parsing. To render raw HTML, explicitly enable it through [markdownItConfig](https://imzbf.github.io/md-editor-rt/en-US/api#%F0%9F%8D%A4%20markdownItConfig). This plugin only processes HTML tokens; use `sanitize` to sanitize the final generated HTML.
+
 Version 5.0 exports the built-in XSS plugin, which is no longer added by default. The exported XSS plugin includes additional tags and attributes on top of the default whitelist:
 
 ```json::close
