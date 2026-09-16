@@ -1,5 +1,51 @@
 <!-- next-release -->
 
+## 7.0.0 (2026-09-16)
+
+### Features
+
+- support code block line highlighting ([commit 9df7e63](https://github.com/imzbf/md-editor-rt/commit/9df7e632a1f1a4855319ebc32b1db707cff5f443))
+  - Parse fence metadata for line highlighting, support custom highlighters, and enable code line numbers by default.
+
+- replace `.md-editor-dark` with `.md-editor[data-theme="dark"]` for theme toggling ([commit ac44460](https://github.com/imzbf/md-editor-rt/commit/ac444600c7a896cb147bb16dc6c1420693f87bf1))
+
+### Fixed Bugs
+
+- disable raw HTML parsing in markdown-it ([commit 6c815cb](https://github.com/imzbf/md-editor-rt/commit/6c815cb1e427038a9f33ecb460956e60f726aada))
+
+- correct exposed callbacks and update CDN extensions ([commit 00fa33a](https://github.com/imzbf/md-editor-rt/commit/00fa33a67ce45bffdc6298d768a6c13f5503ab89))
+
+- replace dynamic option evaluation with JSON5 ([commit 8e9c201](https://github.com/imzbf/md-editor-rt/commit/8e9c201897e964c83e2a53f58109d85082008f62))
+  - Parse ECharts code blocks as data and require a top-level object.
+
+- keep code line numbers aligned after wrapping ([commit a6b4cab](https://github.com/imzbf/md-editor-rt/commit/a6b4cabd31fe44e0834955caddf3ad23fa9cf3de))
+
+### Others
+
+- chore(deps): upgrade @vavt/markdown-theme ([commit 4a27763](https://github.com/imzbf/md-editor-rt/commit/4a2776301520893fe68318f8578a205b0d9891d8))
+
+- ci(release): merge npm publish channels into one trusted workflow ([commit 529604a](https://github.com/imzbf/md-editor-rt/commit/529604a413d7743339117bff718addaab752c455))
+  - npm trusted publishing allows a single trusted workflow per package, so
+  - beta and latest can no longer live in separate files. Combine them into
+  - publish.yml and pick the npm dist-tag from the trigger: a v\* tag
+  - publishes latest, a push to beta publishes with --tag beta.
+  - Authentication moves from the long-lived NPM_TOKEN secret to OIDC via
+  - id-token: write. Node 26 ships npm 11.19.0, above the 11.5.1 minimum for
+  - the token exchange.
+  - Extract the release-notes and issue-notification logic into
+  - .github/scripts/ so the workflow file stays focused on orchestration.
+  - Both scripts walk the commit history between tags, so checkout keeps
+  - fetch-depth: 0 -- a shallow clone resolves no previous tag and silently
+  - produces an empty release entry.
+  - Serialize runs with a concurrency group since publishing and the
+  - CHANGELOG write-back both mutate remote state.
+  - Note: the trusted publisher entry on npm must be repointed from
+  - latest.yml to publish.yml, otherwise publishing fails with E404.
+
+**Full Changelog**: [v6.5.6...v7.0.0](https://github.com/imzbf/md-editor-rt/compare/v6.5.6...v7.0.0)
+
+---
+
 ## 6.5.6 (2026-08-05)
 
 ### Fixed Bugs
