@@ -16,6 +16,9 @@ interface AppLayout {
 }
 
 config({
+  markdownItConfig(md) {
+    md.set({ html: true });
+  },
   markdownItPlugins(plugins, { editorId }) {
     return [
       ...plugins.map((item) => {
