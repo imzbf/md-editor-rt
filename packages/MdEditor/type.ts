@@ -304,7 +304,7 @@ export interface MdPreviewProps {
    */
   customIcon?: CustomIcon;
   /**
-   * 转换生成的mermaid代码
+   * Mermaid 在默认 strict 渲染之后的异步 SVG 后处理入口。
    *
    * @param html
    * @returns
@@ -797,7 +797,7 @@ export interface GlobalConfig {
     }
   ) => Array<MarkdownItConfigPlugin>;
   /**
-   * mermaid配置项
+   * Mermaid 配置项。默认 securityLevel 为 strict，可显式设置 loose 开放交互能力。
    *
    * @param base
    * @returns

@@ -90,7 +90,8 @@ const useMarkdownIt = (props: ContentPreviewProps, previewOnly: boolean) => {
 
   const { hljsRef, hljsInited } = useHighlight(props);
   const { katexRef, katexInited } = useKatex(props);
-  const { reRender, replaceMermaid } = useMermaid(props);
+  const { reRender, reRenderRef, replaceMermaid, invalidateMermaid, getCachedMermaid } =
+    useMermaid(props);
   const { reRenderEcharts, replaceEcharts } = useEcharts(props);
 
   const [md] = useState(() => {
@@ -162,7 +163,7 @@ const useMarkdownIt = (props: ContentPreviewProps, previewOnly: boolean) => {
       plugins.push({
         type: 'mermaid',
         plugin: MermaidPlugin,
-        options: { themeRef }
+        options: { themeRef, revision: reRenderRef, getCached: getCachedMermaid }
       });
     }
 
@@ -314,24 +315,11 @@ const useMarkdownIt = (props: ContentPreviewProps, previewOnly: boolean) => {
   }, [editorId, html, key, onGetCatalog, onHtmlChanged]);
 
   useEffect(() => {
-    let clearZoomMermaidEvents = () => {};
-    let clearCopyMermaidEvents = () => {};
     if (setting.preview) {
-      void replaceMermaid().then(() => {
-        [clearZoomMermaidEvents, clearCopyMermaidEvents] = handleMermaidActions();
-      });
-
-      void replaceEcharts();
-
       // 生成目录
       bus.emit(editorId, CATALOG_CHANGED, headsRef.current);
     }
-
-    return () => {
-      clearZoomMermaidEvents();
-      clearCopyMermaidEvents();
-    };
-  }, [editorId, handleMermaidActions, replaceEcharts, replaceMermaid, setting.preview]);
+  }, [editorId, setting.preview]);
 
   useEffect(() => {
     if (ignoreFirstRender.current) {
@@ -349,18 +337,32 @@ const useMarkdownIt = (props: ContentPreviewProps, previewOnly: boolean) => {
     return () => {
       clearTimeout(timer);
     };
-  }, [needReRender, theme, markHtml, language, previewOnly, editorConfig.renderDelay]);
+  }, [
+    needReRender,
+    theme,
+    reRender,
+    markHtml,
+    language,
+    previewOnly,
+    editorConfig.renderDelay
+  ]);
 
   useEffect(() => {
+    if (!setting.preview) return;
+
+    // 所有渲染与预览切换共用这一处绑定；失效 effect 的异步结果不得重新添加监听。
+    let active = true;
     let clearZoomMermaidEvents = () => {};
     let clearCopyMermaidEvents = () => {};
     void replaceMermaid().then(() => {
+      if (!active) return;
       [clearZoomMermaidEvents, clearCopyMermaidEvents] = handleMermaidActions();
     });
 
     void replaceEcharts();
 
     return () => {
+      active = false;
       clearZoomMermaidEvents();
       clearCopyMermaidEvents();
     };
@@ -371,7 +373,8 @@ const useMarkdownIt = (props: ContentPreviewProps, previewOnly: boolean) => {
     reRender,
     replaceMermaid,
     reRenderEcharts,
-    replaceEcharts
+    replaceEcharts,
+    setting.preview
   ]);
 
   useEffect(() => {
@@ -392,6 +395,7 @@ const useMarkdownIt = (props: ContentPreviewProps, previewOnly: boolean) => {
   useEffect(() => {
     const callback = () => {
       // 强制更新节点
+      invalidateMermaid();
       setKey(`_article-key_${randomId()}`);
       markHtml();
     };
@@ -402,7 +406,7 @@ const useMarkdownIt = (props: ContentPreviewProps, previewOnly: boolean) => {
     return () => {
       bus.remove(editorId, RERENDER, callback);
     };
-  }, [editorId, markHtml]);
+  }, [editorId, invalidateMermaid, markHtml]);
 
   return { html, key };
 };
