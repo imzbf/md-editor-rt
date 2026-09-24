@@ -9,6 +9,7 @@ import {
   ToolbarNames,
   MdHeadingId
 } from './type';
+import { sanitizeEchartsOption } from './utils/echarts';
 
 export const prefix = 'md-editor';
 export const prefixHump = 'MdEditor';
@@ -543,7 +544,8 @@ export const globalConfig: GlobalConfig = {
         }
 
         return option;
-      }
+      },
+      sanitizeOption: sanitizeEchartsOption
     }
   },
   editorExtensionsAttrs: {},

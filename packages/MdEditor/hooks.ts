@@ -1,3 +1,4 @@
+import { deepClone, deepMerge } from '@vavt/util';
 import {
   ForwardedRef,
   MutableRefObject,
@@ -340,16 +341,13 @@ export const useMdPreviewConfig = (props: MdPreviewProps) => {
 
   // 缓存语言设置
   const usedLanguageText = useMemo<StaticTextDefaultValue>(() => {
-    const allText: any = {
+    const allText: { [key: string]: StaticTextDefaultValue } = {
       ...staticTextDefault,
       ...globalConfig.editorConfig.languageUserDefined
     };
 
-    if (allText[language]) {
-      return allText[language];
-    } else {
-      return staticTextDefault['zh-CN'];
-    }
+    // 与 Vue 端一致，部分语言文案继承英文默认值；复制后合并，避免修改共享默认配置。
+    return deepMerge(deepClone(staticTextDefault['en-US']), allText[language] || {});
   }, [language]);
 
   return [highlight, usedLanguageText] as const;

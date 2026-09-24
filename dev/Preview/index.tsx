@@ -14,7 +14,8 @@ import {
   ExposeParam,
   NormalFooterToolbar,
   MdHeadingId,
-  ToolbarNames
+  ToolbarNames,
+  Footers
 } from '~~/index';
 
 import './index.scss';
@@ -155,7 +156,10 @@ export default ({ theme, previewTheme, codeTheme, lang }: PreviewProp) => {
   const strikeIcon = useMemo(() => <Icon name="strike-through" />, []);
   const dropdownOverlay = useMemo(() => <div>下拉内容</div>, []);
 
-  const DEFAULT_FOOTERS = useMemo(() => ['markdownTotal', '=', 0, 'scrollSwitch'], []);
+  const DEFAULT_FOOTERS = useMemo<Footers[]>(
+    () => ['markdownTotal', '=', 0, 'scrollSwitch'],
+    []
+  );
   const DEF_FOOTERS_NODES = useMemo(
     () => [<NormalFooterToolbar key="NormalFooterToolbar">^_^</NormalFooterToolbar>],
     []

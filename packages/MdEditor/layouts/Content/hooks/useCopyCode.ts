@@ -1,13 +1,19 @@
 import copy2clipboard from '@vavt/copy2clipboard';
-import { useContext, useEffect } from 'react';
+import { useContext, useEffect, useRef } from 'react';
 import { ContentPreviewProps } from '../props';
-import { prefix } from '~/config';
+import { defaultProps, prefix } from '~/config';
 import { EditorContext } from '~/context';
 
 const useCopyCode = (props: ContentPreviewProps, html: string, key: string) => {
   const { editorId, usedLanguageText, customIcon, rootRef, setting } =
     useContext(EditorContext);
-  const { formatCopiedText = (t: string) => t } = props;
+  const { formatCopiedText = defaultProps.formatCopiedText } = props;
+  const formatCopiedTextRef = useRef(formatCopiedText);
+
+  // 按需更新会复用按钮 DOM，点击时读取最新回调，避免旧按钮保留首次绑定的闭包。
+  useEffect(() => {
+    formatCopiedTextRef.current = formatCopiedText;
+  }, [formatCopiedText]);
 
   useEffect(() => {
     if (setting.preview) {
@@ -37,7 +43,7 @@ const useCopyCode = (props: ContentPreviewProps, html: string, key: string) => {
 
               let msg = successTips!;
 
-              copy2clipboard(formatCopiedText(codeText))
+              copy2clipboard(formatCopiedTextRef.current(codeText))
                 .catch(() => {
                   msg = failTips!;
                 })
@@ -65,7 +71,6 @@ const useCopyCode = (props: ContentPreviewProps, html: string, key: string) => {
   }, [
     customIcon,
     editorId,
-    formatCopiedText,
     html,
     key,
     setting.preview,
