@@ -1,5 +1,44 @@
 <!-- next-release -->
 
+## 7.1.0 (2026-09-28)
+
+### Fixed Bugs
+
+- type custom preview footer entries ([commit 87f3e6c](https://github.com/imzbf/md-editor-rt/commit/87f3e6ce4c256053f5879d6911df55e0cf0bfef6))
+
+- inherit defaults for partial language packs ([commit 793160b](https://github.com/imzbf/md-editor-rt/commit/793160b6c076135a5483ab3cb82c980cf1a2e420))
+  - Merge language overrides into a cloned English default, matching Vue
+  - behavior without mutating shared text.
+
+- use the latest code formatting callback ([commit eaeb07c](https://github.com/imzbf/md-editor-rt/commit/eaeb07cec1a8b1ee9a4da96427811f09e55a0117))
+  - Read formatCopiedText through a ref so reused copy buttons follow
+  - callback changes without rescanning the preview.
+
+- preserve inline tokens in checkbox labels ([commit 24b963f](https://github.com/imzbf/md-editor-rt/commit/24b963ff41a477e3bdb9bd06ab3e06db90f759e4))
+  - Wrap existing inline tokens with structured labels to preserve
+  - formatting and HTML escaping.
+
+- preserve safe defaults in custom configuration ([commit a81694b](https://github.com/imzbf/md-editor-rt/commit/a81694bc94e3658dbd088892708c20f03fe2f121))
+  - Merge custom options over rendering defaults while keeping trust
+  - disabled unless explicitly overridden.
+
+- isolate rendering state and enforce safe defaults ([commit 1f71477](https://github.com/imzbf/md-editor-rt/commit/1f714771a66414bc8a43b0feacc4703c75d057cd))
+  - Keep strict defaults, serialize library initialization and rendering,
+  - and cache sanitized SVGs per preview and code block.
+  - Reject outdated async results after content or policy changes and
+  - rebind interactions when cached SVGs create new DOM.
+
+- sanitize chart options before rendering ([commit 9faa3d1](https://github.com/imzbf/md-editor-rt/commit/9faa3d1c401a97560adbde27354f697464394d3a))
+  - Use rich-text tooltips, escape inherited DataView labels and restrict
+  - links across base, timeline and media options. Keep parsing and
+  - sanitization independently configurable.
+  - Restore source text after render failures and recognize closed
+  - backtick, tilde and nested fences.
+
+**Full Changelog**: [v7.0.0...v7.1.0](https://github.com/imzbf/md-editor-rt/compare/v7.0.0...v7.1.0)
+
+---
+
 ## 7.0.0 (2026-09-16)
 
 ### Features
