@@ -2,7 +2,7 @@ import Head from 'next/head';
 
 import { KEYWORDS_EN, DESCRIPTION_EN, SITE_NAME_EN } from '@/config';
 import IzPreviewContent from '@/layouts/PreviewContent';
-import mdText from '../../../../public/grammar-en-US.md';
+import mdText from '../../../../public/syntax-en-US.md';
 
 export default function Page() {
   return (

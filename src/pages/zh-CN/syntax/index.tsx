@@ -2,7 +2,7 @@ import Head from 'next/head';
 
 import { DESCRIPTION_CN, KEYWORDS_CN, SITE_NAME_CN } from '@/config';
 import IzPreviewContent from '@/layouts/PreviewContent';
-import mdText from '../../../../public/grammar-zh-CN.md';
+import mdText from '../../../../public/syntax-zh-CN.md';
 
 export default function Page() {
   return (
