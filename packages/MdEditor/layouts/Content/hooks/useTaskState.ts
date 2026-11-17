@@ -1,17 +1,17 @@
 import { useContext, useEffect } from 'react';
+import { ContentPreviewProps } from '../props';
 import { EditorContext } from '~/context';
 import { TASK_STATE_CHANGED } from '~/static/event-name';
 import bus from '~/utils/event-bus';
-import { ContentPreviewProps } from '../props';
 
 const template = {
   checked: {
-    regexp: /- \[x\]/,
-    value: '- [ ]'
+    regexp: /\[[xX]\]/,
+    value: '[ ]'
   },
   unChecked: {
-    regexp: /- \[\s\]/,
-    value: '- [x]'
+    regexp: /\[ \]/,
+    value: '[x]'
   }
 };
 
@@ -19,7 +19,11 @@ export const useTaskState = (props: ContentPreviewProps, html: string) => {
   const { editorId, rootRef } = useContext(EditorContext);
 
   useEffect(() => {
-    const tasks = rootRef!.current?.querySelectorAll('.task-list-item.enabled') || [];
+    // 只监听复选框，避免正文点击误改任务及嵌套列表冒泡导致的重复更新。
+    const tasks =
+      rootRef!.current?.querySelectorAll(
+        '.task-list-item.enabled .task-list-item-checkbox'
+      ) || [];
 
     const listener = (e: Event) => {
       e.preventDefault();
