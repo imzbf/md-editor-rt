@@ -153,17 +153,16 @@ const ClipModal = (props: ClipModalProps) => {
                 </div>
               </div>
             ) : (
-              <div
+              <button
                 className={`${prefix}-clip-upload`}
+                type="button"
                 onClick={() => {
                   (uploadRef.current as HTMLInputElement).click();
                 }}
-                role="button"
-                tabIndex={0}
                 aria-label={usedLanguageText.imgTitleItem?.upload}
               >
                 <Icon name="upload" />
-              </div>
+              </button>
             )}
           </div>
           <div className={`${prefix}-clip-preview`}>

@@ -4,16 +4,16 @@ import {
   ReactNode,
   useContext,
   useEffect,
-  useMemo,
+  useId,
   useRef,
   useState
 } from 'react';
 import { createPortal } from 'react-dom';
+import Icon from '../Icon';
 import { globalConfig, prefix } from '~/config';
 import { EditorContext } from '~/context';
 import { getZIndexIncrement } from '~/utils';
-import { keyMove } from '~/utils/dom';
-import Icon from '../Icon';
+import { getFocusableElements, keyMove } from '~/utils/dom';
 
 export type ModalProps = Readonly<{
   title?: ReactNode;
@@ -36,13 +36,14 @@ const toClass = `${prefix}-modal-container`;
 const Modal = (props: ModalProps) => {
   const { theme, rootRef } = useContext(EditorContext);
 
-  const { onClose = () => {}, onAdjust = () => {}, style = {}, showMask = true } = props;
-  const [modalVisible, setMV] = useState(props.visible);
-  const [modalClass, setModalClass] = useState([`${prefix}-modal`]);
+  const { onClose, onAdjust, style, visible = false, showMask = true } = props;
+  const [modalVisible, setModalVisible] = useState(visible);
   const modalRef = useRef<HTMLDivElement>(null);
   const modalHeaderRef = useRef<HTMLDivElement>(null);
+  const previousFocusRef = useRef<HTMLElement | null>(null);
+  const titleId = useId();
 
-  const bodyRef = useRef<Element | ShadowRoot>(null);
+  const [body, setBody] = useState<Element | ShadowRoot | null>(null);
 
   // 创建的弹窗容器，存放在document.body末尾
   const containerRef = useRef<HTMLDivElement>(null);
@@ -69,99 +70,101 @@ const Modal = (props: ModalProps) => {
     }
   });
 
-  const innerSize = useMemo(() => {
-    if (props.isFullscreen) {
-      return {
-        width: '100%',
-        height: '100%'
-      };
-    } else {
-      return {
-        width: props.width,
-        height: props.height
-      };
+  useEffect(() => {
+    if (visible) {
+      // 先记录返回目标，再挂载 Portal，避免子控件 autoFocus 覆盖打开前的焦点。
+      const root = (rootRef?.current?.getRootNode() || document) as Document | ShadowRoot;
+      previousFocusRef.current = root.activeElement as HTMLElement | null;
     }
-  }, [props.height, props.isFullscreen, props.width]);
+  }, [rootRef, visible]);
 
   useEffect(() => {
-    const rootNode = rootRef?.current?.getRootNode() as ShadowRoot;
-    bodyRef.current = rootNode instanceof Document ? document.body : rootNode;
-    return () => {
-      bodyRef.current = null;
-    };
+    const rootNode = rootRef?.current?.getRootNode();
+    setBody(rootNode instanceof ShadowRoot ? rootNode : document.body);
   }, [rootRef]);
 
   useEffect(() => {
-    let keyMoveClear = () => {};
-
-    if (!props.isFullscreen && props.visible) {
-      keyMoveClear = keyMove(
-        modalHeaderRef.current as HTMLDivElement,
-        (left: number, top: number) => {
-          setState((_state) => {
-            return {
-              ..._state,
-              initPos: {
-                insetInlineStart: left + 'px',
-                insetBlockStart: top + 'px'
-              }
-            };
-          });
+    if (props.isFullscreen || !visible || !modalHeaderRef.current) return;
+    return keyMove(modalHeaderRef.current, (left, top) => {
+      setState((_state) => ({
+        ..._state,
+        initPos: {
+          insetInlineStart: left + 'px',
+          insetBlockStart: top + 'px'
         }
-      );
-    }
-
-    return keyMoveClear;
-  }, [props.isFullscreen, props.visible]);
+      }));
+    });
+  }, [body, props.isFullscreen, visible]);
 
   useEffect(() => {
-    if (modalVisible) {
-      const halfWidth = (modalRef.current as HTMLElement).offsetWidth / 2;
-      const halfHeight = (modalRef.current as HTMLElement).offsetHeight / 2;
-      const halfClientWidth = document.documentElement.clientWidth / 2;
-      const halfClientHeight = document.documentElement.clientHeight / 2;
+    // 退出动画期间保留视觉内容，但不再让隐藏中的控件参与键盘导航。
+    if (containerRef.current) containerRef.current.inert = !visible;
 
-      setState((_state) => {
-        return {
-          ..._state,
-          maskStyle: {
-            zIndex: globalConfig.editorConfig.zIndex! + getZIndexIncrement()
-          },
-          modalStyle: {
-            zIndex: globalConfig.editorConfig.zIndex! + getZIndexIncrement()
-          },
-          initPos: {
-            insetInlineStart: halfClientWidth - halfWidth + 'px',
-            insetBlockStart: halfClientHeight - halfHeight + 'px'
-          }
-        };
-      });
-    }
-  }, [modalVisible]);
-
-  useEffect(() => {
-    const nVal = props.visible;
-
-    if (nVal) {
-      setModalClass(() => [`${prefix}-modal`, 'zoom-in']);
-      setMV(nVal);
+    if (visible) {
+      setModalVisible(true);
     } else {
-      setModalClass(() => [`${prefix}-modal`, 'zoom-out']);
-
-      setTimeout(() => {
-        setMV(nVal);
+      const timer = window.setTimeout(() => {
+        setModalVisible(false);
       }, 150);
+
+      // 快速重开时取消上一次退出动画，避免旧定时器再次隐藏弹窗。
+      return () => clearTimeout(timer);
     }
-  }, [props.visible]);
+  }, [body, visible]);
+
+  useEffect(() => {
+    const modal = modalRef.current;
+    if (!visible || !modalVisible || !modal) return;
+
+    // Portal 挂载且可见后再测量；定位与初始焦点只在本次打开时设置。
+    const maskStyle = {
+      zIndex: globalConfig.editorConfig.zIndex! + getZIndexIncrement()
+    };
+    const modalStyle = {
+      zIndex: globalConfig.editorConfig.zIndex! + getZIndexIncrement()
+    };
+    const initPos = {
+      insetInlineStart:
+        (document.documentElement.clientWidth - modal.offsetWidth) / 2 + 'px',
+      insetBlockStart:
+        (document.documentElement.clientHeight - modal.offsetHeight) / 2 + 'px'
+    };
+    setState((_state) => ({ ..._state, maskStyle, modalStyle, initPos }));
+
+    const root = modal.getRootNode() as Document | ShadowRoot;
+    const previousFocus = previousFocusRef.current;
+    const modalBody = modal.querySelector<HTMLElement>(`.${prefix}-modal-body`)!;
+
+    if (!modal.contains(root.activeElement)) {
+      // 等容器退出 inert 状态后再进入表单；空弹窗仍可通过关闭按钮接收按键。
+      const initialFocus =
+        getFocusableElements(modalBody)[0] || getFocusableElements(modal)[0] || modal;
+      initialFocus.focus({ preventScroll: true });
+    }
+
+    return () => {
+      const activeElement = root.activeElement;
+      // 动作若已将焦点交给其他界面，则保留该结果；关闭和卸载时才归还原焦点。
+      if (
+        previousFocus?.isConnected &&
+        (!activeElement ||
+          activeElement === document.body ||
+          modal.contains(activeElement))
+      ) {
+        previousFocus.focus({ preventScroll: true });
+      }
+    };
+  }, [body, modalVisible, visible]);
 
   return (
     <>
-      {bodyRef.current &&
+      {body &&
         createPortal(
           <div ref={containerRef} className={toClass} data-theme={theme}>
             <div
               className={props.className}
               style={{ ...style, display: modalVisible ? 'block' : 'none' }}
+              aria-hidden={!visible || undefined}
             >
               {showMask && (
                 <div
@@ -171,21 +174,67 @@ const Modal = (props: ModalProps) => {
                 />
               )}
               <div
-                className={modalClass.join(' ')}
+                className={`${prefix}-modal ${visible ? 'zoom-in' : 'zoom-out'}`}
                 style={{
                   ...state.modalStyle,
                   ...state.initPos,
-                  ...innerSize
+                  width: props.isFullscreen ? '100%' : props.width,
+                  height: props.isFullscreen ? '100%' : props.height
                 }}
                 ref={modalRef}
+                role="dialog"
+                aria-modal={showMask || undefined}
+                aria-labelledby={props.title ? titleId : undefined}
+                aria-label={props.title ? undefined : 'Dialog'}
+                tabIndex={-1}
+                onKeyDown={(event) => {
+                  if (
+                    !visible ||
+                    event.defaultPrevented ||
+                    event.nativeEvent.isComposing
+                  ) {
+                    return;
+                  }
+
+                  if (event.key === 'Escape') {
+                    event.preventDefault();
+                    event.stopPropagation();
+                    onClose?.();
+                    return;
+                  }
+
+                  if (event.key !== 'Tab' || !showMask) return;
+                  const modal = event.currentTarget;
+                  const root = modal.getRootNode() as Document | ShadowRoot;
+                  const items = getFocusableElements(modal);
+                  const first = items[0];
+                  const last = items.at(-1);
+                  const atBoundary = event.shiftKey
+                    ? root.activeElement === first || root.activeElement === modal
+                    : root.activeElement === last;
+
+                  // 有遮罩的弹窗限制 Tab 范围；无罩弹窗允许继续访问页面。
+                  if (!first || atBoundary) {
+                    event.preventDefault();
+                    const next = event.shiftKey ? last : first;
+                    (next || modal).focus({ preventScroll: true });
+                  }
+                }}
               >
-                <div className={`${prefix}-modal-header`} ref={modalHeaderRef}>
+                <div
+                  id={titleId}
+                  className={`${prefix}-modal-header`}
+                  ref={modalHeaderRef}
+                >
                   {props.title || ''}
                 </div>
+                {/* 图标按钮使用固定的无障碍名称，避免扩展语言包配置。 */}
                 <div className={`${prefix}-modal-func`}>
                   {props.showAdjust && (
-                    <div
+                    <button
                       className={`${prefix}-modal-adjust`}
+                      type="button"
+                      aria-label={props.isFullscreen ? 'Restore' : 'Maximize'}
                       onClick={(e) => {
                         e.stopPropagation();
 
@@ -206,27 +255,29 @@ const Modal = (props: ModalProps) => {
                           }));
                         }
 
-                        if (onAdjust instanceof Function) onAdjust(!props.isFullscreen);
+                        onAdjust?.(!props.isFullscreen);
                       }}
                     >
                       <Icon name={props.isFullscreen ? 'minimize' : 'maximize'} />
-                    </div>
+                    </button>
                   )}
-                  <div
+                  <button
                     className={`${prefix}-modal-close`}
+                    type="button"
+                    aria-label="Close"
                     onClick={(e) => {
                       e.stopPropagation();
-                      if (props.onClose) props.onClose();
+                      onClose?.();
                     }}
                   >
                     <Icon name="close" />
-                  </div>
+                  </button>
                 </div>
                 <div className={`${prefix}-modal-body`}>{props.children}</div>
               </div>
             </div>
           </div>,
-          bodyRef.current
+          body
         )}
     </>
   );
