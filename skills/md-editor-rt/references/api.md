@@ -1,6 +1,6 @@
 # md-editor-rt 公开 API 速查
 
-> 面向 `md-editor-rt@7.x` 使用环境整理（当前对应 `feature/v7` 分支，首个发布版本为 `7.0.0`）。若用户项目版本不同，先核对本地安装包类型定义。
+> 以 7.x 公开 API 和当前源码为参考。安装包可能尚未包含最新修复；先核对业务项目的版本和 `lib/types/index.d.ts`，再使用对应能力。
 
 ## 目录
 
@@ -17,7 +17,7 @@
 
 ## 1. 公开导出
 
-主入口 `packages/index.ts` / `packages/preview.ts` 暴露了这些能力：
+从 `md-editor-rt` 主入口导入以下能力；源码入口为 `packages/index.ts`，其中部分预览能力由 `packages/preview.ts` 复用：
 
 - `MdEditor`
 - `MdPreview`
@@ -110,6 +110,7 @@
 - `maxLength`
 - `autoDetectCode`
 - `showToolbarName`
+- `customIcon`
 - `completions`
 - `inputBoxWidth`
 - `onInputBoxWidthChange`
@@ -200,6 +201,8 @@
 - 在 `toolbars` / `footers` 中插入对应数字下标决定展示位置
 - 这不是“按名字注册”，而是“按下标占位”
 
+下拉工具栏需要同时维护 `visible` 和 `onChange`；弹窗工具栏需要维护 `visible`、打开回调与 `onClose`。菜单动作优先使用带 `role="menuitem"` 的原生按钮，配合有名称的菜单容器；表单内容保留原生输入控件，不强行标记为菜单。参见 [可运行的工具栏模式](playbook.md#7-自定义工具栏)。
+
 ## 7. `config()` 全局配置
 
 `config()` 能改这些核心能力：
@@ -214,6 +217,7 @@
   - `echarts`
     - `editorExtensions.echarts.parseOption(code, { editorId, element })`
     - `>=6.5.0` 支持；用于自定义 ECharts 代码块内容解析
+    - `editorExtensions.echarts.sanitizeOption(option, { editorId, element })` 在 `echartsConfig` 之后同步处理渲染配置
 - `editorExtensionsAttrs`
 - `editorConfig`
 - `codeMirrorExtensions(extensions, { editorId, theme, keyBindings })`
@@ -236,26 +240,18 @@
 
 ## 8. 安全与 HTML 清洗
 
-当前版本默认没有内置 XSS 插件，需要业务自己决定策略：
+原生 HTML 默认关闭，Mermaid 默认 `securityLevel: 'strict'`，KaTeX 默认 `trust: false`。替换依赖实例会保留这些默认配置。
 
-- 轻量做法：传 `sanitize(html)`
-- 统一做法：在 `config({ markdownItPlugins })` 里接入 `XSSPlugin`
-
-同时评估：
-
-- 是否允许 Markdown 中的原生 HTML
-- 是否需要单独处理 Mermaid 结果：`sanitizeMermaid`
-- 是否要统一 CSP / 外链策略
+- 显式开启原生 HTML 时，根据输入来源选择 `sanitize(html)` 或 `XSSPlugin`；后者仅清洗 HTML token。
+- `sanitizeMermaid(svg)` 是异步 SVG 后处理入口，不等同于 `mermaidConfig`。
+- ECharts 按 `parseOption → echartsConfig → sanitizeOption → setOption` 执行；自定义解析器不会自动关闭渲染防护。
+- 应用提供的 renderer、插件、解析器和回调属于应用代码。按业务需要单独调整对应模块。
 
 ## 9. 清理副作用
 
-`clearSideEffects()` 用于清理组件运行期间插入到页面里的默认外部资源标签。
+`clearSideEffects()` 移除页面共享的 CDN script/link 标签，不是单个组件的销毁方法。组件卸载会自行释放实例监听；仅在使用这些共享资源的所有实例卸载后，由微前端或页面宿主统一清理。
 
-典型场景：
-
-- 微前端切换应用
-- 页面卸载后希望移除自动插入的 CDN 资源
-- 测试环境需要显式清理
+完全通过本地实例和应用 CSS 管理资源时，通常不需要调用。该函数访问 `document`，只能在客户端执行。
 
 ## 10. 用户项目里如何核对当前版本 API
 

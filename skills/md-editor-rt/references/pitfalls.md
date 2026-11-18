@@ -17,6 +17,10 @@
 - [13. 继续沿用旧 `mdHeadingId` / `codeMirrorExtensions` 签名](#13-继续沿用旧-mdheadingid--codemirrorextensions-签名)
 - [14. 自定义 markdown-it / CodeMirror 时把内置能力全丢了](#14-自定义-markdown-it--codemirror-时把内置能力全丢了)
 
+- [15. 代码语言不存在时预览变慢](#15-代码语言不存在时预览变慢)
+- [16. 自定义菜单或弹窗无法用键盘操作](#16-自定义菜单或弹窗无法用键盘操作)
+- [17. 复制了旧 iconfont 配置](#17-复制了旧-iconfont-配置)
+
 ## 1. 导错样式文件
 
 症状：
@@ -110,15 +114,9 @@
 
 ## 8. 忽略 HTML / XSS 风险
 
-现状：
+7.x 默认关闭原生 HTML，Mermaid 使用 `strict`，KaTeX 使用 `trust: false`。ECharts 的 JSON5 解析与 `sanitizeOption` 独立执行。`sanitize` 和 `sanitizeMermaid` 默认透传，不应误认为它们默认提供额外清洗。
 
-- 当前版本默认没有内置 XSS 扩展
-- 用户输入的 HTML 是否安全，需要业务自己负责
-
-处理：
-
-- 至少接一个 `sanitize`
-- 或在 `markdownItPlugins` 里显式启用 `XSSPlugin`
+启用 HTML 后，根据内容来源通过 `sanitize` 或 `XSSPlugin` 增加应用过滤规则；`XSSPlugin` 仅处理 HTML token，不能代替图表本身的配置。只需要自定义 ECharts 解析时，保留渲染策略。
 
 ## 9. 忽略外链副作用
 
@@ -130,7 +128,7 @@
 处理：
 
 - 正式业务优先本地实例注入
-- 需要清理时调用 `clearSideEffects()`
+- 确认使用共享 CDN 资源的所有实例都已卸载，再由宿主调用 `clearSideEffects()`
 
 ## 10. 预览目录不跟随滚动
 
@@ -191,3 +189,25 @@
 - `markdownItPlugins` 以“筛选 / 追加”内置插件为主
 - `codeMirrorExtensions` 以“保留现有扩展后增量修改”为主
 - 默认不要把内置列表整组替换为空
+
+## 15. 代码语言不存在时预览变慢
+
+当前源码中，已注册语言使用指定语法高亮，没有语言标签的代码块才走自动探测；显式写了未注册语言时输出转义后的纯文本。此修复可能尚未出现在业务已安装的版本中。
+
+- 使用 `highlight.js/lib/core` 时先注册业务需要的语言，再将实例传给 `config()`。
+- 不要用 `autoDetectCode` 控制预览高亮：它用于识别粘贴到编辑区的代码。
+- 排查旧版本的长代码块卡顿时，可临时设置 `noHighlight`；不要通过删除未知语言标签触发全语法自动探测。
+- 自定义 `markdownItConfig` 中的 `highlight` 时，返回结果会优先使用，需单独检查该实现。
+
+## 16. 自定义菜单或弹窗无法用键盘操作
+
+当前源码为下拉与弹窗提供焦点管理。先检查安装包是否包含相应修复，再检查业务自定义内容：
+
+- 下拉菜单将 `visible` 和 `onChange` 配套传入；菜单项用原生按钮和 `role="menuitem"`，保留文字或可访问名称。
+- 菜单模式支持方向键、Home/End、Enter/Space、Escape；普通表单下拉保留原生输入行为，不把表单节点标记为菜单项。
+- 弹窗通过 `visible`、打开回调和 `onClose` 管理状态，提供有意义的标题和可聚焦操作。不要另加全局按键监听与内置焦点归还冲突。
+- `title` / `modalTitle` 用于组件已有的名称入口；不要往库的语言包中添加不存在的字段。
+
+## 17. 复制了旧 iconfont 配置
+
+7.x 使用内置 SVG 图标，不再使用 `config({ iconfontType: ... })`。移除旧 iconfont 脚本、CSS 和字体；需要替换图标时查当前安装包的 `customIcon` 类型。

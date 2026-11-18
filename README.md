@@ -8,6 +8,9 @@ Markdown editor for `react`, developed in `jsx` and `typescript`.
 
 - Documentation and demo：[Go](https://imzbf.github.io/md-editor-rt)
 
+- Runnable integration examples: [examples](./examples/README.md)
+- Skill for downstream projects: [md-editor-rt](./skills/md-editor-rt/SKILL.md)
+
 - The same series editor for vue3：[md-editor-v3](https://github.com/imzbf/md-editor-v3)
 
 ## ⭐️ Features
@@ -49,7 +52,7 @@ npm i @vavt/cm-extension
 Use existing components of toolbar, such as exporting content as PDF
 
 ```shell
-npm i @vavt/v3-extension
+npm i @vavt/rt-extension
 ```
 
 For more ways to use or contribute, please refer to: [md-editor-extension](https://github.com/imzbf/md-editor-extension)
@@ -67,7 +70,7 @@ import 'md-editor-rt/lib/style.css';
 
 export default () => {
   const [text, setText] = useState('# Hello Editor');
-  return <MdEditor modelValue={text} onChange={setText} />;
+  return <MdEditor value={text} onChange={setText} />;
 };
 ```
 
@@ -78,7 +81,7 @@ import React, { useState } from 'react';
 import { MdPreview, MdCatalog } from 'md-editor-rt';
 import 'md-editor-rt/lib/preview.css';
 
-const scrollElement = document.documentElement;
+const scrollElement = 'html';
 
 export default () => {
   const [text] = useState('# Hello Editor');
@@ -86,7 +89,7 @@ export default () => {
 
   return (
     <>
-      <MdPreview id={id} modelValue={text} />
+      <MdPreview id={id} value={text} />
       <MdCatalog editorId={id} scrollElement={scrollElement} />
     </>
   );

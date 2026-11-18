@@ -8,6 +8,9 @@
 
 - 文档与在线预览：[传送门](https://imzbf.github.io/md-editor-rt)
 
+- 可运行的接入示例：[examples](./examples/README.md)
+- 面向下游项目的技能：[md-editor-rt](./skills/md-editor-rt/SKILL.md)
+
 - [md-editor-v3](https://imzbf.github.io/md-editor-v3)同系列项目。
 
 ## ⭐️ 功能一览
@@ -66,7 +69,7 @@ import 'md-editor-rt/lib/style.css';
 
 export default () => {
   const [text, setText] = useState('# Hello Editor');
-  return <MdEditor modelValue={text} onChange={setText} />;
+  return <MdEditor value={text} onChange={setText} />;
 };
 ```
 
@@ -74,10 +77,10 @@ export default () => {
 
 ```jsx
 import React, { useState } from 'react';
-import { MdEditor, MdCatalog } from 'md-editor-rt';
+import { MdPreview, MdCatalog } from 'md-editor-rt';
 import 'md-editor-rt/lib/preview.css';
 
-const scrollElement = document.documentElement;
+const scrollElement = 'html';
 
 export default () => {
   const [text] = useState('# Hello Editor');
@@ -85,7 +88,7 @@ export default () => {
 
   return (
     <>
-      <MdEditor id={id} modelValue={text} />
+      <MdPreview id={id} value={text} />
       <MdCatalog editorId={id} scrollElement={scrollElement} />
     </>
   );

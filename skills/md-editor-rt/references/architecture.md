@@ -132,6 +132,10 @@
 - `packages/MdEditor/layouts/Content/hooks/useKatex.ts`
 - `packages/MdEditor/layouts/Content/hooks/useEcharts.ts`
 
+当前默认关闭 Markdown 原生 HTML，Mermaid 使用 `strict`，KaTeX 使用 `trust: false`。ECharts 按 `parseOption → echartsConfig → sanitizeOption → setOption` 执行；实例注入不会关闭这些模块默认值。
+
+内置高亮对已注册语言使用对应语法，无语言标签时自动探测，未知语言按转义后的纯文本展示；业务注入的 highlight 回调优先。诊断时先核对安装版本是否包含当前源码的修复。
+
 ## 7. 为什么 ref API 很适合业务集成
 
 业务项目经常需要：

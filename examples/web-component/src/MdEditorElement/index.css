@@ -2,4 +2,7 @@
 @import 'highlight.js/styles/atom-one-dark.css';
 @import 'cropperjs/dist/cropper.css';
 @import 'katex/dist/katex.min.css';
-@import './iconfont.css';
+
+:host {
+  display: block;
+}
