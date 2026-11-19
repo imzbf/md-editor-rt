@@ -1,5 +1,30 @@
 <!-- next-release -->
 
+## 7.1.1 (2026-11-19)
+
+### Fixed Bugs
+
+- skip auto detection for unknown code languages ([commit 31da5d4](https://github.com/imzbf/md-editor-rt/commit/31da5d4c881d886a5d8880ecdd11b67dc93cf27d)) [#254](https://github.com/imzbf/md-editor-rt/issues/254)
+
+- restore keyboard navigation and focus management ([commit 382bc3e](https://github.com/imzbf/md-editor-rt/commit/382bc3ef65f52b5f539d14f5052d4a15c1e90b90)) [#253](https://github.com/imzbf/md-editor-rt/issues/253)
+
+- toggle tasks with all list markers ([commit ea50da9](https://github.com/imzbf/md-editor-rt/commit/ea50da962152f291581b3cfe1a4ef3e2e6512025))
+  - Preserve list markers, numbering and indentation when toggling tasks.
+  - Limit click handling to checkboxes to preserve body link behavior
+  - and avoid duplicate updates through nested lists.
+  - Refs imzbf/md-editor-v3#1036
+
+### Others
+
+- chore(integrations): refresh downstream skills and examples ([commit 986d81e](https://github.com/imzbf/md-editor-rt/commit/986d81eda7f43e51c2de216c22d23de353c62dc5))
+  - Rename example to examples and update documentation links.
+  - Refresh downstream API guidance and runnable integration examples.
+  - Remove obsolete scaffolding and ignore local build and environment files.
+
+**Full Changelog**: [v7.1.0...v7.1.1](https://github.com/imzbf/md-editor-rt/compare/v7.1.0...v7.1.1)
+
+---
+
 ## 7.1.0 (2026-09-28)
 
 ### Fixed Bugs
