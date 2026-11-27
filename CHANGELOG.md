@@ -1,5 +1,19 @@
 <!-- next-release -->
 
+## 7.1.2 (2026-11-27)
+
+### Fixed Bugs
+
+- take heading level from the tag for setext headings ([commit 201f1aa](https://github.com/imzbf/md-editor-rt/commit/201f1aa246f5d1ea2a8e47068d8c5508c77e4f86))
+
+### Others
+
+- chore(release): 7.1.2 ([commit d9b8541](https://github.com/imzbf/md-editor-rt/commit/d9b8541f38bbbe3273689f207f903a2d2e006a17))
+
+**Full Changelog**: [v7.1.1...v7.1.2](https://github.com/imzbf/md-editor-rt/compare/v7.1.1...v7.1.2)
+
+---
+
 ## 7.1.1 (2026-11-19)
 
 ### Fixed Bugs
